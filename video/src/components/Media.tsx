@@ -9,10 +9,11 @@ export const Clip: React.FC<{
   muted?: boolean;
   volume?: number | ((f: number) => number);
   startFrom?: number;
-  loopFrames?: number; // loop clips shorter than their on-screen time
+  loopFrames?: number;
+  playbackRate?: number; // loop clips shorter than their on-screen time
   radius?: number;
   style?: React.CSSProperties;
-}> = ({src, width, height, muted = true, volume, startFrom = 0, loopFrames, radius = 0, style}) => {
+}> = ({src, width, height, muted = true, volume, startFrom = 0, loopFrames, playbackRate = 1, radius = 0, style}) => {
   const isImg = /\.(webp|png|jpe?g)$/.test(src);
   const common: React.CSSProperties = {width: '100%', height: '100%', objectFit: 'cover', display: 'block'};
   return (
@@ -21,7 +22,7 @@ export const Clip: React.FC<{
         <Img src={staticFile(`media/${src}`)} style={common} />
       ) : (
         (() => {
-          const v = <OffthreadVideo src={staticFile(`media/${src}`)} muted={muted} volume={volume} startFrom={startFrom} style={common} />;
+          const v = <OffthreadVideo src={staticFile(`media/${src}`)} muted={muted} volume={volume} startFrom={startFrom} playbackRate={playbackRate} style={common} />;
           return loopFrames ? <Loop durationInFrames={loopFrames}>{v}</Loop> : v;
         })()
       )}

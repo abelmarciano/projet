@@ -7,17 +7,15 @@ import {prog, pop, mix} from '../components/anim';
 import {C, DISPLAY, FONT, GRAD} from '../theme';
 
 const CARDS = [
-  {src: 'ugc-scierie.mp4', name: 'Léa', tag: 'B2B · Industrie', slot: -2, start: 30},
-  {src: 'ugc-homme.mp4', name: 'Marc', tag: 'Témoignage', slot: -1, start: 0},
-  {src: 'ugc-femme.mp4', name: 'Inès', tag: 'Beauté · Lifestyle', slot: 0, start: 0},
-  {src: 'ugc-solaire.mp4', name: 'Sophie', tag: 'Maison · Énergie', slot: 1, start: 0, loop: 150},
-  {src: 'ugc-charlotte.mp4', name: 'Charlotte', tag: 'Face caméra', slot: 2, start: 300},
+  {src: 'ugc-scierie.mp4', name: 'Léa', tag: 'B2B · Industrie', slot: -1.5, start: 30},
+  {src: 'ugc-femme.mp4', name: 'Inès', tag: 'Beauté · Lifestyle', slot: -0.5, start: 0},
+  {src: 'ugc-homme.mp4', name: 'Marc', tag: 'Témoignage', slot: 0.5, start: 0},
+  {src: 'ugc-solaire.mp4', name: 'Sophie', tag: 'Maison · Énergie', slot: 1.5, start: 0, loop: 150},
 ];
 
 const SIZE = [
-  {w: 360, h: 640},
+  {w: 340, h: 604},
   {w: 300, h: 534},
-  {w: 250, h: 444},
 ];
 
 export const Actors: React.FC = () => {
@@ -55,13 +53,13 @@ export const Actors: React.FC = () => {
       </div>
       <AbsoluteFill style={{perspective: 2000}}>
         {[...CARDS]
-          .sort((a, b) => Math.abs(b.slot) - Math.abs(a.slot))
+          .sort((a, b) => (a.name === 'Inès' ? 1 : 0) - (b.name === 'Inès' ? 1 : 0) || Math.abs(b.slot) - Math.abs(a.slot))
           .map((c) => {
-            const d = Math.abs(c.slot);
+            const d = Math.abs(c.slot) > 1 ? 1 : 0;
             const s = SIZE[d];
-            const x = 960 + c.slot * mix(0, 330, fan) - s.w / 2 + drift * c.slot;
+            const x = 960 + c.slot * mix(0, 360, fan) - s.w / 2 + drift * c.slot;
             const y = 640 - s.h / 2 + d * mix(0, 40, fan);
-            const isSel = c.slot === 0;
+            const isSel = c.name === 'Inès';
             const dim = isSel ? 1 : 1 - sel * 0.35;
             const appear = pop(f, 4 + d * 5, 15);
             return (
@@ -111,7 +109,7 @@ export const Actors: React.FC = () => {
       <div
         style={{
           position: 'absolute',
-          left: 960 - 450,
+          left: 780 - 450,
           top: 976,
           width: 900,
           opacity: sel,

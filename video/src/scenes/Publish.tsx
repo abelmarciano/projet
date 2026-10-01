@@ -68,7 +68,7 @@ export const Publish: React.FC = () => {
           <Card style={{width: 860, padding: 34, borderRadius: 28}}>
             <div style={{display: 'flex', gap: 22, alignItems: 'center', marginBottom: 20}}>
               <div style={{borderRadius: 14, overflow: 'hidden', flexShrink: 0}}>
-                <Clip src="ugc-charlotte.mp4" width={110} height={140} startFrom={60} />
+                <Clip src="ugc-femme.mp4" width={110} height={140} startFrom={60} />
               </div>
               <div style={{flex: 1}}>
                 <div style={{fontSize: 16, color: C.slate, letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 600}}>Campagne</div>

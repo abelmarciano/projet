@@ -10,7 +10,7 @@ Rendu final : `out/growthity-promo.mp4`
 |---|-------|---------|
 | 1 | Problème | Agence 3 000 € · 2 semaines · Des heures → barrés. « Et si une phrase suffisait ? » |
 | 2 | Promesse | « Vos publicités Meta, générées et publiées en 2 minutes. » |
-| 3 | 01 · Chat créatif | Le prompt pompe à chaleur se tape, l'IA écrit le script, choisit l'actrice et répond par la **vraie vidéo UGC de Charlotte** (avec sa voix), qui s'agrandit en plein téléphone |
+| 3 | 01 · Chat créatif | Le prompt pompe à chaleur se tape, l'IA écrit le script, choisit l'actrice et répond par une **vraie vidéo UGC** (Inès, sans son, sous-titres animés), qui s'agrandit en plein téléphone |
 | 4 | 02 · Acteurs UGC | « 500+ acteurs IA » : vraies vidéos d'acteurs Growthity en éventail, sélection automatique |
 | 5 | 03 · Formats | Vidéo UGC 9:16, carrousel 1:1 (bougie, sneakers, MacBook), feed 4:5 |
 | 6 | 04 · Espion Meta Ads | Bibliothèque Meta, vraies pubs, « Gagnant probable », bouton S'inspirer |

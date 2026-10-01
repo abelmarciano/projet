@@ -98,9 +98,7 @@ for b in range(int(DUR / BAR) + 1):
 hero_t = fr(S['Hero'])
 chat_t = fr(S['Chat'])
 outro_t = fr(S['Outro'])
-# The UGC video in the chat plays with its own voice: duck the music under it
-ugc_on = fr(S['Chat'] + 206)
-ugc_off = fr(S['Chat'] + 470)
+
 end_t = DUR
 
 beat_times = np.arange(0, DUR, BEAT)
@@ -261,9 +259,7 @@ for c in range(2):
     mix[c] = mix[c] + 0.28 * wet
 
 mix = hp(mix, 30)
-tt = np.arange(mix.shape[1]) / SR
-duck = 1 - 0.72 * np.clip(np.minimum((tt - ugc_on) / 0.4, (ugc_off - tt) / 0.5), 0, 1)
-mix *= duck
+
 total = int(DUR * SR)
 mix = mix[:, :total]
 fade_in = int(0.3 * SR)
