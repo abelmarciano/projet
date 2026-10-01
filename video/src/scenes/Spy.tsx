@@ -8,18 +8,23 @@ import {prog, pop, typed, INOUT} from '../components/anim';
 import {C, DISPLAY, FONT, GRAD} from '../theme';
 
 const ADS: {src: string; brand: string; days: number; win: boolean; loop?: number}[] = [
-  {src: 'img-bougie.webp', brand: 'Maison Ambre', days: 47, win: true},
-  {src: 'img-macbook.webp', brand: 'TechStore', days: 9, win: false},
-  {src: 'ugc-solaire.mp4', brand: 'Sol’Énergie', days: 62, win: true, loop: 150},
-  {src: 'img-sneakers.webp', brand: 'Street Kicks', days: 4, win: false},
+  {src: 'img-pac-fioul.webp', brand: 'Éco Habitat', days: 47, win: true},
+  {src: 'ugc-pac-awa.mp4', brand: 'Chaleur+', days: 12, win: false},
+  {src: 'ugc-charlotte.mp4', brand: 'ThermoConfort', days: 62, win: true},
+  {src: 'img-pac-rge.webp', brand: 'RénoPro', days: 9, win: false},
+  {src: 'ugc-pac-hugo.mp4', brand: 'Maison Éco', days: 33, win: true},
+  {src: 'img-pac-70.webp', brand: 'Énergie Plus', days: 4, win: false},
 ];
+// when each winner gets its badge (the panel keeps scrolling while the scan runs)
+const FLAG_AT = [62, 0, 90, 0, 128, 0];
+const CARD = 244; // card width + gap
 
 // Meta Ads library intelligence
 export const Spy: React.FC = () => {
   const f = useCurrentFrame();
   const kick = prog(f, 4, 22);
   const panel = prog(f, 8, 30);
-  const q = typed('meilleures pubs e-commerce', f, 26, 30);
+  const q = typed('pompe à chaleur', f, 26, 26);
   const scan = interpolate(f, [56, 100], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
   // cursor path to "S'inspirer"
   const cx = interpolate(f, [104, 136], [1560, 1672], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
@@ -98,10 +103,11 @@ export const Spy: React.FC = () => {
             </div>
             <Badge tone="meta" style={{height: 44, fontSize: 18}}>Bibliothèque Meta · FR</Badge>
           </div>
-          <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 18, marginTop: 26}}>
+          <div style={{overflow: 'hidden', marginTop: 26, marginRight: -30}}>
+          <div style={{display: 'flex', gap: 18, transform: `translateX(${-interpolate(f, [70, 175], [0, 2 * CARD], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT})}px)`}}>
             {ADS.map((a, i) => {
               const p = pop(f, 46 + i * 5, 15);
-              const flagged = a.win && scan > (i + 0.5) / ADS.length;
+              const flagged = a.win && f >= FLAG_AT[i];
               return (
                 <div
                   key={i}
@@ -111,7 +117,9 @@ export const Spy: React.FC = () => {
                     boxShadow: flagged ? '0 0 0 4px rgba(34,193,122,0.15)' : 'none',
                     overflow: 'hidden',
                     transform: `translateY(${(1 - p) * 40}px)`,
-                    opacity: p * (scan >= 1 && !a.win ? 0.45 : 1),
+                    opacity: p * (f > 110 && !a.win ? 0.45 : 1),
+                    width: 226,
+                    flexShrink: 0,
                     background: '#fff',
                   }}
                 >
@@ -127,7 +135,7 @@ export const Spy: React.FC = () => {
                     <div style={{fontSize: 14, color: C.slate}}>Active depuis {a.days} j</div>
                     <div style={{height: 30}}>
                       {flagged && (
-                        <Badge tone="success" style={{height: 30, fontSize: 14, transform: `scale(${pop(f, 60 + i * 10)})`}}>
+                        <Badge tone="success" style={{height: 30, fontSize: 14, transform: `scale(${pop(f, FLAG_AT[i])})`}}>
                           ● Gagnant probable
                         </Badge>
                       )}
@@ -136,6 +144,7 @@ export const Spy: React.FC = () => {
                 </div>
               );
             })}
+          </div>
           </div>
           {/* scan line */}
           {scan > 0 && scan < 1 && (
@@ -169,9 +178,9 @@ export const Spy: React.FC = () => {
             }}
           >
             <div style={{flex: 1}}>
-              <div style={{fontSize: 20, fontWeight: 700, color: C.ink}}>2 gagnants probables détectés</div>
+              <div style={{fontSize: 20, fontWeight: 700, color: C.ink}}>3 gagnants probables détectés</div>
               <div style={{fontSize: 16, color: C.slate}}>
-                {sent > 0 ? 'Envoyés au chat comme références ✓' : 'Hook avant/après · format 9:16 · preuve sociale'}
+                {sent > 0 ? 'Envoyés au chat comme références ✓' : 'Hook facture · UGC face caméra · aides de l’État'}
               </div>
             </div>
             <div
