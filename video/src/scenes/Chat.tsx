@@ -16,7 +16,7 @@ const EXPAND = 232; // card flies out into the phone
 
 const STEPS = [
   {t: 'Script & hook rédigés', d: '« Si vous vous chauffez encore au gaz ou au fioul… »'},
-  {t: 'Actrice : Inès', d: 'voix française naturelle'},
+  {t: 'Actrice : Charlotte', d: 'voix française naturelle'},
   {t: 'Tournage IA · vidéo 9:16 · 16 s', d: ''},
 ];
 
@@ -31,51 +31,6 @@ const Avatar: React.FC = () => (
     <LogoMark size={26} color="#fff" />
   </div>
 );
-
-// Animated captions, Growthity style (uppercase, keyword in brand purple)
-const CAPTIONS: {from: number; to: number; words: string[]; hi: number}[] = [
-  {from: 0, to: 1.4, words: ['SI', 'VOUS', 'VOUS', 'CHAUFFEZ'], hi: 3},
-  {from: 1.4, to: 2.8, words: ['ENCORE', 'AU', 'GAZ', 'OU', 'AU', 'FIOUL,'], hi: 5},
-  {from: 2.8, to: 4.2, words: ['ÉCOUTEZ', 'BIEN', '!'], hi: 0},
-  {from: 4.2, to: 5.8, words: ['UNE', 'AIDE', 'FINANCE'], hi: 1},
-  {from: 5.8, to: 7.4, words: ['VOTRE', 'POMPE', 'À', 'CHALEUR'], hi: 1},
-  {from: 7.4, to: 9.5, words: ['SOUS', 'CONDITIONS.'], hi: 1},
-];
-
-const Subtitles: React.FC<{scale: number}> = ({scale}) => {
-  const f = useCurrentFrame(); // relative to the video's Sequence
-  const t = f / 30;
-  const cap = CAPTIONS.find((c) => t >= c.from && t < c.to);
-  if (!cap) return null;
-  const local = f - cap.from * 30;
-  const p = Math.min(1, local / 5);
-  return (
-    <div style={{position: 'absolute', left: 0, right: 0, bottom: '24%', display: 'flex', justifyContent: 'center'}}>
-      <div
-        style={{
-          maxWidth: '84%',
-          textAlign: 'center',
-          fontFamily: FONT,
-          fontWeight: 800,
-          fontSize: 34 * scale,
-          lineHeight: 1.15,
-          color: '#fff',
-          background: 'rgba(15,15,20,0.62)',
-          padding: `${8 * scale}px ${14 * scale}px`,
-          borderRadius: 8 * scale,
-          transform: `scale(${0.85 + p * 0.15})`,
-          opacity: p,
-        }}
-      >
-        {cap.words.map((w, i) => (
-          <span key={i} style={{color: i === cap.hi ? '#9B7BFF' : '#fff'}}>
-            {w}{' '}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-};
 
 // Card rect inside the browser thread → phone rect on the right
 const FROM = {x: 240, y: 333, w: 300, h: 534};
@@ -285,7 +240,7 @@ export const Chat: React.FC = () => {
           Actrice IA ultra-réaliste, voix française naturelle, sous-titres animés. Prête à publier sur Meta.
         </div>
         <div style={{display: 'flex', gap: 14, marginTop: 40, transform: `scale(${chip})`, transformOrigin: 'left center'}}>
-          {['9:16 · Reels & Stories', '8 s', 'Sous-titres'].map((t) => (
+          {['9:16 · Reels & Stories', '16 s', 'Sous-titres'].map((t) => (
             <div key={t} style={{fontFamily: FONT, fontWeight: 600, fontSize: 21, color: C.primary, background: '#EEEBFF', padding: '10px 18px', borderRadius: 999}}>
               {t}
             </div>
@@ -312,8 +267,7 @@ export const Chat: React.FC = () => {
           <div style={{position: 'relative', width: '100%', height: '100%', borderRadius: mix(18, 44, ex), overflow: 'hidden'}}>
             {f >= PLAY ? (
               <Sequence from={PLAY} layout="none">
-                <Clip src="ugc-femme.mp4" width="100%" height="100%" playbackRate={0.9} style={{position: 'absolute', inset: 0}} />
-                <Subtitles scale={r.w / TO.w} />
+                <Clip src="ugc-charlotte.mp4" width="100%" height="100%" style={{position: 'absolute', inset: 0}} />
               </Sequence>
             ) : (
               <div style={{position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(90deg, #EEF0F6 0%, #DCDFF0 50%, #EEF0F6 100%)', backgroundSize: '200% 100%', backgroundPosition: `${200 - ((f * 4) % 400)}% 0`}} />

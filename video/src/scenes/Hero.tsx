@@ -11,7 +11,7 @@ export const Hero: React.FC = () => {
   const f = useCurrentFrame();
   const sub = prog(f, 30, 22);
   const btn = pop(f, 42, 14);
-  const out = prog(f, 139, 18, INOUT);
+  const out = prog(f, 159, 18, INOUT);
   return (
     <LightBg>
       <AbsoluteFill
