@@ -10,7 +10,7 @@ import {C, DISPLAY, FONT, GRAD} from '../theme';
 const ADS: {src: string; brand: string; days: number; win: boolean; loop?: number}[] = [
   {src: 'img-pac-fioul.webp', brand: 'Éco Habitat', days: 47, win: true},
   {src: 'ugc-pac-awa.mp4', brand: 'Chaleur+', days: 12, win: false},
-  {src: 'ugc-charlotte.mp4', brand: 'ThermoConfort', days: 62, win: true},
+  {src: 'ugc-homme.mp4', brand: 'ThermoConfort', days: 62, win: true},
   {src: 'img-pac-rge.webp', brand: 'RénoPro', days: 9, win: false},
   {src: 'ugc-pac-hugo.mp4', brand: 'Maison Éco', days: 33, win: true},
   {src: 'img-pac-70.webp', brand: 'Énergie Plus', days: 4, win: false},
