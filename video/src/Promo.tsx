@@ -11,7 +11,6 @@ import '@fontsource/inter/700.css';
 import '@fontsource/space-grotesk/500.css';
 import '@fontsource/space-grotesk/600.css';
 import '@fontsource/space-grotesk/700.css';
-import {Intro} from './scenes/Intro';
 import {Problem} from './scenes/Problem';
 import {Hero} from './scenes/Hero';
 import {Chat} from './scenes/Chat';
@@ -22,7 +21,7 @@ import {Publish} from './scenes/Publish';
 import {Outro} from './scenes/Outro';
 import {SCENES, TRANSITIONS} from './timeline';
 
-const COMPONENTS: Record<string, React.FC> = {Intro, Problem, Hero, Chat, Formats, Actors, Spy, Publish, Outro};
+const COMPONENTS: Record<string, React.FC> = {Problem, Hero, Chat, Formats, Actors, Spy, Publish, Outro};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const presentation = (kind: string): any => {

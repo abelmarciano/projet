@@ -1,0 +1,21 @@
+{
+  "scenes": [
+    {"id": "Problem", "duration": 110},
+    {"id": "Hero", "duration": 110},
+    {"id": "Chat", "duration": 470},
+    {"id": "Actors", "duration": 180},
+    {"id": "Formats", "duration": 170},
+    {"id": "Spy", "duration": 190},
+    {"id": "Publish", "duration": 190},
+    {"id": "Outro", "duration": 220}
+  ],
+  "transitions": [
+    {"kind": "fade", "duration": 8},
+    {"kind": "fade", "duration": 14},
+    {"kind": "wipe", "duration": 20},
+    {"kind": "slide-left", "duration": 20},
+    {"kind": "wipe", "duration": 20},
+    {"kind": "slide-up", "duration": 20},
+    {"kind": "fade", "duration": 20}
+  ]
+}

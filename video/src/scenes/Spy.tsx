@@ -1,17 +1,17 @@
 import React from 'react';
 import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
 import {StudioBg} from '../components/Backgrounds';
-import {Creative, CreativeKind} from '../components/Creatives';
+import {Clip} from '../components/Media';
 import {Badge, Cursor, Kicker, Sparkle} from '../components/UI';
 import {WordsReveal} from '../components/Text';
 import {prog, pop, typed, INOUT} from '../components/anim';
 import {C, DISPLAY, FONT, GRAD} from '../theme';
 
-const ADS: {kind: CreativeKind; brand: string; days: number; win: boolean; headline: string}[] = [
-  {kind: 'serum', brand: 'Glow Lab', days: 47, win: true, headline: 'Peau terne ? 7 jours.'},
-  {kind: 'perfume', brand: 'Maison Élan', days: 9, win: false, headline: 'Nouvelle fragrance'},
-  {kind: 'serum', brand: 'Pure Skin', days: 62, win: true, headline: 'Avant / Après'},
-  {kind: 'candle', brand: 'Ambre & Co', days: 4, win: false, headline: 'Offre de rentrée'},
+const ADS: {src: string; brand: string; days: number; win: boolean; loop?: number}[] = [
+  {src: 'img-bougie.webp', brand: 'Maison Ambre', days: 47, win: true},
+  {src: 'img-macbook.webp', brand: 'TechStore', days: 9, win: false},
+  {src: 'ugc-solaire.mp4', brand: 'Sol’Énergie', days: 62, win: true, loop: 150},
+  {src: 'img-sneakers.webp', brand: 'Street Kicks', days: 4, win: false},
 ];
 
 // Meta Ads library intelligence
@@ -19,7 +19,7 @@ export const Spy: React.FC = () => {
   const f = useCurrentFrame();
   const kick = prog(f, 4, 22);
   const panel = prog(f, 8, 30);
-  const q = typed('sérum vitamine C', f, 26, 26);
+  const q = typed('meilleures pubs e-commerce', f, 26, 30);
   const scan = interpolate(f, [56, 100], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
   // cursor path to "S'inspirer"
   const cx = interpolate(f, [104, 136], [1560, 1672], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
@@ -33,10 +33,23 @@ export const Spy: React.FC = () => {
       </div>
       <div style={{position: 'absolute', left: 140, top: 150, width: 640}}>
         <WordsReveal
-          words={[{t: 'Inspirez-vous'}, {t: 'des'}, {t: 'pubs', grad: 'pink'}, {t: 'qui', grad: 'pink'}, {t: 'gagnent.', grad: 'pink'}]}
+          words={[{t: 'Inspirez-vous', br: true}, {t: 'des'}, {t: 'pubs'}, {t: 'qui', br: true}, {t: 'gagnent.'}]}
           start={8}
           stagger={3}
-          style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 76, lineHeight: 1.04, color: '#fff', justifyContent: 'flex-start'}}
+          style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 80, lineHeight: 1.08, color: '#fff', justifyContent: 'flex-start'}}
+        />
+        {/* highlight marker under “gagnent.” */}
+        <div
+          style={{
+            height: 8,
+            width: 300,
+            marginTop: 6,
+            borderRadius: 7,
+            backgroundImage: GRAD,
+            transform: `scaleX(${prog(f, 26, 20)})`,
+            transformOrigin: 'left center',
+            boxShadow: '0 0 30px rgba(146,120,255,0.6)',
+          }}
         />
         <div style={{marginTop: 30, fontFamily: FONT, fontSize: 28, lineHeight: 1.5, color: 'rgba(255,255,255,0.65)', opacity: prog(f, 30, 20)}}>
           L’IA analyse en temps réel la bibliothèque publicitaire Meta de votre marché et s’en inspire pour chaque création.
@@ -109,7 +122,7 @@ export const Spy: React.FC = () => {
                       <div style={{fontSize: 12, color: C.slate}}>Sponsorisé</div>
                     </div>
                   </div>
-                  <Creative kind={a.kind} width={220} height={300} radius={0} headline={a.headline} />
+                  <Clip src={a.src} width={226} height={390} loopFrames={a.loop} />
                   <div style={{padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 8}}>
                     <div style={{fontSize: 14, color: C.slate}}>Active depuis {a.days} j</div>
                     <div style={{height: 30}}>

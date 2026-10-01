@@ -14,7 +14,7 @@ const PAINS = [
 // 4.5–9.5s: the old way, struck through
 export const Problem: React.FC = () => {
   const f = useCurrentFrame();
-  const leave = prog(f, 104, 16);
+  const leave = prog(f, 94, 14);
   return (
     <StudioBg intensity={0.7}>
       <AbsoluteFill style={{alignItems: 'center', justifyContent: 'center', opacity: 1 - leave}}>
@@ -26,8 +26,8 @@ export const Problem: React.FC = () => {
         />
         <div style={{display: 'flex', gap: 40, marginTop: 70}}>
           {PAINS.map((p, i) => {
-            const s = pop(f, 18 + i * 9, 13);
-            const strike = prog(f, 56 + i * 7, 14);
+            const s = pop(f, 14 + i * 8, 13);
+            const strike = prog(f, 46 + i * 7, 14);
             return (
               <div
                 key={p.k}
@@ -67,7 +67,7 @@ export const Problem: React.FC = () => {
         <div style={{height: 90}} />
         <WordsReveal
           words={[...words('Et si une'), {t: 'phrase', grad: 'pink'}, {t: 'suffisait ?'}]}
-          start={78}
+          start={70}
           stagger={3}
           style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 84, color: '#fff'}}
         />
@@ -75,7 +75,7 @@ export const Problem: React.FC = () => {
       <AbsoluteFill
         style={{
           background: 'white',
-          opacity: interpolate(f, [112, 122], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}),
+          opacity: interpolate(f, [100, 110], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}),
         }}
       />
     </StudioBg>

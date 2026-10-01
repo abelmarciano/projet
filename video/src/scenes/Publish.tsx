@@ -1,7 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
 import {LightBg} from '../components/Backgrounds';
-import {Creative} from '../components/Creatives';
+import {Clip} from '../components/Media';
 import {Badge, Card, Check, Cursor, Kicker, MetaLogo} from '../components/UI';
 import {WordsReveal} from '../components/Text';
 import {prog, pop, INOUT} from '../components/anim';
@@ -68,12 +68,12 @@ export const Publish: React.FC = () => {
           <Card style={{width: 860, padding: 34, borderRadius: 28}}>
             <div style={{display: 'flex', gap: 22, alignItems: 'center', marginBottom: 20}}>
               <div style={{borderRadius: 14, overflow: 'hidden', flexShrink: 0}}>
-                <Creative kind="serum" width={110} height={140} radius={0} />
+                <Clip src="ugc-charlotte.mp4" width={110} height={140} startFrom={60} />
               </div>
               <div style={{flex: 1}}>
                 <div style={{fontSize: 16, color: C.slate, letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 600}}>Campagne</div>
-                <div style={{fontFamily: DISPLAY, fontSize: 36, fontWeight: 700, marginTop: 4}}>Sérum Vitamine C</div>
-                <div style={{fontSize: 18, color: C.slate, marginTop: 4}}>3 créations · Objectif ventes</div>
+                <div style={{fontFamily: DISPLAY, fontSize: 36, fontWeight: 700, marginTop: 4}}>Pompes à chaleur</div>
+                <div style={{fontSize: 18, color: C.slate, marginTop: 4}}>Vidéo UGC + 2 visuels · Objectif leads</div>
               </div>
               <div style={{transform: live ? `scale(${pop(f, CLICK + 6, 10)})` : undefined}}>
                 {live ? (
