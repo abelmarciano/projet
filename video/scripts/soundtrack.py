@@ -1,0 +1,266 @@
+"""Synthesised soundtrack for the Growthity promo, locked to the scene timeline.
+
+Writes public/soundtrack.wav (48 kHz stereo). Run: python3 scripts/soundtrack.py
+"""
+import numpy as np
+from scipy.signal import fftconvolve, butter, sosfilt
+from scipy.io import wavfile
+
+SR = 48000
+FPS = 30
+SCENES = [135, 125, 240, 330, 185, 160, 190, 200, 210]
+TRANS = [18, 8, 16, 20, 20, 20, 20, 20]
+
+starts, t = [], 0
+for i, d in enumerate(SCENES):
+    starts.append(t)
+    t += d - (TRANS[i] if i < len(TRANS) else 0)
+TOTAL_F = t
+DUR = TOTAL_F / FPS
+N = int(DUR * SR) + SR  # 1s tail, trimmed later
+rng = np.random.default_rng(7)
+
+
+def fr(frame):
+    return frame / FPS
+
+
+def note(n):  # MIDI → Hz
+    return 440.0 * 2 ** ((n - 69) / 12)
+
+
+def lp(x, hz, order=2):
+    return sosfilt(butter(order, hz, 'low', fs=SR, output='sos'), x)
+
+
+def hp(x, hz, order=2):
+    return sosfilt(butter(order, hz, 'high', fs=SR, output='sos'), x)
+
+
+def env_adsr(n, a, r):
+    e = np.ones(n)
+    na, nr = int(a * SR), int(r * SR)
+    e[:na] = np.linspace(0, 1, na) if na else 1
+    if nr:
+        e[-nr:] *= np.linspace(1, 0, nr)
+    return e
+
+
+L = np.zeros(N)
+R = np.zeros(N)
+
+
+def add(sig, at, gain=1.0, pan=0.0):
+    i = int(at * SR)
+    if i >= N:
+        return
+    sig = sig[: N - i]
+    gl = gain * np.sqrt(0.5 * (1 - pan))
+    gr = gain * np.sqrt(0.5 * (1 + pan))
+    L[i : i + len(sig)] += sig * gl
+    R[i : i + len(sig)] += sig * gr
+
+
+# ---------- harmony: 120 BPM, one chord per bar (2 s) ----------
+BPM = 120
+BEAT = 60 / BPM
+BAR = 4 * BEAT
+PROG = [  # Fmaj9, G6, Am7, Cmaj7/E  — bright, hopeful
+    [53, 57, 60, 64, 67],
+    [55, 59, 62, 64, 71],
+    [57, 60, 64, 67, 71],
+    [52, 55, 59, 64, 67],
+]
+ROOTS = [41, 43, 45, 40]
+
+# Pad (detuned saw stack, low-passed), whole piece
+for b in range(int(DUR / BAR) + 1):
+    t0 = b * BAR
+    chord = PROG[b % 4]
+    n = int((BAR + 0.6) * SR)
+    tt = np.arange(n) / SR
+    sig = np.zeros(n)
+    for m in chord:
+        for det in (-0.08, 0.0, 0.07):
+            f0 = note(m + det)
+            ph = rng.random()
+            saw = 2 * ((tt * f0 + ph) % 1) - 1
+            sig += saw
+    sig = lp(sig, 1400 + 600 * np.sin(b * 0.7)) / 15
+    sig *= env_adsr(n, 0.5, 0.7)
+    add(sig, t0, 0.32, pan=-0.15 if b % 2 else 0.15)
+
+# Section flags (seconds)
+hero_t = fr(starts[2])
+chat_t = fr(starts[3])
+outro_t = fr(starts[8])
+end_t = DUR
+
+beat_times = np.arange(0, DUR, BEAT)
+
+
+def sidechain(at):
+    return 1.0
+
+
+# Kick (soft, from the Hero drop until the outro tag)
+def kick():
+    n = int(0.45 * SR)
+    tt = np.arange(n) / SR
+    f = 45 + 95 * np.exp(-tt * 28)
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    return np.sin(ph) * np.exp(-tt * 7.5)
+
+
+K = kick()
+for bt in beat_times:
+    if hero_t <= bt < outro_t + 2.9:
+        add(K, bt, 0.55)
+
+# Sub bass on 8ths, ducked after each kick
+for b in range(int(DUR / BAR) + 1):
+    root = ROOTS[b % 4]
+    for k in range(8):
+        at = b * BAR + k * BEAT / 2
+        if not (hero_t <= at < outro_t + 2.9):
+            continue
+        n = int(BEAT / 2 * SR)
+        tt = np.arange(n) / SR
+        s = np.sin(2 * np.pi * note(root) * tt) + 0.25 * np.sin(4 * np.pi * note(root) * tt)
+        e = env_adsr(n, 0.01, 0.05) * (0.45 if k % 2 == 0 else 1.0)
+        add(s * e, at, 0.22)
+
+# Hats on off-beats from the Chat scene
+for bt in beat_times:
+    at = bt + BEAT / 2
+    if chat_t <= at < outro_t + 2.9:
+        n = int(0.06 * SR)
+        s = hp(rng.standard_normal(n), 8000) * np.exp(-np.arange(n) / SR * 70)
+        add(s, at, 0.07, pan=0.3)
+
+# Clap on 2 & 4 from Formats on
+for i, bt in enumerate(beat_times):
+    if fr(starts[4]) <= bt < outro_t + 2.9 and i % 2 == 1:
+        n = int(0.18 * SR)
+        s = lp(hp(rng.standard_normal(n), 1200), 5000) * np.exp(-np.arange(n) / SR * 22)
+        add(s, bt, 0.10, pan=-0.1)
+
+# Pluck arpeggio (16ths) from the Chat scene, with stereo echo
+for b in range(int(DUR / BAR) + 1):
+    chord = PROG[b % 4]
+    pattern = [0, 2, 4, 2, 1, 3, 4, 3]
+    for k in range(16):
+        at = b * BAR + k * BEAT / 4
+        if not (chat_t <= at < outro_t + 2.9):
+            continue
+        m = chord[pattern[k % 8]] + 12
+        n = int(0.35 * SR)
+        tt = np.arange(n) / SR
+        s = (np.sin(2 * np.pi * note(m) * tt) + 0.3 * np.sin(4 * np.pi * note(m) * tt)) * np.exp(-tt * 14)
+        add(s, at, 0.07, pan=-0.35)
+        add(s, at + BEAT * 0.75, 0.035, pan=0.45)
+
+
+# ---------- sound design ----------
+def whoosh(dur=0.7, up=True):
+    n = int(dur * SR)
+    noise = rng.standard_normal(n)
+    out = np.zeros(n)
+    seg = 512
+    for i in range(0, n, seg):
+        p = i / n
+        fc = 300 + (6000 if up else 4000) * (p if up else 1 - p) ** 1.5
+        out[i : i + seg] = lp(noise[i : i + seg], min(fc, 18000), 1)
+    e = np.sin(np.pi * np.linspace(0, 1, n)) ** 2
+    return out * e
+
+
+def boom():
+    n = int(1.6 * SR)
+    tt = np.arange(n) / SR
+    f = 32 + 60 * np.exp(-tt * 10)
+    return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tt * 2.6)
+
+
+def riser(dur):
+    n = int(dur * SR)
+    tt = np.arange(n) / SR
+    f = 200 * 2 ** (tt / dur * 3)
+    tone = np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.3
+    noise = hp(rng.standard_normal(n), 2000) * 0.5
+    return (tone + noise) * (tt / dur) ** 2
+
+
+def click(bright=1.0):
+    n = int(0.03 * SR)
+    tt = np.arange(n) / SR
+    return hp(rng.standard_normal(n), 2500 * bright) * np.exp(-tt * 260)
+
+
+def chime(base=76):
+    n = int(1.2 * SR)
+    tt = np.arange(n) / SR
+    s = np.zeros(n)
+    for i, m in enumerate([base, base + 4, base + 7, base + 12]):
+        d = int(i * 0.07 * SR)
+        s[d:] += np.sin(2 * np.pi * note(m) * tt[: n - d]) * np.exp(-tt[: n - d] * 4)
+    return s
+
+
+# Whooshes centred on each transition
+for i, tr in enumerate(TRANS):
+    centre = fr(starts[i + 1] + tr / 2)
+    w = whoosh(0.8)
+    add(w, centre - 0.4, 0.35, pan=-0.4 if i % 2 else 0.4)
+
+add(boom(), fr(8), 0.9)  # logo hit
+add(chime(72), fr(10), 0.12)
+add(riser(1.2), hero_t - 1.2, 0.25)  # into the promise
+add(boom(), hero_t, 0.6)
+add(boom(), fr(starts[8] + 92), 0.8)  # outro logo
+add(chime(79), fr(starts[8] + 94), 0.14)
+
+# Typing in the chat (frames 14..96 of Chat, 62 chars/s)
+for k in range(0, int((96 - 14) / FPS * 62), 2):
+    add(click(1.4), chat_t + fr(14) + k / 62 + rng.random() * 0.01, 0.10, pan=0.1)
+add(click(0.6), chat_t + fr(94), 0.35)  # send
+for i in range(4):  # checklist ticks
+    add(chime(84 + i), chat_t + fr(96 + 64 + i * 22), 0.04)
+add(chime(79), chat_t + fr(250), 0.08)  # creations revealed
+
+add(click(0.6), fr(starts[6] + 138), 0.4)  # S'inspirer
+add(click(0.6), fr(starts[7] + 92), 0.4)  # Publier
+add(chime(81), fr(starts[7] + 98), 0.16)
+
+# Strike-throughs in the Problem scene
+for i in range(3):
+    add(whoosh(0.25), fr(starts[1] + 56 + i * 7), 0.18, pan=(i - 1) * 0.5)
+
+# Final ringing chord
+n = int(4 * SR)
+tt = np.arange(n) / SR
+fin = sum(np.sin(2 * np.pi * note(m) * tt) for m in [53, 60, 64, 67, 72]) * np.exp(-tt * 1.1) / 5
+add(fin, fr(starts[8] + 92), 0.25)
+
+# ---------- mix ----------
+mix = np.stack([L, R])
+ir_n = int(1.8 * SR)
+it = np.arange(ir_n) / SR
+for c in range(2):
+    ir = rng.standard_normal(ir_n) * np.exp(-it * 3.2)
+    ir = lp(ir, 6000)
+    ir /= np.sqrt(np.sum(ir ** 2))
+    wet = fftconvolve(mix[c], ir)[: mix.shape[1]]
+    mix[c] = mix[c] + 0.28 * wet
+
+mix = hp(mix, 30)
+total = int(DUR * SR)
+mix = mix[:, :total]
+fade_in = int(0.3 * SR)
+mix[:, :fade_in] *= np.linspace(0, 1, fade_in)
+fade = int(1.6 * SR)
+mix[:, -fade:] *= np.linspace(1, 0, fade) ** 1.5
+mix = np.tanh(mix * 1.4) / np.tanh(1.4)  # gentle glue
+mix /= np.max(np.abs(mix)) / 0.89
+wavfile.write('public/soundtrack.wav', SR, (mix.T * 32767).astype(np.int16))
+print(f'{DUR:.2f}s written, total frames {TOTAL_F}')
