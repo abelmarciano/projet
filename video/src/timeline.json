@@ -2,7 +2,7 @@
   "scenes": [
     {
       "id": "Problem",
-      "duration": 179
+      "duration": 140
     },
     {
       "id": "Hero",
@@ -14,15 +14,15 @@
     },
     {
       "id": "Actors",
-      "duration": 201
+      "duration": 193
     },
     {
       "id": "Formats",
-      "duration": 189
+      "duration": 180
     },
     {
       "id": "Spy",
-      "duration": 205
+      "duration": 190
     },
     {
       "id": "Publish",
