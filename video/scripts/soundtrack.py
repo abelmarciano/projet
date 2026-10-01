@@ -275,9 +275,7 @@ for i, sid in enumerate(VO_IDS):
     if v.ndim > 1:
         v = v.mean(axis=1)
     v = resample_poly(v, SR, vsr)
-    v = hp(v, 90)
-    v = v + 0.35 * hp(v, 3500)  # a little presence
-    v = np.tanh(v * 2.2) / np.tanh(2.2)  # gentle compression
+    # takes are already EQ'd and compressed by scripts/voiceover.py
     k = IDS.index(sid)
     lead = (TRANS[k - 1] / 2 if k > 0 else 0) + 6
     at = int(fr(S[sid] + lead) * SR)
@@ -294,7 +292,9 @@ for a0, a1 in spans:
 mix *= duck
 if np.max(np.abs(voice)) > 0:
     voice *= 0.9 / np.max(np.abs(voice))
-    mix += np.stack([voice, voice]) * 0.9
+    voice_track = np.stack([voice, voice]) * 0.9
+else:
+    voice_track = np.zeros_like(mix)
 
 total = int(DUR * SR)
 mix = mix[:, :total]
@@ -302,7 +302,8 @@ fade_in = int(0.3 * SR)
 mix[:, :fade_in] *= np.linspace(0, 1, fade_in)
 fade = int(1.6 * SR)
 mix[:, -fade:] *= np.linspace(1, 0, fade) ** 1.5
-mix = np.tanh(mix * 1.1) / np.tanh(1.1)  # gentle glue
+mix = np.tanh(mix * 1.1) / np.tanh(1.1)  # gentle glue on the music only
+mix += voice_track[:, : mix.shape[1]]  # clean voice on top, never saturated
 mix /= np.max(np.abs(mix)) / 0.89
 wavfile.write('public/soundtrack.wav', SR, (mix.T * 32767).astype(np.int16))
 print(f'{DUR:.2f}s written, total frames {TOTAL_F}')
