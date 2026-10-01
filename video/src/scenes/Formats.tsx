@@ -73,8 +73,8 @@ export const Formats: React.FC = () => {
         <div style={{display: 'flex', alignItems: 'flex-end', gap: 64, transform: `rotateY(${orbit}deg)`}}>
           <div style={{transform: `translateY(${(1 - items[0]) * 300}px) rotateY(12deg)`, opacity: items[0]}}>
             <div style={{position: 'relative', borderRadius: 30, overflow: 'hidden', boxShadow: SHADOW}}>
-              <Clip src="ugc-homme.mp4" width={340} height={604} />
-              <Sponsored name="Énergie Plus" />
+              <Clip src="ugc-femme.mp4" width={340} height={604} />
+              <Sponsored name="Maison Ilara" />
             </div>
             <Label ratio="9:16" text="Reels & Stories" o={items[0]} />
           </div>
