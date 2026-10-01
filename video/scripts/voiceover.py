@@ -36,7 +36,7 @@ TAKES = {
     '05': [("Vidéo !", MID), ("Image !", MID), ("Carrousel !", MID), ("Tous les formats Méta, depuis un seul brief.", FAST)],
     '06': [("En manque d'inspiration ?", FAST), ("Gro-siti repère les pubes qui cartonnent dans votre marché, et s'en inspire pour vous !", FAST)],
     '07': [("Un clic !", MID), ("Et votre campagne est en ligne, sur Facebook et Instagram !", FAST)],
-    '08': [("Votre prochaine campagne Méta ?", FAST), ("Elle est à une phrase.", MID), ("Gro-siti !", SLOW), ("Lancez-vous, c'est gratuit !", MID)],
+    '08': [("Votre prochaine campagne Méta ?", FAST), ("Elle est à une phrase.", MID), ("Gro-siti !", SLOW), ("Commencez !", MID)],
 }
 
 

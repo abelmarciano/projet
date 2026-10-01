@@ -77,7 +77,7 @@ export const Outro: React.FC = () => {
         </div>
         <div style={{marginTop: 44, transform: `scale(${btn})`}}>
           <GradButton style={{height: 84, fontSize: 30, padding: '0 44px'}}>
-            Commencer gratuitement
+            Commencer
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
               <path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />
             </svg>
