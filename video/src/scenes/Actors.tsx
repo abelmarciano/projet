@@ -8,29 +8,38 @@ import {C, DISPLAY, FONT, GRAD} from '../theme';
 
 type Actor = {src: string; name: string; tag: string; start?: number; loop?: number};
 
-const CHARLOTTE: Actor = {src: 'ugc-charlotte.mp4', name: 'Charlotte', tag: 'Face caméra'};
+// 21 different actors, each shown exactly once across the two rows
+const L = 150; // the casting previews are 5 s long: loop them
 const ROW_A: Actor[] = [
-  CHARLOTTE,
-  {src: 'ugc-femme.mp4', name: 'Inès', tag: 'Beauté'},
+  {src: 'actor-antoine.mp4', name: 'Antoine', tag: 'Auto', loop: L},
+  {src: 'actor-emiko.mp4', name: 'Emiko', tag: 'Beauté', loop: L},
   {src: 'ugc-homme.mp4', name: 'Marc', tag: 'Témoignage'},
-  {src: 'ugc-pac-awa.mp4', name: 'Awa', tag: 'Maison'},
-  {src: 'ugc-scierie.mp4', name: 'Léa', tag: 'B2B', loop: 220},
-  {src: 'ugc-pac-hugo.mp4', name: 'Hugo', tag: 'Énergie'},
-  {src: 'ugc-solaire.mp4', name: 'Sophie', tag: 'Lifestyle', loop: 150},
+  {src: 'actor-freja.mp4', name: 'Freja', tag: 'Maison', loop: L},
+  {src: 'actor-thomas.mp4', name: 'Thomas', tag: 'B2B', loop: L},
+  {src: 'ugc-charlotte.mp4', name: 'Charlotte', tag: 'Face caméra'},
+  {src: 'ugc-pac-awa.mp4', name: 'Awa', tag: 'Énergie', loop: 75},
+  {src: 'actor-camille.mp4', name: 'Camille', tag: 'Lifestyle', loop: L},
+  {src: 'actor-hiro.mp4', name: 'Hiro', tag: 'Tech', loop: L},
+  {src: 'actor-claire.mp4', name: 'Claire', tag: 'Finance', loop: L},
+  {src: 'ugc-solaire.mp4', name: 'Sophie', tag: 'Maison', loop: L},
 ];
 const ROW_B: Actor[] = [
-  {src: 'ugc-pac-hugo.mp4', name: 'Hugo', tag: 'Énergie', start: 150},
-  {src: 'ugc-solaire.mp4', name: 'Sophie', tag: 'Lifestyle', loop: 150},
-  {src: 'ugc-femme.mp4', name: 'Inès', tag: 'Beauté', start: 10},
-  {src: 'ugc-scierie.mp4', name: 'Léa', tag: 'B2B', loop: 220},
-  {src: 'ugc-homme.mp4', name: 'Marc', tag: 'Témoignage', start: 10},
-  {src: 'ugc-pac-awa.mp4', name: 'Awa', tag: 'Maison', start: 20},
-  {src: 'ugc-charlotte.mp4', name: 'Charlotte', tag: 'Face caméra', start: 200},
+  {src: 'actor-lucas.mp4', name: 'Lucas', tag: 'Casual', loop: L},
+  {src: 'ugc-femme.mp4', name: 'Inès', tag: 'Beauté'},
+  {src: 'actor-anya.mp4', name: 'Anya', tag: 'Wellness', loop: L},
+  {src: 'actor-david.mp4', name: 'David', tag: 'Corporate', loop: L},
+  {src: 'actor-zoe.mp4', name: 'Zoé', tag: 'Mode', loop: L},
+  {src: 'ugc-pac-hugo.mp4', name: 'Hugo', tag: 'Énergie'},
+  {src: 'actor-model-01.mp4', name: 'Alice', tag: 'Lifestyle', loop: L},
+  {src: 'ugc-scierie.mp4', name: 'Léa', tag: 'Industrie', loop: 220},
+  {src: 'actor-marta.mp4', name: 'Marta', tag: 'Famille', loop: L},
+  {src: 'actor-emma.mp4', name: 'Emma', tag: 'Beauté', loop: L},
 ];
+const SELECTED = 5; // Charlotte, centred in row A while selected
 
 const W = 196;
 const H = 348;
-const GAP = 20;
+const GAP = 26;
 const STEP = W + GAP;
 
 const Tile: React.FC<{a: Actor; highlight?: number}> = ({a, highlight = 0}) => (
@@ -71,24 +80,21 @@ const Tile: React.FC<{a: Actor; highlight?: number}> = ({a, highlight = 0}) => (
   </div>
 );
 
-// Endless two-row wall of real UGC actors, scrolling in opposite directions
-const Row: React.FC<{actors: Actor[]; y: number; dir: 1 | -1; speed: number; highlightIdx?: number; highlight?: number}> = ({
+// One pass, no repetition: each row slides slowly in its own direction
+const Row: React.FC<{actors: Actor[]; y: number; x0: number; dir: 1 | -1; speed: number; highlightIdx?: number; highlight?: number}> = ({
   actors,
   y,
+  x0,
   dir,
   speed,
   highlightIdx,
   highlight = 0,
 }) => {
   const f = useCurrentFrame();
-  const loopW = actors.length * STEP;
-  const raw = f * speed;
-  const off = dir === -1 ? -(raw % loopW) : (raw % loopW) - loopW;
-  const tiles = [...actors, ...actors, ...actors];
   return (
-    <div style={{position: 'absolute', top: y, left: 0, display: 'flex', gap: GAP, transform: `translateX(${off - 60}px)`}}>
-      {tiles.map((a, i) => (
-        <Tile key={i} a={a} highlight={highlightIdx !== undefined && i === actors.length + highlightIdx ? highlight : 0} />
+    <div style={{position: 'absolute', top: y, left: 0, display: 'flex', gap: GAP, transform: `translateX(${x0 + dir * f * speed}px)`}}>
+      {actors.map((a, i) => (
+        <Tile key={a.name} a={a} highlight={i === highlightIdx ? highlight : 0} />
       ))}
     </div>
   );
@@ -127,8 +133,8 @@ export const Actors: React.FC = () => {
         acteurs IA, prêts à tourner.
       </div>
       <div style={{position: 'absolute', inset: 0, opacity: wall, transform: `translateY(${(1 - wall) * 60}px) rotate(-3deg) scale(1.04)`}}>
-        <Row actors={ROW_A} y={262} dir={-1} speed={2.4} highlightIdx={0} highlight={sel} />
-        <Row actors={ROW_B} y={262 + H + 26} dir={1} speed={2.0} />
+        <Row actors={ROW_A} y={262} x0={-60} dir={-1} speed={1} highlightIdx={SELECTED} highlight={sel} />
+        <Row actors={ROW_B} y={262 + H + 26} x0={-280} dir={1} speed={1} />
       </div>
       {/* soft edges so tiles slide in and out of the dark */}
       <div style={{position: 'absolute', inset: 0, background: 'linear-gradient(90deg, #0B0A0C 0%, transparent 12%, transparent 88%, #0B0A0C 100%)', pointerEvents: 'none'}} />
