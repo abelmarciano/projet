@@ -13,6 +13,8 @@ import subprocess
 import tempfile
 
 import numpy as np
+import parselmouth
+from parselmouth.praat import call
 from scipy.io import wavfile
 from scipy.signal import butter, sosfilt
 
@@ -54,6 +56,38 @@ def say(text, ls, sr_out=None):
     return sr, x
 
 
+RANGE = 1.9  # pitch-range expansion (1 = untouched)
+LIFT = 2.0  # semitones up overall, brighter "ad" voice
+
+
+def animate(x, sr, kind):
+    """Exaggerate the melody: wider pitch range, brighter, and an ad-style
+    contour per sentence (rise-fall on '!', strong rise on '?')."""
+    snd = parselmouth.Sound(x, sampling_frequency=sr)
+    man = call(snd, 'To Manipulation', 0.01, 90, 450)
+    tier = call(man, 'Extract pitch tier')
+    n = call(tier, 'Get number of points')
+    if n < 3:
+        return x
+    pts = [(call(tier, 'Get time from index', i), call(tier, 'Get value at index', i)) for i in range(1, n + 1)]
+    mean = float(np.exp(np.mean([np.log(f) for _, f in pts])))
+    dur = snd.duration
+    call(tier, 'Remove points between', 0, dur)
+    for t, f in pts:
+        u = t / dur
+        st = LIFT + RANGE * 12 * np.log2(f / mean) - 12 * np.log2(f / mean)  # widen around the mean
+        if kind == '!':
+            st += 3.0 * np.exp(-((u - 0.7) / 0.18) ** 2) - 2.0 * max(0, u - 0.88) / 0.12
+        elif kind == '?':
+            st += 5.0 * max(0, u - 0.65) / 0.35
+        else:
+            st += 1.5 * np.exp(-((u - 0.25) / 0.2) ** 2)
+        call(tier, 'Add point', t, f * 2 ** (st / 12))
+    call([tier, man], 'Replace pitch tier')
+    out = call(man, 'Get resynthesis (overlap-add)')
+    return out.values[0]
+
+
 def punch(x, sr):
     x = sosfilt(butter(2, 100, 'high', fs=sr, output='sos'), x)
     x = x + 0.5 * sosfilt(butter(2, 2500, 'high', fs=sr, output='sos'), x)  # presence
@@ -66,6 +100,8 @@ for n, lines in TAKES.items():
     parts = []
     for text, ls in lines:
         sr, x = say(text, ls)
+        kind = text.strip()[-1] if text.strip()[-1] in '!?' else '.'
+        x = animate(x, sr, kind)
         parts += [x, np.zeros(int(GAP * sr))]
     take = punch(np.concatenate(parts[:-1]), sr)
     wavfile.write(f'public/vo/{n}.wav', sr, (take * 32767).astype(np.int16))
