@@ -89,10 +89,26 @@ def animate(x, sr, kind):
 
 
 def punch(x, sr):
-    x = sosfilt(butter(2, 100, 'high', fs=sr, output='sos'), x)
-    x = x + 0.5 * sosfilt(butter(2, 2500, 'high', fs=sr, output='sos'), x)  # presence
-    x = np.tanh(x * 3.0) / np.tanh(3.0)  # radio-style compression
-    return x * 0.9 / np.abs(x).max()
+    """Clean broadcast chain: no saturation, just EQ + gentle compression."""
+    x = sosfilt(butter(2, 110, 'high', fs=sr, output='sos'), x)
+    # tame the boomy / "too close to the mic" low-mids (~250 Hz)
+    low_mid = sosfilt(butter(2, [180, 350], 'bandpass', fs=sr, output='sos'), x)
+    x = x - 0.35 * low_mid
+    # light air, then soften harsh highs
+    x = x + 0.15 * sosfilt(butter(2, 4000, 'high', fs=sr, output='sos'), x)
+    x = sosfilt(butter(2, 9000, 'low', fs=sr, output='sos'), x)
+    # soft-knee compressor, 2.5:1 above -20 dBFS, 8 ms attack / 120 ms release
+    x = x / (np.abs(x).max() + 1e-9)
+    env = np.abs(x)
+    a, r = np.exp(-1 / (0.008 * sr)), np.exp(-1 / (0.12 * sr))
+    e = np.zeros_like(env)
+    for i in range(1, len(env)):
+        c = a if env[i] > e[i - 1] else r
+        e[i] = c * e[i - 1] + (1 - c) * env[i]
+    thr = 10 ** (-20 / 20)
+    gain = np.where(e > thr, (thr * (e / thr) ** (1 / 2.5)) / np.maximum(e, 1e-9), 1.0)
+    x = x * gain
+    return x * (10 ** (-3 / 20)) / np.abs(x).max()  # peak at -3 dBFS, never clipped
 
 
 os.makedirs('public/vo', exist_ok=True)
