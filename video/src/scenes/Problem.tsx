@@ -13,7 +13,8 @@ const PAINS = [
 
 // 4.5–9.5s: the old way, struck through
 export const Problem: React.FC = () => {
-  const f = useCurrentFrame();
+  // animation authored for 110 frames, stretched to the voice-over length
+  const f = useCurrentFrame() * (110 / 179);
   const leave = prog(f, 94, 14);
   return (
     <StudioBg intensity={0.7}>

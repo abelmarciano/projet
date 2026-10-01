@@ -260,13 +260,49 @@ for c in range(2):
 
 mix = hp(mix, 30)
 
+# ---------- voice-over (public/vo/NN.wav, one take per scene) ----------
+import os
+from scipy.signal import resample_poly
+VO_IDS = ['Problem', 'Hero', 'Chat', 'Actors', 'Formats', 'Spy', 'Publish', 'Outro']
+voice = np.zeros(mix.shape[1])
+spans = []
+for i, sid in enumerate(VO_IDS):
+    path = f'public/vo/{i + 1:02d}.wav'
+    if not os.path.exists(path):
+        continue
+    vsr, v = wavfile.read(path)
+    v = v.astype(float) / 32768
+    if v.ndim > 1:
+        v = v.mean(axis=1)
+    v = resample_poly(v, SR, vsr)
+    v = hp(v, 90)
+    v = v + 0.35 * hp(v, 3500)  # a little presence
+    v = np.tanh(v * 2.2) / np.tanh(2.2)  # gentle compression
+    k = IDS.index(sid)
+    lead = (TRANS[k - 1] / 2 if k > 0 else 0) + 6
+    at = int(fr(S[sid] + lead) * SR)
+    v = v[: max(0, voice.shape[0] - at)]
+    voice[at : at + len(v)] += v
+    spans.append((at / SR, (at + len(v)) / SR))
+
+# duck the music under the voice (smooth 0.25 s ramps)
+tt = np.arange(mix.shape[1]) / SR
+duck = np.ones_like(tt)
+for a0, a1 in spans:
+    ramp = np.clip(np.minimum((tt - (a0 - 0.25)) / 0.25, ((a1 + 0.3) - tt) / 0.3), 0, 1)
+    duck = np.minimum(duck, 1 - 0.6 * ramp)
+mix *= duck
+if np.max(np.abs(voice)) > 0:
+    voice *= 0.9 / np.max(np.abs(voice))
+    mix += np.stack([voice, voice]) * 0.9
+
 total = int(DUR * SR)
 mix = mix[:, :total]
 fade_in = int(0.3 * SR)
 mix[:, :fade_in] *= np.linspace(0, 1, fade_in)
 fade = int(1.6 * SR)
 mix[:, -fade:] *= np.linspace(1, 0, fade) ** 1.5
-mix = np.tanh(mix * 1.4) / np.tanh(1.4)  # gentle glue
+mix = np.tanh(mix * 1.1) / np.tanh(1.1)  # gentle glue
 mix /= np.max(np.abs(mix)) / 0.89
 wavfile.write('public/soundtrack.wav', SR, (mix.T * 32767).astype(np.int16))
 print(f'{DUR:.2f}s written, total frames {TOTAL_F}')
