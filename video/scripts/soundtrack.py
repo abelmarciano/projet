@@ -288,11 +288,12 @@ tt = np.arange(mix.shape[1]) / SR
 duck = np.ones_like(tt)
 for a0, a1 in spans:
     ramp = np.clip(np.minimum((tt - (a0 - 0.25)) / 0.25, ((a1 + 0.3) - tt) / 0.3), 0, 1)
-    duck = np.minimum(duck, 1 - 0.6 * ramp)
-mix *= duck
+    duck = np.minimum(duck, 1 - 0.75 * ramp)
+MUSIC_GAIN = 0.5  # music + sound effects sit well under the voice
+mix *= duck * MUSIC_GAIN
 if np.max(np.abs(voice)) > 0:
     voice *= 0.9 / np.max(np.abs(voice))
-    voice_track = np.stack([voice, voice]) * 0.9
+    voice_track = np.stack([voice, voice]) * 1.0
 else:
     voice_track = np.zeros_like(mix)
 
