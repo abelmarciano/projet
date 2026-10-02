@@ -11,7 +11,7 @@ const PAINS = [
   {k: 'Montage', v: 'Des heures'},
 ];
 
-// 4.5–9.5s: the old way, struck through
+// Second to last: the old way, struck through, right before the outro
 export const Problem: React.FC = () => {
   // animation authored for 110 frames, stretched to the voice-over length
   const f = useCurrentFrame() * (110 / 158);
@@ -73,12 +73,6 @@ export const Problem: React.FC = () => {
           style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 84, color: '#fff'}}
         />
       </AbsoluteFill>
-      <AbsoluteFill
-        style={{
-          background: 'white',
-          opacity: interpolate(f, [100, 110], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}),
-        }}
-      />
     </StudioBg>
   );
 };

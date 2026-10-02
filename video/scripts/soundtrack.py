@@ -8,8 +8,8 @@ from scipy.signal import fftconvolve, butter, sosfilt
 from scipy.io import wavfile
 
 SR = 48000
-FPS = 30
 TL = json.load(open('src/timeline.json'))
+FPS = 30 * TL.get('speed', 1.0)  # the final cut plays the 30 fps render faster
 IDS = [s['id'] for s in TL['scenes']]
 SCENES = [s['duration'] for s in TL['scenes']]
 TRANS = [t['duration'] for t in TL['transitions']]
@@ -56,6 +56,8 @@ R = np.zeros(N)
 
 def add(sig, at, gain=1.0, pan=0.0):
     i = int(at * SR)
+    if i < 0:
+        sig, i = sig[-i:], 0
     if i >= N:
         return
     sig = sig[: N - i]

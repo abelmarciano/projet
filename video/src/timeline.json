@@ -1,16 +1,12 @@
 {
   "scenes": [
     {
-      "id": "Problem",
-      "duration": 158
-    },
-    {
       "id": "Hero",
       "duration": 177
     },
     {
       "id": "Chat",
-      "duration": 470
+      "duration": 400
     },
     {
       "id": "Actors",
@@ -29,15 +25,15 @@
       "duration": 190
     },
     {
+      "id": "Problem",
+      "duration": 158
+    },
+    {
       "id": "Outro",
       "duration": 220
     }
   ],
   "transitions": [
-    {
-      "kind": "fade",
-      "duration": 8
-    },
     {
       "kind": "fade",
       "duration": 14
@@ -60,7 +56,12 @@
     },
     {
       "kind": "fade",
+      "duration": 16
+    },
+    {
+      "kind": "fade",
       "duration": 20
     }
-  ]
+  ],
+  "speed": 1.12
 }
