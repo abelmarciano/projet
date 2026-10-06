@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "studio": "remotion studio",
-    "render": "remotion render src/index.ts ClassicallPromo out/video-crm.mp4 --codec=h264 --crf=18 --pixel-format=yuv420p",
+    "render": "remotion render src/index.ts ClassicallPromo out/video-crm.mp4 --codec=h264 --crf=18 --audio-codec=aac --audio-bitrate=192k",
     "stills": "node scripts/stills.mjs"
   },
   "dependencies": {

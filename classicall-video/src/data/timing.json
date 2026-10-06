@@ -1,0 +1,92 @@
+{
+ "fps": 30,
+ "overlap": 15,
+ "lead": 0.3,
+ "total": 2224,
+ "scenes": [
+  {
+   "id": "01-ouverture",
+   "dur": 120,
+   "vo": 1.225,
+   "start": 0
+  },
+  {
+   "id": "02-probleme",
+   "dur": 150,
+   "vo": 2.567,
+   "start": 105
+  },
+  {
+   "id": "03-solution",
+   "dur": 135,
+   "vo": 2.645,
+   "start": 240
+  },
+  {
+   "id": "04-statistiques",
+   "dur": 165,
+   "vo": 2.479,
+   "start": 360
+  },
+  {
+   "id": "05-tableau-leads",
+   "dur": 195,
+   "vo": 1.96,
+   "start": 510
+  },
+  {
+   "id": "06-filtres",
+   "dur": 150,
+   "vo": 2.995,
+   "start": 690
+  },
+  {
+   "id": "07-doublons",
+   "dur": 150,
+   "vo": 2.172,
+   "start": 825
+  },
+  {
+   "id": "08-fiche-lead",
+   "dur": 195,
+   "vo": 3.027,
+   "start": 960
+  },
+  {
+   "id": "09-planning",
+   "dur": 210,
+   "vo": 2.841,
+   "start": 1140
+  },
+  {
+   "id": "10-optimiseur",
+   "dur": 195,
+   "vo": 3.552,
+   "start": 1335
+  },
+  {
+   "id": "11-comptabilite",
+   "dur": 165,
+   "vo": 3.149,
+   "start": 1515
+  },
+  {
+   "id": "12-api-ia",
+   "dur": 165,
+   "vo": 4.005,
+   "start": 1665
+  },
+  {
+   "id": "13-prix",
+   "dur": 180,
+   "vo": 4.123,
+   "start": 1815
+  },
+  {
+   "id": "14-cloture",
+   "dur": 244,
+   "vo": 5.762,
+   "start": 1980
+  }
+ ]
+}
