@@ -1,0 +1,30 @@
+{
+  "waypoints": [
+    "12 cours Émile Zola, 69100 Villeurbanne",
+    "8 rue Henri Maréchal, 69800 Saint-Priest",
+    "114 quai Jean Jaurès, 38200 Vienne",
+    "9 montée des Soldats, 69300 Caluire-et-Cuire"
+  ],
+  "distance": "77 km",
+  "duration": "101 minutes",
+  "legs": [
+    {
+      "start_address": "12 cours Émile Zola, 69100 Villeurbanne",
+      "end_address": "8 rue Henri Maréchal, 69800 Saint-Priest",
+      "distance": "12,3 km",
+      "duration": "18 min"
+    },
+    {
+      "start_address": "8 rue Henri Maréchal, 69800 Saint-Priest",
+      "end_address": "114 quai Jean Jaurès, 38200 Vienne",
+      "distance": "25,6 km",
+      "duration": "34 min"
+    },
+    {
+      "start_address": "114 quai Jean Jaurès, 38200 Vienne",
+      "end_address": "9 montée des Soldats, 69300 Caluire-et-Cuire",
+      "distance": "39,1 km",
+      "duration": "49 min"
+    }
+  ]
+}

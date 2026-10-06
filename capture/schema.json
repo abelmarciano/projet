@@ -1,0 +1,505 @@
+{
+ "access_permissions": {
+  "cols": {
+   "created_at": "string",
+   "description": "string",
+   "enabled": "boolean | null",
+   "id": "string",
+   "name": "string",
+   "updated_at": "string"
+  },
+  "rels": []
+ },
+ "appointments": {
+  "cols": {
+   "color": "string | null",
+   "company_id": "string | null",
+   "created_at": "string | null",
+   "created_by": "string | null",
+   "email_sent": "boolean | null",
+   "etiquette": "Database[\"public\"][\"Enums\"][\"appointment_label\"] | null",
+   "id": "string",
+   "lead_id": "string",
+   "notes": "string | null",
+   "priority": "boolean | null",
+   "scheduled_at": "string",
+   "sms_sent": "boolean | null",
+   "sms_sent_at": "string | null",
+   "status": "Database[\"public\"][\"Enums\"][\"appointment_status\"] | null",
+   "type": "Database[\"public\"][\"Enums\"][\"appointment_type\"] | null",
+   "updated_at": "string | null"
+  },
+  "rels": [
+   {
+    "name": "appointments_company_id_fkey",
+    "col": "company_id",
+    "ref": "companies",
+    "refCol": "id"
+   },
+   {
+    "name": "appointments_lead_id_fkey",
+    "col": "lead_id",
+    "ref": "leads",
+    "refCol": "id"
+   },
+   {
+    "name": "fk_lead",
+    "col": "lead_id",
+    "ref": "leads",
+    "refCol": "id"
+   }
+  ]
+ },
+ "audit_log": {
+  "cols": {
+   "action": "string",
+   "company_id": "string | null",
+   "created_at": "string | null",
+   "details": "Json | null",
+   "id": "string",
+   "target_user_id": "string | null",
+   "user_id": "string | null"
+  },
+  "rels": []
+ },
+ "bulk_lead_action_jobs": {
+  "cols": {
+   "action": "string",
+   "completed_at": "string | null",
+   "created_at": "string",
+   "error_message": "string | null",
+   "failed_count": "number",
+   "id": "string",
+   "lead_ids": "string[]",
+   "payload": "Json",
+   "processed_count": "number",
+   "status": "string",
+   "total_count": "number",
+   "updated_at": "string",
+   "user_id": "string"
+  },
+  "rels": []
+ },
+ "call_centers": {
+  "cols": {
+   "company_id": "string | null",
+   "created_at": "string",
+   "description": "string | null",
+   "id": "string",
+   "is_active": "boolean | null",
+   "name": "string",
+   "updated_at": "string"
+  },
+  "rels": [
+   {
+    "name": "call_centers_company_id_fkey",
+    "col": "company_id",
+    "ref": "companies",
+    "refCol": "id"
+   }
+  ]
+ },
+ "campaigns": {
+  "cols": {
+   "category": "string | null",
+   "company_id": "string | null",
+   "created_at": "string | null",
+   "id": "string",
+   "lead_price": "number",
+   "name": "string",
+   "updated_at": "string | null"
+  },
+  "rels": [
+   {
+    "name": "campaigns_company_id_fkey",
+    "col": "company_id",
+    "ref": "companies",
+    "refCol": "id"
+   }
+  ]
+ },
+ "companies": {
+  "cols": {
+   "created_at": "string | null",
+   "created_by": "string | null",
+   "domain": "string | null",
+   "id": "string",
+   "is_active": "boolean | null",
+   "logo_url": "string | null",
+   "name": "string",
+   "settings": "Json | null",
+   "subdomain": "string",
+   "updated_at": "string | null"
+  },
+  "rels": []
+ },
+ "lead_invoices": {
+  "cols": {
+   "amount_ht": "number",
+   "amount_ttc": "number",
+   "campaign_id": "string",
+   "company": "string | null",
+   "company_id": "string | null",
+   "created_at": "string",
+   "document_path": "string | null",
+   "id": "string",
+   "invoice_date": "string",
+   "notes": "string | null",
+   "payment_date": "string | null",
+   "payment_status": "string | null",
+   "supplier": "string | null",
+   "title": "string | null",
+   "updated_at": "string"
+  },
+  "rels": [
+   {
+    "name": "lead_invoices_campaign_id_fkey",
+    "col": "campaign_id",
+    "ref": "campaigns",
+    "refCol": "id"
+   },
+   {
+    "name": "lead_invoices_company_id_fkey",
+    "col": "company_id",
+    "ref": "companies",
+    "refCol": "id"
+   }
+  ]
+ },
+ "leads": {
+  "cols": {
+   "address": "string | null",
+   "anef_mot_de_passe": "string | null",
+   "anef_numero_etranger": "string | null",
+   "assigned_confirmer": "string | null",
+   "assigned_sales": "string | null",
+   "assigned_secu": "string | null",
+   "assigned_telepro": "string | null",
+   "assigned_telepros": "string[] | null",
+   "callback_date": "string | null",
+   "campaign": "string | null",
+   "campaign_id": "string | null",
+   "casier_judiciaire": "string | null",
+   "children_count": "number | null",
+   "city": "string | null",
+   "commentaire_echeance_1": "string | null",
+   "commentaire_echeance_2": "string | null",
+   "commentaire_echeance_3": "string | null",
+   "commentaire_echeance_4": "string | null",
+   "comments": "string | null",
+   "commercial_report": "string | null",
+   "company_created_before_march_1_2025": "boolean | null",
+   "company_id": "string | null",
+   "controlled_by": "string | null",
+   "created_at": "string | null",
+   "credit_amount": "number | null",
+   "date_arrivee_france": "string | null",
+   "date_depot_prefecture": "string | null",
+   "date_echeance_1": "string | null",
+   "date_echeance_2": "string | null",
+   "date_echeance_3": "string | null",
+   "date_echeance_4": "string | null",
+   "deja_recu_oqtf": "string | null",
+   "demande_en_cours": "boolean | null",
+   "demande_en_cours_text": "string | null",
+   "department": "string | null",
+   "desired_product": "string | null",
+   "diplome_obtenu_france": "string | null",
+   "document_administratif_actuel": "string | null",
+   "documents": "Json | null",
+   "echeance_1_paye": "boolean | null",
+   "echeance_2_paye": "boolean | null",
+   "echeance_3_paye": "boolean | null",
+   "echeance_4_paye": "boolean | null",
+   "electricity_details": "string | null",
+   "email": "string | null",
+   "expiration_documents_actuel": "string | null",
+   "first_name": "string",
+   "has_credit": "boolean | null",
+   "heating_mode": "Database[\"public\"][\"Enums\"][\"heating_mode\"] | null",
+   "hidden_in_crm": "boolean | null",
+   "history": "Json | null",
+   "id": "string",
+   "import_source": "string | null",
+   "income": "number | null",
+   "installateur": "string | null",
+   "installation_date": "string | null",
+   "installer": "string | null",
+   "is_appointment_signed": "boolean | null",
+   "is_owner": "boolean | null",
+   "last_name": "string",
+   "lead_signe": "Database[\"public\"][\"Enums\"][\"lead_signed_status\"] | null",
+   "metier": "string | null",
+   "modalite_paiement": "string | null",
+   "mode_paiement": "string | null",
+   "montant_echeance_1": "number | null",
+   "montant_echeance_2": "number | null",
+   "montant_echeance_3": "number | null",
+   "montant_echeance_4": "number | null",
+   "nationalite_conjoint": "string | null",
+   "nature_precise_demande": "string | null",
+   "nombre_annees_france": "string | null",
+   "nombre_enfants_etranger": "string | null",
+   "nombre_enfants_scolarise": "string | null",
+   "notes": "string | null",
+   "numero_securite_sociale": "string | null",
+   "objet_demande": "string | null",
+   "phone_1": "string",
+   "phone_2": "string | null",
+   "postal_code": "string | null",
+   "prefecture_demande": "string | null",
+   "preferred_time_slot": "string | null",
+   "presence_france": "string | null",
+   "professional_activity": "string | null",
+   "quote_acceptance_date": "string | null",
+   "resultat_rdv": "Database[\"public\"][\"Enums\"][\"appointment_result\"] | null",
+   "salaire": "string | null",
+   "secu_report": "string | null",
+   "signature_date": "string | null",
+   "sold_products": "Json | null",
+   "status": "string | null",
+   "statut_paiement_global": "string | null",
+   "travail": "string | null",
+   "travaille_5_dernieres_annees": "string | null",
+   "type_depot": "string | null",
+   "updated_at": "string | null"
+  },
+  "rels": [
+   {
+    "name": "fk_assigned_confirmer",
+    "col": "assigned_confirmer",
+    "ref": "profiles",
+    "refCol": "id"
+   },
+   {
+    "name": "fk_assigned_sales",
+    "col": "assigned_sales",
+    "ref": "profiles",
+    "refCol": "id"
+   },
+   {
+    "name": "fk_assigned_secu",
+    "col": "assigned_secu",
+    "ref": "profiles",
+    "refCol": "id"
+   },
+   {
+    "name": "fk_assigned_telepro",
+    "col": "assigned_telepro",
+    "ref": "profiles",
+    "refCol": "id"
+   },
+   {
+    "name": "fk_campaign",
+    "col": "campaign_id",
+    "ref": "campaigns",
+    "refCol": "id"
+   },
+   {
+    "name": "fk_controlled_by",
+    "col": "controlled_by",
+    "ref": "profiles",
+    "refCol": "id"
+   },
+   {
+    "name": "fk_installer",
+    "col": "installer",
+    "ref": "profiles",
+    "refCol": "id"
+   },
+   {
+    "name": "leads_assigned_secu_fkey",
+    "col": "assigned_secu",
+    "ref": "profiles",
+    "refCol": "id"
+   },
+   {
+    "name": "leads_company_id_fkey",
+    "col": "company_id",
+    "ref": "companies",
+    "refCol": "id"
+   }
+  ]
+ },
+ "login_attempts": {
+  "cols": {
+   "attempted_at": "string | null",
+   "email": "string | null",
+   "id": "string",
+   "ip_address": "unknown",
+   "success": "boolean",
+   "user_agent": "string | null"
+  },
+  "rels": []
+ },
+ "products": {
+  "cols": {
+   "additional_costs_ht": "number",
+   "additional_costs_title": "string | null",
+   "category": "string",
+   "company_id": "string | null",
+   "confirmer_commission_ht": "number",
+   "created_at": "string | null",
+   "id": "string",
+   "installer_name": "string",
+   "installer_session_price_ht": "number",
+   "name": "string",
+   "price_ht": "number",
+   "price_ttc": "number",
+   "sales_commission_ht": "number",
+   "secu_commission_ht": "number",
+   "telepro_commission_ht": "number",
+   "type": "Database[\"public\"][\"Enums\"][\"product_type\"] | null",
+   "updated_at": "string | null"
+  },
+  "rels": [
+   {
+    "name": "products_company_id_fkey",
+    "col": "company_id",
+    "ref": "companies",
+    "refCol": "id"
+   }
+  ]
+ },
+ "profiles": {
+  "cols": {
+   "created_at": "string | null",
+   "disabled": "boolean | null",
+   "email": "string | null",
+   "first_name": "string",
+   "id": "string",
+   "is_active": "boolean | null",
+   "last_login": "string | null",
+   "last_name": "string",
+   "role": "Database[\"public\"][\"Enums\"][\"user_role\"]",
+   "updated_at": "string | null"
+  },
+  "rels": []
+ },
+ "role_permissions": {
+  "cols": {
+   "access": "Database[\"public\"][\"Enums\"][\"role_access_type\"]",
+   "created_at": "string",
+   "id": "string",
+   "role": "Database[\"public\"][\"Enums\"][\"user_role\"]",
+   "updated_at": "string"
+  },
+  "rels": []
+ },
+ "sales_invoices": {
+  "cols": {
+   "amount_ht": "number",
+   "amount_ttc": "number",
+   "company_id": "string | null",
+   "created_at": "string",
+   "document_path": "string | null",
+   "id": "string",
+   "invoice_date": "string",
+   "invoice_number": "string | null",
+   "lead_id": "string | null",
+   "notes": "string | null",
+   "payment_date": "string | null",
+   "payment_status": "string | null",
+   "product_id": "string | null",
+   "title": "string | null",
+   "updated_at": "string"
+  },
+  "rels": [
+   {
+    "name": "sales_invoices_company_id_fkey",
+    "col": "company_id",
+    "ref": "companies",
+    "refCol": "id"
+   },
+   {
+    "name": "sales_invoices_lead_id_fkey",
+    "col": "lead_id",
+    "ref": "leads",
+    "refCol": "id"
+   },
+   {
+    "name": "sales_invoices_product_id_fkey",
+    "col": "product_id",
+    "ref": "products",
+    "refCol": "id"
+   }
+  ]
+ },
+ "statuses": {
+  "cols": {
+   "color": "string",
+   "company_id": "string | null",
+   "created_at": "string",
+   "id": "string",
+   "name": "string",
+   "type": "string",
+   "updated_at": "string"
+  },
+  "rels": [
+   {
+    "name": "statuses_company_id_fkey",
+    "col": "company_id",
+    "ref": "companies",
+    "refCol": "id"
+   }
+  ]
+ },
+ "user_companies": {
+  "cols": {
+   "call_center_id": "string | null",
+   "company_id": "string | null",
+   "created_at": "string | null",
+   "id": "string",
+   "is_active": "boolean | null",
+   "role": "Database[\"public\"][\"Enums\"][\"user_role\"]",
+   "user_id": "string | null"
+  },
+  "rels": [
+   {
+    "name": "user_companies_call_center_id_fkey",
+    "col": "call_center_id",
+    "ref": "call_centers",
+    "refCol": "id"
+   },
+   {
+    "name": "user_companies_company_id_fkey",
+    "col": "company_id",
+    "ref": "companies",
+    "refCol": "id"
+   }
+  ]
+ },
+ "waiting_list": {
+  "cols": {
+   "appointment_id": "string",
+   "appointment_time": "string",
+   "company_id": "string",
+   "created_at": "string",
+   "id": "string",
+   "lead_id": "string",
+   "status": "string | null",
+   "ticket_number": "string",
+   "updated_at": "string"
+  },
+  "rels": [
+   {
+    "name": "waiting_list_appointment_id_fkey",
+    "col": "appointment_id",
+    "ref": "appointments",
+    "refCol": "id"
+   },
+   {
+    "name": "waiting_list_company_id_fkey",
+    "col": "company_id",
+    "ref": "companies",
+    "refCol": "id"
+   },
+   {
+    "name": "waiting_list_lead_id_fkey",
+    "col": "lead_id",
+    "ref": "leads",
+    "refCol": "id"
+   }
+  ]
+ }
+}

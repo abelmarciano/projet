@@ -6,3 +6,5 @@ video/out/check/
 video/out/v3/
 video/public/vo-manon/full.wav
 video/out/render-30fps.mp4
+classicall-video/out/
+capture/node_modules/
