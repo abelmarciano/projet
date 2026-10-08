@@ -112,6 +112,21 @@ p{margin:0}
 .pill{display:inline-flex;align-items:center;gap:10px;padding:5px 14px 5px 6px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:13px;color:var(--muted);box-shadow:0 4px 14px -8px rgba(15,23,42,.3)}
 .pill .tag{background:var(--grad);color:var(--white);border-radius:999px;padding:3px 10px;font-weight:600;font-size:12px}
 .hero h1{font-size:clamp(42px,7.4vw,92px);line-height:.98;font-weight:700;margin:26px auto 0;max-width:15ch}
+/* hero entrance: nav drops in, title reveals word by word, then copy, CTAs and the actor wall rise */
+@keyframes inUp{from{opacity:0;transform:translateY(18px);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes inDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+@keyframes inWall{from{opacity:0;transform:translateY(70px)}to{opacity:1;transform:none}}
+@keyframes inFade{from{opacity:0}to{opacity:1}}
+.nav .bar{animation:inDown .6s cubic-bezier(.2,.7,.2,1) both}
+.announce{animation:inFade .5s ease both}
+.hero .pill{animation:inUp .6s cubic-bezier(.2,.7,.2,1) .1s both}
+.hero h1 .w{display:inline-block;animation:inUp .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(.18s + var(--i) * .08s)}
+.hero .lede{animation:inUp .7s cubic-bezier(.2,.7,.2,1) .55s both}
+.hero .hero-cta{animation:inUp .7s cubic-bezier(.2,.7,.2,1) .65s both}
+.hero .hero-meta{animation:inFade .7s ease .8s both}
+.wall{animation:inWall 1.1s cubic-bezier(.2,.7,.2,1) .55s both}
+.wall-label{animation:inFade .6s ease 1.1s both}
+.models{animation:inFade .8s ease 1s both}
 .hero .lede{margin:24px auto 0;max-width:620px;font-size:clamp(16px,2vw,19px);color:var(--muted)}
 .hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
 .hero-meta{margin-top:18px;font-size:13px;color:var(--dim);display:flex;gap:8px 18px;justify-content:center;flex-wrap:wrap}
@@ -799,7 +814,7 @@ footer a:hover{color:var(--fg)}
 <div class="hero">
   <div class="wrap">
     <span class="pill"><span class="tag">Nouveau</span> Espion Meta Ads : inspirez-vous des pubs qui gagnent</span>
-    <h1>Vos pubs Meta, <span class="grad">générées et publiées</span> en 2 minutes.</h1>
+    <h1><span class="w" style="--i:0">Vos</span> <span class="w" style="--i:1">pubs</span> <span class="w" style="--i:2">Meta,</span> <span class="w grad" style="--i:4">générées et publiées</span> <span class="w" style="--i:3">en</span> <span class="w" style="--i:3">2</span> <span class="w" style="--i:3">minutes.</span></h1>
     <p class="lede">Décrivez votre produit en une phrase. Growthity écrit le script, choisit l'acteur, tourne la vidéo UGC, décline vos visuels et carrousels, puis publie la campagne sur Facebook et Instagram.</p>
     <div class="hero-cta">
       <a class="btn btn-grad" href="https://growthity.ai/auth" target="_blank" rel="noopener">Créer ma première pub
