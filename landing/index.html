@@ -36,6 +36,8 @@
   --ok-ink:#0F5F3F;
   --warn:#C27C0E;
   --warn-soft:#FDF3DC;
+  --bad:#E11D48;
+  --bad-soft:#FDECEF;
   --no:#94A3B8;
   --night:#0E0D14;
   --night-2:#18171F;
@@ -432,6 +434,43 @@ section{padding-block:110px}
 .kpi em{font-style:normal;font-weight:700;color:var(--ok)}
 .reco{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;background:var(--ok-soft);color:var(--ok);font-size:13px;font-weight:600;flex-wrap:wrap}
 
+/* media buyer */
+.mbwin{max-width:1100px;margin:0 auto}
+.mb{display:grid;grid-template-columns:1.5fr 1fr;gap:0}
+.mb-main{padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.mb-side{padding:20px;border-left:1px solid var(--line);background:#FAFAFC;display:flex;flex-direction:column;gap:12px;min-width:0}
+.mkpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mk{position:relative;padding:10px 12px;border-radius:12px;border:1px solid var(--line);font-size:11px;color:var(--dim);min-width:0}
+.mk b{display:block;font-family:var(--display);font-size:20px;color:var(--fg);font-variant-numeric:tabular-nums;margin-top:2px}
+.mk svg{display:block;width:100%;height:22px;margin-top:4px}
+.mk em{position:absolute;top:10px;right:10px;font-style:normal;font-weight:700;font-size:10px}
+.mk em.up{color:var(--ok)}
+.mb-head{font-size:16px;line-height:1.5;padding:14px 16px;border-radius:14px;background:var(--mist);min-height:72px}
+.mb-lab{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--dim)}
+.sugs{display:flex;flex-direction:column;gap:8px}
+.sug{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;border:1px solid;font-size:13.5px;line-height:1.45;flex-wrap:wrap}
+.sug p{flex:1;min-width:180px}
+.sug .k{font-weight:700;font-size:12px;white-space:nowrap;min-width:92px}
+.sug .sbtn{background:var(--surface);border:1px solid var(--line-2);color:var(--fg);box-shadow:none}
+.sug.boost{border-color:rgba(22,163,106,.25);background:var(--ok-soft)}.sug.boost .k{color:var(--ok)}
+.sug.cut{border-color:rgba(225,29,72,.22);background:var(--bad-soft)}.sug.cut .k{color:var(--bad)}
+.sug.test{border-color:rgba(194,124,14,.25);background:var(--warn-soft)}.sug.test .k{color:var(--warn)}
+.sug.done{opacity:.55}
+.creas{display:flex;flex-direction:column;gap:8px}
+.crea{display:grid;grid-template-columns:34px 1fr 60px auto;gap:10px;align-items:center;padding:8px;border-radius:12px;background:var(--surface);border:1px solid var(--line);font-size:12px;transition:all .4s}
+.crea img{width:34px;height:44px;border-radius:7px;object-fit:cover}
+.crea b{display:block;font-size:12.5px}
+.crea small{color:var(--dim);font-size:11px;font-variant-numeric:tabular-nums}
+.crea svg{width:60px;height:20px}
+.crea .st{font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.st.ok{background:var(--ok-soft);color:var(--ok)}.st.bad{background:var(--bad-soft);color:var(--bad)}.st.warn{background:var(--warn-soft);color:var(--warn)}
+.crea.hot{border-color:rgba(225,29,72,.4);box-shadow:0 0 0 3px rgba(225,29,72,.1)}
+.fatigue{margin-top:auto;padding:12px;border-radius:12px;border:1px dashed var(--line-2);font-size:12px;color:var(--muted);display:grid;grid-template-columns:1fr auto;gap:6px;align-items:baseline}
+.fatigue b{font-family:var(--display);font-size:20px;color:var(--bad);font-variant-numeric:tabular-nums}
+.fatigue .bar{grid-column:1/-1}
+.fatigue .bar>i{background:linear-gradient(90deg,var(--ok),var(--warn) 55%,var(--bad))}
+.fatigue small{grid-column:1/-1;color:var(--dim);font-size:11px}
+.mbwin .toast{bottom:18px;top:auto}
 /* ---------- mini demos grid ---------- */
 .minis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .mini{border-radius:var(--r);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s}
@@ -560,7 +599,7 @@ footer .logo svg{width:22px;height:22px}
 footer nav{display:flex;gap:8px 20px;flex-wrap:wrap}
 footer a:hover{color:var(--fg)}
 
-.js .rv{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.js .rv{opacity:0;transform:translateY(16px);transition:opacity .45s cubic-bezier(.2,.7,.2,1),transform .45s cubic-bezier(.2,.7,.2,1)}
 .js .rv.in{opacity:1;transform:none}
 
 @media (max-width:1000px){
@@ -571,6 +610,9 @@ footer a:hover{color:var(--fg)}
   .feat.flip .copy{order:0}
   .feat+.feat{margin-top:90px}
   .minis{grid-template-columns:repeat(2,1fr)}
+  .mb{grid-template-columns:1fr}
+  .mb-side{border-left:0;border-top:1px solid var(--line)}
+  .mkpis{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:640px){
   section{padding-block:80px}
@@ -633,7 +675,7 @@ footer a:hover{color:var(--fg)}
         <a href="#demo">Démo</a>
         <a href="#espion">Espion Meta Ads</a>
         <a href="#studio">Studio en lot</a>
-        <a href="#publication">Publication</a>
+        <a href="#pilotage">Pilotage</a>
         <a href="#faq">FAQ</a>
       </nav>
       <div class="nav-cta">
@@ -923,12 +965,54 @@ footer a:hover{color:var(--fg)}
                     <path id="parea" d="M0 70 L33 56 L66 62 L100 44 L133 50 L166 32 L200 36 L233 22 L266 26 L300 10 L300 90 L0 90 Z" fill="url(#ga)"/>
                     <path id="pline" d="M0 70 L33 56 L66 62 L100 44 L133 50 L166 32 L200 36 L233 22 L266 26 L300 10" fill="none" stroke="url(#gl)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0"/>
                     <circle id="pdot" cx="300" cy="10" r="5" fill="#E0479E"/></svg></div>
-                <div class="reco" id="preco"><span>À booster : la vidéo de Léa ramène vos leads les moins chers.</span><span class="btn sm" style="background:var(--ok);color:var(--white)">Budget +25 %</span></div>
+                
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEDIA BUYER ============ -->
+<section id="pilotage">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="eyebrow">Pilotage des campagnes</div>
+      <h2>Plus besoin de media buyer. <span class="grad">Growthity vous dit quoi faire.</span></h2>
+      <p>Chaque jour, Growthity analyse vos campagnes Meta et vous explique en clair ce qui marche, ce qui coûte trop cher et quelles créas s'essoufflent. Puis il propose l'action, applicable en un clic.</p>
+    </div>
+    <div class="win mbwin rv" id="mbdemo">
+      <div class="win-bar"><i></i><i></i><i></i><span>Où en sont vos publicités</span><span class="chip" style="margin-left:auto">7 derniers jours</span></div>
+      <div class="mb">
+        <div class="mb-main">
+          <div class="mkpis" id="mkpis">
+            <div class="mk"><span>Dépense</span><b data-v="1178" data-f="eur">1 178 €</b><svg viewBox="0 0 80 22" data-s="8,10,9,12,13,12,14"></svg></div>
+            <div class="mk"><span>Leads</span><b data-v="142">142</b><svg viewBox="0 0 80 22" data-s="12,14,13,18,21,24,26"></svg><em class="up">+21 %</em></div>
+            <div class="mk"><span>Coût par lead</span><b data-v="8.3" data-f="eur2">8,30 €</b><svg viewBox="0 0 80 22" data-s="11,10.5,10,9.6,9,8.7,8.3" data-good="down"></svg><em class="up">−13 %</em></div>
+            <div class="mk"><span>ROAS</span><b data-v="3.8" data-f="x">3,8×</b><svg viewBox="0 0 80 22" data-s="2.9,3.1,3,3.4,3.5,3.6,3.8"></svg><em class="up">+0,6</em></div>
+          </div>
+          <p class="mb-head" id="mbhead">Bonne semaine : vos leads coûtent 13 % moins cher. La vidéo de Léa porte la campagne, mais le carrousel bougie s'essouffle.</p>
+          <div class="mb-lab">Ce que je ferais maintenant</div>
+          <div class="sugs" id="sugs">
+            <div class="sug boost"><span class="k">↗ À booster</span><p>La vidéo UGC de Léa ramène vos leads 32 % moins cher que la moyenne du compte.</p><span class="btn sm sbtn" id="mbbudget">Augmenter le budget</span></div>
+            <div class="sug cut"><span class="k">⏸ À couper</span><p>Le carrousel bougie s'essouffle : CTR −41 % en 6 jours, vu 4,8 fois par les mêmes personnes.</p><span class="btn sm sbtn">Mettre en pause</span></div>
+            <div class="sug test"><span class="k">⚗ À tester</span><p>Remplacez-le par une nouvelle accroche sur la vidéo produit : 3 variantes sont prêtes.</p><span class="btn sm sbtn">Créer une nouvelle pub</span></div>
+          </div>
+        </div>
+        <aside class="mb-side">
+          <div class="mb-lab">Vos créas en ce moment</div>
+          <div class="creas" id="creas">
+            <div class="crea"><img src="media/ugc-femme.poster.webp" alt=""><div><b>UGC Léa</b><small>CTR 3,9 %</small></div><svg viewBox="0 0 60 20" data-s="2.8,3.1,3.3,3.5,3.6,3.8,3.9"></svg><span class="st ok">En forme</span></div>
+            <div class="crea"><img src="media/bougie-916.poster.webp" alt=""><div><b>Vidéo produit</b><small>CTR 2,7 %</small></div><svg viewBox="0 0 60 20" data-s="2.4,2.6,2.5,2.7,2.6,2.8,2.7"></svg><span class="st ok">Stable</span></div>
+            <div class="crea hot"><img src="media/img-bougie.webp" alt=""><div><b>Carrousel bougie</b><small>CTR 1,3 %</small></div><svg viewBox="0 0 60 20" data-s="2.2,2.1,1.9,1.7,1.5,1.4,1.3" data-good="bad"></svg><span class="st bad">S'essouffle</span></div>
+            <div class="crea"><img src="media/actor-camille.poster.webp" alt=""><div><b>UGC Camille</b><small>En apprentissage</small></div><svg viewBox="0 0 60 20" data-s="1.8,2,2.2,2.1,2.3"></svg><span class="st warn">Trop tôt</span></div>
+          </div>
+          <div class="fatigue"><span>Fréquence du carrousel</span><b id="freq">4,8</b><div class="bar"><i id="freqbar" style="width:80%"></i></div><small>Au-delà de 3, votre audience se lasse.</small></div>
+        </aside>
+      </div>
+      <div class="toast" id="mbtoast"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Budget de la vidéo de Léa +25 %, appliqué sur Meta</div>
     </div>
   </div>
 </section>
@@ -1362,7 +1446,7 @@ footer a:hover{color:var(--fg)}
   /* ---------- 7. performance: leads first ---------- */
   var perf=$('#perfdemo'),pbody=$('#perfdemo .perf');
   demo(perf,async function(w){
-    var q=$('#pq'),a=$('#pa'),line=$('#pline'),area=$('#parea'),dot=$('#pdot'),reco=$('#preco'),b=$('.b',a),kp=$$('.kpi',a),chart=$('.chart',a);
+    var q=$('#pq'),a=$('#pa'),line=$('#pline'),area=$('#parea'),dot=$('#pdot'),reco=document.createElement('div'),b=$('.b',a),kp=$$('.kpi',a),chart=$('.chart',a);
     $$('.extra',pbody).forEach(function(x){x.remove()});pbody.scrollTop=0;
     [a,reco,chart].concat(kp).forEach(function(x){x.style.opacity='0'});q.style.opacity='0';line.style.transition='none';line.style.strokeDashoffset='1';area.style.opacity='0';dot.style.opacity='0';
     await w(500);q.style.opacity='';q.classList.add('pop');await w(700);
@@ -1387,6 +1471,33 @@ footer a:hover{color:var(--fg)}
       d.innerHTML='<span class="ini">'+l[0]+'</span><div><b>'+l[1]+'</b><small>'+l[2]+'</small></div><span class="src"><img src="'+thumb+'" alt="">'+l[4]+'</span>';
       list.appendChild(d);pbody.scrollTop=pbody.scrollHeight;await w(650)}
     await w(6500);[q,chart,reco].concat(kp).forEach(function(x){x.classList.remove('pop')});
+  });
+
+  /* ---------- media buyer ---------- */
+  function spark(svg){
+    var v=svg.dataset.s.split(',').map(Number),vb=svg.viewBox.baseVal,W=vb.width,H=vb.height,mn=Math.min.apply(0,v),mx=Math.max.apply(0,v),r=(mx-mn)||1;
+    var pts=v.map(function(x,i){return (i/(v.length-1)*W).toFixed(1)+','+(H-2-(x-mn)/r*(H-4)).toFixed(1)}).join(' ');
+    var bad=svg.dataset.good==='bad',col=bad?'var(--bad)':'var(--ok)';
+    svg.innerHTML='<polyline points="'+pts+'" fill="none" stroke="'+col+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" style="transition:stroke-dashoffset 1s ease"/>';
+  }
+  $$('#mbdemo svg[data-s]').forEach(spark);
+  var mbox=$('#mbdemo');
+  demo(mbox,async function(w){
+    var ks=$$('#mkpis .mk'),head=$('#mbhead'),sg=$$('#sugs .sug'),cr=$$('#creas .crea'),bud=$('#mbbudget'),toast=$('#mbtoast'),freq=$('#freq'),fb=$('#freqbar'),c=mbox._c||(mbox._c=cursor(mbox));
+    var full=head.dataset.t||(head.dataset.t=head.textContent);
+    ks.forEach(function(k){k.style.opacity='0'});sg.forEach(function(x){x.style.opacity='0';x.classList.remove('done','pop')});cr.forEach(function(x){x.style.opacity='0';x.classList.remove('pop')});
+    head.textContent='';toast.classList.remove('on');fb.style.width='20%';freq.textContent='1,0';
+    $$('#mbdemo polyline').forEach(function(p){p.style.transition='none';p.style.strokeDashoffset='1'});
+    for(var i=0;i<ks.length;i++){ks[i].style.opacity='';ks[i].classList.add('pop');var b=$('b',ks[i]),v=parseFloat(b.dataset.v),f=b.dataset.f;
+      countTo(b,v,900,f==='eur'?function(x){return fmtN(x)+' €'}:f==='eur2'?function(x){return x.toFixed(2).replace('.',',')+' €'}:f==='x'?function(x){return x.toFixed(1).replace('.',',')+'×'}:undefined);
+      var pl=$('polyline',ks[i]);void pl.offsetWidth;pl.style.transition='stroke-dashoffset 1s ease';pl.style.strokeDashoffset='0';await w(160)}
+    for(var j=0;j<cr.length;j++){cr[j].style.opacity='';cr[j].classList.add('pop');var p2=$('polyline',cr[j]);void p2.offsetWidth;p2.style.transition='stroke-dashoffset 1s ease';p2.style.strokeDashoffset='0';await w(160)}
+    countTo(freq,4.8,1200,function(x){return x.toFixed(1).replace('.',',')});fb.style.transition='width 1.2s ease';fb.style.width='80%';
+    await typeInto(head,full,w,14);
+    for(var k=0;k<sg.length;k++){await w(350);sg[k].style.opacity='';sg[k].classList.add('pop')}
+    await w(900);await moveTo(c,mbox,bud,w);await click(c,bud,w);c.classList.remove('on');
+    toast.classList.add('on');sg[0].classList.add('done');await w(4500);toast.classList.remove('on');
+    await w(3000);
   });
 
   /* ---------- mini demos ---------- */
@@ -1460,7 +1571,7 @@ footer a:hover{color:var(--fg)}
   /* reveal */
   var rv=$$('.rv');
   if('IntersectionObserver' in window && !REDUCE){
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px 10% 0px'});
     rv.forEach(function(e){if(e.getBoundingClientRect().top<innerHeight)e.classList.add('in');else io.observe(e)});
   }else rv.forEach(function(e){e.classList.add('in')});
   if(REDUCE)$$('#vs .with li').forEach(function(y){y.classList.add('in')});
