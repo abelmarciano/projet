@@ -220,6 +220,8 @@ section{padding-block:110px}
 .res .vid video{width:100%;height:100%;object-fit:cover}
 .res .img{position:relative;width:130px;aspect-ratio:4/5;border-radius:14px;overflow:hidden;background:var(--mist)}
 .res .img img{width:100%;height:100%;object-fit:cover}
+.res .img .ovl{position:absolute;left:0;right:0;bottom:0;padding:26px 8px 8px;background:linear-gradient(transparent,rgba(15,23,42,.85));color:var(--white);font-family:var(--display);font-weight:700;font-size:13px;line-height:1.1}
+.res .img .ovl small{display:block;font-family:var(--body);font-weight:500;font-size:10px;opacity:.8;margin-top:3px}
 .res .lbl{position:absolute;top:6px;left:6px;font-family:var(--mono);font-size:10px;padding:2px 6px;border-radius:6px;background:rgba(255,255,255,.92)}
 .acts{display:flex;gap:6px;flex-wrap:wrap}
 .prod{display:flex;gap:12px;align-items:center;width:300px;max-width:100%}
@@ -316,7 +318,7 @@ section{padding-block:110px}
 .spy-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--night-3);font-size:13px;flex-wrap:wrap}
 .spy-foot b{color:var(--night-fg)}
 .spy-foot span{color:var(--night-muted)}
-.toast{position:absolute;right:18px;top:56px;z-index:5;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:var(--surface);color:var(--fg);font-size:13px;font-weight:600;box-shadow:var(--shadow-lg);opacity:0;transform:translateY(10px);transition:all .4s}
+.toast{position:absolute;right:18px;bottom:84px;z-index:5;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:var(--surface);color:var(--fg);font-size:13px;font-weight:600;box-shadow:var(--shadow-lg);opacity:0;transform:translateY(10px);transition:all .4s}
 .toast.on{opacity:1;transform:none}
 .toast svg{width:16px;height:16px;color:var(--ok)}
 
@@ -338,7 +340,9 @@ section{padding-block:110px}
 .bgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
 .bgrid figure{margin:0;position:relative;border-radius:10px;overflow:hidden;aspect-ratio:4/5;background:var(--mist)}
 .bgrid img,.bgrid video{width:100%;height:100%;object-fit:cover}
-.bgrid figure.empty img,.bgrid figure.empty video{opacity:0}
+.bgrid figure.empty img,.bgrid figure.empty video,.bgrid figure.empty .bo,.bgrid figure.empty figcaption{opacity:0}
+.bgrid .bo{position:absolute;left:5px;right:5px;top:6px;text-align:center;font-family:var(--display);font-weight:700;font-size:11px;line-height:1.1;color:var(--white);text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.bgrid figcaption{position:absolute;left:5px;bottom:5px;font-size:9px;font-weight:700;padding:1px 6px;border-radius:999px;background:rgba(255,255,255,.92);color:var(--fg)}
 .bfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;font-size:13px;color:var(--muted);flex-wrap:wrap}
 .bfoot b{color:var(--fg);font-variant-numeric:tabular-nums}
 
@@ -774,11 +778,11 @@ footer a:hover{color:var(--fg)}
             <div class="ads" id="ads">
               <div class="ad" data-win="1"><div class="top"><span class="avt" data-logo="stride"></span><div><b>Stride</b><small>Sponsorisé</small></div></div><div class="m"><img src="media/img-sneakers.webp" alt=""></div><div class="ft"><span>54 j</span><em>Gagnant probable</em></div></div>
               <div class="ad" data-win="1"><div class="top"><span class="avt" data-logo="kaia"></span><div><b>Kaïa Skin</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-solaire.mp4" poster="media/ugc-solaire.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>38 j</span><em>Gagnant probable</em></div></div>
-              <div class="ad"><div class="top"><span class="avt" data-logo="figue"></span><div><b>Atelier Figue</b><small>Sponsorisé</small></div></div><div class="m"><img src="media/img-bougie.webp" alt=""></div><div class="ft"><span>12 j</span><em>Gagnant probable</em></div></div>
+              <div class="ad"><div class="top"><span class="avt" data-logo="lait"></span><div><b>Ô Lait Bio</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/actor-freja.mp4" poster="media/actor-freja.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>12 j</span><em>Gagnant probable</em></div></div>
               <div class="ad" data-win="1"><div class="top"><span class="avt" data-logo="nova"></span><div><b>Nova Tech</b><small>Sponsorisé</small></div></div><div class="m"><img src="media/img-macbook.webp" alt=""></div><div class="ft"><span>41 j</span><em>Gagnant probable</em></div></div>
               <div class="ad"><div class="top"><span class="avt" data-logo="coach"></span><div><b>Mon Coach RH</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-homme.mp4" poster="media/ugc-homme.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>7 j</span><em>Gagnant probable</em></div></div>
               <div class="ad" data-win="1"><div class="top"><span class="avt" data-logo="nord"></span><div><b>Nordbois</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-scierie.mp4" poster="media/ugc-scierie.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>63 j</span><em>Gagnant probable</em></div></div>
-              <div class="ad"><div class="top"><span class="avt" data-logo="lumi"></span><div><b>Lumi Beauty</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-femme.mp4" poster="media/ugc-femme.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>5 j</span><em>Gagnant probable</em></div></div>
+              <div class="ad"><div class="top"><span class="avt" data-logo="lumi"></span><div><b>Lumi Beauty</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/actor-emiko.mp4" poster="media/actor-emiko.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>5 j</span><em>Gagnant probable</em></div></div>
               <div class="ad"><div class="top"><span class="avt" data-logo="volta"></span><div><b>Volta</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-pac-awa.mp4" poster="media/ugc-pac-awa.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>19 j</span><em>Gagnant probable</em></div></div>
               <div class="scanline" id="scan"></div>
             </div>
@@ -809,7 +813,7 @@ footer a:hover{color:var(--fg)}
         <div class="win" id="batchdemo">
           <div class="win-bar"><i></i><i></i><i></i><span>Studio en lot · Nouvelle marque</span></div>
           <div class="batch-body">
-            <div class="url" id="burl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg><span class="in" id="burlt">maison-figue.fr</span><span class="btn btn-grad sm" id="bgo">Analyser</span></div>
+            <div class="url" id="burl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg><span class="in" id="burlt">atelier-figue.fr</span><span class="btn btn-grad sm" id="bgo">Analyser</span></div>
             <div class="bsteps">
               <div class="crawl" id="crawl">
                 <div><span>/ · Accueil</span><b>✓</b></div>
@@ -827,12 +831,12 @@ footer a:hover{color:var(--fg)}
             </div>
             <div class="angles" id="bangles"><span class="chip dark">Prix</span><span class="chip dark">Preuve sociale</span><span class="chip dark">Témoignage</span><span class="chip dark">Cadeau de Noël</span></div>
             <div class="bgrid" id="bgrid">
-              <figure><img src="media/img-bougie.webp" alt=""></figure>
-              <figure><video src="media/ugc-femme.mp4" poster="media/ugc-femme.poster.webp" autoplay muted loop playsinline></video></figure>
-              <figure><img src="media/img-sneakers.webp" alt=""></figure>
-              <figure><video src="media/actor-freja.mp4" poster="media/actor-freja.poster.webp" autoplay muted loop playsinline></video></figure>
-              <figure><img src="media/img-macbook.webp" alt=""></figure>
-              <figure><video src="media/actor-anya.mp4" poster="media/actor-anya.poster.webp" autoplay muted loop playsinline></video></figure>
+              <figure><img src="media/img-bougie.webp" alt=""><span class="bo">32 €</span><figcaption>Prix</figcaption></figure>
+              <figure><video src="media/ugc-femme.mp4" poster="media/ugc-femme.poster.webp" autoplay muted loop playsinline></video><span class="bo">★★★★★</span><figcaption>Témoignage</figcaption></figure>
+              <figure><video src="media/bougie-916.mp4" poster="media/bougie-916.poster.webp" autoplay muted loop playsinline></video><span class="bo">Idée cadeau</span><figcaption>Noël</figcaption></figure>
+              <figure><img src="media/img-bougie.webp" alt="" style="transform:scale(1.9);transform-origin:28% 72%"><span class="bo">4,9 ★</span><figcaption>Preuve</figcaption></figure>
+              <figure><video src="media/actor-camille.mp4" poster="media/actor-camille.poster.webp" autoplay muted loop playsinline></video><span class="bo">Mon rituel</span><figcaption>Témoignage</figcaption></figure>
+              <figure><img src="media/img-bougie.webp" alt="" style="transform:scale(1.5);transform-origin:60% 35%"><span class="bo">−20 %</span><figcaption>Prix</figcaption></figure>
             </div>
             <div class="bfoot"><span><b id="bcount">24</b> créas · 4 angles · 3 formats</span><span class="chip ok" id="bstatus">● Lot prêt à publier</span></div>
           </div>
@@ -903,14 +907,14 @@ footer a:hover{color:var(--fg)}
             <div class="msg me" id="pq"><div class="b">Combien de leads cette semaine ?</div></div>
             <div class="msg ai" id="pa"><div class="av"><svg viewBox="0 0 24 24" fill="none"><path d="M2 17 8.5 10.5 13.5 15.5 22 7M16 7h6v6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
               <div class="stack" style="flex:1">
-                <div class="b">Très bonne semaine : 142 leads, dont la moitié grâce à la vidéo UGC d'Emma.</div>
+                <div class="b">Très bonne semaine : 142 leads, dont la moitié grâce à la vidéo UGC de Léa.</div>
                 <div class="kpis"><div class="kpi">Leads<b id="k1">142</b><em>+21 %</em></div><div class="kpi">Coût par lead<b id="k2">8,30 €</b><em>−13 %</em></div><div class="kpi">Dépense<b id="k3">1 178 €</b><em>7 jours</em></div></div>
                 <div class="chart"><div class="h"><span>Leads par jour · 10 derniers jours</span><span style="color:var(--ok)">● en direct</span></div>
                   <svg viewBox="0 0 300 90" preserveAspectRatio="none"><defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5B3FE4" stop-opacity=".3"/><stop offset="1" stop-color="#5B3FE4" stop-opacity="0"/></linearGradient><linearGradient id="gl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5B3FE4"/><stop offset="1" stop-color="#E0479E"/></linearGradient></defs>
                     <path id="parea" d="M0 70 L33 56 L66 62 L100 44 L133 50 L166 32 L200 36 L233 22 L266 26 L300 10 L300 90 L0 90 Z" fill="url(#ga)"/>
                     <path id="pline" d="M0 70 L33 56 L66 62 L100 44 L133 50 L166 32 L200 36 L233 22 L266 26 L300 10" fill="none" stroke="url(#gl)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0"/>
                     <circle id="pdot" cx="300" cy="10" r="5" fill="#E0479E"/></svg></div>
-                <div class="reco" id="preco"><span>À booster : la vidéo d'Emma ramène vos leads les moins chers.</span><span class="btn sm" style="background:var(--ok);color:var(--white)">Budget +25 %</span></div>
+                <div class="reco" id="preco"><span>À booster : la vidéo de Léa ramène vos leads les moins chers.</span><span class="btn sm" style="background:var(--ok);color:var(--white)">Budget +25 %</span></div>
               </div>
             </div>
           </div>
@@ -930,7 +934,7 @@ footer a:hover{color:var(--fg)}
     <div class="minis">
       <article class="mini rv">
         <div class="scene" id="m-insp"><div class="insp">
-          <div class="ichips" id="ichips"><span class="chip dark">Tous</span><span class="chip">Mode</span><span class="chip">Beauté</span><span class="chip">Tech</span><span class="chip">Maison</span></div>
+          <div class="ichips" id="ichips"><span class="chip dark">Tous</span><span class="chip">Mode</span><span class="chip">Beauté</span><span class="chip">Tech</span><span class="chip">Maison</span><span class="chip">Food</span></div>
           <div class="icols" id="icols"></div>
           <span class="isave" id="isave">♥ Ajoutée à vos inspirations</span>
         </div></div>
@@ -939,7 +943,7 @@ footer a:hover{color:var(--fg)}
       <article class="mini rv">
         <div class="scene" id="m-tpl"><div class="tpl">
           <div class="big"><img src="media/img-sneakers.webp" alt="Photo produit mise en scène"><span id="tpln">Style Urban</span></div>
-          <div class="opts"><div class="on"><img src="media/img-sneakers.webp" alt=""><span>Urban</span></div><div><img src="media/img-bougie.webp" alt=""><span>Cosy</span></div><div><img src="media/img-macbook.webp" alt=""><span>Tech</span></div><div><img src="media/img-sneakers.webp" alt="" style="filter:hue-rotate(160deg)"><span>Néon</span></div><div><img src="media/img-bougie.webp" alt="" style="filter:sepia(.6)"><span>Luxe</span></div><div><img src="media/img-macbook.webp" alt="" style="filter:hue-rotate(-60deg) saturate(1.4)"><span>Studio</span></div></div>
+          <div class="opts"><div class="on"><img src="media/img-sneakers.webp" alt=""><span>Urban</span></div><div><img src="media/img-sneakers.webp" alt="" style="filter:hue-rotate(160deg) saturate(1.6) contrast(1.1)"><span>Néon</span></div><div><img src="media/img-sneakers.webp" alt="" style="filter:sepia(.7) contrast(1.05)"><span>Vintage</span></div><div><img src="media/img-sneakers.webp" alt="" style="filter:grayscale(1) contrast(1.2)"><span>Éditorial</span></div><div><img src="media/img-sneakers.webp" alt="" style="filter:saturate(2) brightness(1.08)"><span>Pop</span></div><div><img src="media/img-sneakers.webp" alt="" style="filter:brightness(.7) hue-rotate(-30deg) saturate(1.3)"><span>Nuit</span></div></div>
         </div></div>
         <div class="txt"><h3>Templates vidéo produit</h3><p>Choisissez un style, glissez votre photo produit : elle est mise en scène et animée.</p></div>
       </article>
@@ -1124,24 +1128,24 @@ footer a:hover{color:var(--fg)}
     {credits:9340,steps:[
       {u:"Je vends des bougies parfumées sur ma boutique Shopify. Une vidéo qui donne envie d'acheter, sans discours commercial."},
       {a:"Je pars sur un témoignage UGC style selfie, ta bougie en gros plan. J'ai importé le produit depuis ta boutique :",card:{t:'prod',img:'img-bougie',name:'Bougie Figue & Cèdre',sub:'Importée depuis Shopify · 14 photos'}},
-      {a:"Voici 3 créatrices crédibles sur la déco :",card:{t:'picks',list:[['actor-emma','Emma'],['actor-freja','Freja'],['actor-anya','Anya']],pick:0}},
-      {u:"Emma. Fais-moi aussi 3 accroches à tester."},
+      {a:"Voici 3 créatrices crédibles sur la déco :",card:{t:'picks',list:[['ugc-femme','Léa'],['actor-camille','Camille'],['actor-marta','Marta']],pick:0}},
+      {u:"Léa. Fais-moi aussi 3 accroches à tester."},
       {a:"Génération en cours : vidéo 9:16 avec ta bougie intégrée à la scène.",card:{t:'gen',cost:300}},
-      {a:"Voilà ta créa et le visuel produit :",card:{t:'res',video:'ugc-femme',words:["J'ai testé",'<em>cette</em> bougie','pendant','un mois…'],img:'img-bougie'}},
+      {a:"Voilà ta vidéo avec Léa, et le visuel produit :",card:{t:'res',video:'ugc-femme',words:["J'ai testé",'<em>cette</em> bougie','pendant','un mois…'],img:'img-bougie'}},
       {a:"Et les 3 accroches, testées sur une audience similaire :",card:{t:'vars',hooks:[["« J'ai testé pendant 30 jours… »",4.6],["« Le cadeau qu'on m'a le plus demandé »",3.4],["« −20 % ce week-end »",2.2]]}}
     ]},
     {credits:22610,steps:[
       {u:"Je veux des leads pour mon cabinet de recrutement. Cible les DRH et fondateurs de PME en France."},
-      {a:"Une vidéo UGC au ton confiant et pro, plus un visuel 4:5. Voici 3 profils corporate :",card:{t:'picks',list:[['actor-david','David'],['actor-thomas','Thomas'],['actor-antoine','Antoine']],pick:0}},
+      {a:"Une vidéo UGC au ton confiant et pro, plus un visuel 4:5. Voici 3 profils corporate :",card:{t:'picks',list:[['actor-david','David'],['actor-thomas','Thomas'],['actor-claire','Claire']],pick:0}},
       {u:"David. France entière, 40 € par jour."},
       {a:"Je génère la vidéo et le visuel avec l'accroche « Recruter sans y passer vos nuits ».",card:{t:'gen',cost:280}},
-      {a:"Tes créas sont prêtes :",card:{t:'res',video:'actor-david',words:['Recruter','sans y passer','<em>vos nuits</em>'],img:'img-macbook'}},
+      {a:"Tes créas sont prêtes :",card:{t:'res',video:'actor-david',words:['Recruter','sans y passer','<em>vos nuits</em>'],img:'actor-david.poster.webp',ovl:'Recruter sans y passer vos nuits',ovlSub:'Cabinet RH · PME'}},
       {u:"Publie et montre-moi les leads reçus."},
       {a:"Campagne en ligne. Les leads Meta remontent ici en direct :",card:{t:'leads',list:[['JM','Julie M.','DRH · 120 salariés'],['KB','Karim B.','Fondateur · SaaS'],['SL','Sophie L.','Responsable RH']]}}
     ]},
     {credits:4820,steps:[
       {u:"Je fabrique des cuisines en bois sur mesure à Nantes. Je veux des demandes de devis dans un rayon de 40 km."},
-      {a:"Parfait : une vidéo UGC tournée à l'atelier, pour montrer le savoir-faire. Voici 3 profils qui collent :",card:{t:'picks',list:[['ugc-scierie','Sofia'],['actor-marta','Marta'],['actor-zoe','Zoé']],pick:0}},
+      {a:"Parfait : une vidéo UGC tournée à l'atelier, pour montrer le savoir-faire. Voici 3 profils qui collent :",card:{t:'picks',list:[['ugc-scierie','Sofia'],['actor-antoine','Antoine'],['actor-lucas','Lucas']],pick:0}},
       {u:"Sofia. 25 € par jour, 30 à 60 ans."},
       {a:"C'est noté. Je lance la génération : vidéo 9:16, sous-titres inclus.",card:{t:'gen',cost:280}},
       {a:"Ta vidéo est prête :",card:{t:'res',video:'ugc-scierie',words:['Votre cuisine','<em>sur mesure</em>','fabriquée','à Nantes']}},
@@ -1167,7 +1171,7 @@ footer a:hover{color:var(--fg)}
       var left=parseInt(creditsEl.textContent.replace(/\s/g,''),10)-c.cost;creditsEl.textContent=fmtN(left);
       await w(300);
     }else if(c.t==='res'){
-      n.className='pop';n.innerHTML='<div class="res"><div class="vid">'+vid(c.video)+'<span class="lbl">9:16</span><div class="cap-k"></div></div>'+(c.img?'<div class="img"><img src="media/'+c.img+'.webp" alt=""><span class="lbl">4:5</span></div>':'')+'</div><div class="acts" style="margin-top:8px"><span class="chip">Modifier</span><span class="chip">Déclinaisons</span><span class="chip pri">Publier</span></div>';
+      n.className='pop';n.innerHTML='<div class="res"><div class="vid">'+vid(c.video)+'<span class="lbl">9:16</span><div class="cap-k"></div></div>'+(c.img?'<div class="img"><img src="media/'+(c.img.indexOf('.')>0?c.img:c.img+'.webp')+'" alt="">'+(c.ovl?'<div class="ovl">'+c.ovl+'<small>'+(c.ovlSub||'')+'</small></div>':'')+'<span class="lbl">4:5</span></div>':'')+'</div><div class="acts" style="margin-top:8px"><span class="chip">Modifier</span><span class="chip">Déclinaisons</span><span class="chip pri">Publier</span></div>';
       scrollEnd();var ck=$('.cap-k',n),k=0,words=c.words.filter(Boolean);
       ck.innerHTML=words[0];
       timers.push(setInterval(function(){k=(k+1)%words.length;ck.innerHTML=words[k]},650));
@@ -1263,6 +1267,8 @@ footer a:hover{color:var(--fg)}
     nova:'<svg viewBox="0 0 32 32"><defs><linearGradient id="nv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#06B6D4"/></linearGradient></defs><rect width="32" height="32" fill="url(#nv)"/><path d="M16 6l2.4 7.6L26 16l-7.6 2.4L16 26l-2.4-7.6L6 16l7.6-2.4Z" fill="#fff"/></svg>',
     coach:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#F97316"/><path d="M9 21V11l7 6 7-6v10" fill="none" stroke="#fff" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg>',
     nord:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#2F5D3A"/><path d="M16 6l7 10h-4l5 7H8l5-7H9Z" fill="#CFE3C1"/></svg>',
+    lait:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#E0F2FE"/><path d="M13 7h6v3l2 3v12a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1V13l2-3Z" fill="#fff" stroke="#0369A1" stroke-width="1.6" stroke-linejoin="round"/><path d="M11 17h10v4H11Z" fill="#0369A1"/></svg>',
+    cire:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#F3E9DC"/><path d="M16 7c2 3 3 5 0 8-3-3-2-5 0-8Z" fill="#C2410C"/><rect x="11" y="16" width="10" height="10" rx="2" fill="#8B5E3C"/></svg>',
     lumi:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#EDE7FF"/><circle cx="16" cy="16" r="7" fill="#7C5CFF"/><circle cx="19" cy="13.5" r="6" fill="#EDE7FF"/></svg>',
     volta:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#FACC15"/><path d="M18 5 9 18h6l-2 9 10-14h-6Z" fill="#111"/></svg>'
   };
@@ -1289,7 +1295,7 @@ footer a:hover{color:var(--fg)}
   demo(bbox,async function(w){
     var url=$('#burl'),ut=$('#burlt'),go=$('#bgo'),cr=$$('#crawl div'),brand=$('#brand'),ang=$$('#bangles .chip'),figs=$$('#bgrid figure'),cnt=$('#bcount'),stt=$('#bstatus'),c=bbox._c||(bbox._c=cursor(bbox));
     cr.forEach(function(d){d.style.opacity='0'});brand.style.opacity='0';ang.forEach(function(a){a.style.opacity='0'});figs.forEach(function(f){f.classList.add('empty','shimmer')});cnt.textContent='0';stt.className='chip';stt.textContent='En attente';
-    url.classList.add('focus');await typeInto(ut,'maison-figue.fr',w,55);
+    url.classList.add('focus');await typeInto(ut,'atelier-figue.fr',w,55);
     await moveTo(c,bbox,go,w);await click(c,go,w);c.classList.remove('on');url.classList.remove('focus');
     stt.textContent='Analyse du site…';
     for(var i=0;i<cr.length;i++){cr[i].style.opacity='1';cr[i].classList.add('pop');await w(260)}
@@ -1338,7 +1344,7 @@ footer a:hover{color:var(--fg)}
     [a,reco,chart].concat(kp).forEach(function(x){x.style.opacity='0'});q.style.opacity='0';line.style.transition='none';line.style.strokeDashoffset='1';area.style.opacity='0';dot.style.opacity='0';
     await w(500);q.style.opacity='';q.classList.add('pop');await w(700);
     a.style.opacity='';b.innerHTML='<span class="dots" style="padding:0;background:none"><i></i><i></i><i></i></span>';await w(900);
-    b.textContent="Très bonne semaine : 142 leads, dont la moitié grâce à la vidéo UGC d'Emma.";
+    b.textContent="Très bonne semaine : 142 leads, dont la moitié grâce à la vidéo UGC de Léa.";
     for(var i=0;i<kp.length;i++){kp[i].style.opacity='';kp[i].classList.add('pop');await w(250)}
     countTo($('#k1'),142,900);
     countTo($('#k2'),8.3,900,function(v){return v.toFixed(2).replace('.',',')+' €'});
@@ -1352,7 +1358,7 @@ footer a:hover{color:var(--fg)}
     var a2=document.createElement('div');a2.className='msg ai fadein extra';a2.innerHTML='<div class="av">'+LOGO+'</div><div class="dots"><i></i><i></i><i></i></div>';pbody.appendChild(a2);pbody.scrollTop=pbody.scrollHeight;
     await w(800);
     a2.className='msg ai pop extra';a2.style.maxWidth='100%';a2.innerHTML='<div class="av">'+LOGO+'</div><div class="stack" style="flex:1"><div class="b">Voici les derniers leads, avec la pub qui les a apportés :</div><div class="leads"></div></div>';
-    var list=$('.leads',a2),L=[['CM','Camille M.','camille.m@… · 06 •• •• 41 12','actor-emma','UGC Emma'],['TR','Thomas R.','thomas.r@… · 07 •• •• 18 90','img-bougie','Carrousel'],['NB','Nadia B.','nadia.b@… · 06 •• •• 73 05','actor-emma','UGC Emma'],['LP','Lucas P.','lucas.p@… · 06 •• •• 22 67','bougie-916','Vidéo produit']];
+    var list=$('.leads',a2),L=[['CM','Camille M.','camille.m@… · 06 •• •• 41 12','ugc-femme','UGC Léa'],['TR','Thomas R.','thomas.r@… · 07 •• •• 18 90','img-bougie','Carrousel'],['NB','Nadia B.','nadia.b@… · 06 •• •• 73 05','ugc-femme','UGC Léa'],['LP','Lucas P.','lucas.p@… · 06 •• •• 22 67','bougie-916','Vidéo produit']];
     for(var j=0;j<L.length;j++){var l=L[j],d=document.createElement('div');d.className='lead pop';
       var thumb=l[3].indexOf('img-')===0?'media/'+l[3]+'.webp':'media/'+l[3]+'.poster.webp';
       d.innerHTML='<span class="ini">'+l[0]+'</span><div><b>'+l[1]+'</b><small>'+l[2]+'</small></div><span class="src"><img src="'+thumb+'" alt="">'+l[4]+'</span>';
@@ -1370,7 +1376,7 @@ footer a:hover{color:var(--fg)}
     }
   });
   (function(){
-    var items=[['img-sneakers','q','Mode'],['ugc-solaire','t','Beauté'],['img-macbook','q','Tech'],['actor-emma','t','Maison'],['img-bougie','q','Maison'],['ugc-femme','t','Beauté'],['actor-hiro','t','Tech'],['img-sneakers','q','Mode'],['actor-freja','t','Mode']];
+    var items=[['img-sneakers','q','Mode'],['ugc-solaire','t','Beauté'],['img-macbook','q','Tech'],['actor-freja','t','Food'],['img-bougie','q','Maison'],['actor-emiko','t','Beauté'],['actor-lucas','t','Tech'],['actor-camille','t','Mode'],['bougie-916','t','Maison']];
     var cols=$('#icols');
     for(var c=0;c<3;c++){var col=document.createElement('div');col.className='icol';var h='';
       for(var r=0;r<3;r++){var it=items[(c*3+r)%items.length];h+='<div class="icard '+it[1]+'" data-cat="'+it[2]+'">'+(it[1]==='t'?vid(it[0]):'<img src="media/'+it[0]+'.webp" alt="">')+'</div>'}
@@ -1386,7 +1392,7 @@ footer a:hover{color:var(--fg)}
     }
   });
   demo($('#m-leads'),async function(w){
-    var box=$('#lvl'),rows=[['lead','JM','Julie M.','Formulaire Meta · il y a 1 min'],['sale','','Vente attribuée · UGC Emma','+64 €'],['lead','KB','Karim B.','Formulaire Meta · il y a 3 min'],['sale','','Vente attribuée · Carrousel bougie','+32 €']];
+    var box=$('#lvl'),rows=[['lead','JM','Julie M.','Formulaire Meta · il y a 1 min'],['sale','','Vente attribuée · UGC Léa','+64 €'],['lead','KB','Karim B.','Formulaire Meta · il y a 3 min'],['sale','','Vente attribuée · Carrousel bougie','+32 €']];
     box.innerHTML='';
     for(var i=0;i<rows.length;i++){var r=rows[i],d=document.createElement('div');
       if(r[0]==='lead'){d.className='lead pop';d.innerHTML='<span class="ini">'+r[1]+'</span><div><b>'+r[2]+'</b><small>'+r[3]+'</small></div><span class="chip ok">Nouveau</span>'}
