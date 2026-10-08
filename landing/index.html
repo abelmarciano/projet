@@ -180,7 +180,7 @@ section{padding-block:110px}
 .scen button[aria-selected="true"] .pg{display:block}
 .scen button .pg i{display:block;height:100%;width:0;background:var(--grad-pink)}
 .chatwin{max-width:1040px;margin:0 auto}
-.app{display:flex;flex-direction:column;height:620px}
+.app{display:flex;flex-direction:column;height:680px}
 .side{border-right:1px solid var(--line);background:#FBFAFF;padding:16px 12px;display:flex;flex-direction:column;gap:4px;font-size:13px}
 .side .logo{font-size:16px;margin:0 6px 14px}
 .side .logo svg{width:20px;height:20px}
@@ -250,6 +250,28 @@ section{padding-block:110px}
 .lead .ini{width:28px;height:28px;border-radius:14px;background:var(--grad-pink);color:var(--white);display:grid;place-items:center;font-size:11px;font-weight:700;flex:none}
 .lead small{display:block;color:var(--dim);font-size:11px}
 .lead .chip{margin-left:auto}
+.metac{display:flex;flex-direction:column;gap:10px}
+.aud{display:flex;flex-wrap:wrap;gap:6px}
+.sendm{width:300px;max-width:100%}
+.sendm .t{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:8px}
+.sendm .t b{color:var(--meta);font-variant-numeric:tabular-nums}
+.sendm .bar>i{background:var(--meta)}
+.metarow{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.fbp{width:220px;max-width:100%;border-radius:14px;border:1px solid var(--line);background:var(--surface);overflow:hidden;font-size:12px;box-shadow:0 18px 40px -24px rgba(15,23,42,.45)}
+.fbp .hd{display:flex;gap:8px;align-items:center;padding:10px}
+.fbp .hd i{width:30px;height:30px;border-radius:15px;overflow:hidden;flex:none;display:block}
+.fbp .hd i svg{width:100%;height:100%;display:block}
+.fbp .hd b{display:block;font-size:12.5px}
+.fbp .hd small{color:var(--dim);font-size:10.5px}
+.fbp .tx{padding:0 10px 9px;font-size:12px;line-height:1.4}
+.fbp .md{aspect-ratio:1/1;background:var(--black)}
+.fbp .md video{width:100%;height:100%;object-fit:cover}
+.fbp .ft{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;background:var(--mist)}
+.fbp .ft b{font-size:12px;line-height:1.25}
+.fbp .ft span{font-size:11px;font-weight:700;padding:6px 10px;border-radius:6px;background:var(--mist-2);white-space:nowrap}
+.fbp .rx{display:flex;justify-content:space-around;padding:8px;font-size:11px;font-weight:600;color:var(--dim);border-top:1px solid var(--line)}
+.mside{display:flex;flex-direction:column;gap:8px;min-width:150px}
+.mside .met{background:var(--mist)}
 .composer{display:flex;align-items:center;gap:10px;margin:10px 20px 18px;padding:8px 8px 8px 16px;border-radius:16px;border:1.5px solid var(--line-2);font-size:14px;transition:all .2s;min-height:52px}
 .composer.focus{border-color:var(--indigo);box-shadow:0 0 0 5px rgba(91,63,228,.1)}
 .composer .in{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -619,6 +641,10 @@ footer a:hover{color:var(--fg)}
   .app{height:560px}
   .thread{padding:16px 14px 8px}
   .msg{max-width:96%}
+  .mside{width:100%;min-width:0;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .mside .chip,.mside .nofee{grid-column:1/-1;justify-self:start}
+  .mside .met b{font-size:15px}
+  .fbp{width:100%}
   .picks{grid-template-columns:repeat(3,1fr)}
   .res .vid{width:120px}.res .img{width:100px}
   .composer{margin:8px 12px 12px}
@@ -1234,28 +1260,29 @@ footer a:hover{color:var(--fg)}
       {u:"Je vends des bougies parfumées sur ma boutique Shopify. Une vidéo qui donne envie d'acheter, sans discours commercial."},
       {a:"Je pars sur un témoignage UGC style selfie, ta bougie en gros plan. J'ai importé le produit depuis ta boutique :",card:{t:'prod',img:'img-bougie',name:'Bougie Figue & Cèdre',sub:'Importée depuis Shopify · 14 photos'}},
       {a:"Voici 3 créatrices crédibles sur la déco :",card:{t:'picks',list:[['ugc-femme','Léa'],['actor-camille','Camille'],['actor-marta','Marta']],pick:0}},
-      {u:"Léa. Fais-moi aussi 3 accroches à tester."},
+      {u:"Léa. Avec une accroche style témoignage."},
       {a:"Génération en cours : vidéo 9:16 avec ta bougie intégrée à la scène.",card:{t:'gen',cost:300}},
       {a:"Voilà ta vidéo avec Léa, et le visuel produit :",card:{t:'res',video:'ugc-femme',words:["J'ai testé",'<em>cette</em> bougie','pendant','un mois…'],img:'img-bougie'}},
-      {a:"Et les 3 accroches, testées sur une audience similaire :",card:{t:'vars',hooks:[["« J'ai testé pendant 30 jours… »",4.6],["« Le cadeau qu'on m'a le plus demandé »",3.4],["« −20 % ce week-end »",2.2]]}}
+      {u:"Publie sur Meta : France, femmes 25-45 ans, intérêts déco et cadeaux, 30 € par jour."},
+      {a:"C'est parti. Voici ta campagne et l'aperçu de la pub :",card:{t:'meta',aud:['France','Femmes 25–45 ans','Déco · Cadeaux','30 € / jour','Ventes'],brand:'Atelier Figue',logo:'figue',video:'ugc-femme',text:"J'ai testé cette bougie pendant un mois… et franchement, je ne m'attendais pas à ça.",headline:'Bougies faites main',cta:'Acheter',m:[['Impressions',14200],['Clics',398],['Ventes',21]]}}
     ]},
     {credits:22610,steps:[
       {u:"Je veux des leads pour mon cabinet de recrutement. Cible les DRH et fondateurs de PME en France."},
       {a:"Une vidéo UGC au ton confiant et pro, plus un visuel 4:5. Voici 3 profils corporate :",card:{t:'picks',list:[['actor-david','David'],['actor-thomas','Thomas'],['actor-claire','Claire']],pick:0}},
-      {u:"David. France entière, 40 € par jour."},
+      {u:"David, parfait."},
       {a:"Je génère la vidéo et le visuel avec l'accroche « Recruter sans y passer vos nuits ».",card:{t:'gen',cost:280}},
       {a:"Tes créas sont prêtes :",card:{t:'res',video:'actor-david',words:['Recruter','sans y passer','<em>vos nuits</em>'],img:'actor-david.poster.webp',ovl:'Recruter sans y passer vos nuits',ovlSub:'Cabinet RH · PME'}},
-      {u:"Publie et montre-moi les leads reçus."},
-      {a:"Campagne en ligne. Les leads Meta remontent ici en direct :",card:{t:'leads',list:[['JM','Julie M.','DRH · 120 salariés'],['KB','Karim B.','Fondateur · SaaS'],['SL','Sophie L.','Responsable RH']]}}
+      {u:"Publie sur Meta : France entière, DRH et dirigeants de PME, 30 à 55 ans, 40 € par jour."},
+      {a:"Campagne de leads créée, avec un formulaire Meta. Aperçu :",card:{t:'meta',aud:['France entière','30–55 ans','DRH · Dirigeants PME','40 € / jour','Leads'],brand:'Talento RH',logo:'talento',video:'actor-david',text:"Vous passez vos soirées à trier des CV ? On s'occupe de vos recrutements de A à Z.",headline:'Recruter sans y passer vos nuits',cta:"S'inscrire",m:[['Impressions',11950],['Clics',264],['Leads',17]]}}
     ]},
     {credits:4820,steps:[
-      {u:"Je fabrique des cuisines en bois sur mesure à Nantes. Je veux des demandes de devis dans un rayon de 40 km."},
+      {u:"Je fabrique des cuisines en bois sur mesure à Nantes. Je veux des demandes de devis."},
       {a:"Parfait : une vidéo UGC tournée à l'atelier, pour montrer le savoir-faire. Voici 3 profils qui collent :",card:{t:'picks',list:[['ugc-scierie','Sofia'],['actor-antoine','Antoine'],['actor-lucas','Lucas']],pick:0}},
-      {u:"Sofia. 25 € par jour, 30 à 60 ans."},
-      {a:"C'est noté. Je lance la génération : vidéo 9:16, sous-titres inclus.",card:{t:'gen',cost:280}},
+      {u:"Sofia, c'est parfait."},
+      {a:"Je lance la génération : vidéo 9:16, sous-titres inclus.",card:{t:'gen',cost:280}},
       {a:"Ta vidéo est prête :",card:{t:'res',video:'ugc-scierie',words:['Votre cuisine','<em>sur mesure</em>','fabriquée','à Nantes']}},
-      {u:"Parfait, publie sur Meta."},
-      {a:"Campagne en ligne, ciblée à 40 km autour de Nantes. Je surveille les demandes de devis.",card:{t:'pub',m:[['Impressions',9860],['Clics',284],['Devis',14]]}}
+      {u:"Publie sur Meta : 40 km autour de Nantes, propriétaires 30-60 ans, 25 € par jour."},
+      {a:"Campagne locale créée. Voici l'aperçu de ta pub :",card:{t:'meta',aud:['Nantes + 40 km','30–60 ans','Propriétaires','25 € / jour','Devis'],brand:'Atelier Bois Nantais',logo:'nord',video:'ugc-scierie',text:"Votre cuisine sur mesure, fabriquée dans notre atelier à Nantes. Devis gratuit en 48 h.",headline:'Cuisines en bois sur mesure',cta:'Demander un devis',m:[['Impressions',9860],['Clics',284],['Devis',14]]}}
     ]}
   ];
   var thread=$('#thread'),cin=$('#cin'),comp=$('#composer'),creditsEl=$('#credits');
@@ -1284,6 +1311,23 @@ footer a:hover{color:var(--fg)}
     }else if(c.t==='prod'){
       n.className='cardx prod pop';n.innerHTML='<img src="media/'+c.img+'.webp" alt=""><div><b>'+c.name+'</b><small>'+c.sub+'</small></div><span class="chip ok" style="margin-left:auto">Importé</span>';
       scrollEnd();await w(900);
+    }else if(c.t==='meta'){
+      n.className='metac';
+      n.innerHTML='<div class="aud">'+c.aud.map(function(x,i){return '<span class="chip'+(i===c.aud.length-1?' pri':'')+'">'+x+'</span>'}).join('')+'</div>'+
+        '<div class="cardx sendm"><div class="t"><span>Envoi à Meta Ads…</span><b>0 %</b></div><div class="bar"><i></i></div></div>';
+      var chips=$$('.aud .chip',n);chips.forEach(function(x){x.style.opacity='0'});scrollEnd();
+      for(var ci=0;ci<chips.length;ci++){chips[ci].style.opacity='';chips[ci].classList.add('pop');await w(160)}
+      var sb=$('.sendm .bar i',n),sp=$('.sendm b',n);
+      for(var pp=0;pp<=100;pp+=10){sb.style.width=pp+'%';sp.textContent=pp+' %';await w(60)}
+      $('.sendm',n).remove();
+      var row=document.createElement('div');row.className='metarow pop';
+      row.innerHTML='<div class="fbp"><div class="hd"><i>'+((typeof LOGOS!=='undefined'&&LOGOS[c.logo])||'')+'</i><div><b>'+c.brand+'</b><small>Sponsorisé · Facebook &amp; Instagram</small></div></div>'+
+        '<div class="tx">'+c.text+'</div><div class="md">'+vid(c.video)+'</div>'+
+        '<div class="ft"><b>'+c.headline+'</b><span>'+c.cta+'</span></div><div class="rx"><span>J\'aime</span><span>Commenter</span><span>Partager</span></div></div>'+
+        '<div class="mside"><span class="chip ok">● En ligne sur Meta</span><span class="chip meta">Facebook · Instagram</span>'+c.m.map(function(m){return '<div class="met">'+m[0]+'<b>0</b></div>'}).join('')+'<span class="nofee" style="margin:0">0 % de commission sur le budget</span></div>';
+      n.appendChild(row);scrollEnd();
+      $$('.mside .met b',row).forEach(function(b,i){countTo(b,c.m[i][1],2000)});
+      await w(2200);
     }else if(c.t==='pub'){
       n.className='cardx pubd pop';n.innerHTML='<div class="top"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.24.19 2.24.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02Z"/></svg>Publiée sur Meta Ads<span class="chip ok" style="margin-left:auto">● En ligne</span></div><div class="mets">'+c.m.map(function(m){return '<div class="met">'+m[0]+'<b>0</b></div>'}).join('')+'</div>';
       scrollEnd();$$('.met b',n).forEach(function(b,i){countTo(b,c.m[i][1],2200)});await w(2200);
@@ -1374,6 +1418,7 @@ footer a:hover{color:var(--fg)}
     nova:'<svg viewBox="0 0 32 32"><defs><linearGradient id="nv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#06B6D4"/></linearGradient></defs><rect width="32" height="32" fill="url(#nv)"/><path d="M16 6l2.4 7.6L26 16l-7.6 2.4L16 26l-2.4-7.6L6 16l7.6-2.4Z" fill="#fff"/></svg>',
     coach:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#F97316"/><path d="M9 21V11l7 6 7-6v10" fill="none" stroke="#fff" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg>',
     nord:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#2F5D3A"/><path d="M16 6l7 10h-4l5 7H8l5-7H9Z" fill="#CFE3C1"/></svg>',
+    talento:'<svg viewBox=\"0 0 32 32\"><rect width=\"32\" height=\"32\" fill=\"#1E3A8A\"/><path d=\"M9 10h14v3h-5.5v11h-3V13H9Z\" fill=\"#fff\"/></svg>',
     lait:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#E0F2FE"/><path d="M13 7h6v3l2 3v12a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1V13l2-3Z" fill="#fff" stroke="#0369A1" stroke-width="1.6" stroke-linejoin="round"/><path d="M11 17h10v4H11Z" fill="#0369A1"/></svg>',
     cire:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#F3E9DC"/><path d="M16 7c2 3 3 5 0 8-3-3-2-5 0-8Z" fill="#C2410C"/><rect x="11" y="16" width="10" height="10" rx="2" fill="#8B5E3C"/></svg>',
     lumi:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#EDE7FF"/><circle cx="16" cy="16" r="7" fill="#7C5CFF"/><circle cx="19" cy="13.5" r="6" fill="#EDE7FF"/></svg>',
