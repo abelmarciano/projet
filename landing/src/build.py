@@ -48,8 +48,12 @@ def thumb_html(src):
 LOGO_SVG = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2563EB"/><stop offset=".52" stop-color="#5B3FE4"/><stop offset="1" stop-color="#9333EA"/></linearGradient></defs><path d="M2 17 8.5 10.5 13.5 15.5 22 7M16 7h6v6" stroke="url(#lg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 
 
-def mitem(slug, current):
+def mitem(entry, current):
+    slug = entry[0] if isinstance(entry, tuple) else entry
     g, title, desc, ic, t, _ = PAGES[slug]
+    if isinstance(entry, tuple):
+        title, desc, ic, t = entry[1], entry[2], entry[3], entry[4]
+        current = None
     cur = ' aria-current="page"' if slug == current else ''
     new = ' <span class="new">Nouveau</span>' if slug in NEW else ''
     return ('<a class="mitem" href="%s"%s><span class="ic"%s>%s</span><span><b>%s%s</b><small>%s</small></span></a>'
@@ -66,13 +70,15 @@ def featured(key):
 
 def header(current):
     group = PAGES[current][0] if current in PAGES else None
+    from sitemap import FEATURED  # noqa: F811
     btns, panels, sheet = [], [], []
     for key, (label, cols) in GROUPS.items():
         cls = ' cur' if key == group else ''
         btns.append('<button class="nl%s" type="button" data-p="%s" aria-expanded="false" aria-controls="mp-%s">%s%s</button>' % (cls, key, key, label, CHEV))
         colhtml = ''.join('<div class="mgroup">%s%s</div>' % ('<h6>%s</h6>' % h if h else '<h6>&nbsp;</h6>', ''.join(mitem(s, current) for s in items)) for h, items in cols)
-        panels.append('<div class="mpanel" id="mp-%s">%s%s</div>' % (key, colhtml, featured(key)))
-        allitems = ''.join(mitem(s, current) for _, items in cols for s in items)
+        feat_html = featured(key) if key in FEATURED else ''
+        panels.append('<div class="mpanel%s" id="mp-%s">%s%s</div>' % ('' if feat_html else ' c3', key, colhtml, feat_html))
+        allitems = ''.join(mitem(s, current) for _, items in cols for s in items if not isinstance(s, tuple))
         sheet.append('<details%s><summary>%s%s</summary><div class="mlist">%s</div></details>' % (' open' if key == group else '', label, CHEV, allitems))
     demo_cur = ' aria-current="page"' if current == 'index' else ''
     return '''<div class="announce">
@@ -109,7 +115,7 @@ def header(current):
 def footer():
     cols = []
     for key, (label, groups) in GROUPS.items():
-        links = ''.join('<li><a href="%s">%s</a></li>' % (href(s), html.escape(PAGES[s][1])) for _, items in groups for s in items)
+        links = ''.join('<li><a href="%s">%s</a></li>' % (href(s), html.escape(PAGES[s][1])) for _, items in groups for s in items if not isinstance(s, tuple))
         cols.append('<div><h6>%s</h6><ul>%s</ul></div>' % (label, links))
     legal = ''.join('<li><a href="https://growthity.ai/%s"%s>%s</a></li>' % (p, EXT, t) for p, t in
                     [('cgv', 'CGV'), ('mentions-legales', 'Mentions légales'), ('politique-de-confidentialite', 'Confidentialité'), ('suppression-des-donnees', 'Suppression des données')])
@@ -212,8 +218,19 @@ def hero_split(slug, pill, plain, grad, lede, tick_items, stage, second=None):
 </div>''' % (crumbs(slug), pill[0], pill[1], h1(plain, grad), fr(lede), ticks(tick_items) if tick_items else '', ctas(second), stage)
 
 
-def hero_center(slug, pill, plain, grad, lede, demo='', second=None, meta=True):
-    return '''<div class="phero center">
+def media(m, cls=''):
+    """A video (name without extension) or an image (name with extension) from media/."""
+    if '.' in m:
+        return '<img src="media/%s" alt="" loading="lazy"%s>' % (m, cls)
+    return '<video data-src="media/%s.mp4" poster="media/%s.poster.webp" muted loop playsinline preload="none"%s></video>' % (m, m, cls)
+
+
+def floats(items):
+    return ''.join('<div class="fl %s%s" aria-hidden="true">%s</div>' % (k, ' sq' if '.' in m else '', media(m)) for k, m in zip('abcd', items))
+
+
+def hero_center(slug, pill, plain, grad, lede, demo='', second=None, meta=True, fl=None):
+    return '''<div class="phero center">%s
   <div class="wrap">
     %s
     <span class="pill"><span class="tag">%s</span> %s</span>
@@ -223,7 +240,7 @@ def hero_center(slug, pill, plain, grad, lede, demo='', second=None, meta=True):
     %s
     %s
   </div>
-</div>''' % (crumbs(slug), pill[0], pill[1], h1(plain, grad), fr(lede), ctas(second), META if meta else '',
+</div>''' % (floats(fl) if fl else '', crumbs(slug), pill[0], pill[1], h1(plain, grad), fr(lede), ctas(second), META if meta else '',
              '<div class="bigdemo">%s</div>' % demo if demo else '')
 
 
@@ -241,16 +258,69 @@ def head(eyebrow, plain, grad='', p='', more=None):
 
 
 def facts(items):
-    return '<div class="facts rv">%s</div>' % ''.join('<div><b>%s</b><span>%s</span></div>' % f for f in items)
+    return '<div class="wrap factsw"><div class="facts rv">%s</div></div>' % ''.join('<div><b>%s</b><span>%s</span></div>' % f for f in items)
 
 
 def steps(items):
     return '<div class="steps3">%s</div>' % ''.join('<div class="step rv"><h3>%s</h3><p>%s</p></div>' % (fr(a), fr(c)) for a, c in items)
 
 
-def features(items):
+def features(items, md=None):
+    if md:
+        return bento(items, md)
     return '<div class="fgrid">%s</div>' % ''.join(
         '<div class="fcard rv"><span class="ic"%s>%s</span><h3>%s</h3><p>%s</p></div>' % (tone(t), ICONS[ic], fr(h), fr(p)) for ic, t, h, p in items)
+
+
+def bento(items, md):
+    """Feature grid with two large cards carrying a video or image (md: two media names)."""
+    n, out, mi = len(items), [], iter(md)
+    for i, (ic, t, h, p) in enumerate(items):
+        big = i in (0, 3)
+        wide = n == 6 and i == 5
+        m = next(mi, None) if big else None
+        txt = '<div><span class="ic"%s>%s</span><h3>%s</h3><p>%s</p></div>' % (tone(t), ICONS[ic], fr(h), fr(p))
+        cls = 'bcard rv' + (' big' if big and m else '') + (' wide' if wide or (big and not m) else '')
+        out.append('<div class="%s"%s>%s%s</div>' % (cls, tone(t), txt, '<div class="md">%s</div>' % media(m) if m else ''))
+    return '<div class="bento">%s</div>' % ''.join(out)
+
+
+def hooks(items):
+    return '<div class="hooks">%s</div>' % ''.join(
+        '<div class="hook rv"><span class="chip">%s</span><q>%s</q><small><b>Pourquoi ça marche :</b> %s</small></div>' % (t, fr(q), fr(w)) for t, q, w in items)
+
+
+XI = '<i><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></i>'
+VI = '<i><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></i>'
+
+
+def pains(big_without, without, big_with, with_):
+    return ('<div class="vs static"><div class="col without rv"><div class="lab">Sans Growthity</div><div class="big">%s</div><ul>%s</ul></div>'
+            '<div class="col with rv"><div class="lab">Avec Growthity</div><div class="big">%s</div><ul>%s</ul></div></div>'
+            % (big_without, ''.join('<li class="x">%s<span>%s</span></li>' % (XI, fr(x)) for x in without),
+               big_with, ''.join('<li class="in">%s%s</li>' % (VI, fr(x)) for x in with_)))
+
+
+def faq2(items, title='Vos questions.', p="Tout ce qu'il faut savoir avant de vous lancer."):
+    return ('<div class="faq2"><div class="fside rv"><div class="eyebrow">Questions fréquentes</div><h2>%s</h2><p>%s</p>'
+            '<a class="more" href="faq.html">Toutes les questions %s</a></div>%s</div>' % (fr(title), fr(p), ARROW, faq(items)))
+
+
+MODELS = ('<div class="models"><p>Propulsé par les meilleurs modèles d\'IA</p><div class="marq" aria-label="Modèles d\'IA utilisés">'
+          '<div class="track" id="models"></div></div></div>')
+
+
+def chat_custom(scens):
+    """Chat demo running this page's own scenarios (labels become the tabs; a single one hides them)."""
+    import json
+    tabs = ''.join('<button role="tab" aria-selected="%s" data-s="%d">%s<span class="pg"><i></i></span></button>'
+                   % ('true' if i == 0 else 'false', i, html.escape(sc['label'])) for i, sc in enumerate(scens))
+    blk = block('chat-demo')
+    i, j = blk.index('<div class="scen"'), blk.index('</div>', blk.index('<div class="scen"')) + 6
+    solo = ' style="display:none"' if len(scens) == 1 else ''
+    blk = blk[:i] + '<div class="scen" role="tablist" aria-label="Scénarios de démonstration"%s>%s</div>' % (solo, tabs) + blk[j:]
+    data = json.dumps([{k: v for k, v in sc.items() if k != 'label'} for sc in scens], ensure_ascii=False).replace('</', '<\\/')
+    return '<script>window.GROWTHITY_SCEN=%s</script>\n%s' % (data, blk)
 
 
 def uses(items):

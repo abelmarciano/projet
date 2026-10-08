@@ -7,6 +7,8 @@
   var LOGO='<svg viewBox="0 0 24 24" fill="none"><path d="M2 17 8.5 10.5 13.5 15.5 22 7M16 7h6v6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var CUR='<svg viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.5L16 20l-3 1.5-3.5-7.5L4 18Z" fill="#0F172A" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>';
   function vid(src,attrs){return '<video data-src="media/'+src+'.mp4" poster="media/'+src+'.poster.webp" autoplay muted loop playsinline preload="none"'+(attrs||'')+'></video>'}
+  function initialsLogo(name,col){var t=name.split(/\s+/).filter(function(w){return w.length>2||w===name}).slice(0,2).map(function(w){return w.charAt(0)}).join('').toUpperCase()||name.charAt(0);
+    return '<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="'+(col||'#334155')+'"/><text x="16" y="20.5" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" fill="#fff">'+t+'</text></svg>'}
   function fmtN(n){return Math.round(n).toLocaleString('fr-FR')}
 
   /* ---------- demo runner: plays when visible, pauses off-screen, restartable ---------- */
@@ -69,7 +71,8 @@
   if($('#models'))$('#models').innerHTML=mh+mh;
 
   /* ---------- 1. chat demo ---------- */
-  var SCEN=[
+  /* a page can bring its own scenarios (solution pages) through window.GROWTHITY_SCEN */
+  var SCEN=window.GROWTHITY_SCEN||[
     {credits:9340,steps:[
       {u:"Je vends un sérum vitamine C sur ma boutique Shopify. Je veux une vidéo qui fait vraie cliente, pas une pub."},
       {a:"Je pars sur un témoignage UGC face caméra, angle avant / après, zéro discours commercial. J'ai importé ton produit depuis ta boutique :",card:{t:'prod',img:'img-serum-pack',name:'Sérum Vitamine C · 30 ml',sub:'Importé depuis Shopify · 9 photos'}},
@@ -138,7 +141,7 @@
       $('.sendm',n).remove();
       var row=document.createElement('div');row.className='metarow pop';
       var site=c.site||(c.brand.toLowerCase().normalize('NFD').replace(/[^a-z]/g,'')+'.fr');
-      row.innerHTML='<div class="fbp"><div class="hd"><i>'+((typeof LOGOS!=='undefined'&&LOGOS[c.logo])||'')+'</i><div><b>'+c.brand+'</b><small>Sponsorisé · <svg viewBox="0 0 16 16" width="10" height="10" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm4.9 6.3h-2.1a11 11 0 0 0-.9-3.9 5.6 5.6 0 0 1 3 3.9ZM8 2.5c.6.8 1.2 2.5 1.4 4.8H6.6C6.8 5 7.4 3.3 8 2.5Zm-1.9.9a11 11 0 0 0-.9 3.9H3.1a5.6 5.6 0 0 1 3-3.9ZM3.1 8.7h2.1c.1 1.4.4 2.8.9 3.9a5.6 5.6 0 0 1-3-3.9ZM8 13.5c-.6-.8-1.2-2.5-1.4-4.8h2.8C9.2 11 8.6 12.7 8 13.5Zm1.9-.9c.5-1.1.8-2.5.9-3.9h2.1a5.6 5.6 0 0 1-3 3.9Z"/></svg></small></div><span class="dots3">···</span></div>'+
+      row.innerHTML='<div class="fbp"><div class="hd"><i>'+((typeof LOGOS!=='undefined'&&LOGOS[c.logo])||initialsLogo(c.brand,c.color))+'</i><div><b>'+c.brand+'</b><small>Sponsorisé · <svg viewBox="0 0 16 16" width="10" height="10" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm4.9 6.3h-2.1a11 11 0 0 0-.9-3.9 5.6 5.6 0 0 1 3 3.9ZM8 2.5c.6.8 1.2 2.5 1.4 4.8H6.6C6.8 5 7.4 3.3 8 2.5Zm-1.9.9a11 11 0 0 0-.9 3.9H3.1a5.6 5.6 0 0 1 3-3.9ZM3.1 8.7h2.1c.1 1.4.4 2.8.9 3.9a5.6 5.6 0 0 1-3-3.9ZM8 13.5c-.6-.8-1.2-2.5-1.4-4.8h2.8C9.2 11 8.6 12.7 8 13.5Zm1.9-.9c.5-1.1.8-2.5.9-3.9h2.1a5.6 5.6 0 0 1-3 3.9Z"/></svg></small></div><span class="dots3">···</span></div>'+
         '<div class="tx">'+c.text+'</div><div class="md">'+vid(c.video)+'</div>'+
         '<div class="ft"><div><small>'+site.toUpperCase()+'</small><b>'+c.headline+'</b></div><span>'+c.cta+'</span></div>'+
         '<div class="rc"><span class="re"><i class="lk">👍</i><i class="ht">❤</i>1,2 k</span><span>48 commentaires · 12 partages</span></div>'+

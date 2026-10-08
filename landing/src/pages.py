@@ -19,7 +19,7 @@ def build_pages(b):
 
     def tail(rel, qa, faq_title='Vos questions.'):
         return stack(
-            sec(stack(head('Questions fréquentes', faq_title), b.faq(qa)), style='padding-top:40px') if qa else '',
+            sec(b.faq2(qa, faq_title)) if qa else '',
             sec(stack(head('À découvrir aussi', 'Allez plus loin', 'avec Growthity.'), b.related(rel)), cls='tint', style='padding-top:60px'),
             b.final())
 
@@ -46,6 +46,7 @@ def build_pages(b):
                         b.hero_center('chat-ia', ('Produit', 'Chat créatif IA'), 'Votre agence créative,', 'dans un chat.',
                                       "Décrivez ce que vous vendez. Le chat écrit le script, choisit l'acteur, génère la vidéo et le visuel, puis lance la campagne sur Meta. Vous validez chaque étape, comme avec un collègue.",
                                       demo=chat()),
+                        b.MODELS,
                         b.facts([('2 min', 'du brief à la pub en ligne'), ('500+', 'acteurs UGC IA'), ('9:16 · 1:1 · 4:5', 'tous les formats Meta'), ('0 %', 'de commission sur le budget')]),
                         sec(stack(head('Comment ça marche', 'Trois messages,', 'une campagne.'),
                                   b.steps([('Décrivez votre produit', "Une phrase suffit, ou collez le lien de votre fiche produit : photos, prix et arguments sont récupérés automatiquement."),
@@ -57,7 +58,7 @@ def build_pages(b):
                                               ('user', 'blue', 'Casting en un message', "Trois profils d'acteurs adaptés à votre cible, parmi plus de 500. Ou votre propre acteur, créé depuis une photo."),
                                               ('wand', 'orange', 'Retouches en une phrase', "« Plus court », « change l'accroche », « ajoute le prix » : seule la partie concernée est régénérée."),
                                               ('send', 'meta', 'Publication intégrée', "Audience, zone, budget et objectif se règlent dans la conversation. Pas besoin d'ouvrir le Gestionnaire de publicités."),
-                                              ('chart', 'green', 'Il lit vos résultats', "Demandez « Comment va ma campagne ? » : le chat répond avec vos chiffres et vous dit quoi faire ensuite.")])), cls='tint'),
+                                              ('chart', 'green', 'Il lit vos résultats', "Demandez « Comment va ma campagne ? » : le chat répond avec vos chiffres et vous dit quoi faire ensuite.")], md=['img-serum-pack.webp', 'real-42'])), cls='tint'),
                         tail(['acteurs-ugc', 'formats', 'publication-meta'], [
                             ("Faut-il savoir rédiger un brief ?", "Non. Écrivez comme vous parleriez à un collègue : ce que vous vendez, à qui, et ce que vous voulez obtenir. Le chat pose les bonnes questions s'il lui manque quelque chose."),
                             ("Puis-je garder la main sur chaque étape ?", "Oui. Rien n'est publié sans votre validation. Vous pouvez changer l'angle, l'acteur, le texte ou le visuel à tout moment."),
@@ -90,7 +91,7 @@ def build_pages(b):
                                                   ('mic', 'indigo', 'Voix naturelles en français', "Intonations, pauses, accents du quotidien. Le texte sonne parlé, pas lu."),
                                                   ('users', 'blue', 'Tous les profils', "Âges, styles, univers : choisissez la personne qui ressemble à votre client idéal."),
                                                   ('refresh', 'green', 'Toujours disponibles', "Une nouvelle accroche, une nouvelle version, un nouveau format : l'acteur rejoue la scène en quelques minutes."),
-                                                  ('text', 'slate', 'Sous-titres inclus', "Sous-titres animés générés automatiquement, pour les 85 % de vidéos regardées sans le son.")]))),
+                                                  ('text', 'slate', 'Sous-titres inclus', "Sous-titres animés générés automatiquement, pour les 85 % de vidéos regardées sans le son.")], md=['real-14', 'actor-thomas']))),
                             tail(['chat-ia', 'formats', 'editeur-video'], [
                                 ("Les acteurs sont-ils de vraies personnes ?", "Ce sont des acteurs générés par IA, conçus pour être réalistes. Vous pouvez aussi créer un acteur à partir de votre propre photo."),
                                 ("Puis-je utiliser le même acteur sur plusieurs pubs ?", "Oui. Un acteur peut porter toutes vos campagnes, pour une image de marque cohérente."),
@@ -108,7 +109,7 @@ def build_pages(b):
                                               ('copy', 'orange', 'Carrousel', "Trois à dix cartes qui racontent une histoire : bénéfice, preuve, offre. Généré d'un coup."),
                                               ('layers', 'indigo', 'Variantes à tester', "Plusieurs accroches et visuels pour la même idée, pour laisser Meta trouver la meilleure."),
                                               ('text', 'green', 'Textes de pub', "Texte principal, titre et bouton d'action, écrits pour Meta et adaptés à chaque créa."),
-                                              ('wand', 'slate', 'Retouches en langage naturel', "« Fond plus clair », « produit plus grand » : décrivez, l'IA corrige.")])), cls='tint'),
+                                              ('wand', 'slate', 'Retouches en langage naturel', "« Fond plus clair », « produit plus grand » : décrivez, l'IA corrige.")], md=['real-05', 'lessive-linge.webp'])), cls='tint'),
                         sec(stack(head('Comment ça marche', 'De l\'idée au lot', 'prêt à publier.'),
                                   b.steps([('Décrivez', "Votre produit, votre cible et le ton voulu. Ou partez d'une pub repérée dans l'Espion Meta Ads."),
                                            ('Générez', "Plusieurs moteurs d'IA travaillent en parallèle : la vidéo, le visuel et le carrousel sortent ensemble."),
@@ -129,7 +130,7 @@ def build_pages(b):
                                                     ('text', 'indigo', 'Sous-titres animés', "Mot à mot, mots-clés en couleur, position et style réglables."),
                                                     ('mic', 'blue', 'Nouvelle accroche', "Changez la première phrase : seule cette partie est rejouée par l'acteur."),
                                                     ('layers', 'green', 'Tous les ratios', "Recadrez en 9:16, 1:1 ou 4:5 sans perdre le visage ni le produit."),
-                                                    ('chat', 'slate', 'Ou demandez au chat', "« Rends-la plus courte » : pas besoin de toucher à la timeline.")])), cls='tint'),
+                                                    ('chat', 'slate', 'Ou demandez au chat', "« Rends-la plus courte » : pas besoin de toucher à la timeline.")], md=['gloss-lips.webp', 'real-42'])), cls='tint'),
                               tail(['formats', 'acteurs-ugc', 'templates'], [
                                   ("Faut-il savoir monter ?", "Non. L'éditeur est conçu pour des retouches rapides, et le chat peut faire les modifications à votre place."),
                                   ("Puis-je importer mes propres vidéos ?", "Vous pouvez importer vos images et vos visuels pour les insérer dans les vidéos générées.")])))
@@ -168,7 +169,7 @@ def build_pages(b):
                                                       ('globe', 'blue', 'Facebook et Instagram', "Les placements de chaque pub, et les pubs actives d'un concurrent en un coup d'œil."),
                                                       ('bulb', 'orange', 'Angles et accroches', "Repérez les hooks, les formats et les offres qui reviennent dans votre secteur."),
                                                       ('wand', 'green', 'Inspirer, pas copier', "Le chat reprend le principe qui marche et l'applique à votre produit, avec vos acteurs et votre marque."),
-                                                      ('folder', 'slate', 'Sauvegardez vos trouvailles', "Rangez les pubs repérées dans vos dossiers d'inspiration.")])), cls='tint'),
+                                                      ('folder', 'slate', 'Sauvegardez vos trouvailles', "Rangez les pubs repérées dans vos dossiers d'inspiration.")], md=['ugc-solaire', 'real-12'])), cls='tint'),
                                 tail(['inspiration', 'chat-ia', 'studio-en-lot'], [
                                     ("D'où viennent les pubs ?", "De la Meta Ads Library, la bibliothèque publique de toutes les pubs actives sur Facebook et Instagram. Growthity la parcourt et l'analyse pour vous."),
                                     ("Comment savez-vous qu'une pub marche ?", "Meta ne publie pas les résultats des pubs. Le meilleur indice public est la durée : une pub qui tourne depuis des semaines est presque toujours rentable."),
@@ -187,7 +188,7 @@ def build_pages(b):
                                                        ('users', 'pink', 'Audience', "Âge, genre et centres d'intérêt, proposés par le chat selon votre produit."),
                                                        ('euro', 'green', 'Budget', "Un budget par jour, modifiable à tout moment. Il est facturé par Meta, directement sur votre compte."),
                                                        ('layers', 'blue', 'Placements', "Fil, Stories et Reels sur Facebook et Instagram, chaque créa au bon format."),
-                                                       ('lock', 'slate', 'Votre compte, vos données', "Vous connectez votre compte Meta Business une fois. Les campagnes et l'historique restent à vous.")])), cls='tint'),
+                                                       ('lock', 'slate', 'Votre compte, vos données', "Vous connectez votre compte Meta Business une fois. Les campagnes et l'historique restent à vous.")], md=['real-04-hd', 'real-04'])), cls='tint'),
                                  tail(['pilotage-ia', 'leads-ventes', 'espion-meta-ads'], [
                                      ("Growthity prend-il une commission ?", "Non, 0 %. Votre budget est facturé par Meta sur votre propre compte publicitaire. Growthity ne touche jamais à vos dépenses pub."),
                                      ("Faut-il un compte Meta Business ?", "Oui, un compte publicitaire Meta. Vous le connectez une fois à Growthity, en quelques clics."),
@@ -205,7 +206,7 @@ def build_pages(b):
                                                   ('bulb', 'orange', 'À tester', "De nouveaux angles et accroches à lancer, inspirés de ce qui marche déjà chez vous."),
                                                   ('refresh', 'indigo', 'Fatigue créative', "Un CTR qui baisse et une fréquence qui monte : Growthity vous prévient avant que vos coûts n'explosent."),
                                                   ('chart', 'blue', 'Vos chiffres en clair', "Dépenses, coût par lead ou par vente, ROAS : l'essentiel, sans tableau à 40 colonnes."),
-                                                  ('chat', 'slate', 'Posez vos questions', "« Pourquoi mes coûts montent ? » Le chat répond avec vos données, en français.")])), cls='tint'),
+                                                  ('chat', 'slate', 'Posez vos questions', "« Pourquoi mes coûts montent ? » Le chat répond avec vos données, en français.")], md=['ugc-femme', 'img-bougie.webp'])), cls='tint'),
                             sec(feat(copy('Dans le chat', 'Posez la question.', 'Le chat lit vos résultats.',
                                           "Demandez comment va votre campagne : le chat répond avec vos chiffres, vous montre les derniers leads et vous dit quoi faire.",
                                           ['Résumé de la semaine en une phrase', 'Leads et ventes reliés à chaque pub', 'Actions appliquées sur Meta en un clic'], more=('Voir Leads & ventes', 'leads-ventes.html')),
@@ -239,6 +240,7 @@ def build_pages(b):
                           b.hero_center('ecommerce', ('Solutions', 'E-commerce'), 'Des pubs qui font', 'vendre vos produits.',
                                         "Importez un produit depuis votre boutique, Growthity crée la vidéo UGC avec un acteur qui le tient en main, le visuel et le carrousel, puis lance la campagne de ventes sur Meta.",
                                         demo=chat(0), second=('Voir l\'Espion Meta Ads', 'espion-meta-ads.html')),
+                          sec(stack(head('Les angles qui marchent', 'Des accroches', 'qui arrêtent le pouce.', "Des exemples d'angles que le chat vous propose, et pourquoi ils fonctionnent sur Meta."), b.hooks([('Avant / après', '3 semaines, zéro fond de teint.', "Un résultat daté, raconté par quelqu'un qui ressemble à votre cliente."), ('Unboxing', 'Je l\'ai reçu ce matin, je vous montre.', "La découverte en direct crée la même excitation que l'achat."), ('Comparaison', 'J\'ai arrêté mon ancien produit pour celui-là.', "Parler à ceux qui utilisent déjà un concurrent, c'est viser des acheteurs.")])), cls='night'),
                           sec(stack(head('Pour tous les produits', 'Beauté, mode, maison,', 'tech, food…'),
                                     b.uses([('Beauté & skincare', None), ('Mode & accessoires', None), ('Maison & déco', None), ('Tech & gadgets', None), ('Food & boissons', None),
                                             ('Sport & bien-être', None), ('Bébé & enfants', None), ('Animaux', None), ('Bijoux', None), ('Cadeaux', None)]))),
@@ -260,6 +262,7 @@ def build_pages(b):
                           b.hero_center('b2b-leads', ('Solutions', 'B2B & services'), 'Des leads qualifiés,', 'chaque semaine.',
                                         "Cabinet, agence, SaaS, formation, conseil : Growthity crée des vidéos au ton pro, publie des campagnes de leads avec formulaire Meta, et vous montre quels contacts viennent de quelle pub.",
                                         demo=chat(1), second=('Voir Leads & ventes', 'leads-ventes.html')),
+                          sec(stack(head('Les angles qui marchent', 'Des accroches', 'qui arrêtent le pouce.', "Des exemples d'angles que le chat vous propose, et pourquoi ils fonctionnent sur Meta."), b.hooks([('Problème', 'Vous passez vos soirées à trier des CV ?', "Nommer la douleur exacte de votre client fait se reconnaître le bon décideur."), ('Preuve', 'Comment on a réduit nos délais de moitié.', "Un résultat concret vaut mieux qu'une liste de services."), ('Fondateur', 'Je suis le fondateur, et voici pourquoi on existe.', "En B2B, on achète d'abord une personne en qui on a confiance.")])), cls='night'),
                           sec(feat(copy('Leads', 'Posez la question.', 'Voyez vos leads.',
                                         "Le chat résume vos résultats, vous montre les derniers leads et la pub qui les a apportés. Vous rappelez les bons contacts au bon moment.",
                                         ['Formulaires instantanés Meta', 'Leads en direct dans Growthity', 'Coût par lead par créa'], more=('Découvrir Leads & ventes', 'leads-ventes.html')),
@@ -281,6 +284,7 @@ def build_pages(b):
                                b.hero_center('commerce-local', ('Solutions', 'Commerce local'), 'Des clients', 'autour de chez vous.',
                                              "Restaurant, artisan, salon, garage, agence : Growthity crée une pub qui montre votre savoir-faire et la diffuse uniquement aux personnes de votre zone, avec le budget que vous choisissez.",
                                              demo=chat(2), second=('Voir la publication Meta', 'publication-meta.html')),
+                          sec(stack(head('Les angles qui marchent', 'Des accroches', 'qui arrêtent le pouce.', "Des exemples d'angles que le chat vous propose, et pourquoi ils fonctionnent sur Meta."), b.hooks([('Savoir-faire', 'Votre cuisine, fabriquée à 20 km de chez vous.', "Montrer l'atelier et les mains au travail inspire confiance immédiatement."), ('Avis', '4,9 étoiles sur Google, voilà pourquoi.', "Les avis locaux sont la première chose qu'on vérifie avant d'appeler."), ('Offre locale', 'Devis gratuit en 48 h dans toute la métropole.', "Une promesse simple, datée et locale déclenche la prise de contact.")])), cls='night'),
                                sec(feat(copy('Ciblage local', 'Votre ville,', 'votre rayon.',
                                              "Choisissez des villes, des départements ou un rayon autour de votre adresse. La portée estimée s'affiche en direct, le budget reste sous contrôle.",
                                              ['Ville, département ou rayon', 'Budget dès quelques euros par jour', 'Appels, devis ou réservations'], more=('Découvrir la publication Meta', 'publication-meta.html')),
@@ -301,7 +305,7 @@ def build_pages(b):
                     stack(
                         b.hero_center('agences', ('Solutions', 'Agences'), 'Toutes vos marques,', 'une seule app.',
                                       "Un workspace par client, votre équipe avec les bons rôles, des lots de créas produits en minutes et des campagnes pilotées par l'IA. Livrez plus, sans recruter.",
-                                      second=('Voir le Studio en lot', 'studio-en-lot.html')),
+                                      second=('Voir le Studio en lot', 'studio-en-lot.html'), fl=['ugc-femme', 'img-bougie.webp', 'actor-claire', 'img-sneakers.webp']),
                         sec(stack(minis('m-team', 'm-fold', 'm-clone'))),
                         sec(feat(copy('Production', 'Un nouveau client ?', 'Un lot de créas le jour même.',
                                       "Collez son site : Growthity analyse la marque, propose les angles et produit le lot. Votre équipe valide, ajuste et publie.",
@@ -352,7 +356,7 @@ def build_pages(b):
                                                 ('spark', 'indigo', 'Packshot animé', "Rotation, zoom et reflets : le produit sous tous les angles."),
                                                 ('bag', 'blue', 'Unboxing', "Ouverture du colis et découverte du produit, comme une cliente."),
                                                 ('refresh', 'green', 'Avant / après', "Le résultat de votre produit, montré en deux temps."),
-                                                ('calendar', 'slate', 'Saisonnier', "Noël, fête des mères, soldes : le même produit, l'ambiance du moment.")])), cls='tint'),
+                                                ('calendar', 'slate', 'Saisonnier', "Noël, fête des mères, soldes : le même produit, l'ambiance du moment.")], md=['img-sneakers.webp', 'bougie-916'])), cls='tint'),
                           tail(['formats', 'studio-en-lot', 'inspiration'], [
                               ("Quelle photo faut-il ?", "Une photo nette du produit, idéalement détouré ou sur fond simple. Celles de votre site conviennent très bien."),
                               ("Puis-je ajouter un acteur ?", "Oui : partez du template, puis demandez au chat d'ajouter un acteur UGC qui présente le produit.")])))
@@ -422,7 +426,7 @@ def build_pages(b):
                           stack(
                               b.hero_center('guide-pub-ugc', ('Guide', '8 min de lecture'), 'La pub UGC', 'qui convertit.',
                                             "Hooks, scripts, acteurs, formats, tests : tout ce qu'il faut savoir pour créer des vidéos UGC qui vendent sur Facebook et Instagram, sans agence.",
-                                            second=('Voir la démo', b.HOME + '#demo'), meta=False),
+                                            second=('Voir la démo', b.HOME + '#demo'), meta=False, fl=['real-42', 'img-serum.webp', 'real-12', 'lessive-bottle.webp']),
                               sec(b.fr(article), style='padding-top:0'),
                               tail(['chat-ia', 'espion-meta-ads', 'pilotage-ia'], [])))
 
@@ -440,7 +444,7 @@ def build_pages(b):
                                 stack(
                                     b.hero_center('growthity-vs-agence', ('Comparatif', 'Agence vs Growthity'), 'Growthity ou une agence ?', 'Le vrai comparatif.',
                                                   "Une agence apporte du conseil et du temps humain. Growthity apporte la vitesse, le volume de tests et le contrôle total, sans commission sur votre budget. Voici les différences, honnêtement.",
-                                                  meta=False),
+                                                  meta=False, fl=['actor-thomas', 'img-macbook.webp', 'real-14', 'img-bougie.webp']),
                                     sec(table, style='padding-top:0'),
                                     blk('vs'),
                                     sec(stack(head('Le bon choix', 'Growthity est fait pour vous', 'si…'),
@@ -464,8 +468,11 @@ def build_pages(b):
                 "Crédits, publication Meta, commission, acteurs, données, équipes : toutes les réponses sur Growthity.",
                 stack(
                     b.hero_center('faq', ('Aide', 'FAQ'), 'Questions', 'fréquentes.',
-                                  "Tout ce qu'il faut savoir sur Growthity : création, publication sur Meta, budget, équipe et données.", meta=False),
+                                  "Tout ce qu'il faut savoir sur Growthity : création, publication sur Meta, budget, équipe et données.", meta=False, fl=['real-19', 'img-serum-pack.webp', 'real-40', 'gloss-lips.webp']),
                     sec(faqs, style='padding-top:0'),
                     sec(stack(head('À découvrir aussi', 'Allez plus loin', 'avec Growthity.'), b.related(['chat-ia', 'espion-meta-ads', 'guide-pub-ugc'])), cls='tint', style='padding-top:60px'),
                     b.final()))
+    from solutions import SECTORS, build_sector
+    for slug, d in SECTORS.items():
+        P[slug] = build_sector(b, slug, d)
     return P

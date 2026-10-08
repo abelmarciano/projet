@@ -4,20 +4,32 @@
 PAGES = {
   # Produit · Créer
   'chat-ia':            ('produit', 'Chat créatif IA', 'Du brief à la pub, en une conversation', 'chat', 'indigo', 'lena-serum.poster.webp'),
-  'acteurs-ugc':        ('produit', '500+ acteurs UGC IA', 'Ou le vôtre, depuis une simple photo', 'user', 'pink', 'real-14.poster.webp'),
+  'acteurs-ugc':        ('produit', '500+ acteurs UGC IA', 'Ou le vôtre, depuis une simple photo', 'user', 'pink', 'actor-zoe.poster.webp'),
   'formats':            ('produit', 'Vidéos, visuels & carrousels', 'Tous les formats Meta en un brief', 'layers', 'blue', 'lessive-bottle.webp'),
   'editeur-video':      ('produit', 'Éditeur vidéo', 'Coupez, insérez, sous-titrez', 'film', 'orange', 'gloss-lips.webp'),
   'studio-en-lot':      ('produit', 'Studio en lot', 'Une campagne entière depuis votre site', 'grid', 'green', 'img-bougie.webp'),
   # Produit · Diffuser & piloter
-  'espion-meta-ads':    ('produit', 'Espion Meta Ads', 'Growthity trouve les pubs qui marchent', 'search', 'slate', 'real-12.poster.webp'),
-  'publication-meta':   ('produit', 'Publication Meta Ads', 'Audience, budget, en ligne en un clic', 'send', 'meta', 'real-04-hd.poster.webp'),
-  'pilotage-ia':        ('produit', 'Pilotage IA', 'Le media buyer qui vous dit quoi faire', 'chart', 'cyan', 'real-40.poster.webp'),
+  'espion-meta-ads':    ('produit', 'Espion Meta Ads', 'Growthity trouve les pubs qui marchent', 'search', 'slate', 'ugc-solaire.poster.webp'),
+  'publication-meta':   ('produit', 'Publication Meta Ads', 'Audience, budget, en ligne en un clic', 'send', 'meta', 'real-04.poster.webp'),
+  'pilotage-ia':        ('produit', 'Pilotage IA', 'Le media buyer qui vous dit quoi faire', 'chart', 'cyan', 'ugc-femme.poster.webp'),
   'leads-ventes':       ('produit', 'Leads & ventes', 'Chaque lead relié à la pub qui l\'a apporté', 'target', 'green', 'ugc-homme.poster.webp'),
   # Solutions
   'ecommerce':          ('solutions', 'E-commerce', 'Des pubs qui font vendre vos produits', 'bag', 'pink', 'img-serum.webp'),
-  'b2b-leads':          ('solutions', 'B2B & services', 'Des leads qualifiés, chaque semaine', 'briefcase', 'blue', 'actor-claire.poster.webp'),
+  'b2b-leads':          ('solutions', 'B2B & services', 'Des leads qualifiés, chaque semaine', 'briefcase', 'blue', 'img-macbook.webp'),
   'commerce-local':     ('solutions', 'Commerce local & artisans', 'Des clients autour de chez vous', 'pin', 'orange', 'ugc-scierie.poster.webp'),
-  'agences':            ('solutions', 'Agences', 'Toutes vos marques, une seule app', 'users', 'indigo', 'real-06.poster.webp'),
+  'agences':            ('solutions', 'Agences', 'Toutes vos marques, une seule app', 'users', 'indigo', 'actor-claire.poster.webp'),
+  'franchises-reseaux': ('solutions', 'Franchises & réseaux', 'Une campagne locale par point de vente', 'store', 'green', 'ugc-pac-awa.poster.webp'),
+  # Solutions · par secteur
+  'beaute-cosmetique':  ('solutions', 'Beauté & cosmétique', 'Skincare, maquillage, soins', 'spark', 'pink', 'real-42.poster.webp'),
+  'maison-deco':        ('solutions', 'Maison & entretien', 'Déco, bougies, produits ménagers', 'home', 'orange', 'real-05.poster.webp'),
+  'restauration':       ('solutions', 'Restauration', 'Restaurants, bars, food', 'utensils', 'orange', 'real-04-hd.poster.webp'),
+  'renovation-energie': ('solutions', 'Rénovation & énergie', 'Solaire, pompes à chaleur, travaux', 'bolt', 'green', 'real-12.poster.webp'),
+  'formation-coaching': ('solutions', 'Formation & coaching', 'Formations, coachs, consultants', 'book', 'indigo', 'real-14.poster.webp'),
+  'immobilier':         ('solutions', 'Immobilier', 'Agences, mandataires, promoteurs', 'key', 'blue', 'actor-claire.poster.webp'),
+  'tech-applis':        ('solutions', 'Tech & applis', 'SaaS, applis, objets connectés', 'phone', 'cyan', 'real-40.poster.webp'),
+  # Solutions · par objectif
+  'lancement-produit':  ('solutions', 'Lancer un produit', 'Faire connaître une nouveauté, vite', 'rocket', 'pink', 'real-19.poster.webp'),
+  'recrutement':        ('solutions', 'Recruter', 'Des candidats, pas seulement des clients', 'users', 'slate', 'actor-thomas.poster.webp'),
   # Ressources
   'inspiration':        ('ressources', 'Galerie d\'inspiration', 'Les pubs qui performent, par secteur', 'bulb', 'orange', 'real-19.poster.webp'),
   'templates':          ('ressources', 'Templates vidéo produit', 'Votre photo produit, mise en scène', 'spark', 'pink', 'img-sneakers.webp'),
@@ -29,7 +41,12 @@ PAGES = {
 GROUPS = {
   'produit': ('Produit', [('Créer', ['chat-ia', 'acteurs-ugc', 'formats', 'editeur-video', 'studio-en-lot']),
                           ('Diffuser & piloter', ['espion-meta-ads', 'publication-meta', 'pilotage-ia', 'leads-ventes'])]),
-  'solutions': ('Solutions', [('Par activité', ['ecommerce', 'b2b-leads']), ('', ['commerce-local', 'agences'])]),
+  'solutions': ('Solutions', [('Par activité', ['ecommerce', 'b2b-leads', 'commerce-local', 'agences', 'franchises-reseaux']),
+                              ('Par secteur', ['beaute-cosmetique', 'maison-deco', 'restauration', 'renovation-energie', 'formation-coaching', 'immobilier', 'tech-applis']),
+                              ('Par objectif', [('ecommerce', 'Vendre en ligne', 'Des ventes reliées à chaque pub', 'bag', 'pink'),
+                                                ('b2b-leads', 'Générer des leads', 'Des contacts qualifiés chaque semaine', 'target', 'blue'),
+                                                ('commerce-local', 'Attirer en boutique', 'Des clients dans votre zone', 'pin', 'orange'),
+                                                'lancement-produit', 'recrutement'])]),
   'ressources': ('Ressources', [('Apprendre', ['guide-pub-ugc', 'growthity-vs-agence', 'faq']), ('S\'inspirer', ['inspiration', 'templates'])]),
 }
 
@@ -38,7 +55,6 @@ NEW = {'espion-meta-ads'}
 # Featured card at the right of each mega-menu panel: (media, is_video, chip, title, text, href)
 FEATURED = {
   'produit': ('lena-serum', True, 'Démo', 'Du brief à Meta en 2 minutes', 'Regardez le chat créer et publier une pub complète.', 'chat-ia.html'),
-  'solutions': ('ugc-scierie', True, 'Tous secteurs', 'Produits, services, local : ça marche pour tout', 'Si ça se vend, Growthity sait en faire une pub.', 'chat-ia.html'),
   'ressources': ('real-42', True, 'Guide', 'La pub UGC qui convertit', 'Hooks, scripts et formats qui marchent sur Meta.', 'guide-pub-ugc.html'),
 }
 
@@ -88,6 +104,10 @@ ICONS = {k: _P % v for k, v in {
   'image': '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/>',
   'play': '<circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4Z"/>',
   'phone': '<rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/>',
+  'home': '<path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10M10 20v-6h4v6"/>',
+  'utensils': '<path d="M7 3v8a2 2 0 0 0 2 2v8M5 3v5M9 3v5M17 3c-2 1-3 4-3 7h3v11"/>',
+  'key': '<circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3M15 8l2 2"/>',
+  'rocket': '<path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2M9 15l-3-3c1-4 4-9 12-9 0 8-5 11-9 12Z"/><circle cx="14.5" cy="9.5" r="1.5"/>',
   'calendar': '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
 }.items()}
 
