@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Growthity · Pubs Meta par IA</title>
+<meta name="description" content="Décrivez votre produit en une phrase : vidéos UGC, visuels et carrousels sont créés par l'IA, puis publiés sur Meta en un clic.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: dark studio, centred hero over a tilted wall of real UGC actors, then a bento of product moments, one closing CTA. */
+:root{
+  color-scheme:dark;
+  --bg:#07060C;          /* studio black, violet bias */
+  --bg-2:#0E0C17;        /* raised surface */
+  --bg-3:#151225;        /* card inner */
+  --line:rgba(196,186,255,.10);
+  --line-2:rgba(196,186,255,.18);
+  --fg:#F5F3FF;
+  --muted:#A8A3C2;
+  --dim:#6E6990;
+  --blue:#2563EB;
+  --indigo:#5B3FE4;
+  --violet:#6552E8;
+  --violet-hi:#9C86FF;
+  --purple:#9333EA;
+  --pink:#E0479E;
+  --meta:#0866FF;
+  --ok:#22C17A;
+  --ok-bg:rgba(34,193,122,.12);
+  --white:#FFFFFF;
+  --ink:#0F172A;
+  --grad:linear-gradient(120deg,var(--blue) 0%,var(--indigo) 52%,var(--purple) 100%);
+  --grad-pink:linear-gradient(100deg,var(--violet-hi) 0%,var(--purple) 50%,var(--pink) 100%);
+  --display:"Space Grotesk","Inter",system-ui,sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:22px;
+  --wrap:1200px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--violet-hi);outline-offset:3px;border-radius:8px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.03em;text-wrap:balance;margin:0}
+p{margin:0}
+.grad{background:var(--grad-pink);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--violet-hi)}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 22px;border-radius:999px;font-weight:600;font-size:15px;border:0;cursor:pointer;font-family:var(--body);transition:transform .2s,box-shadow .2s,background .2s;white-space:nowrap}
+.btn-grad{background:var(--grad);color:var(--white);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 14px 40px -12px rgba(101,82,232,.9)}
+.btn-grad:hover{transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 20px 50px -12px rgba(146,120,255,1)}
+.btn-ghost{background:rgba(255,255,255,.04);color:var(--fg);border:1px solid var(--line-2)}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.btn svg{width:18px;height:18px}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);background:rgba(7,6,12,.62);border-bottom:1px solid transparent;transition:border-color .3s}
+.nav.scrolled{border-bottom-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:20px}
+.logo{display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:-.01em}
+.logo svg{width:28px;height:28px}
+.logo b{font-weight:600;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;background-image:linear-gradient(120deg,#5B8BFF,var(--violet-hi),#C084FC)}
+.nav-links{display:flex;gap:30px;font-size:14px;color:var(--muted)}
+.nav-links a:hover{color:var(--fg)}
+.nav .btn{height:40px;font-size:14px;padding:0 18px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding-top:72px;text-align:center;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:-200px 0 auto;height:900px;z-index:-1;background:
+  radial-gradient(600px 380px at 50% 18%,rgba(101,82,232,.45),transparent 70%),
+  radial-gradient(500px 300px at 20% 40%,rgba(37,99,235,.18),transparent 70%),
+  radial-gradient(500px 300px at 80% 40%,rgba(224,71,158,.14),transparent 70%)}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;opacity:.5;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 60% 50% at 50% 20%,#000,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 60% 50% at 50% 20%,#000,transparent 75%)}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border-radius:999px;border:1px solid var(--line-2);background:rgba(255,255,255,.03);font-size:13px;color:var(--muted)}
+.pill .tag{background:var(--grad);color:var(--white);border-radius:999px;padding:3px 10px;font-weight:600;font-size:12px}
+.hero h1{font-size:clamp(42px,7.4vw,92px);line-height:.98;font-weight:700;margin:26px auto 0;max-width:15ch}
+.hero .lede{margin:24px auto 0;max-width:600px;font-size:clamp(16px,2vw,19px);color:var(--muted)}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+.hero-meta{margin-top:18px;font-size:13px;color:var(--dim);display:flex;gap:8px 18px;justify-content:center;flex-wrap:wrap}
+.hero-meta span{display:inline-flex;align-items:center;gap:6px}
+.hero-meta svg{width:14px;height:14px;color:var(--ok)}
+
+/* prompt bar floating over the wall */
+.prompt{position:relative;z-index:3;margin:56px auto -36px;max-width:720px;display:flex;align-items:center;gap:12px;padding:10px 10px 10px 20px;border-radius:20px;background:rgba(21,18,37,.82);border:1px solid var(--line-2);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 30px 80px -20px rgba(0,0,0,.8),0 0 0 6px rgba(101,82,232,.08);text-align:left}
+.prompt .spark{width:22px;height:22px;flex:none;color:var(--violet-hi)}
+.prompt .txt{flex:1;min-width:0;font-size:15px;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prompt .caret{display:inline-block;width:2px;height:1.1em;background:var(--violet-hi);vertical-align:-3px;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.prompt .btn{height:42px;font-size:14px;padding:0 16px}
+
+/* video wall */
+.wall{position:relative;height:560px;margin-top:0;perspective:1400px;overflow:hidden;mask-image:linear-gradient(to bottom,transparent 0,#000 14%,#000 72%,transparent 100%),linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 14%,#000 72%,transparent 100%);mask-composite:intersect;-webkit-mask-composite:source-in}
+.wall-inner{position:absolute;left:50%;top:40px;width:2200px;margin-left:-1100px;transform:rotateX(18deg) rotateZ(-5deg);transform-origin:50% 0;display:flex;flex-direction:column;gap:18px}
+.row{display:flex;gap:18px;width:max-content;animation:slide 60s linear infinite}
+.row.rev{animation-direction:reverse;animation-duration:70s}
+.row.slow{animation-duration:84s}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tile{position:relative;flex:none;width:168px;aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:var(--bg-3);border:1px solid var(--line);box-shadow:0 20px 50px -20px rgba(0,0,0,.9)}
+.tile video,.tile img{width:100%;height:100%;object-fit:cover}
+.tile .nm{position:absolute;left:10px;bottom:10px;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:rgba(7,6,12,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.tile.sq{aspect-ratio:1/1;width:300px;align-self:center}
+.tile.live::after{content:"● En ligne";position:absolute;top:10px;left:10px;font-size:11px;font-weight:600;color:var(--ok);background:rgba(7,6,12,.7);padding:3px 8px;border-radius:999px}
+
+/* ---------- proof strip ---------- */
+.strip{border-block:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.015),transparent)}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);padding-block:30px}
+.stat{padding:6px 24px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:0;padding-left:0}
+.stat b{display:block;font-family:var(--display);font-size:clamp(26px,3.4vw,38px);font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.stat>span{font-size:14px;color:var(--muted)}
+
+/* ---------- sections ---------- */
+section{padding-block:120px}
+.head{max-width:720px;margin:0 auto 56px;text-align:center}
+.head h2{font-size:clamp(34px,5vw,60px);line-height:1.02;margin-top:14px}
+.head p{margin-top:18px;color:var(--muted);font-size:18px}
+
+/* bento */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.card{position:relative;overflow:hidden;border-radius:var(--r);background:var(--bg-2);border:1px solid var(--line);padding:28px;display:flex;flex-direction:column;min-width:0}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(400px 200px at var(--mx,50%) var(--my,0%),rgba(146,120,255,.14),transparent 70%);opacity:0;transition:opacity .3s}
+.card:hover::before{opacity:1}
+.card h3{font-size:24px;line-height:1.15;font-weight:600}
+.card .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card .k i{width:6px;height:6px;border-radius:3px;background:var(--violet-hi);box-shadow:0 0 10px var(--violet-hi)}
+.card p.d{margin-top:10px;color:var(--muted);font-size:15px;max-width:46ch}
+.c-chat{grid-column:span 4}
+.c-actors{grid-column:span 2}
+.c-formats{grid-column:span 2}
+.c-spy{grid-column:span 4}
+.c-pub{grid-column:span 3}
+.c-geo{grid-column:span 3}
+.demo{margin-top:26px;flex:1;display:flex;min-height:0}
+
+/* chat demo */
+.chat{display:grid;grid-template-columns:1fr 210px;gap:22px;width:100%;align-items:end}
+.msgs{display:flex;flex-direction:column;gap:12px;min-width:0}
+.bub{max-width:92%;padding:12px 16px;border-radius:18px;font-size:14px;line-height:1.5}
+.bub.me{align-self:flex-end;background:var(--grad);border-bottom-right-radius:6px;color:var(--white)}
+.bub.ai{align-self:flex-start;background:var(--bg-3);border:1px solid var(--line);border-bottom-left-radius:6px}
+.steps{list-style:none;padding:0;margin:10px 0 0;display:flex;flex-direction:column;gap:8px}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted)}
+.steps li b{color:var(--fg);font-weight:600}
+.chk{flex:none;width:18px;height:18px;border-radius:9px;background:var(--ok-bg);color:var(--ok);display:grid;place-items:center;margin-top:1px}
+.chk svg{width:11px;height:11px}
+.phone{position:relative;border-radius:30px;padding:7px;background:linear-gradient(160deg,#2a2546,#0f0d1a);box-shadow:0 40px 80px -30px rgba(101,82,232,.7),inset 0 0 0 1px rgba(255,255,255,.08)}
+.phone .scr{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:9/16;background:#000}
+.phone video{width:100%;height:100%;object-fit:cover}
+.snd{position:absolute;right:10px;bottom:10px;width:36px;height:36px;border-radius:18px;border:0;background:rgba(7,6,12,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:var(--white);display:grid;place-items:center;cursor:pointer}
+.snd svg{width:18px;height:18px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--muted)}
+.chip.ok{background:var(--ok-bg);border-color:transparent;color:var(--ok)}
+.chip.meta{background:rgba(8,102,255,.14);border-color:transparent;color:#6FA3FF}
+
+/* actors mini grid */
+.agrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;align-content:end}
+.agrid .a{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/4;background:var(--bg-3);cursor:pointer;border:2px solid transparent;transition:border-color .2s,transform .2s}
+.agrid .a video{width:100%;height:100%;object-fit:cover}
+.agrid .a:hover{transform:translateY(-2px)}
+.agrid .a.sel{border-color:var(--violet-hi);box-shadow:0 0 0 4px rgba(156,134,255,.2)}
+.agrid .a span{position:absolute;left:6px;bottom:6px;font-size:11px;font-weight:600;padding:2px 7px;border-radius:999px;background:rgba(7,6,12,.6)}
+
+/* formats */
+.fmts{display:grid;grid-template-columns:1.2fr 1fr;grid-template-rows:1fr 1fr;gap:10px;width:100%;align-self:flex-end}
+.fm{position:relative;border-radius:12px;overflow:hidden;background:var(--bg-3);border:1px solid var(--line)}
+.fm video,.fm img{width:100%;height:100%;object-fit:cover}
+.fm em{position:absolute;top:6px;left:6px;font-style:normal;font-family:var(--mono);font-size:10px;padding:2px 6px;border-radius:6px;background:rgba(7,6,12,.7)}
+.fm.v{grid-row:span 2;aspect-ratio:9/16}
+.fm.s,.fm.p{min-height:0}
+.dots{position:absolute;bottom:6px;left:0;right:0;display:flex;gap:4px;justify-content:center}
+.dots i{width:5px;height:5px;border-radius:3px;background:rgba(255,255,255,.45)}
+.dots i.on{background:var(--white)}
+
+/* spy */
+.spy{width:100%;display:flex;flex-direction:column;gap:14px;min-width:0}
+.search{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:var(--bg-3);border:1px solid var(--line);font-size:14px}
+.search svg{width:16px;height:16px;color:var(--dim)}
+.search .chip{margin-left:auto}
+.lib{display:flex;gap:12px;overflow:hidden;mask-image:linear-gradient(90deg,#000 80%,transparent);-webkit-mask-image:linear-gradient(90deg,#000 80%,transparent)}
+.ad{flex:none;width:188px;border-radius:14px;overflow:hidden;background:var(--white);color:var(--ink);font-size:12px}
+.ad.win{box-shadow:0 0 0 2px var(--ok)}
+.ad .top{display:flex;align-items:center;gap:7px;padding:8px 10px}
+.ad .av{width:22px;height:22px;border-radius:11px;background:var(--grad)}
+.ad .top b{font-size:12px;display:block;line-height:1.1}
+.ad .top small{font-size:10px;color:#64748B}
+.ad .m{aspect-ratio:4/5;background:#E7E9EF}
+.ad .m video,.ad .m img{width:100%;height:100%;object-fit:cover}
+.ad .ft{padding:8px 10px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.ad .ft span{color:#64748B;font-size:11px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.ad .ft em{font-style:normal;font-size:10px;font-weight:700;color:#13824F;background:#E3F8EE;padding:2px 6px;border-radius:999px;white-space:nowrap}
+
+/* publish */
+.camp{width:100%;border-radius:16px;background:var(--bg-3);border:1px solid var(--line);padding:18px;display:flex;flex-direction:column;gap:2px}
+.camp .hd{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.camp .th{width:48px;height:48px;border-radius:10px;overflow:hidden;flex:none}
+.camp .th img{width:100%;height:100%;object-fit:cover}
+.camp .hd b{font-family:var(--display);font-size:18px;display:block}
+.camp .hd small{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.camp .hd .chip{margin-left:auto}
+.kv{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+.kv>span{color:var(--muted)}
+.kv>div{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.kv strong{font-family:var(--display);font-size:20px;color:var(--ok);font-variant-numeric:tabular-nums}
+.pubbtn{margin-top:12px;justify-content:center;width:100%}
+.pubbtn.done{background:var(--ok);box-shadow:0 14px 40px -12px rgba(34,193,122,.7)}
+
+/* France map-ish: départements grid */
+.geo{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
+.deps{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}
+.deps i{aspect-ratio:1;border-radius:4px;background:rgba(255,255,255,.05);transition:background .4s}
+.deps i.on{background:var(--violet);box-shadow:0 0 12px rgba(146,120,255,.6)}
+.deps i.hot{background:var(--pink)}
+.geo ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:14px}
+.geo li{display:flex;justify-content:space-between;gap:8px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.geo li span{color:var(--muted)}
+.geo li b{font-variant-numeric:tabular-nums;font-family:var(--mono);font-weight:500;font-size:13px}
+
+/* ---------- verticals ---------- */
+.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.tab{height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--line-2);background:transparent;color:var(--muted);font:600 14px var(--body);cursor:pointer;transition:all .2s}
+.tab[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.vert{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.vert-copy h3{font-size:clamp(28px,3.4vw,42px);line-height:1.05}
+.vert-copy p{margin-top:16px;color:var(--muted);font-size:17px;max-width:48ch}
+.quote{margin-top:26px;padding:18px 20px;border-radius:16px;background:var(--bg-2);border:1px solid var(--line);font-size:15px}
+.quote small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.vert-media{display:flex;gap:16px;justify-content:center;align-items:center}
+.vert-media .phone{width:min(46%,230px)}
+.vert-media .phone:nth-child(2){transform:translateY(40px) rotate(3deg)}
+.vert-media .phone:nth-child(1){transform:rotate(-3deg)}
+.vpanel[hidden]{display:none}
+.vpanel{animation:fade .5s ease}
+@keyframes fade{from{opacity:.0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- how ---------- */
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+.step{padding:30px;border-radius:var(--r);border:1px solid var(--line);background:linear-gradient(180deg,var(--bg-2),transparent)}
+.step .n{font-family:var(--display);font-size:64px;font-weight:700;line-height:1;background:linear-gradient(180deg,rgba(156,134,255,.9),rgba(156,134,255,.05));-webkit-background-clip:text;background-clip:text;color:transparent}
+.step h3{font-size:22px;margin-top:20px}
+.step p{margin-top:10px;color:var(--muted);font-size:15px}
+.step .t{margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--violet-hi)}
+
+/* ---------- faq ---------- */
+.faq{max-width:780px;margin:0 auto;display:flex;flex-direction:column}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;font-family:var(--display);font-size:19px;font-weight:600}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{flex:none;width:28px;height:28px;border-radius:14px;border:1px solid var(--line-2);display:grid;place-items:center;transition:transform .25s}
+.faq summary i::before{content:"+";font-style:normal;font-size:18px;color:var(--muted)}
+.faq details[open] summary i{transform:rotate(45deg)}
+.faq details p{padding:0 48px 22px 0;color:var(--muted)}
+
+/* ---------- final cta ---------- */
+.final{position:relative;overflow:hidden;margin:0 20px 20px;border-radius:32px;padding:120px 20px;text-align:center;background:radial-gradient(800px 400px at 50% 120%,rgba(147,51,234,.55),transparent 70%),radial-gradient(600px 300px at 50% -20%,rgba(37,99,235,.35),transparent 70%),var(--bg-2);border:1px solid var(--line)}
+.final h2{position:relative;z-index:2;font-size:clamp(38px,6.4vw,84px);line-height:1;max-width:14ch;margin:0 auto}
+.final p{position:relative;z-index:2;margin-top:20px;color:var(--muted);font-size:18px}
+.final .hero-cta{position:relative;z-index:2}
+.float{position:absolute;width:150px;aspect-ratio:9/16;border-radius:18px;overflow:hidden;opacity:.5;box-shadow:0 30px 60px -20px rgba(0,0,0,.9);animation:bob 7s ease-in-out infinite}
+.float video,.float img{width:100%;height:100%;object-fit:cover}
+.float.f1{left:5%;top:14%;transform:rotate(-9deg)}
+.float.f2{right:6%;top:10%;transform:rotate(7deg);animation-delay:-2s;width:170px;aspect-ratio:1}
+.float.f3{left:12%;bottom:-40px;transform:rotate(6deg);animation-delay:-4s;width:170px;aspect-ratio:1}
+.float.f4{right:10%;bottom:-30px;transform:rotate(-5deg);animation-delay:-1s}
+@keyframes bob{50%{translate:0 -14px}}
+
+footer{padding-block:40px 60px;color:var(--dim);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+footer .logo{font-size:17px;color:var(--fg)}
+footer .logo svg{width:22px;height:22px}
+footer nav{display:flex;gap:22px}
+footer a:hover{color:var(--fg)}
+
+/* reveal: visible at rest, nudged in when JS runs */
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .nav-links{display:none}
+  .c-chat,.c-spy,.c-pub,.c-geo{grid-column:span 6}
+  .c-actors,.c-formats{grid-column:span 3}
+  .vert{grid-template-columns:1fr;gap:48px}
+  .how{grid-template-columns:1fr}
+  .strip .wrap{grid-template-columns:repeat(2,1fr);row-gap:22px}
+  .stat:nth-child(3){border-left:0;padding-left:0}
+}
+@media (max-width:640px){
+  section{padding-block:84px}
+  .c-actors,.c-formats{grid-column:span 6}
+  .card{padding:22px}
+  .chat{grid-template-columns:1fr}
+  .chat .phone{width:200px;margin:0 auto}
+  .geo{grid-template-columns:1fr}
+  .wall{height:420px}
+  .wall-inner{transform:rotateX(24deg) rotateZ(-6deg) scale(.72)}
+  .prompt{margin-inline:0}
+  .prompt .btn span{display:none}
+  .float{display:none}
+  .final{padding:84px 20px;margin-inline:12px}
+  .faq details p{padding-right:0}
+  .nav .btn{padding:0 14px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .js .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="growthity.ai, accueil">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2563EB"/><stop offset=".52" stop-color="#5B3FE4"/><stop offset="1" stop-color="#9333EA"/></linearGradient></defs><path d="M2 17 8.5 10.5 13.5 15.5 22 7M16 7h6v6" stroke="url(#lg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      growthity<b>.ai</b>
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#produit">Produit</a>
+      <a href="#acteurs">Acteurs</a>
+      <a href="#secteurs">Secteurs</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-grad" href="https://growthity.ai" target="_blank" rel="noopener">Commencer
+      <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+</header>
+
+<main id="top">
+<!-- ================= HERO ================= -->
+<div class="hero">
+  <div class="wrap">
+    <span class="pill"><span class="tag">Nouveau</span> Espion Meta Ads : inspirez-vous des pubs qui gagnent</span>
+    <h1>Vos pubs Meta, <span class="grad">générées et publiées</span> en 2 minutes.</h1>
+    <p class="lede">Décrivez votre produit en une phrase. Growthity écrit le script, choisit l'acteur, tourne la vidéo UGC, décline vos visuels et publie la campagne sur Facebook et Instagram.</p>
+    <div class="hero-cta">
+      <a class="btn btn-grad" href="https://growthity.ai" target="_blank" rel="noopener">Créer ma première pub
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="btn btn-ghost" href="#produit">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg>
+        Voir comment ça marche</a>
+    </div>
+    <div class="hero-meta">
+      <span><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>500 crédits offerts sur votre premier abonnement</span>
+      <span><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Conçu &amp; hébergé en France</span>
+    </div>
+
+    <div class="prompt" role="img" aria-label="Exemple de demande dans le chat Growthity">
+      <svg class="spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9L12 2Zm7 12 .9 2.6L22.5 17.5l-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9L19 14Z"/></svg>
+      <div class="txt"><span id="typed">Je vends des pompes à chaleur financées par les aides. Fais-moi une vidéo UGC face caméra.</span><span class="caret"></span></div>
+      <a class="btn btn-grad" href="https://growthity.ai" target="_blank" rel="noopener"><span>Générer</span>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+
+  <div class="wall" aria-hidden="true">
+    <div class="wall-inner">
+      <div class="row" data-row="a"></div>
+      <div class="row rev" data-row="b"></div>
+      <div class="row slow" data-row="c"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= STRIP ================= -->
+<div class="strip">
+  <div class="wrap">
+    <div class="stat"><b><span data-count="500">500</span>+</b><span>acteurs IA prêts à tourner</span></div>
+    <div class="stat"><b>2 min</b><span>de la phrase à la pub prête</span></div>
+    <div class="stat"><b>9:16 · 1:1 · 4:5</b><span>Reels, Stories, feed, carrousels</span></div>
+    <div class="stat"><b>1 clic</b><span>pour publier sur Facebook et Instagram</span></div>
+  </div>
+</div>
+
+<!-- ================= BENTO ================= -->
+<section id="produit">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="eyebrow">Le studio créatif complet</div>
+      <h2>Une agence entière, <span class="grad">dans un chat.</span></h2>
+      <p>Plus besoin de payer 3 000 € une agence ni d'attendre deux semaines. Vous écrivez ce que vous vendez, Growthity s'occupe du reste.</p>
+    </div>
+
+    <div class="bento">
+      <!-- chat -->
+      <article class="card c-chat rv">
+        <div class="k"><i></i>Chat créatif</div>
+        <h3>Une phrase en entrée. Une vraie vidéo UGC en sortie.</h3>
+        <p class="d">L'IA rédige le hook et le script, choisit l'actrice, la voix française et ajoute les sous-titres animés.</p>
+        <div class="demo">
+          <div class="chat">
+            <div class="msgs">
+              <div class="bub me">Je vends des pompes à chaleur financées par les aides. Fais-moi une vidéo UGC face caméra avec une actrice et des sous-titres.</div>
+              <div class="bub ai">Parfait ! Script, actrice et tournage : <b>je m'occupe de tout.</b>
+                <ul class="steps">
+                  <li><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Script &amp; hook rédigés</b> · « Si vous vous chauffez encore au gaz ou au fioul… »</span></li>
+                  <li><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Actrice : Charlotte</b> · voix française naturelle</span></li>
+                  <li><span class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Tournage IA</b> · vidéo 9:16 · 16 s</span></li>
+                </ul>
+              </div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip">9:16 · Reels &amp; Stories</span><span class="chip">16 s</span><span class="chip">Sous-titres</span></div>
+            </div>
+            <div class="phone">
+              <div class="scr">
+                <video id="charlotte" src="media/ugc-charlotte.mp4" poster="media/ugc-charlotte.poster.webp" autoplay muted loop playsinline preload="auto"></video>
+                <button class="snd" id="snd" type="button" aria-label="Activer le son">
+                  <svg id="snd-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="m22 9-6 6M16 9l6 6"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- actors -->
+      <article class="card c-actors rv" id="acteurs">
+        <div class="k"><i></i>500+ acteurs IA</div>
+        <h3>Le bon visage pour chaque produit.</h3>
+        <p class="d">Choisissez vous-même ou laissez l'IA sélectionner l'acteur qui colle à votre cible.</p>
+        <div class="demo"><div class="agrid" id="agrid"></div></div>
+      </article>
+
+      <!-- formats -->
+      <article class="card c-formats rv">
+        <div class="k"><i></i>Tous les formats</div>
+        <h3>Vidéo, visuel, carrousel.</h3>
+        <p class="d">Chaque pub est déclinée aux bons ratios pour Reels, Stories et feed.</p>
+        <div class="demo">
+          <div class="fmts">
+            <div class="fm v"><video src="media/ugc-femme.mp4" poster="media/ugc-femme.poster.webp" autoplay muted loop playsinline></video><em>9:16</em></div>
+            <div class="fm s" id="carousel"><img src="media/img-bougie.webp" alt="Visuel carrousel : bougie parfumée"><em>1:1</em><div class="dots"><i class="on"></i><i></i><i></i></div></div>
+            <div class="fm p"><img src="media/img-pac-rge.webp" alt="Visuel feed : pompe à chaleur RGE"><em>4:5</em></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- spy -->
+      <article class="card c-spy rv">
+        <div class="k"><i></i>Espion Meta Ads</div>
+        <h3>Inspirez-vous des pubs qui gagnent.</h3>
+        <p class="d">Fouillez la bibliothèque publicitaire Meta de votre secteur. Les pubs qui tournent depuis des semaines sont repérées comme gagnantes probables, et vous les envoyez au chat comme références.</p>
+        <div class="demo">
+          <div class="spy">
+            <div class="search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+              pompe à chaleur
+              <span class="chip meta">Bibliothèque Meta · FR</span>
+            </div>
+            <div class="lib">
+              <div class="ad win"><div class="top"><span class="av"></span><div><b>Éco Habitat</b><small>Sponsorisé</small></div></div><div class="m"><img src="media/img-pac-fioul.webp"  alt=""></div><div class="ft"><span>Active · 47 j</span><em>Gagnant probable</em></div></div>
+              <div class="ad"><div class="top"><span class="av"></span><div><b>Chaleur+</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-pac-awa.mp4" poster="media/ugc-pac-awa.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>Active · 12 j</span></div></div>
+              <div class="ad win"><div class="top"><span class="av"></span><div><b>ThermoConfort</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-homme.mp4" poster="media/ugc-homme.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>Active · 62 j</span><em>Gagnant probable</em></div></div>
+              <div class="ad"><div class="top"><span class="av"></span><div><b>RénoPro</b><small>Sponsorisé</small></div></div><div class="m"><img src="media/img-pac-rge.webp"  alt=""></div><div class="ft"><span>Active · 9 j</span></div></div>
+              <div class="ad win"><div class="top"><span class="av"></span><div><b>Maison Éco</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-pac-hugo.mp4" poster="media/ugc-pac-hugo.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>Active · 33 j</span><em>Gagnant probable</em></div></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- publish -->
+      <article class="card c-pub rv">
+        <div class="k"><i></i>Publication automatique</div>
+        <h3>En ligne sur Meta en un clic.</h3>
+        <p class="d">Budget, ciblage et placements sont préremplis. Vous validez, Growthity publie.</p>
+        <div class="demo">
+          <div class="camp">
+            <div class="hd">
+              <div class="th"><img src="media/img-pac-70.webp" alt=""></div>
+              <div><small>Campagne</small><b>Pompes à chaleur</b></div>
+              <span class="chip ok" id="status">● En ligne</span>
+            </div>
+            <div class="kv"><span>Placements</span><div><span class="chip meta">Facebook</span><span class="chip meta">Instagram</span></div></div>
+            <div class="kv"><span>Formats</span><div><span class="chip">Reels</span><span class="chip">Stories</span><span class="chip">Feed</span></div></div>
+            <div class="kv"><span>CTR vs. moyenne du compte</span><strong>+<span id="ctr">234</span> %</strong></div>
+            <button class="btn btn-grad pubbtn" id="pub" type="button">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.24.19 2.24.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02Z"/></svg>
+              <span id="pub-l">Publier sur Meta</span></button>
+          </div>
+        </div>
+      </article>
+
+      <!-- geo -->
+      <article class="card c-geo rv">
+        <div class="k"><i></i>Ciblage local</div>
+        <h3>Diffusez là où sont vos clients.</h3>
+        <p class="d">Pour les artisans et réseaux d'agences : ciblez par département et ajustez le budget zone par zone.</p>
+        <div class="demo">
+          <div class="geo">
+            <div class="deps" id="deps" aria-hidden="true"></div>
+            <ul>
+              <li><span>13 · Bouches-du-Rhône</span><b>ciblé</b></li>
+              <li><span>69 · Rhône</span><b>ciblé</b></li>
+              <li><span>33 · Gironde</span><b>ciblé</b></li>
+              <li><span>44 · Loire-Atlantique</span><b>ciblé</b></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VERTICALS ================= -->
+<section id="secteurs" style="padding-top:20px">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="eyebrow">Pour chaque secteur</div>
+      <h2>Des pubs qui parlent <span class="grad">comme vos clients.</span></h2>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Secteurs">
+      <button class="tab" role="tab" id="t-local" aria-selected="true" aria-controls="p-local">Artisans &amp; local</button>
+      <button class="tab" role="tab" id="t-ecom" aria-selected="false" aria-controls="p-ecom">E-commerce</button>
+      <button class="tab" role="tab" id="t-b2b" aria-selected="false" aria-controls="p-b2b">B2B &amp; services</button>
+    </div>
+
+    <div class="vpanel" role="tabpanel" id="p-local" aria-labelledby="t-local">
+      <div class="vert">
+        <div class="vert-copy">
+          <h3>Pompes à chaleur, solaire, rénovation, menuiserie.</h3>
+          <p>Des vidéos tournées « sur le terrain », devant la maison ou à l'atelier, qui mettent en avant les aides de l'État et votre zone d'intervention.</p>
+          <div class="quote"><small>Hook généré</small>« Si vous vous chauffez encore au gaz ou au fioul, regardez ça avant votre prochaine facture. »</div>
+        </div>
+        <div class="vert-media">
+          <div class="phone"><div class="scr"><video src="media/ugc-pac-awa.mp4" poster="media/ugc-pac-awa.poster.webp" autoplay muted loop playsinline></video></div></div>
+          <div class="phone"><div class="scr"><video src="media/ugc-scierie.mp4" poster="media/ugc-scierie.poster.webp" autoplay muted loop playsinline></video></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="vpanel" role="tabpanel" id="p-ecom" aria-labelledby="t-ecom" hidden>
+      <div class="vert">
+        <div class="vert-copy">
+          <h3>Mode, beauté, maison, tech.</h3>
+          <p>Témoignages face caméra, unboxings et carrousels produit déclinés en quelques secondes pour tester plusieurs angles à la fois.</p>
+          <div class="quote"><small>Hook généré</small>« J'ai testé cette bougie pendant un mois, et franchement je ne m'attendais pas à ça. »</div>
+        </div>
+        <div class="vert-media">
+          <div class="phone"><div class="scr"><video data-src="media/ugc-femme.mp4" poster="media/ugc-femme.poster.webp" muted loop playsinline></video></div></div>
+          <div class="phone"><div class="scr"><img src="media/img-sneakers.webp" alt="Visuel produit : sneakers" style="width:100%;height:100%;object-fit:cover"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="vpanel" role="tabpanel" id="p-b2b" aria-labelledby="t-b2b" hidden>
+      <div class="vert">
+        <div class="vert-copy">
+          <h3>Logiciels, conseil, formation.</h3>
+          <p>Un porte-parole crédible qui explique votre offre en 20 secondes, avec des sous-titres pour le visionnage sans le son.</p>
+          <div class="quote"><small>Hook généré</small>« Vous passez encore vos lundis à faire des reportings à la main ? »</div>
+        </div>
+        <div class="vert-media">
+          <div class="phone"><div class="scr"><video data-src="media/ugc-homme.mp4" poster="media/ugc-homme.poster.webp" muted loop playsinline></video></div></div>
+          <div class="phone"><div class="scr"><video data-src="media/ugc-solaire.mp4" poster="media/ugc-solaire.poster.webp" muted loop playsinline></video></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW ================= -->
+<section style="padding-top:40px">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="eyebrow">Comment ça marche</div>
+      <h2>De l'idée à la pub en ligne, <span class="grad">en trois étapes.</span></h2>
+    </div>
+    <div class="how">
+      <div class="step rv"><div class="n">1</div><h3>Décrivez votre pub</h3><p>Ce que vous vendez, à qui, et le ton voulu. Une phrase suffit, ajoutez des références si vous en avez.</p><div class="t">≈ 15 secondes</div></div>
+      <div class="step rv"><div class="n">2</div><h3>Growthity crée</h3><p>Script, acteur, tournage IA, sous-titres et déclinaisons de visuels. Vous ajustez dans le chat si besoin.</p><div class="t">≈ 2 minutes</div></div>
+      <div class="step rv"><div class="n">3</div><h3>Publiez sur Meta</h3><p>Connectez votre compte publicitaire et lancez la campagne sur Facebook et Instagram en un clic.</p><div class="t">1 clic</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq" style="padding-top:40px">
+  <div class="wrap">
+    <div class="head rv"><div class="eyebrow">Questions fréquentes</div><h2>Tout ce qu'il faut savoir.</h2></div>
+    <div class="faq">
+      <details open><summary>Faut-il des compétences en vidéo ou en pub Meta ?<i></i></summary><p>Non. Vous décrivez votre produit dans le chat, Growthity rédige, tourne, monte et prépare la campagne. Vous gardez la main pour tout modifier avant de publier.</p></details>
+      <details><summary>Qui sont les acteurs des vidéos ?<i></i></summary><p>Des acteurs IA réalistes, avec plus de 500 profils disponibles. Vous pouvez en choisir un ou laisser l'IA sélectionner celui qui correspond le mieux à votre cible.</p></details>
+      <details><summary>Quels formats sont générés ?<i></i></summary><p>Vidéos UGC en 9:16 pour Reels et Stories, visuels et carrousels en 1:1, et formats 4:5 pour le feed Facebook et Instagram.</p></details>
+      <details><summary>Comment fonctionne l'Espion Meta Ads ?<i></i></summary><p>Il interroge la bibliothèque publicitaire publique de Meta sur vos mots-clés. Les pubs actives depuis longtemps sont repérées comme gagnantes probables, et vous pouvez les envoyer au chat comme source d'inspiration.</p></details>
+      <details><summary>Où sont hébergées mes données ?<i></i></summary><p>Growthity est conçu et hébergé en France.</p></details>
+      <details><summary>Comment démarrer ?<i></i></summary><p>Créez votre compte sur growthity.ai. Votre premier abonnement inclut 500 crédits offerts pour générer vos premières pubs.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL ================= -->
+<div class="final rv">
+  <div class="float f1"><video src="media/actor-camille.mp4" poster="media/actor-camille.poster.webp" autoplay muted loop playsinline></video></div>
+  <div class="float f2"><img src="media/img-bougie.webp" alt=""></div>
+  <div class="float f3"><img src="media/img-sneakers.webp" alt=""></div>
+  <div class="float f4"><video src="media/actor-david.mp4" poster="media/actor-david.poster.webp" autoplay muted loop playsinline></video></div>
+  <h2>Votre prochaine campagne Meta est à <span class="grad">une phrase.</span></h2>
+  <p>500 crédits offerts sur votre premier abonnement.</p>
+  <div class="hero-cta">
+    <a class="btn btn-grad" style="height:56px;padding:0 28px;font-size:16px" href="https://growthity.ai" target="_blank" rel="noopener">Commencer
+      <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 17 8.5 10.5 13.5 15.5 22 7M16 7h6v6" stroke="url(#lg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      growthity<b>.ai</b>
+    </a>
+    <nav><a href="#produit">Produit</a><a href="#secteurs">Secteurs</a><a href="#faq">FAQ</a></nav>
+    <span>© 2026 Growthity · Conçu &amp; hébergé en France</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var doc=document.documentElement;
+  doc.classList.add('js');
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* nav border on scroll */
+  var nav=document.getElementById('nav');
+  addEventListener('scroll',function(){nav.classList.toggle('scrolled',scrollY>10)},{passive:true});
+
+  /* ---- video wall ---- */
+  var actors=['antoine','anya','camille','claire','david','emiko','emma','freja','hiro','lucas','marta','thomas','zoe'];
+  var cap=function(s){return s.charAt(0).toUpperCase()+s.slice(1)};
+  var ugc=['ugc-femme','ugc-pac-awa','ugc-homme','ugc-scierie','ugc-solaire','ugc-pac-hugo'];
+  var imgs=['img-bougie','img-sneakers','img-pac-fioul','img-macbook','img-pac-rge','img-pac-70'];
+  function vid(src){return '<video src="media/'+src+'.mp4" poster="media/'+src+'.poster.webp" autoplay muted loop playsinline preload="metadata"></video>'}
+  var rows={
+    a:actors.slice(0,7).map(function(a,i){return '<div class="tile">'+vid('actor-'+a)+'<span class="nm">'+cap(a)+'</span></div>'+(i===2?'<div class="tile live">'+vid(ugc[0])+'</div>':'')}),
+    b:actors.slice(7).concat(['antoine']).map(function(a,i){return (i%2?'<div class="tile">'+vid(ugc[1+(i>>1)%5])+'</div>':'')+'<div class="tile">'+vid('actor-'+a)+'<span class="nm">'+cap(a)+'</span></div>'}),
+    c:imgs.map(function(m,i){return '<div class="tile'+(i%2?'':' live')+'">'+(i<ugc.length?vid(ugc[(i+3)%ugc.length]):'')+'</div><div class="tile sq"><img src="media/'+m+'.webp" alt="" loading="lazy"></div>'})
+  };
+  document.querySelectorAll('[data-row]').forEach(function(r){
+    var h=rows[r.dataset.row].join('');r.innerHTML=h+h;
+  });
+
+  /* ---- typing prompt ---- */
+  var prompts=[
+    "Je vends des pompes à chaleur financées par les aides. Fais-moi une vidéo UGC face caméra.",
+    "Une bougie parfumée artisanale, cible femmes 25-45 ans. Un carrousel et une vidéo unboxing.",
+    "Panneaux solaires pour particuliers en Gironde. Une actrice devant une maison, ton rassurant.",
+    "Logiciel de facturation pour indépendants. Un hook qui parle des lundis perdus en paperasse."
+  ];
+  var el=document.getElementById('typed');
+  if(!reduce){
+    var pi=0,ci=prompts[0].length,del=false;
+    setTimeout(function tick(){
+      var p=prompts[pi];
+      if(!del){ci++;if(ci>p.length){del=true;return setTimeout(tick,2400)}}
+      else{ci-=3;if(ci<=0){ci=0;del=false;pi=(pi+1)%prompts.length}}
+      el.textContent=prompts[pi].slice(0,ci);
+      setTimeout(tick,del?14:34+Math.random()*30);
+    },2600);
+  }
+
+  /* ---- sound toggle on the Charlotte phone ---- */
+  var cv=document.getElementById('charlotte'),snd=document.getElementById('snd'),ic=document.getElementById('snd-ic');
+  var ON='<path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/>',OFF=ic.innerHTML;
+  snd.addEventListener('click',function(){
+    cv.muted=!cv.muted;if(!cv.muted){cv.currentTime=0;cv.play().catch(function(){})}
+    ic.innerHTML=cv.muted?OFF:ON;snd.setAttribute('aria-label',cv.muted?'Activer le son':'Couper le son');
+  });
+
+  /* ---- actor picker ---- */
+  var grid=document.getElementById('agrid');
+  ['charlotte','emma','hiro','claire','lucas','marta'].forEach(function(a,i){
+    var d=document.createElement('button');d.type='button';d.className='a'+(i===0?' sel':'');d.setAttribute('aria-label','Choisir '+cap(a));
+    var src=a==='charlotte'?'ugc-charlotte':'actor-'+a;
+    d.innerHTML='<video src="media/'+src+'.mp4" poster="media/'+src+'.poster.webp" autoplay muted loop playsinline preload="metadata"></video><span>'+cap(a)+'</span>';
+    d.style.padding='0';
+    d.addEventListener('click',function(){grid.querySelectorAll('.a').forEach(function(x){x.classList.remove('sel')});d.classList.add('sel')});
+    grid.appendChild(d);
+  });
+
+  /* ---- carousel ---- */
+  var car=document.getElementById('carousel'),ci2=0,cimgs=['img-bougie','img-sneakers','img-macbook'];
+  if(!reduce)setInterval(function(){
+    ci2=(ci2+1)%3;car.querySelector('img').src='media/'+cimgs[ci2]+'.webp';
+    car.querySelectorAll('.dots i').forEach(function(d,i){d.classList.toggle('on',i===ci2)});
+  },2200);
+
+  /* ---- publish button ---- */
+  var pub=document.getElementById('pub'),pl=document.getElementById('pub-l'),st=document.getElementById('status'),ctr=document.getElementById('ctr');
+  pub.addEventListener('click',function(){
+    if(pub.classList.contains('done'))return;
+    pl.textContent='Publication…';st.className='chip';st.textContent='● En cours';ctr.textContent='0';
+    setTimeout(function(){
+      pub.classList.add('done');pl.textContent='Publiée sur Meta';st.className='chip ok';st.textContent='● En ligne';
+      var t0=performance.now();(function f(t){var k=Math.min(1,(t-t0)/1200);ctr.textContent=Math.round(234*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)})(t0);
+      setTimeout(function(){pub.classList.remove('done');pl.textContent='Publier sur Meta'},4000);
+    },1100);
+  });
+
+  /* ---- départements grid ---- */
+  var deps=document.getElementById('deps'),on=[12,23,37,44,58,61,72,86];
+  for(var i=0;i<60;i++){var c=document.createElement('i');if(on.indexOf(i)>-1)c.className='on';deps.appendChild(c)}
+  if(!reduce)setInterval(function(){
+    var cells=deps.children,j=on[Math.floor(Math.random()*on.length)];
+    if(cells[j]){cells[j].classList.add('hot');setTimeout(function(){cells[j].classList.remove('hot')},700)}
+  },900);
+
+  /* ---- tabs ---- */
+  var tabs=document.querySelectorAll('.tab');
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    tabs.forEach(function(x){
+      var p=document.getElementById(x.getAttribute('aria-controls')),sel=x===t;
+      x.setAttribute('aria-selected',sel);p.hidden=!sel;
+      if(sel)p.querySelectorAll('video[data-src]').forEach(function(v){v.src=v.dataset.src;v.removeAttribute('data-src');v.play().catch(function(){})});
+    });
+  })});
+
+  /* ---- card spotlight ---- */
+  document.querySelectorAll('.card').forEach(function(c){
+    c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')});
+  });
+
+  /* ---- reveal on scroll (content is visible without JS) ---- */
+  var rv=document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window && !reduce){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+    rv.forEach(function(e){if(e.getBoundingClientRect().top<innerHeight)e.classList.add('in');else io.observe(e)});
+  } else rv.forEach(function(e){e.classList.add('in')});
+
+  /* ---- pause off-screen videos to save battery ---- */
+  if('IntersectionObserver' in window){
+    var vo=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){if(v.src)v.play().catch(function(){})}else v.pause()})},{rootMargin:'200px'});
+    document.querySelectorAll('video').forEach(function(v){vo.observe(v)});
+  }
+})();
+</script>
+</body>
+</html>
