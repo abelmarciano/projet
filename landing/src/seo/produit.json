@@ -1,7 +1,7 @@
 {
   "index": {
     "title": "Publicité Facebook IA : créez vos pubs Meta | Growthity",
-    "description": "Publicité Facebook et Instagram avec l'IA : vidéos UGC, visuels, textes et publication Meta en quelques minutes. Logiciel français, 0 % commission. Essayez.",
+    "description": "Publicité Facebook et Instagram avec l'IA : vidéos UGC, visuels, textes et publication Meta en quelques minutes. Outil français, 0 % commission. Essayez.",
     "h2": "Publicité Facebook IA : de l'idée à la campagne Meta",
     "intro": "Growthity.ai est un logiciel de publicité Facebook et Instagram conçu et hébergé en France. Décrivez votre produit en une phrase ou collez le lien de votre boutique : l'IA écrit le script, choisit un acteur, génère une vidéo UGC IA, des visuels et des carrousels, puis publie votre campagne sur Meta. Vous validez chaque étape et gardez la main sur votre compte publicitaire. Créer des pubs Meta avec l'IA devient aussi simple qu'une conversation.",
     "sections": [
@@ -23,12 +23,30 @@
       }
     ],
     "links": [
-      ["créer une pub Facebook avec l'IA", "chat-ia"],
-      ["vidéo UGC IA", "acteurs-ugc"],
-      ["créer une campagne Facebook Ads", "publication-meta"],
-      ["optimiser ses Facebook Ads", "pilotage-ia"],
-      ["espionner les pubs concurrentes", "espion-meta-ads"],
-      ["guide de la pub UGC", "guide-pub-ugc"]
+      [
+        "créer une pub Facebook avec l'IA",
+        "chat-ia"
+      ],
+      [
+        "vidéo UGC IA",
+        "acteurs-ugc"
+      ],
+      [
+        "créer une campagne Facebook Ads",
+        "publication-meta"
+      ],
+      [
+        "optimiser ses Facebook Ads",
+        "pilotage-ia"
+      ],
+      [
+        "espionner les pubs concurrentes",
+        "espion-meta-ads"
+      ],
+      [
+        "guide de la pub UGC",
+        "guide-pub-ugc"
+      ]
     ]
   },
   "chat-ia": {
@@ -55,17 +73,35 @@
       }
     ],
     "links": [
-      ["acteurs UGC IA", "acteurs-ugc"],
-      ["éditeur vidéo pub en ligne", "editeur-video"],
-      ["formats publicité Facebook", "formats"],
-      ["publier une campagne Meta", "publication-meta"],
-      ["pub Facebook e-commerce", "ecommerce"],
-      ["exemples de pubs IA", "inspiration"]
+      [
+        "acteurs UGC IA",
+        "acteurs-ugc"
+      ],
+      [
+        "éditeur vidéo pub en ligne",
+        "editeur-video"
+      ],
+      [
+        "formats publicité Facebook",
+        "formats"
+      ],
+      [
+        "publier une campagne Meta",
+        "publication-meta"
+      ],
+      [
+        "pub Facebook e-commerce",
+        "ecommerce"
+      ],
+      [
+        "exemples de pubs IA",
+        "inspiration"
+      ]
     ]
   },
   "acteurs-ugc": {
     "title": "Acteurs UGC IA : 500+ avatars pour vos pubs | Growthity",
-    "description": "Acteurs UGC IA réalistes : plus de 500 avatars qui montrent votre produit, voix françaises et sous-titres animés. Créez votre vidéo UGC ou votre propre avatar.",
+    "description": "Acteurs UGC IA réalistes : plus de 500 avatars qui montrent votre produit, voix françaises et sous-titres animés. Créez votre vidéo UGC ou votre avatar.",
     "h2": "Des acteurs UGC IA pour des vidéos crédibles et rapides",
     "intro": "La vidéo UGC, ce format où une personne parle face caméra comme un vrai client, s'est imposée sur Facebook et Instagram. Le problème : trouver un créateur UGC, envoyer le produit, attendre le tournage et payer chaque variante. Avec les acteurs UGC IA de Growthity, vous choisissez parmi plus de 500 profils réalistes et obtenez une vidéo prête à publier en quelques minutes, avec la voix, les sous-titres et le format adaptés à Meta.",
     "sections": [
@@ -87,12 +123,30 @@
       }
     ],
     "links": [
-      ["créer une pub avec l'IA", "chat-ia"],
-      ["sous-titres automatiques vidéo", "editeur-video"],
-      ["format vidéo Reels 9:16", "formats"],
-      ["guide de la pub UGC", "guide-pub-ugc"],
-      ["pub vidéo beauté cosmétique", "beaute-cosmetique"],
-      ["Growthity ou agence UGC", "growthity-vs-agence"]
+      [
+        "créer une pub avec l'IA",
+        "chat-ia"
+      ],
+      [
+        "sous-titres automatiques vidéo",
+        "editeur-video"
+      ],
+      [
+        "format vidéo Reels 9:16",
+        "formats"
+      ],
+      [
+        "guide de la pub UGC",
+        "guide-pub-ugc"
+      ],
+      [
+        "pub vidéo beauté cosmétique",
+        "beaute-cosmetique"
+      ],
+      [
+        "Growthity ou agence UGC",
+        "growthity-vs-agence"
+      ]
     ]
   },
   "formats": {
@@ -119,17 +173,35 @@
       }
     ],
     "links": [
-      ["vidéo UGC IA", "acteurs-ugc"],
-      ["recadrer une vidéo pub", "editeur-video"],
-      ["créer des publicités en masse", "studio-en-lot"],
-      ["templates vidéo produit", "templates"],
-      ["exemples de pubs Instagram", "inspiration"],
-      ["créer une pub Facebook", "chat-ia"]
+      [
+        "vidéo UGC IA",
+        "acteurs-ugc"
+      ],
+      [
+        "recadrer une vidéo pub",
+        "editeur-video"
+      ],
+      [
+        "créer des publicités en masse",
+        "studio-en-lot"
+      ],
+      [
+        "templates vidéo produit",
+        "templates"
+      ],
+      [
+        "exemples de pubs Instagram",
+        "inspiration"
+      ],
+      [
+        "créer une pub Facebook",
+        "chat-ia"
+      ]
     ]
   },
   "editeur-video": {
     "title": "Montage vidéo publicitaire en ligne avec l'IA | Growthity",
-    "description": "Montage vidéo publicitaire en ligne : coupez, réorganisez, ajoutez des sous-titres automatiques et changez l'accroche de votre vidéo pub Instagram en un clic.",
+    "description": "Montage vidéo publicitaire en ligne : coupez, réorganisez, ajoutez des sous-titres automatiques et changez l'accroche de votre vidéo pub Instagram.",
     "h2": "Un éditeur vidéo pub en ligne pensé pour Facebook et Instagram",
     "intro": "Une vidéo générée par l'IA est rarement parfaite du premier coup, et c'est normal. L'éditeur vidéo de Growthity vous permet de finaliser votre montage vidéo publicitaire directement dans le navigateur, sans logiciel à installer ni compétence de monteur. Vous retouchez la séquence, les sous-titres ou le cadrage, ou vous demandez simplement au chat d'effectuer la modification à votre place. Le résultat : des pubs prêtes à publier sur Meta en quelques minutes.",
     "sections": [
@@ -143,7 +215,7 @@
       },
       {
         "h3": "Changer l'accroche sans refaire toute la vidéo",
-        "p": "L'accroche est souvent l'élément qui fait la différence entre une pub ignorée et une pub regardée. Dans Growthity, vous pouvez remplacer uniquement le hook : seule cette partie est régénérée, le reste de la vidéo reste intact. C'est idéal pour tester trois ou quatre entrées en matière différentes sur la même base, et identifier celle qui retient le mieux votre audience. Vous gagnez du temps et vos crédits sont consacrés à ce qui compte vraiment."
+        "p": "L'accroche est souvent l'élément qui fait la différence entre une pub ignorée et une pub regardée. Dans Growthity, vous pouvez remplacer uniquement le hook : seule cette partie est régénérée, le reste de la vidéo reste intact. C'est idéal pour tester trois ou quatre entrées en matière différentes sur la même base, et identifier celle qui retient le mieux votre audience. Vous gagnez du temps, vous évitez de perdre une prise de parole réussie, et vos crédits sont consacrés à ce qui compte vraiment."
       },
       {
         "h3": "Recadrer votre vidéo pub Instagram pour chaque placement",
@@ -151,12 +223,30 @@
       }
     ],
     "links": [
-      ["générateur de publicité IA", "chat-ia"],
-      ["avatar IA vidéo", "acteurs-ugc"],
-      ["format pub Instagram", "formats"],
-      ["templates vidéo produit", "templates"],
-      ["tests créatifs Facebook Ads", "studio-en-lot"],
-      ["questions fréquentes Growthity", "faq"]
+      [
+        "générateur de publicité IA",
+        "chat-ia"
+      ],
+      [
+        "avatar IA vidéo",
+        "acteurs-ugc"
+      ],
+      [
+        "format pub Instagram",
+        "formats"
+      ],
+      [
+        "templates vidéo produit",
+        "templates"
+      ],
+      [
+        "tests créatifs Facebook Ads",
+        "studio-en-lot"
+      ],
+      [
+        "questions fréquentes Growthity",
+        "faq"
+      ]
     ]
   },
   "studio-en-lot": {
@@ -183,12 +273,30 @@
       }
     ],
     "links": [
-      ["formats publicité Facebook", "formats"],
-      ["détecter la fatigue créative", "pilotage-ia"],
-      ["logiciel pub pour agences", "agences"],
-      ["pubs Facebook e-commerce", "ecommerce"],
-      ["vidéo UGC IA", "acteurs-ugc"],
-      ["exemples de créas par secteur", "inspiration"]
+      [
+        "formats publicité Facebook",
+        "formats"
+      ],
+      [
+        "détecter la fatigue créative",
+        "pilotage-ia"
+      ],
+      [
+        "logiciel pub pour agences",
+        "agences"
+      ],
+      [
+        "pubs Facebook e-commerce",
+        "ecommerce"
+      ],
+      [
+        "vidéo UGC IA",
+        "acteurs-ugc"
+      ],
+      [
+        "exemples de créas par secteur",
+        "inspiration"
+      ]
     ]
   },
   "espion-meta-ads": {
@@ -215,23 +323,41 @@
       }
     ],
     "links": [
-      ["générateur de publicité IA", "chat-ia"],
-      ["créer des publicités en masse", "studio-en-lot"],
-      ["galerie d'inspiration pub", "inspiration"],
-      ["lancer un produit sur Facebook", "lancement-produit"],
-      ["guide de la pub UGC", "guide-pub-ugc"],
-      ["publicité Facebook IA", "index"]
+      [
+        "générateur de publicité IA",
+        "chat-ia"
+      ],
+      [
+        "créer des publicités en masse",
+        "studio-en-lot"
+      ],
+      [
+        "galerie d'inspiration pub",
+        "inspiration"
+      ],
+      [
+        "lancer un produit sur Facebook",
+        "lancement-produit"
+      ],
+      [
+        "guide de la pub UGC",
+        "guide-pub-ugc"
+      ],
+      [
+        "publicité Facebook IA",
+        "index"
+      ]
     ]
   },
   "publication-meta": {
     "title": "Créer une campagne Facebook Ads sans commission | Growthity",
     "description": "Créez une campagne Facebook Ads depuis Growthity : objectif, ciblage, zones, budget et placements, sur votre compte Meta. 0 % commission sur vos dépenses.",
     "h2": "Publier vos pubs Meta sans vous perdre dans le gestionnaire",
-    "intro": "Le gestionnaire de publicités Meta est puissant, mais ses nombreux menus peuvent décourager quand on veut simplement lancer une annonce. Growthity simplifie la publication : une fois vos créas validées, vous configurez la campagne dans un parcours clair, puis elle part directement sur votre compte publicitaire Meta. Vous conservez vos données et votre historique, et vous ne payez aucune commission sur votre budget publicitaire.",
+    "intro": "Le gestionnaire de publicités Meta est puissant, mais ses nombreux menus peuvent décourager quand on veut simplement lancer une annonce. Growthity simplifie la publication : une fois vos créas validées, vous configurez la campagne dans un parcours clair, puis elle part directement sur votre compte publicitaire Meta. Le parcours reste le même, que vous vendiez en ligne, cherchiez des prospects ou remplissiez un agenda. Vous conservez vos données et votre historique, et vous ne payez aucune commission sur votre budget publicitaire.",
     "sections": [
       {
         "h3": "Créer une campagne Facebook Ads en quelques étapes",
-        "p": "Vous commencez par choisir l'objectif : ventes, leads via les formulaires instantanés Meta, trafic vers votre site ou réservations. Growthity vous guide ensuite écran par écran. Vos créas, textes d'annonce et boutons d'action sont déjà prêts, puisqu'ils viennent du chat ou du studio. Pas besoin de maîtriser toute la structure du gestionnaire, entre campagne, ensemble de publicités et publicité : l'essentiel est présenté simplement, et vous validez avant toute mise en ligne."
+        "p": "Vous commencez par choisir l'objectif : ventes, leads via les formulaires instantanés Meta, trafic vers votre site ou réservations. Growthity vous guide ensuite écran par écran. Vos créas, textes d'annonce et boutons d'action sont déjà prêts, puisqu'ils viennent du chat ou du studio. Vous pouvez aussi revenir sur une créa avant le lancement si un détail vous gêne. Pas besoin de maîtriser toute la structure du gestionnaire, entre campagne, ensemble de publicités et publicité : l'essentiel est présenté simplement, et vous validez avant toute mise en ligne."
       },
       {
         "h3": "Ciblage Facebook : zones, rayon et audience",
@@ -247,12 +373,30 @@
       }
     ],
     "links": [
-      ["optimiser une campagne Facebook", "pilotage-ia"],
-      ["générer des leads Facebook", "leads-ventes"],
-      ["publicité Facebook commerce local", "commerce-local"],
-      ["pub Facebook immobilier", "immobilier"],
-      ["créer une pub Facebook", "chat-ia"],
-      ["Growthity ou agence Facebook Ads", "growthity-vs-agence"]
+      [
+        "optimiser une campagne Facebook",
+        "pilotage-ia"
+      ],
+      [
+        "générer des leads Facebook",
+        "leads-ventes"
+      ],
+      [
+        "publicité Facebook commerce local",
+        "commerce-local"
+      ],
+      [
+        "pub Facebook immobilier",
+        "immobilier"
+      ],
+      [
+        "créer une pub Facebook",
+        "chat-ia"
+      ],
+      [
+        "Growthity ou agence Facebook Ads",
+        "growthity-vs-agence"
+      ]
     ]
   },
   "pilotage-ia": {
@@ -271,7 +415,7 @@
       },
       {
         "h3": "ROAS Facebook et coût par lead : des KPI en langage clair",
-        "p": "Les tableaux du gestionnaire de publicités affichent des dizaines de colonnes. Growthity se concentre sur les indicateurs qui comptent pour votre activité : dépenses, coût par lead ou par vente, et ROAS Facebook, c'est-à-dire le chiffre d'affaires généré pour chaque euro investi. Les ventes de votre boutique sont rattachées à l'annonce qui les a apportées, ce qui rend ce calcul plus parlant. Vous savez rapidement quelles créas rapportent réellement."
+        "p": "Les tableaux du gestionnaire de publicités affichent des dizaines de colonnes. Growthity se concentre sur les indicateurs qui comptent pour votre activité : dépenses, coût par lead ou par vente, et ROAS Facebook, c'est-à-dire le chiffre d'affaires généré pour chaque euro investi. Les ventes de votre boutique sont rattachées à l'annonce qui les a apportées, ce qui rend ce calcul plus parlant. Vous savez rapidement quelles créas rapportent réellement, et lesquelles coûtent plus qu'elles ne rapportent."
       },
       {
         "h3": "Gestion Facebook Ads : posez vos questions au chat",
@@ -279,19 +423,37 @@
       }
     ],
     "links": [
-      ["créer une campagne Facebook Ads", "publication-meta"],
-      ["coût par lead Facebook", "leads-ventes"],
-      ["tests créatifs en masse", "studio-en-lot"],
-      ["pubs Facebook pour franchises", "franchises-reseaux"],
-      ["Growthity ou agence média", "growthity-vs-agence"],
-      ["publicité Facebook IA", "index"]
+      [
+        "créer une campagne Facebook Ads",
+        "publication-meta"
+      ],
+      [
+        "coût par lead Facebook",
+        "leads-ventes"
+      ],
+      [
+        "tests créatifs en masse",
+        "studio-en-lot"
+      ],
+      [
+        "pubs Facebook pour franchises",
+        "franchises-reseaux"
+      ],
+      [
+        "Growthity ou agence média",
+        "growthity-vs-agence"
+      ],
+      [
+        "publicité Facebook IA",
+        "index"
+      ]
     ]
   },
   "leads-ventes": {
     "title": "Lead Ads Facebook : leads et ventes en direct | Growthity",
     "description": "Lead Ads Facebook et ventes au même endroit : recevez vos leads de formulaire en direct, suivez votre coût par lead et attribuez chaque vente à sa pub.",
     "h2": "Générer des leads Facebook et suivre chaque vente",
-    "intro": "Une campagne réussie se mesure en contacts et en chiffre d'affaires, pas en impressions. Growthity relie vos publicités Meta à leurs résultats concrets : les prospects issus des formulaires Facebook arrivent dans l'application en temps réel, et les ventes de votre boutique sont attribuées à l'annonce qui les a déclenchées. Vous savez enfin quelle créa vous apporte des clients, et vous pouvez agir vite pour en obtenir davantage.",
+    "intro": "Une campagne réussie se mesure en contacts et en chiffre d'affaires, pas en impressions. Growthity relie vos publicités Meta à leurs résultats concrets : les prospects issus des formulaires Facebook arrivent dans l'application en temps réel, et les ventes de votre boutique sont attribuées à l'annonce qui les a déclenchées. Plus besoin de recouper des tableaux à la main pour relier une dépense à un résultat. Vous savez enfin quelle créa vous apporte des clients, et vous pouvez agir vite pour en obtenir davantage.",
     "sections": [
       {
         "h3": "Lead Ads Facebook : le formulaire instantané de Meta",
@@ -299,7 +461,7 @@
       },
       {
         "h3": "Recevoir vos leads de formulaire Facebook en direct",
-        "p": "Chaque formulaire Facebook rempli apparaît immédiatement dans Growthity, sans export manuel depuis l'espace Meta. Vous voyez qui a répondu, à quelle annonce, et quand. Cette réactivité compte : un prospect rappelé rapidement est généralement plus réceptif qu'un contact recontacté plusieurs jours plus tard. Centraliser les leads au même endroit que vos créas et vos campagnes vous évite aussi de jongler entre plusieurs outils pour comprendre ce qui fonctionne."
+        "p": "Chaque formulaire Facebook rempli apparaît immédiatement dans Growthity, sans export manuel depuis l'espace Meta. Vous voyez qui a répondu, à quelle annonce, et quand. Cette réactivité compte : un prospect rappelé rapidement est généralement plus réceptif qu'un contact recontacté plusieurs jours plus tard. Centraliser les leads au même endroit que vos créas et vos campagnes vous évite aussi de perdre une demande en route ou de jongler entre plusieurs outils pour comprendre ce qui fonctionne."
       },
       {
         "h3": "Suivre et réduire votre coût par lead",
@@ -307,16 +469,34 @@
       },
       {
         "h3": "Attribution des ventes : quelle pub fait vraiment vendre ?",
-        "p": "Pour une boutique en ligne, Growthity attribue les ventes à l'annonce qui a amené l'acheteur. Vous ne regardez plus seulement les clics, mais le chiffre d'affaires généré par chaque vidéo ou visuel. Cette attribution des ventes alimente le calcul du ROAS et les recommandations du pilotage IA. Vous pouvez ainsi investir davantage sur les créas qui vendent vraiment, et arrêter sans regret celles qui attirent l'attention sans convertir."
+        "p": "Pour une boutique en ligne, Growthity attribue les ventes à l'annonce qui a amené l'acheteur. Vous ne regardez plus seulement les clics, mais le chiffre d'affaires généré par chaque vidéo ou visuel. Cette attribution des ventes alimente le calcul du ROAS et les recommandations du pilotage IA. Vous pouvez ainsi investir davantage sur les créas qui vendent vraiment, et arrêter sans regret celles qui attirent l'attention sans convertir. Votre budget travaille enfin là où il crée de la valeur."
       }
     ],
     "links": [
-      ["pubs Facebook génération de leads", "b2b-leads"],
-      ["ROAS Facebook Ads", "pilotage-ia"],
-      ["créer une campagne Facebook Ads", "publication-meta"],
-      ["publicité Facebook e-commerce", "ecommerce"],
-      ["pub Facebook rénovation énergétique", "renovation-energie"],
-      ["pub Facebook formation coaching", "formation-coaching"]
+      [
+        "pubs Facebook génération de leads",
+        "b2b-leads"
+      ],
+      [
+        "ROAS Facebook Ads",
+        "pilotage-ia"
+      ],
+      [
+        "créer une campagne Facebook Ads",
+        "publication-meta"
+      ],
+      [
+        "publicité Facebook e-commerce",
+        "ecommerce"
+      ],
+      [
+        "pub Facebook rénovation énergétique",
+        "renovation-energie"
+      ],
+      [
+        "pub Facebook formation coaching",
+        "formation-coaching"
+      ]
     ]
   }
 }
