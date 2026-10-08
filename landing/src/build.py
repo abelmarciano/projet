@@ -39,8 +39,8 @@ def tone(t):
     return ' style="--tone:%s;--tone-soft:%s"' % (c, s)
 
 
-def thumb_html(src):
-    return '<img src="media/%s" alt="" loading="lazy">' % src
+def thumb_html(src, alt=''):
+    return '<img src="media/%s" alt="%s" loading="lazy">' % (src, html.escape(alt, quote=True))
 
 
 # ---------------------------------------------------------------- header / footer
@@ -61,11 +61,22 @@ def mitem(entry, current):
 
 
 def featured(key):
-    media, is_vid, chip, title, text, link = FEATURED[key]
-    m = ('<video data-src="media/%s.mp4" poster="media/%s.poster.webp" muted loop playsinline preload="none"></video>' % (media, media)
-         if is_vid else '<img src="media/%s" alt="">' % media)
-    return ('<a class="mfeat" href="%s">%s<span class="chip">%s</span><b>%s</b><small>%s</small><span class="go">Découvrir %s</span></a>'
-            % (link, m, chip, title, text, ARROW.replace('<svg', '<svg width="14" height="14"')))
+    """Mini product-UI card at the right of a mega-menu panel."""
+    go = ARROW.replace('<svg', '<svg width="14" height="14"')
+    if key == 'produit':
+        ads = [('lena-serum.poster.webp', 'Gagnant', ''), ('ugc-solaire.poster.webp', '5 j', ' lose'), ('real-42.poster.webp', 'Gagnant', '')]
+        ui = ('<div class="mui"><div class="mq"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.6-4.6"/></svg>'
+              'sérum vitamine C<span class="chip ok">● 4 gagnantes</span></div><div class="mads">%s</div></div>'
+              % ''.join('<div class="mad%s"><img src="media/%s" alt="" loading="lazy"><span>%s</span></div>' % (c, m, t) for m, t, c in ads))
+        return ('<a class="mfeat ui" href="espion-meta-ads.html">%s<span class="new">Nouveau</span><b>Espion Meta Ads</b>'
+                '<small>Growthity repère les pubs de votre secteur qui tournent depuis des semaines.</small><span class="go">Découvrir %s</span></a>' % (ui, go))
+    if key == 'ressources':
+        ch = ['Le hook des 3 secondes', 'Le script qui vend', 'Choisir le bon acteur', 'Tester sans se ruiner']
+        ui = ('<div class="mui guide"><span class="gtag">Guide · 8 min de lecture</span><b>La pub UGC<br>qui convertit</b><ol>%s</ol><div class="gbar"><i></i></div></div>'
+              % ''.join('<li><i>0%d</i>%s</li>' % (i + 1, c) for i, c in enumerate(ch)))
+        return ('<a class="mfeat ui" href="guide-pub-ugc.html">%s<b>Apprenez la méthode</b>'
+                '<small>Hooks, scripts, acteurs, tests : tout pour créer des pubs qui vendent.</small><span class="go">Lire le guide %s</span></a>' % (ui, go))
+    return ''
 
 
 def header(current):
@@ -134,7 +145,110 @@ def footer():
 </footer>''' % (HOME, '\n      '.join(cols), legal)
 
 
+BASE = 'https://growthity.ai'
+SEO = {}
+for _f in sorted(os.listdir(os.path.join(SRC, 'seo'))) if os.path.isdir(os.path.join(SRC, 'seo')) else []:
+    if _f.endswith('.json'):
+        import json as _json
+        with open(os.path.join(SRC, 'seo', _f), encoding='utf-8') as _h:
+            SEO.update(_json.load(_h))
+
+
+def url(slug):
+    return BASE + '/' if slug == 'index' else '%s/%s' % (BASE, slug)
+
+
+def strip(t):
+    return re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', t))).strip()
+
+
+def seo_section(slug):
+    d = SEO.get(slug)
+    if not d:
+        return ''
+    blocks = ''.join('<div class="seo-b rv"><h3>%s</h3><p>%s</p></div>' % (fr(x['h3']), fr(x['p'])) for x in d['sections'])
+    links = ''.join('<a href="%s">%s</a>' % (href(t) if t != 'index' else HOME, html.escape(a)) for a, t in d.get('links', []) if t != slug)
+    return '''<section class="seo">
+  <div class="wrap">
+    <div class="seo-in">
+      <div class="seo-head rv"><div class="eyebrow">En détail</div><h2>%s</h2><p>%s</p></div>
+      <div class="seo-grid">%s</div>
+    </div>
+    %s
+  </div>
+</section>''' % (fr(d['h2']), fr(d['intro']), blocks, '<nav class="seo-links rv" aria-label="Recherches associées"><span>Recherches associées</span>%s</nav>' % links if links else '')
+
+
+def with_seo(slug, body):
+    sec_html = seo_section(slug)
+    if not sec_html:
+        return body
+    for marker in ('<section class="tint" style="padding-top:60px">', '<section id="faq"', '<div class="final rv">'):
+        i = body.find(marker)
+        if i >= 0:
+            return body[:i] + sec_html + '\n\n' + body[i:]
+    return body + sec_html
+
+
+def jsonld(slug, title, desc, body):
+    import json
+    org = {'@type': 'Organization', '@id': BASE + '/#org', 'name': 'Growthity', 'url': BASE + '/', 'logo': BASE + '/favicon.svg',
+           'description': "Créez, publiez et pilotez vos pubs Facebook et Instagram avec l'IA. Conçu et hébergé en France.", 'areaServed': 'FR'}
+    graph = [org]
+    if slug == 'index':
+        graph.append({'@type': 'WebSite', '@id': BASE + '/#site', 'url': BASE + '/', 'name': 'Growthity', 'inLanguage': 'fr-FR', 'publisher': {'@id': BASE + '/#org'}})
+    if slug in ('index', 'chat-ia'):
+        graph.append({'@type': 'SoftwareApplication', 'name': 'Growthity', 'applicationCategory': 'BusinessApplication', 'operatingSystem': 'Web',
+                      'url': BASE + '/', 'inLanguage': 'fr-FR', 'description': desc, 'publisher': {'@id': BASE + '/#org'},
+                      'featureList': ['Vidéos UGC générées par IA', '500+ acteurs UGC IA', 'Visuels et carrousels', 'Espion Meta Ads',
+                                      'Publication Facebook et Instagram', 'Pilotage IA des campagnes', 'Leads et ventes attribués']})
+    if slug in PAGES:
+        graph.append({'@type': 'BreadcrumbList', 'itemListElement': [
+            {'@type': 'ListItem', 'position': 1, 'name': 'Accueil', 'item': BASE + '/'},
+            {'@type': 'ListItem', 'position': 2, 'name': PAGES[slug][1], 'item': url(slug)}]})
+    if slug == 'guide-pub-ugc':
+        graph.append({'@type': 'Article', 'headline': 'La pub UGC qui convertit', 'description': desc, 'inLanguage': 'fr-FR', 'url': url(slug),
+                      'image': BASE + '/og/%s.jpg' % slug, 'author': {'@id': BASE + '/#org'}, 'publisher': {'@id': BASE + '/#org'}})
+    qa = re.findall(r'<summary>(.*?)<i></i></summary><p>(.*?)</p>', body, re.S)
+    if qa:
+        seen, items = set(), []
+        for q, a in qa:
+            q = strip(q)
+            if q in seen:
+                continue
+            seen.add(q)
+            items.append({'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': strip(a)}})
+        graph.append({'@type': 'FAQPage', 'mainEntity': items})
+    return '<script type="application/ld+json">%s</script>' % json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False).replace('</', '<\\/')
+
+
+def seo_head(slug, title, desc, body):
+    og = BASE + '/og/%s.jpg' % slug
+    e = lambda t: html.escape(t, quote=True)  # noqa: E731
+    return '''<link rel="canonical" href="%(u)s">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#FCFCFD">
+<meta property="og:type" content="%(ty)s">
+<meta property="og:site_name" content="Growthity">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="%(t)s">
+<meta property="og:description" content="%(d)s">
+<meta property="og:url" content="%(u)s">
+<meta property="og:image" content="%(og)s">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="%(t)s">
+<meta name="twitter:description" content="%(d)s">
+<meta name="twitter:image" content="%(og)s">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+%(ld)s''' % dict(u=url(slug), ty='article' if slug == 'guide-pub-ugc' else 'website', t=e(title), d=e(desc), og=og, ld=jsonld(slug, title, desc, body))
+
+
 def page(slug, title, desc, body):
+    if slug in SEO:
+        title, desc = SEO[slug]['title'], SEO[slug]['description']
+    body = with_seo(slug, body)
     return '''<!doctype html>
 <html lang="fr">
 <head>
@@ -146,6 +260,7 @@ def page(slug, title, desc, body):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500&family=Grand+Hotel&display=swap">
 <link rel="stylesheet" href="site.css">
+%s
 </head>
 <body>
 
@@ -160,7 +275,7 @@ def page(slug, title, desc, body):
 <script src="site.js"></script>
 </body>
 </html>
-''' % (html.escape(title), html.escape(desc, quote=True), header(slug), body, footer())
+''' % (html.escape(title), html.escape(desc, quote=True), seo_head(slug, title, desc, body), header(slug), body, footer())
 
 
 # ---------------------------------------------------------------- components
@@ -218,11 +333,13 @@ def hero_split(slug, pill, plain, grad, lede, tick_items, stage, second=None):
 </div>''' % (crumbs(slug), pill[0], pill[1], h1(plain, grad), fr(lede), ticks(tick_items) if tick_items else '', ctas(second), stage)
 
 
-def media(m, cls=''):
+def media(m, cls='', alt=''):
     """A video (name without extension) or an image (name with extension) from media/."""
+    a = html.escape(re.sub('<[^>]+>|&nbsp;', ' ', alt), quote=True)
     if '.' in m:
-        return '<img src="media/%s" alt="" loading="lazy"%s>' % (m, cls)
-    return '<video data-src="media/%s.mp4" poster="media/%s.poster.webp" muted loop playsinline preload="none"%s></video>' % (m, m, cls)
+        return '<img src="media/%s" alt="%s" loading="lazy"%s>' % (m, a, cls)
+    lab = ' aria-label="%s"' % a if a else ''
+    return '<video data-src="media/%s.mp4" poster="media/%s.poster.webp" muted loop playsinline preload="none"%s%s></video>' % (m, m, lab, cls)
 
 
 def floats(items):
@@ -281,7 +398,7 @@ def bento(items, md):
         m = next(mi, None) if big else None
         txt = '<div><span class="ic"%s>%s</span><h3>%s</h3><p>%s</p></div>' % (tone(t), ICONS[ic], fr(h), fr(p))
         cls = 'bcard rv' + (' big' if big and m else '') + (' wide' if wide or (big and not m) else '')
-        out.append('<div class="%s"%s>%s%s</div>' % (cls, tone(t), txt, '<div class="md">%s</div>' % media(m) if m else ''))
+        out.append('<div class="%s"%s>%s%s</div>' % (cls, tone(t), txt, '<div class="md">%s</div>' % media(m, alt='Exemple de pub Meta : ' + h) if m else ''))
     return '<div class="bento">%s</div>' % ''.join(out)
 
 
@@ -338,7 +455,7 @@ def related(slugs):
     for s in slugs:
         g, title, desc, ic, t, th = PAGES[s]
         cards.append('<a class="rcard rv" href="%s"><div class="th">%s<span class="ic"%s>%s</span></div><div class="tx"><h3>%s</h3><p>%s</p><span class="go">Découvrir %s</span></div></a>'
-                     % (href(s), thumb_html(th), tone(t), ICONS[ic], html.escape(title), html.escape(desc), ARROW))
+                     % (href(s), thumb_html(th, title + ' avec Growthity'), tone(t), ICONS[ic], html.escape(title), html.escape(desc), ARROW))
     return '<div class="rel">%s</div>' % ''.join(cards)
 
 
@@ -383,4 +500,8 @@ if __name__ == '__main__':
     built = build_pages(sys.modules[__name__])
     for name, (title, desc, body) in built.items():
         write(name + '.html', page(name, title, desc, body))
-    print('built %d pages' % len(built))
+    order = ['index'] + [s for s in PAGES]
+    urls = ''.join('<url><loc>%s</loc><changefreq>weekly</changefreq><priority>%s</priority></url>' % (url(s), '1.0' if s == 'index' else '0.8' if PAGES[s][0] != 'ressources' else '0.6') for s in order if s in built)
+    write('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">%s</urlset>\n' % urls)
+    write('robots.txt', 'User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n' % BASE)
+    print('built %d pages (%d with SEO copy)' % (len(built), len([k for k in built if k in SEO])))
