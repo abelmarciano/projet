@@ -1309,7 +1309,7 @@ footer a:hover{color:var(--fg)}
   async function click(c,target,w){c.classList.add('press');target.classList.add('press-fx');await w(160);c.classList.remove('press');target.classList.remove('press-fx');await w(120)}
 
   /* ---------- hero wall + models ---------- */
-  var R1=['real-14','ugc-femme','real-42','ugc-homme','real-05','real-40','ugc-solaire'],R2=['real-19','ugc-scierie','real-04','ugc-pac-awa','real-06','bougie-916'],R3=['img-bougie','real-42','img-sneakers','real-05','img-macbook','real-14'];
+  var R1=['real-14','real-42','real-05','real-40','real-04-hd','real-19'],R2=['ugc-femme','real-12','ugc-homme','ugc-solaire','real-06','ugc-scierie','ugc-pac-awa','bougie-916'],R3=['img-bougie','real-42','img-sneakers','real-05','img-macbook','real-14'];
   var rows={
     a:R1.map(function(n,i){return '<div class="tile'+(i===2?' live':'')+'">'+vid(n)+'</div>'}),
     b:R2.map(function(n,i){return '<div class="tile'+(i===3?' live':'')+'">'+vid(n)+'</div>'}),
