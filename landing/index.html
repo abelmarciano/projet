@@ -33,6 +33,7 @@
   --meta-soft:#E6F0FF;
   --ok:#16A36A;
   --ok-soft:#E3F8EE;
+  --ok-ink:#0F5F3F;
   --warn:#C27C0E;
   --warn-soft:#FDF3DC;
   --no:#94A3B8;
@@ -175,7 +176,7 @@ section{padding-block:110px}
 .scen button[aria-selected="true"] .pg{display:block}
 .scen button .pg i{display:block;height:100%;width:0;background:var(--grad-pink)}
 .chatwin{max-width:1040px;margin:0 auto}
-.app{display:grid;grid-template-columns:220px 1fr;height:620px}
+.app{display:flex;flex-direction:column;height:620px}
 .side{border-right:1px solid var(--line);background:#FBFAFF;padding:16px 12px;display:flex;flex-direction:column;gap:4px;font-size:13px}
 .side .logo{font-size:16px;margin:0 6px 14px}
 .side .logo svg{width:20px;height:20px}
@@ -187,6 +188,7 @@ section{padding-block:110px}
 .side .credits b{display:block;font-family:var(--display);font-size:18px;color:var(--fg);font-variant-numeric:tabular-nums}
 .side .credits .bar{margin-top:8px}
 .main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.chatwin .thread{padding-inline:clamp(14px,6vw,80px)}
 .thread{flex:1;overflow:hidden;padding:22px 26px 10px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
 .msg{display:flex;gap:10px;max-width:86%}
 .msg.me{align-self:flex-end}
@@ -275,6 +277,13 @@ section{padding-block:110px}
 .frame .dts i{width:5px;height:5px;border-radius:3px;background:rgba(255,255,255,.55)}
 .frame .dts i.on{background:var(--white)}
 .frames .cap{text-align:center;font-size:12px;color:var(--dim);margin-top:8px}
+.frame .ovl{position:absolute;z-index:2;left:8px;right:8px;color:var(--white);font-family:var(--display);font-weight:700;text-shadow:0 2px 8px rgba(0,0,0,.55);line-height:1.1}
+.frame .ovl.top{top:34px;font-size:15px}
+.frame .ovl.cta{bottom:10px;right:auto;font-family:var(--body);font-size:11px;background:var(--white);color:var(--fg);text-shadow:none;padding:5px 10px;border-radius:999px}
+.frame .ovl.mid{bottom:22px;font-size:14px;text-align:center}
+.frame .ovl.band{left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.72));padding:34px 10px 10px;font-size:13px}
+.frame .ovl.band small{display:block;font-family:var(--body);font-weight:500;font-size:10px;opacity:.85;margin-top:3px}
+#fcarimg{transition:transform .9s cubic-bezier(.4,0,.2,1)}
 
 /* spy (dark band) */
 .night{background:var(--night);color:var(--night-fg);border-radius:40px;margin-inline:20px}
@@ -291,7 +300,8 @@ section{padding-block:110px}
 .ads{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
 .ad{border-radius:12px;overflow:hidden;background:var(--surface);color:var(--fg);font-size:11px;transition:box-shadow .4s,transform .4s,opacity .4s}
 .ad .top{display:flex;align-items:center;gap:6px;padding:7px 8px}
-.ad .avt{width:18px;height:18px;border-radius:9px;background:var(--grad);flex:none}
+.ad .avt{width:22px;height:22px;border-radius:11px;flex:none;overflow:hidden;display:block}
+.ad .avt svg{width:100%;height:100%;display:block}
 .ad .top b{font-size:11px;display:block;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ad .top small{font-size:9px;color:var(--dim)}
 .ad .m{aspect-ratio:4/5;background:var(--mist)}
@@ -306,7 +316,7 @@ section{padding-block:110px}
 .spy-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--night-3);font-size:13px;flex-wrap:wrap}
 .spy-foot b{color:var(--night-fg)}
 .spy-foot span{color:var(--night-muted)}
-.toast{position:absolute;right:18px;bottom:18px;z-index:5;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:var(--surface);color:var(--fg);font-size:13px;font-weight:600;box-shadow:var(--shadow-lg);opacity:0;transform:translateY(10px);transition:all .4s}
+.toast{position:absolute;right:18px;top:56px;z-index:5;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;background:var(--surface);color:var(--fg);font-size:13px;font-weight:600;box-shadow:var(--shadow-lg);opacity:0;transform:translateY(10px);transition:all .4s}
 .toast.on{opacity:1;transform:none}
 .toast svg{width:16px;height:16px;color:var(--ok)}
 
@@ -342,7 +352,10 @@ section{padding-block:110px}
 .trk>span{border-radius:7px;font-size:10px;font-weight:600;display:flex;align-items:center;padding:0 8px;overflow:hidden;white-space:nowrap;transition:all .4s}
 .trk.cap>span{background:var(--violet-soft);color:var(--indigo);border:1px solid rgba(91,63,228,.25)}
 .trk.cap>span.on{background:var(--indigo);color:var(--white)}
-.trk.vid>span{background-size:cover;background-position:center;border:2px solid transparent}
+.trk.vid>span{background-size:cover;background-position:center;border:2px solid transparent;color:var(--white);text-shadow:0 1px 3px rgba(0,0,0,.6);align-items:flex-end;padding-bottom:3px}
+.ed .pv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .25s}
+.ed .pv img.on{opacity:1}
+.ed .pv .cap-k{z-index:2}
 .trk.vid>span.cut{border-color:var(--pink)}
 .trk.mus{height:26px;align-items:center;gap:2px;padding:0 6px;border-radius:7px;background:var(--mist)}
 .trk.mus i{flex:1;border-radius:1px;background:rgba(91,63,228,.4)}
@@ -362,13 +375,34 @@ section{padding-block:110px}
 .slider{position:relative;height:6px;border-radius:3px;background:var(--mist-2);margin-top:12px}
 .slider>i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--grad-pink);width:20%;transition:width .9s ease}
 .slider>b{position:absolute;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:9px;background:var(--surface);border:2px solid var(--indigo);left:20%;transition:left .9s ease;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.zone{position:relative}
+.zsel{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:42px;padding:6px 8px;border-radius:12px;border:1.5px solid var(--line-2);background:var(--surface);transition:all .2s}
+.zsel.focus{border-color:var(--indigo);box-shadow:0 0 0 4px rgba(91,63,228,.1)}
+.zchip{display:inline-flex;align-items:center;gap:6px;padding:4px 6px 4px 10px;border-radius:8px;background:var(--violet-soft);color:var(--indigo);font-weight:600;font-size:12px;white-space:nowrap}
+.zchip i{font-style:normal;width:16px;height:16px;border-radius:4px;display:grid;place-items:center;background:rgba(91,63,228,.12);font-size:11px}
+.zin{font-size:13px;min-width:40px;color:var(--fg)}
+.zin:empty::before{content:"Ajouter une ville, un département…";color:var(--dim)}
+.zdrop{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:4;border-radius:12px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-lg);padding:6px;display:none}
+.zdrop.on{display:block}
+.zdrop div{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;font-size:13px;transition:background .2s}
+.zdrop div.hl{background:var(--violet-soft)}
+.zdrop div b{min-width:30px;height:22px;padding:0 4px;border-radius:6px;background:var(--mist);display:grid;place-items:center;font-size:11px;font-family:var(--mono);font-weight:500}
+.zdrop div small{margin-left:auto;color:var(--dim);font-size:11px}
+.reach{display:flex;justify-content:space-between;align-items:baseline;margin:10px 0 6px;font-size:12px;color:var(--dim)}
+.reach b{font-family:var(--display);font-size:15px;color:var(--fg);font-variant-numeric:tabular-nums}
+.nofee{display:flex;gap:6px;align-items:center;margin-top:10px;font-size:12px;color:var(--ok);font-weight:600}
+.nofee svg{width:14px;height:14px;flex:none}
+.callout{display:flex;gap:12px;align-items:flex-start;margin-top:24px;padding:16px 18px;border-radius:16px;background:var(--ok-soft);border:1px solid rgba(22,163,106,.25);font-size:15px;color:var(--ok-ink);max-width:48ch}
+.callout svg{width:22px;height:22px;flex:none;color:var(--ok);margin-top:1px}
+.callout b{font-weight:700}
 .budget{display:flex;justify-content:space-between;align-items:baseline}
 .budget b{font-family:var(--display);font-size:20px;font-variant-numeric:tabular-nums}
 .pubbtn{justify-content:center;width:100%}
 .pubbtn.done{background:var(--ok);box-shadow:0 14px 34px -14px rgba(22,163,106,.8)}
 .fb{border-radius:14px;border:1px solid var(--line);overflow:hidden;font-size:11px;background:var(--surface)}
 .fb .top{display:flex;align-items:center;gap:6px;padding:8px}
-.fb .top i{width:22px;height:22px;border-radius:11px;background:var(--grad);flex:none}
+.fb .top i{width:22px;height:22px;border-radius:11px;overflow:hidden;flex:none;display:block}
+.fb .top i svg{width:100%;height:100%;display:block}
 .fb .top b{display:block;font-size:11px}
 .fb .top small{color:var(--dim);font-size:9px}
 .fb .m{aspect-ratio:4/5;background:var(--black)}
@@ -443,6 +477,26 @@ section{padding-block:110px}
 .avs .st{display:flex}
 .avs .st i{width:26px;height:26px;border-radius:13px;border:2px solid var(--mist);margin-left:-7px;display:grid;place-items:center;font-style:normal;font-size:9px;font-weight:700;color:var(--white)}
 .avs .st i:first-child{margin-left:0}
+.insp{width:100%;height:100%;display:flex;flex-direction:column;gap:10px;position:relative}
+.ichips{display:flex;gap:5px;overflow:hidden}
+.icols{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;overflow:hidden;mask-image:linear-gradient(transparent,#000 10%,#000 85%,transparent);-webkit-mask-image:linear-gradient(transparent,#000 10%,#000 85%,transparent)}
+.icol{display:flex;flex-direction:column;gap:8px;animation:up 20s linear infinite}
+.icol:nth-child(2){animation-duration:26s;animation-direction:reverse}
+.icol:nth-child(3){animation-duration:23s}
+@keyframes up{to{transform:translateY(-50%)}}
+.icard{position:relative;border-radius:8px;overflow:hidden;background:var(--surface);flex:none}
+.icard img,.icard video{width:100%;height:100%;display:block;object-fit:cover}
+.icard.t{aspect-ratio:9/14}.icard.q{aspect-ratio:1}
+.icard i{position:absolute;right:4px;top:4px;width:18px;height:18px;border-radius:9px;background:rgba(255,255,255,.92);display:grid;place-items:center;font-style:normal;font-size:10px;color:var(--pink)}
+.isave{position:absolute;left:50%;bottom:6px;transform:translate(-50%,10px);opacity:0;padding:6px 12px;border-radius:999px;background:var(--fg);color:var(--white);font-size:12px;font-weight:600;white-space:nowrap;transition:all .35s}
+.isave.on{opacity:1;transform:translate(-50%,0)}
+.lv{width:100%;height:100%;display:flex;flex-direction:column;gap:8px}
+.lvh{display:flex;justify-content:space-between;align-items:center;font-size:13px}
+.lvl{display:flex;flex-direction:column;gap:6px}
+.lvl .lead{background:var(--surface)}
+.lvl .sale{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;background:var(--ok-soft);color:var(--ok-ink);font-size:12.5px;font-weight:600}
+.lvl .sale b{margin-left:auto;font-family:var(--display);font-size:15px;color:var(--ok)}
+.clone .ph .tag{position:absolute;left:6px;bottom:6px;font-size:10px;font-weight:700;background:rgba(255,255,255,.92);padding:2px 7px;border-radius:999px}
 /* ab */
 .ab{width:100%;display:flex;flex-direction:column;gap:8px}
 
@@ -602,7 +656,7 @@ footer a:hover{color:var(--fg)}
       <div class="row slow" data-row="c"></div>
     </div>
   </div>
-  <div class="wall-label"><span class="faces"><img src="media/actor-emma.poster.webp" alt=""><img src="media/actor-david.poster.webp" alt=""><img src="media/actor-emiko.poster.webp" alt=""><img src="media/actor-lucas.poster.webp" alt=""></span><span><b>60+ acteurs UGC IA</b> · ou le vôtre, depuis une photo</span></div>
+  <div class="wall-label"><span class="faces"><img src="media/actor-emma.poster.webp" alt=""><img src="media/actor-david.poster.webp" alt=""><img src="media/actor-emiko.poster.webp" alt=""><img src="media/actor-lucas.poster.webp" alt=""></span><span><b>500+ acteurs UGC IA</b> · ou le vôtre, depuis une photo</span></div>
 </div>
 
 <div class="models">
@@ -616,28 +670,17 @@ footer a:hover{color:var(--fg)}
     <div class="head rv">
       <div class="eyebrow">Chat créatif</div>
       <h2>Regardez une pub se créer, <span class="grad">du brief à Meta.</span></h2>
-      <p>Un seul chat remplace le directeur créatif, le casting, le tournage, le montage et le media buyer. Choisissez un scénario.</p>
+      <p>Un seul chat remplace le directeur créatif, le casting, le tournage, le montage et le media buyer. E-commerce, B2B, services, commerce local : choisissez un scénario.</p>
     </div>
     <div class="scen" role="tablist" aria-label="Scénarios de démonstration">
-      <button role="tab" aria-selected="true" data-s="0">Artisan local<span class="pg"><i></i></span></button>
-      <button role="tab" aria-selected="false" data-s="1">E-commerce<span class="pg"><i></i></span></button>
-      <button role="tab" aria-selected="false" data-s="2">B2B<span class="pg"><i></i></span></button>
+      <button role="tab" aria-selected="true" data-s="0">E-commerce<span class="pg"><i></i></span></button>
+      <button role="tab" aria-selected="false" data-s="1">B2B &amp; services<span class="pg"><i></i></span></button>
+      <button role="tab" aria-selected="false" data-s="2">Commerce local<span class="pg"><i></i></span></button>
     </div>
     <div class="win chatwin rv" id="chatdemo">
-      <div class="win-bar"><i></i><i></i><i></i><span>growthity.ai · Chat créatif</span></div>
+      <div class="win-bar"><i></i><i></i><i></i><span>growthity.ai · Chat créatif</span><span class="chip pri" style="margin-left:auto">Crédits <b id="credits" style="font-variant-numeric:tabular-nums">4 820</b></span></div>
       <div class="app">
-        <aside class="side" aria-hidden="true">
-          <div class="logo"><svg viewBox="0 0 24 24" fill="none"><path d="M2 17 8.5 10.5 13.5 15.5 22 7M16 7h6v6" stroke="url(#lg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>growthity<b>.ai</b></div>
-          <div class="new">+ Nouvelle pub</div>
-          <a class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg>Chat créatif</a>
-          <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Studio en lot</a>
-          <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>Espion Meta Ads</a>
-          <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9l-.8-1.2A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>Créations</a>
-          <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Acteurs</a>
-          <a><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>Performances</a>
-          <div class="credits">Crédits restants<b id="credits">4 820</b><div class="bar"><i id="credbar" style="width:96%"></i></div></div>
-        </aside>
-        <div class="main">
+        <div class="main" style="flex:1">
           <div class="thread" id="thread" aria-live="off"></div>
           <div class="composer" id="composer"><span class="in" id="cin"><span class="ph">Décrivez votre pub…</span></span><span class="send"><svg viewBox="0 0 24 24" fill="none"><path d="M12 19V5M6 11l6-6 6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
         </div>
@@ -664,11 +707,11 @@ footer a:hover{color:var(--fg)}
         <div class="win" id="fmtdemo">
           <div class="win-bar"><i></i><i></i><i></i><span>Nouvelle création</span></div>
           <div class="fmt-demo">
-            <div class="brief"><svg viewBox="0 0 24 24" width="18" height="18" fill="var(--indigo)"><path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9L12 2Z"/></svg><span class="in" id="fbrief">Bougie parfumée artisanale, ambiance cosy, ton sincère.</span><span class="btn btn-grad sm" id="fgo">Générer</span></div>
+            <div class="brief"><svg viewBox="0 0 24 24" width="18" height="18" fill="var(--indigo)"><path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9L12 2Z"/></svg><span class="in" id="fbrief">Bougie Figue &amp; Cèdre, faite main. Ambiance cosy, ton sincère.</span><span class="btn btn-grad sm" id="fgo">Générer</span></div>
             <div class="frames">
-              <div><div class="frame v"><span class="lbl">9:16</span><video src="media/ugc-solaire.mp4" poster="media/ugc-solaire.poster.webp" autoplay muted loop playsinline></video><div class="sk shimmer" style="opacity:0"><span>Rendu 0 %</span></div></div><div class="cap">Reels &amp; Stories</div></div>
-              <div><div class="frame s" id="fcar"><span class="lbl">1:1</span><img src="media/img-bougie.webp" alt="Carrousel généré : bougie"><div class="dts"><i class="on"></i><i></i><i></i></div><div class="sk shimmer" style="opacity:0"><span>Rendu 0 %</span></div></div><div class="cap">Carrousel</div></div>
-              <div><div class="frame p"><span class="lbl">4:5</span><img src="media/img-sneakers.webp" alt="Visuel feed généré"><div class="sk shimmer" style="opacity:0"><span>Rendu 0 %</span></div></div><div class="cap">Feed</div></div>
+              <div><div class="frame v"><span class="lbl">9:16</span><video src="media/bougie-916.mp4" poster="media/bougie-916.poster.webp" autoplay muted loop playsinline></video><div class="ovl top">Le rituel du soir<br>qui change tout</div><div class="ovl cta">Acheter · 32 €</div><div class="sk shimmer" style="opacity:0"><span>Rendu 0 %</span></div></div><div class="cap">Reels &amp; Stories</div></div>
+              <div><div class="frame s" id="fcar"><span class="lbl">1:1</span><img id="fcarimg" src="media/img-bougie.webp" alt="Carrousel généré : bougie Figue et Cèdre"><div class="ovl mid" id="fcartxt">Fait main à Paris</div><div class="dts"><i class="on"></i><i></i><i></i></div><div class="sk shimmer" style="opacity:0"><span>Rendu 0 %</span></div></div><div class="cap">Carrousel</div></div>
+              <div><div class="frame p"><span class="lbl">4:5</span><img src="media/img-bougie.webp" alt="Visuel feed généré : bougie Figue et Cèdre" style="object-position:22% 50%"><div class="ovl band">Bougie Figue &amp; Cèdre<small>45 h de combustion · cire de soja</small></div><div class="sk shimmer" style="opacity:0"><span>Rendu 0 %</span></div></div><div class="cap">Feed</div></div>
             </div>
           </div>
         </div>
@@ -690,14 +733,14 @@ footer a:hover{color:var(--fg)}
         <div class="win" id="eddemo">
           <div class="win-bar"><i></i><i></i><i></i><span>Éditeur vidéo · Bougie Figue &amp; Cèdre</span></div>
           <div class="ed">
-            <div class="pv"><video src="media/ugc-femme.mp4" poster="media/ugc-femme.poster.webp" autoplay muted loop playsinline></video><div class="cap-k" id="edcap">J'ai testé <em>cette</em> bougie</div></div>
+            <div class="pv"><video id="edv" src="media/ugc-femme.mp4" poster="media/ugc-femme.poster.webp" autoplay muted loop playsinline></video><img id="edimg" src="media/img-bougie.webp" alt="Plan produit inséré"><div class="cap-k" id="edcap">J'ai testé</div></div>
             <div class="tl" id="tl">
               <div class="hdr"><span id="edtime">00:00 / 00:08</span><span>Sous-titres · Vidéo · Musique</span></div>
-              <div class="trk cap" id="edcaps"><span>J'ai testé</span><span>cette bougie</span><span>pendant un mois</span><span>et franchement…</span></div>
-              <div class="trk vid" id="edclips"><span style="flex:3;background-image:url(media/ugc-femme.poster.webp)"></span><span style="flex:2;background-image:url(media/img-bougie.webp)"></span><span style="flex:3;background-image:url(media/ugc-solaire.poster.webp)"></span></div>
+              <div class="trk cap" id="edcaps"><span style="flex:2">J'ai testé</span><span style="flex:2">cette bougie</span><span style="flex:2">pendant un mois</span><span style="flex:2">et franchement…</span></div>
+              <div class="trk vid" id="edclips"><span style="flex:3;background-image:url(media/femme-1.webp)">Vidéo</span><span class="ins" style="flex:2;background-image:url(media/img-bougie.webp)">Image</span><span style="flex:3;background-image:url(media/femme-6.webp)">Vidéo</span></div>
               <div class="trk mus" id="edwave"></div>
               <div class="ph-line" id="edph"></div>
-              <div class="ed-act"><span class="chip pri" id="edtool">✂ Découpe auto</span><span class="chip">Musique 40 %</span><span class="chip">Vitesse 1,1×</span><span class="btn btn-grad sm" id="edexp" style="margin-left:auto">Exporter</span></div>
+              <div class="ed-act"><span class="chip pri">Image insérée · 00:03 → 00:05</span><span class="chip">Musique 40 %</span><span class="btn btn-grad sm" style="margin-left:auto">Exporter</span></div>
             </div>
           </div>
         </div>
@@ -724,21 +767,21 @@ footer a:hover{color:var(--fg)}
         <div class="win spywin" id="spydemo">
           <div class="win-bar"><i></i><i></i><i></i><span>Espion Meta Ads · Bibliothèque FR</span></div>
           <div class="spy-body">
-            <div class="sbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span class="in" id="sq">pompe à chaleur</span><span class="chip meta">Meta · France</span></div>
+            <div class="sbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span class="in" id="sq">vidéo UGC face caméra</span><span class="chip meta">Tous secteurs · France</span></div>
             <div class="ads" id="ads">
-              <div class="ad" data-win="1"><div class="top"><span class="avt"></span><div><b>Éco Habitat</b><small>Sponsorisé</small></div></div><div class="m"><img src="media/img-pac-fioul.webp" alt=""></div><div class="ft"><span>47 j</span><em>Gagnant probable</em></div></div>
-              <div class="ad"><div class="top"><span class="avt"></span><div><b>Chaleur+</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-pac-awa.mp4" poster="media/ugc-pac-awa.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>12 j</span><em>Gagnant probable</em></div></div>
-              <div class="ad" data-win="1"><div class="top"><span class="avt"></span><div><b>ThermoConfort</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-homme.mp4" poster="media/ugc-homme.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>62 j</span><em>Gagnant probable</em></div></div>
-              <div class="ad"><div class="top"><span class="avt"></span><div><b>RénoPro</b><small>Sponsorisé</small></div></div><div class="m"><img src="media/img-pac-rge.webp" alt=""></div><div class="ft"><span>9 j</span><em>Gagnant probable</em></div></div>
-              <div class="ad" data-win="1"><div class="top"><span class="avt"></span><div><b>Maison Éco</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-pac-hugo.mp4" poster="media/ugc-pac-hugo.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>33 j</span><em>Gagnant probable</em></div></div>
-              <div class="ad"><div class="top"><span class="avt"></span><div><b>Énergie Plus</b><small>Sponsorisé</small></div></div><div class="m"><img src="media/img-pac-70.webp" alt=""></div><div class="ft"><span>4 j</span><em>Gagnant probable</em></div></div>
-              <div class="ad"><div class="top"><span class="avt"></span><div><b>SolaireDirect</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-solaire.mp4" poster="media/ugc-solaire.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>6 j</span><em>Gagnant probable</em></div></div>
-              <div class="ad"><div class="top"><span class="avt"></span><div><b>Bois &amp; Co</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-scierie.mp4" poster="media/ugc-scierie.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>15 j</span><em>Gagnant probable</em></div></div>
+              <div class="ad" data-win="1"><div class="top"><span class="avt" data-logo="stride"></span><div><b>Stride</b><small>Sponsorisé</small></div></div><div class="m"><img src="media/img-sneakers.webp" alt=""></div><div class="ft"><span>54 j</span><em>Gagnant probable</em></div></div>
+              <div class="ad" data-win="1"><div class="top"><span class="avt" data-logo="kaia"></span><div><b>Kaïa Skin</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-solaire.mp4" poster="media/ugc-solaire.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>38 j</span><em>Gagnant probable</em></div></div>
+              <div class="ad"><div class="top"><span class="avt" data-logo="figue"></span><div><b>Atelier Figue</b><small>Sponsorisé</small></div></div><div class="m"><img src="media/img-bougie.webp" alt=""></div><div class="ft"><span>12 j</span><em>Gagnant probable</em></div></div>
+              <div class="ad" data-win="1"><div class="top"><span class="avt" data-logo="nova"></span><div><b>Nova Tech</b><small>Sponsorisé</small></div></div><div class="m"><img src="media/img-macbook.webp" alt=""></div><div class="ft"><span>41 j</span><em>Gagnant probable</em></div></div>
+              <div class="ad"><div class="top"><span class="avt" data-logo="coach"></span><div><b>Mon Coach RH</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-homme.mp4" poster="media/ugc-homme.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>7 j</span><em>Gagnant probable</em></div></div>
+              <div class="ad" data-win="1"><div class="top"><span class="avt" data-logo="nord"></span><div><b>Nordbois</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-scierie.mp4" poster="media/ugc-scierie.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>63 j</span><em>Gagnant probable</em></div></div>
+              <div class="ad"><div class="top"><span class="avt" data-logo="lumi"></span><div><b>Lumi Beauty</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-femme.mp4" poster="media/ugc-femme.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>5 j</span><em>Gagnant probable</em></div></div>
+              <div class="ad"><div class="top"><span class="avt" data-logo="volta"></span><div><b>Volta</b><small>Sponsorisé</small></div></div><div class="m"><video src="media/ugc-pac-awa.mp4" poster="media/ugc-pac-awa.poster.webp" autoplay muted loop playsinline></video></div><div class="ft"><span>19 j</span><em>Gagnant probable</em></div></div>
               <div class="scanline" id="scan"></div>
             </div>
-            <div class="spy-foot"><span><b id="wcount">3</b> gagnants probables · Hook facture, UGC face caméra, aides de l'État</span><span class="btn btn-grad sm" id="inspire">S'inspirer</span></div>
+            <div class="spy-foot"><span><b id="wcount">4</b> gagnants probables · Témoignage, preuve en 3 s, produit en main</span><span class="btn btn-grad sm" id="inspire">S'inspirer</span></div>
           </div>
-          <div class="toast" id="spytoast"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>3 références envoyées au chat</div>
+          <div class="toast" id="spytoast"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>4 références envoyées au chat</div>
         </div>
       </div>
     </div>
@@ -805,29 +848,34 @@ footer a:hover{color:var(--fg)}
         <h2>En ligne sur Meta <span class="grad">sans quitter l'app.</span></h2>
         <p>Connectez votre compte Meta Business une fois. Choisissez l'objectif, l'audience, les départements et le budget : Growthity pousse la campagne sur Facebook et Instagram.</p>
         <ul class="ticks">
-          <li><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Ciblage par département, code postal ou rayon</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Ciblage par département, ville ou rayon autour d'une adresse</li>
           <li><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Leads Meta remontés en direct dans Growthity</li>
           <li><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Ventes de votre boutique attribuées à la bonne pub</li>
         </ul>
+        <div class="callout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg><p><b>0 % de commission sur vos dépenses Meta.</b> Votre budget publicitaire est facturé directement par Meta, Growthity ne prend rien dessus.</p></div>
       </div>
       <div class="stage rv">
         <div class="win" id="pubdemo">
           <div class="win-bar"><i></i><i></i><i></i><span>Publier sur Meta Ads</span></div>
           <div class="pub">
             <div class="form">
-              <div class="fld"><label>Objectif</label><div class="seg"><span class="chip" data-o>Trafic</span><span class="chip pri" data-o>Leads</span><span class="chip" data-o>Ventes</span></div></div>
-              <div class="fld"><label>Audience</label><div class="seg"><span class="chip">30 – 65 ans</span><span class="chip">Propriétaires</span><span class="chip">Rénovation</span></div></div>
-              <div class="fld"><label>Départements · <span id="dcount">4</span> ciblés</label><div class="deps" id="pdeps"></div></div>
-              <div class="fld"><div class="budget"><label style="margin:0">Budget quotidien</label><b id="bud">30 €</b></div><div class="slider" id="slider"><i></i><b></b></div></div>
+              <div class="fld"><label>Objectif</label><div class="seg"><span class="chip" data-o>Trafic</span><span class="chip" data-o>Leads</span><span class="chip" data-o>Ventes</span></div></div>
+              <div class="fld"><label>Audience</label><div class="seg"><span class="chip">25 – 45 ans</span><span class="chip">Déco</span><span class="chip">Cadeaux</span></div></div>
+              <div class="fld"><label>Zones de diffusion</label>
+                <div class="zone"><div class="zsel" id="zsel"><span class="zchip">75 · Paris<i>×</i></span><span class="zin" id="zin"></span></div><div class="zdrop" id="zdrop"></div></div>
+                <div class="reach"><span>Audience estimée</span><b id="reach">1,2 M personnes</b></div><div class="bar"><i id="reachbar" style="width:30%"></i></div>
+              </div>
+              <div class="fld"><div class="budget"><label style="margin:0">Budget quotidien</label><b id="bud">30 €</b></div><div class="slider" id="slider"><i></i><b></b></div>
+                <div class="nofee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>Payé directement à Meta · 0 % de commission Growthity</div></div>
               <span class="btn btn-grad pubbtn" id="pbtn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.24.19 2.24.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02Z"/></svg><span id="pbl">Publier sur Meta</span></span>
             </div>
             <div>
               <div class="fb">
-                <div class="top"><i></i><div><b>Éco Chauffage 33</b><small>Sponsorisé</small></div></div>
-                <div class="m"><video src="media/ugc-charlotte.mp4" poster="media/ugc-charlotte.poster.webp" autoplay muted loop playsinline></video></div>
-                <div class="cta"><b>Jusqu'à 70 % d'aides</b><span>En savoir plus</span></div>
+                <div class="top"><i data-logo="figue"></i><div><b>Atelier Figue</b><small>Sponsorisé</small></div></div>
+                <div class="m"><video src="media/ugc-femme.mp4" poster="media/ugc-femme.poster.webp" autoplay muted loop playsinline></video></div>
+                <div class="cta"><b>Bougies faites main</b><span>Acheter</span></div>
               </div>
-              <div class="live"><div class="met">Impr.<b id="m1">0</b></div><div class="met">Clics<b id="m2">0</b></div><div class="met">Leads<b id="m3">0</b></div></div>
+              <div class="live"><div class="met">Impr.<b id="m1">0</b></div><div class="met">Clics<b id="m2">0</b></div><div class="met">Ventes<b id="m3">0</b></div></div>
             </div>
           </div>
         </div>
@@ -878,35 +926,34 @@ footer a:hover{color:var(--fg)}
     </div>
     <div class="minis">
       <article class="mini rv">
+        <div class="scene" id="m-insp"><div class="insp">
+          <div class="ichips" id="ichips"><span class="chip dark">Tous</span><span class="chip">Mode</span><span class="chip">Beauté</span><span class="chip">Tech</span><span class="chip">Maison</span></div>
+          <div class="icols" id="icols"></div>
+          <span class="isave" id="isave">♥ Ajoutée à vos inspirations</span>
+        </div></div>
+        <div class="txt"><h3>Galerie d'inspiration</h3><p>Des pubs qui performent, triées par secteur et par format. Sauvegardez-les et envoyez-les au chat comme modèle.</p></div>
+      </article>
+      <article class="mini rv">
         <div class="scene" id="m-tpl"><div class="tpl">
           <div class="big"><img src="media/img-sneakers.webp" alt="Photo produit mise en scène"><span id="tpln">Style Urban</span></div>
-          <div class="opts"><div class="on"><img src="media/img-sneakers.webp" alt=""><span>Urban</span></div><div><img src="media/img-bougie.webp" alt=""><span>Cosy</span></div><div><img src="media/img-macbook.webp" alt=""><span>Tech</span></div><div><img src="media/img-pac-70.webp" alt=""><span>Maison</span></div><div><img src="media/img-sneakers.webp" alt="" style="filter:hue-rotate(160deg)"><span>Néon</span></div><div><img src="media/img-bougie.webp" alt="" style="filter:sepia(.6)"><span>Luxe</span></div></div>
+          <div class="opts"><div class="on"><img src="media/img-sneakers.webp" alt=""><span>Urban</span></div><div><img src="media/img-bougie.webp" alt=""><span>Cosy</span></div><div><img src="media/img-macbook.webp" alt=""><span>Tech</span></div><div><img src="media/img-sneakers.webp" alt="" style="filter:hue-rotate(160deg)"><span>Néon</span></div><div><img src="media/img-bougie.webp" alt="" style="filter:sepia(.6)"><span>Luxe</span></div><div><img src="media/img-macbook.webp" alt="" style="filter:hue-rotate(-60deg) saturate(1.4)"><span>Studio</span></div></div>
         </div></div>
-        <div class="txt"><h3>35+ templates vidéo produit</h3><p>Choisissez un style, glissez votre photo produit : elle est mise en scène et animée.</p></div>
-      </article>
-      <article class="mini rv">
-        <div class="scene" id="m-ab"><div class="ab">
-          <div class="var"><div class="r"><span>« J'ai testé 30 jours… »</span><b>4,6 %</b></div><div class="bar"><i style="width:92%"></i></div></div>
-          <div class="var"><div class="r"><span>« Le secret des pros »</span><b>3,1 %</b></div><div class="bar"><i style="width:62%"></i></div></div>
-          <div class="var"><div class="r"><span>« −40 % aujourd'hui »</span><b>2,4 %</b></div><div class="bar"><i style="width:48%"></i></div></div>
-          <span class="chip ok" style="align-self:flex-start" id="abwin">Gagnante : variante 1 · CTR +48 %</span>
-        </div></div>
-        <div class="txt"><h3>Tests A/B automatisés</h3><p>Plusieurs accroches pour la même pub, et l'IA identifie la variante gagnante.</p></div>
-      </article>
-      <article class="mini rv">
-        <div class="scene" id="m-lang"><div class="lang">
-          <div class="v"><video src="media/actor-anya.mp4" poster="media/actor-anya.poster.webp" autoplay muted loop playsinline></video><div class="sub" id="lsub">Je l'utilise tous les matins.</div></div>
-          <div class="codes" id="lcodes"><span class="chip pri">Français</span><span class="chip">English</span><span class="chip">Español</span><span class="chip">Deutsch</span><span class="chip">Italiano</span><span class="chip">+ 25 langues</span></div>
-        </div></div>
-        <div class="txt"><h3>30 langues</h3><p>La même créa, déclinée pour chaque marché en un clic, voix et sous-titres compris.</p></div>
+        <div class="txt"><h3>Templates vidéo produit</h3><p>Choisissez un style, glissez votre photo produit : elle est mise en scène et animée.</p></div>
       </article>
       <article class="mini rv">
         <div class="scene" id="m-clone"><div class="clone">
-          <div class="ph"><img src="media/actor-zoe.poster.webp" alt="Photo importée"><div class="scan"></div></div>
+          <div class="ph"><img src="media/actor-zoe-photo.webp" alt="Photo importée"><div class="scan"></div><span class="tag">Votre photo</span></div>
           <div class="arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div class="out"><video src="media/actor-zoe.mp4" poster="media/actor-zoe.poster.webp" autoplay muted loop playsinline></video><span>Acteur prêt</span></div>
         </div></div>
-        <div class="txt"><h3>Votre propre acteur</h3><p>Une photo suffit pour créer un acteur réutilisable : votre fondateur, votre commercial, votre égérie.</p></div>
+        <div class="txt"><h3>Votre propre acteur</h3><p>Une photo suffit pour créer un acteur réutilisable dans toutes vos vidéos : votre fondateur, votre commercial, votre égérie.</p></div>
+      </article>
+      <article class="mini rv">
+        <div class="scene" id="m-leads"><div class="lv">
+          <div class="lvh"><b>Leads &amp; ventes</b><span class="chip ok">● en direct</span></div>
+          <div class="lvl" id="lvl"></div>
+        </div></div>
+        <div class="txt"><h3>Leads &amp; ventes</h3><p>Les leads Meta arrivent en direct dans Growthity, et chaque vente de votre boutique est attribuée à la bonne pub.</p></div>
       </article>
       <article class="mini rv">
         <div class="scene" id="m-fold"><div class="fold">
@@ -970,9 +1017,11 @@ footer a:hover{color:var(--fg)}
     <div class="faq">
       <details open><summary>Faut-il des compétences en design ou en montage ?<i></i></summary><p>Aucune. Vous décrivez votre produit en une phrase, l'IA s'occupe du visuel, de la vidéo, du texte et du format. Le résultat est prêt à publier.</p></details>
       <details><summary>Sur quelles plateformes je peux publier ?<i></i></summary><p>Facebook et Instagram, directement depuis growthity.ai. Vous connectez votre compte Meta Business une fois et chaque création peut être diffusée en un clic.</p></details>
-      <details><summary>Qui sont les acteurs des vidéos ?<i></i></summary><p>Plus de 60 acteurs UGC IA réalistes, filtrables par style. Vous pouvez aussi créer votre propre acteur à partir d'une photo.</p></details>
+      <details><summary>Qui sont les acteurs des vidéos ?<i></i></summary><p>Plus de 500 acteurs UGC IA réalistes, filtrables par style. Vous pouvez aussi créer votre propre acteur à partir d'une photo.</p></details>
       <details><summary>Quels modèles d'IA sont utilisés ?<i></i></summary><p>Growthity orchestre pour vous les meilleurs moteurs du marché pour les textes, les visuels, les voix et les vidéos. Tout est intégré, vous n'avez aucun compte à créer.</p></details>
       <details><summary>Puis-je modifier une création après génération ?<i></i></summary><p>Oui. Chaque création garde son contexte. Vous cliquez sur « Modifier », écrivez ce que vous voulez changer, et l'IA met à jour uniquement ce qui doit l'être.</p></details>
+      <details><summary>Growthity prend-il une commission sur mes dépenses Meta ?<i></i></summary><p>Non, 0 %. Votre budget publicitaire est facturé directement par Meta sur votre propre compte publicitaire. Growthity ne touche jamais à vos dépenses pub.</p></details>
+      <details><summary>Pour quels secteurs ça fonctionne ?<i></i></summary><p>Tous : e-commerce, mode, beauté, tech, restauration, immobilier, formation, services B2B, artisans, commerces locaux… Si votre produit ou service se vend sur Facebook et Instagram, Growthity peut créer et publier ses pubs.</p></details>
       <details><summary>Je gère plusieurs clients, est-ce adapté ?<i></i></summary><p>Oui. Chaque client a sa marque, ses créations et sa mémoire, dans des workspaces séparés. Vous invitez votre équipe avec des rôles admin ou éditeur.</p></details>
       <details><summary>Où sont hébergées mes données ?<i></i></summary><p>Growthity est conçu et hébergé en France. Vous pouvez supprimer votre compte, vos campagnes et vos données Meta à tout moment.</p></details>
     </div>
@@ -1056,8 +1105,8 @@ footer a:hover{color:var(--fg)}
 
   /* ---------- hero wall + models ---------- */
   var actors=['antoine','anya','camille','claire','david','emiko','emma','freja','hiro','lucas','marta','thomas','zoe'];
-  var ugc=['ugc-femme','ugc-pac-awa','ugc-homme','ugc-scierie','ugc-solaire','ugc-pac-hugo'];
-  var imgs=['img-bougie','img-sneakers','img-pac-fioul','img-macbook','img-pac-rge','img-pac-70'];
+  var ugc=['ugc-femme','ugc-pac-awa','ugc-homme','ugc-scierie','ugc-solaire','bougie-916'];
+  var imgs=['img-bougie','img-sneakers','img-macbook','img-sneakers','img-bougie','img-macbook'];
   var rows={
     a:actors.slice(0,7).map(function(a,i){return '<div class="tile">'+vid('actor-'+a)+'<span class="nm">'+cap(a)+'</span></div>'+(i===2?'<div class="tile live">'+vid(ugc[0])+'</div>':'')}),
     b:actors.slice(7).concat(['antoine']).map(function(a,i){return (i%2?'<div class="tile">'+vid(ugc[1+(i>>1)%5])+'</div>':'')+'<div class="tile">'+vid('actor-'+a)+'<span class="nm">'+cap(a)+'</span></div>'}),
@@ -1069,22 +1118,13 @@ footer a:hover{color:var(--fg)}
 
   /* ---------- 1. chat demo ---------- */
   var SCEN=[
-    {credits:4820,steps:[
-      {u:"Je vends des pompes à chaleur financées par les aides, en Gironde. Je veux des leads : une vidéo UGC et un visuel."},
-      {a:"Parfait : une vidéo UGC 9:16 face caméra, plus un visuel 4:5 pour le feed. Voici 3 actrices qui inspirent confiance :",card:{t:'picks',list:[['ugc-charlotte','Charlotte'],['actor-claire','Claire'],['actor-marta','Marta']],pick:0}},
-      {u:"Charlotte. Cible la Gironde, 30 à 65 ans, 30 € par jour."},
-      {a:"C'est noté. Je lance la génération : vidéo 9:16 de 16 s, sous-titres inclus.",card:{t:'gen',cost:280}},
-      {a:"Ta vidéo est prête, avec le visuel assorti :",card:{t:'res',video:'ugc-charlotte',words:['Si vous vous','<em>chauffez</em>','encore au gaz','ou au fioul…'],img:'img-pac-fioul'}},
-      {u:"Parfait, publie sur Meta."},
-      {a:"Campagne en ligne sur Facebook et Instagram. Je surveille les leads en direct.",card:{t:'pub',m:[['Impressions',12480],['Clics',356],['Leads',18]]}}
-    ]},
     {credits:9340,steps:[
       {u:"Je vends des bougies parfumées sur ma boutique Shopify. Une vidéo qui donne envie d'acheter, sans discours commercial."},
       {a:"Je pars sur un témoignage UGC style selfie, ta bougie en gros plan. J'ai importé le produit depuis ta boutique :",card:{t:'prod',img:'img-bougie',name:'Bougie Figue & Cèdre',sub:'Importée depuis Shopify · 14 photos'}},
       {a:"Voici 3 créatrices crédibles sur la déco :",card:{t:'picks',list:[['actor-emma','Emma'],['actor-freja','Freja'],['actor-anya','Anya']],pick:0}},
       {u:"Emma. Fais-moi aussi 3 accroches à tester."},
       {a:"Génération en cours : vidéo 9:16 avec ta bougie intégrée à la scène.",card:{t:'gen',cost:300}},
-      {a:"Voilà ta créa et le carrousel produit :",card:{t:'res',video:'ugc-femme',words:["J'ai testé",'<em>cette</em> bougie','pendant','un mois…'],img:'img-bougie'}},
+      {a:"Voilà ta créa et le visuel produit :",card:{t:'res',video:'ugc-femme',words:["J'ai testé",'<em>cette</em> bougie','pendant','un mois…'],img:'img-bougie'}},
       {a:"Et les 3 accroches, testées sur une audience similaire :",card:{t:'vars',hooks:[["« J'ai testé pendant 30 jours… »",4.6],["« Le cadeau qu'on m'a le plus demandé »",3.4],["« −20 % ce week-end »",2.2]]}}
     ]},
     {credits:22610,steps:[
@@ -1092,12 +1132,21 @@ footer a:hover{color:var(--fg)}
       {a:"Une vidéo UGC au ton confiant et pro, plus un visuel 4:5. Voici 3 profils corporate :",card:{t:'picks',list:[['actor-david','David'],['actor-thomas','Thomas'],['actor-antoine','Antoine']],pick:0}},
       {u:"David. France entière, 40 € par jour."},
       {a:"Je génère la vidéo et le visuel avec l'accroche « Recruter sans y passer vos nuits ».",card:{t:'gen',cost:280}},
-      {a:"Tes créas sont prêtes :",card:{t:'res',video:'actor-david',words:['Recruter','sans y passer','<em>vos nuits</em>',''],img:'img-macbook'}},
+      {a:"Tes créas sont prêtes :",card:{t:'res',video:'actor-david',words:['Recruter','sans y passer','<em>vos nuits</em>'],img:'img-macbook'}},
       {u:"Publie et montre-moi les leads reçus."},
       {a:"Campagne en ligne. Les leads Meta remontent ici en direct :",card:{t:'leads',list:[['JM','Julie M.','DRH · 120 salariés'],['KB','Karim B.','Fondateur · SaaS'],['SL','Sophie L.','Responsable RH']]}}
+    ]},
+    {credits:4820,steps:[
+      {u:"Je fabrique des cuisines en bois sur mesure à Nantes. Je veux des demandes de devis dans un rayon de 40 km."},
+      {a:"Parfait : une vidéo UGC tournée à l'atelier, pour montrer le savoir-faire. Voici 3 profils qui collent :",card:{t:'picks',list:[['ugc-scierie','Sofia'],['actor-marta','Marta'],['actor-zoe','Zoé']],pick:0}},
+      {u:"Sofia. 25 € par jour, 30 à 60 ans."},
+      {a:"C'est noté. Je lance la génération : vidéo 9:16, sous-titres inclus.",card:{t:'gen',cost:280}},
+      {a:"Ta vidéo est prête :",card:{t:'res',video:'ugc-scierie',words:['Votre cuisine','<em>sur mesure</em>','fabriquée','à Nantes']}},
+      {u:"Parfait, publie sur Meta."},
+      {a:"Campagne en ligne, ciblée à 40 km autour de Nantes. Je surveille les demandes de devis.",card:{t:'pub',m:[['Impressions',9860],['Clics',284],['Devis',14]]}}
     ]}
   ];
-  var thread=$('#thread'),cin=$('#cin'),comp=$('#composer'),creditsEl=$('#credits'),credbar=$('#credbar');
+  var thread=$('#thread'),cin=$('#cin'),comp=$('#composer'),creditsEl=$('#credits');
   var scenBtns=$$('.scen button'),cur=0,timers=[];
   function scrollEnd(){thread.scrollTop=thread.scrollHeight}
   function add(html,cls){var d=document.createElement('div');d.className=cls;d.innerHTML=html;thread.appendChild(d);scrollEnd();return d}
@@ -1112,10 +1161,10 @@ footer a:hover{color:var(--fg)}
       scrollEnd();var b=$('.bar i',n),t=$('.t b',n),li=$$('li',n);
       for(var p=0;p<=100;p+=5){b.style.width=p+'%';t.textContent=p+' %';li.forEach(function(l,i){if(p>=(i+1)*24)l.classList.add('done')});await w(70)}
       t.textContent=c.cost+' crédits';
-      var left=parseInt(creditsEl.textContent.replace(/\s/g,''),10)-c.cost;creditsEl.textContent=fmtN(left);credbar.style.width=Math.max(8,parseFloat(credbar.style.width)-6)+'%';
+      var left=parseInt(creditsEl.textContent.replace(/\s/g,''),10)-c.cost;creditsEl.textContent=fmtN(left);
       await w(300);
     }else if(c.t==='res'){
-      n.className='pop';n.innerHTML='<div class="res"><div class="vid">'+vid(c.video)+'<span class="lbl">9:16</span><div class="cap-k"></div></div><div class="img"><img src="media/'+c.img+'.webp" alt=""><span class="lbl">4:5</span></div></div><div class="acts" style="margin-top:8px"><span class="chip">Modifier</span><span class="chip">Déclinaisons</span><span class="chip pri">Publier</span></div>';
+      n.className='pop';n.innerHTML='<div class="res"><div class="vid">'+vid(c.video)+'<span class="lbl">9:16</span><div class="cap-k"></div></div>'+(c.img?'<div class="img"><img src="media/'+c.img+'.webp" alt=""><span class="lbl">4:5</span></div>':'')+'</div><div class="acts" style="margin-top:8px"><span class="chip">Modifier</span><span class="chip">Déclinaisons</span><span class="chip pri">Publier</span></div>';
       scrollEnd();var ck=$('.cap-k',n),k=0,words=c.words.filter(Boolean);
       ck.innerHTML=words[0];
       timers.push(setInterval(function(){k=(k+1)%words.length;ck.innerHTML=words[k]},650));
@@ -1139,7 +1188,7 @@ footer a:hover{color:var(--fg)}
   }
   async function playChat(w){
     var s=SCEN[cur];timers.forEach(clearInterval);timers=[];thread.innerHTML='';
-    creditsEl.textContent=fmtN(s.credits);credbar.style.width='96%';
+    creditsEl.textContent=fmtN(s.credits);
     cin.innerHTML='<span class="ph">Décrivez votre pub…</span>';
     var pg=$('.pg i',scenBtns[cur]);pg.style.transition='none';pg.style.width='0';
     var total=s.steps.length;
@@ -1174,39 +1223,54 @@ footer a:hover{color:var(--fg)}
   demo(fbox,async function(w){
     var sks=$$('.sk',fbox),go=$('#fgo'),br=$('#fbrief'),c=fbox._c||(fbox._c=cursor(fbox));
     sks.forEach(function(s){s.style.opacity='1';$('span',s).textContent='En attente'});
-    await typeInto(br,'Bougie parfumée artisanale, ambiance cosy, ton sincère.',w,30);
+    await typeInto(br,'Bougie Figue & Cèdre, faite main. Ambiance cosy, ton sincère.',w,30);
     await moveTo(c,fbox,go,w);await click(c,go,w);c.classList.remove('on');
     for(var p=0;p<=100;p+=10){sks.forEach(function(s,i){var v=Math.max(0,Math.min(100,p-i*15));$('span',s).textContent='Rendu '+v+' %'});await w(120)}
     for(var i=0;i<sks.length;i++){$('span',sks[i]).textContent='Prêt';await w(220);sks[i].style.opacity='0'}
-    var car=$('#fcar'),im=$('img',car),ds=$$('.dts i',car),list=['img-bougie','img-sneakers','img-macbook'];
-    for(var k=1;k<=6;k++){await w(1100);im.src='media/'+list[k%3]+'.webp';ds.forEach(function(d,j){d.classList.toggle('on',j===k%3)})}
+    var car=$('#fcar'),im=$('#fcarimg'),tx=$('#fcartxt'),ds=$$('.dts i',car);
+    var SL=[['50% 50%',1,'Fait main à Paris'],['28% 72%',1.9,'Cire de soja · 45 h'],['60% 35%',1.45,'−20 % ce week-end']];
+    for(var k=1;k<=6;k++){await w(1300);var sl=SL[k%3];im.style.transformOrigin=sl[0];im.style.transform='scale('+sl[1]+')';tx.textContent=sl[2];tx.classList.remove('fadein');void tx.offsetWidth;tx.classList.add('fadein');ds.forEach(function(d,j){d.classList.toggle('on',j===k%3)})}
+    im.style.transform='';tx.textContent=SL[0][2];ds.forEach(function(d,j){d.classList.toggle('on',j===0)});
     await w(1200);
   });
 
-  /* ---------- editor ---------- */
+  /* ---------- editor: playhead follows the real video ---------- */
   var ebox=$('#eddemo'),wave=$('#edwave');
   for(var wi=0;wi<46;wi++){var bar=document.createElement('i');bar.style.height=(25+Math.abs(Math.sin(wi*1.7)*Math.cos(wi*.45))*70)+'%';wave.appendChild(bar)}
-  demo(ebox,async function(w){
-    var ph=$('#edph'),tl=$('#tl'),caps=$$('#edcaps span'),clips=$$('#edclips span'),tm=$('#edtime'),ec=$('#edcap'),exp=$('#edexp'),tool=$('#edtool');
-    var words=["J'ai testé","<em>cette</em> bougie",'pendant <em>un mois</em>','et franchement…'];
-    exp.classList.remove('done');exp.textContent='Exporter';clips.forEach(function(c){c.classList.remove('cut')});tool.textContent='✂ Découpe auto';
-    var left=$('#edcaps').offsetLeft,wd=$('#edcaps').offsetWidth;
-    for(var s=0;s<=80;s++){
-      var k=s/80;ph.style.left=(left+k*wd)+'px';
-      var ci=Math.min(3,Math.floor(k*4));caps.forEach(function(c,i){c.classList.toggle('on',i===ci)});ec.innerHTML=words[ci];
-      tm.textContent='00:0'+Math.floor(k*8)+' / 00:08';
-      if(s===34){clips[1].classList.add('cut');tool.textContent='✂ Plan coupé à 00:03'}
-      await w(55);
+  (function(){
+    var v=$('#edv'),img=$('#edimg'),ph=$('#edph'),caps=$$('#edcaps span'),clips=$$('#edclips span'),tm=$('#edtime'),ec=$('#edcap');
+    var words=["J'ai testé","<em>cette</em> bougie",'pendant <em>un mois</em>','et franchement…'],last=-1;
+    function frame(){
+      var d=v.duration||8,t=v.currentTime%d,k=t/d,row=$('#edcaps');
+      ph.style.left=(row.offsetLeft+k*row.offsetWidth)+'px';
+      var ci=Math.min(3,Math.floor(k*4));
+      if(ci!==last){last=ci;caps.forEach(function(c,i){c.classList.toggle('on',i===ci)});ec.innerHTML=words[ci]}
+      var ins=t>=d*3/8&&t<d*5/8;img.classList.toggle('on',ins);clips.forEach(function(c,i){c.classList.toggle('cut',i===(ins?1:t<d*3/8?0:2))});
+      tm.textContent='00:0'+Math.floor(t)+' / 00:0'+Math.round(d);
+      requestAnimationFrame(frame);
     }
-    exp.textContent='Export…';await w(900);exp.classList.add('done');exp.textContent='Exporté ✓';await w(1800);
-  });
+    requestAnimationFrame(frame);
+  })();
+
+  /* advertiser logos (fictional brands) */
+  var LOGOS={
+    stride:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#111"/><path d="M6 20c6 1 14-3 20-10-3 7-9 12-17 13-3 0-4-2-3-3Z" fill="#fff"/></svg>',
+    kaia:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#F6D5DF"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-size="17" font-style="italic" fill="#9B2C55">K</text></svg>',
+    figue:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#3B2A22"/><text x="16" y="21" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#E9D8C4" letter-spacing=".5">AF</text></svg>',
+    nova:'<svg viewBox="0 0 32 32"><defs><linearGradient id="nv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#06B6D4"/></linearGradient></defs><rect width="32" height="32" fill="url(#nv)"/><path d="M16 6l2.4 7.6L26 16l-7.6 2.4L16 26l-2.4-7.6L6 16l7.6-2.4Z" fill="#fff"/></svg>',
+    coach:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#F97316"/><path d="M9 21V11l7 6 7-6v10" fill="none" stroke="#fff" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg>',
+    nord:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#2F5D3A"/><path d="M16 6l7 10h-4l5 7H8l5-7H9Z" fill="#CFE3C1"/></svg>',
+    lumi:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#EDE7FF"/><circle cx="16" cy="16" r="7" fill="#7C5CFF"/><circle cx="19" cy="13.5" r="6" fill="#EDE7FF"/></svg>',
+    volta:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#FACC15"/><path d="M18 5 9 18h6l-2 9 10-14h-6Z" fill="#111"/></svg>'
+  };
+  $$('[data-logo]').forEach(function(e){e.innerHTML=LOGOS[e.dataset.logo]||''});
 
   /* ---------- 3. spy ---------- */
   var sbox=$('#spydemo');
   demo(sbox,async function(w){
     var ads=$$('.ad',sbox),scan=$('#scan'),q=$('#sq'),btn=$('#inspire'),toast=$('#spytoast'),wc=$('#wcount'),c=sbox._c||(sbox._c=cursor(sbox));
     ads.forEach(function(a){a.classList.remove('win','lose');a.style.opacity='0'});toast.classList.remove('on');wc.textContent='0';
-    await typeInto(q,'pompe à chaleur',w,60);
+    await typeInto(q,'vidéo UGC face caméra',w,50);
     for(var i=0;i<ads.length;i++){ads[i].style.opacity='';ads[i].classList.add('pop');await w(90)}
     await w(400);
     var grid=$('#ads'),gw=grid.offsetWidth;scan.style.opacity='1';
@@ -1236,23 +1300,30 @@ footer a:hover{color:var(--fg)}
   });
 
   /* ---------- 6. publish ---------- */
-  var pbox=$('#pubdemo'),pd=$('#pdeps');
-  for(var di=0;di<48;di++)pd.appendChild(document.createElement('i'));
+  var pbox=$('#pubdemo');
   demo(pbox,async function(w){
-    var objs=$$('[data-o]',pbox),cells=$$('#pdeps i'),sl=$('#slider'),bud=$('#bud'),btn=$('#pbtn'),bl=$('#pbl'),dc=$('#dcount'),m=[$('#m1'),$('#m2'),$('#m3')],c=pbox._c||(pbox._c=cursor(pbox));
-    objs.forEach(function(o){o.className='chip'});cells.forEach(function(x){x.className=''});$('i',sl).style.width='10%';$('b',sl).style.left='10%';bud.textContent='10 €';btn.classList.remove('done');bl.textContent='Publier sur Meta';dc.textContent='0';m.forEach(function(x){x.textContent='0'});
-    await w(400);await moveTo(c,pbox,objs[1],w);await click(c,objs[1],w);objs[1].className='chip pri';
-    var on=[7,8,19,20,30,31];
-    await moveTo(c,pbox,pd,w);
-    for(var i=0;i<on.length;i++){cells[on[i]].className='on';dc.textContent=i+1;await w(160)}
+    var objs=$$('[data-o]',pbox),zsel=$('#zsel'),zin=$('#zin'),zdrop=$('#zdrop'),reach=$('#reach'),rbar=$('#reachbar'),sl=$('#slider'),bud=$('#bud'),btn=$('#pbtn'),bl=$('#pbl'),m=[$('#m1'),$('#m2'),$('#m3')],c=pbox._c||(pbox._c=cursor(pbox));
+    objs.forEach(function(o){o.className='chip'});$$('.zchip',zsel).slice(1).forEach(function(z){z.remove()});zin.textContent='';reach.textContent='1,2 M personnes';rbar.style.width='30%';
+    $('i',sl).style.width='15%';$('b',sl).style.left='15%';bud.textContent='10 €';btn.classList.remove('done');bl.textContent='Publier sur Meta';m.forEach(function(x){x.textContent='0'});
+    await w(400);await moveTo(c,pbox,objs[2],w);await click(c,objs[2],w);objs[2].className='chip pri';
+    var Q=[['Lyon',[['69','Rhône','Auvergne-Rhône-Alpes'],['⌖','Lyon + 20 km','Rayon']],'2,1 M personnes',55],['Lille',[['59','Nord','Hauts-de-France'],['⌖','Lille + 15 km','Rayon']],'2,9 M personnes',78]];
+    for(var q=0;q<Q.length;q++){
+      await moveTo(c,pbox,zsel,w);zsel.classList.add('focus');
+      await typeInto(zin,Q[q][0],w,90);
+      zdrop.innerHTML=Q[q][1].map(function(o){return '<div><b>'+o[0]+'</b>'+o[1]+'<small>'+o[2]+'</small></div>'}).join('');zdrop.classList.add('on');
+      var first=$('div',zdrop);await w(300);await moveTo(c,pbox,first,w);first.classList.add('hl');await click(c,first,w);
+      zdrop.classList.remove('on');zin.textContent='';
+      var o=Q[q][1][0],chip=document.createElement('span');chip.className='zchip pop';chip.innerHTML=o[0]+' · '+o[1]+'<i>×</i>';zsel.insertBefore(chip,zin);
+      reach.textContent=Q[q][2];rbar.style.width=Q[q][3]+'%';zsel.classList.remove('focus');await w(300);
+    }
     await moveTo(c,pbox,$('b',sl),w);
     $('i',sl).style.width='45%';$('b',sl).style.left='45%';
-    var b0=performance.now();(function tick(t){var k=Math.min(1,(t-b0)/900);bud.textContent=Math.round(10+20*k)+' €';if(k<1)requestAnimationFrame(tick)})(b0);
+    var b0=performance.now();(function tick(t){var k=Math.min(1,(t-b0)/900);bud.textContent=Math.round(10+20*k)+' €';if(k<1&&!REDUCE)requestAnimationFrame(tick);else bud.textContent='30 €'})(b0);
     var r=sl.getBoundingClientRect(),bx=pbox.getBoundingClientRect();c.style.transform='translate('+(r.left-bx.left+r.width*.45)+'px,'+(r.top-bx.top)+'px)';
     await w(1000);
     await moveTo(c,pbox,btn,w);await click(c,btn,w);c.classList.remove('on');
     bl.textContent='Publication…';await w(1100);btn.classList.add('done');bl.textContent='En ligne sur Meta ✓';
-    countTo(m[0],12480,2400);countTo(m[1],356,2400);countTo(m[2],18,2400);
+    countTo(m[0],18240,2400);countTo(m[1],512,2400);countTo(m[2],27,2400);
     await w(4200);
   });
 
@@ -1283,16 +1354,30 @@ footer a:hover{color:var(--fg)}
       nm.textContent='Style '+$('span',opts[i]).textContent;await w(80);big.style.transform='scale(1)';await w(1300);
     }
   });
-  demo($('#m-ab'),async function(w){
-    var vs=$$('#m-ab .var'),win=$('#abwin'),vals=[4.6,3.1,2.4];
-    vs.forEach(function(v){v.classList.remove('win');$('.bar i',v).style.width='4%';$('b',v).textContent='—'});win.style.opacity='0';
-    for(var i=0;i<vs.length;i++){await w(600);$('.bar i',vs[i]).style.width=(vals[i]/5*100)+'%';$('b',vs[i]).textContent=vals[i].toFixed(1).replace('.',',')+' %'}
-    await w(700);vs[0].classList.add('win');win.style.transition='opacity .4s';win.style.opacity='1';await w(2600);
+  (function(){
+    var items=[['img-sneakers','q','Mode'],['ugc-solaire','t','Beauté'],['img-macbook','q','Tech'],['actor-emma','t','Maison'],['img-bougie','q','Maison'],['ugc-femme','t','Beauté'],['actor-hiro','t','Tech'],['img-sneakers','q','Mode'],['actor-freja','t','Mode']];
+    var cols=$('#icols');
+    for(var c=0;c<3;c++){var col=document.createElement('div');col.className='icol';var h='';
+      for(var r=0;r<3;r++){var it=items[(c*3+r)%items.length];h+='<div class="icard '+it[1]+'" data-cat="'+it[2]+'">'+(it[1]==='t'?vid(it[0]):'<img src="media/'+it[0]+'.webp" alt="">')+'</div>'}
+      col.innerHTML=h+h;cols.appendChild(col)}
+  })();
+  demo($('#m-insp'),async function(w){
+    var ch=$$('#ichips .chip'),sv=$('#isave'),cards=$$('#icols .icard');
+    for(var i=0;i<ch.length;i++){
+      ch.forEach(function(c,j){c.className='chip'+(j===i?' dark':'')});
+      var cat=ch[i].textContent;cards.forEach(function(c){c.style.opacity=(i===0||c.dataset.cat===cat)?'1':'.25'});
+      if(i===2||i===4){var vis=cards.filter(function(c){return c.style.opacity==='1'});var pick=vis[1];if(pick){var h=document.createElement('i');h.textContent='♥';h.className='pop';pick.appendChild(h);sv.classList.add('on');await w(1300);sv.classList.remove('on');h.remove()}}
+      await w(1300);
+    }
   });
-  demo($('#m-lang'),async function(w){
-    var L=[['Français',"Je l'utilise tous les matins."],['English','I use it every single morning.'],['Español','Lo uso todas las mañanas.'],['Deutsch','Ich benutze es jeden Morgen.'],['Italiano','Lo uso tutte le mattine.']];
-    var cs=$$('#lcodes .chip'),sub=$('#lsub');
-    for(var i=0;i<L.length;i++){cs.forEach(function(c,j){c.className='chip'+(j===i?' pri':'')});sub.textContent=L[i][1];sub.classList.remove('fadein');void sub.offsetWidth;sub.classList.add('fadein');await w(1500)}
+  demo($('#m-leads'),async function(w){
+    var box=$('#lvl'),rows=[['lead','JM','Julie M.','Formulaire Meta · il y a 1 min'],['sale','','Vente attribuée · UGC Emma','+64 €'],['lead','KB','Karim B.','Formulaire Meta · il y a 3 min'],['sale','','Vente attribuée · Carrousel bougie','+32 €']];
+    box.innerHTML='';
+    for(var i=0;i<rows.length;i++){var r=rows[i],d=document.createElement('div');
+      if(r[0]==='lead'){d.className='lead pop';d.innerHTML='<span class="ini">'+r[1]+'</span><div><b>'+r[2]+'</b><small>'+r[3]+'</small></div><span class="chip ok">Nouveau</span>'}
+      else{d.className='sale pop';d.innerHTML=CHECK.replace('<svg','<svg width="16" height="16"')+r[2]+'<b>'+r[3]+'</b>'}
+      box.appendChild(d);await w(900)}
+    await w(2500);
   });
   demo($('#m-clone'),async function(w){
     var scan=$('#m-clone .scan'),out=$('#m-clone .out video'),lab=$('#m-clone .out span');
