@@ -80,8 +80,8 @@
       {u:"Léna, elle fait vraie utilisatrice. Accroche avant / après."},
       {a:"Génération en cours : vidéo 9:16, Léna tient ton sérum face caméra.",card:{t:'gen',cost:300}},
       {a:"Voilà ta vidéo avec Léna, et le visuel produit :",card:{t:'res',video:'lena-serum',words:['3 semaines,','<em>zéro</em>','fond de teint'],img:'img-serum'}},
-      {u:"Publie sur Meta : France, femmes 22-40 ans, intérêts skincare et beauté, 30 € par jour."},
-      {a:"C'est parti. Voici ta campagne et l'aperçu de la pub :",card:{t:'meta',aud:['France','Femmes 22–40 ans','Skincare · Beauté','30 € / jour','Ventes'],brand:'Éclat Skin',site:'eclat-skin.fr',logo:'eclat',video:'lena-serum',text:"3 semaines, zéro fond de teint. Ma peau n'a jamais été aussi nette, je vous montre ma routine 🍊",headline:'Sérum Vitamine C · 30 ml',cta:'Acheter',m:[['Impressions',18400],['Clics',512],['Ventes',34]]}}
+      {u:"Publie sur Meta : France, femmes 22-40 ans, 30 € par jour, objectif ventes."},
+      {a:"C'est parti. Voici ta campagne et l'aperçu de la pub :",card:{t:'meta',aud:['France','Femmes 22–40 ans','Placements auto','30 € / jour','Ventes'],brand:'Éclat Skin',site:'eclat-skin.fr',logo:'eclat',video:'lena-serum',text:"3 semaines, zéro fond de teint. Ma peau n'a jamais été aussi nette, je vous montre ma routine 🍊",headline:'Sérum Vitamine C · 30 ml',cta:'Acheter',m:[['Impressions',18400],['Clics',512],['Ventes',34]]}}
     ]},
     {credits:22610,steps:[
       {u:"Je veux des leads pour mon cabinet de recrutement. Cible les DRH et fondateurs de PME en France."},
@@ -89,8 +89,8 @@
       {u:"Marc, parfait."},
       {a:"Je génère la vidéo et le visuel avec l'accroche « Recruter sans y passer vos nuits ».",card:{t:'gen',cost:280}},
       {a:"Tes créas sont prêtes :",card:{t:'res',video:'ugc-homme',words:['Recruter','sans y passer','<em>vos nuits</em>'],img:'ugc-homme.poster.webp',ovl:'Recruter sans y passer vos nuits',ovlSub:'Cabinet RH · PME'}},
-      {u:"Publie sur Meta : France entière, DRH et dirigeants de PME, 30 à 55 ans, 40 € par jour."},
-      {a:"Campagne de leads créée, avec un formulaire Meta. Aperçu :",card:{t:'meta',aud:['France entière','30–55 ans','DRH · Dirigeants PME','40 € / jour','Leads'],brand:'Talento RH',site:'talento-rh.fr',logo:'talento',video:'ugc-homme',text:"Vous passez vos soirées à trier des CV ? On s'occupe de vos recrutements de A à Z.",headline:'Recruter sans y passer vos nuits',cta:"S'inscrire",m:[['Impressions',11950],['Clics',264],['Leads',17]]}}
+      {u:"Publie sur Meta : France entière, 30-55 ans, mon audience enregistrée « Dirigeants PME », 40 € par jour."},
+      {a:"Campagne de leads créée, avec un formulaire Meta. Aperçu :",card:{t:'meta',aud:['France entière','30–55 ans','Audience : Dirigeants PME','40 € / jour','Leads'],brand:'Talento RH',site:'talento-rh.fr',logo:'talento',video:'ugc-homme',text:"Vous passez vos soirées à trier des CV ? On s'occupe de vos recrutements de A à Z.",headline:'Recruter sans y passer vos nuits',cta:"S'inscrire",m:[['Impressions',11950],['Clics',264],['Leads',17]]}}
     ]},
     {credits:4820,steps:[
       {u:"Je fabrique des cuisines en bois sur mesure à Nantes. Je veux des demandes de devis."},
@@ -98,8 +98,8 @@
       {u:"Sofia, c'est parfait."},
       {a:"Je lance la génération : vidéo 9:16, sous-titres inclus.",card:{t:'gen',cost:280}},
       {a:"Ta vidéo est prête :",card:{t:'res',video:'ugc-scierie',words:['Votre cuisine','<em>sur mesure</em>','fabriquée','à Nantes']}},
-      {u:"Publie sur Meta : 40 km autour de Nantes, propriétaires 30-60 ans, 25 € par jour."},
-      {a:"Campagne locale créée. Voici l'aperçu de ta pub :",card:{t:'meta',aud:['Nantes + 40 km','30–60 ans','Propriétaires','25 € / jour','Devis'],brand:'Atelier Bois Nantais',site:'atelierboisnantais.fr',logo:'nord',video:'ugc-scierie',text:"Votre cuisine sur mesure, fabriquée dans notre atelier à Nantes. Devis gratuit en 48 h.",headline:'Cuisines en bois sur mesure',cta:'Demander un devis',m:[['Impressions',9860],['Clics',284],['Devis',14]]}}
+      {u:"Publie sur Meta : Loire-Atlantique, 30-60 ans, 25 € par jour, formulaire de devis."},
+      {a:"Campagne locale créée. Voici l'aperçu de ta pub :",card:{t:'meta',aud:['Loire-Atlantique (44)','30–60 ans','Tous genres','25 € / jour','Leads'],brand:'Atelier Bois Nantais',site:'atelierboisnantais.fr',logo:'nord',video:'ugc-scierie',text:"Votre cuisine sur mesure, fabriquée dans notre atelier à Nantes. Devis gratuit en 48 h.",headline:'Cuisines en bois sur mesure',cta:'Demander un devis',m:[['Impressions',9860],['Clics',284],['Devis',14]]}}
     ]}
   ];
   if($('#chatdemo'))(function(){
@@ -342,7 +342,7 @@
     objs.forEach(function(o){o.className='chip'});$$('.zchip',zsel).slice(1).forEach(function(z){z.remove()});zin.textContent='';reach.textContent='1,2 M personnes';rbar.style.width='30%';
     $('i',sl).style.width='15%';$('b',sl).style.left='15%';bud.textContent='10 €';btn.classList.remove('done');bl.textContent='Publier sur Meta';m.forEach(function(x){x.textContent='0'});
     await w(400);await moveTo(c,pbox,objs[2],w);await click(c,objs[2],w);objs[2].className='chip pri';
-    var Q=[['Lyon',[['69','Rhône','Auvergne-Rhône-Alpes'],['⌖','Lyon + 20 km','Rayon']],'2,1 M personnes',55],['Lille',[['59','Nord','Hauts-de-France'],['⌖','Lille + 15 km','Rayon']],'2,9 M personnes',78]];
+    var Q=[['Rhône',[['69','Rhône','Auvergne-Rhône-Alpes'],['42','Loire','Auvergne-Rhône-Alpes']],'2,1 M personnes',55],['Nord',[['59','Nord','Hauts-de-France'],['62','Pas-de-Calais','Hauts-de-France']],'2,9 M personnes',78]];
     for(var q=0;q<Q.length;q++){
       await moveTo(c,pbox,zsel,w);zsel.classList.add('focus');
       await typeInto(zin,Q[q][0],w,90);
@@ -446,7 +446,7 @@
     }
   });
   demo($('#m-leads'),async function(w){
-    var box=$('#lvl'),rows=[['lead','JM','Julie M.','Formulaire Meta · il y a 1 min'],['sale','','Vente attribuée · UGC Léa','+64 €'],['lead','KB','Karim B.','Formulaire Meta · il y a 3 min'],['sale','','Vente attribuée · Carrousel bougie','+32 €']];
+    var box=$('#lvl'),rows=[['lead','JM','Julie M.','Formulaire Meta · il y a 1 min'],['sale','','Nouvelle vente · Sérum Vitamine C','+64 €'],['lead','KB','Karim B.','Formulaire Meta · il y a 3 min'],['sale','','Nouvelle vente · Bougie Figue','+32 €']];
     box.innerHTML='';
     for(var i=0;i<rows.length;i++){var r=rows[i],d=document.createElement('div');
       if(r[0]==='lead'){d.className='lead pop';d.innerHTML='<span class="ini">'+r[1]+'</span><div><b>'+r[2]+'</b><small>'+r[3]+'</small></div><span class="chip ok">Nouveau</span>'}
@@ -486,6 +486,68 @@
     await w(300);
     for(var i=0;i<xs.length;i++){xs[i].classList.add('x');await w(260);ys[i].classList.add('in');await w(260)}
     await w(999999);
+  });
+
+  /* ---------- product pages: faithful app screens ---------- */
+  $$('.pf svg[data-s]').forEach(spark);
+  /* leads CRM: a new lead arrives, its status changes, then the CSV export */
+  var crm=$('#crmdemo');
+  if(crm){var tplNew=$('#crmnew',crm),crmList=$('#crmlist',crm),crmDrop=$('#crmdrop',crm);
+  demo(crm,async function(w){
+    var c=crm._c||(crm._c=cursor(crm)),old=$('.cr-row.fresh',crmList);if(old)old.remove();
+    $('#crmn',crm).textContent='34';$('#crmt',crm).textContent='6';crmDrop.classList.remove('on');$('#crmtoast',crm).classList.remove('on');
+    var r2=$$('.cr-row',crmList)[1],st2=$('.st',r2);st2.outerHTML='<span class="st" style="--c:#f59e0b">Contacté</span>';
+    await w(900);var sy=$('#crmsync',crm);await moveTo(c,crm,sy,w);await click(c,sy,w);await w(500);
+    var g=$('.cr-g',crmList);g.insertAdjacentHTML('afterend',tplNew.innerHTML);$('#crmn',crm).textContent='35';$('#crmt',crm).textContent='7';
+    await w(1600);
+    r2=$$('.cr-row',crmList)[2];var stEl=$('.cr-st',r2);await moveTo(c,crm,stEl,w);await click(c,stEl,w);
+    var b=crm.getBoundingClientRect(),rr=stEl.getBoundingClientRect();crmDrop.style.left=(rr.left-b.left)+'px';crmDrop.style.top=(rr.bottom-b.top+4)+'px';crmDrop.classList.add('on');
+    var opt=$$('div',crmDrop)[2];await w(400);await moveTo(c,crm,opt,w);opt.classList.add('hl');await click(c,opt,w);opt.classList.remove('hl');crmDrop.classList.remove('on');
+    $('.st',stEl).outerHTML='<span class="st" style="--c:#8b5cf6">Qualifié</span>';await w(900);
+    var ex=$('#crmexp',crm);await moveTo(c,crm,ex,w);await click(c,ex,w);c.classList.remove('on');$('#crmtoast',crm).classList.add('on');await w(3200);$('#crmtoast',crm).classList.remove('on');
+    await w(2500);
+  })}
+  /* lead card: an internal note is typed and saved */
+  var lcd=$('#leadcard');
+  if(lcd)demo(lcd,async function(w){
+    var n=$('#lcnote',lcd),st=$('#lcst',lcd),t=$('#lctoast',lcd);n.textContent='';t.classList.remove('on');$('.st',st).outerHTML='<span class="st" style="--c:#3b82f6">Nouveau</span>';
+    await w(800);await typeInto(n,'Rappelée à 11 h : propriétaire, toiture plein sud, veut un devis avant fin octobre.',w,22);
+    await w(400);$('.st',st).outerHTML='<span class="st" style="--c:#8b5cf6">Qualifié</span>';await w(500);t.classList.add('on');await w(3000);t.classList.remove('on');await w(1500);
+  });
+  /* lead form: a disqualifying answer marks the lead "Non qualifié" */
+  var fwd=$('#formdemo');
+  if(fwd)demo(fwd,async function(w){
+    var l=$('#fwlead',fwd),n=$('#fwnote',fwd);l.style.opacity='0';l.style.transform='translateY(8px)';n.style.opacity='0';
+    await w(1200);l.style.opacity='';l.style.transform='';await w(1300);n.style.opacity='';await w(5000);
+  });
+  /* editor: playhead runs along the timeline */
+  var edx=$('#edxdemo');
+  if(edx){var ph=$('#edxph',edx),tl=$('#edxtl',edx),tt=$('#edxt',edx),t0=performance.now();
+    (function run(t){if(edx.offsetParent!==null){var k=((t-t0)/16000)%1,row=$('.edx-tr>div',tl),x=row.offsetLeft+k*row.offsetWidth;ph.style.left=x+'px';tt.textContent='00:'+String(Math.floor(k*16)).padStart(2,'0')+' / 00:16'}requestAnimationFrame(run)})(t0)}
+  /* batch studio: the four steps play in turn */
+  function stepper(box,stepSel,paneSel,hold){
+    return async function(w){var st=$$(stepSel,box),pn=$$(paneSel,box);
+      for(var i=0;i<st.length;i++){st.forEach(function(s,j){s.classList.toggle('on',j===i);s.classList.toggle('done',j<i)});pn.forEach(function(p,j){p.classList.toggle('on',j===i)});await w(hold)}}
+  }
+  var bx=$('#bxdemo');if(bx)demo(bx,stepper(bx,'.bx-steps span','.bx-p',3200));
+  var wz=$('#wzdemo');
+  if(wz){var wzRun=stepper(wz,'.wz-steps span','.wz-p',2600);demo(wz,async function(w){$('#wztoast',wz).classList.remove('on');await wzRun(w);var c=wz._c||(wz._c=cursor(wz)),bt=$('#wzpub',wz);await moveTo(c,wz,bt,w);await click(c,bt,w);c.classList.remove('on');$('#wztoast',wz).classList.add('on');await w(3000);$('#wztoast',wz).classList.remove('on')})}
+  /* competitor watch: two winners added as references, then the strategy request */
+  var spx=$('#spxdemo');
+  if(spx)demo(spx,async function(w){
+    var ads=$$('.spx-ad',spx),an=$('#spxan',spx),c=spx._c||(spx._c=cursor(spx));
+    ads.forEach(function(a){a.classList.remove('sel');$('.ref',a).textContent='Ajouter en référence';a.style.opacity='0'});an.style.opacity='0';
+    for(var i=0;i<ads.length;i++){ads[i].style.opacity='';ads[i].classList.add('pop');await w(180)}
+    for(var k=0;k<2;k++){var r=$('.ref',ads[k]);await moveTo(c,spx,r,w);await click(c,r,w);ads[k].classList.add('sel');r.textContent='Référence ajoutée';await w(300)}
+    an.style.opacity='';await w(1500);var go=$('#spxgo',spx);await moveTo(c,spx,go,w);await click(c,go,w);c.classList.remove('on');await w(3500);
+  });
+  /* media buyer: "Augmenter le budget" opens the +20 % dialog, then applies it */
+  var mbx=$('#mbxdemo');
+  if(mbx)demo(mbx,async function(w){
+    var c=mbx._c||(mbx._c=cursor(mbx)),b=$('#mbxb',mbx),d=$('#mbxdlg',mbx),ok=$('#mbxok',mbx),t=$('#mbxtoast',mbx);
+    d.classList.remove('on');t.classList.remove('on');await w(1500);
+    await moveTo(c,mbx,b,w);await click(c,b,w);d.classList.add('on');await w(1200);
+    await moveTo(c,mbx,ok,w);await click(c,ok,w);d.classList.remove('on');c.classList.remove('on');t.classList.add('on');await w(3200);t.classList.remove('on');await w(2000);
   });
 
   /* reveal */

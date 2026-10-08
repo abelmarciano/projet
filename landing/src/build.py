@@ -135,12 +135,12 @@ def footer():
     <div class="cols">
       <div class="about">
         <a class="logo" href="%s"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 17 8.5 10.5 13.5 15.5 22 7M16 7h6v6" stroke="url(#lg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>growthity<b>.ai</b></a>
-        <p>Créez, publiez et pilotez vos pubs Facebook et Instagram avec l'IA. Conçu et hébergé en France.</p>
+        <p>Créez, publiez et pilotez vos pubs Facebook et Instagram avec l'IA. Conçu en France, hébergé en Europe.</p>
       </div>
       %s
       <div><h6>Légal</h6><ul>%s</ul></div>
     </div>
-    <div class="base"><span>© 2026 Growthity · Conçu &amp; hébergé en France</span><span>0 %% de commission sur votre budget Meta</span></div>
+    <div class="base"><span>© 2026 Growthity · Conçu en France, hébergé en Europe</span><span>0 %% de commission sur votre budget Meta</span></div>
   </div>
 </footer>''' % (HOME, '\n      '.join(cols), legal)
 
@@ -193,7 +193,7 @@ def with_seo(slug, body):
 def jsonld(slug, title, desc, body):
     import json
     org = {'@type': 'Organization', '@id': BASE + '/#org', 'name': 'Growthity', 'url': BASE + '/', 'logo': BASE + '/favicon.svg',
-           'description': "Créez, publiez et pilotez vos pubs Facebook et Instagram avec l'IA. Conçu et hébergé en France.", 'areaServed': 'FR'}
+           'description': "Créez, publiez et pilotez vos pubs Facebook et Instagram avec l'IA. Conçu en France, hébergé en Europe.", 'areaServed': 'FR'}
     graph = [org]
     if slug == 'index':
         graph.append({'@type': 'WebSite', '@id': BASE + '/#site', 'url': BASE + '/', 'name': 'Growthity', 'inLanguage': 'fr-FR', 'publisher': {'@id': BASE + '/#org'}})
@@ -307,7 +307,7 @@ def ctas(second=None):
             % (AUTH, EXT, ARROW, s[1], s[0]))
 
 
-META = ('<div class="hero-meta"><span>' + CHECK.replace('3.5', '3') + 'Conçu &amp; hébergé en France</span><span>' + CHECK.replace('3.5', '3') +
+META = ('<div class="hero-meta"><span>' + CHECK.replace('3.5', '3') + 'Conçu en France, hébergé en Europe</span><span>' + CHECK.replace('3.5', '3') +
         'Aucune compétence technique</span><span>' + CHECK.replace('3.5', '3') + '0 % de commission</span></div>')
 
 
@@ -438,6 +438,21 @@ def chat_custom(scens):
     blk = blk[:i] + '<div class="scen" role="tablist" aria-label="Scénarios de démonstration"%s>%s</div>' % (solo, tabs) + blk[j:]
     data = json.dumps([{k: v for k, v in sc.items() if k != 'label'} for sc in scens], ensure_ascii=False).replace('</', '<\\/')
     return '<script>window.GROWTHITY_SCEN=%s</script>\n%s' % (data, blk)
+
+
+def specs(items):
+    """'Tout le détail' sheet: (icon, tone, title, [lines]) cards listing exact app capabilities."""
+    return '<div class="specs">%s</div>' % ''.join(
+        '<div class="spec rv"%s><h3><span class="ic">%s</span>%s</h3><ul>%s</ul></div>' % (tone(t), ICONS[ic], fr(h), ''.join('<li><span>%s</span></li>' % fr(x) for x in lines))
+        for ic, t, h, lines in items)
+
+
+def nums(items):
+    return '<div class="wrap factsw"><div class="nums rv">%s</div></div>' % ''.join('<div><b>%s</b><span>%s</span></div>' % (b, fr(t)) for b, t in items)
+
+
+def split(copy_html, mock_html, flip=False):
+    return feat(copy_html, '<div class="stage rv">%s</div>' % mock_html, flip)
 
 
 def uses(items):

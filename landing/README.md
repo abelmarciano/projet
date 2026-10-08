@@ -7,6 +7,7 @@ Les pages sont générées : ne modifiez pas les `*.html` à la main, modifiez l
 - `src/sitemap.py` : plan du site (menu Produit / Solutions / Ressources, footer, cartes « À découvrir aussi »).
 - `src/pages.py` : contenu de l'accueil, des 9 pages produit, de 4 pages solutions et des 5 ressources.
 - `src/solutions.py` : les 10 pages solutions par secteur et par objectif (scénario de chat, accroches, avant / après, FAQ propres à chaque page).
+- `src/product_pages.py` + `src/mocks.py` : pages produit et reproductions fidèles des écrans de l'app (CRM des leads, assistant de publication, éditeur, Batch Studio, veille concurrentielle, media buyer…).
 - `src/blocks/` : les démos animées et sections partagées, réutilisées sur l'accueil et les pages internes.
 - `src/build.py` : en-tête avec méga-menu et menu mobile, footer, composants (hero, étapes, fonctionnalités, FAQ…).
 

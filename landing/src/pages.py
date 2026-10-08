@@ -25,7 +25,7 @@ def build_pages(b):
 
     # ================================================================= HOME
     P['index'] = ("Growthity · Pubs Meta par IA",
-                  "Décrivez votre produit en une phrase : vidéos UGC, visuels et carrousels sont créés par l'IA, puis publiés sur Meta en un clic. Conçu et hébergé en France.",
+                  "Décrivez votre produit en une phrase : vidéos UGC, visuels et carrousels sont créés par l'IA, puis publiés sur Meta en un clic. Conçu en France, hébergé en Europe.",
                   stack(
                       blk('hero'),
                       sec(stack(b.with_more(blk('chat-head'), 'chat-ia', 'Tout savoir sur le chat'), blk('chat-demo')), sid='demo'),
@@ -35,7 +35,7 @@ def build_pages(b):
                       sec(feat(b.with_more(blk('studio-copy'), 'studio-en-lot'), blk('studio-stage'), flip=True), sid='studio'),
                       sec(stack(feat(b.with_more(blk('pub-copy'), 'publication-meta'), blk('pub-stage')),
                                 feat(b.with_more(blk('perf-copy'), 'leads-ventes'), blk('perf-stage'), flip=True)), cls='tint', sid='publication', style='padding-top:40px'),
-                      sec(stack(b.with_more(blk('mb-head'), 'pilotage-ia', 'Découvrir le pilotage IA'), blk('mb-demo')), sid='pilotage'),
+                      sec(stack(b.with_more(blk('mb-head'), 'pilotage-ia', 'Découvrir le pilotage IA'), '<div style="max-width:860px;margin:0 auto">%s</div>' % __import__('mocks').mb_summary()), sid='pilotage'),
                       sec(stack(blk('minis-head'), blk('minis'))),
                       blk('vs'), blk('faq'), b.final()))
 
@@ -114,7 +114,7 @@ def build_pages(b):
                                   b.steps([('Décrivez', "Votre produit, votre cible et le ton voulu. Ou partez d'une pub repérée dans l'Espion Meta Ads."),
                                            ('Générez', "Plusieurs moteurs d'IA travaillent en parallèle : la vidéo, le visuel et le carrousel sortent ensemble."),
                                            ('Publiez', "Choisissez vos favorites et envoyez-les sur Meta, chacune sur le bon placement.")]))),
-                        tail(['editeur-video', 'templates', 'studio-en-lot'], [
+                        tail(['editeur-video', 'creations', 'studio-en-lot'], [
                             ("Quels ratios sont disponibles ?", "9:16 pour les Reels et Stories, 1:1 et 4:5 pour le fil. Chaque créa peut être déclinée dans les trois en un clic."),
                             ("Puis-je utiliser mes propres photos ?", "Oui. Importez vos photos produit ou laissez Growthity les récupérer sur votre site, elles servent de base aux visuels et aux vidéos.")])))
 
@@ -131,7 +131,7 @@ def build_pages(b):
                                                     ('mic', 'blue', 'Nouvelle accroche', "Changez la première phrase : seule cette partie est rejouée par l'acteur."),
                                                     ('layers', 'green', 'Tous les ratios', "Recadrez en 9:16, 1:1 ou 4:5 sans perdre le visage ni le produit."),
                                                     ('chat', 'slate', 'Ou demandez au chat', "« Rends-la plus courte » : pas besoin de toucher à la timeline.")], md=['gloss-lips.webp', 'real-42'])), cls='tint'),
-                              tail(['formats', 'acteurs-ugc', 'templates'], [
+                              tail(['formats', 'acteurs-ugc', 'creations'], [
                                   ("Faut-il savoir monter ?", "Non. L'éditeur est conçu pour des retouches rapides, et le chat peut faire les modifications à votre place."),
                                   ("Puis-je importer mes propres vidéos ?", "Vous pouvez importer vos images et vos visuels pour les insérer dans les vidéos générées.")])))
 
@@ -252,7 +252,7 @@ def build_pages(b):
                                     b.features([('store', 'pink', 'Import depuis la boutique', "Un lien produit suffit : photos, prix, avis et arguments sont récupérés."),
                                                 ('user', 'indigo', 'Le produit en main', "Des acteurs UGC qui montrent et utilisent votre produit, comme une vraie cliente."),
                                                 ('euro', 'green', 'Ventes attribuées', "Chaque vente est reliée à la créa qui l'a apportée, pour savoir où mettre votre budget.")]))),
-                          tail(['studio-en-lot', 'templates', 'espion-meta-ads'], [
+                          tail(['studio-en-lot', 'creations', 'espion-meta-ads'], [
                               ("Ma boutique doit-elle être sur Shopify ?", "Non. Shopify, WooCommerce, PrestaShop ou un site sur mesure : il suffit que vos pages produits soient publiques."),
                               ("Puis-je faire une pub pour plusieurs produits ?", "Oui : carrousel multi-produits, lot par collection, ou une vidéo par produit phare.")])))
 
@@ -315,7 +315,7 @@ def build_pages(b):
                                   b.features([('folder', 'orange', 'Workspaces séparés', "Chaque client a sa marque, ses créations, sa mémoire et son compte Meta."),
                                               ('users', 'indigo', 'Équipe et rôles', "Invitez vos créatifs et vos media buyers avec des droits admin ou éditeur."),
                                               ('chart', 'green', 'Pilotage multi-comptes', "Les recommandations de l'IA pour chaque client, pour ne rien laisser filer.")]))),
-                        tail(['studio-en-lot', 'pilotage-ia', 'templates'], [
+                        tail(['studio-en-lot', 'pilotage-ia', 'creations'], [
                             ("Mes clients peuvent-ils accéder à leur espace ?", "Vous pouvez inviter un client dans son workspace, avec le rôle qui convient."),
                             ("Les données des clients sont-elles séparées ?", "Oui. Marques, créations, comptes Meta et historique sont cloisonnés par workspace.")])))
 
@@ -342,12 +342,12 @@ def build_pages(b):
                                           "Sauvegardez une pub dans vos favoris ou vos dossiers, puis envoyez-la au chat comme référence : il reprend le principe avec votre produit et vos acteurs.",
                                           ['Filtres par secteur et par format', 'Favoris et dossiers', 'Envoi au chat en un clic'], more=('Chercher chez vos concurrents', 'espion-meta-ads.html')),
                                      stage(minis('m-insp', cols='1fr'))), cls='tint'),
-                            tail(['espion-meta-ads', 'templates', 'guide-pub-ugc'], [])))
+                            tail(['espion-meta-ads', 'creations', 'guide-pub-ugc'], [])))
 
-    P['templates'] = ("Templates vidéo produit · Growthity",
+    P['creations'] = ("Templates vidéo produit · Growthity",
                       "Choisissez un style, glissez votre photo produit : Growthity la met en scène et l'anime en vidéo, prête pour les Reels et les Stories.",
                       stack(
-                          b.hero_split('templates', ('Ressources', 'Templates'), 'Votre photo produit,', 'mise en scène.',
+                          b.hero_split('creations', ('Ressources', 'Templates'), 'Votre photo produit,', 'mise en scène.',
                                        "Choisissez un style, glissez une simple photo de votre produit : Growthity la place dans un décor, l'anime et en fait une vidéo prête pour Meta.",
                                        ['Une photo suffit', 'Des styles pour chaque univers', 'Vidéo 9:16 prête à publier'], stage(minis('m-tpl', cols='1fr'))),
                           sec(stack(head('Les styles', 'Un décor pour', 'chaque produit.'),
@@ -475,4 +475,6 @@ def build_pages(b):
     from solutions import SECTORS, build_sector
     for slug, d in SECTORS.items():
         P[slug] = build_sector(b, slug, d)
+    from product_pages import build_products
+    P.update(build_products(b))
     return P
