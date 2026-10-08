@@ -114,7 +114,7 @@ def build_pages(b):
                                   b.steps([('Décrivez', "Votre produit, votre cible et le ton voulu. Ou partez d'une pub repérée dans l'Espion Meta Ads."),
                                            ('Générez', "Plusieurs moteurs d'IA travaillent en parallèle : la vidéo, le visuel et le carrousel sortent ensemble."),
                                            ('Publiez', "Choisissez vos favorites et envoyez-les sur Meta, chacune sur le bon placement.")]))),
-                        tail(['editeur-video', 'creations', 'studio-en-lot'], [
+                        tail(['editeur-video', 'creations-catalogue', 'studio-en-lot'], [
                             ("Quels ratios sont disponibles ?", "9:16 pour les Reels et Stories, 1:1 et 4:5 pour le fil. Chaque créa peut être déclinée dans les trois en un clic."),
                             ("Puis-je utiliser mes propres photos ?", "Oui. Importez vos photos produit ou laissez Growthity les récupérer sur votre site, elles servent de base aux visuels et aux vidéos.")])))
 
@@ -131,7 +131,7 @@ def build_pages(b):
                                                     ('mic', 'blue', 'Nouvelle accroche', "Changez la première phrase : seule cette partie est rejouée par l'acteur."),
                                                     ('layers', 'green', 'Tous les ratios', "Recadrez en 9:16, 1:1 ou 4:5 sans perdre le visage ni le produit."),
                                                     ('chat', 'slate', 'Ou demandez au chat', "« Rends-la plus courte » : pas besoin de toucher à la timeline.")], md=['gloss-lips.webp', 'real-42'])), cls='tint'),
-                              tail(['formats', 'acteurs-ugc', 'creations'], [
+                              tail(['formats', 'acteurs-ugc', 'creations-catalogue'], [
                                   ("Faut-il savoir monter ?", "Non. L'éditeur est conçu pour des retouches rapides, et le chat peut faire les modifications à votre place."),
                                   ("Puis-je importer mes propres vidéos ?", "Vous pouvez importer vos images et vos visuels pour les insérer dans les vidéos générées.")])))
 
@@ -170,7 +170,7 @@ def build_pages(b):
                                                       ('bulb', 'orange', 'Angles et accroches', "Repérez les hooks, les formats et les offres qui reviennent dans votre secteur."),
                                                       ('wand', 'green', 'Inspirer, pas copier', "Le chat reprend le principe qui marche et l'applique à votre produit, avec vos acteurs et votre marque."),
                                                       ('folder', 'slate', 'Sauvegardez vos trouvailles', "Rangez les pubs repérées dans vos dossiers d'inspiration.")], md=['ugc-solaire', 'real-12'])), cls='tint'),
-                                tail(['inspiration', 'chat-ia', 'studio-en-lot'], [
+                                tail(['galerie-inspiration', 'chat-ia', 'studio-en-lot'], [
                                     ("D'où viennent les pubs ?", "De la Meta Ads Library, la bibliothèque publique de toutes les pubs actives sur Facebook et Instagram. Growthity la parcourt et l'analyse pour vous."),
                                     ("Comment savez-vous qu'une pub marche ?", "Meta ne publie pas les résultats des pubs. Le meilleur indice public est la durée : une pub qui tourne depuis des semaines est presque toujours rentable."),
                                     ("Est-ce légal ?", "Oui. La Meta Ads Library est publique. Growthity vous aide à vous inspirer des principes qui marchent, pas à copier les créas des autres.")])))
@@ -252,7 +252,7 @@ def build_pages(b):
                                     b.features([('store', 'pink', 'Import depuis la boutique', "Un lien produit suffit : photos, prix, avis et arguments sont récupérés."),
                                                 ('user', 'indigo', 'Le produit en main', "Des acteurs UGC qui montrent et utilisent votre produit, comme une vraie cliente."),
                                                 ('euro', 'green', 'Ventes attribuées', "Chaque vente est reliée à la créa qui l'a apportée, pour savoir où mettre votre budget.")]))),
-                          tail(['studio-en-lot', 'creations', 'espion-meta-ads'], [
+                          tail(['studio-en-lot', 'creations-catalogue', 'espion-meta-ads'], [
                               ("Ma boutique doit-elle être sur Shopify ?", "Non. Shopify, WooCommerce, PrestaShop ou un site sur mesure : il suffit que vos pages produits soient publiques."),
                               ("Puis-je faire une pub pour plusieurs produits ?", "Oui : carrousel multi-produits, lot par collection, ou une vidéo par produit phare.")])))
 
@@ -315,7 +315,7 @@ def build_pages(b):
                                   b.features([('folder', 'orange', 'Workspaces séparés', "Chaque client a sa marque, ses créations, sa mémoire et son compte Meta."),
                                               ('users', 'indigo', 'Équipe et rôles', "Invitez vos créatifs et vos media buyers avec des droits admin ou éditeur."),
                                               ('chart', 'green', 'Pilotage multi-comptes', "Les recommandations de l'IA pour chaque client, pour ne rien laisser filer.")]))),
-                        tail(['studio-en-lot', 'pilotage-ia', 'creations'], [
+                        tail(['studio-en-lot', 'pilotage-ia', 'creations-catalogue'], [
                             ("Mes clients peuvent-ils accéder à leur espace ?", "Vous pouvez inviter un client dans son workspace, avec le rôle qui convient."),
                             ("Les données des clients sont-elles séparées ?", "Oui. Marques, créations, comptes Meta et historique sont cloisonnés par workspace.")])))
 
@@ -332,22 +332,22 @@ def build_pages(b):
                 ('<div class="atile" data-k="%s"><video data-src="media/%s.mp4" poster="media/%s.poster.webp" muted loop playsinline preload="none"></video><span>%s<small>%s</small></span></div>' % (k, m, m, sct, fm)
                  if v else '<div class="atile" data-k="%s"><img src="media/%s.webp" alt="" loading="lazy" style="object-fit:cover"><span>%s<small>%s</small></span></div>' % (k, m, sct, fm))
                 for m, k, sct, fm, v in insp) + '</div>')
-    P['inspiration'] = ("Galerie d'inspiration · Growthity",
+    P['galerie-inspiration'] = ("Galerie d'inspiration · Growthity",
                         "Des pubs qui performent, triées par secteur et par format. Sauvegardez-les et envoyez-les au chat de Growthity comme modèle.",
                         stack(
-                            b.hero_center('inspiration', ('Ressources', 'Galerie'), 'L\'inspiration,', 'triée pour vous.',
+                            b.hero_center('galerie-inspiration', ('Ressources', 'Galerie'), 'L\'inspiration,', 'triée pour vous.',
                                           "Des pubs qui performent, rangées par secteur et par format. Trouvez une idée, sauvegardez-la, et envoyez-la au chat : il l'adapte à votre produit.",
                                           demo='<div class="rv">%s</div>' % igal, second=('Voir l\'Espion Meta Ads', 'espion-meta-ads.html')),
                             sec(feat(copy('Dans l\'app', 'Une idée vous plaît ?', 'Le chat s\'en inspire.',
                                           "Sauvegardez une pub dans vos favoris ou vos dossiers, puis envoyez-la au chat comme référence : il reprend le principe avec votre produit et vos acteurs.",
                                           ['Filtres par secteur et par format', 'Favoris et dossiers', 'Envoi au chat en un clic'], more=('Chercher chez vos concurrents', 'espion-meta-ads.html')),
                                      stage(minis('m-insp', cols='1fr'))), cls='tint'),
-                            tail(['espion-meta-ads', 'creations', 'guide-pub-ugc'], [])))
+                            tail(['espion-meta-ads', 'creations-catalogue', 'guide-pub-ugc'], [])))
 
-    P['creations'] = ("Templates vidéo produit · Growthity",
+    P['creations-catalogue'] = ("Templates vidéo produit · Growthity",
                       "Choisissez un style, glissez votre photo produit : Growthity la met en scène et l'anime en vidéo, prête pour les Reels et les Stories.",
                       stack(
-                          b.hero_split('creations', ('Ressources', 'Templates'), 'Votre photo produit,', 'mise en scène.',
+                          b.hero_split('creations-catalogue', ('Ressources', 'Templates'), 'Votre photo produit,', 'mise en scène.',
                                        "Choisissez un style, glissez une simple photo de votre produit : Growthity la place dans un décor, l'anime et en fait une vidéo prête pour Meta.",
                                        ['Une photo suffit', 'Des styles pour chaque univers', 'Vidéo 9:16 prête à publier'], stage(minis('m-tpl', cols='1fr'))),
                           sec(stack(head('Les styles', 'Un décor pour', 'chaque produit.'),
@@ -357,7 +357,7 @@ def build_pages(b):
                                                 ('bag', 'blue', 'Unboxing', "Ouverture du colis et découverte du produit, comme une cliente."),
                                                 ('refresh', 'green', 'Avant / après', "Le résultat de votre produit, montré en deux temps."),
                                                 ('calendar', 'slate', 'Saisonnier', "Noël, fête des mères, soldes : le même produit, l'ambiance du moment.")], md=['img-sneakers.webp', 'bougie-916'])), cls='tint'),
-                          tail(['formats', 'studio-en-lot', 'inspiration'], [
+                          tail(['formats', 'studio-en-lot', 'galerie-inspiration'], [
                               ("Quelle photo faut-il ?", "Une photo nette du produit, idéalement détouré ou sur fond simple. Celles de votre site conviennent très bien."),
                               ("Puis-je ajouter un acteur ?", "Oui : partez du template, puis demandez au chat d'ajouter un acteur UGC qui présente le produit.")])))
 

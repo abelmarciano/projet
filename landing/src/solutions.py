@@ -44,7 +44,7 @@ SECTORS = {
     md=['real-42', 'ugc-solaire'],
     faq=[("Les créatrices peuvent-elles appliquer mon produit ?", "Oui : l'acteur tient, montre et applique votre produit dans la scène, comme dans un vrai tuto."),
          ("Et les promesses de résultat ?", "Le chat formule les bénéfices de façon mesurée, et vous validez chaque texte avant publication.")],
-    rel=['acteurs-ugc', 'creations', 'espion-meta-ads']),
+    rel=['acteurs-ugc', 'creations-catalogue', 'espion-meta-ads']),
 
   'maison-deco': dict(
     meta=("Growthity pour la maison, la déco et l'entretien", "Des pubs qui mettent vos produits en scène chez vos clients : vidéos UGC, visuels et carrousels de collection, publiés sur Meta."),
@@ -285,7 +285,7 @@ SECTORS = {
     md=['real-19', 'img-sneakers.webp'],
     faq=[("Quand faut-il commencer ?", "Préparez vos créas quelques jours avant et publiez le jour J. Les premiers résultats arrivent en quelques jours."),
          ("Je n'ai pas encore de photos pro du produit.", "Une photo nette suffit : le chat la met en scène dans un visuel, un carrousel ou une vidéo.")],
-    rel=['creations', 'studio-en-lot', 'pilotage-ia']),
+    rel=['creations-catalogue', 'studio-en-lot', 'pilotage-ia']),
 
   'recrutement': dict(
     meta=("Recruter avec Growthity", "Des annonces vidéo incarnées par vos managers, diffusées sur Facebook et Instagram autour de vos sites, avec des candidatures qualifiées."),

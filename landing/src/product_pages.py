@@ -118,7 +118,7 @@ def build_products(b):
             ('eye', 'slate', 'Sur chaque carte', ['Signal, statut actif ou inactif, date de début', 'Visuel image ou vidéo, agrandissable', '« Active depuis N j » ou « Diffusée N j · arrêtée »', 'Lien vers la bibliothèque officielle']),
             ('search', 'blue', 'L\'analyse', ['Diffusion, période, portée UE', 'Plateformes : Facebook, Instagram, Messenger, Audience Network', 'Accroche, titre, description, destination', '« Pourquoi ce signal »']),
             ('chat', 'indigo', 'Les statistiques', ['Pubs retenues, annonceurs, encore actives', 'Durée médiane de diffusion', '2 pubs maximum par annonceur', 'Références gardées dans toute la conversation'])]))),
-        tail(['inspiration', 'chat-ia', 'studio-en-lot'], [
+        tail(['galerie-inspiration', 'chat-ia', 'studio-en-lot'], [
             ("D'où viennent les pubs ?", "De la Meta Ads Library, la bibliothèque publique des pubs diffusées sur Facebook, Instagram, Messenger et Audience Network en Europe."),
             ("Un signal « fort » veut-il dire que la pub est rentable ?", "Non, c'est le meilleur indice public : une pub qui tourne depuis longtemps, ou qui touche beaucoup de monde, a de bonnes chances de fonctionner. Growthity l'indique clairement."),
             ("Est-ce que ça copie les pubs des concurrents ?", "Non. Les pubs servent de références : le chat en retient le principe et crée une pub originale pour votre produit, ou au contraire une approche pour vous différencier.")])))
@@ -244,13 +244,13 @@ def build_products(b):
             ('film', 'orange', 'Cinématique', "Plans soignés et lumière travaillée, en Standard ⚡300 ou Cinématique premium ⚡1334."),
             ('image', 'green', 'Animation d\'image', "Une photo produit qui prend vie en quelques secondes."),
             ('copy', 'slate', 'Carrousel', "De 2 à 10 images, assemblées depuis vos créations ou générées d'un coup.")], md=['lena-serum', 'real-05']))),
-        tail(['editeur-video', 'creations', 'studio-en-lot'], [
+        tail(['editeur-video', 'creations-catalogue', 'studio-en-lot'], [
             ("Quels ratios sont disponibles ?", "9:16 par défaut, et 1:1, 4:5 ou 16:9 dès que vous le demandez (« carré », « feed », « paysage »). Une vidéo existante se recadre aussi en 9:16, 16:9, 1:1 ou 4:5."),
             ("Puis-je utiliser mes propres images ?", "Oui : importez-les dans le chat ou dans Mes créations, ou rangez-les dans votre catalogue produit pour les réutiliser.")])))
 
     # ================================================================ MES CRÉATIONS & CATALOGUE
-    P['creations'] = ("Mes créations & catalogue · Growthity", "Toutes vos pubs au même endroit : dossiers, versions, sélection multiple, carrousels, publication en lot. Et vos produits en catalogue ou depuis Shopify.", stack(
-        b.hero_center('creations', ('Produit', 'Mes créations'), 'Toutes vos pubs,', 'rangées et prêtes.',
+    P['creations-catalogue'] = ("Mes créations & catalogue · Growthity", "Toutes vos pubs au même endroit : dossiers, versions, sélection multiple, carrousels, publication en lot. Et vos produits en catalogue ou depuis Shopify.", stack(
+        b.hero_center('creations-catalogue', ('Produit', 'Mes créations'), 'Toutes vos pubs,', 'rangées et prêtes.',
                       "Retrouvez, organisez et publiez vos créations : filtres par type et par source, dossiers, versions, sélection multiple. Vos produits sont rangés dans un catalogue, ou viennent directement de Shopify.",
                       demo=M.creations_page()),
         sec(split(copy('Catalogue produit', 'Vos produits,', 'prêts pour le chat.',
@@ -266,8 +266,8 @@ def build_products(b):
             ("Que se passe-t-il si une génération échoue ?", "La carte l'indique, affiche le prompt utilisé et propose « Modifier dans le chat » ou « Réessayer ».")])))
 
     # ================================================================ INSPIRATION (Ressources)
-    P['inspiration'] = ("Galerie d'inspiration · Growthity", "Des pubs qui performent, triées par concept, secteur, style, objectif et format. Choisissez-en une : Growthity la recrée pour votre produit.", stack(
-        b.hero_center('inspiration', ('Ressources', 'Galerie d\'inspiration'), 'Choisissez une pub.', 'On la recrée pour votre produit.',
+    P['galerie-inspiration'] = ("Galerie d'inspiration · Growthity", "Des pubs qui performent, triées par concept, secteur, style, objectif et format. Choisissez-en une : Growthity la recrée pour votre produit.", stack(
+        b.hero_center('galerie-inspiration', ('Ressources', 'Galerie d\'galerie-inspiration'), 'Choisissez une pub.', 'On la recrée pour votre produit.',
                       "Des pubs qui performent, repérées chaque jour et validées par l'équipe. Filtrez par concept, secteur, style, objectif et format, puis « Recréer pour mon produit ».",
                       demo=M.inspi_gallery()),
         b.nums([('20', 'secteurs, e-commerce et services locaux'), ('21', 'concepts tendance, images et vidéos'), ('30 j', 'de diffusion minimum pour entrer dans la galerie'), ('1 clic', 'pour la recréer avec votre produit')]),

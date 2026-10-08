@@ -175,7 +175,7 @@
     "links": [
       [
         "mes créations et catalogue produit",
-        "creations"
+        "creations-catalogue"
       ],
       [
         "publicité e-commerce Facebook",
@@ -187,7 +187,7 @@
       ],
       [
         "exemples de publicités Facebook",
-        "inspiration"
+        "galerie-inspiration"
       ],
       [
         "suivi des ventes Meta",
@@ -249,7 +249,7 @@
       ]
     ]
   },
-  "inspiration": {
+  "galerie-inspiration": {
     "title": "Exemples de publicités Facebook et idées de pubs | Growthity",
     "description": "Exemples de publicités Facebook et inspiration pub Instagram classés par secteur et format. Trouvez des idées de publicités et adaptez-les avec l'IA.",
     "h2": "Exemples de publicités Facebook et Instagram pour trouver l'idée juste",
@@ -283,7 +283,7 @@
       ],
       [
         "bibliothèque de créations publicitaires",
-        "creations"
+        "creations-catalogue"
       ],
       [
         "formats de publicité Meta",
@@ -299,7 +299,7 @@
       ]
     ]
   },
-  "creations": {
+  "creations-catalogue": {
     "title": "Bibliothèque de créations publicitaires Meta | Growthity",
     "description": "Bibliothèque de créations publicitaires : gérez vos créas Facebook Ads, votre catalogue produit et vos produits Shopify au même endroit, prêts à publier.",
     "h2": "Mes créations et catalogue produit : vos créations Meta Ads bien rangées",
@@ -391,7 +391,7 @@
       ],
       [
         "exemples de publicités Facebook",
-        "inspiration"
+        "galerie-inspiration"
       ],
       [
         "formats vidéo Instagram",

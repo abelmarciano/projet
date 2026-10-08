@@ -8,7 +8,7 @@ PAGES = {
   'formats':            ('produit', 'Vidéos, visuels & carrousels', 'Tous les formats Meta en un brief', 'layers', 'blue', 'lessive-bottle.webp'),
   'editeur-video':      ('produit', 'Éditeur vidéo', 'Coupez, insérez, sous-titrez', 'film', 'orange', 'gloss-lips.webp'),
   'studio-en-lot':      ('produit', 'Studio en lot', 'Une campagne entière depuis votre site', 'grid', 'green', 'img-bougie.webp'),
-  'creations':          ('produit', 'Mes créations & catalogue', 'Dossiers, versions, produits, Shopify', 'folder', 'blue', 'img-sneakers.webp'),
+  'creations-catalogue':          ('produit', 'Mes créations & catalogue', 'Dossiers, versions, produits, Shopify', 'folder', 'blue', 'img-sneakers.webp'),
   # Produit · Diffuser & piloter
   'espion-meta-ads':    ('produit', 'Espion Meta Ads', 'Growthity trouve les pubs qui marchent', 'search', 'slate', 'ugc-solaire.poster.webp'),
   'publication-meta':   ('produit', 'Publication Meta Ads', 'Audience, budget, en ligne en un clic', 'send', 'meta', 'real-04.poster.webp'),
@@ -32,14 +32,14 @@ PAGES = {
   'lancement-produit':  ('solutions', 'Lancer un produit', 'Faire connaître une nouveauté, vite', 'rocket', 'pink', 'real-19.poster.webp'),
   'recrutement':        ('solutions', 'Recruter', 'Des candidats, pas seulement des clients', 'users', 'slate', 'actor-thomas.poster.webp'),
   # Ressources
-  'inspiration':        ('ressources', 'Galerie d\'inspiration', 'Les pubs qui performent, par secteur', 'bulb', 'orange', 'real-19.poster.webp'),
+  'galerie-inspiration':        ('ressources', 'Galerie d\'galerie-inspiration', 'Les pubs qui performent, par secteur', 'bulb', 'orange', 'real-19.poster.webp'),
   'guide-pub-ugc':      ('ressources', 'Guide : la pub UGC qui convertit', 'Hooks, scripts, formats : la méthode', 'book', 'blue', 'real-42.poster.webp'),
   'growthity-vs-agence':('ressources', 'Growthity ou une agence ?', 'Délais, coûts, contrôle : le comparatif', 'scale', 'slate', 'actor-thomas.poster.webp'),
   'faq':                ('ressources', 'Questions fréquentes', 'Crédits, Meta, données, équipe', 'help', 'cyan', 'real-05.poster.webp'),
 }
 
 GROUPS = {
-  'produit': ('Produit', [('Créer', ['chat-ia', 'acteurs-ugc', 'formats', 'editeur-video', 'studio-en-lot', 'creations']),
+  'produit': ('Produit', [('Créer', ['chat-ia', 'acteurs-ugc', 'formats', 'editeur-video', 'studio-en-lot', 'creations-catalogue']),
                           ('Diffuser & piloter', ['espion-meta-ads', 'publication-meta', 'pilotage-ia', 'leads-ventes'])]),
   'solutions': ('Solutions', [('Par activité', ['ecommerce', 'b2b-leads', 'commerce-local', 'agences', 'franchises-reseaux']),
                               ('Par secteur', ['beaute-cosmetique', 'maison-deco', 'restauration', 'renovation-energie', 'formation-coaching', 'immobilier', 'tech-applis']),
@@ -47,7 +47,7 @@ GROUPS = {
                                                 ('b2b-leads', 'Générer des leads', 'Des contacts qualifiés chaque semaine', 'target', 'blue'),
                                                 ('commerce-local', 'Attirer en boutique', 'Des clients dans votre zone', 'pin', 'orange'),
                                                 'lancement-produit', 'recrutement'])]),
-  'ressources': ('Ressources', [('Apprendre', ['guide-pub-ugc', 'growthity-vs-agence', 'faq']), ('S\'inspirer', ['inspiration'])]),
+  'ressources': ('Ressources', [('Apprendre', ['guide-pub-ugc', 'growthity-vs-agence', 'faq']), ('S\'inspirer', ['galerie-inspiration'])]),
 }
 
 NEW = {'espion-meta-ads'}
