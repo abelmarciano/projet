@@ -413,7 +413,10 @@ section{padding-block:110px}
 .live .met{flex:1;min-width:58px;background:var(--surface);border:1px solid var(--line)}
 
 /* performance chat */
-.perf{padding:20px;display:flex;flex-direction:column;gap:14px;min-height:430px}
+.perf{padding:20px;display:flex;flex-direction:column;gap:14px;height:560px;overflow:hidden;scroll-behavior:smooth}
+.perf .leads{width:100%}
+.perf .lead .src{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--dim);white-space:nowrap}
+.perf .lead .src img{width:22px;height:28px;border-radius:5px;object-fit:cover}
 .chart{border-radius:12px;background:var(--mist);padding:12px}
 .chart .h{display:flex;justify-content:space-between;font-size:11px;color:var(--dim);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
 .chart svg{width:100%;height:90px;margin-top:6px;display:block}
@@ -886,10 +889,10 @@ footer a:hover{color:var(--fg)}
       <div class="copy rv">
         <div class="eyebrow">Performances</div>
         <h2>Posez la question. <span class="grad">Le chat lit vos résultats.</span></h2>
-        <p>Le même chat qui crée vos pubs analyse leurs performances. Il rassemble les chiffres de vos campagnes Meta et vous dit quoi faire ensuite.</p>
+        <p>Le même chat qui crée vos pubs suit vos leads et vos performances. Demandez combien de leads vous avez eus, qui ils sont et quelle pub les a apportés : il vous répond et vous dit quoi faire ensuite.</p>
         <ul class="ticks">
-          <li><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>ROAS, CPA, CPL et dépense, avec leur évolution</li>
-          <li><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Les pubs gagnantes repérées automatiquement</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Leads, coût par lead, ROAS et dépense, avec leur évolution</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>La liste de vos leads, avec la pub qui les a apportés</li>
           <li><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Une recommandation concrète, applicable en un clic</li>
         </ul>
       </div>
@@ -897,17 +900,17 @@ footer a:hover{color:var(--fg)}
         <div class="win" id="perfdemo">
           <div class="win-bar"><i></i><i></i><i></i><span>Chat créatif · Performances</span></div>
           <div class="perf">
-            <div class="msg me" id="pq"><div class="b">Comment s'est passée la campagne Black Friday ?</div></div>
+            <div class="msg me" id="pq"><div class="b">Combien de leads cette semaine ?</div></div>
             <div class="msg ai" id="pa"><div class="av"><svg viewBox="0 0 24 24" fill="none"><path d="M2 17 8.5 10.5 13.5 15.5 22 7M16 7h6v6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
               <div class="stack" style="flex:1">
-                <div class="b">Très bonne semaine : la vidéo UGC d'Emma tire la campagne.</div>
-                <div class="kpis"><div class="kpi">ROAS<b id="k1">4,1×</b><em>+8 %</em></div><div class="kpi">CPA<b id="k2">6,20 €</b><em>−13 %</em></div><div class="kpi">Dépense<b id="k3">1 248 €</b><em>7 jours</em></div></div>
-                <div class="chart"><div class="h"><span>ROAS · 10 derniers jours</span><span style="color:var(--ok)">● en direct</span></div>
+                <div class="b">Très bonne semaine : 142 leads, dont la moitié grâce à la vidéo UGC d'Emma.</div>
+                <div class="kpis"><div class="kpi">Leads<b id="k1">142</b><em>+21 %</em></div><div class="kpi">Coût par lead<b id="k2">8,30 €</b><em>−13 %</em></div><div class="kpi">Dépense<b id="k3">1 178 €</b><em>7 jours</em></div></div>
+                <div class="chart"><div class="h"><span>Leads par jour · 10 derniers jours</span><span style="color:var(--ok)">● en direct</span></div>
                   <svg viewBox="0 0 300 90" preserveAspectRatio="none"><defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5B3FE4" stop-opacity=".3"/><stop offset="1" stop-color="#5B3FE4" stop-opacity="0"/></linearGradient><linearGradient id="gl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5B3FE4"/><stop offset="1" stop-color="#E0479E"/></linearGradient></defs>
                     <path id="parea" d="M0 70 L33 56 L66 62 L100 44 L133 50 L166 32 L200 36 L233 22 L266 26 L300 10 L300 90 L0 90 Z" fill="url(#ga)"/>
                     <path id="pline" d="M0 70 L33 56 L66 62 L100 44 L133 50 L166 32 L200 36 L233 22 L266 26 L300 10" fill="none" stroke="url(#gl)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0"/>
                     <circle id="pdot" cx="300" cy="10" r="5" fill="#E0479E"/></svg></div>
-                <div class="reco" id="preco"><span>À booster : la vidéo d'Emma ramène vos clients les moins chers.</span><span class="btn sm" style="background:var(--ok);color:var(--white)">Budget +25 %</span></div>
+                <div class="reco" id="preco"><span>À booster : la vidéo d'Emma ramène vos leads les moins chers.</span><span class="btn sm" style="background:var(--ok);color:var(--white)">Budget +25 %</span></div>
               </div>
             </div>
           </div>
@@ -1327,21 +1330,33 @@ footer a:hover{color:var(--fg)}
     await w(4200);
   });
 
-  /* ---------- 7. performance ---------- */
-  var perf=$('#perfdemo');
+  /* ---------- 7. performance: leads first ---------- */
+  var perf=$('#perfdemo'),pbody=$('#perfdemo .perf');
   demo(perf,async function(w){
     var q=$('#pq'),a=$('#pa'),line=$('#pline'),area=$('#parea'),dot=$('#pdot'),reco=$('#preco'),b=$('.b',a),kp=$$('.kpi',a),chart=$('.chart',a);
+    $$('.extra',pbody).forEach(function(x){x.remove()});pbody.scrollTop=0;
     [a,reco,chart].concat(kp).forEach(function(x){x.style.opacity='0'});q.style.opacity='0';line.style.transition='none';line.style.strokeDashoffset='1';area.style.opacity='0';dot.style.opacity='0';
     await w(500);q.style.opacity='';q.classList.add('pop');await w(700);
     a.style.opacity='';b.innerHTML='<span class="dots" style="padding:0;background:none"><i></i><i></i><i></i></span>';await w(900);
-    b.textContent='Très bonne semaine : la vidéo UGC d\'Emma tire la campagne.';
+    b.textContent="Très bonne semaine : 142 leads, dont la moitié grâce à la vidéo UGC d'Emma.";
     for(var i=0;i<kp.length;i++){kp[i].style.opacity='';kp[i].classList.add('pop');await w(250)}
-    countTo($('#k1'),4.1,900,function(v){return v.toFixed(1).replace('.',',')+'×'});
-    countTo($('#k2'),6.2,900,function(v){return v.toFixed(2).replace('.',',')+' €'});
-    countTo($('#k3'),1248,900,function(v){return fmtN(v)+' €'});
+    countTo($('#k1'),142,900);
+    countTo($('#k2'),8.3,900,function(v){return v.toFixed(2).replace('.',',')+' €'});
+    countTo($('#k3'),1178,900,function(v){return fmtN(v)+' €'});
     chart.style.opacity='';chart.classList.add('pop');await w(200);
     line.style.transition='stroke-dashoffset 1.6s ease';line.style.strokeDashoffset='0';area.style.transition='opacity 1s .6s';area.style.opacity='1';
     await w(1600);dot.style.opacity='1';await w(300);reco.style.opacity='';reco.classList.add('pop');
+    await w(1600);
+    var q2=document.createElement('div');q2.className='msg me pop extra';q2.innerHTML='<div class="b">Montre-moi les leads.</div>';pbody.appendChild(q2);pbody.scrollTop=pbody.scrollHeight;
+    await w(700);
+    var a2=document.createElement('div');a2.className='msg ai fadein extra';a2.innerHTML='<div class="av">'+LOGO+'</div><div class="dots"><i></i><i></i><i></i></div>';pbody.appendChild(a2);pbody.scrollTop=pbody.scrollHeight;
+    await w(800);
+    a2.className='msg ai pop extra';a2.style.maxWidth='100%';a2.innerHTML='<div class="av">'+LOGO+'</div><div class="stack" style="flex:1"><div class="b">Voici les derniers leads, avec la pub qui les a apportés :</div><div class="leads"></div></div>';
+    var list=$('.leads',a2),L=[['CM','Camille M.','camille.m@… · 06 •• •• 41 12','actor-emma','UGC Emma'],['TR','Thomas R.','thomas.r@… · 07 •• •• 18 90','img-bougie','Carrousel'],['NB','Nadia B.','nadia.b@… · 06 •• •• 73 05','actor-emma','UGC Emma'],['LP','Lucas P.','lucas.p@… · 06 •• •• 22 67','bougie-916','Vidéo produit']];
+    for(var j=0;j<L.length;j++){var l=L[j],d=document.createElement('div');d.className='lead pop';
+      var thumb=l[3].indexOf('img-')===0?'media/'+l[3]+'.webp':'media/'+l[3]+'.poster.webp';
+      d.innerHTML='<span class="ini">'+l[0]+'</span><div><b>'+l[1]+'</b><small>'+l[2]+'</small></div><span class="src"><img src="'+thumb+'" alt="">'+l[4]+'</span>';
+      list.appendChild(d);pbody.scrollTop=pbody.scrollHeight;await w(650)}
     await w(4000);[q,chart,reco].concat(kp).forEach(function(x){x.classList.remove('pop')});
   });
 
