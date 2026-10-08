@@ -1285,7 +1285,8 @@ footer a:hover{color:var(--fg)}
      scrolling past already sees the result), held for a few seconds once on screen, then
      replayed as an animation in a loop. Pauses off-screen, restartable. */
   var HOLD=3500;
-  function demo(el,play){
+  function demo(el,play,opts){
+    opts=opts||{};
     var vis=false,gen=0;
     function mkWait(g,instant){var f=function(ms){return new Promise(function(res,rej){
       if(g!==gen)return rej(0);
@@ -1296,7 +1297,8 @@ footer a:hover{color:var(--fg)}
     async function run(first){
       var g=gen;
       try{
-        if(first){await play(mkWait(g,true));if(REDUCE)return;await untilVisible(g);await new Promise(function(r){setTimeout(r,HOLD)});await untilVisible(g)}
+        if(first&&opts.fromStart){if(REDUCE){await play(mkWait(g,true));return}await untilVisible(g)}
+        else if(first){await play(mkWait(g,true));if(REDUCE)return;await untilVisible(g);await new Promise(function(r){setTimeout(r,HOLD)});await untilVisible(g)}
         do{await play(mkWait(g,false))}while(!REDUCE&&g===gen);
       }catch(e){}
     }
@@ -1455,7 +1457,9 @@ footer a:hover{color:var(--fg)}
     if(!REDUCE&&!w.instant){cur=(cur+1)%SCEN.length;selectTab(cur)}
   }
   function selectTab(i){scenBtns.forEach(function(b,j){b.setAttribute('aria-selected',i===j)})}
-  var chatRun=demo($('#chatdemo'),playChat);
+  var chatRun=demo($('#chatdemo'),playChat,{fromStart:true});
+  /* render the opening message right away so the window is never empty before the chat starts */
+  add('<div class="b">'+SCEN[0].steps[0].u+'</div>','msg me');
   scenBtns.forEach(function(b,i){b.addEventListener('click',function(){cur=i;selectTab(i);chatRun.restart()})});
 
   /* ---------- 2. formats ---------- */
