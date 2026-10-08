@@ -60,6 +60,7 @@
 html{scroll-behavior:smooth;background:var(--bg)}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img,video{max-width:100%;display:block}
+video{object-position:50% 22%}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--indigo);outline-offset:3px;border-radius:8px}
@@ -272,19 +273,28 @@ section{padding-block:110px}
 .sendm .t b{color:var(--meta);font-variant-numeric:tabular-nums}
 .sendm .bar>i{background:var(--meta)}
 .metarow{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
-.fbp{width:220px;max-width:100%;border-radius:14px;border:1px solid var(--line);background:var(--surface);overflow:hidden;font-size:12px;box-shadow:0 18px 40px -24px rgba(15,23,42,.45)}
-.fbp .hd{display:flex;gap:8px;align-items:center;padding:10px}
-.fbp .hd i{width:30px;height:30px;border-radius:15px;overflow:hidden;flex:none;display:block}
+.fbp{width:270px;max-width:100%;border-radius:10px;border:1px solid #DADDE1;background:var(--surface);overflow:hidden;font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;font-size:12.5px;color:#050505;box-shadow:0 18px 40px -24px rgba(15,23,42,.45)}
+.fbp .hd{display:flex;gap:8px;align-items:center;padding:10px 12px 6px}
+.fbp .hd i{width:34px;height:34px;border-radius:17px;overflow:hidden;flex:none;display:block}
 .fbp .hd i svg{width:100%;height:100%;display:block}
-.fbp .hd b{display:block;font-size:12.5px}
-.fbp .hd small{color:var(--dim);font-size:10.5px}
-.fbp .tx{padding:0 10px 9px;font-size:12px;line-height:1.4}
-.fbp .md{aspect-ratio:1/1;background:var(--black)}
-.fbp .md video{width:100%;height:100%;object-fit:cover}
-.fbp .ft{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;background:var(--mist)}
-.fbp .ft b{font-size:12px;line-height:1.25}
-.fbp .ft span{font-size:11px;font-weight:700;padding:6px 10px;border-radius:6px;background:var(--mist-2);white-space:nowrap}
-.fbp .rx{display:flex;justify-content:space-around;padding:8px;font-size:11px;font-weight:600;color:var(--dim);border-top:1px solid var(--line)}
+.fbp .hd b{display:block;font-size:13px;font-weight:600}
+.fbp .hd small{font-size:11px;color:#65676B;display:inline-flex;align-items:center;gap:3px}
+.fbp .hd .dots3{margin-left:auto;color:#65676B;font-weight:700;letter-spacing:1px}
+.fbp .tx{padding:2px 12px 10px;font-size:12.5px;line-height:1.38}
+.fbp .md{aspect-ratio:1/1;background:#000}
+.fbp .md video{width:100%;height:100%;object-fit:cover;object-position:50% 22%}
+.fbp .ft{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;background:#F0F2F5;border-bottom:1px solid #DADDE1}
+.fbp .ft small{display:block;font-size:10px;color:#65676B;letter-spacing:.02em}
+.fbp .ft b{display:block;font-size:12.5px;line-height:1.25;font-weight:600}
+.fbp .ft span{font-size:12px;font-weight:600;padding:7px 11px;border-radius:6px;background:#E4E6EB;white-space:nowrap}
+.fbp .rc{display:flex;justify-content:space-between;align-items:center;padding:7px 12px;font-size:11px;color:#65676B}
+.fbp .re{display:flex;align-items:center;gap:4px}
+.fbp .re i{font-style:normal;width:16px;height:16px;border-radius:8px;display:grid;place-items:center;font-size:9px;margin-right:-6px;border:1.5px solid #fff}
+.fbp .re i.lk{background:#1877F2}.fbp .re i.ht{background:#F33E58;color:#fff}
+.fbp .re i:last-of-type{margin-right:2px}
+.fbp .rx{display:flex;justify-content:space-around;margin:0 8px;padding:6px 0;font-size:12px;font-weight:600;color:#65676B;border-top:1px solid #DADDE1}
+.fbp .rx span{display:inline-flex;align-items:center;gap:5px}
+.fbp .rx svg{width:16px;height:16px}
 .mside{display:flex;flex-direction:column;gap:8px;min-width:150px}
 .mside .met{background:var(--mist)}
 .composer{display:flex;align-items:center;gap:10px;margin:10px 20px 18px;padding:8px 8px 8px 16px;border-radius:16px;border:1.5px solid var(--line-2);font-size:14px;transition:all .2s;min-height:52px}
@@ -813,7 +823,7 @@ footer a:hover{color:var(--fg)}
 <!-- ============ HERO ============ -->
 <div class="hero">
   <div class="wrap">
-    <span class="pill"><span class="tag">Nouveau</span> Espion Meta Ads : inspirez-vous des pubs qui gagnent</span>
+    <span class="pill"><span class="tag">Nouveau</span> Espion Meta Ads : Growthity trouve les pubs qui marchent</span>
     <h1><span class="w" style="--i:0">Vos</span> <span class="w" style="--i:1">pubs</span> <span class="w" style="--i:2">Meta,</span> <span class="w grad" style="--i:4">générées et publiées</span> <span class="w" style="--i:3">en</span> <span class="w" style="--i:3">2</span> <span class="w" style="--i:3">minutes.</span></h1>
     <p class="lede">Décrivez votre produit en une phrase. Growthity écrit le script, choisit l'acteur, tourne la vidéo UGC, décline vos visuels et carrousels, puis publie la campagne sur Facebook et Instagram.</p>
     <div class="hero-cta">
@@ -934,13 +944,13 @@ footer a:hover{color:var(--fg)}
   <div class="wrap">
     <div class="head rv">
       <div class="eyebrow">Espion Meta Ads</div>
-      <h2>Inspirez-vous des <span class="grad">pubs qui gagnent.</span></h2>
-      <p>Fouillez la bibliothèque publicitaire Meta de votre secteur. Les pubs qui tournent depuis des semaines sont repérées comme gagnantes probables. Voyez-les comme vos clients les voient, puis envoyez-les au chat comme références.</p>
+      <h2>Growthity trouve pour vous <span class="grad">les pubs qui marchent.</span></h2>
+      <p>Donnez un mot-clé ou le nom d'un concurrent. Growthity fouille toute la bibliothèque publicitaire Meta et repère les pubs qui tournent depuis des semaines, le signe qu'elles sont rentables. Vous les voyez comme vos clients les voient, et en un clic le chat s'en inspire pour créer la vôtre.</p>
     </div>
     <div class="win spywin rv" id="spydemo">
       <div class="win-bar"><i></i><i></i><i></i><span>Espion Meta Ads · Bibliothèque publicitaire</span></div>
       <div class="spy-body">
-        <div class="sbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span class="in" id="sq">vidéo UGC face caméra</span><span class="chip meta">Tous secteurs · France</span><span class="chip">Actives</span></div>
+        <div class="sbar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span class="in" id="sq">vidéo UGC face caméra</span><span class="chip meta">Tous secteurs · France</span><span class="chip" id="sstat">4 gagnantes trouvées</span></div>
         <div class="spy-grid">
           <div class="lib-wrap"><div class="libg" id="ads"></div><div class="scanline" id="scan"></div></div>
           <div class="pv-col">
@@ -948,7 +958,7 @@ footer a:hover{color:var(--fg)}
             <div class="phonem"><div class="screen" id="pscreen"></div></div>
           </div>
         </div>
-        <div class="spy-foot"><span><b id="wcount">4</b> gagnants probables · Témoignage, preuve en 3 s, produit en main</span><span class="btn btn-grad sm" id="inspire">S'inspirer</span></div>
+        <div class="spy-foot"><span>Growthity a repéré <b id="wcount">4</b> pubs gagnantes · Témoignage, preuve en 3 s, produit en main</span><span class="btn btn-grad sm" id="inspire">S'inspirer</span></div>
       </div>
       <div class="toast" id="spytoast"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 5 5L20 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>4 références envoyées au chat</div>
     </div>
@@ -1341,14 +1351,14 @@ footer a:hover{color:var(--fg)}
   /* ---------- 1. chat demo ---------- */
   var SCEN=[
     {credits:9340,steps:[
-      {u:"Je vends des bougies parfumées sur ma boutique Shopify. Une vidéo qui donne envie d'acheter, sans discours commercial."},
-      {a:"Je pars sur un témoignage UGC style selfie, ta bougie en gros plan. J'ai importé le produit depuis ta boutique :",card:{t:'prod',img:'img-bougie',name:'Bougie Figue & Cèdre',sub:'Importée depuis Shopify · 14 photos'}},
-      {a:"Voici 3 créatrices crédibles sur la déco :",card:{t:'picks',list:[['ugc-femme','Léa'],['real-42','Inès'],['real-05','Camille']],pick:0}},
-      {u:"Léa. Avec une accroche style témoignage."},
-      {a:"Génération en cours : vidéo 9:16 avec ta bougie intégrée à la scène.",card:{t:'gen',cost:300}},
-      {a:"Voilà ta vidéo avec Léa, et le visuel produit :",card:{t:'res',video:'ugc-femme',words:["J'ai testé",'<em>cette</em> bougie','pendant','un mois…'],img:'img-bougie'}},
-      {u:"Publie sur Meta : France, femmes 25-45 ans, intérêts déco et cadeaux, 30 € par jour."},
-      {a:"C'est parti. Voici ta campagne et l'aperçu de la pub :",card:{t:'meta',aud:['France','Femmes 25–45 ans','Déco · Cadeaux','30 € / jour','Ventes'],brand:'Atelier Figue',logo:'figue',video:'ugc-femme',text:"J'ai testé cette bougie pendant un mois… et franchement, je ne m'attendais pas à ça.",headline:'Bougies faites main',cta:'Acheter',m:[['Impressions',14200],['Clics',398],['Ventes',21]]}}
+      {u:"Je vends un sérum vitamine C sur ma boutique Shopify. Je veux une vidéo qui fait vraie cliente, pas une pub."},
+      {a:"Je pars sur un témoignage UGC face caméra, angle avant / après, zéro discours commercial. J'ai importé ton produit depuis ta boutique :",card:{t:'prod',img:'img-serum-pack',name:'Sérum Vitamine C · 30 ml',sub:'Importé depuis Shopify · 9 photos'}},
+      {a:"Voici 3 créatrices crédibles en skincare :",card:{t:'picks',list:[['lena-serum','Léna'],['real-14','Inès'],['real-42','Camille']],pick:0}},
+      {u:"Léna, elle fait vraie utilisatrice. Accroche avant / après."},
+      {a:"Génération en cours : vidéo 9:16, Léna tient ton sérum face caméra.",card:{t:'gen',cost:300}},
+      {a:"Voilà ta vidéo avec Léna, et le visuel produit :",card:{t:'res',video:'lena-serum',words:['3 semaines,','<em>zéro</em>','fond de teint'],img:'img-serum'}},
+      {u:"Publie sur Meta : France, femmes 22-40 ans, intérêts skincare et beauté, 30 € par jour."},
+      {a:"C'est parti. Voici ta campagne et l'aperçu de la pub :",card:{t:'meta',aud:['France','Femmes 22–40 ans','Skincare · Beauté','30 € / jour','Ventes'],brand:'Éclat Skin',site:'eclat-skin.fr',logo:'eclat',video:'lena-serum',text:"3 semaines, zéro fond de teint. Ma peau n'a jamais été aussi nette, je vous montre ma routine 🍊",headline:'Sérum Vitamine C · 30 ml',cta:'Acheter',m:[['Impressions',18400],['Clics',512],['Ventes',34]]}}
     ]},
     {credits:22610,steps:[
       {u:"Je veux des leads pour mon cabinet de recrutement. Cible les DRH et fondateurs de PME en France."},
@@ -1357,7 +1367,7 @@ footer a:hover{color:var(--fg)}
       {a:"Je génère la vidéo et le visuel avec l'accroche « Recruter sans y passer vos nuits ».",card:{t:'gen',cost:280}},
       {a:"Tes créas sont prêtes :",card:{t:'res',video:'ugc-homme',words:['Recruter','sans y passer','<em>vos nuits</em>'],img:'ugc-homme.poster.webp',ovl:'Recruter sans y passer vos nuits',ovlSub:'Cabinet RH · PME'}},
       {u:"Publie sur Meta : France entière, DRH et dirigeants de PME, 30 à 55 ans, 40 € par jour."},
-      {a:"Campagne de leads créée, avec un formulaire Meta. Aperçu :",card:{t:'meta',aud:['France entière','30–55 ans','DRH · Dirigeants PME','40 € / jour','Leads'],brand:'Talento RH',logo:'talento',video:'ugc-homme',text:"Vous passez vos soirées à trier des CV ? On s'occupe de vos recrutements de A à Z.",headline:'Recruter sans y passer vos nuits',cta:"S'inscrire",m:[['Impressions',11950],['Clics',264],['Leads',17]]}}
+      {a:"Campagne de leads créée, avec un formulaire Meta. Aperçu :",card:{t:'meta',aud:['France entière','30–55 ans','DRH · Dirigeants PME','40 € / jour','Leads'],brand:'Talento RH',site:'talento-rh.fr',logo:'talento',video:'ugc-homme',text:"Vous passez vos soirées à trier des CV ? On s'occupe de vos recrutements de A à Z.",headline:'Recruter sans y passer vos nuits',cta:"S'inscrire",m:[['Impressions',11950],['Clics',264],['Leads',17]]}}
     ]},
     {credits:4820,steps:[
       {u:"Je fabrique des cuisines en bois sur mesure à Nantes. Je veux des demandes de devis."},
@@ -1366,7 +1376,7 @@ footer a:hover{color:var(--fg)}
       {a:"Je lance la génération : vidéo 9:16, sous-titres inclus.",card:{t:'gen',cost:280}},
       {a:"Ta vidéo est prête :",card:{t:'res',video:'ugc-scierie',words:['Votre cuisine','<em>sur mesure</em>','fabriquée','à Nantes']}},
       {u:"Publie sur Meta : 40 km autour de Nantes, propriétaires 30-60 ans, 25 € par jour."},
-      {a:"Campagne locale créée. Voici l'aperçu de ta pub :",card:{t:'meta',aud:['Nantes + 40 km','30–60 ans','Propriétaires','25 € / jour','Devis'],brand:'Atelier Bois Nantais',logo:'nord',video:'ugc-scierie',text:"Votre cuisine sur mesure, fabriquée dans notre atelier à Nantes. Devis gratuit en 48 h.",headline:'Cuisines en bois sur mesure',cta:'Demander un devis',m:[['Impressions',9860],['Clics',284],['Devis',14]]}}
+      {a:"Campagne locale créée. Voici l'aperçu de ta pub :",card:{t:'meta',aud:['Nantes + 40 km','30–60 ans','Propriétaires','25 € / jour','Devis'],brand:'Atelier Bois Nantais',site:'atelierboisnantais.fr',logo:'nord',video:'ugc-scierie',text:"Votre cuisine sur mesure, fabriquée dans notre atelier à Nantes. Devis gratuit en 48 h.",headline:'Cuisines en bois sur mesure',cta:'Demander un devis',m:[['Impressions',9860],['Clics',284],['Devis',14]]}}
     ]}
   ];
   var thread=$('#thread'),cin=$('#cin'),comp=$('#composer'),creditsEl=$('#credits');
@@ -1405,9 +1415,12 @@ footer a:hover{color:var(--fg)}
       for(var pp=0;pp<=100;pp+=10){sb.style.width=pp+'%';sp.textContent=pp+' %';await w(60)}
       $('.sendm',n).remove();
       var row=document.createElement('div');row.className='metarow pop';
-      row.innerHTML='<div class="fbp"><div class="hd"><i>'+((typeof LOGOS!=='undefined'&&LOGOS[c.logo])||'')+'</i><div><b>'+c.brand+'</b><small>Sponsorisé · Facebook &amp; Instagram</small></div></div>'+
+      var site=c.site||(c.brand.toLowerCase().normalize('NFD').replace(/[^a-z]/g,'')+'.fr');
+      row.innerHTML='<div class="fbp"><div class="hd"><i>'+((typeof LOGOS!=='undefined'&&LOGOS[c.logo])||'')+'</i><div><b>'+c.brand+'</b><small>Sponsorisé · <svg viewBox="0 0 16 16" width="10" height="10" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm4.9 6.3h-2.1a11 11 0 0 0-.9-3.9 5.6 5.6 0 0 1 3 3.9ZM8 2.5c.6.8 1.2 2.5 1.4 4.8H6.6C6.8 5 7.4 3.3 8 2.5Zm-1.9.9a11 11 0 0 0-.9 3.9H3.1a5.6 5.6 0 0 1 3-3.9ZM3.1 8.7h2.1c.1 1.4.4 2.8.9 3.9a5.6 5.6 0 0 1-3-3.9ZM8 13.5c-.6-.8-1.2-2.5-1.4-4.8h2.8C9.2 11 8.6 12.7 8 13.5Zm1.9-.9c.5-1.1.8-2.5.9-3.9h2.1a5.6 5.6 0 0 1-3 3.9Z"/></svg></small></div><span class="dots3">···</span></div>'+
         '<div class="tx">'+c.text+'</div><div class="md">'+vid(c.video)+'</div>'+
-        '<div class="ft"><b>'+c.headline+'</b><span>'+c.cta+'</span></div><div class="rx"><span>J\'aime</span><span>Commenter</span><span>Partager</span></div></div>'+
+        '<div class="ft"><div><small>'+site.toUpperCase()+'</small><b>'+c.headline+'</b></div><span>'+c.cta+'</span></div>'+
+        '<div class="rc"><span class="re"><i class="lk">👍</i><i class="ht">❤</i>1,2 k</span><span>48 commentaires · 12 partages</span></div>'+
+        '<div class="rx"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 11v9H4v-9Zm0 0 4-8a2 2 0 0 1 2 2v4h5a2 2 0 0 1 2 2.3l-1.2 7A2 2 0 0 1 16.8 20H7"/></svg>J\'aime</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.3A8.5 8.5 0 1 1 21 12Z"/></svg>Commenter</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M15 5l6 6-6 6M21 11H10a6 6 0 0 0-6 6v2"/></svg>Partager</span></div></div>'+
         '<div class="mside"><span class="chip ok">● En ligne sur Meta</span><span class="chip meta">Facebook · Instagram</span>'+c.m.map(function(m){return '<div class="met">'+m[0]+'<b>0</b></div>'}).join('')+'<span class="nofee" style="margin:0">0 % de commission sur le budget</span></div>';
       n.appendChild(row);scrollEnd();
       $$('.mside .met b',row).forEach(function(b,i){countTo(b,c.m[i][1],2000)});
@@ -1500,6 +1513,7 @@ footer a:hover{color:var(--fg)}
   var LOGOS={
     stride:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#111"/><path d="M6 20c6 1 14-3 20-10-3 7-9 12-17 13-3 0-4-2-3-3Z" fill="#fff"/></svg>',
     kaia:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#F6D5DF"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-size="17" font-style="italic" fill="#9B2C55">K</text></svg>',
+    eclat:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#F4E6D4"/><circle cx="16" cy="16" r="7" fill="#F29A2E"/><text x="16" y="19.5" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#fff">É</text></svg>',
     figue:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#3B2A22"/><text x="16" y="21" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#E9D8C4" letter-spacing=".5">AF</text></svg>',
     nova:'<svg viewBox="0 0 32 32"><defs><linearGradient id="nv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#06B6D4"/></linearGradient></defs><rect width="32" height="32" fill="url(#nv)"/><path d="M16 6l2.4 7.6L26 16l-7.6 2.4L16 26l-2.4-7.6L6 16l7.6-2.4Z" fill="#fff"/></svg>',
     coach:'<svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#F97316"/><path d="M9 21V11l7 6 7-6v10" fill="none" stroke="#fff" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg>',
@@ -1552,14 +1566,15 @@ footer a:hover{color:var(--fg)}
   var sbox=$('#spydemo');
   demo(sbox,async function(w){
     var cards=$$('.lc',lib),scan=$('#scan'),q=$('#sq'),btn=$('#inspire'),toast=$('#spytoast'),wc=$('#wcount'),c=sbox._c||(sbox._c=cursor(sbox));
-    cards.forEach(function(a){a.classList.remove('win','lose','sel','pop');a.style.opacity='0'});toast.classList.remove('on');wc.textContent='0';
-    await typeInto(q,'vidéo UGC face caméra',w,30);
+    var sst=$('#sstat');cards.forEach(function(a){a.classList.remove('win','lose','sel','pop');a.style.opacity='0'});toast.classList.remove('on');wc.textContent='0';sst.className='chip';sst.textContent='Recherche…';
+    await typeInto(q,'vidéo UGC face caméra',w,30);sst.className='chip pri';sst.textContent='Analyse de 1 284 pubs actives…';
     for(var i=0;i<cards.length;i++){if(cards[i].offsetParent===null)continue;cards[i].style.opacity='';cards[i].classList.add('pop');await w(70)}
     await w(300);
     var wrap=lib.parentNode,gw=wrap.offsetWidth;scan.style.opacity='1';
     for(var x=0;x<=30;x++){scan.style.left=(x/30*gw)+'px';await w(25)}
     scan.style.opacity='0';
     var n=0;for(var j=0;j<cards.length;j++){if(cards[j].dataset.win){cards[j].classList.add('win');n++;wc.textContent=n;await w(260)}else cards[j].classList.add('lose')}
+    sst.className='chip ok';sst.textContent='● '+n+' gagnantes trouvées';
     var picks=[1,5,0];
     for(var k=0;k<picks.length;k++){
       var card=cards[picks[k]];if(!card||card.offsetParent===null)continue;
