@@ -1735,14 +1735,25 @@ footer a:hover{color:var(--fg)}
      (iOS needs the property, not just the attribute), only on-screen videos play, and any play() the
      browser refused (Low Power Mode, data saver) is retried on the first touch or scroll. */
   var onScreen=new Set(),refused=new Set();
-  function prime(v){v.muted=true;v.defaultMuted=true;v.playsInline=true;v.setAttribute('muted','');v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');v.loop=true}
+  function prime(v){v.addEventListener('error',function(){if(v.dataset.src&&String(v.src).indexOf('blob:')===0){blobs.delete(v.dataset.src);v.src=v.dataset.src;tryPlay(v)}});v.muted=true;v.defaultMuted=true;v.playsInline=true;v.setAttribute('muted','');v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');v.loop=true}
   function tryPlay(v){var p=v.play();if(p&&p.catch)p.then(function(){refused.delete(v)}).catch(function(){refused.add(v)})}
   function retry(){onScreen.forEach(function(v){if(v.paused)tryPlay(v)})}
   ['touchstart','pointerdown','scroll','keydown'].forEach(function(ev){addEventListener(ev,function(){if(refused.size||onScreen.size)retry()},{passive:true})});
   document.addEventListener('visibilitychange',function(){if(!document.hidden)retry()});
+  /* Load each clip as a blob first: iOS Safari only plays MP4 from servers that answer byte-range
+     requests, a blob URL sidesteps that. Falls back to the direct URL if fetching fails. */
+  var blobs=new Map(),pending=new Map();
+  function setSrc(v,u){if(!onScreen.has(v))return;v.src=u;tryPlay(v)}
+  function loadSrc(v){
+    var url=v.dataset.src;
+    if(blobs.has(url))return setSrc(v,blobs.get(url));
+    if(!window.fetch||!window.URL||!URL.createObjectURL)return setSrc(v,url);
+    if(!pending.has(url))pending.set(url,fetch(url).then(function(r){if(!r.ok)throw 0;return r.blob()}).then(function(b){var u=URL.createObjectURL(new Blob([b],{type:'video/mp4'}));blobs.set(url,u);return u}).catch(function(){return url}));
+    pending.get(url).then(function(u){setSrc(v,u)});
+  }
   var seen=new WeakSet(),vo=null;
   if('IntersectionObserver' in window){
-    vo=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){onScreen.add(v);if(v.dataset.src&&!v.getAttribute('src'))v.src=v.dataset.src;tryPlay(v)}else{onScreen.delete(v);v.pause();if(v.dataset.src&&v.getAttribute('src')){v.removeAttribute('src');v.load()}}})},{rootMargin:'100px'});
+    vo=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){onScreen.add(v);if(v.dataset.src&&!v.getAttribute('src'))loadSrc(v);else tryPlay(v)}else{onScreen.delete(v);v.pause();if(v.dataset.src&&v.getAttribute('src')){v.removeAttribute('src');v.load()}}})},{rootMargin:'100px'});
   }
   function watch(){$$('video').forEach(function(v){if(seen.has(v))return;seen.add(v);prime(v);if(vo)vo.observe(v);else tryPlay(v)})}
   watch();new MutationObserver(watch).observe(document.body,{childList:true,subtree:true});
