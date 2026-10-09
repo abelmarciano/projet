@@ -871,9 +871,9 @@ label.gx-acc{cursor:pointer}
 a.gx-credits{display:block;color:inherit}
 a.gx-credits:hover{border-color:var(--gx-line-2)}
 /* Accueil branché sur les vraies données */
-.gx-ph{width:36px;height:48px;border-radius:7px;overflow:hidden;flex:none;display:block;background:var(--gx-sunk)}
-.gx-ph img,.gx-ph canvas,.gx-ph video{width:100%;height:100%;object-fit:cover;display:block;border-radius:0}
-.gx-run .gx-th .gx-ph{width:100%;height:100%;border-radius:0}
+.gx-tn{width:36px;height:48px;border-radius:7px;overflow:hidden;flex:none;display:block;background:var(--gx-sunk)}
+.gx-tn img,.gx-tn canvas,.gx-tn video{width:100%;height:100%;object-fit:cover;display:block;border-radius:0}
+.gx-run .gx-th .gx-tn{width:100%;height:100%;border-radius:0}
 a.gx-run{color:inherit}
 a.gx-run:hover,a.gx-lead:hover{background:var(--gx-raised)}
 a.gx-lead{color:inherit;border-radius:8px}
@@ -910,3 +910,28 @@ a.gx-lead{color:inherit;border-radius:8px}
 .gx-ins-d .gx-src:hover{color:var(--gx-fg)}
 /* Pagination sous la grille. */
 .gx-ins-more{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:16px;font-size:12.5px;color:var(--gx-dim)}
+
+/* page:resultats */
+/* ---------- Résultats (mini CRM) ---------- */
+
+/* Séparateurs de période dans le tableau des leads (Aujourd'hui, Hier…) */
+.gx-leadt tr.gx-gr td{padding:7px 16px;font-size:11.5px;font-weight:600;color:var(--gx-dim);text-transform:uppercase;letter-spacing:.06em;background:var(--gx-raised)}
+.gx-leadt .gx-who .gx-st{margin-top:3px}
+
+/* Filtres avancés (derrière le bouton discret de la ligne de filtres) */
+.gx-ld-more{padding-top:2px}
+.gx-ld-date{min-width:0;width:auto;min-height:36px;height:36px;padding:0 10px;font-size:13px}
+.gx-ld-more-rows{justify-content:center}
+
+/* Fiche lead : identifiants Meta sous la valeur, aperçu de la publicité */
+.gx-ls-b .gx-recap dd{min-width:0;overflow-wrap:anywhere}
+.gx-ls-b .gx-recap dd small{display:block;font-size:11.5px}
+.gx-ls-ad{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border:1px solid var(--gx-line);border-radius:10px;background:var(--gx-raised);font-size:13px}
+.gx-ls-ad small{color:var(--gx-muted)}
+.gx-ls-ad a{display:inline-flex;align-items:center;gap:4px;color:var(--gx-accent-ink);font-weight:600}
+.gx-ls-ad .gx-i{width:13px;height:13px}
+.gx-ls-media{width:100%;max-height:224px;object-fit:contain;border-radius:10px;background:var(--gx-sunk)}
+
+/* Sheet « Statuts des leads » : ajout d'un statut personnalisé */
+.gx-ls-b .gx-ld-newst input.gx-in{flex:1;width:auto;min-width:0}
+.gx-ld-color{width:44px;height:38px;padding:3px;border:1px solid var(--gx-line);border-radius:10px;background:var(--gx-raised);cursor:pointer;flex:none}

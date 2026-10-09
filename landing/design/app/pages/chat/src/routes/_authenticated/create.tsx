@@ -3881,6 +3881,13 @@ function ChatArea({
 
 
   const [historyOpen, setHistoryOpen] = useState(false);
+  // Sélecteur « Mode IA (interne) » : retiré du fil. Le composant reste monté
+  // (il synchronise le mode et force « Actuel » pour les clients) ; l'équipe
+  // interne peut encore l'afficher via un petit bouton discret.
+  const aiModeAccessFn = useServerFn(getAiModeAccess);
+  const aiModeAccess = useQuery({ queryKey: ["ai-mode-access"], queryFn: () => aiModeAccessFn(), staleTime: 300_000 });
+  const aiModeInternal = (aiModeAccess.data as { internal?: boolean } | undefined)?.internal === true;
+  const [aiModeOpen, setAiModeOpen] = useState(false);
   // Ancrage de repli : une pub sans ancre valide (génération échouée, ancre
   // supprimée…) est épinglée au dernier message présent la première fois
   // qu'on l'affiche, afin que les messages suivants passent EN DESSOUS d'elle.
@@ -3891,9 +3898,9 @@ function ChatArea({
 
   return (
     <CompetitorRefsContext.Provider value={competitorRefsApi}>
-    <div className="flex h-full min-h-0 w-full">
+    <div className="flex min-h-0 w-full flex-1">
       <div
-        className="relative flex h-full min-w-0 flex-1 flex-col"
+        className="gx-thread relative min-w-0 flex-1"
         onDragOver={(e) => {
           if (!e.dataTransfer.types.includes("Files")) return;
           e.preventDefault();
@@ -3910,36 +3917,32 @@ function ChatArea({
           void handleDropFiles(e.dataTransfer.files);
         }}
       >
-      {/* Header */}
-      <div className="flex items-center justify-between border-b border-border/60 bg-background/60 px-4 py-3 backdrop-blur">
-        <div className="flex min-w-0 items-center gap-2">
-          <div className="bg-grad flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white shadow-elegant">
-            <Sparkles className="h-4 w-4" />
-          </div>
-          <div className="min-w-0">
-            <div className="truncate text-sm font-semibold">{title}</div>
-            <div className="text-[11px] text-muted-foreground">
-              Assistant IA - répond en langage naturel
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center gap-1">
-          {!historyOpen && (
-            <button
-              type="button"
-              onClick={() => setHistoryOpen((v) => !v)}
-              className="inline-flex h-9 items-center gap-2 rounded-xl border border-border bg-muted/60 px-3 text-xs font-semibold text-foreground shadow-sm transition hover:border-primary/60 hover:bg-primary/10 hover:text-primary hover:shadow-md"
-              title="Afficher l'historique du chat"
-              aria-label="Afficher l'historique du chat"
-            >
-              <History className="h-4 w-4" />
-              <span className="hidden sm:inline">Messages &amp; créations</span>
-            </button>
-          )}
-        </div>
-
+      {/* Outils discrets du fil (hors maquette) : historique du chat, mode IA interne */}
+      <div className="gx-th-tools">
+        {aiModeInternal && (
+          <button
+            type="button"
+            className={`gx-ib gx-sm${aiModeOpen ? " gx-on" : ""}`}
+            onClick={() => setAiModeOpen((v) => !v)}
+            aria-pressed={aiModeOpen}
+            aria-label="Mode IA (interne)"
+            title="Mode IA (interne, réservé à l'équipe)"
+          >
+            <Box className="gx-i" />
+          </button>
+        )}
+        {!historyOpen && (
+          <button
+            type="button"
+            onClick={() => setHistoryOpen((v) => !v)}
+            className="gx-ib gx-sm gx-th-hist"
+            title="Afficher l'historique du chat (messages & créations)"
+            aria-label="Afficher l'historique du chat"
+          >
+            <History className="gx-i" />
+          </button>
+        )}
       </div>
-
 
       {/* Infos brief et médias générés sont désormais dans le panneau Historique à droite */}
 
@@ -3947,14 +3950,13 @@ function ChatArea({
       {/* Messages */}
       <div
         ref={scrollRef}
-        className="relative flex-1 overflow-y-auto"
+        className="gx-th-in relative"
+        id="thread"
       >
         {isEmptyChat ? (
-          <div className="flex min-h-full items-center justify-center">
-            <EmptyChatHero onSuggestion={(t) => inputRef.current?.setValue(t)} />
-          </div>
+          <EmptyChatHero onSuggestion={(t) => inputRef.current?.setValue(t)} />
         ) : null}
-        <div className={`mx-auto max-w-3xl space-y-5 px-4 py-6 ${isEmptyChat ? "hidden" : ""}`}>
+        <div className={isEmptyChat ? "hidden" : "contents"}>
           {(() => {
             const messageIds = new Set(messages.map((m) => m.id));
             const adsByAnchor = new Map<string, GeneratedAd[]>();
@@ -4030,7 +4032,7 @@ function ChatArea({
                     lastSuggestionIdx !== -1 &&
                     messageIndex < lastSuggestionIdx;
                   return (
-                  <div key={`${m.id}-${messageIndex}`} id={`msg-${m.id}`} className="space-y-5 scroll-mt-24">
+                  <div key={`${m.id}-${messageIndex}`} id={`msg-${m.id}`} className="gx-m-w scroll-mt-24">
 
                     <MessageBubble
                       message={m}
@@ -4042,89 +4044,99 @@ function ChatArea({
                       pageLogos={metaPageLogos}
                     />
 
-                    <AgentToolBlocks message={m} onSuggestion={handleSuggestion} onEditCreation={handleEditCreation} onAdCreated={upsertGeneratedAdLocal} briefSuperseded={messageIndex < lastUserIdx} conversationId={conversationId} />
+                    <div className="gx-m-x">
+                      <AgentToolBlocks message={m} onSuggestion={handleSuggestion} onEditCreation={handleEditCreation} onAdCreated={upsertGeneratedAdLocal} briefSuperseded={messageIndex < lastUserIdx} conversationId={conversationId} />
+                    </div>
 
-
-
-                    {(adsByAnchor.get(m.id) ?? []).map((ad, adIndex) => (
-                      <GeneratedAdCard key={`${m.id}-ad-${ad.id}-${adIndex}`} ad={ad} onSubtitleBurnStart={markAdReburnStart} onReply={() => handleReplyToAd(ad)} onSuggest={handleSuggestion} conversationId={conversationId} onAdCreated={upsertGeneratedAdLocal} />
-                    ))}
+                    {(adsByAnchor.get(m.id) ?? []).length > 0 && (
+                      <div className="gx-m-x">
+                        {(adsByAnchor.get(m.id) ?? []).map((ad, adIndex) => (
+                          <GeneratedAdCard key={`${m.id}-ad-${ad.id}-${adIndex}`} ad={ad} onSubtitleBurnStart={markAdReburnStart} onReply={() => handleReplyToAd(ad)} onSuggest={handleSuggestion} conversationId={conversationId} onAdCreated={upsertGeneratedAdLocal} />
+                        ))}
+                      </div>
+                    )}
                   </div>
                   );
                 })}
 
-                {orphanAds.map((ad, adIndex) => (
-                  <GeneratedAdCard key={`orphan-ad-${ad.id}-${adIndex}`} ad={ad} onSubtitleBurnStart={markAdReburnStart} onReply={() => handleReplyToAd(ad)} onSuggest={handleSuggestion} conversationId={conversationId} onAdCreated={upsertGeneratedAdLocal} />
-                ))}
+                {orphanAds.length > 0 && (
+                  <div className="gx-m-x">
+                    {orphanAds.map((ad, adIndex) => (
+                      <GeneratedAdCard key={`orphan-ad-${ad.id}-${adIndex}`} ad={ad} onSubtitleBurnStart={markAdReburnStart} onReply={() => handleReplyToAd(ad)} onSuggest={handleSuggestion} conversationId={conversationId} onAdCreated={upsertGeneratedAdLocal} />
+                    ))}
+                  </div>
+                )}
               </>
             );
           })()}
 
           {isLoading && messages[messages.length - 1]?.role === "user" && (
-            <div className="flex items-center gap-3 pl-11 animate-fade-in">
-              <div className="bg-grad flex h-7 w-7 items-center justify-center rounded-full text-white shadow-elegant">
-                <Sparkles className="h-3.5 w-3.5 animate-pulse" />
+            <div className="gx-m gx-ai animate-fade-in">
+              <span className="gx-av gx-ai animate-pulse" aria-hidden>G</span>
+              <div className="gx-mb">
+                <p className="gx-typing">
+                  <span className="gx-dots" aria-hidden><i /><i /><i /></span>
+                  l'assistant écrit…
+                </p>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-primary/70 animate-bounce [animation-delay:-0.3s]" />
-                <span className="h-2 w-2 rounded-full bg-primary/70 animate-bounce [animation-delay:-0.15s]" />
-                <span className="h-2 w-2 rounded-full bg-primary/70 animate-bounce" />
-              </div>
-              <span className="text-xs italic text-muted-foreground">l'assistant écrit…</span>
             </div>
           )}
 
           {error && (
-            <div className="flex flex-wrap items-center gap-3 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
-              <span>{toUserMessage(error, "Une erreur est survenue. Réessaie dans quelques instants.")}</span>
-              {isAuthError(error) && (
-                <Button size="sm" variant="outline" onClick={() => navigate({ to: "/auth" })}>
-                  Se reconnecter
-                </Button>
-              )}
+            <div className="gx-m-x">
+              <div className="gx-kard gx-err" role="alert">
+                <p>{toUserMessage(error, "Une erreur est survenue. Réessaie dans quelques instants.")}</p>
+                {isAuthError(error) && (
+                  <div className="gx-kf">
+                    <button type="button" className="gx-btn gx-sm" onClick={() => navigate({ to: "/auth" })}>
+                      Se reconnecter
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           )}
           {(promptPreview?.mediaType === "video" || (readyBrief && canPreparePrompt && String(state.mediaType ?? readyBrief?.mediaType ?? "") === "video")) &&
             typeof state.stockActorName === "string" && state.stockActorName && stockActorImageUrls[0] && (
-            <div className="flex items-center gap-3 rounded-2xl border border-border bg-card p-3 shadow-sm animate-fade-in">
-              <img src={stockActorImageUrls[0]} alt={state.stockActorName} className="h-12 w-12 shrink-0 rounded-full border border-border object-cover" />
-              <div className="min-w-0 flex-1">
-                <div className="text-xs text-muted-foreground">Acteur retenu</div>
-                <div className="truncate text-sm font-semibold">{state.stockActorName}</div>
+            <div className="gx-m-x">
+              <div className="gx-kard gx-actor animate-fade-in">
+                <img src={stockActorImageUrls[0]} alt={state.stockActorName} />
+                <div className="min-w-0 flex-1">
+                  <small>Acteur retenu</small>
+                  <b>{state.stockActorName}</b>
+                </div>
+                <button type="button" className="gx-btn gx-sm" onClick={() => handleOpenStockActorsRef.current()}>
+                  Changer
+                </button>
               </div>
-              <Button size="sm" variant="outline" onClick={() => handleOpenStockActorsRef.current()}>
-                Changer
-              </Button>
             </div>
           )}
           {readyBrief && readyBrief.sameAsLastPrompt !== true && canPreparePrompt && !promptPreview && !chainActive && !generating && (
-            <div className="rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-5 shadow-elegant animate-fade-in">
-              <div className="flex items-center gap-2 text-sm font-semibold">
-                <Wand2 className="h-4 w-4 text-primary" /> Brief prêt
+            <div className="gx-m-x">
+            <div className="gx-kard gx-prompt animate-fade-in">
+              <div className="gx-kh">
+                <b>Brief prêt</b>
+                <small>
+                  {briefPreparing
+                    ? "Je rédige le prompt final, il s'affiche ici dans un instant…"
+                    : "Clique pour rédiger le prompt final à partir de ce brief."}
+                </small>
               </div>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {briefPreparing
-                  ? "Je rédige le prompt final, il s'affiche ici dans un instant…"
-                  : "Clique pour rédiger le prompt final à partir de ce brief."}
-              </p>
               {briefPreparing ? (
-                <div className="mt-4 space-y-2">
-                  <div className="h-3 w-3/4 animate-pulse rounded-full bg-primary/20" />
-                  <div className="h-3 w-full animate-pulse rounded-full bg-primary/15" />
-                  <div className="h-3 w-2/3 animate-pulse rounded-full bg-primary/10" />
+                <div className="gx-pp gx-pp-load" aria-busy="true">
+                  <i /><i /><i />
                 </div>
               ) : null}
               {briefPreparing && promptSlow ? (
-                <div className="mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-border bg-muted/50 p-3 text-xs">
-                  <span className="flex-1 text-muted-foreground">
-                    La rédaction continue, elle peut prendre jusqu'à 3 minutes. Rien n'est facturé tant que le prompt n'est pas livré.
-                  </span>
-                </div>
+                <p className="gx-note">
+                  La rédaction continue, elle peut prendre jusqu'à 3 minutes. Rien n'est facturé tant que le prompt n'est pas livré.
+                </p>
               ) : null}
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="gx-kf">
                 {!briefPreparing && (
-                  <Button
-                    className="bg-grad rounded-full text-white shadow-elegant hover:opacity-90"
+                  <button
+                    type="button"
+                    className="gx-btn gx-sm gx-pri"
                     onClick={() => {
                       const key = readyBriefInfo?.messageId ?? null;
                       autoPreparedRef.current = key;
@@ -4135,15 +4147,17 @@ function ChatArea({
                     disabled={generating}
                   >
                     Rédiger le prompt
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
+                    <ArrowRight className="gx-i" />
+                  </button>
                 )}
               </div>
 
             </div>
+            </div>
           )}
 
           {promptPreview && (
+            <div className="gx-m-x">
             <PromptPreviewCard
               preview={promptPreview}
               editable={editablePrompt}
@@ -4171,7 +4185,9 @@ function ChatArea({
                   : IMAGE_CREDITS * Math.max(1, promptPreview.mediaType === "carousel" ? promptPreview.prompts.length : 1)
               }
             />
+            </div>
           )}
+          <div className="gx-m-x">
           <VideoChainProgress
             conversationId={conversationId}
             version={chainVersion}
@@ -4207,12 +4223,13 @@ function ChatArea({
               if (conversationId) void appendGeneratedAdFn({ data: { conversationId, ad } }).catch(() => {});
             }}
           />
+          </div>
         </div>
 
       </div>
 
-      {/* Composer - pilule fluide, bouton d'envoi intégré */}
-      <div className="relative bg-transparent px-4 pb-5 pt-3">
+      {/* Saisie : raccourcis, pièces jointes en attente, composeur */}
+      <div className="gx-cmp-w">
         {/* Scroll to bottom */}
         {showScrollToBottom && (
           <button
@@ -4222,23 +4239,36 @@ function ChatArea({
               setShowScrollToBottom(false);
               scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
             }}
-            className="absolute -top-6 left-1/2 z-20 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border border-border/70 bg-background text-foreground shadow-lg transition hover:bg-muted"
+            className="gx-ib gx-th-down"
             aria-label="Descendre en bas du chat"
             title="Descendre en bas"
           >
-            <ChevronDown className="h-4 w-4" />
+            <ChevronDown className="gx-i" />
           </button>
         )}
-        <div className="mx-auto max-w-3xl">
+        <div className="gx-sugg" aria-label="Raccourcis">
+          {QUICK_ACTIONS.map((a) => (
+            <button
+              key={a.id}
+              type="button"
+              className="gx-chip"
+              title={a.hint}
+              onClick={() => inputRef.current?.setValue(a.prompt)}
+            >
+              {a.label}
+            </button>
+          ))}
+        </div>
+        <div className="gx-att-w">
           {/* Miniatures des images en attente d'envoi (disparaissent une fois le message envoyé) */}
           {pendingImages.length > 0 && (
-            <div className="mb-2 flex flex-wrap gap-2">
+            <div className="gx-att">
               {pendingImages.map((src, i) => (
                 <div
                   key={`pending-${i}-${src.slice(0, 20)}`}
-                  className="group relative h-16 w-16 overflow-hidden rounded-xl border border-border/70 bg-muted"
+                  className="gx-att-img group"
                 >
-                  <img src={src} alt={`produit ${i + 1}`} className="h-full w-full object-cover" />
+                  <img src={src} alt={`produit ${i + 1}`} />
                   <button
                     type="button"
                     onClick={() => {
@@ -4246,10 +4276,10 @@ function ChatArea({
                       if (idx >= 0) removeProductImage(idx);
                       else setPendingImages((prev) => prev.filter((u) => u !== src));
                     }}
-                    className="absolute right-0.5 top-0.5 rounded-full bg-black/60 p-0.5 text-white opacity-0 transition group-hover:opacity-100"
+                    className="gx-att-x"
                     aria-label="Retirer l'image"
                   >
-                    <X className="h-3 w-3" />
+                    <X className="gx-i" />
                   </button>
                 </div>
               ))}
@@ -4257,23 +4287,23 @@ function ChatArea({
           )}
 
           {pendingVideos.length > 0 && (
-            <div className="mb-2 flex flex-wrap gap-2">
+            <div className="gx-att">
               {pendingVideos.map((v) => (
                 <div
                   key={`pending-video-${v.url}`}
-                  className="group relative flex items-center gap-2 rounded-xl border border-primary/30 bg-primary/5 py-1.5 pl-1.5 pr-2 text-xs"
+                  className="gx-att-i"
                 >
-                  <div className="h-10 w-10 overflow-hidden rounded-lg bg-black">
-                    <video src={v.url} className="h-full w-full object-cover" muted playsInline preload="metadata" />
+                  <div className="gx-att-th">
+                    <video src={v.url} muted playsInline preload="metadata" />
                   </div>
-                  <div className="max-w-44 truncate text-foreground/80">{v.name}</div>
+                  <div className="gx-att-n">{v.name}</div>
                   <button
                     type="button"
                     onClick={() => setPendingVideos((prev) => prev.filter((x) => x.url !== v.url))}
-                    className="ml-1 shrink-0 rounded-md p-1 text-muted-foreground hover:bg-background hover:text-foreground"
+                    className="gx-att-rm"
                     aria-label="Retirer la vidéo"
                   >
-                    <X className="h-3.5 w-3.5" />
+                    <X className="gx-i" />
                   </button>
                 </div>
               ))}
@@ -4281,27 +4311,27 @@ function ChatArea({
           )}
 
           {pendingAudios.length > 0 && (
-            <div className="mb-2 flex flex-wrap gap-2">
+            <div className="gx-att">
               {pendingAudios.map((a) => (
                 <div
                   key={`pending-audio-${a.url}`}
-                  className="group relative flex items-center gap-2 rounded-xl border border-primary/30 bg-primary/5 py-1.5 pl-2 pr-2 text-xs"
+                  className="gx-att-i"
                 >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                    <AudioWaveform className="h-4 w-4" />
+                  <div className="gx-att-th gx-att-ic">
+                    <AudioWaveform className="gx-i" />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-primary">Audio</div>
-                    <div className="max-w-44 truncate text-foreground/80">{a.name}</div>
-                    <audio src={a.url} controls preload="metadata" className="mt-1 h-7 w-52 max-w-full" />
+                    <div className="gx-att-k">Audio</div>
+                    <div className="gx-att-n">{a.name}</div>
+                    <audio src={a.url} controls preload="metadata" className="gx-att-au" />
                   </div>
                   <button
                     type="button"
                     onClick={() => setPendingAudios((prev) => prev.filter((x) => x.url !== a.url))}
-                    className="ml-1 shrink-0 rounded-md p-1 text-muted-foreground hover:bg-background hover:text-foreground"
+                    className="gx-att-rm"
                     aria-label="Retirer l'audio"
                   >
-                    <X className="h-3.5 w-3.5" />
+                    <X className="gx-i" />
                   </button>
                 </div>
               ))}
@@ -4309,8 +4339,8 @@ function ChatArea({
           )}
 
           {competitorRefs.length > 0 && (
-            <div className="mb-2 flex flex-wrap items-center gap-2" aria-label="Annonces de référence">
-              <span className="text-[11px] font-medium text-muted-foreground">
+            <div className="gx-att" aria-label="Annonces de référence">
+              <span className="gx-att-k">
                 {competitorRefs.length} référence{competitorRefs.length > 1 ? "s" : ""}
               </span>
               {competitorRefs.map((r) => (
@@ -4332,30 +4362,30 @@ function ChatArea({
 
 
           {pendingActors.length > 0 && (
-            <div className="mb-2 flex flex-wrap gap-2">
+            <div className="gx-att">
               {pendingActors.map((a) => (
                 <div
                   key={`pending-actor-${a.url}`}
-                  className="group relative flex items-center gap-2 rounded-xl border border-primary/30 bg-primary/5 py-1.5 pl-1.5 pr-2 text-xs"
+                  className="gx-att-i"
                 >
-                  <div className="h-10 w-10 overflow-hidden rounded-lg bg-muted">
+                  <div className="gx-att-th">
                     {/\.(mp4|webm|mov)(\?|$)/i.test(a.url) ? (
-                      <video src={a.url} className="h-full w-full object-cover" muted playsInline />
+                      <video src={a.url} muted playsInline />
                     ) : (
-                      <img src={a.url} alt={a.name ?? "Acteur"} className="h-full w-full object-cover" />
+                      <img src={a.url} alt={a.name ?? "Acteur"} />
                     )}
                   </div>
                   <div className="min-w-0">
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-primary">Acteur UGC</div>
-                    <div className="truncate text-foreground/80">{a.name ?? "Acteur"}</div>
+                    <div className="gx-att-k">Acteur UGC</div>
+                    <div className="gx-att-n">{a.name ?? "Acteur"}</div>
                   </div>
                   <button
                     type="button"
                     onClick={() => setPendingActors((prev) => prev.filter((x) => x.url !== a.url))}
-                    className="ml-1 shrink-0 rounded-md p-1 text-muted-foreground hover:bg-background hover:text-foreground"
+                    className="gx-att-rm"
                     aria-label="Retirer l'acteur"
                   >
-                    <X className="h-3.5 w-3.5" />
+                    <X className="gx-i" />
                   </button>
                 </div>
               ))}
@@ -4363,32 +4393,32 @@ function ChatArea({
           )}
 
           {pendingCreatives.length > 0 && (
-            <div className="mb-2 flex flex-wrap gap-2">
+            <div className="gx-att">
               {pendingCreatives.map((c) => (
                 <div
                   key={`pending-creative-${c.id}`}
-                  className="group relative flex items-center gap-2 rounded-xl border border-primary/30 bg-primary/5 py-1.5 pl-1.5 pr-2 text-xs"
+                  className="gx-att-i"
                 >
-                  <div className="h-10 w-10 overflow-hidden rounded-lg bg-muted">
+                  <div className="gx-att-th">
                     {c.contentType === "video" ? (
-                      <video src={c.thumbUrl ?? c.url} className="h-full w-full object-cover" muted playsInline />
+                      <video src={c.thumbUrl ?? c.url} muted playsInline />
                     ) : (
-                      <img src={c.thumbUrl ?? c.url} alt={c.title} className="h-full w-full object-cover" />
+                      <img src={c.thumbUrl ?? c.url} alt={c.title} />
                     )}
                   </div>
                   <div className="min-w-0">
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-primary">
+                    <div className="gx-att-k">
                       {c.contentType === "video" ? "Vidéo" : "Création"}
                     </div>
-                    <div className="max-w-40 truncate text-foreground/80">{c.title}</div>
+                    <div className="gx-att-n">{c.title}</div>
                   </div>
                   <button
                     type="button"
                     onClick={() => setPendingCreatives((prev) => prev.filter((x) => x.id !== c.id))}
-                    className="ml-1 shrink-0 rounded-md p-1 text-muted-foreground hover:bg-background hover:text-foreground"
+                    className="gx-att-rm"
                     aria-label="Retirer la création"
                   >
-                    <X className="h-3.5 w-3.5" />
+                    <X className="gx-i" />
                   </button>
                 </div>
               ))}
@@ -4396,24 +4426,25 @@ function ChatArea({
           )}
 
           {replyingTo && (
-            <div className="mb-2 flex items-center gap-2 rounded-xl border border-primary/30 bg-primary/5 px-3 py-2 text-xs">
-              <CornerUpLeft className="h-3.5 w-3.5 shrink-0 text-primary" />
+            <div className="gx-att-i gx-reply">
+              <CornerUpLeft className="gx-i" />
               <div className="min-w-0 flex-1">
-                <div className="text-[10px] font-semibold uppercase tracking-wider text-primary">
+                <div className="gx-att-k">
                   Réponse à{replyingTo.kind !== "text" ? ` ${replyingTo.kind === "video" ? "la vidéo" : replyingTo.kind === "image" ? "l'image" : "au carrousel"}` : ""}
                 </div>
-                <div className="truncate text-foreground/80">{replyingTo.snippet}</div>
+                <div className="gx-att-n">{replyingTo.snippet}</div>
               </div>
               <button
                 type="button"
                 onClick={() => setReplyingTo(null)}
-                className="shrink-0 rounded-md p-1 text-muted-foreground hover:bg-background hover:text-foreground"
+                className="gx-att-rm"
                 aria-label="Annuler la réponse"
               >
-                <X className="h-3.5 w-3.5" />
+                <X className="gx-i" />
               </button>
             </div>
           )}
+        </div>
 
           <input
             ref={fileInputRef}
@@ -4433,8 +4464,12 @@ function ChatArea({
               e.target.value = "";
             }}
           />
-          <AiModeSwitch conversationId={conversationId} />
+          {/* Mode IA (interne) : monté pour ses effets, affiché seulement à la demande de l'équipe interne */}
+          <div className="gx-aim" hidden={!(aiModeInternal && aiModeOpen)}>
+            <AiModeSwitch conversationId={conversationId} />
+          </div>
           <ChatComposer
+            ref={inputRef}          <ChatComposer
             ref={inputRef}
             disabled={isLoading}
             isStreaming={isLoading}
@@ -4517,15 +4552,14 @@ function ChatArea({
             }}
           />
 
-        </div>
       </div>
 
       {/* Overlay drag & drop : couvre tout le chat, composer inclus */}
       {isDraggingOver && (
-        <div className="pointer-events-none absolute inset-0 z-30 m-4 flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-primary/60 bg-primary/10 backdrop-blur-sm">
-          <ImageIcon className="mb-3 h-12 w-12 text-primary" />
-          <p className="text-lg font-semibold text-primary">Dépose tes fichiers ici</p>
-          <p className="text-sm text-muted-foreground">JPG, PNG, WebP - max 12 Mo par fichier</p>
+        <div className="gx-drop">
+          <ImageIcon className="gx-i" />
+          <b>Dépose tes fichiers ici</b>
+          <small>JPG, PNG, WebP - max 12 Mo par fichier</small>
         </div>
       )}
       </div>
@@ -4958,114 +4992,123 @@ function PromptPreviewCard({
 }) {
   const kindLabel =
     preview.mediaType === "video" ? "Vidéo" : preview.mediaType === "carousel" ? "Carrousel" : "Image";
+  const STYLE_LABELS: Record<string, string> = { ugc: "UGC face caméra", cinematic: "Cinématique", motion_design: "Motion design", image_animation: "Animation d'image" };
+  const quality = preview.videoQuality ?? "standard";
+  const fmtCredits = (n: number) => n.toLocaleString("fr-FR");
+  const meta = [
+    preview.aspectRatio ? `Format ${preview.aspectRatio}` : null,
+    preview.mediaType === "video" && preview.recommendedDuration ? `${preview.recommendedDuration} s` : null,
+  ].filter(Boolean).join(" · ");
   return (
-    <div className="rounded-2xl border border-primary/40 bg-gradient-to-br from-primary/5 via-background to-background p-5 shadow-elegant">
-      <div className="mb-3 flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2 text-sm font-semibold">
-          <Pencil className="h-4 w-4 text-primary" />
-          Aperçu du prompt - {kindLabel}
-        </div>
-        <div className="flex flex-wrap items-center gap-1.5 text-[10px] text-muted-foreground">
-          {preview.recommendedStyle && (
-            <span className="rounded-full bg-muted px-2 py-0.5">
-              Style : {({ ugc: "UGC face caméra", cinematic: "Cinématique", motion_design: "Motion design", image_animation: "Animation d'image" } as Record<string, string>)[preview.recommendedStyle] ?? preview.recommendedStyle}
-            </span>
-          )}
-          {preview.aspectRatio && (
-            <span className="rounded-full bg-muted px-2 py-0.5">Format : {preview.aspectRatio}</span>
-          )}
-          {preview.mediaType === "video" && preview.recommendedDuration && (
-            <span className="rounded-full bg-muted px-2 py-0.5">Durée : {preview.recommendedDuration}s</span>
-          )}
-        </div>
+    <div className="gx-kard gx-prompt">
+      <div className="gx-kh">
+        <b>Aperçu du prompt · {kindLabel}</b>
+        {meta ? <span className="gx-kh-m">{meta}</span> : null}
+        <small>Tu vois exactement ce qui sera généré avant de dépenser des crédits.</small>
       </div>
-      <p className="mb-2 text-xs text-muted-foreground">
-        Relis (et modifie si tu veux) le prompt ci-dessous. Sans modification, la génération utilise le prompt technique complet. <strong>« Valider mes corrections »</strong> utilise tes modifications <em>mot pour mot</em>. <strong>« Reformuler avec l'IA »</strong> réécrit le prompt à partir du brief.
-      </p>
-      {preview.mediaType === "video" && (
-        <div className="mb-3 grid gap-2 sm:grid-cols-2" role="radiogroup" aria-label="Qualité et prix de la vidéo">
-          <Button type="button" disabled={generating} variant={(preview.videoQuality ?? "standard") === "standard" ? "default" : "outline"} onClick={() => onQualityChange("standard")} className="h-auto justify-between rounded-lg px-3 py-2" role="radio" aria-checked={(preview.videoQuality ?? "standard") === "standard"}>
-            <span>Standard</span><CreditCost credits={300} />
-          </Button>
-          <Button type="button" disabled={generating} variant={preview.videoQuality === "premium" ? "default" : "outline"} onClick={() => onQualityChange("premium")} className="h-auto justify-between rounded-lg px-3 py-2" role="radio" aria-checked={preview.videoQuality === "premium"}>
-            <span>Cinématique premium</span><CreditCost credits={1334} />
-          </Button>
+      {preview.mediaType === "video" ? (
+        <div className="gx-pills" aria-label="Type de vidéo choisi à partir du brief">
+          {Object.entries(STYLE_LABELS).map(([key, label]) => (
+            <span
+              key={key}
+              className={preview.recommendedStyle === key ? "gx-on" : undefined}
+              aria-current={preview.recommendedStyle === key ? "true" : undefined}
+              title={preview.recommendedStyle === key ? "Type retenu à partir du brief" : "Pour changer de type, demande-le dans le chat"}
+            >
+              {label}
+            </span>
+          ))}
         </div>
-      )}
+      ) : preview.recommendedStyle ? (
+        <div className="gx-pills">
+          <span className="gx-on">{STYLE_LABELS[preview.recommendedStyle] ?? preview.recommendedStyle}</span>
+        </div>
+      ) : null}
       {generating && (
-        <div className="mb-3 flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/5 px-3 py-2 text-xs font-medium text-primary">
-          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+        <p className="gx-note gx-note-on">
+          <Loader2 className="gx-i animate-spin" />
           Génération en cours — ce prompt est verrouillé jusqu'à la fin.
-        </div>
+        </p>
       )}
-      <Textarea
+      <textarea
         value={editable}
         onChange={(e) => onChangeEditable(e.target.value)}
         disabled={generating}
-        className="min-h-[180px] resize-y rounded-xl border-border/70 bg-background text-sm leading-relaxed"
+        className="gx-pp"
+        aria-label="Prompt modifiable"
+        spellCheck={false}
         placeholder="Le prompt IA apparaît ici…"
       />
+      {preview.mediaType === "video" && (
+        <div className="gx-eng" role="radiogroup" aria-label="Qualité et prix de la vidéo">
+          <button type="button" disabled={generating} onClick={() => onQualityChange("standard")} role="radio" aria-checked={quality === "standard"} aria-pressed={quality === "standard"}>
+            <b>Standard</b>
+            <small>⚡{fmtCredits(300)}{preview.recommendedDuration ? ` · ${preview.recommendedDuration} s` : ""}</small>
+          </button>
+          <button type="button" disabled={generating} onClick={() => onQualityChange("premium")} role="radio" aria-checked={quality === "premium"} aria-pressed={quality === "premium"}>
+            <b>Cinématique premium</b>
+            <small>⚡{fmtCredits(1334)}</small>
+          </button>
+        </div>
+      )}
       {(() => {
         const hasEdits = editable.trim() !== (preview.userLanguagePrompt ?? "").trim();
         return (
           <>
             {hasEdits && (
-              <p className="mt-2 text-[11px] text-primary">
+              <p className="gx-note gx-note-on">
                 ✎ Tu as modifié le prompt - clique sur « Valider mes corrections » pour l'utiliser tel quel.
               </p>
             )}
             {preview.mediaType === "carousel" && preview.prompts.length > 1 && (
-              <details className="mt-2 rounded-lg border border-border/50 bg-muted/30 p-2 text-xs">
-                <summary className="cursor-pointer font-medium text-muted-foreground">
+              <details className="gx-pp-more">
+                <summary>
                   Voir les {preview.prompts.length} prompts de slides
                 </summary>
-                <ol className="mt-2 space-y-1 pl-4">
+                <ol>
                   {preview.prompts.map((p, i) => (
-                    <li key={i} className="text-muted-foreground">
-                      <span className="font-medium text-foreground">Slide {i + 1} :</span> {p}
+                    <li key={i}>
+                      <b>Slide {i + 1} :</b> {p}
                     </li>
                   ))}
                 </ol>
               </details>
             )}
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
-              <div className="flex flex-wrap items-center gap-2">
-                <Button
-                  className="bg-grad rounded-full text-white shadow-elegant hover:opacity-90"
-                  onClick={onConfirm}
-                  disabled={generating || regenerating || !editable.trim()}
-                  title="Utilise ton texte mot pour mot, sans passer par l'IA"
-                >
-                  {generating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Check className="mr-2 h-4 w-4" />}
-                  {generating ? "Génération…" : hasEdits ? "Valider mes corrections & générer" : "Générer tel quel"}
-                  {!generating && typeof costCredits === "number" && costCredits > 0 ? (
-                    <CreditCost credits={costCredits} />
-                  ) : null}
-                </Button>
-                <Button
-                  variant="outline"
-                  className="rounded-full"
-                  onClick={() => {
-                    if (hasEdits && !window.confirm("Reformuler écrasera tes modifications. Continuer ?")) return;
-                    onRegenerate();
-                  }}
-                  disabled={generating || regenerating}
-                  title={hasEdits ? "⚠️ Écrasera tes modifications" : "Laisse l'IA réécrire le prompt à partir du brief"}
-                >
-                  {regenerating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
-                  Reformuler avec l'IA
-                  <CreditCost credits={1} className="bg-primary/10 text-primary" />
-                </Button>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
+            <div className="gx-kf">
+              <button
+                type="button"
+                className="gx-btn gx-sm gx-pri"
+                onClick={onConfirm}
+                disabled={generating || regenerating || !editable.trim()}
+                title="Utilise ton texte mot pour mot, sans passer par l'IA"
+              >
+                {generating ? <Loader2 className="gx-i animate-spin" /> : null}
+                {generating ? "Génération…" : hasEdits ? "Valider mes corrections & générer" : "Générer tel quel"}
+                {!generating && typeof costCredits === "number" && costCredits > 0 ? (
+                  <span aria-label={`${costCredits} crédit${costCredits > 1 ? "s" : ""}`}>· ⚡{fmtCredits(costCredits)}</span>
+                ) : null}
+              </button>
+              <button
+                type="button"
+                className="gx-btn gx-sm"
+                onClick={() => {
+                  if (hasEdits && !window.confirm("Reformuler écrasera tes modifications. Continuer ?")) return;
+                  onRegenerate();
+                }}
+                disabled={generating || regenerating}
+                title={hasEdits ? "⚠️ Écrasera tes modifications" : "Laisse l'IA réécrire le prompt à partir du brief"}
+              >
+                {regenerating ? <Loader2 className="gx-i animate-spin" /> : null}
+                Reformuler avec l'IA · ⚡1
+              </button>
+              <button
+                type="button"
+                className="gx-btn gx-sm gx-ghost"
                 onClick={onCancel}
                 disabled={generating}
-                className="text-muted-foreground hover:text-foreground"
               >
                 Annuler
-              </Button>
+              </button>
             </div>
           </>
         );

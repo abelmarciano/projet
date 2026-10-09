@@ -1,0 +1,83 @@
+/* ===== Mes créations (pages/creations) ===== */
+
+/* Correction nécessaire : la règle « Accueil branché » `.gx-ph{width:36px;height:48px…}`
+   (vignette) écrase l'en-tête de page `.gx-ph`. On rétablit l'en-tête quand il est
+   l'enfant direct d'une page. */
+.gx-page>.gx-ph{width:auto;height:auto;overflow:visible;border-radius:0;background:none;display:flex;flex:initial}
+
+/* Correction nécessaire : `.gx-ccard.gx-sel` (carte cochée) hérite aussi des styles
+   du sélecteur `.gx-sel` (hauteur 36px, padding, rayon…). On les neutralise. */
+.gx-ccard.gx-sel{display:block;height:auto;padding:0;gap:0;border-radius:var(--gx-r);background:var(--gx-surface);color:inherit;font-size:inherit;white-space:normal}
+.gx-ccard.gx-sel:hover{border-color:var(--gx-accent)}
+
+/* Carte : zone média 4:5 (image, ou 1re image de la vidéo par-dessus une image de secours) */
+.gx-ccard{cursor:pointer}
+.gx-ccard:hover{border-color:var(--gx-line-2)}
+.gx-ccard:focus-visible{outline:2px solid var(--gx-accent);outline-offset:2px}
+.gx-ccard .gx-cm{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:var(--gx-sunk)}
+.gx-ccard .gx-cm>img,.gx-ccard .gx-cm>video,.gx-ccard .gx-cm>div{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:50% 25%;background:transparent}
+.gx-ccard .gx-ck,.gx-ccard .gx-ty{z-index:3}
+.gx-ccard small{font-size:12px;color:var(--gx-muted)}
+.gx-ccard input.gx-in{width:100%;min-width:0;min-height:30px;padding:4px 8px;font-size:13px}
+
+/* Mosaïque (cartes de lot / de marque) */
+.gx-ccard .gx-mos{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;background:var(--gx-line)}
+.gx-ccard .gx-mos>*{position:static;width:100%;height:100%;min-height:0;aspect-ratio:auto;object-fit:cover;object-position:50% 25%;background:var(--gx-sunk)}
+
+/* États dans la zone média : génération, retouche, échec */
+.gx-cm-ov{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:14px;text-align:center;font-size:12px;color:var(--gx-muted);background:color-mix(in srgb,var(--gx-surface) 86%,transparent);backdrop-filter:blur(2px)}
+.gx-ccard .gx-cm-ov b{font-size:12.5px;white-space:normal}
+.gx-cm-ov .gx-bar{display:block;width:100%}
+.gx-cm-ov small{font-size:11px;color:var(--gx-dim)}
+.gx-cm-ov.gx-bad b{color:var(--gx-bad-ink,var(--gx-bad))}
+.gx-cm-ov .gx-clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.gx-cm-acts{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+
+/* Bouton ⋯ de la carte */
+.gx-ccard .gx-cmore{position:absolute;right:8px;bottom:9px;z-index:3;border-color:transparent;background:transparent}
+.gx-ccard .gx-cmore:hover,.gx-ccard .gx-cmore[data-state="open"]{border-color:var(--gx-line);background:var(--gx-surface)}
+.gx-ccard:has(.gx-cmore)>div{padding-right:44px}
+
+/* Squelette de chargement */
+.gx-ccard.gx-cskel{cursor:default}
+.gx-ccard.gx-cskel .gx-cm{animation:gx-pulse 1.4s ease-in-out infinite}
+.gx-ccard.gx-cskel b{color:var(--gx-dim);font-weight:500}
+
+/* Colonne Dossiers : actions (nouveau, renommer, supprimer) */
+.gx-cr-f .gx-cr-fh{display:flex;align-items:center;justify-content:space-between}
+.gx-cr-fr{position:relative}
+.gx-cr-f a{cursor:pointer;user-select:none}
+.gx-cr-f a:focus-visible{outline:2px solid var(--gx-accent);outline-offset:-2px}
+.gx-cr-fm{display:grid;place-items:center;width:24px;height:24px;border-radius:7px;color:var(--gx-dim)}
+.gx-cr-fm .gx-i{width:15px;height:15px}
+.gx-cr-fm:hover{color:var(--gx-fg);background:var(--gx-sunk)}
+.gx-cr-fr .gx-cr-fm{position:absolute;right:6px;top:50%;transform:translateY(-50%);opacity:0;background:var(--gx-surface)}
+.gx-cr-fr:hover .gx-cr-fm,.gx-cr-fr:focus-within .gx-cr-fm,.gx-cr-fr .gx-cr-fm[data-state="open"]{opacity:1}
+.gx-cr-fr input.gx-in{width:100%;min-width:0;min-height:32px;padding:5px 10px;font-size:13px}
+.gx-cr-add{display:none}
+.gx-cr-back{margin-bottom:12px}
+
+/* Dialogues de la page (aperçu, publication, voix, vitesse, échec) */
+.gx-cr-dh b{display:block;font-family:var(--gx-display);font-weight:650;font-size:18px;letter-spacing:-.01em}
+.gx-cr-dh p{color:var(--gx-muted);font-size:13px;margin-top:2px}
+.gx-cr-stage{border-radius:12px;background:#000}
+.gx-cr-err{color:var(--gx-bad-ink,var(--gx-bad))}
+.gx-cr-prompt{border-radius:10px;background:var(--gx-sunk);padding:12px;font-size:12px;color:var(--gx-muted)}
+.gx-cr-voice{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px;border:1px solid var(--gx-line)}
+.gx-cr-voice.gx-on{border-color:var(--gx-accent);background:var(--gx-accent-soft)}
+.gx-cr-voice small{color:var(--gx-dim);font-size:12px}
+.gx-cr-speed{border-radius:12px;border:1px solid var(--gx-line);background:var(--gx-raised);padding:14px}
+.gx-cr-speed small{font-size:11px;color:var(--gx-dim)}
+.gx-cr-speed b{font-size:22px}
+.gx-cr-speed input[type="range"]{accent-color:var(--gx-accent)}
+
+/* Barre de sélection : boutons désactivés lisibles sur fond noir */
+.gx-selbar .gx-btn:disabled{opacity:.45}
+
+@media (max-width:899px){
+  .gx-cr-add{display:block}
+  .gx-cr-fr .gx-cr-fm{display:none}
+  .gx-cr-fr:has(a.gx-on) .gx-cr-fm{display:grid;position:static;transform:none;opacity:1}
+  .gx-cr-fr:has(a.gx-on){display:flex;align-items:center;gap:2px}
+  .gx-cr-fr input.gx-in{width:160px}
+}

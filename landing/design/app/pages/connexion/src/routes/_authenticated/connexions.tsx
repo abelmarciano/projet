@@ -223,6 +223,7 @@ function ConnexionsPage() {
   const openShopSheet = (prefill = "") => { setShopDomain(prefill); setShopSheet(true); };
 
   const connectShop = async () => {
+    if (shopBusy) return;
     if (!shopDomain.trim()) { toast.error("Indique le domaine de ta boutique."); return; }
     setShopBusy(true);
     const popup = window.open("about:blank", "shopify-oauth", "width=620,height=760");
@@ -479,7 +480,7 @@ function ConnexionsPage() {
           <div className="gx-sheet-f">
             <div className="gx-sp" />
             <DialogPrimitive.Close asChild><button type="button" className="gx-btn">Annuler</button></DialogPrimitive.Close>
-            <button type="submit" form="shopForm" className="gx-btn gx-pri" disabled={shopBusy || !shopDomain.trim()}>
+            <button type="submit" form="shopForm" className="gx-btn gx-pri">
               {shopBusy ? "Connexion…" : shopConnected ? "Connecter cette boutique" : "Autoriser Shopify"}
             </button>
           </div>

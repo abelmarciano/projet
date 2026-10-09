@@ -162,10 +162,10 @@ function Spark({ values }: { values: number[] }) {
 function Thumb({ ad, url }: { ad?: any; url?: string | null }) {
   const src = url ?? (ad ? adThumb(ad) : null);
   if (ad?.content_type === "video" && ad?.generated_url && !src) {
-    return <span className="gx-ph"><VideoPoster src={ad.generated_url} className="h-full w-full object-cover" /></span>;
+    return <span className="gx-tn"><VideoPoster src={ad.generated_url} className="h-full w-full object-cover" /></span>;
   }
-  if (src) return <span className="gx-ph"><img src={src} alt="" loading="lazy" /></span>;
-  return <span className="gx-ph" aria-hidden />;
+  if (src) return <span className="gx-tn"><img src={src} alt="" loading="lazy" /></span>;
+  return <span className="gx-tn" aria-hidden />;
 }
 
 /* ---------- page ---------- */

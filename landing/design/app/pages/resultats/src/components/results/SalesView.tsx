@@ -167,7 +167,7 @@ export function SalesView({ title = "Résultats", subtitle, tabs }: { title?: st
             </GxMenu>
             <GxMenu trigger={<SelButton label={statusFilter === "all" ? "Tous les statuts" : frMetaStatus(statusFilter)} set={statusFilter !== "all"} />}>
               <GxMenuItem checked={statusFilter === "all"} onSelect={() => setStatusFilter("all")}>Tous les statuts</GxMenuItem>
-              {statuses.map((s) => <GxMenuItem key={s} checked={statusFilter === s} onSelect={() => setStatusFilter(s)}>{frMetaStatus(s)}</GxMenuItem>)}
+              {statuses.map((s) => <GxMenuItem key={String(s)} checked={statusFilter === s} onSelect={() => setStatusFilter(String(s))}>{frMetaStatus(s)}</GxMenuItem>)}
             </GxMenu>
           </div>
         )}

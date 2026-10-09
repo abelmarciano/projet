@@ -1568,227 +1568,198 @@ export function VideoEditor({
   // de monter l'éditeur, ce garde protège aussi les intégrations directes.
   if (tooSmall) {
     return (
-      <div className="flex h-[calc(100vh-3.5rem)] flex-col items-center justify-center gap-4 px-6 text-center">
-        <Maximize className="h-8 w-8 text-primary" />
-        <h1 className="text-2xl font-bold">Passez sur ordinateur</h1>
-        <p className="max-w-sm text-sm text-muted-foreground">
-          L'éditeur vidéo nécessite un grand écran pour déplacer les séquences et régler la timeline avec précision.
-        </p>
-        {onBack ? (
-          <Button variant="outline" onClick={onBack}>
-            <ChevronLeft className="h-4 w-4" /> Retour
-          </Button>
-        ) : null}
+      <div className="gx-page">
+        <header className="gx-ph">
+          <div>
+            <h1>Éditeur vidéo</h1>
+          </div>
+        </header>
+        <div className="gx-empty">
+          <Maximize className="gx-i" />
+          <b>Passe sur ordinateur</b>
+          <span>
+            L'éditeur vidéo nécessite un grand écran pour déplacer les séquences et régler la timeline avec précision.
+          </span>
+          {onBack ? (
+            <button type="button" className="gx-btn" onClick={onBack}>
+              <ChevronLeft className="gx-i" /> Retour
+            </button>
+          ) : null}
+        </div>
       </div>
     );
   }
 
+  /** Sous-titre de l'en-tête : « Pub … · enregistré automatiquement à 10:42 ». */
+  const saveLabel = readOnly
+    ? `projet de ${ownerName ?? "un membre de l'équipe"} — lecture seule`
+    : saveMutation.isPending
+      ? "enregistrement…"
+      : saveFailed
+        ? "sauvegarde interrompue"
+        : dirty
+          ? "modifications non enregistrées"
+          : lastSavedAt
+            ? `enregistré automatiquement à ${new Date(lastSavedAt).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}`
+            : "enregistrement automatique activé";
+  const exportPct = `${Math.round(exportRatio * 100)} %`;
+
   return (
-
-    <div className="flex h-[calc(100vh-3.5rem)] w-full min-w-0 flex-col overflow-hidden bg-background">
-      {/* barre haute */}
-      <header className="flex min-w-0 items-center gap-2 overflow-hidden border-b border-border px-3 py-2">
-        {onBack ? (
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            className="h-9 shrink-0 px-2"
-            onClick={() => void saveAndLeave()}
-            disabled={saveMutation.isPending}
-          >
-            <ChevronLeft className="h-4 w-4" />
-            <span className="ml-1 hidden sm:inline">Projets</span>
-          </Button>
-        ) : null}
-        {convLink?.conversationId ? (
-          <Button asChild variant="outline" size="sm" className="shrink-0">
-            <Link to="/create" search={{ c: convLink.conversationId, focus: convLink.anchorAdId ?? undefined } as never}>
-              <MessageSquareIcon className="h-4 w-4" />
-              <span className="ml-1 hidden sm:inline">Retour à la discussion</span>
-            </Link>
-          </Button>
-        ) : null}
-        <Input
-          value={projectName}
-          onChange={(e) => setProjectName(e.target.value)}
-          onBlur={() => {
-            const trimmed = projectName.trim();
-            if (!trimmed) {
-              setProjectName(lastValidNameRef.current);
-              return;
-            }
-            if (trimmed !== projectName) setProjectName(trimmed);
-            lastValidNameRef.current = trimmed;
-            void renameProject();
-          }}
-          className="h-9 w-40 min-w-0 bg-card xl:w-56"
-        />
-        {/* GRW-21 : un seul champ de nom ; ici un simple chevron pour changer de projet */}
-        <Select
-          open={projectPickerOpen}
-          onOpenChange={setProjectPickerOpen}
-          value={projectId ?? "new"}
-          onValueChange={(v) => {
-            if (v === "new") {
-              setProjectId(null);
-              setProjectName(defaultProjectName());
-              store.replaceComposition(emptyComposition("9:16"));
-              setTime(0);
-              setDirty(false);
-              return;
-            }
-            void openProject(v);
-          }}
-        >
-          <SelectTrigger
-            aria-label="Changer de projet"
-            title="Changer de projet"
-            className="h-9 w-9 shrink-0 justify-center bg-card p-0 [&>svg:last-child]:hidden"
-          >
-            {loadingProject ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <ChevronDown className="h-4 w-4" />
-            )}
-          </SelectTrigger>
-          <SelectContent className="max-h-80">
-            <SelectItem value="new">Nouveau projet</SelectItem>
-            {(projects.data ?? []).map(
-              (p: { id: string; name: string; thumbnail_url?: string | null; updated_at?: string }) => (
-                <SelectItem key={p.id} value={p.id}>
-                  <span className="flex items-center gap-2">
-                    {p.thumbnail_url ? (
-                      <img
-                        src={p.thumbnail_url}
-                        alt=""
-                        className="h-7 w-5 shrink-0 rounded object-cover"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <span className="flex h-7 w-5 shrink-0 items-center justify-center rounded bg-muted">
-                        <ImageIcon className="h-3 w-3 text-muted-foreground" />
-                      </span>
-                    )}
-                    <span className="flex flex-col text-left">
-                      <span className="truncate text-xs">{p.name}</span>
-                      {p.updated_at ? (
-                        <span className="text-[10px] text-muted-foreground">
-                          {new Date(p.updated_at).toLocaleString("fr-FR", {
-                            day: "2-digit",
-                            month: "2-digit",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </span>
-                      ) : null}
-                    </span>
-                  </span>
-                </SelectItem>
-              ),
-            )}
-          </SelectContent>
-        </Select>
-
-
-        <span className="text-[11px] text-muted-foreground">
-          {readOnly
-            ? `Projet de ${ownerName ?? "un membre de l'équipe"} — lecture seule`
-            : saveMutation.isPending
-            ? "Enregistrement…"
-            : saveFailed
-              ? "Sauvegarde interrompue"
-            : dirty
-              ? "Modifications non enregistrées"
-              : lastSavedAt
-                ? `Enregistré automatiquement à ${new Date(lastSavedAt).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}`
-                : "Enregistrement automatique activé"}
-        </span>
-
-        {readOnly ? (
-          <Button type="button" variant="outline" size="sm" onClick={() => void duplicateToMine()}>
-            Dupliquer dans mes projets
-          </Button>
-        ) : saveFailed && !blockingError ? (
-          <Button type="button" variant="ghost" size="sm" onClick={() => queueSave(false)}>
-            Réessayer
-          </Button>
-        ) : null}
-
-        {!readOnly && draftUnsynced ? (
-          <span className="rounded-full bg-destructive/10 px-2 py-0.5 text-[11px] font-medium text-destructive">
-            Modifications locales non enregistrées sur le serveur
-          </span>
-        ) : null}
-
-
-        <div className="ml-auto flex shrink-0 items-center gap-2">
-          <IconAction label="Raccourcis clavier · ?" onClick={() => setShortcutsOpen(true)}>
-            <Keyboard className="h-4 w-4" />
-          </IconAction>
-
-          {/* GRW-13 : sous 1280 px, les exports passent en icônes + infobulle */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="outline"
-                size={narrow ? "icon" : "sm"}
-                aria-label="Télécharger la vidéo"
-                onClick={() => void runExport("download")}
-                disabled={exporting}
-              >
-                {exporting ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    {narrow ? null : `${Math.round(exportRatio * 100)} %`}
-                  </>
-                ) : (
-                  <>
-                    <Download className="h-4 w-4" />
-                    {narrow ? null : "Télécharger"}
-                  </>
-                )}
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Télécharger la vidéo</TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                size={narrow ? "icon" : "sm"}
-                aria-label="Exporter dans mes créations"
-                onClick={() => void runExport("creations")}
-                disabled={exporting}
-              >
-                {exporting ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    {narrow ? null : `${Math.round(exportRatio * 100)} %`}
-                  </>
-                ) : (
-                  <>
-                    <Film className="h-4 w-4" />
-                    {narrow ? null : "Exporter dans mes créations"}
-                  </>
-                )}
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Exporter dans mes créations</TooltipContent>
-          </Tooltip>
+    <div className="gx-page gx-edp" data-narrow={narrow ? "1" : undefined}>
+      <header className="gx-ph">
+        <div>
+          <h1>Éditeur vidéo</h1>
+          <p className="gx-ed-sub">
+            <input
+              className="gx-ed-name"
+              aria-label="Nom du projet"
+              value={projectName}
+              size={Math.max(8, Math.min(48, projectName.length + 1))}
+              onChange={(e) => setProjectName(e.target.value)}
+              onBlur={() => {
+                const trimmed = projectName.trim();
+                if (!trimmed) {
+                  setProjectName(lastValidNameRef.current);
+                  return;
+                }
+                if (trimmed !== projectName) setProjectName(trimmed);
+                lastValidNameRef.current = trimmed;
+                void renameProject();
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") (e.currentTarget as HTMLInputElement).blur();
+              }}
+            />
+            <span aria-hidden>·</span>
+            <span>{saveLabel}</span>
+            {!readOnly && saveFailed && !blockingError ? (
+              <button type="button" className="gx-btn gx-sm" onClick={() => queueSave(false)}>
+                Réessayer
+              </button>
+            ) : null}
+            {!readOnly && draftUnsynced ? (
+              <span className="gx-st gx-bad">Modifications locales non enregistrées sur le serveur</span>
+            ) : null}
+          </p>
         </div>
-
+        <div className="gx-pa">
+          {onBack ? (
+            <button
+              type="button"
+              className="gx-ib"
+              aria-label="Retour aux projets"
+              title="Retour aux projets"
+              onClick={() => void saveAndLeave()}
+              disabled={saveMutation.isPending}
+            >
+              <ChevronLeft className="gx-i" />
+            </button>
+          ) : null}
+          {/* GRW-21 : un seul champ de nom ; ici un simple chevron pour changer de projet */}
+          <Select
+            open={projectPickerOpen}
+            onOpenChange={setProjectPickerOpen}
+            value={projectId ?? "new"}
+            onValueChange={(v) => {
+              if (v === "new") {
+                setProjectId(null);
+                setProjectName(defaultProjectName());
+                store.replaceComposition(emptyComposition("9:16"));
+                setTime(0);
+                setDirty(false);
+                return;
+              }
+              void openProject(v);
+            }}
+          >
+            <SelectTrigger
+              aria-label="Changer de projet"
+              title="Changer de projet"
+              className="gx-ib [&>svg:last-child]:hidden"
+            >
+              {loadingProject ? <Loader2 className="gx-i animate-spin" /> : <FolderOpen className="gx-i" />}
+            </SelectTrigger>
+            <SelectContent className="console-app-portal max-h-80">
+              <SelectItem value="new">Nouveau projet</SelectItem>
+              {(projects.data ?? []).map(
+                (p: { id: string; name: string; thumbnail_url?: string | null; updated_at?: string }) => (
+                  <SelectItem key={p.id} value={p.id}>
+                    <span className="gx-ed-pick">
+                      {p.thumbnail_url ? (
+                        <img src={p.thumbnail_url} alt="" loading="lazy" />
+                      ) : (
+                        <span aria-hidden>
+                          <ImageIcon className="gx-i" />
+                        </span>
+                      )}
+                      <span>
+                        <b>{p.name}</b>
+                        {p.updated_at ? (
+                          <small>
+                            {new Date(p.updated_at).toLocaleString("fr-FR", {
+                              day: "2-digit",
+                              month: "2-digit",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </small>
+                        ) : null}
+                      </span>
+                    </span>
+                  </SelectItem>
+                ),
+              )}
+            </SelectContent>
+          </Select>
+          {convLink?.conversationId ? (
+            <Link
+              className="gx-btn"
+              to="/create"
+              search={{ c: convLink.conversationId, focus: convLink.anchorAdId ?? undefined } as never}
+            >
+              <MessageSquareIcon className="gx-i" />
+              Retour à la discussion
+            </Link>
+          ) : null}
+          <button
+            type="button"
+            className="gx-ib"
+            aria-label="Raccourcis clavier"
+            title="Raccourcis clavier · ?"
+            onClick={() => setShortcutsOpen(true)}
+          >
+            <Keyboard className="gx-i" />
+          </button>
+          <button
+            type="button"
+            className="gx-btn"
+            onClick={() => void runExport("creations")}
+            disabled={exporting}
+          >
+            {exporting ? <Loader2 className="gx-i animate-spin" /> : null}
+            {exporting ? exportPct : "Exporter dans mes créations"}
+          </button>
+          <button
+            type="button"
+            className="gx-btn gx-pri"
+            onClick={() => void runExport("download")}
+            disabled={exporting}
+          >
+            {exporting ? <Loader2 className="gx-i animate-spin" /> : <Download className="gx-i" />}
+            {exporting ? exportPct : "Télécharger la vidéo"}
+          </button>
+        </div>
       </header>
 
       {readOnly ? (
-        <div className="flex flex-wrap items-center gap-3 border-b border-border bg-muted/60 px-3 py-2 text-sm">
+        <div className="gx-note">
           <span>
-            Projet de <strong>{ownerName ?? "un membre de l'équipe"}</strong> — lecture seule. Tes
-            modifications ne seront pas enregistrées.
+            Projet de <b>{ownerName ?? "un membre de l'équipe"}</b> — lecture seule. Tes modifications ne seront pas
+            enregistrées.
           </span>
-          <Button size="sm" variant="outline" onClick={() => void duplicateToMine()}>
+          <button type="button" className="gx-btn gx-sm" onClick={() => void duplicateToMine()}>
             Dupliquer dans mes projets
-          </Button>
+          </button>
         </div>
       ) : null}
 
@@ -1809,143 +1780,61 @@ export function VideoEditor({
         </DialogContent>
       </Dialog>
 
-
-      <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
-        <div className="relative flex min-h-0 min-w-0 flex-1 overflow-hidden">
-        {/* sidebar panneaux */}
-        <nav className="flex w-16 shrink-0 flex-col items-center gap-1 border-r border-border py-3 xl:w-[76px]">
-          {PANELS.map((p) => (
-            <button
-              key={p.key}
-              type="button"
-              aria-label={p.label}
-              title={p.label}
-              onMouseEnter={() => {
-                if (p.key === "assets") prefetchAssets();
-              }}
-              onClick={() => {
-                if (panel === p.key) setPanelOpen((o) => !o);
-                else {
-                  setPanel(p.key);
-                  setPanelOpen(true);
-                }
-              }}
-
-              className={cn(
-                "flex w-14 flex-col items-center justify-center gap-1 rounded-lg px-1 py-2 text-[10px] leading-tight transition-colors",
-                panel === p.key && panelOpen
-                  ? "bg-primary/10 text-primary"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground",
-              )}
-            >
-              <p.icon className="h-4 w-4" />
-              <span className="w-full truncate text-center">{p.label}</span>
-            </button>
-          ))}
-        </nav>
-
-        {/* panneau actif — colonne fixe en grand écran, overlay sous 1280 px */}
-        {panelOpen ? (
-          <aside
-            className={cn(
-              "shrink-0 border-r border-border bg-background",
-              narrow ? "absolute inset-y-0 left-16 z-30 w-64 shadow-xl" : "relative w-56 xl:w-72",
-            )}
-          >
-            <button
-              type="button"
-              aria-label="Replier le panneau"
-              title="Replier le panneau"
-              onClick={() => setPanelOpen(false)}
-              className="absolute right-1 top-1 z-10 rounded-md p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-            <ScrollArea className="h-full">
-              <div className="p-3">
-                <LeftPanel
-                  panel={panel}
-                  store={store}
-                  currentTime={time}
-                  onAddMedia={addMedia}
-                  onAddAudio={addAudio}
-                  onUpload={uploadFiles}
-                />
-              </div>
-            </ScrollArea>
-          </aside>
-        ) : (
-          <button
-            type="button"
-            aria-label="Déplier le panneau"
-            title="Déplier le panneau"
-            onClick={() => setPanelOpen(true)}
-            className="flex w-5 shrink-0 items-center justify-center border-r border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </button>
-        )}
-
-
-        {/* aperçu */}
-        <section
-          className="flex min-h-[40%] min-w-0 flex-1 flex-col"
-          onPointerDownCapture={() => {
-            // Sous 1280 px, le panneau flotte au-dessus de l'aperçu : un clic
-            // sur l'aperçu le referme (GRW-13).
-            if (narrow && panelOpen) setPanelOpen(false);
-          }}
-        >
-
-          <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-muted/30">
-            <div className="flex h-11 shrink-0 items-center justify-center gap-2 border-b border-border bg-card/80 px-3">
-              {reframeTarget ? (
-                <>
-                  <span className="px-1 font-mono text-[10px] text-muted-foreground">
-                    {Math.round(effectiveScale(reframeTarget) * 100)} %
-                  </span>
-                  <Slider
-                    aria-label="Zoom du média"
-                    className="w-28"
-                    value={[effectiveScale(reframeTarget)]}
-                    min={reframeTarget.kind === "text" ? MIN_SCALE : MIN_MEDIA_SCALE}
-                    max={6}
-                    step={0.01}
-                    onValueChange={([value]) =>
-                      applyFrame(
-                        reframeTarget,
-                        clampFrame(reframeTarget, reframeTarget.x, reframeTarget.y, value),
-                        { silent: true },
-                      )
+      <div className="gx-box gx-ed">
+        {/* Colonne outils : onglets + panneau actif (re-cliquer l'onglet actif replie le panneau). */}
+        <div className="gx-ed-l">
+          <div className="gx-vt" role="tablist" aria-label="Outils">
+            {PANELS.map((p) => {
+              const on = panel === p.key && panelOpen;
+              return (
+                <button
+                  key={p.key}
+                  type="button"
+                  role="tab"
+                  aria-selected={on}
+                  className={on ? "gx-on" : undefined}
+                  onMouseEnter={() => {
+                    if (p.key === "assets") prefetchAssets();
+                  }}
+                  onClick={() => {
+                    if (panel === p.key) setPanelOpen((o) => !o);
+                    else {
+                      setPanel(p.key);
+                      setPanelOpen(true);
                     }
-                    onValueCommit={([value]) =>
-                      applyFrame(
-                        reframeTarget,
-                        clampFrame(reframeTarget, reframeTarget.x, reframeTarget.y, value),
-                      )
-                    }
-                  />
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <button
-                        type="button"
-                        className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                        onClick={() =>
-                          applyFrame(reframeTarget, { x: 0.5, y: 0.5, scale: 1, rotation: 0 })
-                        }
-                      >
-                        <RotateCcw className="h-3.5 w-3.5" />
-                      </button>
-                    </TooltipTrigger>
-                    <TooltipContent side="bottom">Réinitialiser le cadrage</TooltipContent>
-                  </Tooltip>
-                  <span className="mx-1 h-4 w-px bg-border" />
-                </>
-              ) : null}
+                  }}
+                >
+                  {p.label}
+                </button>
+              );
+            })}
+          </div>
+          {panelOpen ? (
+            <div className="gx-ed-panel">
+              <LeftPanel
+                panel={panel}
+                store={store}
+                currentTime={time}
+                onAddMedia={addMedia}
+                onAddAudio={addAudio}
+                onUpload={uploadFiles}
+              />
+            </div>
+          ) : (
+            <small className="gx-hint">Choisis un outil pour l'afficher.</small>
+          )}
+        </div>
+
+        {/* Aperçu */}
+        <div className="gx-ed-c">
+          <div className="gx-ed-bar">
+            <div className="gx-seg" role="tablist" aria-label="Format de la vidéo">
               {(["9:16", "16:9", "1:1"] as AspectRatio[]).map((r) => (
                 <button
                   key={r}
                   type="button"
+                  role="tab"
+                  aria-selected={aspect === r}
                   onClick={() => {
                     if (r === aspect) return;
                     setPlaying(false);
@@ -1957,29 +1846,52 @@ export function VideoEditor({
                       ?.clips.find((c) => c.start <= 0.001);
                     store.setSelectedClipId(first?.id ?? null);
                   }}
-                  className={cn(
-                    "rounded-md px-2.5 py-1 text-xs font-medium transition-colors",
-                    aspect === r ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
-                  )}
                 >
                   {r}
                 </button>
               ))}
             </div>
-            <div
-              ref={stageWrapRef}
-              className="relative flex min-h-0 min-w-0 flex-1 items-center justify-center overflow-hidden p-4"
-            >
-              <div
-                ref={stageBoxRef}
-                className="relative touch-none"
-                style={{ width: stageBox.w || undefined, height: stageBox.h || undefined }}
-              >
+            {reframeTarget ? (
+              <div className="gx-ed-zoom">
+                <span className="gx-num">{Math.round(effectiveScale(reframeTarget) * 100)} %</span>
+                <Slider
+                  aria-label="Zoom du média"
+                  className="w-24"
+                  value={[effectiveScale(reframeTarget)]}
+                  min={reframeTarget.kind === "text" ? MIN_SCALE : MIN_MEDIA_SCALE}
+                  max={6}
+                  step={0.01}
+                  onValueChange={([value]) =>
+                    applyFrame(
+                      reframeTarget,
+                      clampFrame(reframeTarget, reframeTarget.x, reframeTarget.y, value),
+                      { silent: true },
+                    )
+                  }
+                  onValueCommit={([value]) =>
+                    applyFrame(reframeTarget, clampFrame(reframeTarget, reframeTarget.x, reframeTarget.y, value))
+                  }
+                />
+                <button
+                  type="button"
+                  className="gx-ib gx-sm"
+                  aria-label="Réinitialiser le cadrage"
+                  title="Réinitialiser le cadrage"
+                  onClick={() => applyFrame(reframeTarget, { x: 0.5, y: 0.5, scale: 1, rotation: 0 })}
+                >
+                  <RotateCcw className="gx-i" />
+                </button>
+              </div>
+            ) : null}
+          </div>
 
-              <div
-                ref={stageRef}
-                className="h-full w-full overflow-hidden rounded-xl border border-border bg-black shadow-lg"
-              />
+          <div ref={stageWrapRef} className="gx-ed-stage">
+            <div
+              ref={stageBoxRef}
+              className="relative touch-none"
+              style={{ width: stageBox.w || undefined, height: stageBox.h || undefined }}
+            >
+              <div ref={stageRef} className="gx-ed-canvas" />
               {(() => {
                 const activeVisual = store.composition.tracks
                   .filter((track) => track.kind !== "audio" && !track.hidden)
@@ -1990,14 +1902,14 @@ export function VideoEditor({
                 // ne pas masquer une frame déjà peinte avec un loader indéfini.
                 if (!activeVisual?.src || !activeStatus || activeStatus === "ready") return null;
                 return (
-                  <div className="pointer-events-none absolute inset-0 z-10 grid place-items-center rounded-xl bg-background/70 backdrop-blur-sm">
+                  <div className="gx-ed-ov">
                     {activeStatus === "error" ? (
-                      <div className="text-center text-sm text-muted-foreground">
-                        <ImageIcon className="mx-auto mb-2 h-6 w-6" />
+                      <span>
+                        <ImageIcon className="gx-i" />
                         Aperçu indisponible
-                      </div>
+                      </span>
                     ) : (
-                      <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                      <Loader2 className="gx-i animate-spin" />
                     )}
                   </div>
                 );
@@ -2005,7 +1917,7 @@ export function VideoEditor({
               {/* Recadrage manuel : glisser pour repositionner, double-clic pour éditer un texte. */}
               <div
                 className={cn(
-                  "absolute inset-0 rounded-xl",
+                  "absolute inset-0 rounded-[14px]",
                   reframeTarget && !editingTextId ? "cursor-move" : "pointer-events-none",
                 )}
                 onPointerDown={onReframeDown}
@@ -2018,17 +1930,13 @@ export function VideoEditor({
               />
 
               {/* Repères d'alignement (centrage horizontal / vertical). */}
-              {guides.v ? (
-                <div className="pointer-events-none absolute inset-y-0 left-1/2 z-30 w-px -translate-x-1/2 bg-primary" />
-              ) : null}
-              {guides.h ? (
-                <div className="pointer-events-none absolute inset-x-0 top-1/2 z-30 h-px -translate-y-1/2 bg-primary" />
-              ) : null}
+              {guides.v ? <div className="gx-ed-guide gx-v" /> : null}
+              {guides.h ? <div className="gx-ed-guide gx-h" /> : null}
 
               {/* Cadre de transformation : collé au média / texte réellement affiché. */}
               {reframeTarget && !editingTextId ? (
                 <div
-                  className="pointer-events-none absolute z-20 rounded-md border border-primary/70"
+                  className="gx-ed-sel"
                   style={
                     selBox
                       ? {
@@ -2053,7 +1961,7 @@ export function VideoEditor({
                     <div
                       key={h.k}
                       role="presentation"
-                      className="pointer-events-auto absolute h-3.5 w-3.5 rounded-sm border border-primary bg-background shadow"
+                      className="gx-ed-hdl"
                       style={{ ...h.style, cursor: h.cursor }}
                       onPointerDown={(e) => onHandleDown(e, h.k)}
                       onPointerMove={onHandleMove}
@@ -2061,11 +1969,7 @@ export function VideoEditor({
                       onPointerCancel={onHandleUp}
                     />
                   ))}
-                  {reframeTarget.kind === "text" ? (
-                    <span className="absolute -top-6 left-0 rounded bg-primary px-1.5 py-0.5 text-[10px] font-medium text-primary-foreground">
-                      Double-clic pour éditer
-                    </span>
-                  ) : null}
+                  {reframeTarget.kind === "text" ? <span className="gx-ed-tag">Double-clic pour éditer</span> : null}
                 </div>
               ) : null}
 
@@ -2083,9 +1987,10 @@ export function VideoEditor({
                       : { left: "8%", top: "45%", width: "84%" }
                   }
                 >
-                  <Textarea
+                  <textarea
                     autoFocus
                     rows={2}
+                    className="gx-in gx-ed-txt"
                     value={reframeTarget.text ?? ""}
                     onChange={(e) =>
                       store.updateClip(reframeTarget.id, { text: e.target.value }, { silent: true })
@@ -2097,66 +2002,44 @@ export function VideoEditor({
                     onKeyDown={(e) => {
                       if (e.key === "Escape") setEditingTextId(null);
                     }}
-                    className="resize-none border-primary bg-card/95 text-center text-sm shadow-lg"
                   />
                 </div>
               ) : null}
-              </div>
             </div>
           </div>
-
-
-
-        </section>
-
-        {/* inspecteur (repliable ; en overlay sous 1280 px) */}
-        {store.selected && inspectorOpen ? (
-          <aside
-            className={cn(
-              "shrink-0 border-l border-border bg-background",
-              narrow ? "absolute inset-y-0 right-0 z-30 w-72 shadow-xl" : "relative w-64 xl:w-80",
-            )}
-          >
-            <div className="flex items-center justify-between border-b border-border px-2 py-1">
-              <span className="truncate text-xs font-medium text-muted-foreground">Réglages</span>
-              <IconAction
-                label="Replier l'inspecteur"
-                onClick={() => setInspectorOpen(false)}
-                side="left"
-              >
-                <PanelRightClose className="h-4 w-4" />
-              </IconAction>
-            </div>
-            <ScrollArea className="h-[calc(100%-2.25rem)]">
-              <MediaStatusContext.Provider value={mediaStatuses}>
-                <Inspector
-                  store={store}
-                  clip={store.selected.clip}
-                  onReplaceMedia={() => {
-                    replaceTargetRef.current = store.selectedClipId;
-                    setPanel("assets");
-                    setPanelOpen(true);
-                    toast.info("Choisissez le média de remplacement dans « Mes assets ».");
-                  }}
-                />
-              </MediaStatusContext.Provider>
-            </ScrollArea>
-          </aside>
-        ) : store.selected ? (
-          <div className="flex shrink-0 items-start border-l border-border p-1">
-            <IconAction
-              label="Déplier l'inspecteur"
-              onClick={() => setInspectorOpen(true)}
-              side="left"
-            >
-              <PanelRightOpen className="h-4 w-4" />
-            </IconAction>
-          </div>
-        ) : null}
-
+          <small className="gx-hint">Double-clique sur le texte de la vidéo pour le modifier.</small>
         </div>
 
-        {/* GRW-13 : timeline pleine largeur, sous l'aperçu ET l'inspecteur */}
+        {/* Réglages du calque sélectionné (repliables). */}
+        <div className="gx-ed-r">
+          {store.selected && inspectorOpen ? (
+            <MediaStatusContext.Provider value={mediaStatuses}>
+              <Inspector
+                store={store}
+                clip={store.selected.clip}
+                onCollapse={() => setInspectorOpen(false)}
+                onReplaceMedia={() => {
+                  replaceTargetRef.current = store.selectedClipId;
+                  setPanel("assets");
+                  setPanelOpen(true);
+                  toast.info("Choisis le média de remplacement dans « Mes assets ».");
+                }}
+              />
+            </MediaStatusContext.Provider>
+          ) : store.selected ? (
+            <button type="button" className="gx-btn gx-sm" onClick={() => setInspectorOpen(true)}>
+              <PanelRightOpen className="gx-i" />
+              Afficher les réglages
+            </button>
+          ) : (
+            <div className="gx-ed-none">
+              <b>Aucun calque sélectionné</b>
+              <span>Clique sur un clip de la timeline pour régler son texte, son style, sa position et son animation.</span>
+            </div>
+          )}
+        </div>
+
+        {/* GRW-13 : timeline pleine largeur, sous l'aperçu ET les réglages */}
         <MediaStatusContext.Provider value={mediaStatuses}>
           <Timeline
             store={store}
@@ -2168,6 +2051,12 @@ export function VideoEditor({
             setZoom={setZoom}
             fitSignal={fitSignal}
             onShowShortcuts={() => setShortcutsOpen(true)}
+            onDuplicate={duplicateSelectedClip}
+            onOpenPanel={(key) => {
+              setPanel(key);
+              setPanelOpen(true);
+              if (key === "assets") prefetchAssets();
+            }}
             onDropAsset={(payload, at) =>
               payload.kind === "audio"
                 ? addAudio(payload.url, payload.name)
@@ -2235,7 +2124,7 @@ function LeftPanel({
 }
 
 function PanelTitle({ children }: { children: React.ReactNode }) {
-  return <h3 className="mb-3 text-sm font-semibold text-foreground">{children}</h3>;
+  return <div className="gx-lbl gx-ed-pt">{children}</div>;
 }
 
 function MediaPanel({ onUpload }: { onUpload: (files: FileList | null) => void }) {
@@ -2254,12 +2143,12 @@ function MediaPanel({ onUpload }: { onUpload: (files: FileList | null) => void }
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        className="flex w-full flex-col items-center gap-2 rounded-xl border border-dashed border-border bg-card px-4 py-8 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-foreground"
+        className="gx-ed-drop"
       >
-        <Upload className="h-5 w-5" />
+        <Upload className="gx-i" />
         Glisse tes vidéos, images ou audios
       </button>
-      <p className="mt-3 text-xs text-muted-foreground">
+      <p className="gx-hint gx-ed-pn">
         Les fichiers sont stockés dans ton espace Growthity et réutilisables sur tous tes projets.
       </p>
     </div>
@@ -2555,39 +2444,35 @@ function TextPanel({ store, currentTime }: { store: StoreType; currentTime: numb
     );
   };
 
+  const templates = TEXT_TEMPLATES.filter((t) => t.key !== "plain");
   return (
-    <div>
-      <PanelTitle>Texte</PanelTitle>
-      <Textarea
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        rows={3}
-        className="mb-3 bg-card"
-        placeholder="Votre texte"
-      />
-      <Button className="mb-4 w-full" size="sm" onClick={() => add("plain")}>
-        Ajouter un texte simple
-      </Button>
-      <p className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-        Titres animés
-      </p>
-      <div className="grid grid-cols-2 gap-2">
-        {TEXT_TEMPLATES.filter((t) => t.key !== "plain").map((t) => (
+    <div className="gx-ed-txtp">
+      <div className="gx-lbl">Titres animés · {templates.length}</div>
+      <div className="gx-ttr">
+        {templates.map((t) => (
           <button
             key={t.key}
             type="button"
             onClick={() => add(t.key)}
-            className="anim-card overflow-hidden rounded-lg border border-border bg-card text-left transition-colors hover:border-primary"
+            title={`Ajouter le titre « ${t.label} » à la tête de lecture`}
+            aria-label={`Ajouter le titre ${t.label}`}
           >
-            <span className="flex h-14 items-center justify-center bg-[linear-gradient(135deg,#1c1c22,#33333d)] px-1">
-              <TextTemplatePreview template={t} text={value} />
-            </span>
-            <span className="block truncate px-2 py-1 text-[11px] font-medium text-foreground">
-              {t.label}
-            </span>
+            <TextTemplatePreview template={t} text={t.label} />
           </button>
         ))}
       </div>
+      <label className="gx-lbl" htmlFor="gx-ed-newtext">Texte à ajouter</label>
+      <textarea
+        id="gx-ed-newtext"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        rows={3}
+        className="gx-in gx-ed-ta"
+        placeholder="Ton texte"
+      />
+      <button type="button" className="gx-btn gx-sm" onClick={() => add("plain")}>
+        Ajouter un texte simple
+      </button>
     </div>
   );
 }
