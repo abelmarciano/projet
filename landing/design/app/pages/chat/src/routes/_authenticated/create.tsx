@@ -5168,41 +5168,27 @@ const QUICK_ACTIONS: Array<QuickAction & { iconClass: string }> = [
 
 function EmptyChatHero({ onSuggestion }: { onSuggestion: (text: string) => void }) {
   return (
-    <div className="mx-auto flex min-h-[60vh] max-w-3xl flex-col items-center justify-center px-4 pb-10 pt-8 text-center">
-      <div className="bg-grad mb-5 flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-elegant">
-        <Sparkles className="h-7 w-7" />
-      </div>
-      <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-        Que veux-tu créer aujourd'hui&nbsp;?
-      </h1>
-
-      <div className="mt-10 w-full text-left">
-        <div className="grid grid-cols-1 items-stretch gap-2 sm:grid-cols-2">
-          {QUICK_ACTIONS.map((a) => {
-            const Icon = a.icon;
-            return (
-              <button
-                key={a.id}
-                type="button"
-                onClick={() => onSuggestion(a.prompt)}
-                className="group flex h-full min-h-[84px] items-start gap-3 rounded-2xl border border-border/70 bg-background/60 p-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-primary/60 hover:bg-primary/[0.06] hover:shadow-md"
-              >
-                <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition ${a.iconClass}`}>
-                  <Icon className="h-4 w-4" />
-                </div>
-
-                <div className="min-w-0 flex-1">
-                  <div className="text-sm font-medium leading-snug text-foreground">
-                    {a.label}
-                  </div>
-                  <div className="mt-0.5 text-xs leading-snug text-muted-foreground">
-                    {a.hint}
-                  </div>
-                </div>
-              </button>
-            );
-          })}
-        </div>
+    <div className="gx-chat-hi">
+      <span className="gx-av gx-ai gx-big" aria-hidden>G</span>
+      <h1>Que veux-tu créer aujourd'hui&nbsp;?</h1>
+      <div className="gx-chat-qa">
+        {QUICK_ACTIONS.map((a) => {
+          const Icon = a.icon;
+          return (
+            <button
+              key={a.id}
+              type="button"
+              onClick={() => onSuggestion(a.prompt)}
+              className="gx-kard gx-qa"
+            >
+              <span className="gx-qa-ic"><Icon className="gx-i" /></span>
+              <span className="min-w-0">
+                <b>{a.label}</b>
+                <small>{a.hint}</small>
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
@@ -5525,21 +5511,66 @@ const ChatComposer = memo(
     const canSubmit = lockedPrefix ? !!input.trim() : (!!input.trim() || hasPendingImages);
 
     return (
-      <div
-        className={`gx-composer group/composer relative flex flex-col gap-1.5 px-3 pt-2 pb-1.5 ${
-          disabled && !isStreaming
-            ? "border-border/60 opacity-90"
-            : "border-border/70 focus-within:border-primary/60 focus-within:shadow-xl focus-within:ring-2 focus-within:ring-primary/20 dark:border-white/10 dark:focus-within:border-primary/50 dark:focus-within:ring-primary/25"
-        }`}
-      >
-        <div className="flex items-start px-3 py-1.5">
+      <div className={`gx-composer${disabled && !isStreaming ? " gx-dis" : ""}`}>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button
+              type="button"
+              className="gx-ib gx-sm gx-up"
+              disabled={disabled || uploadingImage}
+              aria-label="Ajouter du contenu"
+              title="Ajouter une image, un produit, un acteur…"
+            >
+              {uploadingImage ? <Loader2 className="gx-i animate-spin" /> : <Plus className="gx-i" />}
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-60">
+            <DropdownMenuItem onClick={onPickFile}>
+              <Paperclip className="mr-2 h-4 w-4" /> Importer une image ou une vidéo
+            </DropdownMenuItem>
+            {onOpenCreations && (
+              <DropdownMenuItem onClick={onOpenCreations}>
+                <ImageIcon className="mr-2 h-4 w-4" /> Importer depuis mes créations
+              </DropdownMenuItem>
+            )}
+            {onOpenCatalogTab && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => onOpenCatalogTab("products")}>
+                  <Package className="mr-2 h-4 w-4" /> Mes produits
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => onOpenCatalogTab("actors")}>
+                  <Users className="mr-2 h-4 w-4" /> Acteurs UGC
+                </DropdownMenuItem>
+              </>
+            )}
+            {onOpenContinueVideo && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={onOpenContinueVideo}>
+                  <Film className="mr-2 h-4 w-4" /> Prolonger une de mes vidéos
+                </DropdownMenuItem>
+              </>
+            )}
+            {onOpenCampaigns && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={onOpenCampaigns}>
+                  <Megaphone className="mr-2 h-4 w-4" /> Mes campagnes Meta
+                </DropdownMenuItem>
+              </>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <div className="gx-cmp-f">
           {lockedPrefix ? (
-            <span className="flex shrink-0 select-none items-center gap-1 text-[15px] font-semibold leading-6 text-primary">
-              <Lock className="h-3 w-3 shrink-0 opacity-70" />
+            <span className="gx-cmp-lock">
+              <Lock className="gx-i" />
               {lockedPrefix}
             </span>
           ) : null}
-          <Textarea
+          <textarea
             ref={areaRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -5549,107 +5580,46 @@ const ChatComposer = memo(
                 if (!isStreaming) submit();
               }
             }}
-            placeholder={lockedPrefix ? "Complète le nom de la campagne…" : isStreaming ? "L'IA répond…" : "Écris ton message…"}
+            aria-label="Message"
+            placeholder={lockedPrefix ? "Complète le nom de la campagne…" : isStreaming ? "L'IA répond…" : "Demande une modification, une variation, une publication…"}
             rows={1}
             style={{ fieldSizing: "content" } as React.CSSProperties}
-            className={lockedPrefix
-              ? "max-h-56 min-h-0 min-w-[12ch] flex-1 resize-none overflow-y-auto border-0 bg-transparent p-0 text-[15px] leading-6 placeholder:text-muted-foreground/70 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
-              : "max-h-56 min-h-0 w-full resize-none overflow-y-auto border-0 bg-transparent p-0 text-[15px] leading-6 placeholder:text-muted-foreground/70 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"}
           />
         </div>
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
-                  disabled={disabled || uploadingImage}
-                  aria-label="Ajouter du contenu"
-                  title="Ajouter du contenu"
-                >
-                  {uploadingImage ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-60">
-                <DropdownMenuItem onClick={onPickFile}>
-                  <Paperclip className="mr-2 h-4 w-4" /> Importer une image ou une vidéo
-                </DropdownMenuItem>
-                {onOpenCreations && (
-                  <DropdownMenuItem onClick={onOpenCreations}>
-                    <ImageIcon className="mr-2 h-4 w-4" /> Importer depuis mes créations
-                  </DropdownMenuItem>
-                )}
-                {onOpenCatalogTab && (
-                  <>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => onOpenCatalogTab("products")}>
-                      <Package className="mr-2 h-4 w-4" /> Mes produits
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => onOpenCatalogTab("actors")}>
-                      <Users className="mr-2 h-4 w-4" /> Acteurs UGC
-                    </DropdownMenuItem>
-                  </>
-                )}
-                {onOpenContinueVideo && (
-                  <>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={onOpenContinueVideo}>
-                      <Film className="mr-2 h-4 w-4" /> Prolonger une de mes vidéos
-                    </DropdownMenuItem>
-                  </>
-                )}
-                {onOpenCampaigns && (
-                  <>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={onOpenCampaigns}>
-                      <Megaphone className="mr-2 h-4 w-4" /> Mes campagnes Meta
-                    </DropdownMenuItem>
-                  </>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
 
-          <div className="ml-auto flex items-center gap-1">
-          {speechSupported && !isStreaming && (
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              onClick={toggleDictation}
-              className={`h-8 w-8 shrink-0 rounded-full ${listening ? "animate-pulse bg-destructive text-destructive-foreground hover:bg-destructive/90" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
-              aria-label={listening ? "Arrêter la dictée" : "Dicter un message"}
-              title={listening ? "Écoute en cours… clique pour arrêter" : "Dicter un message"}
-            >
-              <Mic className="h-4 w-4" />
-            </Button>
-          )}
-          {isStreaming ? (
-            <Button
-              type="button"
-              className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full p-0 bg-foreground text-background hover:bg-foreground/90 shadow-elegant"
-              onClick={() => onStop?.()}
-              aria-label="Arrêter la génération"
-              title="Arrêter"
-            >
-              <Square className="h-3.5 w-3.5 fill-current" />
-            </Button>
-          ) : (
-            <Button
-              className="bg-grad inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full p-0 text-white shadow-elegant hover:opacity-90 disabled:opacity-40"
-              onClick={submit}
-              disabled={disabled || !canSubmit}
-              aria-label="Envoyer"
-              title="Envoyer"
-            >
-              <Send className="h-3.5 w-3.5" />
-            </Button>
-          )}
-          </div>
-        </div>
+        {speechSupported && !isStreaming && (
+          <button
+            type="button"
+            onClick={toggleDictation}
+            className={`gx-ib gx-sm${listening ? " gx-rec" : ""}`}
+            aria-label={listening ? "Arrêter la dictée" : "Dicter un message"}
+            title={listening ? "Écoute en cours… clique pour arrêter" : "Dicter"}
+          >
+            <Mic className="gx-i" />
+          </button>
+        )}
+        {isStreaming ? (
+          <button
+            type="button"
+            className="gx-btn gx-sm gx-stop"
+            onClick={() => onStop?.()}
+            aria-label="Arrêter la génération"
+            title="Arrêter"
+          >
+            <Square className="gx-i" />
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="gx-btn gx-pri gx-sm"
+            onClick={submit}
+            disabled={disabled || !canSubmit}
+            aria-label="Envoyer"
+            title="Envoyer"
+          >
+            <ArrowRight className="gx-i" />
+          </button>
+        )}
       </div>
     );
   }),
@@ -5989,16 +5959,39 @@ const MessageBubble = memo(function MessageBubble({
   const isRevealing = isStreaming && !isUser && smoothText.length < cleanText.length;
 
 
+  const bodyContent = textNeedsMarkdown(smoothText) ? (
+    <ReactMarkdown
+      components={{
+        img: ({ node: _n, src, ...props }) => {
+          if (!src || (typeof src === "string" && src.trim() === "")) return null;
+          return (
+            <img
+              {...props}
+              src={src}
+              className="gx-md-img"
+              loading="lazy"
+            />
+          );
+        },
+      }}
+    >
+      {smoothText}
+    </ReactMarkdown>
+  ) : (
+    <PlainMessageText text={smoothText} />
+  );
+  const revealStyle = isRevealing
+    ? { maskImage: "linear-gradient(180deg, #000 calc(100% - 1.6em), rgba(0,0,0,0.55) 100%)", WebkitMaskImage: "linear-gradient(180deg, #000 calc(100% - 1.6em), rgba(0,0,0,0.55) 100%)" }
+    : undefined;
+
   return (
-    <div className={`gx-m ${isUser ? "gx-you flex-row-reverse" : "gx-ai"} group/msg flex gap-3`}>
+    <div className={`gx-m ${isUser ? "gx-you" : "gx-ai"} group/msg`}>
       {!isUser && (
-        <div className="gx-av gx-ai flex h-8 w-8 shrink-0 items-center justify-center" aria-label="Growthity">
-          <Logo variant="icon" className={`h-5 w-5 ${isStreaming ? "animate-pulse" : ""}`} />
-        </div>
+        <span className={`gx-av gx-ai${isStreaming ? " animate-pulse" : ""}`} aria-label="Growthity">G</span>
       )}
-      <div className={`min-w-0 ${!isUser && (message.parts ?? []).some((part) => part.type === "tool-research_competitor_ads") ? "max-w-full" : "max-w-[85%]"} flex-1 ${isUser ? "flex flex-col items-end" : ""}`}>
+      <div className={isUser ? "gx-you-c" : `gx-mb${(message.parts ?? []).some((part) => part.type === "tool-research_competitor_ads") ? " gx-mb-wide" : ""}`}>
           {attachedCompetitorRefs.length > 0 && (
-            <div className="mb-1 flex flex-wrap justify-end gap-1.5">
+            <div className="gx-att gx-att-end">
               {attachedCompetitorRefs.map((r) => (
                 <CompetitorRefChip key={r.id} ref_={r} />
               ))}
@@ -6010,85 +6003,58 @@ const MessageBubble = memo(function MessageBubble({
             </div>
           )}
           {smoothText && (
-            <div
-              className={`inline-block max-w-full break-words rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
-                isUser
-                  ? "rounded-br-md"
-                  : "rounded-bl-md"
-              }`}
-              style={
-                isRevealing
-                  ? { maskImage: "linear-gradient(180deg, #000 calc(100% - 1.6em), rgba(0,0,0,0.55) 100%)", WebkitMaskImage: "linear-gradient(180deg, #000 calc(100% - 1.6em), rgba(0,0,0,0.55) 100%)" }
-                  : undefined
-              }
-            >
-              <div className="prose prose-sm dark:prose-invert max-w-none break-words [&_p]:my-1 [&_ol]:my-1 [&_ul]:my-1">
-                {textNeedsMarkdown(smoothText) ? (
-                  <ReactMarkdown
-                    components={{
-                      img: ({ node: _n, src, ...props }) => {
-                        if (!src || (typeof src === "string" && src.trim() === "")) return null;
-                        return (
-                          <img
-                            {...props}
-                            src={src}
-                            className="my-1 max-h-48 rounded-lg border border-border/40 object-cover"
-                            loading="lazy"
-                          />
-                        );
-                      },
-                    }}
-                  >
-                    {smoothText}
-                  </ReactMarkdown>
-                ) : (
-                  <PlainMessageText text={smoothText} />
-                )}
+            isUser ? (
+              textNeedsMarkdown(smoothText) ? (
+                <div className="gx-bub gx-md">{bodyContent}</div>
+              ) : (
+                <p>{bodyContent}</p>
+              )
+            ) : (
+              <div className="gx-md" style={revealStyle}>
+                {bodyContent}
                 {isRevealing && (
                   <span
                     aria-hidden
-                    className="ml-0.5 inline-block h-3.5 w-[2px] translate-y-0.5 rounded-sm bg-primary/70 align-middle"
+                    className="gx-caret"
                     style={{ animation: "chat-caret-blink 1s steps(2) infinite" }}
                   />
                 )}
               </div>
-            </div>
+            )
           )}
         {pickedMedia.length > 0 && (
-          <div className={`mt-2 flex flex-wrap gap-2 ${isUser ? "justify-end" : ""}`}>
+          <div className={`gx-att${isUser ? " gx-att-end" : ""}`}>
             {pickedMedia.map((m, i) => (
-              <div key={i} className="w-24 overflow-hidden rounded-lg border border-border/60 bg-muted shadow-sm">
-                <div className="relative aspect-square w-full">
+              <div key={i} className="gx-pm">
+                <div className="gx-pm-m">
                   {m.u ? (
                     m.k === "video" ? (
-                      <video src={m.u} className="h-full w-full object-cover" muted playsInline preload="metadata" />
+                      <video src={m.u} muted playsInline preload="metadata" />
                     ) : (
-                      <img src={m.u} alt={m.t} className="h-full w-full object-cover" loading="lazy" />
+                      <img src={m.u} alt={m.t} loading="lazy" />
                     )
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center text-muted-foreground">
-                      <ImageIcon className="h-5 w-5" />
-                    </div>
+                    <ImageIcon className="gx-i" />
                   )}
                 </div>
-                <div className="truncate px-1.5 py-1 text-[10px] font-medium text-muted-foreground">{m.t}</div>
+                <div className="gx-pm-t">{m.t}</div>
               </div>
             ))}
           </div>
         )}
         {attachedAudios.length > 0 && (
-          <div className={`mt-2 flex flex-col gap-2 ${isUser ? "items-end" : ""}`}>
+          <div className={`gx-att${isUser ? " gx-att-end" : ""}`}>
             {attachedAudios.map((a, i) => (
               <div
                 key={`msg-audio-${i}`}
-                className="flex max-w-full items-center gap-2 rounded-xl border border-border/60 bg-muted/60 px-2.5 py-2 shadow-sm"
+                className="gx-att-i"
               >
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                  <AudioWaveform className="h-4 w-4" />
+                <div className="gx-att-th gx-att-ic">
+                  <AudioWaveform className="gx-i" />
                 </div>
                 <div className="min-w-0">
-                  <div className="max-w-52 truncate text-[11px] font-medium text-muted-foreground">{a.name}</div>
-                  <audio src={a.url} controls preload="metadata" className="mt-1 h-8 w-56 max-w-full" />
+                  <div className="gx-att-n">{a.name}</div>
+                  <audio src={a.url} controls preload="metadata" className="gx-att-au" />
                 </div>
               </div>
             ))}
@@ -6155,52 +6121,59 @@ function MessageActions({ messageId, text, isUser, onReply, onEdit }: { messageI
   };
 
   return (
-    <div className={`mt-1 flex items-center gap-0.5 text-muted-foreground opacity-0 transition group-hover/msg:opacity-100 ${isUser ? "justify-end" : ""}`}>
+    <div className={`gx-acts opacity-0 transition group-hover/msg:opacity-100 focus-within:opacity-100${isUser ? " gx-acts-end" : ""}`}>
       {onReply && (
         <button
+          type="button"
           onClick={onReply}
-          className="rounded-md p-1.5 transition hover:bg-muted hover:text-foreground"
+          className="gx-act-b"
           title="Répondre"
           aria-label="Répondre"
         >
-          <Reply className="h-3.5 w-3.5" />
+          <Reply className="gx-i" />
         </button>
       )}
       {onEdit && (
         <button
+          type="button"
           onClick={onEdit}
-          className="rounded-md p-1.5 transition hover:bg-muted hover:text-foreground"
+          className="gx-act-b"
           title="Modifier ce message et reprendre la conversation ici"
           aria-label="Modifier ce message et reprendre la conversation ici"
         >
-          <Pencil className="h-3.5 w-3.5" />
+          <Pencil className="gx-i" />
         </button>
       )}
       <button
+        type="button"
         onClick={handleCopy}
-        className="rounded-md p-1.5 transition hover:bg-muted hover:text-foreground"
+        className="gx-act-b"
         title="Copier"
         aria-label="Copier"
       >
-        {copied ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
+        {copied ? <Check className="gx-i gx-up" /> : <Copy className="gx-i" />}
       </button>
       {!isUser && (
         <>
           <button
+            type="button"
             onClick={() => setFb("up")}
-            className={`rounded-md p-1.5 transition hover:bg-muted hover:text-foreground ${feedback === "up" ? "text-emerald-500" : ""}`}
+            className={`gx-act-b${feedback === "up" ? " gx-up" : ""}`}
             title="Bonne réponse"
             aria-label="Bonne réponse"
+            aria-pressed={feedback === "up"}
           >
-            <ThumbsUp className="h-3.5 w-3.5" />
+            <ThumbsUp className="gx-i" />
           </button>
           <button
+            type="button"
             onClick={() => setFb("down")}
-            className={`rounded-md p-1.5 transition hover:bg-muted hover:text-foreground ${feedback === "down" ? "text-red-500" : ""}`}
+            className={`gx-act-b${feedback === "down" ? " gx-dn" : ""}`}
             title="Mauvaise réponse"
             aria-label="Mauvaise réponse"
+            aria-pressed={feedback === "down"}
           >
-            <ThumbsDown className="h-3.5 w-3.5" />
+            <ThumbsDown className="gx-i" />
           </button>
         </>
       )}

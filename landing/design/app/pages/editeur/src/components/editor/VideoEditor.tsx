@@ -2428,7 +2428,7 @@ function AssetsPanel({
 
 
 function TextPanel({ store, currentTime }: { store: StoreType; currentTime: number }) {
-  const [value, setValue] = useState("Votre accroche ici");
+  const [value, setValue] = useState("Ton accroche ici");
   const add = (templateKey: string) => {
     // Le texte se pose au curseur, en calque au-dessus de la vidéo.
     store.addClip(
@@ -3328,7 +3328,7 @@ function AudioAiPanel({
 export type DropPayload = { url: string; name: string; kind: "video" | "image" | "audio" };
 
 /** Largeur de la colonne de contrôle des calques (à gauche de la timeline). */
-const GUTTER = 64;
+const GUTTER = 90;
 
 function Timeline({
   store,
@@ -3340,6 +3340,8 @@ function Timeline({
   setZoom,
   fitSignal,
   onShowShortcuts,
+  onDuplicate,
+  onOpenPanel,
   onDropAsset,
 }: {
   store: StoreType;
@@ -3352,6 +3354,10 @@ function Timeline({
   /** Incrémenté par l'éditeur pour demander un « ajuster au projet » (GRW-17). */
   fitSignal: number;
   onShowShortcuts: () => void;
+  /** Duplique le clip sélectionné (bouton « Dupliquer » de la maquette). */
+  onDuplicate: () => void;
+  /** Ouvre un onglet d'outils (« + Média », « + Texte », « + Audio »). */
+  onOpenPanel: (key: PanelKey) => void;
   onDropAsset: (payload: DropPayload, at: number) => void;
 }) {
   /** Fin réelle du montage : borne la lecture et le scrub. */
@@ -3430,7 +3436,7 @@ function Timeline({
   /** Calque compatible survolé pendant le glissement vertical d'un clip. */
   const [dropTrackId, setDropTrackId] = useState<string | null>(null);
   /** Hauteur des pistes : ajustée automatiquement pour toutes les voir d'un coup. */
-  const ROW_H = 44;
+  const ROW_H = 34;
   const RULER_H = 24;
   const visibleCount = store.composition.tracks.length;
   const fitHeight = Math.min(360, RULER_H + visibleCount * ROW_H + 44);
@@ -3845,31 +3851,46 @@ function Timeline({
 
 
 
+  /** Libellé de piste façon maquette : Vidéo / Texte / Sous-titres / Audio (numérotés si plusieurs). */
+  const trackLabels = useMemo(() => {
+    const seen: Record<string, number> = {};
+    const map = new Map<string, string>();
+    for (const t of displayTracks) {
+      const base =
+        t.kind === "audio"
+          ? "Audio"
+          : t.kind === "text"
+            ? t.name === SUBTITLE_TRACK_NAME
+              ? "Sous-titres"
+              : "Texte"
+            : "Vidéo";
+      seen[base] = (seen[base] ?? 0) + 1;
+      map.set(t.id, seen[base] > 1 ? `${base} ${seen[base]}` : base);
+    }
+    return map;
+  }, [displayTracks]);
+
   return (
-    <div className="shrink-0 border-t border-border bg-card/40">
+    <div className="gx-ed-t">
       {/* GRW-3 : avertissement trous vidéo > 3 s (écran noir à l'export). */}
       {gaps.length > 0 ? (
-        <div className="flex items-center justify-between gap-3 border-b border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-destructive">
+        <div className="gx-note gx-ed-gap">
           <span>
             {gaps.length === 1
               ? `1 trou de ${Math.round(gaps[0]!.duration)} s sans vidéo — la vidéo sera noire à cet endroit`
               : `${gaps.length} trous sans vidéo — la vidéo sera noire à ces endroits`}
           </span>
-          <Button
-            size="sm"
-            variant="outline"
-            className="h-7"
-            onClick={() => store.commit((d) => tightenTimeline(d))}
-          >
+          <button type="button" className="gx-btn gx-sm" onClick={() => store.commit((d) => tightenTimeline(d))}>
             Resserrer la timeline
-          </Button>
+          </button>
         </div>
       ) : null}
       {/* Poignée de redimensionnement de la zone des calques (comme CapCut). */}
       <div
         role="separator"
         aria-label="Redimensionner la timeline"
-        className="group relative h-2 cursor-ns-resize"
+        title="Glisser pour redimensionner · double-clic pour ajuster"
+        className="gx-tl-grip"
         onPointerDown={(e) => {
           e.preventDefault();
           const startY = e.clientY;
@@ -3885,106 +3906,146 @@ function Timeline({
           window.addEventListener("pointerup", onUp);
         }}
         onDoubleClick={() => setManualHeight(false)}
-      >
-        <span className="absolute left-1/2 top-1/2 h-1 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full bg-border transition-colors group-hover:bg-primary/60" />
-      </div>
-      <div ref={toolbarRef} className="flex items-center gap-2 px-3 py-2">
-        <IconAction
-          label={playing ? "Pause" : "Lecture"}
-          hint="Espace"
-          side="top"
+      />
+      <div ref={toolbarRef} className="gx-tl-tools">
+        <button
+          type="button"
+          className="gx-play"
+          aria-label={playing ? "Pause" : "Lecture"}
+          title={playing ? "Pause · Espace" : "Lecture · Espace"}
           onClick={() => setPlaying(!playing)}
         >
-          {playing ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-        </IconAction>
-        <span className="w-28 font-mono text-xs text-muted-foreground">
-          {fmt(time)} / {fmt(store.duration)}
-        </span>
-        <IconAction label="Annuler la dernière action" hint="⌘/Ctrl + Z" side="top" onClick={store.undo} disabled={!store.canUndo}>
-          <Undo2 className="h-4 w-4" />
-        </IconAction>
-        <IconAction label="Rétablir" hint="⌘/Ctrl + Maj + Z" side="top" onClick={store.redo} disabled={!store.canRedo}>
-          <Redo2 className="h-4 w-4" />
-        </IconAction>
-        <IconAction
-          label="Découper à la tête de lecture"
-          hint="S"
-          side="top"
+          {playing ? <Pause className="gx-i" /> : <Play className="gx-i" />}
+        </button>
+        <button
+          type="button"
+          aria-label="Annuler la dernière action"
+          title="Annuler · ⌘/Ctrl + Z"
+          onClick={store.undo}
+          disabled={!store.canUndo}
+        >
+          ↶
+        </button>
+        <button
+          type="button"
+          aria-label="Rétablir"
+          title="Rétablir · ⌘/Ctrl + Maj + Z"
+          onClick={store.redo}
+          disabled={!store.canRedo}
+        >
+          ↷
+        </button>
+        <button
+          type="button"
+          title="Découper à la tête de lecture · S"
           disabled={!store.selectedClipId}
           onClick={() => store.selectedClipId && store.splitClip(store.selectedClipId, time)}
         >
-          <Scissors className="h-4 w-4" />
-        </IconAction>
-        <IconAction
-          label="Supprimer le clip sélectionné"
-          hint="Suppr"
-          side="top"
+          Découper
+        </button>
+        <button type="button" title="Dupliquer le clip sélectionné" disabled={!store.selectedClipId} onClick={onDuplicate}>
+          Dupliquer
+        </button>
+        <button type="button" title="Ajouter un média depuis tes assets" onClick={() => onOpenPanel("assets")}>
+          + Média
+        </button>
+        <button type="button" title="Ajouter un titre ou un texte" onClick={() => onOpenPanel("text")}>
+          + Texte
+        </button>
+        <button type="button" title="Ajouter une voix off ou une musique" onClick={() => onOpenPanel("audio")}>
+          + Audio
+        </button>
+        <button
+          type="button"
+          className="gx-tl-ib"
+          aria-label="Supprimer le clip sélectionné"
+          title="Supprimer le clip sélectionné · Suppr"
           disabled={!store.selectedClipId}
           onClick={() => store.selectedClipId && store.removeClip(store.selectedClipId)}
         >
-          <Trash2 className="h-4 w-4" />
-        </IconAction>
-        <IconAction
-          label={
+          <Trash2 className="gx-i" />
+        </button>
+        <button
+          type="button"
+          className="gx-tl-ib"
+          aria-label={
             mergePair
               ? "Assembler les 2 séquences sélectionnées"
-              : "Sélectionne 2 séquences vidéo du même calque (⌘/Ctrl + clic) pour les assembler"
+              : "Sélectionne 2 séquences vidéo du même calque (Maj + clic) pour les assembler"
           }
-          side="top"
+          title={
+            mergePair
+              ? "Assembler les 2 séquences sélectionnées"
+              : "Maj + clic sur 2 séquences vidéo du même calque pour les assembler"
+          }
           disabled={!mergePair || merging}
           onClick={handleMerge}
         >
-          {merging ? <Loader2 className="h-4 w-4 animate-spin" /> : <Combine className="h-4 w-4" />}
-        </IconAction>
-        <span className="text-[11px] text-muted-foreground">
-          {mergeIds.length > 0
-            ? `${mergeIds.length}/2 séquence${mergeIds.length > 1 ? "s" : ""} à assembler`
-            : "Maj + clic sur 2 séquences pour les assembler"}
+          {merging ? <Loader2 className="gx-i animate-spin" /> : <Combine className="gx-i" />}
+        </button>
+        {mergeIds.length > 0 ? (
+          <small className="gx-hint">
+            {`${mergeIds.length}/2 séquence${mergeIds.length > 1 ? "s" : ""} à assembler`}
+          </small>
+        ) : null}
+        <span className="gx-sp" />
+        <button
+          type="button"
+          className="gx-tl-ib"
+          aria-label="Zoom arrière"
+          title="Zoom arrière · −"
+          onClick={() => setZoom(Math.max(10, Math.round(zoom / 1.3)))}
+        >
+          <ZoomOut className="gx-i" />
+        </button>
+        <button
+          type="button"
+          className="gx-tl-ib"
+          aria-label="Zoom avant"
+          title="Zoom avant · +"
+          onClick={() => setZoom(Math.min(400, Math.round(zoom * 1.3)))}
+        >
+          <ZoomIn className="gx-i" />
+        </button>
+        <button
+          type="button"
+          className="gx-tl-ib"
+          aria-label="Ajuster la timeline au projet"
+          title="Ajuster la timeline au projet · Maj + Z"
+          onClick={fitZoom}
+        >
+          <Maximize className="gx-i" />
+        </button>
+        <button
+          type="button"
+          className="gx-tl-ib"
+          aria-label="Raccourcis clavier"
+          title="Raccourcis clavier · ?"
+          onClick={onShowShortcuts}
+        >
+          <Keyboard className="gx-i" />
+        </button>
+        <button
+          type="button"
+          className="gx-tl-ib"
+          aria-label={trackAreaHeight > 260 ? "Réduire les calques" : "Agrandir les calques"}
+          title={trackAreaHeight > 260 ? "Réduire la zone des calques" : "Agrandir la zone des calques"}
+          onClick={() => {
+            setManualHeight(true);
+            setTrackAreaHeight((h) => (h > 260 ? 140 : 420));
+          }}
+        >
+          {trackAreaHeight > 260 ? <ChevronDown className="gx-i" /> : <ChevronUp className="gx-i" />}
+        </button>
+        <span className="gx-num">
+          {fmt(time)} / {fmt(store.duration)}
         </span>
-        <div className="ml-auto flex items-center gap-1">
-          <IconAction label="Zoom arrière" hint="−" side="top" onClick={() => setZoom(Math.max(10, Math.round(zoom / 1.3)))}>
-            <ZoomOut className="h-4 w-4" />
-          </IconAction>
-          <IconAction label="Zoom avant" hint="+" side="top" onClick={() => setZoom(Math.min(400, Math.round(zoom * 1.3)))}>
-            <ZoomIn className="h-4 w-4" />
-          </IconAction>
-          <IconAction label="Ajuster la timeline au projet" hint="Maj + Z" side="top" onClick={fitZoom}>
-            <Maximize className="h-4 w-4" />
-          </IconAction>
-          <IconAction label="Raccourcis clavier" hint="?" side="top" onClick={onShowShortcuts}>
-            <Keyboard className="h-4 w-4" />
-          </IconAction>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                size="icon"
-                variant="ghost"
-                className="h-8 w-8"
-                aria-label={trackAreaHeight > 260 ? "Réduire les calques" : "Agrandir les calques"}
-                onClick={() => {
-                  setManualHeight(true);
-                  setTrackAreaHeight((h) => (h > 260 ? 140 : 420));
-                }}
-              >
-                {trackAreaHeight > 260 ? (
-                  <ChevronDown className="h-4 w-4" />
-                ) : (
-                  <ChevronUp className="h-4 w-4" />
-                )}
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="top">
-              {trackAreaHeight > 260 ? "Réduire la zone des calques" : "Agrandir la zone des calques"}
-            </TooltipContent>
-          </Tooltip>
-        </div>
-
       </div>
 
       <div ref={tracksRef} className="min-w-0">
       <ScrollArea style={{ height: trackAreaHeight }}>
         <div
-          className={cn("relative", dragOver && "bg-primary/5 ring-1 ring-inset ring-primary/40")}
+          className={cn("gx-tl-area", dragOver && "gx-drop")}
           style={{ width: Math.max(width + GUTTER, 600) }}
           onDragEnter={(e) => {
             e.preventDefault();
@@ -4005,13 +4066,9 @@ function Timeline({
         >
 
           {/* règle */}
-          <div className="relative h-6 cursor-pointer border-b border-border" onMouseDown={onScrub}>
+          <div className="gx-tl-ru" onMouseDown={onScrub}>
             {Array.from({ length: Math.ceil(timelineEnd) + 1 }).map((_, i) => (
-              <span
-                key={i}
-                className="absolute top-1 text-[10px] text-muted-foreground"
-                style={{ left: GUTTER + i * zoom }}
-              >
+              <span key={i} style={{ left: GUTTER + i * zoom }}>
                 {i}s
               </span>
             ))}
@@ -4022,9 +4079,7 @@ function Timeline({
             <div
               key={track.id}
               data-track-id={track.id}
-              className={`group relative border-b border-border/60 ${
-                dropTrackId === track.id ? "bg-primary/10 ring-1 ring-inset ring-primary/60" : ""
-              }`}
+              className={cn("gx-tl-row", dropTrackId === track.id && "gx-drop")}
               style={{ height: ROW_H }}
               onMouseDown={(e) => {
                 if (e.target === e.currentTarget) onScrub(e);
@@ -4036,12 +4091,10 @@ function Timeline({
                   type="button"
                   title="Deux clips se chevauchent — clique pour résoudre"
                   aria-label="Deux clips se chevauchent — clique pour résoudre"
-                  className="absolute top-0 z-30 h-full border border-destructive/70"
+                  className="gx-tl-ov"
                   style={{
                     left: GUTTER + ov.from * zoom,
                     width: Math.max(4, (ov.to - ov.from) * zoom),
-                    backgroundImage:
-                      "repeating-linear-gradient(45deg, color-mix(in oklab, var(--destructive) 55%, transparent) 0 6px, transparent 6px 12px)",
                   }}
                   onClick={() =>
                     store.commit((d) => {
@@ -4065,6 +4118,15 @@ function Timeline({
                   clip={clip}
                   zoom={zoom}
                   offset={GUTTER}
+                  variant={
+                    track.kind === "audio"
+                      ? "gx-a"
+                      : track.kind === "text"
+                        ? track.name === SUBTITLE_TRACK_NAME
+                          ? "gx-s"
+                          : "gx-t"
+                        : "gx-v"
+                  }
                   selected={store.selectedClipId === clip.id}
                   mergeSelected={mergeIds.includes(clip.id)}
                   onPointerDown={(e) => startClipDrag(e, clip)}
@@ -4077,71 +4139,58 @@ function Timeline({
                   }}
                 />
               ))}
-              {/* Colonne de contrôle du calque : ordre dans la pile + suppression. */}
-              <div
-                className="sticky left-0 z-40 flex h-full flex-col items-center justify-center border-r border-border/60 bg-card/95"
-                style={{ width: GUTTER }}
-              >
-                <span className="text-muted-foreground/70">
-                  {track.kind === "text" ? (
-                    <Type className="h-3.5 w-3.5" />
-                  ) : track.kind === "audio" ? (
-                    <Music className="h-3.5 w-3.5" />
-                  ) : (
-                    <Film className="h-3.5 w-3.5" />
-                  )}
-                </span>
-                <div className="flex items-center gap-0.5 opacity-0 transition group-hover:opacity-100">
+              {/* Colonne du calque : nom (maquette) + ordre dans la pile et suppression au survol. */}
+              <div className="gx-tl-lab" style={{ width: GUTTER }}>
+                <small>{trackLabels.get(track.id) ?? ""}</small>
+                <span className="gx-tl-lact">
                   <button
                     type="button"
                     aria-label="Monter le calque"
-                    className="rounded p-0.5 text-muted-foreground transition hover:bg-muted hover:text-foreground disabled:opacity-30"
+                    title="Monter le calque"
                     disabled={track.kind === "audio"}
                     onClick={() => store.moveTrack(track.id, "up")}
                   >
-                    <ChevronUp className="h-3.5 w-3.5" />
+                    <ChevronUp className="gx-i" />
                   </button>
                   <button
                     type="button"
                     aria-label="Supprimer le calque"
                     title="Supprimer le calque"
-                    className="rounded p-0.5 text-muted-foreground transition hover:bg-destructive/10 hover:text-destructive"
                     onClick={() => store.removeTrack(track.id)}
                   >
-                    <Trash2 className="h-3.5 w-3.5" />
+                    <Trash2 className="gx-i" />
                   </button>
                   <button
                     type="button"
                     aria-label="Descendre le calque"
-                    className="rounded p-0.5 text-muted-foreground transition hover:bg-muted hover:text-foreground disabled:opacity-30"
+                    title="Descendre le calque"
                     disabled={track.kind === "audio"}
                     onClick={() => store.moveTrack(track.id, "down")}
                   >
-                    <ChevronDown className="h-3.5 w-3.5" />
+                    <ChevronDown className="gx-i" />
                   </button>
-                </div>
+                </span>
               </div>
             </div>
           ))}
 
 
           {/* Ajout rapide d'un calque vide (texte ou média superposé). */}
-          <div className="sticky left-0 flex w-fit items-center gap-2 px-2 py-2">
-            <Button size="sm" variant="outline" className="h-7 text-xs" onClick={() => store.addTrack("video")}>
+          <div className="gx-tl-add">
+            <button type="button" className="gx-btn gx-sm" onClick={() => store.addTrack("video")}>
               + Calque média
-            </Button>
-            <Button size="sm" variant="outline" className="h-7 text-xs" onClick={() => store.addTrack("text")}>
+            </button>
+            <button type="button" className="gx-btn gx-sm" onClick={() => store.addTrack("text")}>
               + Calque texte
-            </Button>
-            <Button size="sm" variant="outline" className="h-7 text-xs" onClick={() => store.addTrack("audio")}>
+            </button>
+            <button type="button" className="gx-btn gx-sm" onClick={() => store.addTrack("audio")}>
               + Calque audio
-            </Button>
-
+            </button>
           </div>
 
 
 
-          {/* Tête de lecture : grande zone de saisie + poignée visible. */}
+          {/* Tête de lecture rouge (maquette) : grande zone de saisie + poignée visible. */}
           <div
             role="slider"
             aria-label="Curseur de lecture"
@@ -4149,7 +4198,7 @@ function Timeline({
             aria-valuemax={duration}
             aria-valuenow={time}
             tabIndex={0}
-            className="absolute top-0 z-50 h-full w-6 -translate-x-1/2 cursor-ew-resize touch-none"
+            className="gx-tl-head"
             style={{ left: GUTTER + time * zoom }}
             onPointerDown={onPlayheadDown}
             onKeyDown={(e) => {
@@ -4157,9 +4206,7 @@ function Timeline({
               if (e.key === "ArrowRight") setTime(Math.min(duration, time + 0.1));
             }}
           >
-            <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-primary" />
-            <span className="absolute left-1/2 top-0 h-4 w-4 -translate-x-1/2 rounded-b-md bg-primary shadow-sm" />
-            <span className="absolute left-1/2 top-3 h-2 w-2 -translate-x-1/2 rotate-45 bg-primary" />
+            <b className="gx-ph-l" />
           </div>
         </div>
       </ScrollArea>
@@ -4168,26 +4215,13 @@ function Timeline({
   );
 }
 
-/** Pellicule légère : une seule frame capturée est répétée sans recharger le média. */
-function ClipFilmstrip({ clip, width, frame }: { clip: Clip; width: number; frame: string | null }) {
-  const src = frame ?? clip.poster ?? (clip.kind === "video" ? "" : clip.src ?? "");
-  const count = Math.max(1, Math.min(8, Math.round(width / 56)));
-  if (!src) return null;
-  return (
-    <span aria-hidden className="pointer-events-none absolute inset-0 flex">
-      {Array.from({ length: count }, (_, i) => (
-        <img key={i} src={src} alt="" decoding="async" className="h-full min-w-0 flex-1 object-cover" />
-      ))}
-    </span>
-  );
-}
-
-/** Bloc de clip dans la timeline, avec vignette réelle du média en fond. */
+/** Bloc de clip dans la timeline : pastille colorée par piste (maquette) + vignette du média. */
 function TimelineClipBase({
 
   clip,
   zoom,
   offset = 0,
+  variant = "gx-v",
   selected,
   mergeSelected = false,
   onPointerDown,
@@ -4197,6 +4231,8 @@ function TimelineClipBase({
   clip: Clip;
   zoom: number;
   offset?: number;
+  /** Couleur de piste : gx-v vidéo, gx-t texte, gx-s sous-titres, gx-a audio. */
+  variant?: "gx-v" | "gx-t" | "gx-s" | "gx-a";
   selected: boolean;
   /** Retenue pour l'assemblage (Maj + clic) : mise en évidence en vert. */
   mergeSelected?: boolean;
@@ -4208,52 +4244,31 @@ function TimelineClipBase({
   const frame = useClipFrame(clip);
   const width = Math.max(24, clip.duration * zoom - 2);
   const hasMedia = clip.kind !== "audio" && clip.kind !== "text" && Boolean(clip.src);
+  const thumb = hasMedia ? frame ?? clip.poster ?? (clip.kind === "video" ? "" : clip.src ?? "") : "";
   // GRW-4 : un média injoignable/expiré doit se voir immédiatement.
   const mediaBroken = useClipMediaStatus(clip.src) === "error";
   return (
     <div
       role="button"
       tabIndex={0}
+      aria-pressed={selected}
       onPointerDown={onPointerDown}
       onKeyDown={onKeyDown}
-      title={mediaBroken ? "Média introuvable ou expiré" : undefined}
+      title={mediaBroken ? "Média introuvable ou expiré" : clip.name}
       className={cn(
-        "absolute top-1 h-9 cursor-grab touch-none select-none overflow-hidden rounded-md border text-left text-[11px] transition-colors active:cursor-grabbing",
-        mediaBroken
-          ? "border-destructive bg-destructive/15 text-foreground"
-          : mergeSelected
-            ? "border-emerald-500 bg-emerald-500/25 text-foreground ring-1 ring-emerald-500"
-            : selected
-            ? "border-primary bg-primary/20 text-foreground"
-            : "border-border bg-muted text-muted-foreground hover:border-primary/50",
+        "gx-c gx-tlc",
+        mediaBroken ? "gx-err" : variant,
+        mergeSelected ? "gx-mrg" : selected ? "gx-sel" : null,
       )}
-
       style={{ left: offset + clip.start * zoom, width }}
     >
-      {hasMedia ? (
-        <span className="pointer-events-none absolute inset-0 opacity-70">
-          <ClipFilmstrip clip={clip} width={width} frame={frame} />
-        </span>
-      ) : frame && clip.kind !== "audio" ? (
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-60"
-          style={{
-            backgroundImage: `url(${frame})`,
-            backgroundRepeat: "repeat-x",
-            backgroundSize: "auto 100%",
-          }}
-        />
-      ) : null}
-      <span className="pointer-events-none absolute inset-0 bg-background/35" />
-      <span className="relative block truncate px-2 pt-1.5 font-medium drop-shadow">
-        {mediaBroken ? <span className="mr-1 text-destructive">⚠</span> : null}
-        {clip.name}
-      </span>
+      {thumb && width > 60 ? <img className="gx-tlc-th" src={thumb} alt="" decoding="async" /> : null}
+      <b>
+        {mediaBroken ? "⚠ " : null}
+        {clip.kind === "text" && clip.text ? clip.text.replace(/\n/g, " ") : clip.name}
+      </b>
 
-      {clip.transition ? (
-        <span className="absolute right-1 top-1 rounded bg-primary/40 px-1 text-[9px] text-foreground">↹</span>
-      ) : null}
+      {clip.transition ? <span className="gx-tlc-tr" aria-label="Transition">↹</span> : null}
       {/* Poignées d'étirement : allonger / raccourcir le temps d'affichage. */}
       {(["start", "end"] as const).map((edge) => (
         <span
@@ -4261,11 +4276,7 @@ function TimelineClipBase({
           role="presentation"
           title={edge === "start" ? "Ajuster le début" : "Ajuster la fin"}
           onPointerDown={(e) => onResizeDown(e, edge)}
-          className={cn(
-            "absolute inset-y-0 z-10 w-2 cursor-ew-resize touch-none",
-            edge === "start" ? "left-0" : "right-0",
-            mergeSelected ? "bg-emerald-500/70" : selected ? "bg-primary/70" : "bg-foreground/10 opacity-0 hover:opacity-100",
-          )}
+          className={cn("gx-tlc-h", edge === "start" ? "gx-s0" : "gx-e0")}
         />
       ))}
 
