@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
-import { ArrowLeft, Download, Loader2, Maximize2, Pencil, Plus, RefreshCw, Send, Trash2 } from "lucide-react";
+import { ArrowLeft, Download, Loader2, Pencil, Plus, RefreshCw, Send, Trash2 } from "lucide-react";
 import { zipSync } from "fflate";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -934,7 +934,7 @@ function BatchDetailPage() {
                         <figure key={k} className="gx-r45"><div className="gx-bph gx-wait" aria-label="Aperçu en cours" /></figure>
                       ))
                     ) : (
-                      <p className="gx-hint">Aucun aperçu pour l'instant.</p>
+                      <p className="gx-hint col-span-full">Aucun aperçu pour l'instant.</p>
                     )
                   ) : visiblePreviewItems.map((i) => {
                     const copy = (i.copy ?? {}) as any;
@@ -1075,7 +1075,7 @@ function BatchDetailPage() {
                           <figure key={k} className={ratioClass(["4:5", "1:1", "9:16"][k % 3])}><div className="gx-bph gx-wait" aria-label="Pub en cours" /></figure>
                         ))
                       ) : (
-                        <p className="gx-hint">Aucune pub pour l'instant.</p>
+                        <p className="gx-hint col-span-full">Aucune pub pour l'instant.</p>
                       )
                     ) : visibleFinals.map((i) => (
                       <figure key={i.id} className={ratioClass(i.aspect_ratio)} title={i.copy?.scene ? `${i.variant_key} · ${i.copy.scene}` : angleLabel(i.angle_key)}>

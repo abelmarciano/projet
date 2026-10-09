@@ -1043,7 +1043,7 @@ function DraftCampaignsView({ items, total, loading, hasMetaCreds, viewMode, onC
         <div className="gx-cgrid gx-cp-grid">
           {cards.map((c: any) => (
             <div key={c.id} className="gx-ccard gx-cp-card" role="button" tabIndex={0} title="Voir le détail de la campagne"
-              onClick={() => onOpenDetail(c.id)} onKeyDown={(e) => { if (e.key === "Enter") onOpenDetail(c.id); }}>
+              onClick={() => onOpenDetail(c.id)} onKeyDown={(e) => { if (e.key === "Enter" && e.target === e.currentTarget) onOpenDetail(c.id); }}>
               {c._thumbs[0]?.video
                 ? <span className="gx-cp-img"><VideoPoster src={c._thumbs[0].url} className="h-full w-full object-cover" /></span>
                 : c._thumbs[0]?.url
@@ -1074,7 +1074,7 @@ function DraftCampaignsView({ items, total, loading, hasMetaCreds, viewMode, onC
       </>}>
         {loading ? <LoadingRow cols={9} text="Chargement de tes brouillons…" /> : cards.map((c: any) => (
           <tr key={c.id} className="gx-lr" tabIndex={0} title="Voir le détail de la campagne"
-            onClick={() => onOpenDetail(c.id)} onKeyDown={(e) => { if (e.key === "Enter") onOpenDetail(c.id); }}>
+            onClick={() => onOpenDetail(c.id)} onKeyDown={(e) => { if (e.key === "Enter" && e.target === e.currentTarget) onOpenDetail(c.id); }}>
             <td>{mainAction(c)}</td>
             <td>
               <div className="gx-cp-cn">
@@ -1109,7 +1109,7 @@ function DraftAdSetsView({ items, total, loading, onOpenDetail, onResetFilters }
     <CTable head={<><th>Action</th><th>Ensemble</th><th>Objectif</th><th>Pubs</th><th>Budget</th></>}>
       {loading ? <LoadingRow cols={6} text="Chargement de tes brouillons…" /> : rows.map((s: any) => (
         <tr key={s.id} className="gx-lr" tabIndex={0} title="Voir le détail de la campagne"
-          onClick={() => onOpenDetail(s.campaign_id)} onKeyDown={(e) => { if (e.key === "Enter") onOpenDetail(s.campaign_id); }}>
+          onClick={() => onOpenDetail(s.campaign_id)} onKeyDown={(e) => { if (e.key === "Enter" && e.target === e.currentTarget) onOpenDetail(s.campaign_id); }}>
           <td><Link to="/campaigns/new" search={{ id: s.campaign_id } as never} className="gx-btn gx-sm" onClick={(e) => e.stopPropagation()}>Reprendre</Link></td>
           <td><b title={frSetName(s.name)}>{frSetName(s.name)}</b><small>Campagne : {s.campaign_name}</small></td>
           <td>{objectiveText(s.objective)}</td>
@@ -1164,7 +1164,7 @@ function DraftAdsView({ items, total, loading, onChanged, onOpenDetail, onResetF
           const title = ca.headline || ad?.title || "Publicité sans titre";
           return (
             <tr key={ca.id} className="gx-lr" tabIndex={0} title="Voir le détail de la campagne" aria-busy={busyId === ca.id || undefined}
-              onClick={() => onOpenDetail(ca.campaign_id)} onKeyDown={(e) => { if (e.key === "Enter") onOpenDetail(ca.campaign_id); }}>
+              onClick={() => onOpenDetail(ca.campaign_id)} onKeyDown={(e) => { if (e.key === "Enter" && e.target === e.currentTarget) onOpenDetail(ca.campaign_id); }}>
               <td><Link to="/campaigns/new" search={{ id: ca.campaign_id } as never} className="gx-btn gx-sm" onClick={(e) => e.stopPropagation()}>Reprendre</Link></td>
               <td>
                 <div className="gx-cp-cn">
@@ -1310,7 +1310,7 @@ function MetaCampaignsView({ items, total, loading, viewMode, trend, onChanged, 
         <div className="gx-cp-kgrid">
           {shownCards.map((c: any) => (
             <div key={c.id} className="gx-kard gx-cp-card" role="button" tabIndex={0} title="Voir le détail de la campagne"
-              onClick={() => onOpenDetail(c)} onKeyDown={(e) => { if (e.key === "Enter") onOpenDetail(c); }}>
+              onClick={() => onOpenDetail(c)} onKeyDown={(e) => { if (e.key === "Enter" && e.target === e.currentTarget) onOpenDetail(c); }}>
               <div className="gx-row">
                 {toggleOf(c)}<MetaLiveBadge campaign={c} /><OriginBadge via={!!c.via_growthity} />
                 <span className="gx-sp" />

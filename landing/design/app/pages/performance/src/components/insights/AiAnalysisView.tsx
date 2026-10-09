@@ -7,6 +7,7 @@ import { frSetName } from "@/lib/meta-labels";
 import { frMoney, frNumber, frPercent } from "@/lib/format";
 import { openMetaAdInChat } from "@/lib/meta-chat-handoff";
 import { BudgetIncreaseDialog } from "@/components/results/BudgetIncreaseDialog";
+import { MetaConnectButton } from "@/components/MetaConnectDialog";
 
 /*
  * Onglet « Quoi faire ? » : cartes .gx-ang / .gx-anc de la maquette Performance.
@@ -65,6 +66,12 @@ export function AiAnalysisView({ range, periodLabel }: { range: { since: string;
           <b>L'analyse n'a pas pu aboutir</b>
           <span>Réessaie dans un instant.</span>
           <button type="button" className="gx-btn gx-sm" onClick={() => void q.refetch()}>Réessayer</button>
+        </div>
+      ) : (q.data as any)?.connected === false ? (
+        <div className="gx-empty">
+          <b>Connecte ton compte Meta</b>
+          <span>Je regarde tes pubs et je te dis lesquelles booster, tester ou couper.</span>
+          <MetaConnectButton />
         </div>
       ) : !(q.data as any)?.hasData || ordered.length === 0 ? (
         <div className="gx-empty">
