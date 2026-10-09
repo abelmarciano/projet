@@ -335,7 +335,7 @@ function GaleriePage() {
     return () => io.disconnect();
   }, [visible, filtered.length]);
 
-  const useActor = async (actor: UnifiedActor) => {
+  const openActor = async (actor: UnifiedActor) => {
     if (creatingActorId) return;
     const raw = actor.image;
     if (!raw) {
@@ -438,7 +438,7 @@ function GaleriePage() {
           <small>Depuis une photo ou une description · ⚡{frNumber(ACTOR_COST)}</small>
         </button>
         {loading
-          ? Array.from({ length: 7 }).map((_, i) => <div key={i} className="gx-atile gx-sk" aria-hidden />)
+          ? Array.from({ length: 7 }).map((_, i) => <div key={i} className="gx-atile" aria-hidden />)
           : filtered.slice(0, visible).map((actor, index) => (
             <ActorTile
               key={actor.key}
@@ -447,7 +447,7 @@ function GaleriePage() {
               loading={creatingActorId === actor.id}
               isFavorite={favs.has(actor.id)}
               onToggleFavorite={() => toggleFav(actor.id)}
-              onUse={() => void useActor(actor)}
+              onUse={() => void openActor(actor)}
               onRemove={() => void removeMine(actor)}
               priority={index < 10}
             />

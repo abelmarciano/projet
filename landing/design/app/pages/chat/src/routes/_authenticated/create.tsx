@@ -17,6 +17,7 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { AiModeSwitch } from "@/components/chat/AiModeSwitch";
 import { getClientAiMode } from "@/lib/ai-mode";
+import { getAiModeAccess } from "@/lib/ai-mode.functions";
 import { useQuery, useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
 import { getAdVersions } from "@/lib/ad-versions.functions";
 import { useServerFn } from "@tanstack/react-start";
@@ -743,6 +744,8 @@ function ChatCreatePage() {
 
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  // Mobile : la colonne des conversations est repliée, un bouton l'ouvre.
+  const [convsOpen, setConvsOpen] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setDebouncedSearch(search.trim()), 300);
     return () => clearTimeout(t);
@@ -950,207 +953,182 @@ function ChatCreatePage() {
     }
   }
 
+  const openConv = (id: string) => {
+    setConvsOpen(false);
+    navigate({ to: "/create", search: { c: id } });
+  };
+  const toggleOnKey = (e: React.KeyboardEvent<HTMLDivElement>, toggle: () => void) => {
+    if (e.target !== e.currentTarget) return;
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+  };
+  const renderConvRow = (c: ConvRow) => (
+    <ConversationRow
+      key={c.id}
+      conv={c}
+      active={c.id === convId}
+      folders={folderList}
+      onOpen={() => openConv(c.id)}
+      onDelete={() => handleDelete(c.id)}
+      onRename={() => handleRename(c.id, c.title)}
+      onFav={() => handleToggleFav(c.id, !c.is_favorite)}
+      onMove={(fid) => handleMoveToFolder(c.id, fid)}
+    />
+  );
+
   return (
-    <div className="console-chat-frame gx-chatv relative flex h-[calc(100vh-3.5rem)] w-full">
-      {/* Sidebar (animated width) */}
-      <div
-        ref={leftSidebarFrameRef}
-        className={`hidden shrink-0 overflow-hidden md:block ${
-          isResizingLeft ? "" : "transition-[width] duration-300 ease-in-out"
-        } ${leftCollapsed ? "" : "relative"}`}
-        style={{ width: leftCollapsed ? 0 : leftSidebarWidth }}
-      >
-        <aside className="gx-convs relative flex h-full flex-col" style={{ width: leftSidebarWidth }}>
-        <div className="gx-cv-h flex items-center justify-between gap-2 px-3 pt-3 pb-2">
-          <div className="flex items-center gap-1">
+    <div className="gx-page">
+    <div className={`gx-chatv relative${convsOpen ? " gx-cv-open" : ""}`}>
+      <aside className="gx-convs" aria-label="Conversations">
+        <div className="gx-cv-h">
+          <b>Conversations</b>
+          <div className="flex items-center gap-1.5">
             <button
-              onClick={() => setLeftCollapsed(true)}
-              className="rounded-md p-1.5 text-muted-foreground transition hover:bg-background hover:text-foreground"
-              title="Réduire la sidebar"
-              aria-label="Réduire la sidebar"
-            >
-              <PanelLeftClose className="h-3.5 w-3.5" />
-            </button>
-            <div className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-              Historique
-            </div>
-          </div>
-          <div className="flex items-center gap-1">
-            <button
-              onClick={handleCreateFolder}
-              className="rounded-md p-1.5 text-muted-foreground transition hover:bg-background hover:text-foreground"
-              title="Nouveau dossier"
-              aria-label="Nouveau dossier"
-            >
-              <FolderPlus className="h-3.5 w-3.5" />
-            </button>
-            <button
-              onClick={() => { void startConversation(); }}
+              type="button"
+              className="gx-ib gx-sm"
+              onClick={() => { setConvsOpen(false); void startConversation(); }}
               disabled={creatingNew}
-              className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-[11px] font-medium text-primary transition hover:bg-primary/20 disabled:opacity-60"
-              title="Nouvelle conversation"
+              aria-label="Nouvelle discussion"
+              title="Nouvelle discussion"
             >
-              <Plus className="h-3 w-3" />
-              <span className="leading-none">Nouveau</span>
+              {creatingNew ? <Loader2 className="gx-i animate-spin" /> : <Plus className="gx-i" />}
+            </button>
+            <button
+              type="button"
+              className="gx-ib gx-sm gx-cv-x"
+              onClick={() => setConvsOpen(false)}
+              aria-label="Fermer la liste des conversations"
+              title="Fermer"
+            >
+              <X className="gx-i" />
             </button>
           </div>
         </div>
-        <div className="px-3 pb-2">
-          <label className="gx-srch flex">
-            <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Rechercher…"
-              className="h-8 rounded-lg border-border/60 bg-background/60 pl-8 text-xs"
-            />
-          </label>
+        <label className="gx-srch">
+          <Search className="gx-i" aria-hidden />
+          <span className="gx-sr">Rechercher dans le chat…</span>
+          <input
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Rechercher dans le chat…"
+            autoComplete="off"
+          />
+        </label>
+
+        {conversations.isLoading && <div className="gx-cv-e">Chargement…</div>}
+        {allConvs.length === 0 && !conversations.isLoading && (
+          <div className="gx-cv-e">Aucune conversation.</div>
+        )}
+
+        {/* Favoris */}
+        <button
+          type="button"
+          className="gx-cv-g"
+          onClick={() => setShowFav((v) => !v)}
+          aria-expanded={showFav}
+          title={showFav ? "Masquer les favoris" : "Afficher les favoris"}
+        >
+          Favoris
+        </button>
+        {showFav && (
+          favConvs.length > 0
+            ? favConvs.map(renderConvRow)
+            : !conversations.isLoading && <div className="gx-cv-e">Aucun favori pour l'instant (menu ⋯ d'une conversation).</div>
+        )}
+
+        {/* Dossiers (dont « Autres » : conversations sans dossier) */}
+        <div className="gx-cv-g gx-cv-gr">
+          <span>Dossiers</span>
+          <button type="button" className="gx-cv-add" onClick={handleCreateFolder} aria-label="Nouveau dossier" title="Nouveau dossier">
+            <FolderPlus className="gx-i" />
+          </button>
         </div>
-        <div className="flex-1 overflow-y-auto px-2 pb-4">
-          {allConvs.length === 0 && !conversations.isLoading && (
-            <div className="px-2 py-4 text-center text-xs text-muted-foreground">Aucune conversation.</div>
-          )}
-
-          {/* Favoris */}
-          {favConvs.length > 0 && (
-            <SidebarSection
-              label="Favoris"
-              icon={<Star className="h-3 w-3 fill-amber-400 text-amber-400" />}
-              open={showFav}
-              onToggle={() => setShowFav((v) => !v)}
-              count={favConvs.length}
-            >
-              {favConvs.map((c) => (
-                <ConversationRow
-                  key={c.id}
-                  conv={c}
-                  active={c.id === convId}
-                  folders={folderList}
-                  onOpen={() => navigate({ to: "/create", search: { c: c.id } })}
-                  onDelete={() => handleDelete(c.id)}
-                  onRename={() => handleRename(c.id, c.title)}
-                  onFav={() => handleToggleFav(c.id, !c.is_favorite)}
-                  onMove={(fid) => handleMoveToFolder(c.id, fid)}
-                />
-              ))}
-            </SidebarSection>
-          )}
-
-          {/* Dossiers */}
-          {folderList.map((f) => {
-            const list = convsByFolder.get(f.id) ?? [];
-            const open = openFolderIds[f.id] ?? false;
-            return (
-              <SidebarSection
-                key={f.id}
-                label={f.name}
-                icon={open ? <FolderOpen className="h-3 w-3 text-primary/70" /> : <Folder className="h-3 w-3 text-muted-foreground" />}
-                open={open}
-                onToggle={() => setOpenFolderIds((s) => ({ ...s, [f.id]: !open }))}
-                count={list.length}
-                menu={
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <button
-                        onClick={(e) => e.stopPropagation()}
-                        className="rounded p-0.5 text-muted-foreground opacity-0 transition hover:bg-background hover:text-foreground group-hover/section:opacity-100"
-                        aria-label="Options du dossier"
-                      >
-                        <MoreHorizontal className="h-3 w-3" />
-                      </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-40">
-                      <DropdownMenuItem onClick={() => handleRenameFolder(f.id, f.name)}>
-                        <Pencil className="mr-2 h-3.5 w-3.5" /> Renommer
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleDeleteFolder(f.id)} className="text-destructive focus:text-destructive">
-                        <Trash2 className="mr-2 h-3.5 w-3.5" /> Supprimer
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                }
+        {folderList.map((f) => {
+          const list = convsByFolder.get(f.id) ?? [];
+          const open = openFolderIds[f.id] ?? false;
+          const toggle = () => setOpenFolderIds((s) => ({ ...s, [f.id]: !open }));
+          return (
+            <div key={f.id} className="gx-cv-f">
+              <div
+                className={`gx-cv gx-cv-row${open ? " gx-open" : ""}`}
+                role="button"
+                tabIndex={0}
+                aria-expanded={open}
+                onClick={toggle}
+                onKeyDown={(e) => toggleOnKey(e, toggle)}
               >
-                {list.length === 0 ? (
-                  <div className="px-2 py-1.5 text-[11px] italic text-muted-foreground/60">Vide</div>
-                ) : (
-                  list.map((c) => (
-                    <ConversationRow
-                      key={c.id}
-                      conv={c}
-                      active={c.id === convId}
-                      folders={folderList}
-                      onOpen={() => navigate({ to: "/create", search: { c: c.id } })}
-                      onDelete={() => handleDelete(c.id)}
-                      onRename={() => handleRename(c.id, c.title)}
-                      onFav={() => handleToggleFav(c.id, !c.is_favorite)}
-                      onMove={(fid) => handleMoveToFolder(c.id, fid)}
-                    />
-                  ))
-                )}
-              </SidebarSection>
-            );
-          })}
+                {open ? <FolderOpen className="gx-i" /> : <Folder className="gx-i" />}
+                <span>{f.name}</span>
+                <small>{list.length}</small>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button
+                      type="button"
+                      onClick={(e) => e.stopPropagation()}
+                      className="gx-cv-more"
+                      aria-label="Options du dossier"
+                    >
+                      <MoreHorizontal className="gx-i" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-40" onClick={(e) => e.stopPropagation()}>
+                    <DropdownMenuItem onClick={() => handleRenameFolder(f.id, f.name)}>
+                      <Pencil className="mr-2 h-3.5 w-3.5" /> Renommer
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleDeleteFolder(f.id)} className="text-destructive focus:text-destructive">
+                      <Trash2 className="mr-2 h-3.5 w-3.5" /> Supprimer
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              {open && (
+                <div className="gx-cv-in">
+                  {list.length === 0 ? <div className="gx-cv-e">Vide</div> : list.map(renderConvRow)}
+                </div>
+              )}
+            </div>
+          );
+        })}
 
-          {/* Autres */}
-          {unfiled.length > 0 && (
-            <SidebarSection
-              label={folderList.length > 0 || favConvs.length > 0 ? "Autres" : "Toutes"}
-              icon={<MessageSquare className="h-3 w-3 text-muted-foreground" />}
-              open={showOthers}
-              onToggle={() => setShowOthers((v) => !v)}
-              count={unfiled.length}
+        {/* Autres */}
+        {unfiled.length > 0 && (
+          <div className="gx-cv-f">
+            <div
+              className={`gx-cv gx-cv-row${showOthers ? " gx-open" : ""}`}
+              role="button"
+              tabIndex={0}
+              aria-expanded={showOthers}
+              onClick={() => setShowOthers((v) => !v)}
+              onKeyDown={(e) => toggleOnKey(e, () => setShowOthers((v) => !v))}
             >
-              {unfiled.map((c) => (
-                <ConversationRow
-                  key={c.id}
-                  conv={c}
-                  active={c.id === convId}
-                  folders={folderList}
-                  onOpen={() => navigate({ to: "/create", search: { c: c.id } })}
-                  onDelete={() => handleDelete(c.id)}
-                  onRename={() => handleRename(c.id, c.title)}
-                  onFav={() => handleToggleFav(c.id, !c.is_favorite)}
-                  onMove={(fid) => handleMoveToFolder(c.id, fid)}
-                />
-              ))}
-            </SidebarSection>
-          )}
-          <div ref={loadMoreRef} className="h-6">
-            {isFetchingNextPage && <p className="px-3 text-xs text-muted-foreground">Chargement…</p>}
+              {showOthers ? <FolderOpen className="gx-i" /> : <Folder className="gx-i" />}
+              <span>{folderList.length > 0 || favConvs.length > 0 ? "Autres" : "Toutes"}</span>
+              <small>{unfiled.length}</small>
+            </div>
+            {showOthers && <div className="gx-cv-in">{unfiled.map(renderConvRow)}</div>}
           </div>
+        )}
+        <div ref={loadMoreRef} className="h-6 shrink-0">
+          {isFetchingNextPage && <div className="gx-cv-e">Chargement…</div>}
         </div>
-        <button
-          type="button"
-          aria-label="Agrandir ou réduire la barre d'historique"
-          title="Agrandir / réduire"
-          onMouseDown={(event) => {
-            event.preventDefault();
-            setIsResizingLeft(true);
-          }}
-          className={`absolute right-0 top-0 z-20 h-full w-2 translate-x-1 cursor-col-resize transition ${
-            isResizingLeft ? "bg-primary/10" : "hover:bg-primary/10"
-          }`}
-        >
-          <span className={`absolute left-1 top-1/2 h-10 w-0.5 -translate-y-1/2 rounded-full ${isResizingLeft ? "bg-primary" : "bg-border"}`} />
-        </button>
       </aside>
-      </div>
 
-      {/* Floating reopen button when collapsed */}
-      {leftCollapsed && (
-        <button
-          type="button"
-          onClick={() => setLeftCollapsed(false)}
-          className="absolute left-3 top-16 z-30 hidden h-9 w-9 items-center justify-center rounded-md border border-border/60 bg-background/95 text-muted-foreground shadow-sm backdrop-blur transition hover:bg-muted hover:text-foreground md:inline-flex"
-          title="Afficher l'historique"
-        >
-          <PanelLeftOpen className="h-4 w-4" />
-        </button>
-      )}
+      {/* Mobile : bouton d'ouverture de la colonne des conversations */}
+      <button
+        type="button"
+        className="gx-ib gx-sm gx-cv-tg"
+        onClick={() => setConvsOpen(true)}
+        aria-label="Afficher les conversations"
+        title="Conversations"
+      >
+        <PanelLeftOpen className="gx-i" />
+      </button>
+      {convsOpen && <div className="gx-cv-scrim" onClick={() => setConvsOpen(false)} aria-hidden />}
 
-      {/* Chat area */}
-      <section className="gx-thread flex min-w-0 flex-1 flex-col">
+      {/* Fil de discussion */}
+      <section className="gx-thread">
         {convId && current.data ? (
+          <ChatArea        {convId && current.data ? (
           <ChatArea
             key={convId}
             conversationId={convId}
@@ -1165,29 +1143,26 @@ function ChatCreatePage() {
             conversationUpdatedAt={(current.data as unknown as { updated_at?: string }).updated_at}
           />
         ) : showStartScreen ? (
-          <div className="flex flex-1 flex-col items-center justify-center gap-4 p-6 text-center">
-            <p className="max-w-sm text-sm text-muted-foreground">
+          <div className="gx-th-in gx-th-start">
+            <p>
               {pendingActorName ? `Lance une nouvelle discussion avec ${pendingActorName}.` : "Démarre une nouvelle discussion pour créer ta pub."}
             </p>
-            <Button onClick={startConversation} disabled={creatingNew}>
-              <Plus className="mr-1.5 h-4 w-4" />{creatingNew ? "Ouverture…" : "Nouvelle discussion"}
-            </Button>
+            <button type="button" className="gx-btn gx-pri" onClick={startConversation} disabled={creatingNew}>
+              <Plus className="gx-i" />{creatingNew ? "Ouverture…" : "Nouvelle discussion"}
+            </button>
           </div>
         ) : (
-          <div className="flex flex-1 flex-col gap-4 overflow-hidden p-4 sm:p-6">
-            <div className="flex items-center gap-3">
+          <div className="gx-th-in" aria-busy="true" aria-label="Chargement de la discussion">
+            <Skeleton className="ml-auto h-10 w-2/3 max-w-sm rounded-2xl" />
+            <div className="flex items-start gap-3">
               <Skeleton className="h-8 w-8 shrink-0 rounded-full" />
-              <Skeleton className="h-5 w-40" />
-            </div>
-            <div className="flex flex-1 flex-col justify-end gap-3">
-              <Skeleton className="ml-auto h-10 w-2/3 max-w-sm rounded-2xl" />
               <Skeleton className="h-16 w-3/4 max-w-md rounded-2xl" />
-              <Skeleton className="ml-auto h-8 w-1/2 max-w-xs rounded-2xl" />
             </div>
-            <Skeleton className="h-12 w-full rounded-xl" />
+            <Skeleton className="ml-auto h-8 w-1/2 max-w-xs rounded-2xl" />
           </div>
         )}
       </section>
+    </div>
 
       <Dialog open={!!folderDialog} onOpenChange={(o) => { if (!o) setFolderDialog(null); }}>
         <DialogContent className="sm:max-w-[420px]">
@@ -1251,7 +1226,6 @@ function ChatCreatePage() {
         </DialogContent>
       </Dialog>
     </div>
-
   );
 }
 
