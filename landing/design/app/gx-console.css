@@ -82,13 +82,13 @@
 .gx-card small{display:block;font-size:12px;color:var(--gx-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .gx-card .gx-mini{margin-top:5px}
 .gx-tbl{border:1px solid var(--gx-line);border-radius:var(--gx-r);background:var(--gx-surface);overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:640px}
-th{font-size:11.5px;font-weight:500;color:var(--gx-dim);text-align:right;padding:10px 16px;border-bottom:1px solid var(--gx-line);white-space:nowrap}
-th:first-child, td:first-child{text-align:left}
-td{padding:11px 16px;text-align:right;border-bottom:1px solid var(--gx-line);white-space:nowrap}
-tr:last-child td{border-bottom:0}
-td b{font-weight:600}
-td small{display:block;color:var(--gx-dim);font-size:12px}
+.gx-tbl table{width:100%;border-collapse:collapse;min-width:640px}
+.gx-tbl th{font-size:11.5px;font-weight:500;color:var(--gx-dim);text-align:right;padding:10px 16px;border-bottom:1px solid var(--gx-line);white-space:nowrap}
+.gx-tbl th:first-child, .gx-tbl td:first-child{text-align:left}
+.gx-tbl td{padding:11px 16px;text-align:right;border-bottom:1px solid var(--gx-line);white-space:nowrap}
+.gx-tbl tr:last-child td{border-bottom:0}
+.gx-tbl td b{font-weight:600}
+.gx-tbl td small{display:block;color:var(--gx-dim);font-size:12px}
 .gx-st{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:2px 8px;border-radius:999px}
 .gx-st::before{content:"";width:6px;height:6px;border-radius:3px;background:currentColor}
 .gx-st.gx-on{color:var(--gx-ok);background:var(--gx-ok-soft)}
@@ -607,7 +607,7 @@ input.gx-in:focus, textarea.gx-in:focus{border-color:var(--gx-accent);box-shadow
 .gx-tipw i{font-style:normal;width:14px;height:14px;border-radius:7px;display:grid;place-items:center;font-size:9.5px;font-weight:700;background:var(--gx-sunk);color:var(--gx-muted)}
 [data-tip]{position:relative}
 [data-tip]:hover::after, [data-tip]:focus-visible::after{content:attr(data-tip);position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);width:max-content;max-width:240px;white-space:normal;text-align:left;text-transform:none;letter-spacing:0;padding:7px 10px;border-radius:9px;background:var(--gx-fg);color:var(--gx-bg);font:500 12px/1.4 var(--gx-ui);z-index:80;pointer-events:none;box-shadow:0 10px 30px -10px rgba(0,0,0,.4)}
-th [data-tip]:hover::after{left:auto;right:0;transform:none}
+.gx-tbl th [data-tip]:hover::after{left:auto;right:0;transform:none}
 .gx-empty{display:flex;flex-direction:column;align-items:center;gap:6px;padding:40px 16px;text-align:center;border:1.5px dashed var(--gx-line-2);border-radius:var(--gx-r);color:var(--gx-muted)}
 .gx-empty b{color:var(--gx-fg);font-size:15px}
 .gx-empty .gx-btn{margin-top:6px}
@@ -868,3 +868,20 @@ label.gx-acc{cursor:pointer}
 .gx-collapsed .gx-credq:hover{background:var(--gx-sunk)}
 @media (max-width:899px){.gx-collapse{display:none}.gx-app.gx-collapsed{grid-template-columns:minmax(0,1fr)}}
 .gx-app{width:100%}
+a.gx-credits{display:block;color:inherit}
+a.gx-credits:hover{border-color:var(--gx-line-2)}
+/* Accueil branché sur les vraies données */
+.gx-ph{width:36px;height:48px;border-radius:7px;overflow:hidden;flex:none;display:block;background:var(--gx-sunk)}
+.gx-ph img,.gx-ph canvas,.gx-ph video{width:100%;height:100%;object-fit:cover;display:block;border-radius:0}
+.gx-run .gx-th .gx-ph{width:100%;height:100%;border-radius:0}
+a.gx-run{color:inherit}
+a.gx-run:hover,a.gx-lead:hover{background:var(--gx-raised)}
+a.gx-lead{color:inherit;border-radius:8px}
+.gx-hello .gx-dn{color:var(--gx-bad-ink,var(--gx-bad));font-weight:600}
+.gx-bar.gx-ind{position:relative}
+.gx-bar.gx-ind i{width:35%;animation:gx-ind 1.4s ease-in-out infinite}
+@keyframes gx-ind{0%{transform:translateX(-100%)}100%{transform:translateX(290%)}}
+.gx-kpis b.gx-soon{font-size:13px;color:var(--gx-dim)}
+.gx-cnone{font-size:12px;color:var(--gx-dim);padding:14px 10px;border:1.5px dashed var(--gx-line-2);border-radius:12px;text-align:center}
+.gx-act:disabled,.gx-go:disabled{opacity:.5;cursor:default}
+.gx-insp .gx-empty{padding:28px 14px}

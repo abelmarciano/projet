@@ -7,6 +7,7 @@ import { CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, C
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { NotificationBell } from "@/components/NotificationBell";
+import { startProductTour } from "@/components/ProductTour";
 import { useNewAdConversation } from "@/hooks/useNewAdConversation";
 import { useAuth } from "@/hooks/useAuth";
 import { getMetaCredentials } from "@/lib/meta.functions";
@@ -45,7 +46,9 @@ export function ConsoleTopBar() {
   const here = destinations.find((d) => pathname === d.to || pathname.startsWith(d.to + "/"))
     ?? (pathname.startsWith("/parametres") ? destinations[12] : pathname.startsWith("/campaigns") ? destinations[8] : undefined);
   const metaStatus = !meta?.connected ? "none" : meta.expiry_status;
-  const metaLabel = metaStatus === "expired" ? "Meta expiré" : metaStatus === "expiring_soon" ? "Meta à renouveler" : metaStatus === "connected" ? "Meta connecté" : "Meta non connecté";
+  const accounts = meta?.connected ? (meta.active_accounts?.length ?? 0) : 0;
+  const metaLabel = metaStatus === "expired" ? "Meta expiré" : metaStatus === "expiring_soon" ? "Meta à renouveler" : metaStatus === "connected"
+    ? `Meta connecté${accounts > 0 ? ` · ${accounts} compte${accounts > 1 ? "s" : ""}` : ""}` : "Meta non connecté";
   const dot = metaStatus === "connected" ? undefined : metaStatus === "expired"
     ? { background: "var(--gx-bad)", boxShadow: "0 0 0 3px var(--gx-bad-soft)" }
     : { background: "var(--gx-warn)", boxShadow: "0 0 0 3px var(--gx-warn-soft)" };
@@ -71,6 +74,9 @@ export function ConsoleTopBar() {
       <div className="gx-sp" />
       <Link to="/connexions" className="gx-pill" title={metaLabel}><i style={dot} />{metaLabel}</Link>
       <ThemeToggle className="gx-ib" />
+      <button type="button" className="gx-ib" onClick={startProductTour} aria-label="Visite guidée" title="Visite guidée (1 min)">
+        <Compass className="gx-i" aria-hidden />
+      </button>
       <NotificationBell className="gx-ib" />
       <DropdownMenu>
         <DropdownMenuTrigger asChild><button type="button" className="gx-me" aria-label="Mon compte">{initials}</button></DropdownMenuTrigger>

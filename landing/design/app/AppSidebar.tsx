@@ -12,6 +12,8 @@ import { Logo } from "@/components/Logo";
 import { WorkspaceBrandCard } from "@/components/WorkspaceBrandCard";
 import { UsageBadge } from "@/components/UsageBadge";
 import { getMetaCredentials } from "@/lib/meta.functions";
+import { listBatches } from "@/lib/batch.functions";
+import { listLeads } from "@/lib/leads.functions";
 import { useNewAdConversation } from "@/hooks/useNewAdConversation";
 
 /* Menu latéral : reprise exacte de la maquette (classes gx-, src/styles/gx-console.css). */
@@ -72,11 +74,38 @@ export function AppSidebar() {
   });
   const showMetaTodo = metaCreds.isSuccess && !metaCreds.data?.connected;
 
+  // Compteurs violets de la maquette : lots en cours de fabrication, nouveaux leads des 7 derniers jours.
+  const fetchBatches = useServerFn(listBatches);
+  const batches = useQuery({
+    queryKey: ["batches", "list", "all"],
+    queryFn: () => fetchBatches({ data: { brandId: null } }),
+    staleTime: 60_000,
+    refetchOnWindowFocus: false,
+  });
+  const runningBatches = ((batches.data as any[]) ?? []).filter((b: any) =>
+    ["extracting", "planning", "previewing", "declining"].includes(String(b?.status))).length;
+  const fetchLeads = useServerFn(listLeads);
+  const leads = useQuery({
+    queryKey: ["leads"],
+    queryFn: () => fetchLeads(),
+    staleTime: 5 * 60_000,
+    refetchOnWindowFocus: false,
+  });
+  const weekAgo = Date.now() - 7 * 86_400_000;
+  const newLeads = ((leads.data as any[]) ?? []).filter((l: any) =>
+    l?.status === "new" && !l?.is_test && +new Date(l?.submitted_at ?? l?.created_at) >= weekAgo).length;
+  const counts: Record<string, number> = { "/batch": runningBatches, "/resultats": newLeads };
+
   const nav = (item: NavItem) => (
     <Tip key={item.url} show={collapsed} label={item.title}>
       <Link to={item.to ?? item.url} className="gx-nv" data-tour={item.tour} aria-current={isActive(item.url) ? "page" : undefined}>
         <item.icon className="gx-i" aria-hidden />
         <span>{item.title}</span>
+        {counts[item.url] > 0 ? (
+          <em title={item.url === "/batch" ? "Lots en cours" : "Nouveaux leads (7 derniers jours)"}>
+            {counts[item.url] > 99 ? "99+" : counts[item.url]}
+          </em>
+        ) : null}
         {item.url === "/connexions" && showMetaTodo ? (
           <>
             <em className="gx-warnb" title="Compte Meta Ads non connecté">0/1</em>
