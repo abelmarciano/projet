@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { forwardRef, useState, type ButtonHTMLAttributes } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Select, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
 import {
@@ -41,13 +41,15 @@ function expiresIn(iso?: string | null) {
 
 const IC_MORE = "M5 12h.01M12 12h.01M19 12h.01";
 
-function MoreButton({ label }: { label: string }) {
-  return (
-    <button type="button" className="gx-ib gx-sm" aria-label={label}>
+/** Bouton « ⋯ » : transmet ref et props pour servir de déclencheur Radix (asChild). */
+const MoreButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement> & { label: string }>(
+  ({ label, ...props }, ref) => (
+    <button ref={ref} type="button" className="gx-ib gx-sm" aria-label={label} {...props}>
       <svg className="gx-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={IC_MORE} /></svg>
     </button>
-  );
-}
+  ),
+);
+MoreButton.displayName = "MoreButton";
 
 function Page() {
   const { data: ws } = useCurrentWorkspace();
