@@ -630,9 +630,9 @@ function Spark({ values }: { values: number[] }) {
 
 /** Vignette d'une création (36 × 48, classe .gx-ph des vignettes). */
 function Thumb({ url, video }: { url?: string | null; video?: boolean }) {
-  if (url && video) return <span className="gx-ph"><VideoPoster src={url} className="h-full w-full object-cover" /></span>;
-  if (url) return <span className="gx-ph"><img src={url} alt="" loading="lazy" /></span>;
-  return <span className="gx-ph" aria-hidden />;
+  if (url && video) return <span className="gx-tn"><VideoPoster src={url} className="h-full w-full object-cover" /></span>;
+  if (url) return <span className="gx-tn"><img src={url} alt="" loading="lazy" /></span>;
+  return <span className="gx-tn" aria-hidden />;
 }
 
 /** Interrupteur de diffusion (vert = diffuse). */
@@ -1553,8 +1553,8 @@ function MetaAdsView({ items, total, loading, onChanged, onResetFilters, paginat
               <td>
                 <div className="gx-cp-cn">
                   {a.thumbnail_url
-                    ? <span className="gx-ph gx-cp-th"><img src={a.thumbnail_url} alt="" loading="lazy" />{a.is_video && <Film className="gx-i" aria-label="Vidéo" />}</span>
-                    : <span className="gx-ph gx-cp-th" title="Aperçu indisponible : Meta n'a pas encore généré de miniature pour cette création."><ImageIcon className="gx-i" aria-hidden /></span>}
+                    ? <span className="gx-tn gx-cp-th"><img src={a.thumbnail_url} alt="" loading="lazy" />{a.is_video && <Film className="gx-i" aria-label="Vidéo" />}</span>
+                    : <span className="gx-tn gx-cp-th" title="Aperçu indisponible : Meta n'a pas encore généré de miniature pour cette création."><ImageIcon className="gx-i" aria-hidden /></span>}
                   <div>
                     {renaming === a.id
                       ? <RenameInput value={a.name} onSave={(v) => void onRename(a.id, v)} onCancel={() => setRenaming(null)} />
