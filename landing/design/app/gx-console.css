@@ -1642,3 +1642,14 @@ textarea.gx-pp:disabled{opacity:.7}
 
 /* page:aide */
 .gx-hc[aria-pressed="true"]{border-color:var(--gx-accent);box-shadow:0 0 0 3px var(--gx-accent-soft)}
+
+/* États vides logiques + focus */
+.gx-fold-i.gx-fold-1{grid-template-columns:1fr}
+.gx-fold-i.gx-fold-0{grid-template-columns:1fr;height:110px;place-items:center;border-radius:8px;background:var(--gx-accent-soft);color:var(--gx-accent-ink)}
+.gx-fold-i.gx-fold-0 span{font:650 40px var(--gx-display)}
+.gx-start-b{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:16px 18px;border-color:var(--gx-accent);background:color-mix(in srgb,var(--gx-accent-soft) 55%,var(--gx-surface))}
+.gx-start-b>div{flex:1;min-width:220px;display:flex;flex-direction:column;gap:2px}
+.gx-start-b b{font-size:14.5px}
+.gx-start-b span{color:var(--gx-muted);font-size:13px}
+.console-app button:focus:not(:focus-visible),.console-app a:focus:not(:focus-visible){outline:none}
+.gx-seg button:focus-visible{outline:2px solid var(--gx-accent);outline-offset:1px;border-radius:8px}

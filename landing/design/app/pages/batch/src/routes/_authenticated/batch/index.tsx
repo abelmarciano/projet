@@ -32,21 +32,25 @@ export const Route = createFileRoute("/_authenticated/batch/")({
 });
 
 function FolderBody({ f }: { f: any }) {
-  const thumbs: string[] = Array.isArray(f.thumbnails) ? f.thumbnails : [];
-  const first = thumbs[0] ?? f.logo_url ?? null;
-  const second = thumbs[1] ?? null;
+  const thumbs: string[] = Array.isArray(f.thumbnails) ? f.thumbnails.filter(Boolean) : [];
+  const imgs = [thumbs[0] ?? f.logo_url ?? null, thumbs[1] ?? null].filter(Boolean) as string[];
   const domain = domainOf(f.website);
   const lots = Number(f.batches_count ?? 0);
   const ads = Number(f.ads_count ?? 0);
+  const initial = String(f.name ?? "?").trim().charAt(0).toUpperCase() || "?";
   return (
     <>
-      <div className="gx-fold-i">
-        {first ? <img src={first} alt="" loading="lazy" /> : <i aria-hidden />}
-        {second ? <img src={second} alt="" loading="lazy" /> : <i aria-hidden />}
-      </div>
+      {imgs.length === 0 ? (
+        // Pas encore de visuel : l'initiale de la marque plutôt que deux cases grises.
+        <div className="gx-fold-i gx-fold-0" aria-hidden><span>{initial}</span></div>
+      ) : (
+        <div className={imgs.length === 1 ? "gx-fold-i gx-fold-1" : "gx-fold-i"}>
+          {imgs.map((src) => <img key={src} src={src} alt="" loading="lazy" />)}
+        </div>
+      )}
       <b>{f.name}</b>
       <small>
-        {[domain, `${lots} lot${lots > 1 ? "s" : ""}`, `${ads} pub${ads > 1 ? "s" : ""}`].filter(Boolean).join(" · ")}
+        {[domain, `${lots} lot${lots > 1 ? "s" : ""}`, ads > 0 ? `${ads} pub${ads > 1 ? "s" : ""}` : "aucune pub prête"].filter(Boolean).join(" · ")}
       </small>
     </>
   );
@@ -60,11 +64,16 @@ function BatchHistoryPage() {
     queryKey: ["batches", "folders"],
     queryFn: () => foldersFn() as Promise<any[]>,
     staleTime: 10_000,
-    enabled: view === "folders",
   });
 
   const rows = (folders.data ?? []) as any[];
-  const empty = view === "folders" && !folders.isLoading && rows.length === 0;
+  // Seuls les vrais dossiers (une marque) sont des cartes ; les lots sans marque restent dans la liste.
+  const realFolders = rows.filter((f) => f.brand_id);
+  const totalLots = rows.reduce((n, f) => n + Number(f.batches_count ?? 0), 0);
+  const totalAds = rows.reduce((n, f) => n + Number(f.ads_count ?? 0), 0);
+  const empty = !folders.isLoading && totalLots === 0;
+  const showFolders = realFolders.length > 0;
+  const currentView = showFolders ? view : "all";
 
   return (
     <div className="gx-page">
@@ -87,7 +96,9 @@ function BatchHistoryPage() {
         <span><b>3</b>Récupère tes pubs en 3 formats et publie</span>
       </div>
 
-      {empty ? (
+      {folders.isLoading ? (
+        <p className="gx-hint">Chargement des lots…</p>
+      ) : empty ? (
         <div className="gx-empty">
           <b>Aucun lot pour l'instant</b>
           <span>Colle le lien d'une page produit ou d'un site : je prépare une série de publicités testables.</span>
@@ -98,45 +109,52 @@ function BatchHistoryPage() {
         </div>
       ) : (
         <>
-          <div className="gx-tabs">
-            <div className="gx-seg" role="tablist" aria-label="Affichage des lots">
-              <button type="button" role="tab" aria-selected={view === "folders"} onClick={() => setView("folders")}>
-                Dossiers
-              </button>
-              <button type="button" role="tab" aria-selected={view === "all"} onClick={() => setView("all")}>
-                Tous les lots
-              </button>
-            </div>
-          </div>
-
-          {view === "folders" ? (
-            folders.isLoading ? (
-              <p className="gx-hint">Chargement des dossiers…</p>
-            ) : (
-              <div className="gx-fold-g">
-                {rows.map((f) => {
-                  const when = f.last_activity
-                    ? `Dernière activité ${formatDistanceToNow(new Date(f.last_activity), { addSuffix: true, locale: fr })}`
-                    : undefined;
-                  return f.brand_id ? (
-                    <Link
-                      key={f.brand_id}
-                      to="/batch/brand/$brandId"
-                      params={{ brandId: f.brand_id }}
-                      className="gx-fold"
-                      title={when}
-                    >
-                      <FolderBody f={f} />
-                    </Link>
-                  ) : (
-                    // Lots sans marque : pas de page dossier, on bascule sur la liste complète.
-                    <button key="none" type="button" className="gx-fold" title={when} onClick={() => setView("all")}>
-                      <FolderBody f={f} />
-                    </button>
-                  );
-                })}
+          {!folders.isLoading && totalAds === 0 && (
+            // Des lots existent mais aucun n'a encore donné de pub : on guide vers la suite.
+            <div className="gx-box gx-start-b">
+              <div>
+                <b>Pas encore de pub prête</b>
+                <span>Lance un nouveau lot avec le lien d'une page produit : tes pubs prêtes apparaîtront ici.</span>
               </div>
-            )
+              <Link to="/batch/new" search={{ brandId: undefined }} className="gx-btn gx-pri">
+                <Plus className="gx-i" />
+                Commencer un lot
+              </Link>
+            </div>
+          )}
+
+          {showFolders && (
+            <div className="gx-tabs">
+              <div className="gx-seg" role="tablist" aria-label="Affichage des lots">
+                <button type="button" role="tab" aria-selected={currentView === "folders"} onClick={() => setView("folders")}>
+                  Dossiers
+                </button>
+                <button type="button" role="tab" aria-selected={currentView === "all"} onClick={() => setView("all")}>
+                  Tous les lots
+                </button>
+              </div>
+            </div>
+          )}
+
+          {currentView === "folders" ? (
+            <div className="gx-fold-g">
+              {realFolders.map((f) => {
+                const when = f.last_activity
+                  ? `Dernière activité ${formatDistanceToNow(new Date(f.last_activity), { addSuffix: true, locale: fr })}`
+                  : undefined;
+                return (
+                  <Link
+                    key={f.brand_id}
+                    to="/batch/brand/$brandId"
+                    params={{ brandId: f.brand_id }}
+                    className="gx-fold"
+                    title={when}
+                  >
+                    <FolderBody f={f} />
+                  </Link>
+                );
+              })}
+            </div>
           ) : null}
 
           <BatchList />
