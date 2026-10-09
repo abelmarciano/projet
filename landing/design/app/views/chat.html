@@ -1,0 +1,38 @@
+<div class="gx-page">
+<div class="gx-chatv">
+  <aside class="gx-convs">
+    <div class="gx-cv-h"><b>Conversations</b><button class="gx-ib gx-sm" id="newConv" aria-label="Nouvelle discussion" data-tip="Nouvelle discussion"><Icon/></button></div>
+    <label class="gx-srch"><Icon/><span class="gx-sr">Rechercher dans le chat…</span><input type="search" id="cvQ" placeholder="Rechercher dans le chat…" autocomplete="off"></label>
+    <div class="gx-cv-g">Favoris</div><div id="cvList"><a class="gx-cv gx-on" data-q="sérum · ugc léna v2"><Icon/><span>Sérum · UGC Léna v2</span><small>il y a 4 min</small></a><a class="gx-cv" data-q="gloss · lancement"><Icon/><span>Gloss · lancement</span><small>hier</small></a><a class="gx-cv" data-q="analyse semaine 40"><Icon/><span>Analyse semaine 40</span><small>lun.</small></a><a class="gx-cv" data-q="retargeting visiteurs"><Icon/><span>Retargeting visiteurs</span><small>2 oct.</small></a><a class="gx-cv" data-q="coffret noël"><Icon/><span>Coffret Noël</span><small>28 sept.</small></a></div>
+    <div class="gx-cv-g">Dossiers</div><a class="gx-cv" data-q="lancement gloss"><Icon/><span>Lancement gloss</span></a><a class="gx-cv" data-q="tests ugc"><Icon/><span>Tests UGC</span></a>
+  </aside>
+  <section class="gx-thread">
+    <div class="gx-th-in" id="thread">
+      <div class="gx-m gx-you"><p>Que font les marques de sérum vitamine C sur Meta en ce moment ? Ensuite propose-moi une vidéo pour le mien.</p></div>
+      <div class="gx-m gx-ai"><span class="gx-av gx-ai">G</span><div class="gx-mb">
+        <p>J'ai parcouru la Meta Ads Library (France). Voici ce qui tourne le plus longtemps :</p>
+        <div class="gx-kard gx-comp"><div class="gx-kh"><span class="gx-chip gx-meta">Meta Ads Library</span><b>« sérum vitamine C »</b><small>20 pubs · 14 annonceurs · durée médiane 27 j · « fort » = en ligne depuis 45 jours ou plus</small></div>
+          <div class="gx-comp-g"><figure><img src="https://cdn.jsdelivr.net/gh/abelmarciano/projet@7319157a9a3ff5d18340ee99690bc3d97434b256/landing/media/img-serum.webp" alt=""><span class="gx-sig gx-ok">fort</span><figcaption><b>Éclat Naturel</b><small>Active depuis 58 j</small></figcaption></figure><figure><img src="https://cdn.jsdelivr.net/gh/abelmarciano/projet@7319157a9a3ff5d18340ee99690bc3d97434b256/landing/media/real-42.poster.webp" alt=""><span class="gx-sig gx-ok">fort</span><figcaption><b>Lumi Beauty</b><small>Active depuis 47 j</small></figcaption></figure><figure><img src="https://cdn.jsdelivr.net/gh/abelmarciano/projet@7319157a9a3ff5d18340ee99690bc3d97434b256/landing/media/ugc-solaire.poster.webp" alt=""><span class="gx-sig gx-pri">prometteur</span><figcaption><b>Peau Douce</b><small>Active depuis 31 j</small></figcaption></figure></div>
+          <div class="gx-kf"><button class="gx-btn gx-sm gx-pri" data-say="Propose-moi une stratégie à partir de ces 2 références">Me proposer une stratégie (2 références)</button><button class="gx-btn gx-sm" data-say="Comment me différencier de ces pubs ?">Se différencier</button></div></div>
+        <div class="gx-kard gx-strat"><div class="gx-kh"><b>Stratégie créative</b><span class="gx-st gx-q">Proposition</span></div>
+          <dl><dt>Cible</dt><dd>Femmes 25-40 ans, peau mixte, routine simple</dd><dt>Angle</dt><dd>Avant / après vécu, sans discours commercial</dd><dt>Objection</dt><dd>« Encore un sérum qui ne fait rien »</dd><dt>Accroches</dt><dd><ol><li>3 semaines, zéro fond de teint.</li><li>J'ai arrêté 4 produits pour celui-là.</li></ol></dd></dl>
+          <div class="gx-kf"><button class="gx-btn gx-sm gx-pri" data-say="Je valide la stratégie">Valider la stratégie</button><button class="gx-btn gx-sm" data-say="Propose-moi un autre angle">Autre angle</button><button class="gx-btn gx-sm" data-say="Propose-moi d'autres accroches">Autres accroches</button></div></div>
+      </div></div>
+      <div class="gx-m gx-you"><p>Valide. Avec Léna, 24 secondes.</p></div>
+      <div class="gx-m gx-ai"><span class="gx-av gx-ai">G</span><div class="gx-mb">
+        <div class="gx-kard gx-prompt"><div class="gx-kh"><b>Aperçu du prompt · Vidéo</b><small>Tu vois exactement ce qui sera généré avant de dépenser des crédits.</small></div>
+          <div class="gx-pills"><span class="gx-on">UGC face caméra</span><span>Cinématique</span><span>Motion design</span><span>Animation d'image</span></div>
+          <p class="gx-pp" contenteditable="true" spellcheck="false" aria-label="Prompt modifiable">Selfie vertical, salle de bain lumineuse. Léna tient le flacon près du visage : « 3 semaines, zéro fond de teint… » · 3 segments de 8 s enchaînés, même acteur, même décor, même voix.</p>
+          <div class="gx-eng"><button aria-pressed="true" data-cost="400"><b>Standard</b><small>⚡400 · 24 s</small></button><button aria-pressed="false" data-cost="4 002"><b>Cinématique premium</b><small>⚡1 334 / 8 s</small></button></div>
+          <div class="gx-kf"><button class="gx-btn gx-sm gx-pri" id="genBtn">Générer tel quel · ⚡<span id="genCost">400</span></button><button class="gx-btn gx-sm" data-say="Reformule le prompt pour qu'il soit plus percutant">Reformuler avec l'IA · ⚡1</button></div></div>
+        <div class="gx-kard gx-result"><div class="gx-rv"><img src="https://cdn.jsdelivr.net/gh/abelmarciano/projet@7319157a9a3ff5d18340ee99690bc3d97434b256/landing/media/lena-serum.poster.webp" alt="Vidéo générée"><span class="gx-fmt">9:16 · 24 s</span></div>
+          <div class="gx-rr"><b>Sérum · UGC Léna v2</b><small>Veo 3.1 · actrice Léna · voix Charlotte</small>
+            <div class="gx-lbl">Et ensuite ?</div><div class="gx-chips"><button class="gx-chip" data-say="Générer une variation">Générer une variation</button><button class="gx-chip" data-say="Décliner en 1:1">Décliner en 1:1</button><button class="gx-chip" data-say="Créer une image">Créer une image</button><button class="gx-chip" data-say="Ajouter des sous-titres">Ajouter des sous-titres</button><button class="gx-chip" data-say="Continuer +8 s">Continuer +8 s</button></div>
+            <div class="gx-lbl">Versions</div><div class="gx-chips"><button class="gx-chip gx-on" data-ver>Originale</button><button class="gx-chip" data-ver>Sous-titrée</button><button class="gx-chip" data-ver>+8 s</button></div>
+            <div class="gx-kf"><button class="gx-btn gx-sm gx-pri" data-open="wizard"><Icon/>Publier sur Meta</button><a class="gx-btn gx-sm" href="#editeur"><Icon/>Ouvrir dans l'éditeur</a></div></div></div>
+      </div></div>
+    </div>
+    <div class="gx-sugg" id="sugg"><button class="gx-chip" data-say="Crée une pub depuis https://eclat-skin.fr/serum-vitamine-c">Depuis un lien produit</button><button class="gx-chip" data-say="Fais-moi 3 images 4:5 pour le sérum">3 images 4:5</button><button class="gx-chip" data-say="Analyse mes pubs des 7 derniers jours">Analyser mes pubs</button></div>
+    <form class="gx-composer" id="chatForm"><label class="gx-ib gx-sm gx-up" aria-label="Ajouter une image" data-tip="Ajouter une image ou un produit"><Icon/><input type="file" accept="image/*" id="chatFile" hidden></label><label for="chatIn" class="gx-sr">Message</label><input id="chatIn" placeholder="Demande une modification, une variation, une publication…" autocomplete="off"><button type="button" class="gx-ib gx-sm" id="micBtn" aria-label="Dicter" data-tip="Dicter"><Icon/></button><button class="gx-btn gx-pri gx-sm" type="submit" aria-label="Envoyer"><Icon/></button></form>
+  </section>
+</div></div>
