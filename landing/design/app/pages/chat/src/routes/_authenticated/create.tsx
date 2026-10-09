@@ -6348,29 +6348,32 @@ function GeneratedAdCard(props: Omit<GeneratedAdCardProps, "anchorId" | "version
   const viewAd = versions.length > 1 && sel ? { ...ad, id: sel.id, url: sel.url } : ad;
   const history = q.data?.history ?? [];
   const versionBar = versions.length > 1 || history.length > 0 ? (
-    <div className="border-b border-border/60 bg-muted/10 px-4 py-2 text-[11px]">
+    <>
       {versions.length > 1 && (
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="font-medium text-muted-foreground">Versions :</span>
-          {versions.map((v, i) => (
-            <button
-              key={v.id}
-              type="button"
-              onClick={() => setSelectedId(v.id)}
-              className={`rounded-full border px-2 py-0.5 transition ${sel?.id === v.id ? "border-primary bg-primary/10 font-semibold text-primary" : "border-border text-muted-foreground hover:text-foreground"}`}
-              title={new Date(v.createdAt).toLocaleString("fr-FR")}
-            >
-              {v.label}{i === versions.length - 1 ? " · dernière" : ""}
-            </button>
-          ))}
-        </div>
+        <>
+          <div className="gx-lbl">Versions</div>
+          <div className="gx-chips">
+            {versions.map((v, i) => (
+              <button
+                key={v.id}
+                type="button"
+                onClick={() => setSelectedId(v.id)}
+                className={`gx-chip${sel?.id === v.id ? " gx-on" : ""}`}
+                aria-pressed={sel?.id === v.id}
+                title={new Date(v.createdAt).toLocaleString("fr-FR")}
+              >
+                {v.label}{i === versions.length - 1 ? " · dernière" : ""}
+              </button>
+            ))}
+          </div>
+        </>
       )}
       {history.length > 0 && (
-        <ul className="mt-1 space-y-0.5 text-muted-foreground">
-          {history.slice(-3).map((h, i) => <li key={i}>• {h.label}</li>)}
+        <ul className="gx-rr-h">
+          {history.slice(-3).map((h, i) => <li key={i}>{h.label}</li>)}
         </ul>
       )}
-    </div>
+    </>
   ) : null;
   return <GeneratedAdCardInner {...props} ad={viewAd} anchorId={ad.id} versionBar={versionBar} />;
 }
@@ -6530,263 +6533,242 @@ function GeneratedAdCardInner({
   };
 
 
+  const statusLabel = ad.status === "ready" ? "Prêt" : ad.status === "failed" ? "Échec" : "En cours…";
+  const metaLine = [
+    kindLabel,
+    detailMeta?.actor ? `acteur ${detailMeta.actor}` : null,
+    modelId ? friendlyModelName(modelId) : null,
+  ].filter(Boolean).join(" · ");
+
   return (
-    <div id={`ad-${anchorId ?? ad.id}`} data-ad-version={ad.id} className="flex gap-3 scroll-mt-24">
-      <div className="bg-grad flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white shadow-elegant">
-        <Sparkles className="h-4 w-4" />
-      </div>
-      <div className="min-w-0 flex-1">
-        <div className="overflow-hidden rounded-2xl border border-border/70 bg-background shadow-sm">
-          <div className="flex items-center justify-between gap-2 border-b border-border/60 bg-muted/30 px-4 py-2.5">
-            <div className="flex min-w-0 items-center gap-2">
-              <KindIcon className="h-3.5 w-3.5 text-primary" />
-              <span className="truncate text-xs font-semibold">{kindLabel} - {ad.title}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span
-                className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${
-                  ad.status === "ready"
-                    ? "bg-emerald-500/10 text-emerald-600"
-                    : ad.status === "failed"
-                      ? "bg-red-500/10 text-red-600"
-                      : "bg-amber-500/10 text-amber-600"
-                }`}
-              >
-                {ad.status === "ready" ? "Prêt" : ad.status === "failed" ? "Échec" : "En cours…"}
-              </span>
-              {onReply && (
-                <button
-                  onClick={onReply}
-                  className="rounded-md p-1 text-muted-foreground transition hover:bg-background hover:text-foreground"
-                  title="Répondre à ce média"
-                  aria-label="Répondre"
-                >
-                  <Reply className="h-3.5 w-3.5" />
-                </button>
-              )}
-            </div>
+    <div id={`ad-${anchorId ?? ad.id}`} data-ad-version={ad.id} className="gx-kard gx-result scroll-mt-24">
+      <div className="gx-rv">
+        {ad.status === "pending" && (
+          <PendingAdPreview
+            kind={ad.kind}
+            createdAt={ad.createdAt ?? null}
+            pipelineStage={ad.pipelineStage ?? null}
+            processingOp={ad.processingOp ?? null}
+            adId={ad.id}
+            onCancelled={() => onAdCreated?.({ ...ad, status: "failed" })}
+          />
+        )}
+        {ad.status === "failed" && (
+          <div className="gx-rv-fail">
+            <b>La génération a échoué</b>
+            <small>
+              {ad.error ?? "Réessaie avec un autre format ou relance depuis le chat."}
+            </small>
           </div>
-
-          {versionBar}
-
-          {promptText && (
-            <div className="border-b border-border/60 bg-muted/20 px-4 py-2">
-              <button
-                type="button"
-                onClick={() => setPromptOpen((v) => !v)}
-                className="flex w-full items-center justify-between gap-2 text-[11px] font-medium text-muted-foreground transition hover:text-foreground"
-                aria-expanded={promptOpen}
-              >
-                <span className="flex items-center gap-1.5">
-                  <Sparkles className="h-3 w-3" />
-                  Prompt utilisé
-                </span>
-                <span className="text-[10px] opacity-70">{promptOpen ? "Masquer" : "Afficher"}</span>
-              </button>
-              {promptOpen && (
-                <div className="mt-2 space-y-2">
-                  <p className="max-h-56 overflow-y-auto whitespace-pre-wrap rounded-md bg-background/80 p-2 text-[11px] leading-relaxed text-foreground/80">
-                    {promptText}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      void navigator.clipboard.writeText(promptText).then(
-                        () => toast.success("Prompt copié"),
-                        () => toast.error("Copie impossible"),
-                      );
-                    }}
-                    className="text-[10px] font-medium text-primary hover:underline"
-                  >
-                    Copier le prompt
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-          <div className="bg-muted/10 p-3">
-            {ad.status === "pending" && (
-              <PendingAdPreview
-                kind={ad.kind}
-                createdAt={ad.createdAt ?? null}
-                pipelineStage={ad.pipelineStage ?? null}
-                processingOp={ad.processingOp ?? null}
-                adId={ad.id}
-                onCancelled={() => onAdCreated?.({ ...ad, status: "failed" })}
-              />
-            )}
-            {ad.status === "failed" && (
-              <div className="flex flex-col items-center justify-center gap-2 rounded-xl bg-red-500/5 p-6 text-center">
-                <span className="text-sm font-medium text-red-600">La génération a échoué</span>
-                <span className="text-xs text-muted-foreground">
-                  {ad.error ?? "Réessaie avec un autre format ou relance depuis le chat."}
-                </span>
-              </div>
-            )}
-            {ad.status === "ready" && ad.kind === "video" && ad.url && (
-              <video
-                src={ad.url}
-                controls
-                className="max-h-[420px] w-full rounded-xl bg-black object-contain"
-              />
-            )}
-            {ad.status === "ready" && ad.kind === "image" && ad.url && (
+        )}
+        {ad.status === "ready" && ad.kind === "video" && ad.url && (
+          <video
+            src={ad.url}
+            controls
+          />
+        )}
+        {ad.status === "ready" && ad.kind === "image" && ad.url && (
+          <img
+            src={ad.url}
+            alt={ad.title}
+          />
+        )}
+        {ad.status === "ready" && ad.kind === "carousel" && ad.urls && (
+          <div className="gx-rv-car">
+            {ad.urls.map((u, i) => (
               <img
-                src={ad.url}
-                alt={ad.title}
-                className="max-h-[420px] w-full rounded-xl object-contain"
+                key={i}
+                src={u}
+                alt={`slide ${i + 1}`}
               />
-            )}
-            {ad.status === "ready" && ad.kind === "carousel" && ad.urls && (
-              <div className="flex gap-2 overflow-x-auto">
-                {ad.urls.map((u, i) => (
-                  <img
-                    key={i}
-                    src={u}
-                    alt={`slide ${i + 1}`}
-                    className="h-40 w-40 shrink-0 rounded-lg object-cover"
-                  />
-                ))}
+            ))}
+          </div>
+        )}
+        {ad.status === "ready" && (
+          <span className="gx-fmt">{kindLabel}{detailMeta?.seconds ? ` · ${detailMeta.seconds} s` : ""}</span>
+        )}
+      </div>
+
+      <div className="gx-rr">
+        <b>{ad.title}</b>
+        <small>
+          <span className={`gx-st ${ad.status === "ready" ? "gx-on" : ad.status === "failed" ? "gx-bad" : "gx-gen"}`}>{statusLabel}</span>
+          {" "}{metaLine}
+        </small>
+
+        {onSuggest && <GeneratedAdSuggestions ad={ad} onSuggest={onSuggest} part="next" />}
+
+        {versionBar}
+
+        <GeneratedAdActions
+          ad={ad}
+          onSubtitleBurnStart={onSubtitleBurnStart}
+          onReply={onReply}
+          conversationId={conversationId}
+          onAdCreated={onAdCreated}
+          publishSlot={onSuggest ? <GeneratedAdSuggestions ad={ad} onSuggest={onSuggest} part="publish" /> : null}
+        />
+
+        {promptText && (
+          <div className="gx-rr-x">
+            <button
+              type="button"
+              onClick={() => setPromptOpen((v) => !v)}
+              className="gx-rr-tg"
+              aria-expanded={promptOpen}
+            >
+              <span>Prompt utilisé</span>
+              <small>{promptOpen ? "Masquer" : "Afficher"}</small>
+            </button>
+            {promptOpen && (
+              <div className="gx-rr-b">
+                <p className="gx-rr-pr">
+                  {promptText}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    void navigator.clipboard.writeText(promptText).then(
+                      () => toast.success("Prompt copié"),
+                      () => toast.error("Copie impossible"),
+                    );
+                  }}
+                  className="gx-rr-lk"
+                >
+                  Copier le prompt
+                </button>
               </div>
             )}
           </div>
-          {ad.status === "ready" && (
-            <div className="border-t border-border/60 bg-muted/10 px-4 py-2">
-              <button
-                type="button"
-                onClick={() => { void toggleDetail(); }}
-                className="flex w-full items-center justify-between gap-2 text-[11px] font-medium text-muted-foreground transition hover:text-foreground"
-                aria-expanded={detailOpen}
-              >
-                <span className="flex items-center gap-1.5">
-                  <Languages className="h-3 w-3" />
-                  Détails & voix
-                </span>
-                <span className="text-[10px] opacity-70">{detailOpen ? "Masquer" : "Afficher"}</span>
-              </button>
-              {detailOpen && (
-                <div className="mt-2 space-y-1 rounded-md bg-background/80 p-2 text-[11px] leading-relaxed">
-                  {detailLoading && <div className="text-muted-foreground">Chargement…</div>}
-                  {!detailLoading && modelId && (
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-muted-foreground">IA utilisée</span>
-                      <span className="font-mono text-[10px] text-foreground/90">{friendlyModelName(modelId)}</span>
-                    </div>
-                  )}
-                  {!detailLoading && detailMeta?.seconds && (
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-muted-foreground">Durée</span>
-                      <span className="text-foreground/80">{detailMeta.seconds} s</span>
-                    </div>
-                  )}
-                  {!detailLoading && detailMeta?.segments && (
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-muted-foreground">Segments</span>
-                      <span className="text-foreground/80">{detailMeta.segments}</span>
-                    </div>
-                  )}
-                  {!detailLoading && detailMeta?.actor && (
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-muted-foreground">Acteur</span>
-                      <span className="text-foreground/80">{detailMeta.actor}</span>
-                    </div>
-                  )}
-                  {modelId && (
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-muted-foreground">Modèle</span>
-                      <span className="font-mono text-[10px] text-muted-foreground/80 truncate">{modelId}</span>
-                    </div>
-                  )}
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-muted-foreground">Type</span>
-                    <span className="text-foreground/80">{kindLabel}</span>
+        )}
+        {ad.status === "ready" && (
+          <div className="gx-rr-x">
+            <button
+              type="button"
+              onClick={() => { void toggleDetail(); }}
+              className="gx-rr-tg"
+              aria-expanded={detailOpen}
+            >
+              <span>Détails & voix</span>
+              <small>{detailOpen ? "Masquer" : "Afficher"}</small>
+            </button>
+            {detailOpen && (
+              <div className="gx-rr-b gx-rr-dl">
+                {detailLoading && <div className="gx-rr-mu">Chargement…</div>}
+                {!detailLoading && modelId && (
+                  <div className="gx-rr-kv">
+                    <span>IA utilisée</span>
+                    <span className="gx-num">{friendlyModelName(modelId)}</span>
                   </div>
-                  {supportsVoiceRegen && voices && (<div ref={voiceSectionRef}>
-                    <div className="mt-2 space-y-2 rounded-md border border-border/60 bg-background/70 p-2">
-                      <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-                        <Sparkles className="h-3 w-3" />
-                        Changer la voix (aperçu ×{UGC_FR_SPEED_LABEL})
-                      </div>
-                      <p className="text-[10px] leading-snug text-muted-foreground">
-                        Clique ▶ pour écouter chaque voix au tempo exact de la vidéo finale.
-                      </p>
-                      <div className="max-h-64 space-y-2.5 overflow-y-auto pr-1">
-                        {(["female", "male"] as const).map((g) => (
-                          <div key={g}>
-                            <div className="mb-1 text-[9px] font-semibold uppercase tracking-wider text-muted-foreground/70">
-                              {g === "female" ? "Voix féminines" : "Voix masculines"}
-                            </div>
-                            <div className="space-y-1">
-                              {voices[g].map((v) => {
-                                const isSel = selectedVoice === v.id;
-                                const isPlaying = playingVoice === v.id;
-                                const isLoadingPrev = previewLoading === v.id;
-                                return (
-                                  <div
-                                    key={v.id}
-                                    className={`flex items-center gap-1.5 rounded-md border px-2 py-1.5 transition ${
-                                      isSel ? "border-primary/60 bg-primary/5" : "border-border/40 bg-background/60"
-                                    }`}
-                                  >
-                                    <button
-                                      type="button"
-                                      onClick={() => { void handlePlayPreview(v.id); }}
-                                      disabled={isLoadingPrev}
-                                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition hover:bg-primary/20 disabled:opacity-50"
-                                      title={isPlaying ? "Pause" : "Écouter"}
-                                      aria-label={isPlaying ? "Pause" : "Écouter"}
-                                    >
-                                      {isLoadingPrev ? (
-                                        <Loader2 className="h-3 w-3 animate-spin" />
-                                      ) : isPlaying ? (
-                                        <span className="text-[9px]">■</span>
-                                      ) : (
-                                        <span className="ml-0.5 text-[9px]">▶</span>
-                                      )}
-                                    </button>
-                                    <button
-                                      type="button"
-                                      onClick={() => setSelectedVoice(v.id)}
-                                      className="flex min-w-0 flex-1 flex-col items-start text-left"
-                                    >
-                                      <span className="truncate text-[11px] font-medium">{v.name}</span>
-                                      {v.notes && (
-                                        <span className="truncate text-[9px] text-muted-foreground">{v.notes}</span>
-                                      )}
-                                    </button>
-                                    {isSel && (
-                                      <span className="shrink-0 rounded-full bg-primary/20 px-1.5 py-0.5 text-[8px] font-semibold uppercase text-primary">
-                                        Sélectionnée
-                                      </span>
-                                    )}
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => { void handleRegenVoice(); }}
-                        disabled={!selectedVoice || regenLoading}
-                        className="w-full rounded-md bg-primary px-2 py-1.5 text-[11px] font-medium text-primary-foreground transition hover:opacity-90 disabled:opacity-50"
-                      >
-                        {regenLoading ? "Lancement…" : "Régénérer avec cette voix"}
-                      </button>
-                      <p className="text-[10px] leading-snug text-muted-foreground">
-                        Refait uniquement TTS + lipsync sur l'acteur existant. ~2× plus rapide qu'une génération complète.
-                      </p>
-                    </div>
-                  </div>)}
-
+                )}
+                {!detailLoading && detailMeta?.seconds && (
+                  <div className="gx-rr-kv">
+                    <span>Durée</span>
+                    <span>{detailMeta.seconds} s</span>
+                  </div>
+                )}
+                {!detailLoading && detailMeta?.segments && (
+                  <div className="gx-rr-kv">
+                    <span>Segments</span>
+                    <span>{detailMeta.segments}</span>
+                  </div>
+                )}
+                {!detailLoading && detailMeta?.actor && (
+                  <div className="gx-rr-kv">
+                    <span>Acteur</span>
+                    <span>{detailMeta.actor}</span>
+                  </div>
+                )}
+                {modelId && (
+                  <div className="gx-rr-kv">
+                    <span>Modèle</span>
+                    <span className="gx-num truncate">{modelId}</span>
+                  </div>
+                )}
+                <div className="gx-rr-kv">
+                  <span>Type</span>
+                  <span>{kindLabel}</span>
                 </div>
-              )}
-            </div>
-          )}
-          <GeneratedAdActions ad={ad} onSubtitleBurnStart={onSubtitleBurnStart} onReply={onReply} conversationId={conversationId} onAdCreated={onAdCreated} />
-        </div>
-        {onSuggest && <GeneratedAdSuggestions ad={ad} onSuggest={onSuggest} />}
+                {supportsVoiceRegen && voices && (<div ref={voiceSectionRef}>
+                  <div className="gx-voice">
+                    <div className="gx-lbl">
+                      Changer la voix (aperçu ×{UGC_FR_SPEED_LABEL})
+                    </div>
+                    <p className="gx-rr-mu">
+                      Clique ▶ pour écouter chaque voix au tempo exact de la vidéo finale.
+                    </p>
+                    <div className="gx-voice-l">
+                      {(["female", "male"] as const).map((g) => (
+                        <div key={g}>
+                          <div className="gx-voice-g">
+                            {g === "female" ? "Voix féminines" : "Voix masculines"}
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            {voices[g].map((v) => {
+                              const isSel = selectedVoice === v.id;
+                              const isPlaying = playingVoice === v.id;
+                              const isLoadingPrev = previewLoading === v.id;
+                              return (
+                                <div
+                                  key={v.id}
+                                  className={`gx-voice-i${isSel ? " gx-on" : ""}`}
+                                >
+                                  <button
+                                    type="button"
+                                    onClick={() => { void handlePlayPreview(v.id); }}
+                                    disabled={isLoadingPrev}
+                                    className="gx-voice-p"
+                                    title={isPlaying ? "Pause" : "Écouter"}
+                                    aria-label={isPlaying ? "Pause" : "Écouter"}
+                                  >
+                                    {isLoadingPrev ? (
+                                      <Loader2 className="gx-i animate-spin" />
+                                    ) : isPlaying ? (
+                                      <span>■</span>
+                                    ) : (
+                                      <span>▶</span>
+                                    )}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => setSelectedVoice(v.id)}
+                                    className="gx-voice-n"
+                                  >
+                                    <b>{v.name}</b>
+                                    {v.notes && (
+                                      <small>{v.notes}</small>
+                                    )}
+                                  </button>
+                                  {isSel && (
+                                    <span className="gx-st gx-q">
+                                      Sélectionnée
+                                    </span>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => { void handleRegenVoice(); }}
+                      disabled={!selectedVoice || regenLoading}
+                      className="gx-btn gx-sm gx-pri"
+                    >
+                      {regenLoading ? "Lancement…" : "Régénérer avec cette voix"}
+                    </button>
+                    <p className="gx-rr-mu">
+                      Refait uniquement TTS + lipsync sur l'acteur existant. ~2× plus rapide qu'une génération complète.
+                    </p>
+                  </div>
+                </div>)}
+
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -6871,10 +6853,10 @@ function MoveAdToFolderButton({ adId }: { adId: string }) {
     <>
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <Button size="sm" variant="outline" className="h-7 gap-1.5 rounded-full text-xs" title="Ranger dans un dossier">
-            <FolderPlus className="h-3.5 w-3.5" />
+          <button type="button" className="gx-btn gx-sm" title="Ranger dans un dossier">
+            <FolderPlus className="gx-i" />
             {movedTo ? movedTo : "Ranger"}
-          </Button>
+          </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-56">
           <DropdownMenuItem onSelect={(e) => { e.preventDefault(); setNewOpen(true); }}>
@@ -6930,6 +6912,7 @@ function GeneratedAdActions({
   onReply,
   conversationId,
   onAdCreated,
+  publishSlot,
 }: {
   ad: {
     id: string;
@@ -6946,6 +6929,8 @@ function GeneratedAdActions({
   onReply?: () => void;
   conversationId?: string | null;
   onAdCreated?: (ad: GeneratedAd) => void;
+  /** Bouton « Publier sur Meta » placé en tête de la rangée d'actions (maquette). */
+  publishSlot?: React.ReactNode;
 }) {
   const [subsOpen, setSubsOpen] = useState(false);
   const [trimOpen, setTrimOpen] = useState(false);
@@ -6992,8 +6977,8 @@ function GeneratedAdActions({
 
   if (ad.status !== "ready") {
     return (
-      <div className="flex items-center justify-end gap-2 border-t border-border/60 px-3 py-2">
-        <Link to="/creations" className="text-xs font-medium text-primary hover:underline">
+      <div className="gx-kf">
+        <Link to="/creations" className="gx-btn gx-sm">
           Ouvrir dans Mes créations →
         </Link>
       </div>
@@ -7012,157 +6997,94 @@ function GeneratedAdActions({
   const isVideo = ad.kind === "video";
 
   return (
-    <div className="border-t border-border/60 px-3 py-2.5">
-      <div className="flex flex-col gap-2">
-        {/* Ligne 1 : actions principales */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          {onReply && (
-            <Button
-              size="sm"
-              variant="outline"
-              className="h-7 gap-1.5 rounded-full text-xs"
-              onClick={onReply}
-              title="Modifier via un message"
-            >
-              <Wand2 className="h-3.5 w-3.5" />
-              Modifier
-            </Button>
-          )}
-
-          {isVideo && ad.url && (
-            <>
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-7 gap-1.5 rounded-full text-xs"
-                onClick={() => setContinueOpen(true)}
-                title="Générer la suite avec le même acteur et le même cadre"
-              >
-                <Wand2 className="h-3.5 w-3.5" />
-                Continuer la vidéo
-              </Button>
-              <Button
-                asChild
-                size="sm"
-                className="h-7 gap-1.5 rounded-full bg-primary px-3 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
-                title="Ouvrir cette vidéo dans l'éditeur"
-              >
-                <Link
-                  to="/editeur"
-                  search={{ p: "new", v: ad.url, n: ad.title || "Vidéo", panel: "media", src: ad.id }}
-                >
-                  <Clapperboard className="h-3.5 w-3.5" />
-                  Ouvrir dans l'éditeur
-                </Link>
-              </Button>
-            </>
-          )}
-        </div>
-
-        {/* Ligne 2 : outils et actions secondaires */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          {isVideo && ad.url && (
-            <>
-              <Button
-                asChild
-                size="sm"
-                variant="outline"
-                className="h-7 gap-1.5 rounded-full text-xs"
-                title="Ouvrir la vidéo dans l'éditeur, onglet Sous-titres"
-              >
-                <Link
-                  to="/editeur"
-                  search={{ p: "new", v: ad.url, n: ad.title || "Vidéo", panel: "captions", src: ad.id }}
-                >
-                  <Captions className="h-3.5 w-3.5" />
-                  Sous-titres
-                </Link>
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-7 gap-1.5 rounded-full text-xs"
-                onClick={() => setTrimOpen(true)}
-                title="Rogner / Couper la vidéo"
-              >
-                <Scissors className="h-3.5 w-3.5" />
-                Rogner / Couper
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-7 gap-1.5 rounded-full text-xs"
-                onClick={() => setSplitOpen(true)}
-                title="Scinder en 2 clips"
-              >
-                <SplitSquareHorizontal className="h-3.5 w-3.5" />
-                Scinder
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-7 gap-1.5 rounded-full text-xs"
-                onClick={() => setCropOpen(true)}
-                title="Recadrer (format / ratio)"
-              >
-                <Crop className="h-3.5 w-3.5" />
-                Recadrer
-              </Button>
-              <MergeSequenceButton
-                adId={ad.id}
-                onCreated={({ adId: newId, title }) =>
-                  onAdCreated?.({ id: newId, kind: "video", title, status: "pending", createdAt: Date.now() })
-                }
-              />
-            </>
-          )}
-
-          {ad.kind === "image" && ad.url && (
-            <>
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-7 gap-1.5 rounded-full text-xs"
-                onClick={() => setRetouchOpen(true)}
-                title="Retoucher l'image (fond, détail, style)"
-              >
-                <Palette className="h-3.5 w-3.5" />
-                Retoucher
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-7 gap-1.5 rounded-full text-xs"
-                onClick={() => spawnMedia("image_upscale", { prompt: "upscale HD", title: `${ad.title} - HD`, sourceImageUrl: ad.url! })}
-                title="Upscaler l'image en haute résolution"
-              >
-                <Maximize2 className="h-3.5 w-3.5" />
-                Upscale HD
-              </Button>
-            </>
-          )}
-
-          <MoveAdToFolderButton adId={ad.id} />
-
-          <button
-            type="button"
-            onClick={doDownload}
-            className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-border/60 bg-background text-muted-foreground transition hover:bg-muted hover:text-foreground"
-            title="Télécharger"
-            aria-label="Télécharger"
+    <>
+      <div className="gx-kf">
+        {publishSlot}
+        {isVideo && ad.url && (
+          <Link
+            to="/editeur"
+            search={{ p: "new", v: ad.url, n: ad.title || "Vidéo", panel: "media", src: ad.id }}
+            className="gx-btn gx-sm"
+            title="Ouvrir cette vidéo dans l'éditeur"
           >
-            <Download className="h-3.5 w-3.5" />
-          </button>
-
-          <div className="ml-auto flex items-center">
-            <Link to="/creations" className="text-xs font-medium text-primary hover:underline">
-              Mes créations →
-            </Link>
-          </div>
-        </div>
+            <Clapperboard className="gx-i" />
+            Ouvrir dans l'éditeur
+          </Link>
+        )}
+        <MoveAdToFolderButton adId={ad.id} />
+        {isVideo && ad.url && (
+          <MergeSequenceButton
+            adId={ad.id}
+            onCreated={({ adId: newId, title }) =>
+              onAdCreated?.({ id: newId, kind: "video", title, status: "pending", createdAt: Date.now() })
+            }
+          />
+        )}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button type="button" className="gx-btn gx-sm" aria-label="Plus d'actions" title="Plus d'actions">
+              <MoreHorizontal className="gx-i" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-60">
+            {onReply && (
+              <DropdownMenuItem onClick={onReply} title="Modifier via un message">
+                <Wand2 className="mr-2 h-3.5 w-3.5" /> Modifier (répondre à ce média)
+              </DropdownMenuItem>
+            )}
+            {isVideo && ad.url && (
+              <>
+                <DropdownMenuItem onClick={() => setContinueOpen(true)} title="Générer la suite avec le même acteur et le même cadre">
+                  <Wand2 className="mr-2 h-3.5 w-3.5" /> Continuer la vidéo
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link
+                    to="/editeur"
+                    search={{ p: "new", v: ad.url, n: ad.title || "Vidéo", panel: "captions", src: ad.id }}
+                    title="Ouvrir la vidéo dans l'éditeur, onglet Sous-titres"
+                  >
+                    <Captions className="mr-2 h-3.5 w-3.5" /> Sous-titres
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTrimOpen(true)} title="Rogner / Couper la vidéo">
+                  <Scissors className="mr-2 h-3.5 w-3.5" /> Rogner / Couper
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSplitOpen(true)} title="Scinder en 2 clips">
+                  <SplitSquareHorizontal className="mr-2 h-3.5 w-3.5" /> Scinder
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setCropOpen(true)} title="Recadrer (format / ratio)">
+                  <Crop className="mr-2 h-3.5 w-3.5" /> Recadrer
+                </DropdownMenuItem>
+              </>
+            )}
+            {ad.kind === "image" && ad.url && (
+              <>
+                <DropdownMenuItem onClick={() => setRetouchOpen(true)} title="Retoucher l'image (fond, détail, style)">
+                  <Palette className="mr-2 h-3.5 w-3.5" /> Retoucher
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => spawnMedia("image_upscale", { prompt: "upscale HD", title: `${ad.title} - HD`, sourceImageUrl: ad.url! })}
+                  title="Upscaler l'image en haute résolution"
+                >
+                  <Maximize2 className="mr-2 h-3.5 w-3.5" /> Upscale HD
+                </DropdownMenuItem>
+              </>
+            )}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={doDownload}>
+              <Download className="mr-2 h-3.5 w-3.5" /> Télécharger
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link to="/creations">
+                <FolderOpen className="mr-2 h-3.5 w-3.5" /> Mes créations
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       {isVideo && ad.url && (
+        <SubtitlesDialog      {isVideo && ad.url && (
         <SubtitlesDialog
           open={subsOpen}
           onOpenChange={setSubsOpen}
@@ -7245,13 +7167,13 @@ function GeneratedAdActions({
         />
       )}
       {spawnedMedia.length > 0 && (
-        <div className="mt-3 space-y-3 border-t border-border/60 pt-3">
+        <div className="gx-rr-sp">
           {spawnedMedia.map((m) => (
             <MediaAssetBlock key={m.id} output={{ ok: true, mediaAssetId: m.id, kind: m.kind, title: m.title }} />
           ))}
         </div>
       )}
-    </div>
+    </>
   );
 }
 
@@ -7373,6 +7295,7 @@ function RetouchImageDialog({
 function GeneratedAdSuggestions({
   ad,
   onSuggest,
+  part,
 }: {
   ad: {
     id: string;
@@ -7384,6 +7307,8 @@ function GeneratedAdSuggestions({
     error?: string | null;
   };
   onSuggest: (text: string) => void;
+  /** « next » : puces « Et ensuite ? » ; « publish » : bouton Publier sur Meta ; absent : les deux. */
+  part?: "next" | "publish";
 }) {
   if (ad.status !== "ready") return null;
 
@@ -7407,21 +7332,25 @@ function GeneratedAdSuggestions({
           ]),
   ];
 
-  return (
-    <div className="pt-4">
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="mr-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Et ensuite&nbsp;?</span>
+  const nextBlock = (
+    <>
+      <div className="gx-lbl">Et ensuite&nbsp;?</div>
+      <div className="gx-chips">
         {suggestions.map((s) => (
           <button
             key={s.label}
             type="button"
             onClick={() => onSuggest(s.text)}
-            className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-4 py-2 text-[13px] font-medium text-primary transition hover:bg-primary/10"
+            className="gx-chip"
           >
-            <s.icon className="h-4 w-4" />
             {s.label}
           </button>
         ))}
+      </div>
+    </>
+  );
+
+  const publishButton = (
         <button
           type="button"
           onClick={() =>
@@ -7448,13 +7377,19 @@ function GeneratedAdSuggestions({
             )
           }
 
-          className="inline-flex items-center gap-2 rounded-full bg-meta px-4 py-2 text-[13px] font-semibold text-white shadow-sm transition hover:opacity-90"
+          className="gx-btn gx-sm gx-pri"
         >
-          <MetaIcon className="h-4 w-4 text-white" />
+          <Send className="gx-i" />
           Publier sur Meta
         </button>
+  );
 
-      </div>
+  if (part === "next") return nextBlock;
+  if (part === "publish") return publishButton;
+  return (
+    <div className="gx-rr">
+      {nextBlock}
+      <div className="gx-kf">{publishButton}</div>
     </div>
   );
 }
@@ -7489,10 +7424,27 @@ function SidebarSection({
 }
 
 
+/** Date courte affichée à droite d'une conversation : « il y a 4 min », « hier », « lun. », « 2 oct. ». */
+function convDateLabel(iso: string): string {
+  const d = new Date(iso);
+  const t = d.getTime();
+  if (!Number.isFinite(t)) return "";
+  const now = new Date();
+  const diffMin = Math.floor((now.getTime() - t) / 60000);
+  if (diffMin < 1) return "à l'instant";
+  if (diffMin < 60) return `il y a ${diffMin} min`;
+  const startOfDay = (x: Date) => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+  const days = Math.round((startOfDay(now) - startOfDay(d)) / 86_400_000);
+  if (days <= 0) return d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+  if (days === 1) return "hier";
+  if (days < 7) return d.toLocaleDateString("fr-FR", { weekday: "short" });
+  return d.toLocaleDateString("fr-FR", d.getFullYear() === now.getFullYear() ? { day: "numeric", month: "short" } : { day: "numeric", month: "short", year: "numeric" });
+}
+
 function ConversationRow({
   conv, active, folders, onOpen, onDelete, onRename, onFav, onMove,
 }: {
-  conv: { id: string; title: string; state?: Record<string, unknown>; is_favorite?: boolean; folder_id?: string | null };
+  conv: { id: string; title: string; state?: Record<string, unknown>; is_favorite?: boolean; folder_id?: string | null; updated_at?: string; created_at?: string };
   active: boolean;
   folders: Array<{ id: string; name: string }>;
   onOpen: () => void;
@@ -7506,83 +7458,77 @@ function ConversationRow({
   const imgCount = ads.filter((a) => a.kind === "image").length;
   const carCount = ads.filter((a) => a.kind === "carousel").length;
   const total = vidCount + imgCount + carCount;
+  const when = conv.updated_at ?? conv.created_at;
+  const countsTitle = total > 0
+    ? [
+        vidCount > 0 ? `${vidCount} vidéo${vidCount > 1 ? "s" : ""}` : null,
+        imgCount > 0 ? `${imgCount} image${imgCount > 1 ? "s" : ""}` : null,
+        carCount > 0 ? `${carCount} carrousel${carCount > 1 ? "s" : ""}` : null,
+      ].filter(Boolean).join(" · ")
+    : null;
   return (
     <div
-      className={`group relative min-w-0 cursor-pointer overflow-hidden rounded-lg px-2.5 py-1.5 transition ${
-        active ? "bg-background shadow-sm ring-1 ring-primary/30" : "hover:bg-background/70"
-      }`}
+      className={`gx-cv gx-cv-row${active ? " gx-on" : ""}`}
+      role="button"
+      tabIndex={0}
+      aria-current={active ? "page" : undefined}
+      title={countsTitle ? `${conv.title || "Nouvelle pub"} — ${countsTitle}` : conv.title || "Nouvelle pub"}
       onClick={onOpen}
+      onKeyDown={(e) => {
+        if (e.target !== e.currentTarget) return;
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onOpen(); }
+      }}
     >
-      <div className="flex items-center gap-1.5">
-        {conv.is_favorite && <Star className="h-3 w-3 shrink-0 fill-amber-400 text-amber-400" />}
-        <div className={`min-w-0 flex-1 truncate text-[12.5px] ${active ? "font-medium text-foreground" : "text-foreground/85"}`}>
-          {conv.title || "Nouvelle pub"}
-        </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button
-              onClick={(e) => e.stopPropagation()}
-              className="shrink-0 rounded p-0.5 text-muted-foreground opacity-0 transition hover:bg-muted hover:text-foreground group-hover:opacity-100 data-[state=open]:opacity-100"
-              aria-label="Options"
-            >
-              <MoreHorizontal className="h-3.5 w-3.5" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48" onClick={(e) => e.stopPropagation()}>
-            <DropdownMenuItem onClick={onFav}>
-              <Star className={`mr-2 h-3.5 w-3.5 ${conv.is_favorite ? "fill-amber-400 text-amber-400" : ""}`} />
-              {conv.is_favorite ? "Retirer des favoris" : "Ajouter aux favoris"}
-            </DropdownMenuItem>
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>
-                <Folder className="mr-2 h-3.5 w-3.5" /> Déplacer vers…
-              </DropdownMenuSubTrigger>
-              <DropdownMenuSubContent className="w-44">
-                <DropdownMenuItem onClick={() => onMove(null)}>
-                  <X className="mr-2 h-3.5 w-3.5" /> Aucun dossier
+      <MessageSquare className="gx-i" />
+      <span>{conv.title || "Nouvelle pub"}</span>
+      {when ? <small>{convDateLabel(when)}</small> : null}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button
+            type="button"
+            onClick={(e) => e.stopPropagation()}
+            className="gx-cv-more"
+            aria-label="Options"
+          >
+            <MoreHorizontal className="gx-i" />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-48" onClick={(e) => e.stopPropagation()}>
+          <DropdownMenuItem onClick={onFav}>
+            <Star className={`mr-2 h-3.5 w-3.5 ${conv.is_favorite ? "fill-current" : ""}`} />
+            {conv.is_favorite ? "Retirer des favoris" : "Ajouter aux favoris"}
+          </DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <Folder className="mr-2 h-3.5 w-3.5" /> Déplacer vers…
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent className="w-44">
+              <DropdownMenuItem onClick={() => onMove(null)}>
+                <X className="mr-2 h-3.5 w-3.5" /> Aucun dossier
+              </DropdownMenuItem>
+              {folders.length > 0 && <DropdownMenuSeparator />}
+              {folders.map((f) => (
+                <DropdownMenuItem key={f.id} onClick={() => onMove(f.id)} disabled={f.id === conv.folder_id}>
+                  <Folder className="mr-2 h-3.5 w-3.5" /> {f.name}
                 </DropdownMenuItem>
-                {folders.length > 0 && <DropdownMenuSeparator />}
-                {folders.map((f) => (
-                  <DropdownMenuItem key={f.id} onClick={() => onMove(f.id)} disabled={f.id === conv.folder_id}>
-                    <Folder className="mr-2 h-3.5 w-3.5" /> {f.name}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuSubContent>
-            </DropdownMenuSub>
-            <DropdownMenuItem onClick={onRename}>
-              <Pencil className="mr-2 h-3.5 w-3.5" /> Renommer
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={onDelete} className="text-destructive focus:text-destructive">
-              <Trash2 className="mr-2 h-3.5 w-3.5" /> Supprimer
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-      {total > 0 && (
-        <div className="mt-1 flex items-center gap-1">
-          {vidCount > 0 && (
-            <span className="inline-flex items-center gap-0.5 rounded-full bg-primary/10 px-1.5 py-0 text-[9px] font-medium text-primary">
-              <Video className="h-2 w-2" />{vidCount}
-            </span>
-          )}
-          {imgCount > 0 && (
-            <span className="inline-flex items-center gap-0.5 rounded-full bg-emerald-500/10 px-1.5 py-0 text-[9px] font-medium text-emerald-600">
-              <ImageIcon className="h-2 w-2" />{imgCount}
-            </span>
-          )}
-          {carCount > 0 && (
-            <span className="inline-flex items-center gap-0.5 rounded-full bg-amber-500/10 px-1.5 py-0 text-[9px] font-medium text-amber-600">
-              <Layers className="h-2 w-2" />{carCount}
-            </span>
-          )}
-        </div>
-      )}
+              ))}
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+          <DropdownMenuItem onClick={onRename}>
+            <Pencil className="mr-2 h-3.5 w-3.5" /> Renommer
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={onDelete} className="text-destructive focus:text-destructive">
+            <Trash2 className="mr-2 h-3.5 w-3.5" /> Supprimer
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }
 
 // ============================================================================
+// Agent tool blocks// ============================================================================
 // Agent tool blocks - rendus interactifs pour les outils backend
 // (list_creations, list_campaigns, duplicate_campaign, search_content)
 // ============================================================================
