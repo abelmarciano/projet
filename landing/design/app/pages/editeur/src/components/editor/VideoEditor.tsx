@@ -4310,14 +4310,90 @@ const FONT_CHOICES = [
   { label: "Manuscrit", value: "'Brush Script MT', cursive" },
 ];
 
+/** Couleurs d'accent proposées en un clic (maquette) ; le sélecteur libre reste à côté. */
+const ACCENT_SWATCHES = ["#F29A2E", "#FFD84D", "#7CF7FF", "#FF5C8A"];
+
+/** Ligne « libellé · valeur » de la maquette (gx-kv). */
+function Kv({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="gx-kv">
+      <span>{label}</span>
+      <b>{children}</b>
+    </div>
+  );
+}
+
+/** Pas à pas − valeur + (gx-stp), borné. */
+function Stepper({
+  value,
+  step,
+  min,
+  max,
+  suffix,
+  label,
+  onChange,
+}: {
+  value: number;
+  step: number;
+  min: number;
+  max: number;
+  suffix?: string;
+  label: string;
+  onChange: (v: number) => void;
+}) {
+  return (
+    <>
+      <button
+        type="button"
+        className="gx-stp"
+        aria-label={`${label} : moins`}
+        disabled={value <= min}
+        onClick={() => onChange(Math.max(min, value - step))}
+      >
+        −
+      </button>
+      <span className="gx-num">
+        {value}
+        {suffix ? ` ${suffix}` : ""}
+      </span>
+      <button
+        type="button"
+        className="gx-stp"
+        aria-label={`${label} : plus`}
+        disabled={value >= max}
+        onClick={() => onChange(Math.min(max, value + step))}
+      >
+        +
+      </button>
+    </>
+  );
+}
+
+/** Interrupteur gx-tg. */
+function Toggle({ on, label, onChange }: { on: boolean; label: string; onChange: (v: boolean) => void }) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={on}
+      aria-label={label}
+      className={cn("gx-tg", on && "gx-on")}
+      onClick={() => onChange(!on)}
+    />
+  );
+}
+
 function Inspector({
   store,
   clip,
   onReplaceMedia,
+  onCollapse,
 }: {
   store: StoreType;
   clip: Clip;
   onReplaceMedia?: () => void;
+  /** Replie la colonne des réglages. */
+  onCollapse?: () => void;
 }) {
   const update = (changes: Partial<Clip>) => store.updateClip(clip.id, changes);
   const frame = useClipFrame(clip);
@@ -4371,66 +4447,25 @@ function Inspector({
       { silent: true },
     );
 
+  const entryLabel = clipAnimation.in
+    ? (animationsOf("in").find((a) => a.key === clipAnimation.in)?.label ?? String(clipAnimation.in))
+    : "Aucune";
+  const accent = String(ts.accentColor ?? "").toLowerCase();
+
   return (
-    <div className="p-3">
+    <div className="gx-insp-r">
       {mediaBroken ? (
-        <div className="mb-3 rounded-md border border-destructive bg-destructive/10 p-2">
-          <p className="text-xs font-semibold text-destructive">Ce média est introuvable</p>
-          <p className="mt-0.5 text-[11px] text-muted-foreground">
-            Le fichier a été supprimé ou son lien a expiré.
-          </p>
-          <Button
-            type="button"
-            size="sm"
-            variant="outline"
-            className="mt-2 h-7 w-full text-xs"
-            onClick={() => onReplaceMedia?.()}
-          >
+        <div className="gx-ed-warn">
+          <b>Ce média est introuvable</b>
+          <small>Le fichier a été supprimé ou son lien a expiré.</small>
+          <button type="button" className="gx-btn gx-sm" onClick={() => onReplaceMedia?.()}>
             Remplacer le média
-          </Button>
+          </button>
         </div>
       ) : null}
-      <div className="mb-3">
-
-        <p className="truncate text-sm font-semibold text-foreground">{clip.name}</p>
-        <p className="text-xs text-muted-foreground">
-          {fmt(clip.start)} → {fmt(clip.start + clip.duration)}
-        </p>
-        {/* Réglage précis du temps d'affichage (utile pour les sous-titres). */}
-        <div className="mt-2 grid grid-cols-2 gap-2">
-          <label className="block text-[11px] text-muted-foreground">
-            Début (s)
-            <Input
-              type="number"
-              step={0.05}
-              min={0}
-              value={Number(clip.start.toFixed(2))}
-              onChange={(e) => {
-                const v = Math.max(0, Number(e.target.value) || 0);
-                update({ start: v });
-              }}
-              className="mt-1 h-8 text-xs"
-            />
-          </label>
-          <label className="block text-[11px] text-muted-foreground">
-            Durée (s)
-            <Input
-              type="number"
-              step={0.05}
-              min={0.2}
-              value={Number(clip.duration.toFixed(2))}
-              onChange={(e) => {
-                const v = Math.max(0.2, Number(e.target.value) || 0.2);
-                update({ duration: v });
-              }}
-              className="mt-1 h-8 text-xs"
-            />
-          </label>
-        </div>
-      </div>
-
 
       {/* Les onglets dépendent du type réel du clip :
+          texte = Texte / Style / Position / Animation (maquette),
           audio = son uniquement, image = visuel sans son, vidéo = tout. */}
       <Tabs
         defaultValue={
@@ -4438,46 +4473,33 @@ function Inspector({
         }
         key={`${clip.id}-${clip.kind}-${hasSound}`}
       >
-        <TabsList
-          className={cn(
-            "sticky top-0 z-10 mb-3 grid w-full bg-background",
-            clip.kind === "audio"
-              ? "grid-cols-1"
-              : clip.kind === "text"
-                ? "grid-cols-4"
-                : hasSound
-                  ? "grid-cols-4"
-                  : "grid-cols-3",
-          )}
-        >
+        <TabsList className="gx-seg">
           {/* GRW-16 : un seul niveau d'onglets pour le texte. */}
           {clip.kind === "text" ? (
             <>
-              <TabsTrigger value="texte" className="text-[11px]">Texte</TabsTrigger>
-              <TabsTrigger value="style" className="text-[11px]">Style</TabsTrigger>
-              <TabsTrigger value="position" className="text-[11px]">Position</TabsTrigger>
+              <TabsTrigger value="texte">Texte</TabsTrigger>
+              <TabsTrigger value="style">Style</TabsTrigger>
+              <TabsTrigger value="position">Position</TabsTrigger>
             </>
           ) : null}
 
-          {clip.kind === "audio" || hasSound ? (
-            <TabsTrigger value="audio" className="text-[11px]">Audio</TabsTrigger>
-          ) : null}
+          {clip.kind === "audio" || hasSound ? <TabsTrigger value="audio">Audio</TabsTrigger> : null}
           {clip.kind !== "audio" ? (
             <>
               {clip.kind !== "text" ? (
                 <>
-                  <TabsTrigger value="filtres" className="text-[11px]">Filtres</TabsTrigger>
-                  <TabsTrigger value="effets" className="text-[11px]">Effets</TabsTrigger>
+                  <TabsTrigger value="filtres">Filtres</TabsTrigger>
+                  <TabsTrigger value="effets">Effets</TabsTrigger>
                 </>
               ) : null}
-              <TabsTrigger value="anim" className="text-[11px]">Animation</TabsTrigger>
+              <TabsTrigger value="anim">Animation</TabsTrigger>
             </>
           ) : null}
         </TabsList>
 
 
 
-        <TabsContent value="audio" className="space-y-4">
+        <TabsContent value="audio" className="gx-insp-tab">
           <Field label={`Volume — ${Math.round(clip.volume * 100)} %`}>
             <Slider
               value={[clip.volume]}
@@ -4502,11 +4524,11 @@ function Inspector({
                   update({ speed: next, duration: nextDuration });
                 }}
               />
-              <p className="mt-1 text-[10px] text-muted-foreground">
+              <small className="gx-hint">
                 {clip.kind === "video"
                   ? "Accélère ou ralentit l’image et le son ensemble. La durée du calque s’adapte automatiquement."
                   : "Accélère ou ralentit ce calque audio sans déformer la voix."}
-              </p>
+              </small>
             </Field>
           ) : null}
           <Field label={`Fondu d'entrée — ${clip.fadeIn.toFixed(1)} s`}>
@@ -4515,255 +4537,228 @@ function Inspector({
           <Field label={`Fondu de sortie — ${clip.fadeOut.toFixed(1)} s`}>
             <Slider value={[clip.fadeOut]} min={0} max={3} step={0.1} onValueChange={([v]) => update({ fadeOut: v })} />
           </Field>
-          <Button variant="outline" size="sm" className="w-full" onClick={() => store.detachAudio(clip.id)}>
+          <button type="button" className="gx-btn gx-sm" onClick={() => store.detachAudio(clip.id)}>
             Détacher l'audio
-          </Button>
+          </button>
         </TabsContent>
 
-        <TabsContent value="texte" className="space-y-3">
+        <TabsContent value="texte" className="gx-insp-tab">
           {textClipCount > 1 ? (
-            <label className="flex cursor-pointer items-start gap-2 rounded-md border border-border bg-card p-2">
+            <label className="gx-ed-all">
               <Checkbox
                 checked={applyAllPref}
                 onCheckedChange={(v) => {
                   textApplyAll.current = v === true;
                   setApplyAllPref(v === true);
                 }}
-                className="mt-0.5"
               />
-              <span className="text-[11px] leading-snug text-foreground">
+              <span>
                 {textScope === "subtitles" ? "Appliquer à tous les sous-titres" : "Appliquer à tous les textes"}
-                <span className="block text-[10px] text-muted-foreground">
+                <small>
                   Style, position et animation s'appliquent aux {textClipCount}{" "}
-                  {textScope === "subtitles" ? "sous-titres" : "textes"} — l'autre famille n'est jamais
-                  modifiée.
-                </span>
+                  {textScope === "subtitles" ? "sous-titres" : "textes"} — l'autre famille n'est jamais modifiée.
+                </small>
               </span>
             </label>
           ) : null}
 
-          <Textarea
+          <textarea
+            className="gx-in gx-ed-ta"
+            aria-label="Texte du calque"
             value={clip.text ?? ""}
             onChange={(e) => update({ text: e.target.value })}
             rows={4}
-            className="bg-card"
           />
-          <p className="text-[10px] text-muted-foreground">
-            Le texte reste propre à ce sous-titre, même si la case ci-dessus est cochée.
-          </p>
+          <small className="gx-hint">Le texte reste propre à ce calque, même si la case ci-dessus est cochée.</small>
         </TabsContent>
 
-        <TabsContent value="style" className="space-y-3">
+        <TabsContent value="style" className="gx-insp-tab">
+          <Kv label="Police">
+            <select
+              className="gx-ed-select"
+              aria-label="Police"
+              value={ts.fontFamily}
+              onChange={(e) => setStyleSmart({ fontFamily: e.target.value })}
+            >
+              {FONT_CHOICES.map((f) => (
+                <option key={f.value} value={f.value} style={{ fontFamily: f.value }}>
+                  {f.label}
+                </option>
+              ))}
+            </select>
+          </Kv>
+          <Kv label="Taille">
+            <Stepper
+              label="Taille"
+              value={ts.fontSize}
+              step={4}
+              min={18}
+              max={220}
+              onChange={(v) => setStyleSmart({ fontSize: v })}
+            />
+          </Kv>
+          <Kv label="Épaisseur">
+            <Stepper
+              label="Épaisseur"
+              value={ts.fontWeight}
+              step={100}
+              min={300}
+              max={900}
+              onChange={(v) => setStyleSmart({ fontWeight: v })}
+            />
+          </Kv>
+          <Kv label="Couleur">
+            <input
+              type="color"
+              className="gx-ed-color"
+              aria-label="Couleur du texte"
+              value={ts.color}
+              onChange={(e) => setStyleSmart({ color: e.target.value })}
+            />
+          </Kv>
+          <div className="gx-kv">
+            <span>Accent</span>
+            <b className="gx-sws">
+              {ACCENT_SWATCHES.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  className={cn("gx-sw", accent === c.toLowerCase() && "gx-on")}
+                  style={{ background: c }}
+                  aria-label={`Couleur ${c}`}
+                  aria-pressed={accent === c.toLowerCase()}
+                  onClick={() => setStyleSmart({ accentColor: c })}
+                />
+              ))}
+              <input
+                type="color"
+                className="gx-ed-color"
+                aria-label="Autre couleur d'accent"
+                value={ts.accentColor}
+                onChange={(e) => setStyleSmart({ accentColor: e.target.value })}
+              />
+            </b>
+          </div>
+          <Kv label="Fond">
+            <Toggle
+              label="Fond du texte"
+              on={Boolean(ts.background)}
+              onChange={(v) => setStyleSmart({ background: v ? "#000000" : null })}
+            />
+            {ts.background ? (
+              <input
+                type="color"
+                className="gx-ed-color"
+                aria-label="Couleur du fond"
+                value={ts.background ?? "#000000"}
+                onChange={(e) => setStyleSmart({ background: e.target.value })}
+              />
+            ) : null}
+          </Kv>
+          <Kv label="Contour">
+            <Stepper
+              label="Contour"
+              value={ts.strokeWidth}
+              step={1}
+              min={0}
+              max={24}
+              suffix="px"
+              onChange={(v) => setStyleSmart({ strokeWidth: v })}
+            />
+            <input
+              type="color"
+              className="gx-ed-color"
+              aria-label="Couleur du contour"
+              value={ts.strokeColor}
+              onChange={(e) => setStyleSmart({ strokeColor: e.target.value })}
+            />
+          </Kv>
+          <Kv label="Majuscules">
+            <Toggle label="Majuscules" on={Boolean(ts.uppercase)} onChange={(v) => setStyleSmart({ uppercase: v })} />
+          </Kv>
+          <Kv label="Ombre portée">
+            <Toggle label="Ombre portée" on={Boolean(ts.shadow)} onChange={(v) => setStyleSmart({ shadow: v })} />
+          </Kv>
+          <Kv label="Entrée">{entryLabel}</Kv>
+
           <TextTemplatePicker clip={clip} setLayoutSmart={setLayoutSmart} />
+        </TabsContent>
 
-              <Field label="Police">
-                <select
-                  value={ts.fontFamily}
-                  onChange={(e) => setStyleSmart({ fontFamily: e.target.value })}
-                  className="h-9 w-full rounded-md border border-border bg-card px-2 text-xs text-foreground"
-                >
-                  {FONT_CHOICES.map((f) => (
-                    <option key={f.value} value={f.value} style={{ fontFamily: f.value }}>
-                      {f.label}
-                    </option>
-                  ))}
-                </select>
-              </Field>
+        <TabsContent value="position" className="gx-insp-tab">
+          <div className="gx-seg gx-seg3" role="group" aria-label="Alignement">
+            {(["left", "center", "right"] as const).map((a) => (
+              <button
+                key={a}
+                type="button"
+                aria-selected={ts.align === a}
+                onClick={() => setStyleSmart({ align: a })}
+              >
+                {a === "left" ? "Gauche" : a === "center" ? "Centre" : "Droite"}
+              </button>
+            ))}
+          </div>
 
-              <Field label={`Taille — ${ts.fontSize}`}>
-                <Slider
-                  value={[ts.fontSize]}
-                  min={18}
-                  max={220}
-                  step={2}
-                  onValueChange={([v]) => setStyleSmart({ fontSize: v })}
-                />
-              </Field>
-
-              <Field label={`Épaisseur — ${ts.fontWeight}`}>
-                <Slider
-                  value={[ts.fontWeight]}
-                  min={300}
-                  max={900}
-                  step={100}
-                  onValueChange={([v]) => setStyleSmart({ fontWeight: v })}
-                />
-              </Field>
-
-              <div className="grid grid-cols-2 gap-2">
-                <Field label="Couleur">
-                  <input
-                    type="color"
-                    value={ts.color}
-                    onChange={(e) => setStyleSmart({ color: e.target.value })}
-                    className="h-9 w-full rounded-md border border-border bg-card"
-                  />
-                </Field>
-                <Field label="Accent">
-                  <input
-                    type="color"
-                    value={ts.accentColor}
-                    onChange={(e) => setStyleSmart({ accentColor: e.target.value })}
-                    className="h-9 w-full rounded-md border border-border bg-card"
-                  />
-                </Field>
-              </div>
-
-              <Field label="Fond du texte">
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setStyleSmart({ background: ts.background ? null : "#000000" })}
-                    className={cn(
-                      "h-9 flex-1 rounded-md border text-xs transition-colors",
-                      ts.background
-                        ? "border-primary bg-primary/10 text-primary"
-                        : "border-border bg-card text-muted-foreground",
-                    )}
-                  >
-                    {ts.background ? "Activé" : "Aucun"}
-                  </button>
-                  <input
-                    type="color"
-                    value={ts.background ?? "#000000"}
-                    disabled={!ts.background}
-                    onChange={(e) => setStyleSmart({ background: e.target.value })}
-                    className="h-9 w-14 rounded-md border border-border bg-card disabled:opacity-40"
-                  />
-                </div>
-              </Field>
-
-              <Field label={`Contour — ${ts.strokeWidth} px`}>
-                <div className="flex items-center gap-2">
-                  <Slider
-                    className="flex-1"
-                    value={[ts.strokeWidth]}
-                    min={0}
-                    max={24}
-                    step={1}
-                    onValueChange={([v]) => setStyleSmart({ strokeWidth: v })}
-                  />
-                  <input
-                    type="color"
-                    value={ts.strokeColor}
-                    onChange={(e) => setStyleSmart({ strokeColor: e.target.value })}
-                    className="h-9 w-12 rounded-md border border-border bg-card"
-                  />
-                </div>
-              </Field>
-
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setStyleSmart({ uppercase: !ts.uppercase })}
-                  className={cn(
-                    "h-8 rounded-md border text-[11px] transition-colors",
-                    ts.uppercase ? "border-primary text-primary" : "border-border text-muted-foreground",
-                  )}
-                >
-                  MAJUSCULES
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setStyleSmart({ shadow: !ts.shadow })}
-                  className={cn(
-                    "h-8 rounded-md border text-[11px] transition-colors",
-                    ts.shadow ? "border-primary text-primary" : "border-border text-muted-foreground",
-                  )}
-                >
-                  Ombre portée
-                </button>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="position" className="space-y-3">
-              <div className="grid grid-cols-3 gap-1">
-                {(["left", "center", "right"] as const).map((a) => (
-                  <button
-                    key={a}
-                    type="button"
-                    onClick={() => setStyleSmart({ align: a })}
-                    className={cn(
-                      "h-8 rounded-md border text-[11px] transition-colors",
-                      ts.align === a ? "border-primary text-primary" : "border-border text-muted-foreground",
-                    )}
-                  >
-                    {a === "left" ? "Gauche" : a === "center" ? "Centre" : "Droite"}
-                  </button>
-                ))}
-              </div>
-
-              <Field label={`Position horizontale — ${Math.round(clip.x * 100)} %`}>
-                <Slider
-                  value={[clip.x]}
-                  min={0}
-                  max={1}
-                  step={0.01}
-                  onValueChange={([v]) => setLayoutSmart({ x: v })}
-                />
-              </Field>
-              <Field label={`Position verticale — ${Math.round(clip.y * 100)} %`}>
-                <Slider
-                  value={[clip.y]}
-                  min={0}
-                  max={1}
-                  step={0.01}
-                  onValueChange={([v]) => setLayoutSmart({ y: v })}
-                />
-              </Field>
-              <Field label={`Échelle — ${Math.round((clip.scale || 1) * 100)} %`}>
-                <Slider
-                  value={[clip.scale || 1]}
-                  min={0.2}
-                  max={4}
-                  step={0.01}
-                  onValueChange={([v]) => setLayoutSmart({ scale: v })}
-                />
-              </Field>
+          <Field label={`Position horizontale — ${Math.round(clip.x * 100)} %`}>
+            <Slider
+              value={[clip.x]}
+              min={0}
+              max={1}
+              step={0.01}
+              onValueChange={([v]) => setLayoutSmart({ x: v })}
+            />
+          </Field>
+          <Field label={`Position verticale — ${Math.round(clip.y * 100)} %`}>
+            <Slider
+              value={[clip.y]}
+              min={0}
+              max={1}
+              step={0.01}
+              onValueChange={([v]) => setLayoutSmart({ y: v })}
+            />
+          </Field>
+          <Field label={`Échelle — ${Math.round((clip.scale || 1) * 100)} %`}>
+            <Slider
+              value={[clip.scale || 1]}
+              min={0.2}
+              max={4}
+              step={0.01}
+              onValueChange={([v]) => setLayoutSmart({ scale: v })}
+            />
+          </Field>
         </TabsContent>
 
 
-        <TabsContent value="filtres">
-          <div className="grid grid-cols-3 gap-2">
+        <TabsContent value="filtres" className="gx-insp-tab">
+          <div className="gx-ed-tiles gx-c3">
             {FILTER_PRESETS.map((f) => (
               <button
                 key={f.key}
                 type="button"
+                aria-pressed={clip.filter === f.key}
                 onClick={() => update({ filter: f.key })}
-                className={cn(
-                  "group overflow-hidden rounded-md border text-[10px]",
-                  clip.filter === f.key ? "border-primary" : "border-border",
-                )}
               >
-                <div className="h-12 w-full overflow-hidden bg-muted">
+                <span>
                   {frame ? (
-                    <img
-                      src={frame}
-                      alt=""
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      style={{ filter: filterToCss(FILTER_BY_KEY[f.key]) }}
-                    />
+                    <img src={frame} alt="" style={{ filter: filterToCss(FILTER_BY_KEY[f.key]) }} />
                   ) : (
-                    <div
-                      className="h-full w-full bg-gradient-to-br from-primary/60 via-foreground/30 to-accent/60"
-                      style={{ filter: filterToCss(FILTER_BY_KEY[f.key]) }}
-                    />
+                    <i style={{ filter: filterToCss(FILTER_BY_KEY[f.key]) }} />
                   )}
-                </div>
-                <span className="block truncate px-1 py-0.5 text-foreground">{f.label}</span>
+                </span>
+                <small>{f.label}</small>
               </button>
             ))}
           </div>
         </TabsContent>
 
-        <TabsContent value="effets" className="space-y-3">
-          <div className="grid grid-cols-2 gap-2">
+        <TabsContent value="effets" className="gx-insp-tab">
+          <div className="gx-ed-tiles">
             {EFFECT_PRESETS.map((eff) => {
               const active = clipEffects.some((e) => e.key === eff.key);
               return (
                 <button
                   key={eff.key}
                   type="button"
+                  aria-pressed={active}
                   onClick={() =>
                     update({
                       effects: active
@@ -4771,49 +4766,39 @@ function Inspector({
                         : [...clipEffects, { key: eff.key, params: defaultEffectParams(eff.key) }],
                     })
                   }
-                  className={cn(
-                    "group overflow-hidden rounded-md border bg-card text-[10px] transition-colors",
-                    active ? "border-primary text-primary" : "border-border hover:border-primary/60",
-                  )}
                 >
-                  <div className="h-12 w-full overflow-hidden bg-muted">
+                  <span>
                     {frame ? (
-                      <img
-                        src={frame}
-                        alt=""
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        style={{ filter: eff.css ?? "none" }}
-                      />
+                      <img src={frame} alt="" style={{ filter: eff.css ?? "none" }} />
                     ) : (
-                      <div
-                        className="h-full w-full bg-gradient-to-br from-primary/60 via-foreground/30 to-accent/60"
-                        style={{ filter: eff.css ?? "none" }}
-                      />
+                      <i style={{ filter: eff.css ?? "none" }} />
                     )}
-                  </div>
-                  <span className="block truncate px-1 py-0.5">{eff.label}</span>
+                  </span>
+                  <small>{eff.label}</small>
                 </button>
               );
             })}
           </div>
 
           {clipEffects.length ? (
-            <div className="space-y-3 rounded-lg border border-border bg-card p-3">
-              <p className="text-xs font-medium text-foreground">Réglages des effets actifs</p>
+            <div className="gx-ed-fx">
+              <div className="gx-lbl">Réglages des effets actifs</div>
               {clipEffects.map((inst) => {
                 const meta = EFFECT_BY_KEY[inst.key];
                 if (!meta) return null;
                 return (
-                  <div key={inst.key} className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-medium text-foreground">{meta.label}</span>
-                      <button
-                        type="button"
-                        className="text-[10px] text-muted-foreground hover:text-destructive"
-                        onClick={() => update({ effects: clipEffects.filter((e) => e.key !== inst.key) })}
-                      >
-                        Retirer
-                      </button>
+                  <div key={inst.key} className="gx-insp-tab">
+                    <div className="gx-kv">
+                      <span>{meta.label}</span>
+                      <b>
+                        <button
+                          type="button"
+                          className="gx-btn gx-sm gx-ghost"
+                          onClick={() => update({ effects: clipEffects.filter((e) => e.key !== inst.key) })}
+                        >
+                          Retirer
+                        </button>
+                      </b>
                     </div>
                     {meta.params.map((param) => {
                       const value = inst.params?.[param.key] ?? param.default;
@@ -4836,48 +4821,40 @@ function Inspector({
           ) : null}
         </TabsContent>
 
-        <TabsContent value="anim">
+        <TabsContent value="anim" className="gx-insp-tab">
           <Tabs defaultValue="in">
-            <TabsList className="mb-3 grid w-full grid-cols-3">
-              <TabsTrigger value="in" className="text-[11px]">Entrée</TabsTrigger>
-              <TabsTrigger value="out" className="text-[11px]">Sortie</TabsTrigger>
-              <TabsTrigger value="loop" className="text-[11px]">Boucle</TabsTrigger>
+            <TabsList className="gx-seg gx-seg3">
+              <TabsTrigger value="in">Entrée</TabsTrigger>
+              <TabsTrigger value="out">Sortie</TabsTrigger>
+              <TabsTrigger value="loop">Boucle</TabsTrigger>
             </TabsList>
             {(["in", "out", "loop"] as const).map((kind) => (
               <TabsContent key={kind} value={kind}>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="gx-ed-tiles">
                   <button
                     type="button"
+                    aria-pressed={!clipAnimation[kind]}
                     onClick={() => update({ animation: { ...clipAnimation, [kind]: null } })}
-                    className={cn(
-                      "flex h-[74px] items-center justify-center rounded-md border bg-card px-2 text-[11px]",
-                      clipAnimation[kind] ? "border-border text-muted-foreground" : "border-primary text-primary",
-                    )}
                   >
-                    Aucune
+                    <span>
+                      <em>Aucune</em>
+                    </span>
+                    <small>Aucune</small>
                   </button>
                   {animationsOf(kind).map((a) => (
                     <button
                       key={a.key}
                       type="button"
+                      className="anim-card"
+                      aria-pressed={clipAnimation[kind] === a.key}
                       onClick={() => update({ animation: { ...clipAnimation, [kind]: a.key } })}
-                      className={cn(
-                        "anim-card overflow-hidden rounded-md border bg-card text-[10px] transition-colors",
-                        clipAnimation[kind] === a.key
-                          ? "border-primary text-primary"
-                          : "border-border text-foreground hover:border-primary/60",
-                      )}
                     >
-                      <span className="flex h-12 w-full items-center justify-center overflow-hidden bg-muted">
-                        <span className={cn("anim-prev block h-7 w-7 rounded-sm", a.previewClass)}>
-                          {frame ? (
-                            <img src={frame} alt="" className="h-full w-full rounded-sm object-cover" />
-                          ) : (
-                            <span className="block h-full w-full rounded-sm bg-gradient-to-br from-primary to-accent" />
-                          )}
+                      <span>
+                        <span className={cn("anim-prev gx-ed-ap", a.previewClass)}>
+                          {frame ? <img src={frame} alt="" /> : <i />}
                         </span>
                       </span>
-                      <span className="block truncate px-1 py-0.5">{a.label}</span>
+                      <small>{a.label}</small>
                     </button>
                   ))}
                 </div>
@@ -4886,14 +4863,61 @@ function Inspector({
           </Tabs>
         </TabsContent>
       </Tabs>
+
+      {/* Calque : nom, temps d'affichage précis (utile pour les sous-titres). */}
+      <div className="gx-ed-clip">
+        <div className="gx-lbl">Calque</div>
+        <Kv label="Nom">
+          <span className="gx-ed-cn" title={clip.name}>{clip.name}</span>
+        </Kv>
+        <Kv label="Plage">
+          <span className="gx-num">
+            {fmt(clip.start)} → {fmt(clip.start + clip.duration)}
+          </span>
+        </Kv>
+        <Kv label="Début (s)">
+          <input
+            type="number"
+            className="gx-ed-numin gx-num"
+            aria-label="Début en secondes"
+            step={0.05}
+            min={0}
+            value={Number(clip.start.toFixed(2))}
+            onChange={(e) => {
+              const v = Math.max(0, Number(e.target.value) || 0);
+              update({ start: v });
+            }}
+          />
+        </Kv>
+        <Kv label="Durée (s)">
+          <input
+            type="number"
+            className="gx-ed-numin gx-num"
+            aria-label="Durée en secondes"
+            step={0.05}
+            min={0.2}
+            value={Number(clip.duration.toFixed(2))}
+            onChange={(e) => {
+              const v = Math.max(0.2, Number(e.target.value) || 0.2);
+              update({ duration: v });
+            }}
+          />
+        </Kv>
+        {onCollapse ? (
+          <button type="button" className="gx-btn gx-sm gx-ghost" onClick={onCollapse}>
+            <PanelRightClose className="gx-i" />
+            Replier les réglages
+          </button>
+        ) : null}
+      </div>
     </div>
   );
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div>
-      <p className="mb-1.5 text-xs text-muted-foreground">{label}</p>
+    <div className="gx-ed-f">
+      <span>{label}</span>
       {children}
     </div>
   );

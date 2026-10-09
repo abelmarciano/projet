@@ -239,7 +239,7 @@ function Page() {
               onCheckout={(t) => {
                 setSheet(null);
                 // Abonnement déjà actif → popup de changement de forfait (prorata Stripe).
-                if (t.kind === "plan" && ws?.plan_code && (t as any).interval !== "year") {
+                if (t.kind === "plan" && ws?.plan_code) {
                   upgradeDialogStore.open({ reason: "manual", suggestedPlanCode: (t as any).planCode });
                   return;
                 }
