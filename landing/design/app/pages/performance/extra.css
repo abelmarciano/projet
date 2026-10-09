@@ -1,8 +1,5 @@
 /* ---------- Performance (pages/performance) ---------- */
 
-/* Correction nécessaire : la règle « .gx-ph » ajoutée pour les vignettes de l'Accueil
-   (36 × 48 px, overflow caché) écrase l'en-tête de page .gx-ph. On rétablit l'en-tête. */
-.gx-perf>.gx-ph{width:auto;height:auto;overflow:visible;border-radius:0;background:none;flex:none;display:flex;align-items:flex-end}
 
 /* Variation défavorable sur les cartes KPI (la maquette ne définit que .gx-up). */
 .gx-perf .gx-k7 em.gx-dn{color:var(--gx-bad-ink,var(--gx-bad));font-weight:600}
