@@ -886,3 +886,27 @@ a.gx-lead{color:inherit;border-radius:8px}
 .gx-act:disabled,.gx-go:disabled{opacity:.5;cursor:default}
 .gx-insp .gx-empty{padding:28px 14px}
 .gx-prev img.gx-fit{object-fit:contain;object-position:50% 50%}
+
+/* page:inspiration */
+/* ===== Inspiration (galerie de pubs de référence) ===== */
+/* Carte cliquable : <a role=button> sans href, curseur et focus clavier. */
+.gx-icard{display:block;color:inherit;cursor:pointer}
+.gx-icard:hover{border-color:var(--gx-line-2)}
+.gx-icard:focus-visible{outline:2px solid var(--gx-accent);outline-offset:2px}
+/* Cadre 4:5 du média : l'image (ou la 1re image de la vidéo) le remplit, la vidéo de survol se superpose. */
+.gx-icard .gx-imed{position:relative;display:block;aspect-ratio:4/5;background:var(--gx-sunk);overflow:hidden}
+.gx-icard .gx-imed>img,.gx-icard .gx-imed>video,.gx-icard .gx-imed>.gx-vp{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%}
+.gx-icard .gx-imed>video.gx-hov{opacity:0;transition:opacity .25s}
+.gx-icard .gx-imed>video.gx-hov.gx-play{opacity:1}
+.gx-icard .gx-vbadge{position:absolute;right:8px;bottom:8px;width:24px;height:24px;border-radius:12px;display:grid;place-items:center;font-size:10px;color:#fff;background:rgba(16,18,23,.55)}
+.gx-icard .gx-noimg,.gx-ins-d .gx-noimg{position:absolute;inset:0;display:grid;place-items:center;padding:12px;text-align:center;font-size:12px;color:var(--gx-dim)}
+.gx-icard>div b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Panneau de détail : même cadre que l'image de la maquette, pour l'image comme pour la vidéo. */
+.gx-ins-d .gx-dmed{position:relative;display:block;aspect-ratio:4/5;max-height:300px;border-radius:10px;overflow:hidden;background:var(--gx-sunk)}
+.gx-ins-d .gx-dmed>img{width:100%;height:100%;max-height:none}
+.gx-ins-d video{display:block;width:100%;aspect-ratio:4/5;max-height:300px;object-fit:contain;border-radius:10px;background:#000}
+.gx-ins-d .gx-none{font-size:12.5px;color:var(--gx-dim)}
+.gx-ins-d .gx-src{font-size:12.5px;color:var(--gx-muted)}
+.gx-ins-d .gx-src:hover{color:var(--gx-fg)}
+/* Pagination sous la grille. */
+.gx-ins-more{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:16px;font-size:12.5px;color:var(--gx-dim)}

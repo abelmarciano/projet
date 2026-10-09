@@ -1,0 +1,14 @@
+/* Connexion — compléments scopés (ajoutés en fin de gx-console.css) */
+
+/* Correctif : la règle « .gx-ph » ajoutée pour les vignettes de l'Accueil (36×48)
+   écrase l'en-tête de page « .gx-ph ». On rétablit l'en-tête quand il est l'enfant direct de .gx-page. */
+.gx-page>.gx-ph{width:auto;height:auto;border-radius:0;overflow:visible;flex:none;display:flex;background:none}
+
+/* Ligne d'intitulé « Comptes publicitaires actifs » + lien discret « Gérer les comptes » */
+.gx-cc-lh{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.gx-cc-lh .gx-lbl{flex:1;min-width:0}
+.gx-cc-lk{font-size:12.5px;font-weight:500;color:var(--gx-muted)}
+.gx-cc-lk:hover{color:var(--gx-fg)}
+.gx-acc input[type="checkbox"]{accent-color:var(--gx-pri);margin:0}
+.gx-cc .gx-row .gx-cc-more{margin-left:auto}
+.gx-cc .gx-hint{margin:0}
