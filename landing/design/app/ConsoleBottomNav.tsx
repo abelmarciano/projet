@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, Film, Plus, Target, Menu } from "lucide-react";
+import { Home, Film, Plus, Target, Menu } from "lucide-react";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useNewAdConversation } from "@/hooks/useNewAdConversation";
 
@@ -11,7 +11,7 @@ export function ConsoleBottomNav() {
   const cur = (p: string) => (pathname.startsWith(p) ? "page" : undefined);
   return (
     <nav className="gx-tabbar" aria-label="Navigation rapide">
-      <Link to="/dashboard" className="gx-tab" aria-current={cur("/dashboard")}><LayoutDashboard className="gx-i" aria-hidden /><span>Accueil</span></Link>
+      <Link to="/dashboard" className="gx-tab" aria-current={cur("/dashboard")}><Home className="gx-i" aria-hidden /><span>Accueil</span></Link>
       <Link to="/creations" className="gx-tab" aria-current={cur("/creations")}><Film className="gx-i" aria-hidden /><span>Créations</span></Link>
       <button type="button" className="gx-tab gx-mid" disabled={busy} onClick={() => void start()} aria-current={cur("/create")}>
         <span className="gx-ic"><Plus className="gx-i" aria-hidden /></span><span>Créer</span>

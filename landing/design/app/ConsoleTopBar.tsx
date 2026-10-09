@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useRouterState, useHydrated } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
-import { Search, Plus, Settings, HelpCircle, CreditCard, LogOut, LayoutDashboard, Film, Megaphone, Users, Layers, Package, Lightbulb, Plug, BarChart3, PanelLeft, MessageSquare, Images, Clapperboard } from "lucide-react";
-import { useSidebar } from "@/components/ui/sidebar";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Search, Plus, Home, Compass, Settings, HelpCircle, CreditCard, LogOut, Film, Megaphone, Users, Layers, Package, Lightbulb, Plug, BarChart3, MessageSquare, Images, Clapperboard } from "lucide-react";
 import { CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -17,7 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 /* Barre du haut : reprise exacte de la maquette (fil d'Ariane, recherche ⌘K, état Meta, thème, cloche, compte). */
 
 const destinations = [
-  { title: "Dashboard", group: "", to: "/dashboard", icon: LayoutDashboard },
+  { title: "Accueil", group: "", to: "/dashboard", icon: Home },
   { title: "Chat", group: "Créer", to: "/create", icon: MessageSquare },
   { title: "Batch Studio", group: "Créer", to: "/batch", icon: Layers },
   { title: "Galerie d'acteurs", group: "Créer", to: "/galerie", icon: Images },
@@ -38,8 +36,7 @@ export function ConsoleTopBar() {
   const navigate = useNavigate();
   const hydrated = useHydrated();
   const { user } = useAuth();
-  const { open: sidebarOpen, toggleSidebar } = useSidebar();
-  const { start, busy } = useNewAdConversation();
+    const { start, busy } = useNewAdConversation();
   const [open, setOpen] = useState(false);
   const fetchMeta = useServerFn(getMetaCredentials);
   const { data: metaData } = useQuery({ queryKey: ["meta-credentials"], queryFn: () => fetchMeta(), staleTime: 5 * 60_000, retry: false });
@@ -67,14 +64,6 @@ export function ConsoleTopBar() {
 
   return <>
     <header className="gx-top">
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <button type="button" className="gx-ib gx-collapse" onClick={toggleSidebar} aria-label={sidebarOpen ? "Replier le menu" : "Ouvrir le menu"}>
-            <PanelLeft className="gx-i" aria-hidden />
-          </button>
-        </TooltipTrigger>
-        <TooltipContent side="bottom">{sidebarOpen ? "Replier le menu" : "Ouvrir le menu"} · Ctrl+B</TooltipContent>
-      </Tooltip>
       <div className="gx-crumb">{here?.group ? <small>{here.group} /</small> : null}<span>{here?.title ?? "Growthity"}</span></div>
       <button type="button" className="gx-cmd" onClick={() => setOpen(true)} aria-label="Rechercher une page ou une action">
         <Search className="gx-i" aria-hidden /><span>Rechercher ou demander à Growthity…</span><kbd>⌘K</kbd>

@@ -3,7 +3,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import {
-  LayoutDashboard, Film, Megaphone, Package, Images, Plus, MessageSquare, BarChart3,
+  Home, LayoutDashboard, Film, Megaphone, Package, Images, MessageSquare, BarChart3,
   Settings, HelpCircle, Plug, Clapperboard, Users, Layers, Lightbulb,
 } from "lucide-react";
 import { useSidebar } from "@/components/ui/sidebar";
@@ -47,11 +47,12 @@ function Tip({ show, label, children }: { show: boolean; label: string; children
 }
 
 export function AppSidebar() {
-  const { open, isMobile, setOpenMobile } = useSidebar();
-  const collapsed = !isMobile && !open;
+  const { isMobile, setOpenMobile } = useSidebar();
+  // La maquette n'a pas de menu replié : le menu reste toujours déplié sur ordinateur.
+  const collapsed = false;
   const currentPath = useRouterState({ select: (r) => r.location.pathname });
   const isActive = (path: string) => (path === "/dashboard" ? currentPath === path : currentPath.startsWith(path));
-  const { start: startNewChat, busy: creating } = useNewAdConversation();
+  const { start: startNewChat } = useNewAdConversation();
 
   // Ferme le tiroir mobile à chaque changement de page.
   useEffect(() => {
@@ -94,14 +95,8 @@ export function AppSidebar() {
 
       <WorkspaceBrandCard collapsed={collapsed} />
 
-      <Tip show={collapsed} label="Nouvelle publicité">
-        <button type="button" className="gx-newad" onClick={() => void startNewChat()} disabled={creating} aria-label="Nouvelle publicité">
-          <Plus className="gx-i" aria-hidden /><span>Nouvelle publicité</span>
-        </button>
-      </Tip>
-
       <nav>
-        {nav({ title: "Dashboard", url: "/dashboard", icon: LayoutDashboard })}
+        {nav({ title: "Accueil", url: "/dashboard", icon: Home })}
 
         <div className="gx-ng">Créer</div>
         <Tip show={collapsed} label="Chat">
