@@ -1,0 +1,26 @@
+function AuthenticatedPendingLayout() {
+  // Même cadre que la page chargée (pas de saut visuel) ; menu neutre tant que l'hydratation n'est pas finie (erreur React #418).
+  const hydrated = useHydrated();
+  return (
+    <ConsoleScope>
+      <SidebarProvider>
+        <ConsoleFrame sidebar={hydrated}>
+          <RoutePendingFallback />
+        </ConsoleFrame>
+      </SidebarProvider>
+    </ConsoleScope>
+  );
+}
+
+/* … et, à la fin d'AuthenticatedLayout, remplacer le return final par : */
+  return (
+    <ConsoleScope>
+      <SidebarProvider>
+        <ConsoleFrame banners={<><AdminImpersonationBanner /><PaymentIssueBanner /><MetaExpiryBanner /></>}>
+          <Outlet />
+        </ConsoleFrame>
+        <ProductTour autoStart={!!status?.onboarded && !status?.tourSeen} />
+        <UpgradePlanDialogHost />
+      </SidebarProvider>
+    </ConsoleScope>
+  );

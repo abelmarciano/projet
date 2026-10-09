@@ -1,0 +1,42 @@
+  // Même déclencheur ouvert ou replié (le CSS gx- gère le replié) : il ouvre le menu combiné complet
+  // (workspaces, marques, Nouvelle marque, Gérer les marques, Paramètres, Facturation, Centre d'aide, Déconnexion).
+  const trigger = (
+    <DropdownMenuTrigger asChild>
+      <button type="button" className="gx-wsbtn" aria-label={`Workspace ${currentWs?.name ?? ""} · marque ${currentBrand?.name ?? "aucune"}`}>
+        <span className="gx-bm">
+          {currentWs?.logo_url ? <img src={currentWs.logo_url} alt="" /> : wsInitials}
+        </span>
+        <span className="gx-wst">
+          <b>{currentWs?.name ?? "Workspace"}</b>
+          <small>Marque : {currentBrand?.name ?? "aucune"}</small>
+        </span>
+        <ChevronsUpDown className="gx-i" aria-hidden />
+      </button>
+    </DropdownMenuTrigger>
+  );
+
+  return (
+    <>
+      <DropdownMenu>
+        {collapsed ? (
+          <Tooltip>
+            <TooltipTrigger asChild>{trigger}</TooltipTrigger>
+            <TooltipContent side="right">{currentWs?.name ?? "Workspace"} · {currentBrand?.name ?? "Marque"}</TooltipContent>
+          </Tooltip>
+        ) : trigger}
+        <CombinedMenuContent
+          workspaces={workspaces} currentWsId={currentWs?.id} onSwitchWs={switchWs}
+          onCreateWs={() => setWsDialog(true)} onSignOut={signOut}
+          brands={brands} currentBrandId={currentBrand?.id}
+          onSwitchBrand={setActiveBrand} onCreateBrand={() => setBrDialog(true)}
+        />
+      </DropdownMenu>
+      <CreateDialogs
+        wsDialog={wsDialog} setWsDialog={setWsDialog} wsName={wsName} setWsName={setWsName}
+        wsCreating={wsCreating} doCreateWs={doCreateWs}
+        brDialog={brDialog} setBrDialog={setBrDialog} brName={brName} setBrName={setBrName}
+        brSite={brSite} setBrSite={setBrSite} brCreating={brCreating} doCreateBrand={doCreateBrand}
+      />
+    </>
+  );
+}
