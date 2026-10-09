@@ -127,6 +127,14 @@ function campaignStatus(c: any): { cls: string; label: string } {
   return { cls: "gx-off", label: "En pause" };
 }
 
+/** Met en gras le nom de la campagne dans le texte du conseil, comme dans la maquette. */
+function boldName(text: string, name: string | null) {
+  if (!name) return text;
+  const at = text.indexOf(name);
+  if (at < 0) return <><b>{name}</b> · {text}</>;
+  return <>{text.slice(0, at)}<b>{name}</b>{text.slice(at + name.length)}</>;
+}
+
 /** Mini courbe, même dessin que la maquette (84 × 26). */
 function Spark({ values }: { values: number[] }) {
   const v = values.length > 1 ? values : [0, ...(values.length ? values : [0])];
@@ -266,7 +274,10 @@ function Home() {
     .filter((c) => campaignStatus(c).cls === "gx-on" || (c?.totals?.spend || 0) > 0)
     .slice(0, 5);
 
-  const firstName = (user?.user_metadata?.full_name ?? (onb.data as any)?.displayName ?? "").split(" ")[0];
+  // Prénom seulement s'il ressemble à un vrai nom (pas l'identifiant de l'adresse e-mail).
+  const rawName = String(user?.user_metadata?.full_name ?? (onb.data as any)?.displayName ?? "").trim();
+  const emailId = String(user?.email ?? "").split("@")[0].toLowerCase();
+  const firstName = rawName && rawName.toLowerCase() !== emailId && !/\d|@/.test(rawName) ? rawName.split(/\s+/)[0] : "";
   const today = hydrated
     ? new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" })
     : "";
@@ -581,7 +592,7 @@ function Home() {
               {suggestions.map((s, i) => (
                 <article key={i} className={`gx-reco gx-${s.kind}`}>
                   <span className="gx-k">{s.kind === "boost" ? "↗ À booster" : s.kind === "test" ? "✦ À tester" : "⏸ À couper"}</span>
-                  <p>{s.campaignName && <b>{s.campaignName} · </b>}{s.text.replace(/ (\d+(?:[,.]\d+)?) %/g, " $1 %")}</p>
+                  <p>{boldName(s.text.replace(/ (\d+(?:[,.]\d+)?) %/g, " $1 %"), s.campaignName)}</p>
                   <div className="gx-row">
                     {s.campaignId && s.kind === "boost" && (
                       <button type="button" className="gx-act gx-pri" onClick={() => setBudgetTarget({ id: s.campaignId ?? "", name: s.campaignName ?? "" })}>Augmenter de 20 %</button>
@@ -666,7 +677,7 @@ function Home() {
               {selIsVideo && selected.generated_url ? (
                 <video key={selected.id} src={selected.generated_url} muted loop playsInline autoPlay preload="metadata" />
               ) : adThumb(selected) ? (
-                <img src={adThumb(selected)!} alt="Aperçu de la création" />
+                <img src={adThumb(selected)!} alt="Aperçu de la création" className="gx-fit" />
               ) : null}
               <span className="gx-fmt">{selected.aspect_ratio || typeLabel(selected)}</span>
             </div>

@@ -74,7 +74,7 @@ export function AppSidebar() {
   });
   const showMetaTodo = metaCreds.isSuccess && !metaCreds.data?.connected;
 
-  // Compteurs violets de la maquette : lots en cours de fabrication, nouveaux leads des 7 derniers jours.
+  // Compteurs violets de la maquette : lots en cours de fabrication, nouveaux leads du jour.
   const fetchBatches = useServerFn(listBatches);
   const batches = useQuery({
     queryKey: ["batches", "list", "all"],
@@ -91,9 +91,9 @@ export function AppSidebar() {
     staleTime: 5 * 60_000,
     refetchOnWindowFocus: false,
   });
-  const weekAgo = Date.now() - 7 * 86_400_000;
+  const dayStart = new Date(); dayStart.setHours(0, 0, 0, 0);
   const newLeads = ((leads.data as any[]) ?? []).filter((l: any) =>
-    l?.status === "new" && !l?.is_test && +new Date(l?.submitted_at ?? l?.created_at) >= weekAgo).length;
+    l?.status === "new" && !l?.is_test && +new Date(l?.submitted_at ?? l?.created_at) >= +dayStart).length;
   const counts: Record<string, number> = { "/batch": runningBatches, "/resultats": newLeads };
 
   const nav = (item: NavItem) => (
@@ -102,7 +102,7 @@ export function AppSidebar() {
         <item.icon className="gx-i" aria-hidden />
         <span>{item.title}</span>
         {counts[item.url] > 0 ? (
-          <em title={item.url === "/batch" ? "Lots en cours" : "Nouveaux leads (7 derniers jours)"}>
+          <em title={item.url === "/batch" ? "Lots en cours" : "Nouveaux leads reçus aujourd'hui"}>
             {counts[item.url] > 99 ? "99+" : counts[item.url]}
           </em>
         ) : null}

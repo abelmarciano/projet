@@ -885,3 +885,4 @@ a.gx-lead{color:inherit;border-radius:8px}
 .gx-cnone{font-size:12px;color:var(--gx-dim);padding:14px 10px;border:1.5px dashed var(--gx-line-2);border-radius:12px;text-align:center}
 .gx-act:disabled,.gx-go:disabled{opacity:.5;cursor:default}
 .gx-insp .gx-empty{padding:28px 14px}
+.gx-prev img.gx-fit{object-fit:contain;object-position:50% 50%}
