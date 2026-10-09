@@ -1128,7 +1128,6 @@ function ChatCreatePage() {
       {/* Fil de discussion */}
       <section className="gx-thread">
         {convId && current.data ? (
-          <ChatArea        {convId && current.data ? (
           <ChatArea
             key={convId}
             conversationId={convId}
@@ -4469,7 +4468,6 @@ function ChatArea({
             <AiModeSwitch conversationId={conversationId} />
           </div>
           <ChatComposer
-            ref={inputRef}          <ChatComposer
             ref={inputRef}
             disabled={isLoading}
             isStreaming={isLoading}
@@ -7084,7 +7082,6 @@ function GeneratedAdActions({
       </div>
 
       {isVideo && ad.url && (
-        <SubtitlesDialog      {isVideo && ad.url && (
         <SubtitlesDialog
           open={subsOpen}
           onOpenChange={setSubsOpen}
@@ -7528,7 +7525,6 @@ function ConversationRow({
 }
 
 // ============================================================================
-// Agent tool blocks// ============================================================================
 // Agent tool blocks - rendus interactifs pour les outils backend
 // (list_creations, list_campaigns, duplicate_campaign, search_content)
 // ============================================================================

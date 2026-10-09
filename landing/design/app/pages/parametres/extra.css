@@ -1,0 +1,27 @@
+/* Paramètres — compléments scopés (ajoutés en fin de gx-console.css) */
+
+/* Onglets = vrais liens de sous-routes : même rendu que .gx-seg button */
+.gx-seg>a{display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:8px;color:var(--gx-muted);font-size:13px;font-weight:500;white-space:nowrap;text-decoration:none}
+.gx-seg>a:hover{color:var(--gx-fg)}
+.gx-seg>a[aria-selected="true"]{background:var(--gx-surface);color:var(--gx-fg);box-shadow:0 1px 2px rgba(16,18,23,.08),0 0 0 1px var(--gx-line)}
+
+/* Pousse un bouton en bout de ligne (lignes de formulaire, lignes .gx-acc) */
+.gx-fr .gx-ml, .gx-acc .gx-ml{margin-left:auto}
+
+/* Icône du workspace / logo de marque : image recadrée, initiales sinon */
+.gx-wsi{overflow:hidden}
+.gx-wsi img, .gx-bm-img img{width:100%;height:100%;object-fit:cover;display:block}
+.gx-bm-img{overflow:hidden;background:var(--gx-pri)}
+.gx-sheet-h .gx-bm-img{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;color:#fff;font-weight:700;flex:none}
+.gx-mc .gx-row{margin-top:4px;gap:6px}
+
+/* Membres : colonne Accès avec action « ⋯ » */
+.gx-mb-acc{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+
+/* 2FA : QR code et clé */
+.gx-qr{align-self:flex-start;padding:10px;border-radius:12px;border:1px solid var(--gx-line);background:#fff}
+.gx-qr svg{display:block;width:180px;height:180px}
+.gx-qr-k{display:block;word-break:break-all;font-size:12px}
+
+/* Historique : intitulé du mois */
+.gx-tbl th.gx-cap{text-transform:capitalize;color:var(--gx-fg);font-weight:600}
