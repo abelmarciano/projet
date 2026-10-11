@@ -1,14 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
+import { Zap } from "lucide-react";
 import { getCreditSummary } from "@/lib/billing/billing.functions";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 /**
  * Carte « Crédits » du pied de menu, reprise de la maquette.
  * Même donnée qu'avant (getCreditSummary) : solde disponible + jauge de consommation
  * du mois (identique à « Consommé ce mois » sur la page Facturation).
  */
-export function UsageBadge(_props: { collapsed?: boolean }) {
+export function UsageBadge({ collapsed = false }: { collapsed?: boolean }) {
   const creditsFn = useServerFn(getCreditSummary);
   const { data: credits } = useQuery({
     queryKey: ["credit-summary"],
@@ -26,6 +28,20 @@ export function UsageBadge(_props: { collapsed?: boolean }) {
   const renew = credits?.periodEnd
     ? new Date(credits.periodEnd).toLocaleDateString("fr-FR", { day: "numeric", month: "short" }).replace(/^1 /, "1er ")
     : null;
+
+  // Menu replié : une seule icône, le solde s'affiche en infobulle.
+  if (collapsed) {
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Link to="/parametres/facturation" className="gx-credq" aria-label={credits ? `${fmt(available)} crédits` : "Crédits"}>
+            <Zap className="gx-i" aria-hidden />
+          </Link>
+        </TooltipTrigger>
+        <TooltipContent side="right">{credits ? `${fmt(available)} crédits` : "Crédits"}</TooltipContent>
+      </Tooltip>
+    );
+  }
 
   return (
       <Link to="/parametres/facturation" className="gx-credits" title="Voir ma facturation et recharger">

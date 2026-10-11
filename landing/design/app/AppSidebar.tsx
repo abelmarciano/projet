@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import {
   Home, LayoutDashboard, Film, Megaphone, Package, Images, MessageSquare, BarChart3,
-  Settings, HelpCircle, Plug, Clapperboard, Users, Layers, Lightbulb,
+  Settings, HelpCircle, Plug, Clapperboard, Users, Layers, Lightbulb, PanelLeftClose, PanelLeftOpen,
 } from "lucide-react";
 import { useSidebar } from "@/components/ui/sidebar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -49,9 +49,9 @@ function Tip({ show, label, children }: { show: boolean; label: string; children
 }
 
 export function AppSidebar() {
-  const { isMobile, setOpenMobile } = useSidebar();
-  // La maquette n'a pas de menu replié : le menu reste toujours déplié sur ordinateur.
-  const collapsed = false;
+  const { open, isMobile, setOpenMobile, toggleSidebar } = useSidebar();
+  // Sur ordinateur, le menu se replie en barre d'icônes (bouton à côté du logo, ou Ctrl/Cmd+B).
+  const collapsed = !isMobile && !open;
   const currentPath = useRouterState({ select: (r) => r.location.pathname });
   const isActive = (path: string) => (path === "/dashboard" ? currentPath === path : currentPath.startsWith(path));
   const { start: startNewChat } = useNewAdConversation();
@@ -118,9 +118,21 @@ export function AppSidebar() {
 
   return (
     <aside className="gx-side" aria-label="Navigation">
-      <Link to="/dashboard" className="gx-brand" aria-label="Growthity">
-        {collapsed ? <Logo variant="icon" className="h-7 w-7" /> : <Logo variant="full" className="h-6 w-auto" />}
-      </Link>
+      <div className="gx-brandrow">
+        <Link to="/dashboard" className="gx-brand" aria-label="Growthity">
+          {collapsed ? <Logo variant="icon" className="h-7 w-7" /> : <Logo variant="full" className="h-6 w-auto" />}
+        </Link>
+        {!isMobile && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button type="button" className="gx-colbtn" onClick={toggleSidebar} aria-label={collapsed ? "Déplier le menu" : "Replier le menu"} aria-expanded={!collapsed}>
+                {collapsed ? <PanelLeftOpen className="gx-i" aria-hidden /> : <PanelLeftClose className="gx-i" aria-hidden />}
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="right">{collapsed ? "Déplier le menu" : "Replier le menu"} · Ctrl+B</TooltipContent>
+          </Tooltip>
+        )}
+      </div>
 
       <WorkspaceBrandCard collapsed={collapsed} />
 

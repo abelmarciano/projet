@@ -8,10 +8,10 @@ import { cn } from "@/lib/utils";
 /**
  * Cadre de l'app connectée, structure identique à la maquette :
  * .gx-app (grille) > aside.gx-side + .gx-main (barre du haut, bandeaux, page) ; barre d'onglets mobile.
- * Comme la maquette : menu toujours déplié sur ordinateur ; tiroir mobile piloté par SidebarProvider.
+ * Menu déplié ou replié en barre d'icônes sur ordinateur, tiroir sur mobile : état piloté par SidebarProvider.
  */
 export function ConsoleFrame({ banners, children, sidebar = true }: { banners?: ReactNode; children: ReactNode; sidebar?: boolean }) {
-  const { isMobile, openMobile, setOpenMobile } = useSidebar();
+  const { open, isMobile, openMobile, setOpenMobile } = useSidebar();
 
   useEffect(() => {
     if (!openMobile) return;
@@ -22,7 +22,7 @@ export function ConsoleFrame({ banners, children, sidebar = true }: { banners?: 
 
   return (
     <>
-      <div className={cn("gx-app", isMobile && openMobile && "gx-nav-open")}>
+      <div className={cn("gx-app", !isMobile && !open && "gx-collapsed", isMobile && openMobile && "gx-nav-open")}>
         {sidebar ? <AppSidebar /> : <aside className="gx-side" aria-hidden />}
         <div className="gx-scrim" onClick={() => setOpenMobile(false)} aria-hidden />
         <div className="gx-main">

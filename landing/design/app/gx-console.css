@@ -1665,3 +1665,14 @@ textarea.gx-pp:disabled{opacity:.7}
 .gx-ed-stage{height:clamp(320px,calc(100vh - 360px),900px)}
 .gx-ed-l,.gx-ed-r{max-height:calc(clamp(320px,calc(100vh - 360px),900px) + 130px)}
 .gx-pv{height:clamp(320px,calc(100vh - 300px),860px);max-height:none}
+
+/* Bouton pour replier / déplier le menu (à côté du logo) */
+.gx-brandrow{display:flex;align-items:center;gap:6px;padding-bottom:12px}
+.gx-brandrow .gx-brand{flex:1;min-width:0;padding-bottom:2px}
+.gx-colbtn{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:var(--gx-dim);border:1px solid transparent;flex:none;transition:background .12s,color .12s,border-color .12s}
+.gx-colbtn:hover{background:var(--gx-sunk);color:var(--gx-fg);border-color:var(--gx-line)}
+.gx-colbtn .gx-i{width:17px;height:17px}
+.gx-collapsed .gx-brandrow{flex-direction:column;gap:6px;width:40px;padding-bottom:10px}
+.gx-collapsed .gx-brandrow .gx-brand{padding:2px 0 0;flex:none}
+.gx-collapsed .gx-colbtn{width:40px;height:32px}
+@media (max-width:899px){.gx-colbtn{display:none}}
