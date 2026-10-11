@@ -1662,8 +1662,8 @@ textarea.gx-pp:disabled{opacity:.7}
   .gx-view.gx-home{grid-template-columns:minmax(0,1fr) 380px}
 }
 /* Éditeur vidéo : l'aperçu et les colonnes grandissent avec la hauteur de l'écran */
-.gx-ed-stage{height:clamp(320px,calc(100vh - 360px),900px)}
-.gx-ed-l,.gx-ed-r{max-height:calc(clamp(320px,calc(100vh - 360px),900px) + 130px)}
+.gx-ed-stage{height:clamp(300px,calc(100vh - 480px),820px)}
+.gx-ed-l,.gx-ed-r{max-height:calc(clamp(300px,calc(100vh - 480px),820px) + 130px)}
 .gx-pv{height:clamp(320px,calc(100vh - 300px),860px);max-height:none}
 
 /* Bouton pour replier / déplier le menu (à côté du logo) */
