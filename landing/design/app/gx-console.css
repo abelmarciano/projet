@@ -1653,3 +1653,15 @@ textarea.gx-pp:disabled{opacity:.7}
 .gx-start-b span{color:var(--gx-muted);font-size:13px}
 .console-app button:focus:not(:focus-visible),.console-app a:focus:not(:focus-visible){outline:none}
 .gx-seg button:focus-visible{outline:2px solid var(--gx-accent);outline-offset:1px;border-radius:8px}
+
+/* Grand écran : toutes les pages prennent toute la largeur disponible */
+.gx-page,.gx-page:has(.gx-chatv),.gx-wrap{max-width:none}
+@media (min-width:1600px){
+  .gx-page{padding-left:40px;padding-right:40px}
+  .gx-wrap{padding-left:40px;padding-right:40px}
+  .gx-view.gx-home{grid-template-columns:minmax(0,1fr) 380px}
+}
+/* Éditeur vidéo : l'aperçu et les colonnes grandissent avec la hauteur de l'écran */
+.gx-ed-stage{height:clamp(320px,calc(100vh - 360px),900px)}
+.gx-ed-l,.gx-ed-r{max-height:calc(clamp(320px,calc(100vh - 360px),900px) + 130px)}
+.gx-pv{height:clamp(320px,calc(100vh - 300px),860px);max-height:none}
