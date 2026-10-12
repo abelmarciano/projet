@@ -16,9 +16,10 @@
   --violet: #9b87f5;
   --violet-dark: #7E69AB;
   --tele: #0EA5E9;
-  --terrain: #002F79;
-  --cq: #14b8a6;
-  --admin: #7E69AB;
+  --terrain: #F97316;
+  --cq: #22C55E;
+  --admin: #9b87f5;
+  --sel: #111827;
   --lead: #94a3b8;
   --rdv: #9b87f5;
   --honore: #f59e0b;
@@ -33,13 +34,13 @@
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #0f172a; --grad: linear-gradient(135deg, #0f172a 0%, #131c33 60%, #0f172a 100%); --surface: rgba(23, 33, 54, 0.88); --surface-solid: #1a2540; --ink: #f1f5f9; --muted: #94a3b8; --line: rgba(255, 255, 255, 0.08);
-  --brand: #38bdf8; --violet: #a897f7; --violet-dark: #b9abf9; --tele: #38bdf8; --terrain: #7ea6ef; --cq: #2dd4bf; --admin: #b9abf9; --lead: #8b98ab; --rdv: #a897f7; --honore: #fbbf24; --signe: #818cf8; --installe: #2dd4bf; --ok: #4ade80; --ko: #f87171; --up: #4ade80; --down: #f87171;
+  --brand: #38bdf8; --violet: #a897f7; --violet-dark: #b9abf9; --tele: #38bdf8; --terrain: #fb923c; --cq: #4ade80; --admin: #b9abf9; --sel: #f1f5f9; --lead: #8b98ab; --rdv: #a897f7; --honore: #fbbf24; --signe: #818cf8; --installe: #2dd4bf; --ok: #4ade80; --ko: #f87171; --up: #4ade80; --down: #f87171;
   --s-bg: #0f172a; --s-floor: #141e33; --s-row: #1c2944; --s-plinth: #25345a;
   color-scheme: dark;
 } }
 :root[data-theme="dark"] {
   --bg: #0f172a; --grad: linear-gradient(135deg, #0f172a 0%, #131c33 60%, #0f172a 100%); --surface: rgba(23, 33, 54, 0.88); --surface-solid: #1a2540; --ink: #f1f5f9; --muted: #94a3b8; --line: rgba(255, 255, 255, 0.08);
-  --brand: #38bdf8; --violet: #a897f7; --violet-dark: #b9abf9; --tele: #38bdf8; --terrain: #7ea6ef; --cq: #2dd4bf; --admin: #b9abf9; --lead: #8b98ab; --rdv: #a897f7; --honore: #fbbf24; --signe: #818cf8; --installe: #2dd4bf; --ok: #4ade80; --ko: #f87171; --up: #4ade80; --down: #f87171;
+  --brand: #38bdf8; --violet: #a897f7; --violet-dark: #b9abf9; --tele: #38bdf8; --terrain: #fb923c; --cq: #4ade80; --admin: #b9abf9; --sel: #f1f5f9; --lead: #8b98ab; --rdv: #a897f7; --honore: #fbbf24; --signe: #818cf8; --installe: #2dd4bf; --ok: #4ade80; --ko: #f87171; --up: #4ade80; --down: #f87171;
   --s-bg: #0f172a; --s-floor: #141e33; --s-row: #1c2944; --s-plinth: #25345a;
   color-scheme: dark;
 }
@@ -58,22 +59,22 @@ button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 #loading { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: var(--muted); font-size: 12px; pointer-events: none; transition: opacity .6s; }
 
 /* Étiquette au-dessus de chaque personne : nom + valeur de l'indicateur choisi */
-.tag { position: absolute; width: max-content; transform: translate(-50%, -100%); display: flex; align-items: center; gap: 7px; padding: 3px 10px 3px 3px; border-radius: 20px; background: var(--surface-solid); border: 1px solid var(--line); box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 4px 12px rgba(0,0,0,.07); white-space: nowrap; pointer-events: auto; cursor: pointer; font: 700 11px/1 var(--f-body); color: var(--ink); transition: box-shadow .2s, transform .25s; }
-.tag .ini { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font: 800 9px/1 var(--f-body); position: relative; }
+.tag { position: absolute; width: max-content; transform: translate(-50%, -100%); display: flex; align-items: center; gap: 7px; padding: 3px 10px 3px 3px; border-radius: 20px; background: var(--surface-solid); border: 1.5px solid color-mix(in srgb, var(--role) 55%, transparent); box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 4px 12px rgba(0,0,0,.07); white-space: nowrap; pointer-events: auto; cursor: pointer; font: 700 11px/1 var(--f-body); color: var(--ink); transition: box-shadow .2s, transform .25s; }
+.tag .ini { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font: 800 9px/1 var(--f-body); position: relative; background: var(--role); color: #fff; }
 .tag .ini::after { content: ""; position: absolute; right: -2px; bottom: -2px; width: 8px; height: 8px; border-radius: 50%; background: var(--st); border: 1.5px solid var(--surface-solid); }
 .tag .nm { display: flex; flex-direction: column; gap: 2px; }
 .tag .nm small { font: 600 10px/1 var(--f-body); color: var(--muted); }
 .tag b { font: 800 13px/1 var(--f-body); font-variant-numeric: tabular-nums; padding-left: 6px; border-left: 1px solid var(--line); }
 .tag:hover, .tag.hover { box-shadow: 0 0 0 1.5px var(--brand), 0 6px 16px rgba(0,0,0,.1); transform: translate(-50%, calc(-100% - 2px)); z-index: 2; }
-.tag.sel { box-shadow: 0 0 0 2px var(--violet), 0 6px 18px rgba(0,0,0,.12); z-index: 3; }
-.tag.best b { color: var(--violet-dark); }
+.tag.sel { box-shadow: 0 0 0 2.5px var(--sel), 0 6px 18px rgba(0,0,0,.12); z-index: 3; }
+.tag.best b { color: color-mix(in srgb, var(--role) 75%, var(--ink)); }
 .tag .nm small { display: none; }
 .tag:hover .nm small, .tag.hover .nm small, .tag.sel .nm small { display: block; }
 
 /* Libellé de rangée avec choix de l'indicateur */
 .rowlab { position: absolute; width: max-content; transform: translate(-100%, -50%); display: flex; flex-direction: column; align-items: flex-end; gap: 6px; pointer-events: auto; }
-.rowlab h3 { margin: 0; font: 800 13px/1 var(--f-body); display: flex; align-items: center; gap: 7px; white-space: nowrap; }
-.rowlab h3 i { width: 8px; height: 8px; border-radius: 50%; }
+.rowlab h3 { margin: 0; font: 800 13px/1 var(--f-body); display: flex; align-items: center; gap: 7px; white-space: nowrap; padding: 6px 10px 6px 8px; border-radius: 20px; background: color-mix(in srgb, var(--role) 14%, var(--surface-solid)); color: color-mix(in srgb, var(--role) 70%, var(--ink)); border: 1px solid color-mix(in srgb, var(--role) 35%, transparent); }
+.rowlab h3 i { width: 9px; height: 9px; border-radius: 50%; }
 .rowlab h3 span { color: var(--muted); font-weight: 600; }
 .mini { display: inline-flex; gap: 2px; padding: 2px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .mini button { border: 0; background: none; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; color: var(--muted); cursor: pointer; white-space: nowrap; }
@@ -126,6 +127,8 @@ button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 .feed li span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .feed li time { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 @keyframes in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.hint .lg { display: inline-flex; align-items: center; gap: 5px; margin-right: 10px; font-weight: 700; color: var(--ink); }
+.hint .lg i { width: 9px; height: 9px; border-radius: 50%; }
 .hint { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); font-size: 12px; color: var(--muted); background: var(--surface); border: 1px solid var(--line); padding: 7px 12px; border-radius: 20px; white-space: nowrap; pointer-events: none; }
 
 .person { display: flex; gap: 14px; align-items: center; }
@@ -183,7 +186,7 @@ button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 </style>
 
 <div class="app">
-  <div id="stage"><div id="labels"></div><div id="loading">Chargement de l'équipe…</div><div class="hint">Cliquez sur une personne pour voir ses stats · choisissez l'indicateur à gauche de chaque rangée</div></div>
+  <div id="stage"><div id="labels"></div><div id="loading">Chargement de l'équipe…</div><div class="hint"><span class="lg"><i style="background:var(--tele)"></i>Télépro</span><span class="lg"><i style="background:var(--terrain)"></i>Commercial</span><span class="lg"><i style="background:var(--cq)"></i>Contrôle qualité</span><span class="lg"><i style="background:var(--admin)"></i>Admin</span><span>· cliquez sur une personne pour ses stats</span></div></div>
   <div id="toast" role="status"></div>
 
   <header class="top">
@@ -318,31 +321,32 @@ const floor = new THREE.Mesh(new THREE.CircleGeometry(80, 96), M.floor); floor.r
 // Rangées : télépros devant le regard (en haut à l'écran), commerciaux au milieu, qualité + admins devant
 const SP = 6.2;
 const ROWS = [
-  { role: 'tele', z: -9 }, { role: 'terrain', z: 0 }, { role: 'cq', z: 9, x0: -14 }, { role: 'admin', z: 9, x0: 7.8 },
+  { role: 'tele', z: -9 }, { role: 'terrain', z: 0 }, { role: 'cq', z: 9, x0: -9.5 }, { role: 'admin', z: 9, x0: 10 },
 ];
-const plinthG = new THREE.BoxGeometry(3.2, 1, 2.4), stripG = new THREE.BoxGeometry(3.22, .08, .06), ringG = new THREE.RingGeometry(.62, .7, 48);
+const plinthG = new THREE.BoxGeometry(3.2, 1, 2.4), stripG = new THREE.BoxGeometry(3.24, .16, .08), ringG = new THREE.RingGeometry(.62, .7, 48);
 const hitG = new THREE.CylinderGeometry(1.2, 1.2, 3.2, 12), hitM = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
 const pickables = [];
 ROWS.forEach(r => {
   const members = agents.filter(a => a.role === r.role);
   const width = (members.length - 1) * SP;
   const start = r.x0 !== undefined ? r.x0 : -width / 2;
-  const strip = new THREE.Mesh(new THREE.BoxGeometry(width + 5, .12, 3.6), M.row); strip.position.set(start + width / 2, .06, r.z); strip.receiveShadow = true; scene.add(strip);
+  r.mat = std(); r.pmat = std({ roughness: .6 });
+  const strip = new THREE.Mesh(new THREE.BoxGeometry(width + 5, .12, 3.6), r.mat); strip.position.set(start + width / 2, .06, r.z); strip.receiveShadow = true; scene.add(strip);
   r.anchor = new THREE.Vector3(start - 2.8, .4, r.z);
   members.forEach((a, i) => {
     a.g = new THREE.Group(); a.g.position.set(start + i * SP, 0, r.z); scene.add(a.g);
-    a.plinth = new THREE.Mesh(plinthG, M.plinth); a.plinth.receiveShadow = true; a.g.add(a.plinth);
+    a.plinth = new THREE.Mesh(plinthG, r.pmat); a.plinth.receiveShadow = true; a.g.add(a.plinth);
     a.plinth.add(new THREE.LineSegments(new THREE.EdgesGeometry(plinthG), edgeM));
     a.strip = new THREE.Mesh(stripG, new THREE.MeshBasicMaterial({ color: 0xffffff })); a.g.add(a.strip);
     a.body = new THREE.Group(); a.g.add(a.body);
     const ring = new THREE.Mesh(ringG, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .5 })); ring.rotation.x = -Math.PI / 2; ring.position.y = .02; a.body.add(ring); a.ring = ring;
     const hit = new THREE.Mesh(hitG, hitM); hit.position.y = 1.4; hit.userData.id = a.id; a.body.add(hit); pickables.push(hit);
     a.h = a.hTarget = .4;
-    const tag = document.createElement('button'); tag.type = 'button'; tag.className = 'tag'; tag.dataset.id = a.id;
-    tag.innerHTML = `<span class="ini" style="background:color-mix(in srgb, var(--${a.role}) 18%, var(--surface-solid));color:var(--${a.role})">${a.ini}</span><span class="nm">${firstName(a.name)}<small></small></span><b></b>`;
+    const tag = document.createElement('button'); tag.type = 'button'; tag.className = 'tag'; tag.dataset.id = a.id; tag.style.setProperty('--role', `var(--${a.role})`);
+    tag.innerHTML = `<span class="ini">${a.ini}</span><span class="nm">${firstName(a.name)}<small></small></span><b></b>`;
     tag.addEventListener('click', () => select(a.id)); labels.appendChild(tag); a.tag = tag;
   });
-  const lab = document.createElement('div'); lab.className = 'rowlab';
+  const lab = document.createElement('div'); lab.className = 'rowlab'; lab.style.setProperty('--role', `var(--${r.role})`);
   lab.innerHTML = `<h3><i style="background:var(--${r.role})"></i>${ROLE_LABEL[r.role]} <span>${members.length}</span></h3><div class="mini" role="group" aria-label="Indicateur">${METRICS[r.role].map(([k, l]) => `<button type="button" data-k="${k}" aria-pressed="${metric[r.role] === k}">${l}</button>`).join('')}</div>`;
   lab.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; metric[r.role] = b.dataset.k; lab.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); updateHeights(); renderTags(); renderDetail(); });
   labels.appendChild(lab); r.el = lab;
@@ -365,12 +369,15 @@ function applyTheme() {
   const dark = (document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')) === 'dark';
   hemi.intensity = dark ? .5 : .8; sun.intensity = dark ? .55 : .75;
   edgeM.color.set(dark ? 0x3a4d78 : 0xc9d4ea);
-  agents.forEach(a => { const c = new THREE.Color(tok(a.role)); a.strip.material.color.copy(c); a.ring.material.color.copy(c); if (a.jointMat) a.jointMat.color.copy(c); });
-  selRing.material.color.set(tok('violet'));
+  ROWS.forEach(r => { const c = new THREE.Color(tok(r.role)); r.mat.color.copy(g('row')).lerp(c, dark ? .28 : .22); r.pmat.color.copy(g('plinth')).lerp(c, dark ? .22 : .12); });
+  agents.forEach(a => { const c = new THREE.Color(tok(a.role)); a.strip.material.color.copy(c); a.ring.material.color.copy(c); tintBody(a); });
+  selRing.material.color.set(tok('sel'));
 }
 
 /* ============ Personnages ============ */
-const BODY = 0xf6f8fc, FIG_H = 2.2;
+const FIG_H = 2.2;
+// Corps teinté à la couleur du rôle, articulations en couleur pleine : le métier se lit de loin
+function tintBody(a) { const c = new THREE.Color(tok(a.role)); if (a.jointMat) a.jointMat.color.copy(c); if (a.bodyMat) a.bodyMat.color.set(0xffffff).lerp(c, .42); }
 function fallbackFigure(a) {
   const b = new THREE.Mesh(new THREE.CylinderGeometry(.34, .42, 1.4, 16), std({ color: tok(a.role) })); b.position.y = .95; b.castShadow = true;
   const hd = new THREE.Mesh(new THREE.SphereGeometry(.27, 16, 12), std({ color: 0xe9cfb8 })); hd.position.y = 1.9; hd.castShadow = true;
@@ -394,9 +401,9 @@ loadBot(bot => {
     model.traverse(o => {
       if (!o.isMesh) return;
       o.castShadow = true; o.frustumCulled = false; o.material = o.material.clone(); o.material.roughness = .5; o.material.metalness = 0;
-      if (/Joints/.test(o.material.name)) { a.jointMat = o.material; o.material.color.set(tok(a.role)); } else o.material.color.set(BODY);
+      if (/Joints/.test(o.material.name)) a.jointMat = o.material; else a.bodyMat = o.material;
     });
-    a.body.add(model);
+    a.body.add(model); tintBody(a);
     a.mixer = new THREE.AnimationMixer(model);
     const act = a.mixer.clipAction(idle); act.play(); act.time = Math.random() * idle.duration;
     a.nod = a.mixer.clipAction(nod); a.nod.blendMode = THREE.AdditiveAnimationBlendMode; a.nod.setLoop(THREE.LoopOnce, 1);
@@ -515,7 +522,7 @@ function renderDetail() {
   const list = `<div class="eyebrow"><span>${listTitle}</span><span>aujourd'hui</span></div><div class="items">${a.items.map(it => `<div><time>${it.t}</time><span>${it.title}<small>${it.sub}</small></span><span class="chip" style="background:color-mix(in srgb, var(--${it.c}) 16%, transparent);color:var(--${it.c})">${it.chip}</span></div>`).join('')}</div>`;
   const btns = { tele: ['Voir ses leads', 'Écouter ses appels'], terrain: ['Voir ses leads', 'Son planning'], cq: ['Dossiers à contrôler', 'Historique'], admin: ['Journal des actions', 'Utilisateurs'] }[a.role];
   $('#detail').innerHTML = `<div class="eyebrow"><span>${ROLE_LABEL[a.role]}</span><span class="pill"><i style="background:var(--${STATUS[a.status]})"></i>${a.status}</span></div>
-    <div class="person"><div class="av" style="background:color-mix(in srgb, var(--${a.role}) 16%, transparent);color:var(--${a.role});--st:var(--${STATUS[a.status]})">${a.ini}</div><div><h2>${a.name}</h2><p>${sub}</p></div></div>
+    <div class="person"><div class="av" style="background:var(--${a.role});color:#fff;--st:var(--${STATUS[a.status]})">${a.ini}</div><div><h2>${a.name}</h2><p>${sub}</p></div></div>
     <div class="rank"><b>${r.pos}<sup>${r.pos === 1 ? 'er' : 'e'}</sup></b><span>sur ${r.n} en ${r.label.toLowerCase()} · ${show(a, metric[a.role])}</span></div>
     <div class="actions"><button class="btn primary" type="button" data-act="Ouverture dans Classicall : ${btns[0].toLowerCase()} de ${fn}">${btns[0]}</button><button class="btn" type="button" data-act="Ouverture dans Classicall : ${btns[1].toLowerCase()} (${fn})">${btns[1]}</button></div>
     ${body}${list}`;
@@ -543,7 +550,7 @@ function resize() { const w = stage.clientWidth, h = stage.clientHeight; rendere
 new ResizeObserver(resize).observe(stage); resize();
 const toScreen = (v, w, h) => { tmp.copy(v).project(camera); return { x: (tmp.x * .5 + .5) * w, y: (-tmp.y * .5 + .5) * h, ok: tmp.z < 1 }; };
 // Décale la scène vers la gauche quand la fiche occupe la droite de l'écran
-const offsetX = () => stage.clientWidth > 880 ? 7 : 0;
+const offsetX = () => stage.clientWidth > 880 ? 5 : 0;
 let last = performance.now();
 function loop(t) {
   const dt = Math.min(.05, (t - last) / 1000); last = t;
