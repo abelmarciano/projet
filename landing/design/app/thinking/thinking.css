@@ -1,0 +1,21 @@
+/* Logo animé « l'IA réfléchit » (composant ThinkingLogo) */
+.gx-think{display:inline-grid;place-items:center;flex:none;vertical-align:middle}
+.gx-think svg{width:100%;height:100%;overflow:visible}
+.gx-think path,.gx-think circle{stroke-width:7.5;stroke-linecap:round;stroke-linejoin:round}
+.gx-think .gx-think-ghost{stroke:var(--gx-line-2,#D3D6DD);opacity:.55}
+.gx-think .gx-think-line{stroke-dasharray:100;stroke-dashoffset:100;animation:gx-think-line 1.8s cubic-bezier(.65,0,.35,1) infinite}
+.gx-think .gx-think-head{stroke-dasharray:100;stroke-dashoffset:100;animation:gx-think-head 1.8s cubic-bezier(.65,0,.35,1) infinite}
+.gx-think .gx-think-dot{stroke-width:5;fill:var(--gx-surface,#fff);transform-box:fill-box;transform-origin:center;transform:scale(0);animation:gx-think-dot 1.8s cubic-bezier(.34,1.56,.64,1) infinite}
+.gx-think .gx-d2{animation-delay:.18s}
+.gx-think .gx-d3{animation-delay:.36s}
+.gx-think .gx-think-spark{transform-box:fill-box;transform-origin:center;transform:scale(0);animation:gx-think-spark 1.8s ease-in-out infinite}
+@keyframes gx-think-line{0%{stroke-dashoffset:100;opacity:0}3%{stroke-dashoffset:97;opacity:1}50%{stroke-dashoffset:0}82%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes gx-think-head{0%,41%{stroke-dashoffset:100;opacity:0}43%{stroke-dashoffset:96;opacity:1}58%{stroke-dashoffset:0}82%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes gx-think-dot{0%{transform:scale(0);opacity:1}14%{transform:scale(1)}78%{transform:scale(1);opacity:1}96%,100%{transform:scale(.6);opacity:0}}
+@keyframes gx-think-spark{0%,52%{transform:scale(0) rotate(0deg);opacity:0}64%{transform:scale(1.35) rotate(45deg);opacity:1}74%{transform:scale(.9) rotate(70deg)}84%{transform:scale(1.1) rotate(90deg);opacity:1}100%{transform:scale(0) rotate(135deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  .gx-think .gx-think-line,.gx-think .gx-think-head{animation:none;stroke-dashoffset:0}
+  .gx-think .gx-think-dot{animation:none;transform:none}
+  .gx-think .gx-think-spark{animation:gx-think-pulse 1.6s ease-in-out infinite;transform:none}
+  @keyframes gx-think-pulse{50%{opacity:.35}}
+}
