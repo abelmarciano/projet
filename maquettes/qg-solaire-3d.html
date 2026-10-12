@@ -53,11 +53,27 @@ button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 #stage.dragging { cursor: grabbing; }
 #stage canvas { display: block; }
 #labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-.tag { position: absolute; transform: translate(-50%, -100%); white-space: nowrap; font: 700 11px/1 var(--f-body); padding: 4px 8px 4px 6px; border-radius: 20px; background: var(--surface-solid); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 4px 14px rgba(0,0,0,.08); display: flex; align-items: center; gap: 6px; transition: opacity .3s; }
-.tag i { width: 7px; height: 7px; border-radius: 50%; display: block; }
-.tag.sel { box-shadow: 0 0 0 1.5px var(--violet), 0 4px 14px rgba(0,0,0,.12); }
-.float { position: absolute; transform: translate(-50%, -100%); font: 700 12px/1 var(--f-body); white-space: nowrap; padding: 6px 10px; border-radius: 20px; background: var(--surface-solid); box-shadow: 0 6px 20px rgba(0,0,0,.12); display: flex; align-items: center; gap: 6px; }
-.float i { width: 7px; height: 7px; border-radius: 50%; }
+.tag { position: absolute; transform: translate(-50%, -100%); white-space: nowrap; font: 700 11px/1 var(--f-body); padding: 3px 9px 3px 3px; border-radius: 20px; background: var(--surface-solid); color: var(--ink); border: 1px solid var(--line); box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.07); display: flex; align-items: center; gap: 6px; pointer-events: auto; cursor: pointer; transition: box-shadow .2s, transform .2s; }
+.tag .ini { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font: 800 8px/1 var(--f-body); position: relative; }
+.tag .ini::after { content: ""; position: absolute; right: -2px; bottom: -2px; width: 7px; height: 7px; border-radius: 50%; background: var(--st); border: 1.5px solid var(--surface-solid); }
+.tag em { font-style: normal; font-weight: 600; color: var(--muted); display: none; }
+.tag:hover, .tag.hover { box-shadow: 0 0 0 1.5px var(--brand), 0 6px 16px rgba(0,0,0,.1); transform: translate(-50%, calc(-100% - 2px)); z-index: 2; }
+.tag:hover em, .tag.hover em, .tag.sel em { display: inline; }
+.tag.sel { z-index: 3; box-shadow: 0 0 0 1.5px var(--violet), 0 4px 14px rgba(0,0,0,.12); }
+.actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.btn { border: 1px solid var(--line); background: var(--surface-solid); border-radius: 8px; padding: 7px 10px; font-weight: 700; font-size: 12px; cursor: pointer; color: var(--ink); }
+.btn:hover { border-color: var(--violet); color: var(--violet-dark); }
+.btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+.agenda { display: flex; flex-direction: column; gap: 2px; margin: 0 -8px; }
+.agenda button { display: grid; grid-template-columns: 52px 1fr auto; gap: 10px; align-items: center; border: 0; background: none; text-align: left; padding: 7px 8px; border-radius: 8px; cursor: pointer; font-size: 12px; min-width: 0; }
+.agenda button:hover { background: var(--line); }
+.agenda time { white-space: nowrap; font-weight: 800; font-variant-numeric: tabular-nums; }
+.agenda span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.agenda span small { display: block; color: var(--muted); font-size: 11px; }
+.agenda .empty { color: var(--muted); font-size: 12px; padding: 4px 8px; }
+.chip { font-size: 10px; font-weight: 800; padding: 3px 7px; border-radius: 10px; white-space: nowrap; }
+#toast { position: absolute; left: 50%; bottom: 96px; transform: translate(-50%, 8px); background: var(--ink); color: var(--surface-solid); padding: 9px 14px; border-radius: 10px; font-weight: 700; font-size: 12px; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; z-index: 20; }
+#toast.on { opacity: 1; transform: translate(-50%, 0); }
 #loading { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: var(--muted); font-size: 12px; letter-spacing: .02em; pointer-events: none; transition: opacity .6s; }
 
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 10px 30px rgba(20,30,30,.07); }
@@ -180,6 +196,7 @@ button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 
 <div class="app">
   <div id="stage"><div id="labels"></div><div id="loading">Chargement de l'équipe…</div></div>
+  <div id="toast" role="status"></div>
 
   <header class="top">
     <section class="card brand">
@@ -288,7 +305,7 @@ renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadow
 renderer.outputEncoding = THREE.sRGBEncoding;
 stage.prepend(renderer.domElement);
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(35, 1, .5, 600);
+const camera = new THREE.PerspectiveCamera(24, 1, .5, 900);
 
 const hemi = new THREE.HemisphereLight(0xffffff, 0xb8c6e0, .75); scene.add(hemi);
 const sun = new THREE.DirectionalLight(0xfff3e2, .85);
@@ -308,7 +325,7 @@ M.windowLit = std({ color: 0x56656b, roughness: .3 });
 const houses = [];
 function applyTheme() {
   const g = k => new THREE.Color(tok('s-' + k));
-  scene.background = g('bg'); scene.fog = new THREE.Fog(g('bg'), 190, 340);
+  scene.background = g('bg'); scene.fog = new THREE.Fog(g('bg'), 300, 560);
   ['plinth', 'lawn', 'road', 'wall', 'roof', 'tree', 'frame', 'glass'].forEach(k => M[k].color.copy(g(k)));
   const dark = (document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')) === 'dark';
   hemi.intensity = dark ? .45 : .75; sun.intensity = dark ? .55 : .85;
@@ -339,7 +356,6 @@ DESKS.forEach(([x, z]) => {
   const scr = new THREE.Mesh(new THREE.BoxGeometry(1.6, .95, .06), M.dark); scr.position.set(x, 2.2, z - .45); scr.castShadow = true; HQ.add(scr);
   const face = new THREE.Mesh(new THREE.PlaneGeometry(1.48, .83), M.screen); face.position.set(x, 2.2, z - .41); HQ.add(face);
 });
-const HQ_TOP = new THREE.Vector3(0, 6, 0);
 
 // Arbres ronds, façon maquette
 const canopy = new THREE.IcosahedronGeometry(1.6, 2), trunkG = new THREE.CylinderGeometry(.12, .16, 1.6, 8);
@@ -360,7 +376,7 @@ for (let j = 0; j <= 6; j++) { px.beginPath(); px.moveTo(0, j * 64); px.lineTo(2
 const panelTex = new THREE.CanvasTexture(pc); panelTex.encoding = THREE.sRGBEncoding;
 const panelG = new THREE.BoxGeometry(3.7, .08, 5.4);
 const doorG = new THREE.PlaneGeometry(1.1, 2.1), winG = new THREE.PlaneGeometry(1.3, 1.1);
-const stemG = new THREE.CylinderGeometry(.05, .05, 2.4, 6), headG = new THREE.SphereGeometry(.42, 20, 14), haloG = new THREE.RingGeometry(3.9, 4.15, 64);
+const stemG = new THREE.CylinderGeometry(.04, .04, 2.4, 6), headG = new THREE.SphereGeometry(.34, 20, 14), haloG = new THREE.RingGeometry(3.9, 4.15, 64);
 const pickables = [];
 ZONES.forEach((z, zi) => {
   for (let gx = 0; gx < 3; gx++) for (let gz = 0; gz < 3; gz++) {
@@ -386,7 +402,7 @@ ZONES.forEach((z, zi) => {
       h.head.material.color.copy(c);
       h.panel.visible = st === 'signe' || st === 'installe';
       h.panel.material.emissive.set(st === 'installe' ? 0x1d3d7a : 0x000000);
-      h.halo.material.color.copy(c); h.halo.material.opacity = st === 'installe' ? .9 : 0;
+      h.halo.material.color.copy(c); h.halo.material.opacity = st === 'installe' ? .7 : 0;
     };
     wall.userData = roof.userData = head.userData = { type: 'house', idx: h.idx };
     pickables.push(wall, roof, head); houses.push(h);
@@ -398,25 +414,26 @@ const seed = ['installe', 'signe', 'honore', 'rdv', 'rdv', 'lead', 'lead'];
 ZONES.forEach((z, zi) => { const zh = houses.filter(h => h.zone === zi).sort(() => Math.random() - .5); seed.forEach((st, i) => { zh[i].d.tele = pick(teles).id; showHouse(zh[i], st, false); }); });
 
 // Anneaux au sol
-const ringG = new THREE.RingGeometry(.7, .86, 48), pulseG = new THREE.RingGeometry(.9, 1, 48);
-const selRing = new THREE.Mesh(new THREE.RingGeometry(1.05, 1.22, 48), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true })); selRing.rotation.x = -Math.PI / 2; scene.add(selRing);
+const ringG = new THREE.RingGeometry(.74, .8, 48), hitG = new THREE.CylinderGeometry(.95, .95, 2.6, 12), hitM = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
+const selRing = new THREE.Mesh(new THREE.RingGeometry(.95, 1.03, 48), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true })); selRing.rotation.x = -Math.PI / 2; scene.add(selRing);
 
 /* ============ Personnages ============ */
 agents.forEach((a, i) => {
   a.g = new THREE.Group(); scene.add(a.g);
   if (a.role === 'tele') { const [x, z] = DESKS[i]; a.g.position.set(x, .48, z + 1.45); a.g.rotation.y = Math.PI; }
   else { const z = ZONES[a.zone]; a.lane = Math.sign(z.x) * 8.5; a.home = new THREE.Vector3(Math.sign(z.x) * 8.5, 0, Math.sign(z.z) * 12.5); a.g.position.copy(a.home); a.g.rotation.y = Math.atan2(-a.home.x, -a.home.z); }
-  const ring = new THREE.Mesh(ringG, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .9 })); ring.rotation.x = -Math.PI / 2; ring.position.y = .04;
-  const pulse = new THREE.Mesh(pulseG, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0 })); pulse.rotation.x = -Math.PI / 2; pulse.position.y = .05;
-  a.g.add(ring, pulse); a.ring = ring; a.pulse = pulse; a.queue = []; a.yaw = a.g.rotation.y;
-  const tag = document.createElement('div'); tag.className = 'tag'; tag.innerHTML = `<i></i>${a.name.split(' ')[0]}`; labels.appendChild(tag); a.tag = tag;
+  const ring = new THREE.Mesh(ringG, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .55 })); ring.rotation.x = -Math.PI / 2; ring.position.y = .04;
+  // zone de clic généreuse autour du personnage (le maillage animé seul est trop fin pour viser)
+  const hit = new THREE.Mesh(hitG, hitM); hit.position.y = 1.3; hit.userData = { type: 'agent', id: a.id }; pickables.push(hit);
+  a.g.add(ring, hit); a.ring = ring; a.queue = []; a.yaw = a.g.rotation.y;
+  const tag = document.createElement('button'); tag.type = 'button'; tag.className = 'tag'; tag.dataset.id = a.id; tag.innerHTML = `<span class="ini" style="background:color-mix(in srgb, var(--${a.role}) 18%, var(--surface-solid));color:var(--${a.role})">${a.ini}</span>${a.name.split(' ')[0]}<em></em>`; tag.addEventListener('click', () => select({ type: 'agent', id: a.id })); labels.appendChild(tag); a.tag = tag;
 });
-function tintRings() { agents.forEach(a => { const c = new THREE.Color(tok(a.role)); a.ring.material.color.copy(c); a.pulse.material.color.copy(c); if (a.jointMat) a.jointMat.color.copy(c); }); selRing.material.color.set(tok('violet')); }
+function tintRings() { agents.forEach(a => { const c = new THREE.Color(tok(a.role)); a.ring.material.color.copy(c); if (a.jointMat) a.jointMat.color.copy(c); }); selRing.material.color.set(tok('violet')); }
 
 function fallbackFigure(a) {
   const b = new THREE.Mesh(new THREE.CylinderGeometry(.36, .44, 1.45, 16), std({ color: tok(a.role) })); b.position.y = .98; b.castShadow = true;
   const hd = new THREE.Mesh(new THREE.SphereGeometry(.28, 16, 12), std({ color: 0xe9cfb8 })); hd.position.y = 2.0; hd.castShadow = true;
-  a.g.add(b, hd); [b, hd].forEach(o => { o.userData = { type: 'agent', id: a.id }; pickables.push(o); });
+  a.g.add(b, hd);
 }
 const BODY = { tele: 0xf6f8fc, terrain: 0xeef1f8 };
 const FIG_H = 2.3; // personnages légèrement agrandis pour rester lisibles sur la maquette
@@ -438,7 +455,7 @@ loadBot(bot => {
     model.scale.setScalar(FIG_H / top);
     model.traverse(o => {
       if (!o.isMesh) return;
-      o.castShadow = true; o.frustumCulled = false; o.userData = { type: 'agent', id: a.id }; pickables.push(o);
+      o.castShadow = true; o.frustumCulled = false;
       o.material = o.material.clone(); o.material.roughness = .55; o.material.metalness = 0;
       if (/Joints/.test(o.material.name)) a.jointMat = o.material; else o.material.color.set(BODY[a.role]);
     });
@@ -462,41 +479,42 @@ function setWalking(a, on) {
 }
 
 /* ============ Caméra ============ */
-const cam = { theta: .55, phi: .98, r: 230, target: new THREE.Vector3(0, 0, 3) };
-const goal = { r: 172, target: cam.target.clone() };
+const cam = { theta: .62, phi: .84, r: 300, target: new THREE.Vector3(0, 0, 3) };
+const goal = { r: 250, target: cam.target.clone() };
 let lastUser = -1e9, follow = null;
 function focus(v, r) { follow = null; goal.target.set(v.x, v.y || 0, v.z); goal.r = r; lastUser = performance.now(); }
 const pointers = new Map(); let drag = null;
-stage.addEventListener('pointerdown', e => { pointers.set(e.pointerId, { x: e.clientX, y: e.clientY }); stage.setPointerCapture(e.pointerId); drag = { x: e.clientX, y: e.clientY, sx: e.clientX, sy: e.clientY, pinch: null }; stage.classList.add('dragging'); });
+stage.addEventListener('pointerdown', e => { if (e.target.closest('.tag')) return; pointers.set(e.pointerId, { x: e.clientX, y: e.clientY }); stage.setPointerCapture(e.pointerId); drag = { x: e.clientX, y: e.clientY, sx: e.clientX, sy: e.clientY, pinch: null }; stage.classList.add('dragging'); });
 stage.addEventListener('pointermove', e => {
-  if (!drag || !pointers.has(e.pointerId)) return; pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
-  if (pointers.size === 2) { const [p, q] = [...pointers.values()]; const d = Math.hypot(p.x - q.x, p.y - q.y); if (drag.pinch) goal.r = THREE.MathUtils.clamp(goal.r * drag.pinch / d, 9, 240); drag.pinch = d; return; }
-  follow = null; cam.theta -= (e.clientX - drag.x) * .005; cam.phi = THREE.MathUtils.clamp(cam.phi - (e.clientY - drag.y) * .004, .3, 1.38);
+  if (!drag) { hoverAt(e); return; }
+  if (!pointers.has(e.pointerId)) return; pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (pointers.size === 2) { const [p, q] = [...pointers.values()]; const d = Math.hypot(p.x - q.x, p.y - q.y); if (drag.pinch) goal.r = THREE.MathUtils.clamp(goal.r * drag.pinch / d, 14, 340); drag.pinch = d; return; }
+  follow = null; cam.theta -= (e.clientX - drag.x) * .005; cam.phi = THREE.MathUtils.clamp(cam.phi - (e.clientY - drag.y) * .004, .55, 1.05);
   drag.x = e.clientX; drag.y = e.clientY; lastUser = performance.now();
 });
 function endDrag(e) { if (!drag) return; const moved = Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy); pointers.delete(e.pointerId); if (moved < 6 && !pointers.size) clickAt(e); if (!pointers.size) { drag = null; stage.classList.remove('dragging'); } }
 stage.addEventListener('pointerup', endDrag); stage.addEventListener('pointercancel', endDrag);
-stage.addEventListener('wheel', e => { e.preventDefault(); goal.r = THREE.MathUtils.clamp(goal.r * (1 + Math.sign(e.deltaY) * .1), 9, 240); lastUser = performance.now(); }, { passive: false });
+stage.addEventListener('wheel', e => { e.preventDefault(); goal.r = THREE.MathUtils.clamp(goal.r * (1 + Math.sign(e.deltaY) * .1), 14, 340); lastUser = performance.now(); }, { passive: false });
 const ray = new THREE.Raycaster(), mouse = new THREE.Vector2();
-function clickAt(e) {
+function pickAt(e) {
   const r = renderer.domElement.getBoundingClientRect();
   mouse.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1); ray.setFromCamera(mouse, camera);
-  const hit = ray.intersectObjects(pickables, false).find(i => { let o = i.object; while (o) { if (!o.visible) return false; o = o.parent; } return true; });
+  const hits = ray.intersectObjects(pickables, false).filter(i => { let o = i.object; while (o) { if (!o.visible) return false; o = o.parent; } return true; });
+  return hits.find(i => i.object.userData.type === 'agent') || hits[0];
+}
+let hovered = null;
+function hoverAt(e) {
+  if (e.pointerType && e.pointerType !== 'mouse' || e.target.closest('.tag')) return;
+  const hit = pickAt(e), id = hit && hit.object.userData.type === 'agent' ? hit.object.userData.id : null;
+  if (hovered && hovered !== id) byId[hovered].tag.classList.remove('hover');
+  hovered = id; if (id) byId[id].tag.classList.add('hover');
+  stage.style.cursor = hit ? 'pointer' : '';
+}
+function clickAt(e) {
+  const hit = pickAt(e);
   if (!hit) return; const u = hit.object.userData;
   select(u.type === 'agent' ? { type: 'agent', id: u.id } : { type: 'house', idx: u.idx });
 }
-
-/* ============ Effets ============ */
-const arcs = [], floats = [];
-function arc(from, to, color) {
-  const end = to.clone(); const mid = from.clone().lerp(end, .5); mid.y = 14 + from.distanceTo(end) * .15;
-  const curve = new THREE.QuadraticBezierCurve3(from.clone(), mid, end);
-  const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(80)); geo.setDrawRange(0, 0);
-  const line = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: tok(color), transparent: true }));
-  const dot = new THREE.Mesh(new THREE.SphereGeometry(.22, 12, 10), new THREE.MeshBasicMaterial({ color: tok(color) }));
-  scene.add(line, dot); arcs.push({ line, dot, curve, t: 0 });
-}
-function floatText(pos, text, color) { const el = document.createElement('div'); el.className = 'float'; el.innerHTML = `<i style="background:var(--${color})"></i>${text}`; labels.appendChild(el); floats.push({ el, pos: pos.clone(), t: 0 }); }
 
 /* ============ Simulation ============ */
 let clock = new Date(2026, 9, 12, 14, 32);
@@ -511,7 +529,6 @@ function bump(k, n = 1) { Object.values(P).forEach(p => p[k] += n); flash.add(k)
 function evLead() {
   const pool = houses.filter(h => !h.shown); if (!pool.length) return evInstall();
   const h = pick(pool); showHouse(h, 'lead'); bump('leads');
-  floatText(h.pos.clone().setY(9.5), 'Nouveau lead', 'lead');
   addFeed('lead', `Nouveau lead · <b>${h.d.client}</b>, ${h.d.city} (${h.d.source})`);
 }
 function evRdv() {
@@ -520,11 +537,10 @@ function evRdv() {
   const h = pick(pool), a = pick(callers); h.busy = a.busy = true; a.status = 'En appel'; renderList();
   setTimeout(() => {
     a.s.appels += Math.round(rnd(3, 9)); a.s.joints++; a.s.rdv++; h.d.tele = a.id;
-    nod(a); arc(a.g.position.clone().setY(2.6), h.pos.clone().setY(8.3), 'tele');
+    nod(a);
     setTimeout(() => {
       setHouse(h, 'rdv'); bump('contactes'); bump('rdv'); a.busy = h.busy = false;
       a.status = Math.random() < .25 ? 'Saisie CRM' : 'Disponible';
-      floatText(h.pos.clone().setY(9.5), `RDV fixé par ${first(a.name)}`, 'rdv');
       addFeed('rdv', `<b>${first(a.name)}</b> fixe un RDV chez ${h.d.client} · ${h.d.city}, ${pick(['demain 10 h', 'jeudi 14 h', 'vendredi 9 h 30', 'lundi 17 h'])}`);
       renderAll();
     }, 1400);
@@ -549,14 +565,11 @@ function evVisit() {
 function sign(h, c) {
   nod(c);
   setHouse(h, 'signe'); bump('signes'); bump('ca', h.d.eur); c.s.signes++; c.s.ca += h.d.eur; c.s.kwc += h.d.kwc; if (h.d.tele) byId[h.d.tele].s.signes++;
-  arc(h.pos.clone().setY(8.3), HQ_TOP, 'signe');
-  floatText(h.pos.clone().setY(9.5), `Signé · ${h.d.kwc} kWc · ${fmt(h.d.eur)} €`, 'signe');
   addFeed('signe', `<b>${first(c.name)}</b> signe ${h.d.kwc} kWc chez ${h.d.client} · ${fmt(h.d.eur)} €`);
 }
 function evInstall() {
   const pool = houses.filter(h => h.state === 'signe'); if (!pool.length) return evVisit();
   const h = pick(pool); setHouse(h, 'installe'); bump('installs'); byId[h.d.com].s.installs++;
-  floatText(h.pos.clone().setY(9.5), 'Installation raccordée', 'installe');
   addFeed('installe', `Installation raccordée chez ${h.d.client} · ${h.d.kwc} kWc`);
 }
 function evStatus() { const a = pick(teles.filter(t => !t.busy)); if (a) a.status = pick(['Disponible', 'En pause', 'Saisie CRM', 'En appel']); }
@@ -565,7 +578,7 @@ function tick() {
   if (r < .1) evStatus(); else if (r < (leads < 5 ? .42 : .26)) evLead(); else if (r < .58) evRdv(); else if (r < .85) evVisit(); else evInstall();
   renderAll();
 }
-setInterval(tick, 3000);
+setInterval(tick, 4500);
 
 /* ============ Interface ============ */
 const KPI = [['leads', 'Leads reçus', 'lead'], ['rdv', 'RDV fixés', 'rdv'], ['honores', 'RDV honorés', 'honore'], ['signes', 'Contrats signés', 'signe'], ['installs', 'Installations', 'installe'], ['ca', 'CA signé', 'signe']];
@@ -589,7 +602,7 @@ function renderList() {
     const cols = isT ? [s.appels, s.rdv, pct(s.rdv, s.joints) + ' %'] : [s.effectues, s.signes, fmt(s.ca / 1000) + 'k'];
     return `<button class="row ${on ? 'sel' : ''}" data-id="${a.id}"><span class="who">${av(a)}<span style="min-width:0"><b>${a.name}</b><small>${a.status}${isT ? '' : ' · ' + ZONES[a.zone].name}</small></span></span><span class="c">${cols[0]}</span><span class="c hl">${cols[1]}</span><span class="c">${cols[2]}</span></button>`;
   }).join('');
-  agents.forEach(a => { a.tag.querySelector('i').style.background = `var(--${STATUS[a.status]})`; a.tag.classList.toggle('sel', sel.type === 'agent' && sel.id === a.id); });
+  agents.forEach(a => { a.tag.style.setProperty('--st', `var(--${STATUS[a.status]})`); a.tag.querySelector('em').textContent = '· ' + a.status; a.tag.classList.toggle('sel', sel.type === 'agent' && sel.id === a.id); });
 }
 function spark(vals, color, label) {
   const w = 280, h = 56, max = Math.max(...vals) * 1.15 || 1, n = vals.length;
@@ -624,8 +637,23 @@ function renderDetail() {
     : `<div class="grid2"><div><small>RDV effectués</small><b>${s.effectues}<span style="font-size:15px;color:var(--muted)"> / ${s.rdv}</span></b></div><div><small>Contrats signés</small><b>${s.signes}</b></div><div><small>CA signé</small><b>${fmt(s.ca)} €</b></div><div><small>Puissance vendue</small><b>${s.kwc} kWc</b></div><div><small>Panier moyen</small><b>${fmt(s.ca / Math.max(1, s.signes))} €</b></div><div><small>Installés</small><b>${s.installs}</b></div></div>
        ${spark(series(a.id, 14, s.ca / 14000), 'terrain', 'CA signé par jour')}
        ${rate('Taux de closing', pct(s.signes, s.effectues), 'signe')}${rate('RDV honorés', pct(s.effectues, s.rdv), 'honore')}${rate('Signés déjà installés', pct(s.installs, s.signes), 'installe')}`;
-  el.innerHTML = head + body;
+  const first = a.name.split(' ')[0];
+  const actions = `<div class="actions"><button class="btn primary" type="button" data-act="Ouverture des leads de ${first} dans Classicall">Voir ses leads</button><button class="btn" type="button" data-act="Ouverture du planning de ${first}">Planning</button><button class="btn" type="button" data-act="Appel de ${first} en cours…">Appeler</button></div>`;
+  const today = `<div class="eyebrow"><span>${isT ? 'Ses RDV fixés' : 'Son agenda du jour'}</span><span>${isT ? 'cliquer pour ouvrir' : 'lundi 12'}</span></div>${agenda(a)}`;
+  el.innerHTML = head + actions + today + body;
 }
+let toastT;
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2200); }
+document.addEventListener('click', e => { const b = e.target.closest('[data-act]'); if (b) toast(b.dataset.act); });
+const SLOTS = ['9 h 00', '10 h 30', '11 h 45', '14 h 00', '15 h 30', '17 h 00', '18 h 15'];
+function agenda(a) {
+  const isT = a.role === 'tele';
+  const slot = h => h.idx % SLOTS.length;
+  const list = houses.filter(h => h.shown && (isT ? h.d.tele === a.id : h.d.com === a.id) && h.state !== 'lead').slice(0, 5).sort((x, y) => slot(x) - slot(y));
+  if (!list.length) return `<div class="agenda"><div class="empty">Rien pour le moment aujourd'hui.</div></div>`;
+  return `<div class="agenda">${list.map((h, i) => `<button type="button" data-house="${h.idx}"><time>${SLOTS[slot(h)]}</time><span>${h.d.client}<small>${h.d.city} · ${h.d.kwc} kWc</small></span><span class="chip" style="background:color-mix(in srgb, ${sc(h.state)} 16%, transparent);color:${sc(h.state)}">${STATE_LABEL[h.state]}</span></button>`).join('')}</div>`;
+}
+$('#detail').addEventListener('click', e => { const b = e.target.closest('[data-house]'); if (b) select({ type: 'house', idx: +b.dataset.house }); });
 function renderFunnel() {
   const p = P[period];
   const steps = [['Leads', p.leads, 'lead'], ['Contactés', p.contactes, 'tele'], ['RDV fixés', p.rdv, 'rdv'], ['Honorés', p.honores, 'honore'], ['Signés', p.signes, 'signe'], ['Installés', p.installs, 'installe']];
@@ -635,9 +663,9 @@ renderAll = () => { renderKpis(); renderList(); renderDetail(); renderFunnel(); 
 
 function select(s, fly = true) {
   sel = s;
-  if (fly) { if (s.type === 'agent') { focus(byId[s.id].g.position.clone().setY(1.3), 17); follow = byId[s.id]; } else focus(houses[s.idx].pos.clone().setY(2), 30); }
+  if (fly) { if (s.type === 'agent') { focus(byId[s.id].g.position.clone().setY(1.3), 28); follow = byId[s.id]; } else focus(houses[s.idx].pos.clone().setY(2), 46); }
   if (s.type === 'agent') { tab = byId[s.id].role; syncSeg('#tabs', 't', tab); }
-  renderList(); renderDetail();
+  renderList(); renderDetail(); $('#detail').scrollTop = 0;
 }
 function syncSeg(id, key, val) { document.querySelectorAll(id + ' button').forEach(b => b.setAttribute('aria-pressed', b.dataset[key] === String(val))); }
 $('#list').addEventListener('click', e => { const r = e.target.closest('.row'); if (r) select({ type: 'agent', id: r.dataset.id }); });
@@ -645,9 +673,9 @@ $('#tabs').addEventListener('click', e => { const b = e.target.closest('button')
 $('#period').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; period = b.dataset.p; syncSeg('#period', 'p', period); renderKpis(); renderFunnel(); });
 $('#views').addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return; syncSeg('#views', 'v', b.dataset.v);
-  if (b.dataset.v === 'all') focus(new THREE.Vector3(0, 0, 3), 172);
-  else if (b.dataset.v === 'hq') focus(new THREE.Vector3(0, 1.5, 1), 36);
-  else { const z = ZONES[+b.dataset.v]; focus(new THREE.Vector3(z.x, 0, z.z), 82); }
+  if (b.dataset.v === 'all') focus(new THREE.Vector3(0, 0, 3), 250);
+  else if (b.dataset.v === 'hq') focus(new THREE.Vector3(0, 1.5, 1), 72);
+  else { const z = ZONES[+b.dataset.v]; focus(new THREE.Vector3(z.x, 0, z.z), 120); }
 });
 
 [['installe', 'Installation raccordée chez M. Roux · 6 kWc'], ['signe', '<b>Nadia</b> signe 9 kWc chez Mme Faure · 21 500 €'], ['rdv', '<b>Inès</b> fixe un RDV chez M. et Mme Blanc · Toulouse, jeudi 14 h'], ['lead', 'Nouveau lead · <b>M. Perrin</b>, Nîmes (Facebook Ads)']].forEach(([c, t]) => addFeed(c, t));
@@ -664,7 +692,6 @@ const toScreen = (v, w, h) => { tmp.copy(v).project(camera); return { x: (tmp.x 
 let last = performance.now();
 function loop(now) {
   const dt = Math.min(.05, (now - last) / 1000); last = now; const t = now / 1000;
-  if (!reduced && now - lastUser > 10000) cam.theta += dt * .025;
   if (follow) { goal.target.set(follow.g.position.x, 1.3, follow.g.position.z); lastUser = now; }
   const ease = 1 - Math.exp(-dt * 3.2); cam.r += (goal.r - cam.r) * ease; cam.target.lerp(goal.target, ease);
   const { theta, phi, r, target } = cam;
@@ -673,8 +700,6 @@ function loop(now) {
   houses.forEach(h => {
     if (!h.shown) return;
     if (h.anim < 1) { h.anim = Math.min(1, h.anim + dt * 1.4); const k = 1 - Math.pow(1 - h.anim, 3); h.g.scale.setScalar(Math.max(.0001, k)); }
-    h.head.position.y = 8.3 + (reduced ? 0 : Math.sin(t * 1.6 + h.idx) * .15);
-    if (h.state === 'installe') h.halo.material.opacity = .45 + Math.sin(t * 2 + h.idx) * .25;
   });
 
   agents.forEach(a => {
@@ -686,30 +711,16 @@ function loop(now) {
       else { tmp.normalize(); a.g.position.addScaledVector(tmp, step); a.yaw = Math.atan2(tmp.x, tmp.z); }
     }
     let dy = a.yaw - a.g.rotation.y; dy = Math.atan2(Math.sin(dy), Math.cos(dy)); a.g.rotation.y += dy * Math.min(1, dt * 8);
-    const active = a.status === 'En appel' || a.status === 'En RDV';
-    const k = (t * .7 + a.s.honores * .1) % 1; a.pulse.scale.setScalar(1 + k * 2.2); a.pulse.material.opacity = active ? (1 - k) * .7 : 0;
   });
   if (sel.type === 'agent') { const g = byId[sel.id].g; selRing.position.set(g.position.x, g.position.y + .06, g.position.z); selRing.scale.setScalar(1); }
   else { const h = houses[sel.idx]; selRing.position.set(h.pos.x, .2, h.pos.z); selRing.scale.setScalar(5.6); }
-  selRing.material.opacity = .65 + Math.sin(t * 3) * .25;
+  selRing.material.opacity = .95;
 
-  for (let i = arcs.length - 1; i >= 0; i--) {
-    const a = arcs[i]; a.t += dt / 1.5;
-    a.line.geometry.setDrawRange(0, Math.min(81, Math.floor(a.t * 81)));
-    if (a.t <= 1) a.dot.position.copy(a.curve.getPoint(a.t)); else a.dot.visible = false;
-    if (a.t > 1) a.line.material.opacity = Math.max(0, 1 - (a.t - 1) * 1.4);
-    if (a.t > 1.8) { scene.remove(a.line, a.dot); a.line.geometry.dispose(); arcs.splice(i, 1); }
-  }
   renderer.render(scene, camera);
 
   const w = stage.clientWidth, h = stage.clientHeight;
-  const far = cam.r > 205;
+  const far = false;
   agents.forEach(a => { const p = toScreen(tmp.copy(a.g.position).setY(a.g.position.y + 2.85), w, h); a.tag.style.display = p.ok ? '' : 'none'; a.tag.style.opacity = far && !(sel.type === 'agent' && sel.id === a.id) ? 0 : 1; a.tag.style.left = p.x + 'px'; a.tag.style.top = p.y + 'px'; });
-  for (let i = floats.length - 1; i >= 0; i--) {
-    const f = floats[i]; f.t += dt; const p = toScreen(tmp.copy(f.pos).setY(f.pos.y + f.t * 1.2), w, h);
-    f.el.style.left = p.x + 'px'; f.el.style.top = p.y + 'px'; f.el.style.opacity = f.t < .25 ? f.t * 4 : f.t < 2.2 ? 1 : Math.max(0, 1 - (f.t - 2.2) * 2);
-    if (f.t > 2.8) { f.el.remove(); floats.splice(i, 1); }
-  }
   requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
