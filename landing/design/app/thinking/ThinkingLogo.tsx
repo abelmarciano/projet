@@ -3,11 +3,18 @@ import { cn } from "@/lib/utils";
 /**
  * Logo Growthity animé « l'IA réfléchit » : la courbe se trace, les points apparaissent,
  * la flèche monte puis l'étincelle scintille, en boucle. Styles dans gx-console.css (.gx-think).
- * Respecte « réduire les animations » (logo fixe avec une étincelle qui pulse doucement).
+ * Avec still, logo fixe (avatar de l'IA au repos). Respecte « réduire les animations » (logo fixe avec une étincelle qui pulse doucement).
  */
-export function ThinkingLogo({ size = 28, label = "Growthity réfléchit…", className }: { size?: number; label?: string; className?: string }) {
+export function ThinkingLogo({ size = 28, label = "Growthity réfléchit…", still = false, className }: { size?: number; label?: string; still?: boolean; className?: string }) {
+  // still : logo fixe (avatar de l'IA quand elle ne réfléchit pas).
   return (
-    <span className={cn("gx-think", className)} role="status" aria-label={label} style={{ width: size, height: size }}>
+    <span
+      className={cn("gx-think", still && "gx-think-still", className)}
+      role={still ? undefined : "status"}
+      aria-label={still ? undefined : label}
+      aria-hidden={still ? true : undefined}
+      style={{ width: size, height: size }}
+    >
       <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <defs>
           <linearGradient id="gxThinkG" x1="18" y1="96" x2="102" y2="24" gradientUnits="userSpaceOnUse">
