@@ -272,7 +272,7 @@ const $=s=>document.querySelector(s);
 const C=(n)=>`c" data-c="${n}`;
 const mside=(on,items)=>`<div class="mside"><div class="h">Paramètres</div>${items.map(x=>`<span class="${x===on?"on":""}">${x}</span>`).join("")}</div>`;
 const SET=["Utilisateurs","Pages","Comptes publicitaires","Comptes Instagram","Moyens de paiement","Sources de données","Sécurité"];
-const mtop=(t)=>`<div class="mtop"><span class="mlogo"></span><b>${t}</b><span class="acct">Rénov'Habitat <i></i></span></div>`;
+const mtop=(t)=>`<div class="mtop"><span class="mlogo"></span><b>${t}</b><span class="acct">Atelier Sauge <i></i></span></div>`;
 const SCR={
   flow:()=>`${mtop("Comment tout s'emboîte")}<div class="mbody full"><div class="mpane">
     <div class="mrow"><span class="av">Toi</span><div><b>Ton profil Facebook</b><small>Privé : il prouve qui gère l'entreprise</small></div></div>
@@ -291,13 +291,13 @@ const SCR={
       <div class="mrow"><span class="av">🔑</span><div>Changer le mot de passe</div></div>
       <div class="mrow ${C(1)} ring"><span class="av">🛡</span><div><b>Authentification à deux facteurs</b><small>Désactivée</small></div><span class="mtag off">Désactivée</span></div>
       <div class="mrow"><span class="av">⌁</span><div>Où vous êtes connecté(e)</div></div></div>
-      <div class="menu"><span class="${C(2)}" style="background:var(--m-blue-soft)">Facebook<small>Abel Marciano</small></span><span>Instagram<small>@renovhabitat.lyon</small></span></div>
+      <div class="menu"><span class="${C(2)}" style="background:var(--m-blue-soft)">Facebook<small>Camille Martin</small></span><span>Instagram<small>@atelier.sauge</small></span></div>
       <div class="mb ${C(3)}">Application d'authentification</div></div></div>`,
   bm:()=>`${mtop("Meta for Business")}<div class="mbody full"><div class="mpane" style="align-items:center">
     <div class="mcard" style="width:min(100%,380px)"><h5>Créer un portefeuille business</h5><p class="s">Gère ta Page, tes publicités et ton équipe au même endroit.</p>
-      <div class="mf"><label class="${C(2)}">Nom de l'entreprise</label><div class="in ring">Rénov'Habitat Lyon</div><span class="hint">Le nom officiel de ton entreprise</span></div>
-      <div class="mf"><label>Ton prénom et ton nom</label><div class="in">Abel Marciano</div></div>
-      <div class="mf"><label>Adresse e-mail professionnelle</label><div class="in ring">contact@renovhabitat.fr</div></div>
+      <div class="mf"><label class="${C(2)}">Nom de l'entreprise</label><div class="in ring">Atelier Sauge</div><span class="hint">Le nom officiel de ton entreprise</span></div>
+      <div class="mf"><label>Ton prénom et ton nom</label><div class="in">Camille Martin</div></div>
+      <div class="mf"><label>Adresse e-mail professionnelle</label><div class="in ring">contact@ateliersauge.fr</div></div>
       <div class="mb ${C(3)}">Envoyer</div></div>
     <div class="mb sec ${C(1)}" style="align-self:center">Créer un compte</div></div></div>`,
   page:()=>`${mtop("Paramètres de l'entreprise")}<div class="mbody">${mside("Pages",SET).replace('<span class="on">Pages</span>','<span class="on '+C(1)+'">Pages</span>')}
@@ -307,21 +307,21 @@ const SCR={
       <div class="mrow"><span class="av">?</span><div>Aucune Page pour l'instant<small>Ajoute ou crée ta Page</small></div></div></div></div>`,
   insta:()=>`${mtop("Paramètres de l'entreprise")}<div class="mbody">${mside("Comptes Instagram",SET).replace('<span class="on">Comptes Instagram</span>','<span class="on '+C(1)+'">Comptes Instagram</span>')}
     <div class="mpane"><div style="display:flex;align-items:center;gap:8px"><b style="font-size:15px">Comptes Instagram</b><span class="mb ${C(2)}" style="margin-left:auto">+ Ajouter</span></div>
-      <div class="mrow"><span class="av ig">IG</span><div><b>@renovhabitat.lyon</b><small>Compte professionnel</small></div><span class="mtag">Relié</span></div>
+      <div class="mrow"><span class="av ig">IG</span><div><b>@atelier.sauge</b><small>Compte professionnel</small></div><span class="mtag">Relié</span></div>
       <div class="mcard"><h5>Ce que ça change</h5><p class="s" style="margin:0">Tes pubs affichent ton nom et ta photo Instagram, et les gens peuvent aller sur ton profil.</p></div></div></div>`,
   adacc:()=>`${mtop("Paramètres de l'entreprise")}<div class="mbody">${mside("Comptes publicitaires",SET).replace('<span class="on">Comptes publicitaires</span>','<span class="on '+C(1)+'">Comptes publicitaires</span>')}
     <div class="mpane"><div class="mcard"><h5>Créer un compte publicitaire</h5>
-      <div class="mf"><label class="${C(2)}">Nom du compte publicitaire</label><div class="in ring">Rénov'Habitat – Pubs</div></div>
+      <div class="mf"><label class="${C(2)}">Nom du compte publicitaire</label><div class="in ring">Atelier Sauge – Pubs</div></div>
       <div class="mf"><label class="${C(3)}">Fuseau horaire</label><div class="in dd ring">(GMT+01:00) Europe/Paris</div><span class="hint">Ne pourra pas être modifié</span></div>
       <div class="mf"><label>Devise</label><div class="in dd ring">EUR – Euro</div><span class="hint">Ne pourra pas être modifiée</span></div>
       <div class="mf"><label>Moyen de paiement</label><div class="in dd" style="color:var(--m-sub)">Ajouter plus tard</div></div>
       <div style="display:flex;gap:8px;justify-content:flex-end"><span class="mb sec">Annuler</span><span class="mb">Suivant</span></div></div></div></div>`,
   pay:()=>`${mtop("Facturation et paiements")}<div class="mbody"><div class="mside"><div class="h">Facturation</div><span>Activité</span><span class="on ${C(1)}">Paramètres de paiement</span><span>Factures</span></div>
-    <div class="mpane"><div class="mcard"><h5>Moyens de paiement</h5><p class="s">Compte : Rénov'Habitat – Pubs</p>
+    <div class="mpane"><div class="mcard"><h5>Moyens de paiement</h5><p class="s">Compte : Atelier Sauge – Pubs</p>
       <div class="mrow"><span class="av">💳</span><div>Aucun moyen de paiement<small>Tes pubs ne peuvent pas être diffusées</small></div><span class="mtag off">À ajouter</span></div>
       <div class="mb ${C(2)}">Ajouter un moyen de paiement</div></div>
       <div class="mcard"><h5>Informations sur l'entreprise</h5>
-        <div class="mf"><label>Adresse</label><div class="in">12 rue de la République, 69002 Lyon</div></div>
+        <div class="mf"><label>Adresse</label><div class="in">8 rue des Lilas, 33000 Bordeaux</div></div>
         <div class="mf"><label class="${C(3)}">Numéro de TVA</label><div class="in ring">FR12 345678901</div></div></div>
       <div class="mrow"><span class="av">€</span><div>Seuil de facturation<small>Prélèvement à chaque seuil atteint</small></div><b>25,00 €</b></div></div></div>`,
   pixel:()=>`${mtop("Gestionnaire d'événements")}<div class="mbody"><div class="mside"><div class="h">Événements</div><span class="on">Sources de données</span><span>Événements personnalisés</span><span>Paramètres</span></div>
@@ -329,12 +329,12 @@ const SCR={
       <div class="mcard"><h5>Sélectionne une source</h5>
         <div class="mrow ${C(2)} ring"><span class="av">🌐</span><div><b>Web</b><small>Mesure les visites et achats sur ton site</small></div></div>
         <div class="mrow"><span class="av">📱</span><div>Application</div></div><div class="mrow"><span class="av">🏬</span><div>Hors ligne</div></div></div>
-      <div class="mrow ${C(3)}"><span class="av">◉</span><div><b>Pixel Rénov'Habitat</b><small>Dernière activité il y a 2 min</small></div><span class="mtag">Actif</span></div></div></div>`,
+      <div class="mrow ${C(3)}"><span class="av">◉</span><div><b>Pixel Atelier Sauge</b><small>Dernière activité il y a 2 min</small></div><span class="mtag">Actif</span></div></div></div>`,
   growthity:()=>`<div class="gx"><div class="gside"><b>growthity.ai</b><span>Accueil</span><span>Chat</span><span>Créations</span><span>Campagnes</span><span>Résultats</span><span class="on ${C(1)}">Connexion</span></div>
     <div class="mpane" style="font-family:var(--ui)"><b style="font-family:var(--display);font-size:20px">Connexion</b>
       <div class="mcard" style="border-color:var(--line);border-radius:14px"><div style="display:flex;align-items:center;gap:10px"><span class="av" style="width:36px;height:36px;border-radius:9px;background:#0866FF;color:#fff;display:grid;place-items:center;font-weight:700">f</span><div style="flex:1"><b>Meta Ads</b><small style="display:block;color:var(--dim)">Facebook &amp; Instagram</small></div><span class="mtag off">Non connecté</span></div>
         <span class="mb ${C(2)}" style="background:#0866FF">Continuer avec Facebook</span></div>
-      <div class="menu ${C(3)}" style="width:100%;max-width:330px"><span>☑ Portefeuille : <b>Rénov'Habitat Lyon</b></span><span>☑ Page : <b>Rénov'Habitat Lyon</b></span><span>☑ Compte pub : <b>Rénov'Habitat – Pubs</b></span></div></div></div>`
+      <div class="menu ${C(3)}" style="width:100%;max-width:330px"><span>☑ Portefeuille : <b>Atelier Sauge</b></span><span>☑ Page : <b>Atelier Sauge</b></span><span>☑ Compte pub : <b>Atelier Sauge – Pubs</b></span></div></div></div>`
 };
 
 function renderList(){
