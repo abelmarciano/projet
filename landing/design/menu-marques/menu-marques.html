@@ -246,7 +246,6 @@ function render(){
     ${S.note?`<div class="note">${S.note}</div>`:''}`;
   const P=document.getElementById('pills');
   P.innerHTML=`<button class="pill${blank?' blank':''}" id="bpill" aria-haspopup="menu" aria-expanded="${S.pmenu}">${mark(cb,true)}<span class="lab">Marque :</span><b>${blank?'Marque blanche':cb.name}</b>${ic('chev')}</button>
-    ${c.v?`<span class="pill"><span class="av"></span><span class="lab">Acteur :</span><b>à choisir</b></span>`:''}
     ${S.pmenu?`<div class="pmenu" role="menu">${BRANDS.map(x=>`<button class="mi" data-pb="${x.id}">${mark(x,true)}<span><b>${x.name}</b></span>${c.b===x.id?ic('check','i ck'):''}</button>`).join('')}<hr><button class="mi" data-pb="blank">${mark('blank',true)}<span><b>Marque blanche</b><small>Ni nom, ni logo, ni couleurs</small></span>${blank?ic('check','i ck'):''}</button></div>`:''}`;
   document.getElementById('hint').textContent=blank?'Marque blanche : les créations de cette conversation sortent sans aucune signature de marque.':`Les créations de cette conversation utilisent l'identité de ${cb.name}.`;
 }
