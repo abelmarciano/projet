@@ -407,7 +407,7 @@ function fiche(){
   const nw=demo==="new";
   const v=(x)=>nw?"":x;
   const props=nw?[]:PROPS;
-  const missing=nw?["Logo","Site web","Couleur principale","Présentation","Promesse","Ton en 3 mots","Type de client","Lien de destination","Pays de vente"]:["Zone de chalandise","Lien de destination"];
+  const missing=nw?["Logo","Site web","Couleur principale","Présentation","Promesse","Ton en 3 mots","Type de client","Lien de destination","Pays de vente"]:["Zone d'intervention","Lien de destination"];
   return `<div class="fiche"><div class="col">
   ${props.length?`<section class="sec todo" id="avalider"><div class="sec-h"><h2>À valider</h2><small>${props.length} proposition${props.length>1?"s":""} de la dernière analyse</small><button type="button" class="btn sm r" id="acceptall">Tout accepter</button></div>
     <div class="props">${props.map((p,i)=>`<div class="prop" data-i="${i}"><div><div class="k">${p.k}${p.ia?'<span class="ia">Proposé par l\'IA</span>':'<span class="ia" style="background:var(--sunk);color:var(--muted)">Trouvé sur le site</span>'}</div><div class="v">${p.k.startsWith("Couleur")?`<span style="display:inline-block;width:14px;height:14px;border-radius:4px;background:${p.v};vertical-align:-2px;margin-right:6px;border:1px solid rgba(0,0,0,.1)"></span>${p.v}`:p.v}</div></div><div class="acts"><button type="button" class="btn sm pri" data-acc="${i}">Accepter</button><button type="button" class="btn sm ghost" data-keep="${i}">Garder le mien</button></div></div>`).join("")}</div></section>`:""}
@@ -445,7 +445,7 @@ function fiche(){
     <div class="fgrid">
       <div class="f full"><label>Type d'activité</label><div class="segf" role="group" aria-label="Type d'activité">${["Non renseigné","E-commerce","Service local","Autre"].map((t,i)=>`<button type="button" aria-pressed="${nw?i===0:i===1}">${t}</button>`).join("")}</div></div>
       ${F("Secteur",v("Décoration · bougies parfumées"))}
-      ${F("Zone de chalandise","",{ph:"Seulement pour un service local · ex. Bordeaux · 20 km"})}
+      <div class="f"><label for="fzone">Zone d'intervention</label><input id="fzone" class="empty" placeholder="ex. Bordeaux · 20 km"><small>Ville et rayon autour desquels tu travailles (seulement pour un service local).</small></div>
       <div class="f full"><label>Pays de vente</label>${nw?chipList([],"pays"):chipList(["France","Belgique","Suisse"],"pays")}</div>
     </div>
   </section>
