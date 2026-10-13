@@ -20,6 +20,8 @@ import {Spy} from './scenes/Spy';
 import {Publish} from './scenes/Publish';
 import {Outro} from './scenes/Outro';
 import {SCENES, TRANSITIONS} from './timeline';
+import {VERTICAL} from './vertical';
+import {SafeOverlay} from './vertical/safe';
 
 const COMPONENTS: Record<string, React.FC> = {Problem, Hero, Chat, Formats, Actors, Spy, Publish, Outro};
 
@@ -45,13 +47,13 @@ const useFonts = () => {
   }, [handle]);
 };
 
-export const Promo: React.FC<{withAudio?: boolean}> = ({withAudio = true}) => {
+export const Promo: React.FC<{withAudio?: boolean; vertical?: boolean; safeOverlay?: boolean}> = ({withAudio = true, vertical = false, safeOverlay = false}) => {
   useFonts();
   return (
     <AbsoluteFill style={{background: '#000'}}>
       <TransitionSeries>
         {SCENES.flatMap((s, i) => {
-          const Comp = COMPONENTS[s.id];
+          const Comp = (vertical ? VERTICAL : COMPONENTS)[s.id];
           const items = [
             <TransitionSeries.Sequence key={s.id} durationInFrames={s.duration}>
               <Comp />
@@ -70,6 +72,7 @@ export const Promo: React.FC<{withAudio?: boolean}> = ({withAudio = true}) => {
           return items;
         })}
       </TransitionSeries>
+      {safeOverlay && <SafeOverlay />}
       {withAudio && <Audio src={staticFile('soundtrack.wav')} />}
     </AbsoluteFill>
   );

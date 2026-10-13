@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, useCurrentFrame, useVideoConfig} from 'remotion';
 import {C} from '../theme';
 
 const Orb: React.FC<{x: number; y: number; size: number; color: string; opacity: number}> = ({
@@ -42,6 +42,9 @@ export const StudioBg: React.FC<{children?: React.ReactNode; intensity?: number}
   intensity = 1,
 }) => {
   const f = useCurrentFrame();
+  const {width, height} = useVideoConfig();
+  const sx = width / 1920;
+  const sy = height / 1080;
   const t = f / 30;
   return (
     <AbsoluteFill
@@ -50,9 +53,9 @@ export const StudioBg: React.FC<{children?: React.ReactNode; intensity?: number}
         overflow: 'hidden',
       }}
     >
-      <Orb x={300 + Math.sin(t * 0.5) * 120} y={180 + Math.cos(t * 0.4) * 80} size={1100} color={C.indigo} opacity={0.45 * intensity} />
-      <Orb x={1650 + Math.cos(t * 0.45) * 140} y={900 + Math.sin(t * 0.35) * 90} size={1000} color={C.pink} opacity={0.22 * intensity} />
-      <Orb x={1100 + Math.sin(t * 0.3) * 200} y={540} size={800} color={C.blue} opacity={0.18 * intensity} />
+      <Orb x={(300 + Math.sin(t * 0.5) * 120) * sx} y={(180 + Math.cos(t * 0.4) * 80) * sy} size={1100} color={C.indigo} opacity={0.45 * intensity} />
+      <Orb x={(1650 + Math.cos(t * 0.45) * 140) * sx} y={(900 + Math.sin(t * 0.35) * 90) * sy} size={1000} color={C.pink} opacity={0.22 * intensity} />
+      <Orb x={(1100 + Math.sin(t * 0.3) * 200) * sx} y={540 * sy} size={800} color={C.blue} opacity={0.18 * intensity} />
       <DotGrid color="rgba(255,255,255,0.5)" opacity={0.12} drift={t * 6} />
       {children}
     </AbsoluteFill>
@@ -61,12 +64,15 @@ export const StudioBg: React.FC<{children?: React.ReactNode; intensity?: number}
 
 export const LightBg: React.FC<{children?: React.ReactNode}> = ({children}) => {
   const f = useCurrentFrame();
+  const {width, height} = useVideoConfig();
+  const sx = width / 1920;
+  const sy = height / 1080;
   const t = f / 30;
   return (
     <AbsoluteFill style={{background: '#FFFFFF', overflow: 'hidden'}}>
       <AbsoluteFill style={{background: 'linear-gradient(180deg, #FFFFFF 0%, #F4F5FB 100%)'}} />
-      <Orb x={960 + Math.sin(t * 0.4) * 60} y={240} size={1300} color="rgba(101,82,232,0.28)" opacity={1} />
-      <Orb x={1500 + Math.cos(t * 0.3) * 80} y={850} size={900} color="rgba(224,71,158,0.12)" opacity={1} />
+      <Orb x={(960 + Math.sin(t * 0.4) * 60) * sx} y={240 * sy} size={1300} color="rgba(101,82,232,0.28)" opacity={1} />
+      <Orb x={(1500 + Math.cos(t * 0.3) * 80) * sx} y={850 * sy} size={900} color="rgba(224,71,158,0.12)" opacity={1} />
       <DotGrid color="rgba(15,23,42,0.35)" opacity={0.35} drift={t * 4} />
       {children}
     </AbsoluteFill>
