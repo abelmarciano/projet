@@ -1,0 +1,45 @@
+/* Menu latéral en icônes Hugeicons, pastille Marque dans la barre de saisie,
+   survol de la liste des conversations. Chargé APRÈS gx-chat-context.css. */
+
+/* 1. Menu : page ouverte en violet clair, icône violette (maquette icones-menu.html). */
+.gx-nv .gx-i{width:18px;height:18px}
+.gx-nv[aria-current="page"]{background:var(--gx-accent-soft);color:var(--gx-fg);font-weight:600}
+.gx-nv[aria-current="page"] .gx-i{color:var(--gx-accent)}
+.gx-nv[aria-current="page"]::before,
+.gx-collapsed .gx-nv[aria-current="page"]::before{display:none}
+.gx-nv[aria-current="page"]:hover{background:var(--gx-accent-soft)}
+.gx-nv:focus:not(:focus-visible){outline:none;box-shadow:none}
+.gx-nv:focus-visible{outline:2px solid var(--gx-accent);outline-offset:1px}
+.gx-colbtn .gx-i{width:18px;height:18px}
+.gx-tabbar .gx-tab[aria-current="page"] .gx-i{color:var(--gx-accent)}
+
+/* 2. Pastille Marque au début du champ de saisie (logo + nom, menu au clic). */
+.gx-cmp-f .gx-cbrand-in{display:inline-flex;align-items:center;gap:5px;flex:none;align-self:flex-start;height:24px;max-width:190px;margin:-1px 2px -1px -6px;padding:0 6px 0 4px;border:0;border-radius:7px;background:var(--gx-sunk);color:var(--gx-fg);font:500 12.5px/1 var(--gx-ui);cursor:pointer;transition:background .12s}
+.gx-cmp-f .gx-cbrand-in:hover{background:color-mix(in srgb,var(--gx-fg) 9%,var(--gx-sunk))}
+.gx-cmp-f .gx-cbrand-in:focus-visible{outline:2px solid var(--gx-accent);outline-offset:1px}
+.gx-cmp-f .gx-cbrand-in:disabled{opacity:.6;cursor:default}
+.gx-cmp-f .gx-cbrand-in .gx-brandmark{gap:5px;min-width:0}
+.gx-cmp-f .gx-cbrand-in .gx-brandmark-n{max-width:130px}
+.gx-cmp-f .gx-cbrand-in > .gx-i{width:13px;height:13px;flex:none;color:var(--gx-dim)}
+.gx-cmp-f .gx-cbrand-in .gx-brandmark > .gx-i{width:14px;height:14px;flex:none}
+.gx-cmp-f .gx-cbrand-in.gx-white{background:var(--gx-accent-soft);color:var(--gx-accent-ink)}
+.gx-cmp-f .gx-cbrand-in.gx-white > .gx-i{color:var(--gx-accent-ink)}
+@media (max-width:599px){
+  .gx-cmp-f .gx-cbrand-in .gx-brandmark-n{display:none}
+  .gx-cmp-f .gx-cbrand-in{margin-left:-8px}
+}
+/* La rangée des pièces jointes n'occupe aucune place quand elle est vide. */
+.gx-ctx:empty{display:none}
+
+/* 3. Liste des conversations : fond gris au survol, la date reste visible, ⋯ apparaît sans rien cacher. */
+.gx-convs .gx-cv-row:hover{background:var(--gx-sunk);color:var(--gx-fg)}
+.gx-convs .gx-cv.gx-on,
+.gx-convs .gx-cv.gx-on:hover{background:var(--gx-surface);border-color:var(--gx-line);color:var(--gx-fg)}
+.gx-convs .gx-cv-row:is(:hover,:focus-within) small{display:inline}
+.gx-convs .gx-cv-row:is(:hover,:focus-within) .gx-cv-meta{display:block}
+.gx-convs .gx-cv-row .gx-cv-more{display:grid;visibility:hidden}
+.gx-convs .gx-cv-row:is(:hover,:focus-within) .gx-cv-more,
+.gx-convs .gx-cv-more[data-state="open"]{visibility:visible}
+.gx-convs .gx-cv-more:hover{background:color-mix(in srgb,var(--gx-fg) 8%,transparent)}
+@media (hover:none){.gx-convs .gx-cv-row .gx-cv-more{visibility:visible}}
+@media (prefers-reduced-motion:no-preference){.gx-convs .gx-cv-row{transition:background .12s}}

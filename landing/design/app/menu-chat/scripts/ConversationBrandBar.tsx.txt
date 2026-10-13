@@ -1,0 +1,79 @@
+/**
+ * Pastille « Marque » dans la barre de saisie : logo (ou initiales) + nom, menu
+ * pour changer de marque ou passer en marque blanche. Le rappel de ce que fait la
+ * marque est dans l'infobulle et en tête du menu.
+ */
+function ConversationBrandBar({ conversationId, disabled, onSwitched }: {
+  conversationId: string;
+  disabled?: boolean;
+  onSwitched: (patch: Record<string, unknown>, note: string) => void;
+}) {
+  const qc = useQueryClient();
+  const setFn = useServerFn(setConversationBrand);
+  const { white, brand, brands, loaded } = useConversationBrand(conversationId);
+  const [busy, setBusy] = useState(false);
+  if (!loaded) return null;
+  const choose = async (brandId: string | null) => {
+    const toWhite = brandId === null;
+    if (toWhite ? white : brand?.id === brandId) return;
+    setBusy(true);
+    try {
+      const res = await setFn({ data: { conversationId, brandId, whiteLabel: toWhite } });
+      onSwitched(toWhite ? { brandingMode: "white_label", brandingConfirmed: true } : { brandingMode: "brand", brandingConfirmed: true, creativeBrandId: brandId }, res.note);
+      await Promise.all([
+        qc.invalidateQueries({ queryKey: ["ad-conversation", conversationId] }),
+        qc.invalidateQueries({ queryKey: ["ad-conversations"] }),
+      ]);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Impossible de changer la marque.");
+    } finally {
+      setBusy(false);
+    }
+  };
+  const hint = white
+    ? "Marque blanche : les créations sortent sans aucune signature de marque."
+    : brand
+      ? `Les créations de cette conversation utilisent l'identité de ${brand.name}.`
+      : "Aucune marque : choisis-en une ou passe en marque blanche.";
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          type="button"
+          className={`gx-cbrand-in${white ? " gx-white" : ""}`}
+          disabled={disabled || busy}
+          aria-label={`Marque de cette conversation : ${white ? "marque blanche" : brand?.name ?? "aucune"}. Changer`}
+          title={hint}
+        >
+          {white ? (
+            <span className="gx-brandmark"><EyeOff className="gx-i" aria-hidden /><span className="gx-brandmark-n">Marque blanche</span></span>
+          ) : brand ? (
+            <BrandMark brand={brand} size={16} />
+          ) : (
+            <span className="gx-brandmark-n">Choisir une marque</span>
+          )}
+          {busy ? <Loader2 className="gx-i animate-spin" aria-hidden /> : <ChevronDown className="gx-i" aria-hidden />}
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" side="top" className="w-64">
+        <DropdownMenuLabel className="flex flex-col gap-0.5">
+          <span>Marque de cette conversation</span>
+          <span className="text-xs font-normal text-muted-foreground">{hint}</span>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {brands.map((b) => (
+          <DropdownMenuItem key={b.id} onClick={() => void choose(b.id)} className="flex items-center gap-2">
+            <BrandMark brand={b} size={18} className="min-w-0 flex-1" />
+            {!white && brand?.id === b.id && <Check className="h-4 w-4" />}
+          </DropdownMenuItem>
+        ))}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => void choose(null)} className="flex items-center gap-2">
+          <EyeOff className="h-4 w-4 text-muted-foreground" />
+          <span className="flex-1">Marque blanche</span>
+          {white && <Check className="h-4 w-4" />}
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
