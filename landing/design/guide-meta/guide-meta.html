@@ -41,7 +41,7 @@ h1{font-family:var(--display);font-weight:650;font-size:clamp(26px,3vw,34px);let
 .box{background:var(--surface);border:1px solid var(--line);border-radius:14px}
 
 /* Étapes */
-.steps{padding:10px;position:sticky;top:12px;display:flex;flex-direction:column;gap:2px}
+.steps{padding:10px;position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto;display:flex;flex-direction:column;gap:2px}
 .steps h2{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:6px 8px}
 .st{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;text-align:left;border:0;background:none;padding:8px;border-radius:10px;color:var(--muted)}
 .st:hover{background:var(--raised)}
@@ -99,6 +99,30 @@ ol.do li small{display:block;color:var(--dim);font-size:12.5px;margin-top:2px}
 .done-b{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:20px;border-radius:14px;background:var(--ok-soft)}
 .done-b h3{margin:0;font-family:var(--display);font-size:22px;font-weight:650}
 
+/* Liens */
+a.lk{color:var(--m-blue);font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+a.lk::after{content:" ↗";font-size:.85em;text-decoration:none;display:inline-block}
+a.lk:hover{text-decoration-thickness:2px}
+.links{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.lrow{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;text-decoration:none;color:var(--fg);background:var(--surface)}
+.lrow+.lrow{border-top:1px solid var(--line)}
+.lrow:hover{background:var(--raised)}
+.lrow .li{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--m-blue-soft);color:var(--m-blue);font-weight:700}
+.lrow b{display:block;font-weight:600;font-size:13.5px}.lrow small{display:block;color:var(--dim);font-size:12px}
+.lrow code{font:500 11.5px var(--mono);color:var(--dim);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.faq{border:1px solid var(--line);border-radius:12px;background:var(--raised)}
+.faq summary{padding:12px 14px;font-weight:600;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary span{font-size:11.5px;font-weight:600;color:var(--dim);background:var(--sunk);border-radius:999px;padding:0 7px}
+.faq summary::after{content:"+";margin-left:auto;color:var(--dim)}.faq[open] summary::after{content:"−"}
+.faq>div{padding:0 14px 12px}.faq>div+div{border-top:1px solid var(--line);padding-top:12px}
+.faq>div b{font-weight:600}.faq>div p{margin:2px 0 0;color:var(--muted)}
+.lex dd a.lk{font-weight:500}
+.chrome a{margin-left:8px;flex:1;min-width:0;font:12px -apple-system,"Segoe UI",sans-serif;color:#1B5FD1;background:#fff;border-radius:7px;padding:4px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}
+.chrome a:hover{text-decoration:underline}
+.chrome a::before{content:"🔒 ";font-size:10px}
+@media (max-width:760px){.lrow code{display:none}}
+
 /* ---------- Capture d'écran Meta (reproduction) ---------- */
 .shotw{position:sticky;top:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
 .shot{border-radius:12px;overflow:hidden;border:1px solid var(--line-2);background:#fff;box-shadow:var(--shadow);font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--m-text)}
@@ -154,7 +178,7 @@ ol.do li small{display:block;color:var(--dim);font-size:12.5px;margin-top:2px}
 @media (max-width:1180px){.main{grid-template-columns:minmax(0,1fr)}.shotw{position:static}}
 @media (max-width:760px){
   .grid{grid-template-columns:minmax(0,1fr)}
-  .steps{position:static;flex-direction:row;overflow-x:auto;gap:6px;padding:8px}
+  .steps{position:static;flex-direction:row;overflow-x:auto;gap:6px;padding:8px;max-height:none}
   .steps h2,.help,.lex{display:none}
   .st{grid-template-columns:26px auto;flex:none;width:auto}
   .st small,.st em{display:none}
@@ -191,6 +215,10 @@ ol.do li small{display:block;color:var(--dim);font-size:12.5px;margin-top:2px}
           <div><dt>Pixel (jeu de données)</dt><dd>Un petit code sur ton site qui dit à Meta qui a visité ou acheté.</dd></div>
         </dl>
       </details>
+      <details class="lex">
+        <summary>Tous les liens Meta</summary>
+        <dl id="allLinks"></dl>
+      </details>
       <div class="help"><b>Bloqué à une étape ?</b>Écris-nous depuis Aide › Écrire au support, avec une capture de ton écran. On répond sous 24 h.</div>
     </nav>
     <main class="box main" id="main" aria-live="polite"></main>
@@ -198,67 +226,89 @@ ol.do li small{display:block;color:var(--dim);font-size:12.5px;margin-top:2px}
 </div>
 
 <script>
+/* Lien cliquable dans une instruction */
+const L=(t,u)=>`<a class="lk" href="${u}" target="_blank" rel="noopener">${t}</a>`;
+const U={
+  fb:"https://www.facebook.com/", fbNew:"https://www.facebook.com/r.php", bs:"https://business.facebook.com/",
+  sec:"https://accountscenter.facebook.com/password_and_security", tfa:"https://accountscenter.facebook.com/password_and_security/two_factor",
+  bm:"https://business.facebook.com/overview", info:"https://business.facebook.com/settings/info",
+  pages:"https://business.facebook.com/settings/pages", pageNew:"https://www.facebook.com/pages/create",
+  ig:"https://business.facebook.com/settings/instagram-account-v2s", igPro:"https://help.instagram.com/502981923235522",
+  ads:"https://business.facebook.com/settings/ad-accounts", am:"https://adsmanager.facebook.com/", aq:"https://www.facebook.com/accountquality",
+  pay:"https://business.facebook.com/billing_hub/payment_settings", payAct:"https://business.facebook.com/billing_hub/payment_activity",
+  ev:"https://business.facebook.com/events_manager2", shop:"https://apps.shopify.com/facebook"
+};
 const STEPS = [
   { t:"Avant de commencer", s:"Ce qu'il te faut", time:"2 min",
     why:"Pour faire de la pub sur Facebook et Instagram, Meta demande <b>4 choses</b> qui s'emboîtent : ton profil Facebook personnel, un <b>portefeuille business</b>, une <b>Page</b> et un <b>compte publicitaire</b> avec un moyen de paiement. Ensuite, tu connectes le tout à Growthity une seule fois.",
     need:["Ton compte Facebook personnel","Un e-mail pro","Une carte bancaire ou PayPal","Ton logo","Ton numéro de TVA si tu en as un"],
-    do:[["Garde ce guide ouvert à côté de Meta.","Ta progression est gardée sur cet appareil."],["Fais les étapes dans l'ordre.","Chaque élément a besoin du précédent."]],
+    do:[[`Vérifie que tu arrives à te connecter sur ${L("facebook.com",U.fb)}.`,`Pas encore de compte ? ${L("Crée-le ici",U.fbNew)}, avec ton vrai nom.`],["Garde ce guide ouvert à côté de Meta.","Ta progression est gardée sur cet appareil."],["Fais les étapes dans l'ordre.","Chaque élément a besoin du précédent."]],
     notes:[["tip","Ton profil Facebook personnel reste privé : tes clients ne le voient jamais. Il sert seulement à prouver qui gère l'entreprise."]],
+    links:[["Me connecter à Facebook",U.fb,"Ton profil personnel"],["Créer un compte Facebook",U.fbNew,"Seulement si tu n'en as pas"],["Meta Business Suite",U.bs,"L'espace où tout se gère"]],
+    faq:[["Je dois vraiment avoir un profil Facebook ?","Oui. Meta n'autorise pas la pub sans profil personnel, mais personne ne le voit : tes pubs sont publiées au nom de ta Page."],["Je peux utiliser le compte d'un salarié ?","Mieux vaut le tien : le propriétaire du portefeuille doit être quelqu'un qui reste dans l'entreprise."]],
     url:"business.facebook.com", scr:"flow" },
   { t:"Sécuriser ton compte Facebook", s:"Double authentification", time:"3 min",
     why:"Meta exige la <b>double authentification</b> pour gérer un portefeuille business. Elle évite aussi qu'on vole ton compte pub, et ta carte avec.",
     need:["Ton téléphone"],
-    do:[["Ouvre <span class='path'>Espace comptes</span> › <b>Mot de passe et sécurité</b>.",""],["Clique sur <b>Authentification à deux facteurs</b>, puis choisis ton compte Facebook.",""],["Choisis <b>Application d'authentification</b> (ou SMS) et suis les instructions.","L'application est plus sûre que le SMS. Note bien les codes de récupération."]],
+    do:[[`Ouvre ${L("Mot de passe et sécurité",U.sec)} dans l'Espace comptes.`,""],[`Clique sur ${L("Authentification à deux facteurs",U.tfa)}, puis choisis ton compte Facebook.`,""],["Choisis <b>Application d'authentification</b> (ou SMS) et suis les instructions.","Google Authenticator ou Microsoft Authenticator, gratuites. Note bien les codes de récupération."]],
     notes:[["warn","Utilise ton <b>vrai nom</b> sur ton profil. Un faux nom ou un profil tout neuf sans photo peut faire bloquer ton compte pub."]],
-    link:["Ouvrir mot de passe et sécurité","https://accountscenter.facebook.com/password_and_security"],
+    links:[["Activer la double authentification",U.tfa,"Espace comptes Meta"],["Mot de passe et sécurité",U.sec,"Espace comptes Meta"]],
+    faq:[["Je ne reçois pas le code par SMS","Attends 2 minutes et redemande-le, ou choisis l'application d'authentification : elle marche même sans réseau."],["J'ai changé de téléphone","Connecte-toi avec un des codes de récupération notés à l'activation, puis réactive la double authentification."]],
     url:"accountscenter.facebook.com/password_and_security", scr:"twofa" },
   { t:"Créer ton portefeuille business", s:"Le dossier de ton entreprise", time:"4 min",
     why:"Le <b>portefeuille business</b> regroupe tout ce qui appartient à ton entreprise chez Meta. Si un salarié ou une agence part un jour, ta Page et tes pubs restent à toi.",
     need:["Le nom de ton entreprise","Ton e-mail pro"],
-    do:[["Sur <span class='path'>business.facebook.com</span>, clique sur <b>Créer un compte</b>.",""],["Saisis le <b>nom de ton entreprise</b>, ton nom et ton <b>e-mail pro</b>.","Le nom doit correspondre à ta vraie entreprise."],["Clique sur <b>Envoyer</b>, puis valide l'e-mail de confirmation.","Regarde aussi dans les indésirables."]],
+    do:[[`Va sur ${L("business.facebook.com",U.bm)} et clique sur <b>Créer un compte</b>.`,""],["Saisis le <b>nom de ton entreprise</b>, ton nom et ton <b>e-mail pro</b>.","Le nom doit correspondre à ta vraie entreprise."],["Clique sur <b>Envoyer</b>, puis valide l'e-mail de confirmation.","Regarde aussi dans les indésirables."]],
     notes:[["warn","Crée <b>un seul</b> portefeuille. En créer plusieurs d'affilée est un signal suspect pour Meta."]],
-    link:["Créer mon portefeuille business","https://business.facebook.com/overview"],
+    links:[["Créer mon portefeuille business",U.bm,"Meta Business Suite"],["Informations sur l'entreprise",U.info,"Vérifier le nom, l'adresse et l'e-mail ensuite"]],
+    faq:[["Meta dit que je ne peux pas créer de portefeuille","Ton profil est peut-être trop récent, ou un portefeuille existe déjà à ton nom : ouvre business.facebook.com pour vérifier."],["Je n'ai pas reçu l'e-mail de confirmation","Regarde dans les indésirables, puis vérifie l'adresse saisie dans Informations sur l'entreprise."]],
     url:"business.facebook.com/overview", scr:"bm" },
   { t:"Créer ta Page Facebook", s:"La vitrine de tes pubs", time:"5 min",
     why:"Toutes les pubs sont publiées <b>au nom d'une Page</b> : c'est le nom et le logo que les gens voient au-dessus de ta pub. Si tu en as déjà une, ajoute-la simplement.",
     need:["Ton logo (carré)","Une photo de couverture","Une phrase sur ton activité"],
-    do:[["Ouvre <b>Paramètres</b> de ton portefeuille, puis <span class='path'>Comptes</span> › <b>Pages</b>.",""],["Clique sur <b>+ Ajouter</b>.",""],["Choisis <b>Créer une Page</b> (ou <b>Ajouter une Page</b> si tu en as déjà une).","Renseigne le nom, la catégorie, ton logo et ta couverture."]],
+    do:[[`Ouvre ${L("Paramètres › Comptes › Pages",U.pages)} de ton portefeuille.`,""],["Clique sur <b>+ Ajouter</b>.",""],["Choisis <b>Créer une Page</b> (ou <b>Ajouter une Page</b> si tu en as déjà une).",`Renseigne le nom, la catégorie, ton logo et ta couverture. Tu peux aussi la créer sur ${L("facebook.com/pages/create",U.pageNew)}.`]],
     notes:[["tip","Publie 2 ou 3 posts sur la Page avant ta première pub : une Page vide fait moins sérieux quand quelqu'un clique dessus."]],
-    link:["Ouvrir les Pages","https://business.facebook.com/settings/pages"],
+    links:[["Ouvrir les Pages du portefeuille",U.pages,"Paramètres de l'entreprise"],["Créer une Page directement",U.pageNew,"Si tu préfères passer par Facebook"]],
+    faq:[["Ma Page existe mais je ne peux pas l'ajouter","Il faut en être administrateur. Choisis « Demander l'accès à une Page » et la personne qui l'a créée validera."],["Quelle catégorie choisir ?","Celle qui décrit le mieux ton activité. Tu pourras la changer plus tard."]],
     url:"business.facebook.com/settings/pages", scr:"page" },
   { t:"Relier ton Instagram", s:"Facultatif", time:"3 min", opt:true,
     why:"Pour que tes pubs apparaissent <b>avec ton compte Instagram</b> (nom, photo, lien vers ton profil). Sans ça, elles passent quand même sur Instagram, au nom de ta Page.",
     need:["Un compte Instagram professionnel"],
-    do:[["Dans les paramètres du portefeuille, ouvre <span class='path'>Comptes</span> › <b>Comptes Instagram</b>.",""],["Clique sur <b>+ Ajouter</b> et connecte-toi à Instagram.","Ton compte doit être « professionnel » : Paramètres de l'app Instagram › Type de compte."]],
+    do:[[`Ouvre ${L("Comptes › Comptes Instagram",U.ig)} dans les paramètres du portefeuille.`,""],["Clique sur <b>+ Ajouter</b> et connecte-toi à Instagram.",`Ton compte doit être professionnel : ${L("voir comment passer en compte pro",U.igPro)}.`]],
     notes:[["ok","Tu peux sauter cette étape et la faire plus tard sans rien perdre."]],
-    link:["Ouvrir les comptes Instagram","https://business.facebook.com/settings/instagram-account-v2s"],
-    url:"business.facebook.com/settings/instagram-accounts", scr:"insta" },
+    links:[["Ouvrir les comptes Instagram",U.ig,"Paramètres de l'entreprise"],["Passer en compte professionnel",U.igPro,"Aide Instagram"]],
+    faq:[["Instagram refuse la connexion","Vérifie d'abord que tu arrives à te connecter dans l'app Instagram, puis réessaie depuis un ordinateur."]],
+    url:"business.facebook.com/settings/instagram-account-v2s", scr:"insta" },
   { t:"Créer ton compte publicitaire", s:"Là où tes pubs vivent", time:"4 min",
     why:"Le <b>compte publicitaire</b> contient tes campagnes et tes dépenses. C'est lui que Growthity utilisera pour publier tes pubs.",
     need:["Le nom de ton entreprise"],
-    do:[["Ouvre <span class='path'>Comptes</span> › <b>Comptes publicitaires</b> › <b>+ Ajouter</b> › <b>Créer un compte publicitaire</b>.",""],["Nomme-le simplement, ex. « NomEntreprise – Pubs ».",""],["Fuseau horaire <b>Europe/Paris</b>, devise <b>EUR – Euro</b>, puis <b>Suivant</b>.","Vérifie bien avant de valider : voir l'alerte."]],
+    do:[[`Ouvre ${L("Comptes › Comptes publicitaires",U.ads)} › <b>+ Ajouter</b> › <b>Créer un compte publicitaire</b>.`,""],["Nomme-le simplement, ex. « NomEntreprise – Pubs ».",""],["Fuseau horaire <b>Europe/Paris</b>, devise <b>EUR – Euro</b>, puis <b>Suivant</b>.","Vérifie bien avant de valider : voir l'alerte."]],
     notes:[["warn","Le <b>fuseau horaire et la devise ne pourront plus jamais être changés</b>. Une erreur oblige à recréer un compte."],["tip","À l'écran suivant, indique que le compte est pour <b>ton entreprise</b> et donne-toi le <b>contrôle total</b>."]],
-    link:["Créer mon compte publicitaire","https://business.facebook.com/settings/ad-accounts"],
+    links:[["Créer mon compte publicitaire",U.ads,"Paramètres de l'entreprise"],["Gestionnaire de publicités",U.am,"Voir ton compte une fois créé"],["Qualité du compte",U.aq,"Si Meta bloque ou désactive le compte"]],
+    faq:[["Je me suis trompé de devise ou de fuseau","Crée un nouveau compte publicitaire avec les bons réglages et n'utilise plus l'ancien."],["Mon compte pub est désactivé",`Ouvre ${L("Qualité du compte",U.aq)} et demande un examen. Ça arrive parfois aux comptes tout neufs.`]],
     url:"business.facebook.com/settings/ad-accounts", scr:"adacc" },
   { t:"Ajouter un moyen de paiement", s:"Carte ou PayPal", time:"3 min",
     why:"Meta prélève seulement ce que tes pubs ont <b>réellement dépensé</b>, quand un seuil est atteint ou en fin de mois. Avec Growthity, tu fixes ton budget par jour : tu ne paies jamais plus.",
     need:["Ta carte bancaire ou PayPal","Ton numéro de TVA (si tu en as un)"],
-    do:[["Ouvre <b>Paramètres de paiement</b> de ton compte publicitaire.",""],["Clique sur <b>Ajouter un moyen de paiement</b> et saisis ta carte ou ton PayPal.","Une autorisation de quelques centimes peut apparaître, elle est annulée ensuite."],["Dans <b>Informations sur l'entreprise</b>, renseigne ton adresse et ton <b>numéro de TVA</b>.","Avec un numéro de TVA intracommunautaire, les factures Meta sont émises sans TVA française (autoliquidation)."]],
+    do:[[`Ouvre ${L("Paramètres de paiement",U.pay)} de ton compte publicitaire.`,""],["Clique sur <b>Ajouter un moyen de paiement</b> et saisis ta carte ou ton PayPal.","Une autorisation de quelques centimes peut apparaître, elle est annulée ensuite."],["Dans <b>Informations sur l'entreprise</b>, renseigne ton adresse et ton <b>numéro de TVA</b>.","Avec un numéro de TVA intracommunautaire, les factures Meta sont émises sans TVA française (autoliquidation)."]],
     notes:[["tip","Au début, Meta prélève à de petits seuils (par exemple 25 €). Le seuil augmente tout seul quand tes paiements passent bien."],["warn","Si un paiement échoue, toutes tes pubs s'arrêtent. Utilise une carte avec un plafond suffisant."]],
-    link:["Ouvrir les paramètres de paiement","https://business.facebook.com/billing_hub/payment_settings"],
+    links:[["Ouvrir les paramètres de paiement",U.pay,"Facturation et paiements"],["Activité et factures",U.payAct,"Tes prélèvements et factures PDF"]],
+    faq:[["Ma carte est refusée","Vérifie que les paiements en ligne et à l'étranger sont activés (Meta facture depuis l'Irlande), ou essaie une autre carte."],["Où trouver mes factures ?",`Dans ${L("Activité et factures",U.payAct)}, en PDF, pour ta comptabilité.`]],
     url:"business.facebook.com/billing_hub/payment_settings", scr:"pay" },
   { t:"Installer le pixel sur ton site", s:"Facultatif · si tu as un site", time:"5 min", opt:true,
     why:"Le <b>pixel</b> (Meta dit maintenant « jeu de données ») indique à Meta qui a visité ton site ou acheté. Il sert à <b>relancer tes visiteurs</b> et à mesurer tes ventes.",
     need:["L'accès à ton site (Shopify, WordPress, Wix…)"],
-    do:[["Ouvre le <b>Gestionnaire d'événements</b> et clique sur <b>Connecter des sources de données</b>.",""],["Choisis <b>Web</b>, donne un nom, puis l'installation <b>via ta plateforme</b>.","C'est le plus simple : pas de code à copier."],["Le statut doit passer à <b>Actif</b> après une visite sur ton site.",""]],
-    notes:[["ok","Sur Shopify : installe l'application « Facebook & Instagram » et choisis ton pixel, tout est automatique."]],
-    link:["Ouvrir le Gestionnaire d'événements","https://business.facebook.com/events_manager2"],
+    do:[[`Ouvre le ${L("Gestionnaire d'événements",U.ev)} et clique sur <b>Connecter des sources de données</b>.`,""],["Choisis <b>Web</b>, donne un nom, puis l'installation <b>via ta plateforme</b>.","C'est le plus simple : pas de code à copier."],["Le statut doit passer à <b>Actif</b> après une visite sur ton site.",""]],
+    notes:[["ok",`Sur Shopify : installe l'application ${L("Facebook & Instagram",U.shop)} et choisis ton pixel, tout est automatique.`]],
+    links:[["Ouvrir le Gestionnaire d'événements",U.ev,"Meta Business Suite"],["Application Shopify « Facebook & Instagram »",U.shop,"Si ton site est sur Shopify"]],
+    faq:[["Le statut reste « Inactif »","Ouvre ton site dans un autre onglet, attends quelques minutes puis actualise le Gestionnaire d'événements."],["Une agence a déjà installé un pixel","Ne crée pas de doublon : demande à l'agence de partager son pixel avec ton portefeuille."]],
     url:"business.facebook.com/events_manager2", scr:"pixel" },
   { t:"Connecter Meta à Growthity", s:"La dernière étape", time:"2 min", final:true,
     why:"Tu autorises Growthity à <b>publier tes pubs</b> et à <b>lire tes résultats</b> sur le compte que tu viens de créer. Tu peux retirer l'accès à tout moment.",
     need:["Ton compte Facebook connecté"],
     do:[["Dans Growthity, ouvre <b>Connexion</b> dans le menu.",""],["Clique sur <b>Continuer avec Facebook</b>.",""],["Coche <b>ton portefeuille</b>, ta <b>Page</b> et ton <b>compte publicitaire</b>, puis valide.","Sans Page, la publication est impossible."]],
     notes:[["tip","Tes premières pubs passent par la vérification de Meta : souvent quelques minutes, parfois jusqu'à 24 h pour un nouveau compte."]],
+    faq:[["Je ne vois pas mon compte publicitaire","Déconnecte puis reconnecte Meta et coche bien tous les éléments à l'écran d'autorisation."],["Comment retirer l'accès ?","Dans Growthity › Connexion › Déconnecter, ou dans les paramètres de ton portefeuille, rubrique Intégrations."]],
     url:"app.growthity.ai/connexions", scr:"growthity" }
 ];
 
@@ -337,6 +387,11 @@ const SCR={
       <div class="menu ${C(3)}" style="width:100%;max-width:330px"><span>☑ Portefeuille : <b>Atelier Sauge</b></span><span>☑ Page : <b>Atelier Sauge</b></span><span>☑ Compte pub : <b>Atelier Sauge – Pubs</b></span></div></div></div>`
 };
 
+const host=u=>u.replace(/^https:\/\/(www\.)?/,"").replace(/\/$/,"");
+const linkRow=([l,u,d])=>`<a class="lrow" href="${u}" target="_blank" rel="noopener"><span class="li">↗</span><span><b>${l}</b><small>${d}</small></span><code>${host(u)}</code></a>`;
+function renderAll(){
+  $("#allLinks").innerHTML=STEPS.map((s,i)=>s.links?`<div><dt>${i+1}. ${s.t}</dt>${s.links.map(([l,u])=>`<dd><a class="lk" href="${u}" target="_blank" rel="noopener">${l}</a></dd>`).join("")}</div>`:"").join("");
+}
 function renderList(){
   $("#stepList").innerHTML=STEPS.map((s,i)=>`<button type="button" class="st${state.done.includes(i)?" done":""}" ${i===state.cur?'aria-current="step"':""} data-i="${i}">
     <span class="n">${state.done.includes(i)?"✓":i+1}</span><span><b>${s.t}</b><small>${s.s}</small></span>${s.opt?"<em>option</em>":""}</button>`).join("");
@@ -356,13 +411,15 @@ function renderMain(){
       <div><p class="sec-t">Ce qu'il te faut</p><div class="need">${s.need.map(x=>`<span>${x}</span>`).join("")}</div></div>
       <div><p class="sec-t">Ce que tu fais</p><ol class="do">${s.do.map(([a,b],k)=>`<li><span class="k">${k+1}</span><div><p>${a}</p>${b?`<small>${b}</small>`:""}</div></li>`).join("")}</ol></div>
       ${s.notes.map(([k,t])=>`<div class="note ${k}"><i>${k==="warn"?"!":k==="ok"?"✓":"i"}</i><p>${t}</p></div>`).join("")}
-      ${s.link?`<a class="btn meta" href="${s.link[1]}" target="_blank" rel="noopener">${s.link[0]} ↗</a>`:""}
+      ${s.links?`<a class="btn meta" href="${s.links[0][1]}" target="_blank" rel="noopener">${s.links[0][0]} ↗</a>`:""}
+      ${s.links&&s.links.length>1?`<div><p class="sec-t">Autres liens utiles</p><div class="links">${s.links.slice(1).map(linkRow).join("")}</div></div>`:""}
+      ${s.faq?`<details class="faq"><summary>Problèmes fréquents <span>${s.faq.length}</span></summary>${s.faq.map(([q,a])=>`<div><b>${q}</b><p>${a}</p></div>`).join("")}</details>`:""}
       ${s.final&&ready?`<div class="done-b"><h3>C'est prêt.</h3><p style="margin:0;color:var(--muted)">Ton compte Meta est en place. Décris ta première pub dans le Chat : Growthity la crée et la publie pour toi.</p><a class="btn pri" href="#">Créer ma première pub →</a></div>`:""}
       <label class="check${isDone?" on":""}"><input type="checkbox" id="chk" ${isDone?"checked":""}><span><b>J'ai fait cette étape</b><br><small style="color:var(--dim)">${s.opt?"Ou passe-la si elle ne te concerne pas.":"Coche pour passer à la suivante."}</small></span></label>
     </div>
     <div class="shotw">
-      <div class="shot" aria-label="Capture d'écran annotée"><div class="chrome"><i></i><i></i><i></i><span>${s.url}</span></div>${SCR[s.scr]()}</div>
-      <div class="cap">Écran reproduit pour le guide · les pastilles roses correspondent aux instructions · l'interface Meta peut légèrement changer</div>
+      <div class="shot" aria-label="Capture d'écran annotée"><div class="chrome"><i></i><i></i><i></i>${s.links?`<a href="https://${s.url}" target="_blank" rel="noopener" title="Ouvrir cette page chez Meta">${s.url}</a>`:`<span>${s.url}</span>`}</div>${SCR[s.scr]()}</div>
+      <div class="cap">Écran reproduit pour le guide · les pastilles roses correspondent aux instructions · l'interface Meta peut légèrement changer · clique sur l'adresse pour ouvrir la vraie page</div>
     </div>
     <div class="foot">
       <button type="button" class="btn" id="prev" ${i===0?"disabled":""}>← Précédent</button>
@@ -379,5 +436,9 @@ function renderMain(){
 }
 function go(i){state.cur=Math.max(0,Math.min(STEPS.length-1,i));save();renderList();renderMain();
   $("#main").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"nearest"});}
-renderList(); renderMain();
+document.addEventListener("keydown",e=>{
+  if(e.target.closest("input,textarea,select,summary")||e.altKey||e.ctrlKey||e.metaKey) return;
+  if(e.key==="ArrowRight") go(state.cur+1); else if(e.key==="ArrowLeft") go(state.cur-1);
+});
+renderAll(); renderList(); renderMain();
 </script>
