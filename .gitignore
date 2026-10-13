@@ -8,3 +8,5 @@ video/public/vo-manon/full.wav
 video/out/render-30fps.mp4
 video/out/vstills/
 video/out/render-v-30fps.mp4
+video/out/v-part*.mp4
+video/out/vparts.txt
