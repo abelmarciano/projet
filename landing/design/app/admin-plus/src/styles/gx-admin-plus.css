@@ -1,0 +1,48 @@
+/* Compléments de l'espace admin : Coûts et marge, Générations, Acquisition, onglet Crédits, alertes hors de l'app.
+   Même règle que gx-admin.css : classes ad-, limitées à .gx-ad. */
+
+/* Parcours (entonnoir) */
+.gx-ad .ad-funnel{display:flex;flex-direction:column;gap:14px}
+.gx-ad .ad-fstep{display:flex;flex-direction:column;gap:5px}
+.gx-ad .ad-fhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-size:13.5px}
+.gx-ad .ad-fhead b{font-weight:600}
+.gx-ad .ad-fhead span{color:var(--gx-muted);font-size:13px}
+.gx-ad .ad-fhead strong{color:var(--gx-fg);font-weight:600}
+.gx-ad .ad-fbar{height:12px;border-radius:0 5px 5px 0;background:var(--gx-sunk);overflow:hidden}
+.gx-ad .ad-fbar i{display:block;height:100%;border-radius:0 5px 5px 0;background:var(--gx-accent)}
+.gx-ad .ad-fstep small{font-size:12px}
+
+/* Inscriptions par semaine : barres verticales, part payante en plein */
+.gx-ad .ad-weeks{display:flex;align-items:flex-end;gap:6px;height:180px;padding-top:18px;overflow-x:auto}
+.gx-ad .ad-wk{flex:1 0 26px;max-width:56px;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px}
+.gx-ad .ad-wkv{font-size:11.5px;font-weight:600;color:var(--gx-muted);min-height:15px}
+.gx-ad .ad-wkb{width:100%;min-height:2px;border-radius:4px 4px 0 0;background:color-mix(in srgb,var(--gx-accent) 30%,var(--gx-surface));display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.gx-ad .ad-wkb i{display:block;width:100%;background:var(--gx-accent);border-top:2px solid var(--gx-surface)}
+.gx-ad .ad-wk small{font-size:10.5px;color:var(--gx-dim);white-space:nowrap}
+
+/* Réglages des alertes */
+.gx-ad .ad-switchrow{display:flex;align-items:flex-start;gap:10px;cursor:pointer}
+.gx-ad .ad-switchrow input,.gx-ad .ad-kind input{width:16px;height:16px;margin-top:2px;accent-color:var(--gx-accent);flex:none}
+.gx-ad .ad-switchrow b,.gx-ad .ad-kind b{display:block;font-size:13.5px;font-weight:600}
+.gx-ad .ad-switchrow small,.gx-ad .ad-kind small{display:block;font-size:12.5px;color:var(--gx-dim)}
+.gx-ad .ad-kinds{border:1px solid var(--gx-line);border-radius:12px;padding:12px 14px;margin:0 0 0 26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px 18px;min-width:0}
+.gx-ad .ad-kinds legend{padding:0 6px;font-size:12px;font-weight:600;color:var(--gx-dim);text-transform:uppercase;letter-spacing:.05em}
+.gx-ad .ad-kinds:disabled{opacity:.55}
+.gx-ad .ad-kind{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+
+/* Fiche client : 5 chiffres au lieu de 4 */
+.gx-ad .ad-qk.ad-qk5{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media (max-width:640px){
+  .gx-ad .ad-qk.ad-qk5{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .gx-ad .ad-qk.ad-qk5>div:nth-child(odd){border-left:0}
+  .gx-ad .ad-qk.ad-qk5>div:nth-child(n+3){border-top:1px solid var(--gx-line)}
+  .gx-ad .ad-kinds{margin-left:0}
+}
+
+/* Tableaux admin : alignement à gauche par défaut, même si une règle globale aligne les td à droite. */
+.gx-ad .ad-table{min-width:0}
+.gx-ad .ad-table th,.gx-ad .ad-table td{text-align:left}
+.gx-ad .ad-table td.ad-num,.gx-ad .ad-table th.ad-num{text-align:right}
+.gx-ad .ad-mono{font-family:var(--gx-mono);font-size:12px;white-space:normal;word-break:break-all;min-width:140px}
+.gx-ad .ad-rk .ad-nm.wrap{white-space:normal}
+.gx-ad .ad-rk .ad-nm small{font-size:11.5px;font-weight:400}
