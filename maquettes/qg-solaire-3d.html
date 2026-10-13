@@ -25,24 +25,7 @@
   --c1: #2a78d6; --c2: #eb6834; --c3: #1baf7a; --c4: #eda100; --c5: #e87ba4; --c6: #008300; --c7: #6250d6; --c8: #e34948; --c-other: #a3a9b5;
   --s-floor: #eef2fa; --s-row: #e3e9f6; --s-plinth: #ffffff;
   --f: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
-}
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #0f172a; --grad: linear-gradient(135deg, #0f172a 0%, #131c33 60%, #0f172a 100%); --surface: #18223a; --surface-2: #1d2945; --ink: #f1f5f9; --ink-2: #cbd5e1; --muted: #94a3b8; --line: #2a3654;
-  --brand: #38bdf8; --brand-ink: #7dd3fc; --violet: #a897f7; --violet-dark: #c4b8fb;
-  --tele: #38bdf8; --terrain: #fb923c; --cq: #4ade80; --admin: #b9abf9; --sel: #f1f5f9;
-  --good: #4ade80; --good-bg: rgba(74,222,128,.14); --warn: #fbbf24; --warn-bg: rgba(251,191,36,.14); --bad: #fb7185; --bad-bg: rgba(251,113,133,.14);
-  --c1: #3987e5; --c2: #d95926; --c3: #199e70; --c4: #c98500; --c5: #d55181; --c6: #008300; --c7: #9085e9; --c8: #e66767; --c-other: #64748b;
-  --s-floor: #141e33; --s-row: #1c2944; --s-plinth: #25345a;
-  color-scheme: dark;
-} }
-:root[data-theme="dark"] {
-  --bg: #0f172a; --grad: linear-gradient(135deg, #0f172a 0%, #131c33 60%, #0f172a 100%); --surface: #18223a; --surface-2: #1d2945; --ink: #f1f5f9; --ink-2: #cbd5e1; --muted: #94a3b8; --line: #2a3654;
-  --brand: #38bdf8; --brand-ink: #7dd3fc; --violet: #a897f7; --violet-dark: #c4b8fb;
-  --tele: #38bdf8; --terrain: #fb923c; --cq: #4ade80; --admin: #b9abf9; --sel: #f1f5f9;
-  --good: #4ade80; --good-bg: rgba(74,222,128,.14); --warn: #fbbf24; --warn-bg: rgba(251,191,36,.14); --bad: #fb7185; --bad-bg: rgba(251,113,133,.14);
-  --c1: #3987e5; --c2: #d95926; --c3: #199e70; --c4: #c98500; --c5: #d55181; --c6: #008300; --c7: #9085e9; --c8: #e66767; --c-other: #64748b;
-  --s-floor: #141e33; --s-row: #1c2944; --s-plinth: #25345a;
-  color-scheme: dark;
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg) var(--grad) fixed; color: var(--ink); font-family: var(--f); font-size: 13px; -webkit-font-smoothing: antialiased; }
@@ -78,9 +61,64 @@ button:focus-visible, select:focus-visible, th button:focus-visible { outline: 2
 .seg button { border: 0; background: none; padding: 6px 11px; border-radius: 7px; cursor: pointer; font-size: 12px; font-weight: 700; color: var(--ink-2); white-space: nowrap; }
 .seg button[aria-pressed="true"] { background: var(--violet); color: #fff; }
 .seg button:not([aria-pressed="true"]):hover { color: var(--violet-dark); }
-select { appearance: none; background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238E9196' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center; border: 1px solid var(--line); border-radius: 9px; padding: 8px 32px 8px 12px; font-size: 13px; font-weight: 600; min-width: 180px; max-width: 100%; cursor: pointer; }
+select { appearance: none; background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238E9196' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center; border: 1px solid var(--line); border-radius: 9px; padding: 8px 32px 8px 12px; font-size: 13px; font-weight: 600; min-width: 160px; max-width: 100%; cursor: pointer; }
 .range { font-size: 12px; color: var(--muted); font-weight: 600; padding-bottom: 9px; }
 .reset { border: 0; background: none; color: var(--brand-ink); font-weight: 700; cursor: pointer; padding: 8px 4px; }
+
+/* Sélecteur de dates */
+.dpwrap { position: relative; }
+.datebtn { display: inline-flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 8px 12px; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.datebtn:hover, .datebtn[aria-expanded="true"] { border-color: var(--violet); }
+.datebtn svg { color: var(--violet-dark); flex: 0 0 auto; }
+.datebtn small { color: var(--muted); font-weight: 600; }
+.dp { position: absolute; top: calc(100% + 8px); left: 0; z-index: 50; display: grid; grid-template-columns: 190px auto; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 18px 50px rgba(17,24,39,.16); overflow: hidden; }
+.dp[hidden] { display: none; }
+.dp-presets { display: flex; flex-direction: column; gap: 2px; padding: 12px; background: var(--surface-2); border-right: 1px solid var(--line); }
+.dp-presets button { border: 0; background: none; text-align: left; padding: 8px 10px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--ink-2); }
+.dp-presets button:hover { background: var(--surface); color: var(--ink); }
+.dp-presets button[aria-pressed="true"] { background: var(--violet); color: #fff; }
+.dp-main { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+.dp-months { display: grid; grid-template-columns: repeat(2, 252px); gap: 22px; position: relative; }
+.dp-nav { position: absolute; top: -2px; border: 1px solid var(--line); background: var(--surface); width: 30px; height: 30px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 800; color: var(--ink-2); z-index: 1; }
+.dp-nav:hover:not(:disabled) { border-color: var(--violet); color: var(--violet-dark); }
+.dp-nav:disabled { opacity: .35; cursor: default; }
+.dp-nav.prev { left: 0; } .dp-nav.next { right: 0; }
+.mo h5 { margin: 4px 0 10px; text-align: center; font-size: 14px; font-weight: 800; text-transform: capitalize; }
+.mo .wd, .mo .days { display: grid; grid-template-columns: repeat(7, 36px); }
+.mo .wd span { text-align: center; font-size: 11px; font-weight: 800; color: var(--muted); padding-bottom: 6px; }
+.mo .days button, .mo .days span { height: 34px; border: 0; background: none; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; cursor: pointer; position: relative; color: var(--ink); }
+.mo .days button:disabled { color: color-mix(in srgb, var(--muted) 45%, transparent); cursor: default; }
+.mo .days button.in { background: color-mix(in srgb, var(--violet) 14%, transparent); }
+.mo .days button.a, .mo .days button.b { background: var(--violet); color: #fff; border-radius: 8px; font-weight: 800; }
+.mo .days button.a.in { border-radius: 8px 0 0 8px; } .mo .days button.b.in { border-radius: 0 8px 8px 0; } .mo .days button.a.b { border-radius: 8px; }
+.mo .days button.today::after { content: ""; position: absolute; bottom: 4px; left: 50%; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: var(--brand); }
+.mo .days button:not(:disabled):not(.a):not(.b):hover { background: var(--surface-2); border-radius: 8px; }
+.dp-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 12px; flex-wrap: wrap; }
+.dp-foot span { font-size: 13px; font-weight: 700; }
+.dp-foot span small { display: block; font-size: 11px; color: var(--muted); font-weight: 600; }
+.dp-foot div { display: flex; gap: 8px; }
+
+/* Objectifs du mois */
+.goal-i { display: flex; flex-direction: column; gap: 8px; }
+.goal-i .gl { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--ink-2); }
+.goal-i > b { font-size: 24px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.goal-i > b small { font-size: 13px; color: var(--muted); font-weight: 700; }
+.gbar { position: relative; height: 8px; border-radius: 6px; background: var(--surface-2); }
+.gbar div { height: 100%; border-radius: 6px; transition: width .6s cubic-bezier(.2,.8,.2,1); }
+.gbar i { position: absolute; top: -4px; bottom: -4px; width: 2px; border-radius: 2px; background: var(--ink); opacity: .55; }
+.goal-i > small { font-size: 12px; color: var(--muted); }
+.goal-i > small b { color: var(--ink); }
+
+/* Mini-courbe dans les cartes chiffres */
+.kpi .ksp { position: absolute; top: 18px; right: 18px; opacity: .9; }
+
+/* Carte de chaleur des créneaux */
+.heat { display: grid; grid-template-columns: 44px repeat(12, minmax(30px, 1fr)); gap: 3px; font-size: 11px; }
+.heat .h { text-align: center; color: var(--muted); font-weight: 700; padding-bottom: 2px; }
+.heat .d { color: var(--ink-2); font-weight: 800; display: flex; align-items: center; }
+.heat .c { height: 30px; border-radius: 5px; display: grid; place-items: center; font-weight: 800; font-variant-numeric: tabular-nums; }
+.heat-legend { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); margin-top: 10px; }
+.heat-legend i { width: 120px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--surface-2), var(--c1)); }
 
 /* Onglets */
 .tabs { display: flex; gap: 2px; padding: 4px; border-radius: 12px; background: color-mix(in srgb, var(--ink) 6%, transparent); overflow-x: auto; scrollbar-width: none; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 51px); z-index: 20; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
@@ -237,6 +275,7 @@ tfoot td { font-weight: 800; background: var(--surface-2); border-bottom: 0; }
 .eyebrow { font-size: 11px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; display: flex; justify-content: space-between; }
 
 @media (max-width: 1280px) { .g5 { grid-template-columns: repeat(3, minmax(0, 1fr)); } .team { grid-template-columns: 1fr; } .person { max-height: none; } }
+@media (max-width: 900px) { .dp { grid-template-columns: 1fr; position: fixed; left: 12px; right: 12px; top: 70px; max-height: calc(100vh - 90px); overflow-y: auto; } .dp-presets { flex-direction: row; flex-wrap: wrap; border-right: 0; border-bottom: 1px solid var(--line); } .dp-months { grid-template-columns: 252px; justify-content: center; } .mo + .mo { display: none; } }
 @media (max-width: 900px) { .g4, .g3, .g21, .g2 { grid-template-columns: 1fr; } .g5 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .donut-row { grid-template-columns: 1fr; } .nav a span, .nav .user div { display: none; } .tabs { top: calc(env(safe-area-inset-top, 0px) + 51px); } }
 @media (max-width: 900px) { .rowctl { left: 8px; right: 8px; bottom: 8px; padding: 8px; } }
 @media (max-width: 560px) { .wrap { padding: 16px 16px 40px; } .g5 { grid-template-columns: 1fr; } select { min-width: 0; width: 100%; } .f { flex: 1 1 100%; } .fz { grid-template-columns: 84px 1fr 80px; } #stage { height: 480px; } .rowctl { display: none; } }
@@ -256,17 +295,24 @@ tfoot td { font-weight: 800; background: var(--surface-2); border-bottom: 0; }
 
 <main class="wrap">
   <div class="head">
-    <div><h1>Dashboard Analytique</h1><p>Vue d'ensemble de la régie · mis à jour lundi 12 octobre 2026, 14 h 32 <span class="sample">Données d'exemple</span></p></div>
+    <div><h1>Dashboard Analytique</h1><p>Vue d'ensemble de la régie · mis à jour mardi 13 octobre 2026, 9 h 05 <span class="sample">Données d'exemple</span></p></div>
   </div>
 
   <div class="filters">
     <div class="f"><label>Période</label><div class="seg" id="period">
-      <button type="button" data-p="today" aria-pressed="false">Aujourd'hui</button><button type="button" data-p="7" aria-pressed="false">7 jours</button><button type="button" data-p="month" aria-pressed="true">Ce mois</button><button type="button" data-p="30" aria-pressed="false">30 jours</button><button type="button" data-p="90" aria-pressed="false">3 mois</button>
+      <button type="button" data-p="today">Aujourd'hui</button><button type="button" data-p="7">7 j</button><button type="button" data-p="month">Ce mois</button><button type="button" data-p="30">30 j</button><button type="button" data-p="90">3 mois</button><button type="button" data-p="365">12 mois</button>
     </div></div>
+    <div class="f dpwrap"><label for="dateBtn">Dates</label>
+      <button type="button" class="datebtn" id="dateBtn" aria-haspopup="dialog" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span id="range"></span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></button>
+      <div class="dp" id="dp" role="dialog" aria-label="Choisir les dates" hidden>
+        <div class="dp-presets" id="dpPresets"></div>
+        <div class="dp-main"><div class="dp-months" id="dpMonths"></div>
+          <div class="dp-foot"><span id="dpSel"></span><div><button type="button" class="btn" id="dpCancel">Annuler</button><button type="button" class="btn primary" id="dpApply">Appliquer</button></div></div></div>
+      </div>
+    </div>
     <div class="f"><label for="fCamp">Campagne</label><select id="fCamp"></select></div>
     <div class="f"><label for="fCom">Commercial</label><select id="fCom"></select></div>
     <div class="f"><label for="fTel">Téléprospecteur</label><select id="fTel"></select></div>
-    <div class="f"><span class="range" id="range"></span></div>
     <div class="f"><button type="button" class="reset" id="reset">Réinitialiser</button></div>
   </div>
 
@@ -276,13 +322,14 @@ tfoot td { font-weight: 800; background: var(--surface-2); border-bottom: 0; }
   <section class="panel" id="p-apercu" role="tabpanel">
     <div class="grid g5" id="kpiMain"></div>
     <div class="grid g5" id="kpiRates"></div>
+    <div class="card"><div class="card-h"><div><h3>Objectifs du mois</h3><p class="sub" id="goalSub"></p></div></div><div class="grid g4" id="goals"></div></div>
     <div class="grid g21">
       <div class="card"><div class="card-h"><div><h3>Du lead à l'installation</h3><p class="sub">Volumes de la période et taux de passage d'une étape à l'autre</p></div></div><div class="funnel" id="funnel"></div></div>
       <div class="card"><div class="card-h"><div><h3>À traiter maintenant</h3><p class="sub">Ce qui bloque le pipeline aujourd'hui</p></div></div><div class="todo" id="todo"></div></div>
     </div>
     <div class="grid g2">
-      <div class="card"><div class="card-h"><div><h3>Leads reçus par semaine</h3><p class="sub">12 dernières semaines</p></div></div><div class="chart sm"><canvas id="chLeadsW"></canvas></div></div>
-      <div class="card"><div class="card-h"><div><h3>Contrats signés par semaine</h3><p class="sub">12 dernières semaines</p></div></div><div class="chart sm"><canvas id="chContW"></canvas></div></div>
+      <div class="card"><div class="card-h"><div><h3>Leads reçus</h3><p class="sub" id="subA1"></p></div></div><div class="chart sm"><canvas id="chLeadsW"></canvas></div></div>
+      <div class="card"><div class="card-h"><div><h3>Contrats signés</h3><p class="sub" id="subA2"></p></div></div><div class="chart sm"><canvas id="chContW"></canvas></div></div>
     </div>
     <div class="grid g2">
       <div class="card"><div class="card-h"><div><h3>Top télépros</h3><p class="sub">RDV fixés sur la période</p></div><button class="btn" data-goto="telepros">Tout voir</button></div><div class="top3" id="topTel"></div></div>
@@ -305,6 +352,7 @@ tfoot td { font-weight: 800; background: var(--surface-2); border-bottom: 0; }
     <div class="ph"><h2>Performance des téléprospecteurs</h2><p>Productivité et qualité des RDV fixés. Cliquez sur un en-tête pour trier, sur un nom pour voir la personne.</p></div>
     <div class="grid g4" id="kpiTel"></div>
     <div class="card"><div class="tw"><table id="tTel"></table></div></div>
+    <div class="card"><div class="card-h"><div><h3>Meilleurs créneaux pour fixer un RDV</h3><p class="sub" id="heatSub"></p></div></div><div class="tw"><div class="heat" id="heat" style="min-width:560px"></div></div><div class="heat-legend"><span>Moins</span><i></i><span>Plus de RDV fixés</span></div></div>
   </section>
 
   <!-- Commerciaux -->
@@ -337,7 +385,7 @@ tfoot td { font-weight: 800; background: var(--surface-2); border-bottom: 0; }
     <div class="ph"><h2>Suivi des rendez-vous</h2><p>RDV pris sur la période, présence et statuts.</p></div>
     <div class="grid g3" id="kpiRdv"></div>
     <div class="card"><div class="card-h"><div><h3>Statuts des rendez-vous</h3><p class="sub" id="rdvTot"></p></div></div><div class="grid g4" id="rdvSt"></div></div>
-    <div class="card"><div class="card-h"><div><h3>RDV pris par jour</h3><p class="sub">Sur la période sélectionnée</p></div></div><div class="chart"><canvas id="chRdvD"></canvas></div></div>
+    <div class="card"><div class="card-h"><div><h3>RDV pris</h3><p class="sub" id="subRdv"></p></div></div><div class="chart"><canvas id="chRdvD"></canvas></div></div>
   </section>
 
   <!-- Contrats -->
@@ -346,7 +394,7 @@ tfoot td { font-weight: 800; background: var(--surface-2); border-bottom: 0; }
     <div class="grid g4" id="kpiCont"></div>
     <div class="grid g2">
       <div class="card"><div class="card-h"><div><h3>Contrats par statut</h3><p class="sub">Contrats signés sur la période</p></div></div><div class="chart tall"><canvas id="chContBar"></canvas></div></div>
-      <div class="card"><div class="card-h"><div><h3>CA signé par semaine</h3><p class="sub">12 dernières semaines, en euros</p></div></div><div class="chart tall"><canvas id="chCaW"></canvas></div></div>
+      <div class="card"><div class="card-h"><div><h3>CA signé</h3><p class="sub" id="subCa"></p></div></div><div class="chart tall"><canvas id="chCaW"></canvas></div></div>
     </div>
     <div class="card"><div class="card-h"><div><h3>Derniers contrats signés</h3></div></div><div class="tw"><table id="tCont"></table></div></div>
   </section>
@@ -355,7 +403,7 @@ tfoot td { font-weight: 800; background: var(--surface-2); border-bottom: 0; }
   <section class="panel" id="p-install" role="tabpanel" hidden>
     <div class="ph"><h2>Suivi des installations</h2><p>Poses réalisées, taux d'installation et délais.</p></div>
     <div class="grid g4" id="kpiInst"></div>
-    <div class="card"><div class="card-h"><div><h3>Contrats signés et installations par semaine</h3><p class="sub">12 dernières semaines</p></div></div><div class="chart"><canvas id="chInstW"></canvas></div><div class="legend"><span><i style="background:var(--c1)"></i>Contrats signés</span><span><i style="background:var(--c3)"></i>Installations</span></div></div>
+    <div class="card"><div class="card-h"><div><h3>Contrats signés et installations</h3><p class="sub" id="subInst"></p></div></div><div class="chart"><canvas id="chInstW"></canvas></div><div class="legend"><span><i style="background:var(--c1)"></i>Contrats signés</span><span><i style="background:var(--c3)"></i>Installations</span></div></div>
   </section>
 
   <!-- Campagnes -->
@@ -367,14 +415,14 @@ tfoot td { font-weight: 800; background: var(--surface-2); border-bottom: 0; }
 
   <!-- Évolution -->
   <section class="panel" id="p-evolution" role="tabpanel" hidden>
-    <div class="ph"><h2>Évolution</h2><p>12 dernières semaines, un graphique par indicateur pour comparer les tendances.</p></div>
+    <div class="ph"><h2>Évolution</h2><p id="subEvo"></p></div>
     <div class="grid g2">
       <div class="card"><div class="card-h"><div><h3>Leads</h3></div></div><div class="chart sm"><canvas id="chEv1"></canvas></div></div>
       <div class="card"><div class="card-h"><div><h3>RDV pris</h3></div></div><div class="chart sm"><canvas id="chEv2"></canvas></div></div>
       <div class="card"><div class="card-h"><div><h3>Contrats signés</h3></div></div><div class="chart sm"><canvas id="chEv3"></canvas></div></div>
       <div class="card"><div class="card-h"><div><h3>CA signé (€)</h3></div></div><div class="chart sm"><canvas id="chEv4"></canvas></div></div>
     </div>
-    <div class="card"><div class="card-h"><div><h3>Semaine par semaine</h3></div></div><div class="tw"><table id="tEv"></table></div></div>
+    <div class="card"><div class="card-h"><div><h3>Détail période par période</h3></div></div><div class="tw"><table id="tEv"></table></div></div>
   </section>
 </main>
 
@@ -401,9 +449,12 @@ const ri = (a, b) => a + Math.floor(rnd() * (b - a + 1));
 const pickW = list => { let r = rnd() * list.reduce((s, x) => s + x[1], 0); for (const x of list) if ((r -= x[1]) < 0) return x[0]; return list[0][0]; };
 const pick = a => a[Math.floor(rnd() * a.length)];
 
-const N = 120, TODAY = N - 1; // index 119 = lundi 12 octobre 2026
-const dateOf = i => new Date(2026, 9, 12 - (TODAY - i));
-const dShort = i => dateOf(i).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' }).replace('.', '');
+const N = 366, TODAY = N - 1; // 12 mois d'historique ; le dernier jour est le mardi 13 octobre 2026
+const dateOf = i => new Date(2026, 9, 13 - (TODAY - i));
+const idxOf = dt => TODAY - Math.round((dateOf(TODAY) - new Date(dt.getFullYear(), dt.getMonth(), dt.getDate())) / 864e5);
+const dShort = i => dateOf(i).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }).replace('.', '');
+const dLong = i => dateOf(i).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' }).replace('.', '');
+const MONTH_START = TODAY - dateOf(TODAY).getDate() + 1;
 
 const CAMPS = [
   { id: 'abel', name: 'LEADS ABEL', price: 31, w: 30, admin: 'gabriel' }, { id: 'stylnet', name: 'LEADS STYLNET', price: 31, w: 24, admin: 'camille' },
@@ -445,6 +496,8 @@ for (let d = 0; d < N; d++) {
     if (d >= TODAY - 1 && rnd() < .55) { L.status = 'NOUVEAU'; leads.push(L); continue; }
     if (rnd() < pRdv) {
       L.status = 'RDV'; L.rdvD = Math.min(TODAY, d + ri(0, 3)); L.apptD = L.rdvD + ri(1, 8);
+      L.h = pickW([[9, 4], [10, 7], [11, 9], [12, 4], [13, 2], [14, 6], [15, 7], [16, 7], [17, 9], [18, 11], [19, 8], [20, 3]]);
+      if (dateOf(L.rdvD).getDay() === 0) L.rdvD = Math.max(d, L.rdvD - 1);
       const zoneComs = COM.filter(c => c.zone === dept[2]); L.com = pickW(zoneComs.map(c => [c.id, c.k])); const com = byId[L.com];
       L.cq = pickW(CQ.map(c => [c.id, c.k]));
       if (L.apptD > TODAY) { L.rdvSt = pickW([['À CONFIRMER', 4], ['CONFIRMÉ', 3], ['NRP CONFIRMÉ', 1.5]]); }
@@ -472,12 +525,27 @@ for (let d = 0; d < N; d++) {
 }
 
 /* ================= Filtres ================= */
-const F = { period: 'month', camp: '', com: '', tel: '', zone: '', dept: '' };
-function rangeOf(p) {
-  if (p === 'today') return [TODAY, TODAY];
-  if (p === 'month') return [TODAY - 11, TODAY]; // 1er au 12 octobre
-  const n = +p; return [TODAY - n + 1, TODAY];
+const PRESETS = [
+  ['today', "Aujourd'hui", [TODAY, TODAY]], ['yesterday', 'Hier', [TODAY - 1, TODAY - 1]], ['7', '7 derniers jours', [TODAY - 6, TODAY]],
+  ['30', '30 derniers jours', [TODAY - 29, TODAY]], ['month', 'Ce mois-ci', [MONTH_START, TODAY]],
+  ['lastmonth', 'Mois dernier', [idxOf(new Date(2026, 8, 1)), MONTH_START - 1]], ['90', '3 derniers mois', [TODAY - 89, TODAY]],
+  ['ytd', 'Depuis le 1er janvier', [idxOf(new Date(2026, 0, 1)), TODAY]], ['365', '12 derniers mois', [0, TODAY]],
+];
+const F = { preset: 'month', from: MONTH_START, to: TODAY, camp: '', com: '', tel: '', zone: '', dept: '' };
+const rangeOf = () => [F.from, F.to];
+function setRange(a, b, preset) { F.from = Math.min(a, b); F.to = Math.max(a, b); F.preset = preset || (PRESETS.find(x => x[2][0] === F.from && x[2][1] === F.to) || ['custom'])[0]; }
+// Découpage automatique des graphiques selon la longueur de la période
+function buckets(r0) {
+  let r = r0; if (r[1] - r[0] < 6) r = [Math.max(0, r[1] - 13), r[1]];
+  const len = r[1] - r[0] + 1, list = [];
+  if (len <= 31) { for (let d = r[0]; d <= r[1]; d++) list.push({ r: [d, d], l: dShort(d) }); return { u: 'par jour', list, ctx: r !== r0 }; }
+  if (len <= 120) { for (let e = r[1]; e >= r[0]; e -= 7) { const s0 = Math.max(r[0], e - 6); list.unshift({ r: [s0, e], l: dShort(s0) }); } return { u: 'par semaine', list }; }
+  let d = r[0];
+  while (d <= r[1]) { const dt = dateOf(d), eom = d + new Date(dt.getFullYear(), dt.getMonth() + 1, 0).getDate() - dt.getDate(), e = Math.min(eom, r[1]); list.push({ r: [d, e], l: dt.toLocaleDateString('fr-FR', { month: 'short', year: '2-digit' }).replace('.', '') }); d = e + 1; }
+  return { u: 'par mois', list };
 }
+const bucketSub = B => `${B.u} · ${B.ctx ? '14 derniers jours pour le contexte' : rangeText(B.list[0].r[0], B.list[B.list.length - 1].r[1])}`;
+const rangeText = (a, b) => a === b ? dLong(a) : dateOf(a).getFullYear() === dateOf(b).getFullYear() ? `${dShort(a)} → ${dLong(b)}` : `${dLong(a)} → ${dLong(b)}`;
 const inR = (v, r) => v !== undefined && v >= r[0] && v <= r[1];
 const prevR = r => { const len = r[1] - r[0] + 1; return [r[0] - len, r[0] - 1]; };
 const base = () => leads.filter(l => (!F.camp || l.camp === F.camp) && (!F.tel || l.tele === F.tel) && (!F.com || l.com === F.com));
@@ -491,9 +559,6 @@ function totals(ls, r) {
     if (inR(l.instD, r)) T.inst++;
   });
   return T;
-}
-function weeks() { // 12 semaines, lundi → dimanche, la dernière contient aujourd'hui
-  const out = []; for (let w = 11; w >= 0; w--) { const s = TODAY - w * 7; out.push([s, Math.min(s + 6, TODAY)]); } return out;
 }
 
 /* ================= Graphiques (Chart.js) ================= */
@@ -552,8 +617,8 @@ function delta(cur, prev, invert) {
   if (Math.abs(d) < .5) return '<span class="delta flat">= stable</span>';
   return `<span class="delta ${good ? 'up' : 'down'}">${d > 0 ? '↑' : '↓'} ${Math.abs(Math.round(d))} %</span>`;
 }
-function kpi(label, color, value, meta, d) { return `<div class="card kpi"><span class="l"><i style="background:${color}"></i>${label}</span><span class="v">${value}</span><span class="m">${d || ''}${meta ? `<span>${meta}</span>` : ''}</span></div>`; }
-const vs = () => ({ today: 'vs hier', 7: 'vs 7 j précédents', month: 'vs même période sept.', 30: 'vs 30 j précédents', 90: 'vs 3 mois précédents' })[F.period];
+function kpi(label, color, value, meta, d, spark) { return `<div class="card kpi">${spark ? `<span class="ksp">${spark}</span>` : ''}<span class="l"><i style="background:${color}"></i>${label}</span><span class="v">${value}</span><span class="m">${d || ''}${meta ? `<span>${meta}</span>` : ''}</span></div>`; }
+const vs = () => { const p = prevR(rangeOf()); return p[0] < 0 ? 'pas d\'historique avant' : `vs ${p[0] === p[1] ? dShort(p[0]) : dShort(p[0]) + ' → ' + dShort(p[1])}`; };
 const av = p => `<span class="av" style="background:var(--${p.role})">${p.ini}</span>`;
 function sparkSvg(vals, color) {
   const w = 72, h = 22, max = Math.max(1, ...vals);
@@ -601,12 +666,19 @@ const rateP = (v, good, warn) => `<span class="pill ${v >= good ? 'good' : v >= 
 
 /* ---------- Aperçu ---------- */
 function renderApercu(ls, r, T, P) {
+  const B = buckets(r), BT = B.list.map(b => totals(ls, b.r)), sp = (k, c) => sparkSvg(BT.map(t => t[k]), tok(c));
   $('#kpiMain').innerHTML =
-    kpi('Leads reçus', 'var(--c1)', fmt(T.leads), `${fmt(T.uniq)} uniques`, delta(T.leads, P.leads)) +
-    kpi('RDV pris', 'var(--c7)', fmt(T.rdv), `${p1(pct(T.rdv, T.leads))} des leads`, delta(T.rdv, P.rdv)) +
-    kpi('Contrats signés', 'var(--c3)', fmt(T.cont), `${p1(pct(T.cont, T.rdv))} des RDV`, delta(T.cont, P.cont)) +
-    kpi('Installations', 'var(--c4)', fmt(T.inst), `${fmt(T.kwc)} kWc signés`, delta(T.inst, P.inst)) +
-    kpi('CA signé', 'var(--c2)', keur(T.ca).replace(' k€', '<small>k€</small>').replace(' €', '<small>€</small>'), `net ${keur(T.caNet)}`, delta(T.ca, P.ca));
+    kpi('Leads reçus', 'var(--c1)', fmt(T.leads), `${fmt(T.uniq)} uniques`, delta(T.leads, P.leads), sp('leads', 'c1')) +
+    kpi('RDV pris', 'var(--c7)', fmt(T.rdv), `${p1(pct(T.rdv, T.leads))} des leads`, delta(T.rdv, P.rdv), sp('rdv', 'c7')) +
+    kpi('Contrats signés', 'var(--c3)', fmt(T.cont), `${p1(pct(T.cont, T.rdv))} des RDV`, delta(T.cont, P.cont), sp('cont', 'c3')) +
+    kpi('Installations', 'var(--c4)', fmt(T.inst), `${fmt(T.kwc)} kWc signés`, delta(T.inst, P.inst), sp('inst', 'c4')) +
+    kpi('CA signé', 'var(--c2)', keur(T.ca).replace(' k€', '<small>k€</small>').replace(' €', '<small>€</small>'), `net ${keur(T.caNet)}`, delta(T.ca, P.ca), sp('ca', 'c2'));
+  // Objectifs du mois en cours (indépendants de la période choisie, mais suivent les filtres)
+  const M = totals(ls, [MONTH_START, TODAY]), elapsed = TODAY - MONTH_START + 1, dim = new Date(2026, dateOf(TODAY).getMonth() + 1, 0).getDate(), pace = elapsed / dim;
+  const GOALS = [['CA signé', M.ca, 600000, keur, 'c2'], ['Contrats signés', M.cont, 40, fmt, 'c3'], ['RDV pris', M.rdv, 150, fmt, 'c7'], ['Installations', M.inst, 20, fmt, 'c4']];
+  $('#goalSub').textContent = `Au ${dLong(TODAY)} · jour ${elapsed} sur ${dim} · le trait noir indique le rythme attendu aujourd'hui`;
+  $('#goals').innerHTML = GOALS.map(([l, v, g, f, c]) => { const proj = v / pace, ratio = proj / g, st = ratio >= 1 ? ['good', 'En avance'] : ratio >= .85 ? ['warn', 'Juste'] : ['bad', 'En retard'];
+    return `<div class="goal-i"><div class="gl"><span>${l}</span><span class="pill ${st[0]}">${st[1]}</span></div><b>${f(v)} <small>/ ${f(g)}</small></b><div class="gbar"><div style="width:${Math.min(100, v / g * 100)}%;background:var(--${c})"></div><i style="left:${pace * 100}%"></i></div><small>Projection fin de mois : <b>${f(proj)}</b> (${Math.round(ratio * 100)} % de l'objectif)</small></div>`; }).join('');
   const rates = [
     ['Taux lead → RDV', pct(T.rdv, T.leads), pct(P.rdv, P.leads)], ['Taux de présence RDV', pct(T.present, T.appts), pct(P.present, P.appts)],
     ['Taux RDV → contrat', pct(T.cont, T.rdv), pct(P.cont, P.rdv)], ['Conversion globale', pct(T.cont, T.leads), pct(P.cont, P.leads)],
@@ -620,9 +692,10 @@ function renderApercu(ls, r, T, P) {
   const doc = all.filter(l => l.contSt === 'MANQUE DOC').length, cqWait = all.filter(l => l.contSt === 'ATTENTE CONTRÔLE QUALITÉ').length;
   $('#todo').innerHTML = [[nNew, 'leads nouveaux pas encore appelés', 'telepros', 'bad'], [toConf, 'RDV à confirmer d\'ici 48 h', 'rdv', 'warn'], [cqWait, 'dossiers en attente de contrôle qualité', 'cq', 'warn'], [doc, 'contrats bloqués pour document manquant', 'contrats', 'bad']]
     .map(([n, t, g, s]) => `<div><b class="num" style="color:var(--${n ? (s === 'bad' ? 'bad' : 'warn') : 'good'})">${n}</b><span>${t}</span><button type="button" data-goto="${g}">Voir</button></div>`).join('');
-  const W = weeks(), wl = W.map(w => dShort(w[0]));
-  chart('chLeadsW', barCfg(wl, W.map(w => totals(ls, w).leads), tok('c1'), 'Leads'));
-  chart('chContW', barCfg(wl, W.map(w => totals(ls, w).cont), tok('c3'), 'Contrats'));
+  const wl = B.list.map(b => b.l);
+  $('#subA1').textContent = bucketSub(B); $('#subA2').textContent = bucketSub(B);
+  chart('chLeadsW', barCfg(wl, BT.map(t => t.leads), tok('c1'), 'Leads'));
+  chart('chContW', barCfg(wl, BT.map(t => t.cont), tok('c3'), 'Contrats'));
   const S = personStats(ls, r);
   const top = (list, k, unit) => list.map(p => [p, S[p.id][k]]).sort((a, b) => b[1] - a[1]).slice(0, 3)
     .map(([p, v], i) => `<button type="button" data-person="${p.id}"><span class="rk">${i + 1}</span>${av(p)}<span>${p.name}</span><b class="n">${fmt(v)} ${unit}</b></button>`).join('');
@@ -631,7 +704,19 @@ function renderApercu(ls, r, T, P) {
 }
 
 /* ---------- Télépros ---------- */
+function renderHeat(ls, r) {
+  const H = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], D = [[1, 'Lun'], [2, 'Mar'], [3, 'Mer'], [4, 'Jeu'], [5, 'Ven'], [6, 'Sam']];
+  const g = {}; let max = 0, best = null;
+  ls.forEach(l => { if (!inR(l.rdvD, r)) return; const k = dateOf(l.rdvD).getDay() + '-' + l.h; g[k] = (g[k] || 0) + 1; if (g[k] > max) { max = g[k]; best = k; } });
+  let html = '<span></span>' + H.map(h => `<span class="h">${h} h</span>`).join('');
+  D.forEach(([d, l]) => { html += `<span class="d">${l}</span>` + H.map(h => { const v = g[d + '-' + h] || 0, t = max ? v / max : 0;
+    return `<span class="c" title="${l} ${h} h : ${v} RDV fixés" style="background:color-mix(in srgb, var(--c1) ${Math.round(t * 100)}%, var(--surface-2));color:${t > .55 ? '#fff' : 'var(--ink-2)'}">${v || ''}</span>`; }).join(''); });
+  $('#heat').innerHTML = html;
+  const bl = best ? `${D.find(x => x[0] === +best.split('-')[0])[1].toLowerCase()}. ${best.split('-')[1]} h` : '—';
+  $('#heatSub').textContent = `RDV fixés par jour de la semaine et heure d'appel · meilleur créneau sur la période : ${bl}`;
+}
 function renderTel(ls, r, S) {
+  renderHeat(ls, r);
   const rows = TEL.map(p => { const s = S[p.id]; return { p, leads: s.leads, calls: s.calls, rdv: s.rdv, rRdv: pct(s.rdv, s.leads), present: s.present, rPres: pct(s.present, s.present + s.absent), absent: s.absent, cont: s.cont, rCont: pct(s.cont, s.rdv), last7: s.last7 }; });
   const t = rows.reduce((a, x) => { ['leads', 'calls', 'rdv', 'present', 'absent', 'cont'].forEach(k => a[k] += x[k]); return a; }, { leads: 0, calls: 0, rdv: 0, present: 0, absent: 0, cont: 0 });
   $('#kpiTel').innerHTML = kpi('Leads attribués', 'var(--tele)', fmt(t.leads), `${fmt(t.calls)} appels`) + kpi('RDV fixés', 'var(--c7)', fmt(t.rdv), `${p1(pct(t.rdv, t.leads))} des leads`) + kpi('Taux de présence', 'var(--c5)', p1(pct(t.present, t.present + t.absent)), `${fmt(t.absent)} absents ou annulés`) + kpi('Contrats générés', 'var(--c3)', fmt(t.cont), `${p1(pct(t.cont, t.rdv))} des RDV`);
@@ -726,14 +811,14 @@ function renderRdv(ls, r, T, P) {
   const cnt = {}; R.forEach(l => cnt[l.rdvSt] = (cnt[l.rdvSt] || 0) + 1);
   $('#rdvTot').textContent = `${fmt(R.length)} rendez-vous pris sur la période`;
   $('#rdvSt').innerHTML = RDV_ST.map(([s, c]) => { const n = cnt[s] || 0; return `<div class="st-card" style="--c:var(--${c})"><small>${s}</small><b>${fmt(n)}<em>${p1(pct(n, R.length))}</em></b><div class="bar"><div style="width:${pct(n, R.length)}%"></div></div></div>`; }).join('');
-  const days = []; for (let d = r[0]; d <= r[1]; d++) days.push(d);
-  chart('chRdvD', barCfg(days.map(dShort), days.map(d => R.filter(l => l.rdvD === d).length), tok('c7'), 'RDV pris'));
+  const B = buckets(r); $('#subRdv').textContent = bucketSub(B);
+  chart('chRdvD', barCfg(B.list.map(b => b.l), B.list.map(b => totals(ls, b.r).rdv), tok('c7'), 'RDV pris'));
 }
 
 /* ---------- Contrats ---------- */
 function renderCont(ls, r, T, P) {
   const C = ls.filter(l => inR(l.signD, r));
-  const thisMonth = ls.filter(l => l.signD >= TODAY - 11).length;
+  const thisMonth = ls.filter(l => l.signD >= MONTH_START).length;
   $('#kpiCont').innerHTML = kpi('Contrats signés', 'var(--c3)', fmt(T.cont), `${fmt(thisMonth)} depuis le 1er octobre`, delta(T.cont, P.cont)) +
     kpi('CA signé', 'var(--c2)', keur(T.ca), `CA net hors annulés : ${keur(T.caNet)}`, delta(T.ca, P.ca)) +
     kpi('Panier moyen', 'var(--c1)', eur(T.cont ? T.ca / T.cont : 0), `${fmt(T.kwc)} kWc vendus`) +
@@ -745,8 +830,8 @@ function renderCont(ls, r, T, P) {
   cfg.options.plugins.tooltip.callbacks = { label: c => ` ${fmt(c.parsed.x)} contrats · ${p1(pct(c.parsed.x, C.length))}` };
   cfg.options.interaction = { mode: 'nearest', axis: 'y', intersect: false };
   chart('chContBar', cfg);
-  const W = weeks();
-  chart('chCaW', barCfg(W.map(w => dShort(w[0])), W.map(w => totals(ls, w).ca), tok('c2'), 'CA signé', eur));
+  const B = buckets(r); $('#subCa').textContent = bucketSub(B) + ', en euros';
+  chart('chCaW', barCfg(B.list.map(b => b.l), B.list.map(b => totals(ls, b.r).ca), tok('c2'), 'CA signé', eur));
   charts.chCaW.options.scales.y.ticks.callback = v => keur(v); charts.chCaW.update();
   const last = C.sort((a, b) => b.signD - a.signD).slice(0, 10);
   const stCls = s => s === 'ANNULÉ' || s === 'FINANCEMENT REFUSÉ' || s === 'INFINANÇABLE' ? 'bad' : ['TERMINÉ PAYÉ', 'INSTALLÉ', 'FINANCEMENT ACCEPTÉ', 'PAIEMENT COMPTANT'].includes(s) ? 'good' : 'warn';
@@ -763,11 +848,11 @@ function renderInst(ls, r, T, P) {
     kpi("Taux d'installation", 'var(--c1)', p1(pct(eligible.filter(l => l.instD !== undefined).length, eligible.length)), 'contrats non annulés de plus de 14 j') +
     kpi('En attente de pose', 'var(--c4)', fmt(pending), 'financement accepté, pose à planifier') +
     kpi('Délai moyen', 'var(--c7)', (dl.length ? dl.reduce((a, b) => a + b, 0) / dl.length : 0).toFixed(0) + '<small>j</small>', 'de la signature à la pose');
-  const W = weeks(), o = baseOpts();
+  const B = buckets(r), BT = B.list.map(b => totals(ls, b.r)), o = baseOpts(); $('#subInst').textContent = bucketSub(B);
   o.plugins.tooltip.callbacks = { label: c => ` ${c.dataset.label} : ${fmt(c.parsed.y)}` };
-  chart('chInstW', { type: 'line', data: { labels: W.map(w => dShort(w[0])), datasets: [
-    { label: 'Contrats signés', data: W.map(w => totals(ls, w).cont), borderColor: tok('c1'), backgroundColor: tok('c1'), borderWidth: 2, pointRadius: 3, pointHoverRadius: 5, tension: .3 },
-    { label: 'Installations', data: W.map(w => totals(ls, w).inst), borderColor: tok('c3'), backgroundColor: tok('c3'), borderWidth: 2, pointRadius: 3, pointHoverRadius: 5, tension: .3 },
+  chart('chInstW', { type: 'line', data: { labels: B.list.map(b => b.l), datasets: [
+    { label: 'Contrats signés', data: BT.map(t => t.cont), borderColor: tok('c1'), backgroundColor: tok('c1'), borderWidth: 2, pointRadius: 3, pointHoverRadius: 5, tension: .3 },
+    { label: 'Installations', data: BT.map(t => t.inst), borderColor: tok('c3'), backgroundColor: tok('c3'), borderWidth: 2, pointRadius: 3, pointHoverRadius: 5, tension: .3 },
   ] }, options: o });
 }
 
@@ -795,21 +880,25 @@ function renderCamp(ls, r) {
 }
 
 /* ---------- Évolution ---------- */
-function renderEvo(ls) {
-  const W = weeks(), T = W.map(w => totals(ls, w)), lab = W.map(w => dShort(w[0]));
+function renderEvo(ls, r) {
+  const B = buckets(r), T = B.list.map(b => totals(ls, b.r)), lab = B.list.map(b => b.l), n = T.length;
+  $('#subEvo').textContent = `Un graphique par indicateur, ${bucketSub(B)}.`;
   [['chEv1', 'leads', 'c1', 'Leads', fmt], ['chEv2', 'rdv', 'c7', 'RDV pris', fmt], ['chEv3', 'cont', 'c3', 'Contrats', fmt], ['chEv4', 'ca', 'c2', 'CA signé', eur]].forEach(([id, k, c, l, f]) => {
     const o = baseOpts(); o.plugins.tooltip.callbacks = { label: x => ` ${l} : ${f(x.parsed.y)}` };
     if (k === 'ca') o.scales.y.ticks.callback = v => keur(v);
     chart(id, { type: 'line', data: { labels: lab, datasets: [{ label: l, data: T.map(t => t[k]), borderColor: tok(c), backgroundColor: tok(c) + '22', fill: true, borderWidth: 2, pointRadius: 2.5, pointHoverRadius: 5, tension: .3 }] }, options: o });
   });
-  const ch = (a, b) => b ? `<span class="delta ${a >= b ? 'up' : 'down'}">${a >= b ? '↑' : '↓'} ${Math.abs(Math.round((a - b) / b * 100))} %</span>` : '';
-  $('#tEv').innerHTML = `<thead><tr><th class="l">Semaine du</th><th>Leads</th><th>RDV</th><th>% RDV</th><th>Contrats</th><th>CA signé</th><th>Installations</th></tr></thead><tbody>${T.map((t, i) => [t, i]).reverse().map(([t, i]) => `<tr><td class="l"><b>${lab[i]}</b>${i === 11 ? ' <span class="pill neutral">en cours</span>' : ''}</td><td>${fmt(t.leads)} ${i ? ch(t.leads, T[i - 1].leads) : ''}</td><td>${fmt(t.rdv)} ${i ? ch(t.rdv, T[i - 1].rdv) : ''}</td><td>${p1(pct(t.rdv, t.leads))}</td><td>${fmt(t.cont)} ${i ? ch(t.cont, T[i - 1].cont) : ''}</td><td><b>${eur(t.ca)}</b></td><td>${fmt(t.inst)}</td></tr>`).join('')}</tbody>`;
+  const partial = B.list[n - 1].r[1] === TODAY && B.u !== 'par jour';
+  const ch0 = (a, b) => b ? `<span class="delta ${a >= b ? 'up' : 'down'}">${a >= b ? '↑' : '↓'} ${Math.abs(Math.round((a - b) / b * 100))} %</span>` : '';
+  $('#tEv').innerHTML = `<thead><tr><th class="l">${B.u === 'par jour' ? 'Jour' : B.u === 'par semaine' ? 'Semaine du' : 'Mois'}</th><th>Leads</th><th>RDV</th><th>% RDV</th><th>Contrats</th><th>CA signé</th><th>Installations</th></tr></thead><tbody>${T.map((t, i) => [t, i]).reverse().map(([t, i]) => { const ch = (a, b2) => partial && i === n - 1 ? '' : ch0(a, b2); return `<tr><td class="l"><b>${lab[i]}</b>${i === n - 1 && B.list[i].r[1] === TODAY && B.u !== 'par jour' ? ' <span class="pill neutral">en cours</span>' : ''}</td><td>${fmt(t.leads)} ${i ? ch(t.leads, T[i - 1].leads) : ''}</td><td>${fmt(t.rdv)} ${i ? ch(t.rdv, T[i - 1].rdv) : ''}</td><td>${p1(pct(t.rdv, t.leads))}</td><td>${fmt(t.cont)} ${i ? ch(t.cont, T[i - 1].cont) : ''}</td><td><b>${eur(t.ca)}</b></td><td>${fmt(t.inst)}</td></tr>`; }).join('')}</tbody>`;
 }
 
 /* ================= Rendu global ================= */
 function render() {
-  const r = rangeOf(F.period), ls = base(), T = totals(ls, r), P = totals(ls, prevR(r));
-  $('#range').textContent = r[0] === r[1] ? `${dShort(r[0])} 2026` : `${dShort(r[0])} → ${dShort(r[1])} 2026`;
+  const r = rangeOf(), ls = base(), T = totals(ls, r), P = totals(ls, prevR(r));
+  const pr = PRESETS.find(x => x[0] === F.preset);
+  $('#range').innerHTML = `${pr ? pr[1] + ' <small>·</small> ' : ''}<small>${rangeText(r[0], r[1])}</small>`;
+  document.querySelectorAll('#period button').forEach(x => x.setAttribute('aria-pressed', x.dataset.p === F.preset));
   const S = personStats(ls, r);
   if (tab === 'apercu') renderApercu(ls, r, T, P);
   if (tab === 'telepros') renderTel(ls, r, S);
@@ -820,7 +909,7 @@ function render() {
   if (tab === 'contrats') renderCont(ls, r, T, P);
   if (tab === 'install') renderInst(ls, r, T, P);
   if (tab === 'campagnes') renderCamp(ls, r);
-  if (tab === 'evolution') renderEvo(ls);
+  if (tab === 'evolution') renderEvo(ls, r);
   team.update(S, r);
 }
 
@@ -830,8 +919,49 @@ fill('#fCamp', 'Toutes les campagnes', CAMPS); fill('#fCom', 'Tous les commercia
 $('#fCamp').onchange = e => { F.camp = e.target.value; render(); };
 $('#fCom').onchange = e => { F.com = e.target.value; render(); };
 $('#fTel').onchange = e => { F.tel = e.target.value; render(); };
-$('#period').onclick = e => { const b = e.target.closest('button'); if (!b) return; F.period = b.dataset.p; document.querySelectorAll('#period button').forEach(x => x.setAttribute('aria-pressed', x === b)); render(); };
-$('#reset').onclick = () => { Object.assign(F, { period: 'month', camp: '', com: '', tel: '', zone: '', dept: '' }); ['#fCamp', '#fCom', '#fTel', '#fZone'].forEach(s => { $(s).value = ''; }); document.querySelectorAll('#period button').forEach(x => x.setAttribute('aria-pressed', x.dataset.p === 'month')); render(); };
+$('#period').onclick = e => { const b = e.target.closest('button'); if (!b) return; const pr = PRESETS.find(x => x[0] === b.dataset.p); setRange(pr[2][0], pr[2][1], pr[0]); render(); };
+$('#reset').onclick = () => { Object.assign(F, { camp: '', com: '', tel: '', zone: '', dept: '' }); setRange(MONTH_START, TODAY, 'month'); ['#fCamp', '#fCom', '#fTel', '#fZone'].forEach(s => { $(s).value = ''; }); render(); };
+
+/* ---------- Calendrier ---------- */
+const dp = { a: null, b: null, hover: null, view: null };
+const MONTHS_FR = d => d.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+function dpOpen() {
+  dp.a = F.from; dp.b = F.to; dp.hover = null;
+  const e = dateOf(F.to); dp.view = new Date(e.getFullYear(), e.getMonth() - 1, 1);
+  $('#dp').hidden = false; $('#dateBtn').setAttribute('aria-expanded', 'true'); dpRender();
+}
+function dpClose() { $('#dp').hidden = true; $('#dateBtn').setAttribute('aria-expanded', 'false'); }
+function dpRender() {
+  $('#dpPresets').innerHTML = PRESETS.map(([id, l, rr]) => `<button type="button" data-pr="${id}" aria-pressed="${dp.a === rr[0] && dp.b === rr[1]}">${l}</button>`).join('');
+  const lo = dp.a, hi = dp.b !== null ? dp.b : (dp.hover !== null ? dp.hover : dp.a), A = Math.min(lo, hi), Z = Math.max(lo, hi);
+  const first = new Date(dateOf(0).getFullYear(), dateOf(0).getMonth(), 1), last = new Date(dateOf(TODAY).getFullYear(), dateOf(TODAY).getMonth(), 1);
+  const month = (m0) => {
+    const y = m0.getFullYear(), m = m0.getMonth(), nd = new Date(y, m + 1, 0).getDate(), lead = (new Date(y, m, 1).getDay() + 6) % 7;
+    let cells = ''; for (let i = 0; i < lead; i++) cells += '<span></span>';
+    for (let d = 1; d <= nd; d++) { const i = idxOf(new Date(y, m, d)), off = i < 0 || i > TODAY;
+      const cls = [i === A ? 'a' : '', i === Z ? 'b' : '', i > A && i < Z || (i === A || i === Z) && A !== Z ? 'in' : '', i === TODAY ? 'today' : ''].join(' ');
+      cells += `<button type="button" data-i="${i}" class="${cls}" ${off ? 'disabled' : ''} aria-label="${new Date(y, m, d).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}">${d}</button>`; }
+    return `<div class="mo"><h5>${MONTHS_FR(m0)}</h5><div class="wd">${['L', 'M', 'M', 'J', 'V', 'S', 'D'].map(x => `<span>${x}</span>`).join('')}</div><div class="days">${cells}</div></div>`;
+  };
+  const v2 = new Date(dp.view.getFullYear(), dp.view.getMonth() + 1, 1);
+  $('#dpMonths').innerHTML = `<button type="button" class="dp-nav prev" id="dpPrev" aria-label="Mois précédent" ${dp.view <= first ? 'disabled' : ''}>‹</button><button type="button" class="dp-nav next" id="dpNext" aria-label="Mois suivant" ${v2 >= last ? 'disabled' : ''}>›</button>${month(dp.view)}${month(v2)}`;
+  const n = Z - A + 1;
+  $('#dpSel').innerHTML = dp.b === null ? `Du ${dLong(dp.a)} → choisissez la date de fin<small>Cliquez sur un deuxième jour</small>` : `${rangeText(A, Z)}<small>${n} jour${n > 1 ? 's' : ''} · comparé aux ${n} jours précédents</small>`;
+  $('#dpApply').disabled = dp.b === null;
+}
+$('#dateBtn').onclick = e => { e.stopPropagation(); $('#dp').hidden ? dpOpen() : dpClose(); };
+$('#dp').addEventListener('click', e => {
+  e.stopPropagation();
+  const pr = e.target.closest('[data-pr]'); if (pr) { const x = PRESETS.find(p => p[0] === pr.dataset.pr); dp.a = x[2][0]; dp.b = x[2][1]; const ev = dateOf(dp.b); dp.view = new Date(ev.getFullYear(), ev.getMonth() - 1, 1); dpRender(); return; }
+  if (e.target.id === 'dpPrev') { dp.view = new Date(dp.view.getFullYear(), dp.view.getMonth() - 1, 1); dpRender(); return; }
+  if (e.target.id === 'dpNext') { dp.view = new Date(dp.view.getFullYear(), dp.view.getMonth() + 1, 1); dpRender(); return; }
+  const d = e.target.closest('[data-i]'); if (d && !d.disabled) { const i = +d.dataset.i; if (dp.b !== null) { dp.a = i; dp.b = null; } else { dp.b = i; if (dp.b < dp.a) [dp.a, dp.b] = [dp.b, dp.a]; } dpRender(); }
+});
+$('#dpMonths').addEventListener('mouseover', e => { const d = e.target.closest('[data-i]'); if (d && dp.b === null && +d.dataset.i !== dp.hover) { dp.hover = +d.dataset.i; dpRender(); } });
+$('#dpCancel').onclick = dpClose;
+$('#dpApply').onclick = () => { if (dp.b === null) return; setRange(dp.a, dp.b); dpClose(); render(); };
+document.addEventListener('click', e => { if (!$('#dp').hidden && !e.target.closest('.dpwrap')) dpClose(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#dp').hidden) { dpClose(); $('#dateBtn').focus(); } });
 
 /* ================= Équipe 3D ================= */
 const team = (() => {
@@ -921,7 +1051,7 @@ const team = (() => {
   function resize() { if (!renderer) return; const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); }
   function theme() {
     if (!built) return;
-    const dark = (document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')) === 'dark';
+    const dark = false; // le dashboard est volontairement en mode clair
     hemi.intensity = dark ? .5 : .8; sun.intensity = dark ? .55 : .75; floorM.color.set(tok('s-floor')); edgeM.color.set(dark ? 0x3a4d78 : 0xc9d4ea);
     ROWS.forEach(r => { const c = new THREE.Color(tok(r.role)); r.mat.color.set(tok('s-row')).lerp(c, dark ? .28 : .22); r.pmat.color.set(tok('s-plinth')).lerp(c, dark ? .22 : .12); });
     PEOPLE.forEach(p => { if (!p.g) return; const c = new THREE.Color(tok(p.role)); p.strip.material.color.copy(c); p.ring.material.color.copy(c); if (p.jm) p.jm.color.copy(c); if (p.bm) p.bm.color.set(0xffffff).lerp(c, .42); });
@@ -981,9 +1111,6 @@ const team = (() => {
 })();
 
 /* ================= Thème ================= */
-function retheme() { Chart.defaults.color = tok('muted'); team.theme(); render(); }
-matchMedia('(prefers-color-scheme: dark)').addEventListener('change', retheme);
-new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 Chart.defaults.font.family = 'Nunito'; Chart.defaults.color = tok('muted');
 setTab(tab);
 })();
