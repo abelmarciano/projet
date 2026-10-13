@@ -109,28 +109,54 @@ a{color:var(--accent-ink)}
 .pitch .eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
 .pitch h2{margin:6px 0 0;font-family:var(--display);font-weight:650;font-size:clamp(26px,2.6vw,34px);letter-spacing:-.02em;line-height:1.12;text-wrap:balance}
 
-/* Mini console : un prompt, trois pubs, publication Meta */
-.mock{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:14px;max-width:520px}
-.ask{display:flex;gap:10px;align-items:flex-start}
-.me{width:28px;height:28px;border-radius:14px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-size:11px;font-weight:600;flex:none}
-.bubble{background:var(--raised);border:1px solid var(--line);border-radius:4px 14px 14px 14px;padding:9px 12px;font-size:13.5px;min-height:40px}
-.caret{display:inline-block;width:2px;height:15px;background:var(--accent);vertical-align:-2px;margin-left:1px;animation:blink 1s steps(1) infinite}
+/* Mini console : la demande, la réponse de Growthity, trois créas au format pub Meta, puis la campagne en diffusion */
+.mock{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:12px;max-width:560px}
+.ask{display:flex;gap:10px;align-items:flex-start;justify-content:flex-end}
+.me{width:28px;height:28px;border-radius:14px;background:#E2832B;color:#fff;display:grid;place-items:center;font-size:11px;font-weight:600;flex:none;order:2}
+.bubble{background:var(--accent);color:#fff;border-radius:14px 4px 14px 14px;padding:9px 12px;font-size:13.5px;min-height:40px;max-width:85%}
+.caret{display:inline-block;width:2px;height:15px;background:#fff;vertical-align:-2px;margin-left:1px;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
+.reply{display:flex;gap:10px;align-items:flex-start;opacity:0;transition:opacity .4s}
+.reply.on{opacity:1}
+.g-av{width:28px;height:28px;border-radius:9px;background:#0E0D14;display:grid;place-items:center;flex:none}
+.g-av svg{width:17px;height:17px}
+.reply p{margin:3px 0 0;font-size:13.5px;color:var(--muted)}.reply b{color:var(--fg);font-weight:600}
 .ads{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.ad{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--surface);opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s}
-.ad.on{opacity:1;transform:none}
-.ad .vis{aspect-ratio:4/5;position:relative;display:flex;align-items:flex-end;padding:8px}
-.ad .vis span{font:600 11px/1.25 var(--ui);color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.35)}
-.ad .vis em{position:absolute;top:8px;left:8px;font-style:normal;font-size:10px;font-weight:600;color:#fff;background:rgba(0,0,0,.35);border-radius:999px;padding:1px 7px}
-.v1{background:radial-gradient(circle at 70% 30%,#F7D9B7 0 18%,transparent 19%),linear-gradient(160deg,#C98B5A,#6B3E2A)}
-.v2{background:radial-gradient(circle at 30% 40%,#FFE9C2 0 14%,transparent 15%),linear-gradient(200deg,#3F5B4A,#1F2E26)}
-.v3{background:radial-gradient(circle at 60% 55%,#FBE3E8 0 20%,transparent 21%),linear-gradient(170deg,#D98FA0,#7A3B52)}
-.ad .cap{padding:7px 8px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
-.ad .cap b{color:var(--fg);font-weight:600}
-.pub{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--raised);border:1px solid var(--line);font-size:13px;opacity:0;transition:opacity .45s}
+.post{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#fff;box-shadow:0 1px 2px rgba(16,18,23,.05);opacity:0;transform:translateY(8px);transition:opacity .45s,transform .45s;min-width:0;font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;color:#1C2B33}
+.post.on{opacity:1;transform:none}
+.ph{display:flex;align-items:center;gap:6px;padding:7px 8px}
+.ph .pa{width:20px;height:20px;border-radius:10px;background:#E2832B;color:#fff;display:grid;place-items:center;font:700 8px var(--ui);flex:none}
+.ph div{min-width:0;flex:1;line-height:1.15}
+.ph b{display:block;font-size:10.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ph small{display:block;font-size:9.5px;color:#65676B}
+.ph i{font-style:normal;color:#65676B;font-size:11px;letter-spacing:1px}
+.vis{position:relative;aspect-ratio:4/5;overflow:hidden;background:#ddd}
+.vis svg.sc{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ov{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:8px;pointer-events:none}
+.tag{align-self:flex-start;display:inline-flex;align-items:center;gap:4px;font:600 9.5px var(--ui);color:#fff;background:rgba(0,0,0,.42);border-radius:999px;padding:2px 7px}
+.tag svg{width:8px;height:8px}
+.hook{font:700 13px/1.15 var(--display);color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.35);letter-spacing:-.01em;text-wrap:balance}
+.sub-cap{align-self:center;text-align:center;font:700 10.5px/1.3 var(--ui);color:#fff;background:rgba(0,0,0,.72);border-radius:4px;padding:3px 6px}
+.prog{position:absolute;left:8px;right:8px;bottom:5px;height:2.5px;border-radius:2px;background:rgba(255,255,255,.35);overflow:hidden}
+.prog i{display:block;height:100%;width:38%;background:#fff}
+.price{align-self:flex-end;font:700 11px var(--ui);color:#1C2B33;background:#fff;border-radius:999px;padding:3px 8px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.dots{align-self:center;display:flex;gap:4px}.dots i{width:5px;height:5px;border-radius:3px;background:rgba(255,255,255,.55)}.dots i:first-child{background:#fff}
+.n13{position:absolute;top:8px;right:8px;font:600 9.5px var(--ui);color:#fff;background:rgba(0,0,0,.42);border-radius:999px;padding:2px 7px}
+.pf{display:flex;align-items:center;gap:6px;padding:7px 8px;background:#F0F2F5}
+.pf div{min-width:0;flex:1;line-height:1.2}
+.pf small{display:block;font-size:9px;color:#65676B;text-transform:uppercase;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pf b{display:block;font-size:10.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pf span{font-size:10px;font-weight:600;background:#E4E6EB;border-radius:5px;padding:4px 7px;white-space:nowrap}
+.angle{display:flex;justify-content:space-between;padding:6px 8px 7px;font:500 10.5px var(--ui);color:var(--muted);border-top:1px solid var(--line)}
+.angle b{color:var(--fg);font-weight:600}
+.pub{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:var(--raised);border:1px solid var(--line);font-size:13px;opacity:0;transition:opacity .45s}
 .pub.on{opacity:1}
-.pub .f-ic{width:26px;height:26px;border-radius:7px;background:var(--meta);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
-.pub .st{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ok)}
+.meta-lg{width:34px;height:34px;border-radius:9px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;flex:none}
+.meta-lg svg{width:22px;height:22px}
+.pub div{min-width:0}
+.pub b{display:block;font-weight:600}
+.pub small{display:block;color:var(--dim);font-size:12px}
+.pub .st{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ok);white-space:nowrap}
 .pub .st::before{content:"";width:7px;height:7px;border-radius:4px;background:var(--ok);box-shadow:0 0 0 3px var(--ok-soft)}
 .trio{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-width:520px}
 .trio li{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--muted)}
@@ -208,12 +234,13 @@ a{color:var(--accent-ink)}
     </div>
     <div class="mock" aria-hidden="true">
       <div class="ask"><span class="me">AS</span><div class="bubble" id="typed"></div></div>
-      <div class="ads">
-        <div class="ad" id="a1"><div class="vis v1"><em>Vidéo</em><span>La bougie qui sent la maison</span></div><div class="cap"><b>Angle 1</b>9:16</div></div>
-        <div class="ad" id="a2"><div class="vis v2"><em>Image</em><span>Coulée à la main à Bordeaux</span></div><div class="cap"><b>Angle 2</b>4:5</div></div>
-        <div class="ad" id="a3"><div class="vis v3"><em>Carrousel</em><span>3 parfums pour l'automne</span></div><div class="cap"><b>Angle 3</b>1:1</div></div>
+      <div class="reply" id="rep"><span class="g-av"><svg viewBox="0 0 24 24" fill="none"><defs><linearGradient id="lgA" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2563EB"/><stop offset=".52" stop-color="#7B61FF"/><stop offset="1" stop-color="#B05CF5"/></linearGradient></defs><path d="M2.5 17 8.5 11l5 5L21.5 8M16 8h5.5v5.5" stroke="url(#lgA)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p><b>3 pubs prêtes</b>, une par angle : l'ambiance, le fait-main, la collection.</p></div>
+      <div class="ads" id="ads"></div>
+      <div class="pub" id="pub">
+        <span class="meta-lg"><svg viewBox="0 0 24 24" role="img" aria-label="Meta"><defs><linearGradient id="mG" x1="0" y1="12" x2="24" y2="12" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0064E1"/><stop offset=".55" stop-color="#0073EE"/><stop offset="1" stop-color="#0082FB"/></linearGradient></defs><path fill="url(#mG)" d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg></span>
+        <div><b>Campagne « Bougies d'automne »</b><small>Facebook et Instagram · 20 € par jour</small></div>
+        <span class="st">En diffusion</span>
       </div>
-      <div class="pub" id="pub"><span class="f-ic">f</span><div><b>Campagne « Bougies automne »</b><br><small style="color:var(--dim)">Facebook &amp; Instagram · 20 € / jour</small></div><span class="st">En diffusion</span></div>
     </div>
     <ul class="trio">
       <li><span class="n">01</span><b>Décris</b>ton produit, ton offre, ton budget</li>
@@ -241,12 +268,10 @@ const pwField=(mode,err)=>`<div class="f"><div class="f-h"><label for="pw">Mot d
 const V={
   signin:()=>`${seg("signin")}<h1>Bon retour</h1><p class="sub">Connecte-toi pour retrouver tes pubs et tes résultats.</p>
     ${google}<form class="form" style="gap:14px" id="f">${mailField()}${pwField("signin")}
-    <label class="check"><input type="checkbox" id="rem" checked> Rester connecté sur cet appareil</label>
     <button class="btn pri" type="submit">Se connecter</button></form>`,
   error:()=>`${seg("signin")}<h1>Bon retour</h1><p class="sub">Connecte-toi pour retrouver tes pubs et tes résultats.</p>
     <div class="msg bad" role="alert"><i>!</i><p><b>E-mail ou mot de passe incorrect.</b> Vérifie ta saisie, ou <button type="button" class="lnk" data-go="forgot" style="color:inherit;text-decoration:underline">choisis un nouveau mot de passe</button>.</p></div>
     ${google}<form class="form" style="gap:14px" id="f">${mailField(true)}${pwField("signin",true)}
-    <label class="check"><input type="checkbox" id="rem" checked> Rester connecté sur cet appareil</label>
     <button class="btn pri" type="submit">Se connecter</button></form>`,
   signup:()=>`${seg("signup")}<h1>Crée ton compte</h1><p class="sub">Ta première pub prête en quelques minutes.</p>
     ${google}<form class="form" style="gap:14px" id="f">${mailField()}${pwField("signup")}
@@ -275,17 +300,60 @@ function render(){
 document.querySelectorAll(".demo button").forEach(b=>b.onclick=()=>{view=b.dataset.v;render();});
 render();
 
-/* Aperçu : le prompt se tape, puis les pubs et la campagne apparaissent */
+/* Aperçu : créas dessinées (bougies Atelier Sauge, exemple), puis animation prompt → réponse → pubs → campagne */
+const CANDLE=(x,y,k,c)=>`<g transform="translate(${x} ${y}) scale(${k})">
+  <ellipse cx="0" cy="64" rx="36" ry="6" fill="#000" opacity=".2"/>
+  <rect x="-30" y="0" width="60" height="64" rx="10" fill="${c.jar}" stroke="rgba(255,255,255,.55)" stroke-width="1.5"/>
+  <rect x="-27" y="5" width="54" height="56" rx="7" fill="${c.wax}"/>
+  <ellipse cx="0" cy="6" rx="26" ry="4.5" fill="${c.top}"/>
+  <rect x="-21" y="22" width="42" height="24" rx="3" fill="#FFFDF8"/>
+  <text x="0" y="32" text-anchor="middle" font-family="Geist,Arial,sans-serif" font-size="5.6" letter-spacing="1.2" fill="${c.ink}">ATELIER</text>
+  <text x="0" y="41" text-anchor="middle" font-family="Bricolage Grotesque,Georgia,serif" font-size="8" font-weight="700" fill="${c.ink}">Sauge</text>
+  <line x1="0" y1="5" x2="0" y2="-3" stroke="#3A2A1E" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="0" cy="-12" r="17" fill="url(#glow)"/>
+  <path d="M0 -24 C6 -16 7 -10 0 -2 C-7 -10 -6 -16 0 -24Z" fill="url(#fl)"/>
+</g>`;
+const DEFS=`<defs><radialGradient id="fl" cx=".5" cy=".7" r=".6"><stop offset="0" stop-color="#FFF8D6"/><stop offset=".55" stop-color="#FFC24A"/><stop offset="1" stop-color="#FF7A1A"/></radialGradient>
+  <radialGradient id="glow"><stop offset="0" stop-color="#FFD27A" stop-opacity=".75"/><stop offset="1" stop-color="#FFD27A" stop-opacity="0"/></radialGradient></defs>`;
+const LEAF=(x,y,r,col)=>`<ellipse cx="${x}" cy="${y}" rx="9" ry="3.6" transform="rotate(${r} ${x} ${y})" fill="${col}"/>`;
+const SCENE=(b1,b2,table,body)=>`<svg class="sc" viewBox="0 0 160 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${DEFS}
+  <linearGradient id="bg${b1.slice(1)}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${b1}"/><stop offset="1" stop-color="${b2}"/></linearGradient>
+  <rect width="160" height="200" fill="url(#bg${b1.slice(1)})"/><circle cx="80" cy="96" r="70" fill="#fff" opacity=".12"/>
+  <rect y="150" width="160" height="50" fill="${table}"/>${body}</svg>`;
+const AMBER={jar:"rgba(255,236,210,.35)",wax:"#F2DEC4",top:"#E9CDAA",ink:"#5B3A26"};
+const SAGE={jar:"rgba(225,240,228,.35)",wax:"#E4EADF",top:"#D2DCCB",ink:"#2F4A3A"};
+const ROSE={jar:"rgba(255,228,234,.35)",wax:"#F6E1E4",top:"#EBCBD1",ink:"#7A3B52"};
+const POSTS=[
+  {angle:"L'ambiance",fmt:"Reels · 9:16",
+   vis:SCENE("#C98B5A","#6B3E2A","#4A2A1C",LEAF(26,160,-20,"#C8612B")+LEAF(132,166,25,"#E09A3E")+CANDLE(80,88,1,AMBER)),
+   ov:`<span class="tag"><svg viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="#fff"/></svg>Reels</span><span class="sub-cap">Ton salon sent l'automne</span><span class="prog"><i></i></span>`,
+   cta:["ateliersauge.fr","Ambre & Cèdre","Acheter"]},
+  {angle:"Le fait-main",fmt:"Image · 4:5",
+   vis:SCENE("#5E7A66","#2C3E33","#22302A",LEAF(30,162,-15,"#8FA57E")+CANDLE(80,88,1,SAGE)),
+   ov:`<span class="hook">Coulée à la main à Bordeaux</span><span class="price">24 €</span>`,
+   cta:["ateliersauge.fr","Sauge & Figue","Acheter"]},
+  {angle:"La collection",fmt:"Carrousel · 1:1",
+   vis:SCENE("#D99AAA","#8A4A60","#6A3448",CANDLE(36,104,.62,AMBER)+CANDLE(124,104,.62,SAGE)+CANDLE(80,92,.82,ROSE)),
+   ov:`<span class="hook" style="padding-right:30px">3 parfums d'automne</span><span class="dots"><i></i><i></i><i></i></span><span class="n13">1/3</span>`,
+   cta:["ateliersauge.fr","Coffret trio","Découvrir"]}
+];
+$("#ads").innerHTML=POSTS.map((p,k)=>`<div class="post" id="p${k}">
+  <div class="ph"><span class="pa">AS</span><div><b>Atelier Sauge</b><small>Sponsorisé</small></div><i>···</i></div>
+  <div class="vis">${p.vis}<div class="ov">${p.ov}</div></div>
+  <div class="pf"><div><small>${p.cta[0]}</small><b>${p.cta[1]}</b></div><span>${p.cta[2]}</span></div>
+  <div class="angle"><b>${p.angle}</b>${p.fmt}</div></div>`).join("");
+
 const PROMPT="Une pub pour mes bougies d'automne, budget 20 € par jour";
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const SEQ=["#rep","#p0","#p1","#p2","#pub"];
+const showAll=()=>{$("#typed").textContent=PROMPT;SEQ.forEach(s=>$(s).classList.add("on"));};
 function play(){
-  const el=$("#typed"); ["#a1","#a2","#a3","#pub"].forEach(s=>$(s).classList.remove("on"));
-  if(reduce){el.textContent=PROMPT;["#a1","#a2","#a3","#pub"].forEach(s=>$(s).classList.add("on"));return;}
+  const el=$("#typed"); SEQ.forEach(s=>$(s).classList.remove("on"));
   let i=0; el.innerHTML='<span class="caret"></span>';
-  const t=setInterval(()=>{i++; el.innerHTML=PROMPT.slice(0,i)+'<span class="caret"></span>'; if(i>=PROMPT.length){clearInterval(t);
-    ["#a1","#a2","#a3","#pub"].forEach((s,k)=>setTimeout(()=>$(s).classList.add("on"),500+k*450));
-    setTimeout(play,9000);}},38);
+  const t=setInterval(()=>{i++; el.innerHTML=PROMPT.slice(0,i)+'<span class="caret"></span>'; if(i>=PROMPT.length){clearInterval(t); el.textContent=PROMPT;
+    SEQ.forEach((s,k)=>setTimeout(()=>$(s).classList.add("on"),400+k*450));
+    setTimeout(play,10000);}},36);
 }
-$("#typed").textContent=PROMPT;["#a1","#a2","#a3","#pub"].forEach(s=>$(s).classList.add("on"));
-if(!reduce) setTimeout(play,3000);
+showAll();
+if(!reduce) setTimeout(play,3500);
 </script>
