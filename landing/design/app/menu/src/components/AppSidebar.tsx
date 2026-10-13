@@ -1,0 +1,168 @@
+import { useEffect, type ReactNode } from "react";
+import { Link, useRouterState } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
+import {
+  Home, LayoutDashboard, Film, Megaphone, Package, Images, MessageSquare, BarChart3,
+  Settings, HelpCircle, Plug, Clapperboard, Users, Layers, Lightbulb, PanelLeftClose, PanelLeftOpen,
+} from "lucide-react";
+import { useSidebar } from "@/components/ui/sidebar";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Logo } from "@/components/Logo";
+import { WorkspaceBrandCard } from "@/components/WorkspaceBrandCard";
+import { UsageBadge } from "@/components/UsageBadge";
+import { getMetaCredentials } from "@/lib/meta.functions";
+import { listBatches } from "@/lib/batch.functions";
+import { countNewLeadsSince } from "@/lib/leads.functions";
+import { useNewAdConversation } from "@/hooks/useNewAdConversation";
+
+/*
+ * Menu latéral, rangé dans l'ordre du travail (maquette validée : landing/design/menu/menu.html) :
+ * Accueil · Chat · Ma marque, puis « Créer » (outils et idées), puis « Mes pubs » (Créations → Campagnes →
+ * Performance → Leads, et Connexion Meta). Logo, carte workspace/marque et bloc de crédits inchangés.
+ * Le menu tient dans la hauteur de l'écran sans défiler (src/styles/gx-sidebar-fit.css).
+ */
+
+type NavItem = { title: string; url: string; to?: string; icon: typeof LayoutDashboard; tour?: string };
+
+/** Outils et idées pour créer. */
+const createItems: NavItem[] = [
+  { title: "Batch Studio", url: "/batch", icon: Layers },
+  { title: "Éditeur vidéo", url: "/editeur", icon: Clapperboard },
+  { title: "Galerie d'acteurs", url: "/galerie", icon: Images, tour: "galerie" },
+  // Vidéos Produit (/templates-produit) masquée pour le moment — remettre ici le moment venu :
+  // { title: "Vidéos Produit", url: "/templates-produit", icon: Clapperboard },
+  { title: "Inspiration", url: "/inspiration", icon: Lightbulb },
+];
+/** Tout le cycle d'une pub, puis la connexion Meta qui permet de publier. */
+const adsItems: NavItem[] = [
+  { title: "Créations", url: "/creations", icon: Film, tour: "creations" },
+  { title: "Campagnes", url: "/campaigns", icon: Megaphone, tour: "meta" },
+  { title: "Performance", url: "/performance", icon: BarChart3 },
+  { title: "Leads", url: "/resultats", icon: Users, tour: "leads" },
+  { title: "Connexion Meta", url: "/connexions", icon: Plug },
+];
+
+/** Infobulle à droite, seulement quand le menu est replié. */
+function Tip({ show, label, children }: { show: boolean; label: string; children: ReactNode }) {
+  if (!show) return <>{children}</>;
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>{children}</TooltipTrigger>
+      <TooltipContent side="right" align="center">{label}</TooltipContent>
+    </Tooltip>
+  );
+}
+
+export function AppSidebar() {
+  const { open, isMobile, setOpenMobile, toggleSidebar } = useSidebar();
+  // Sur ordinateur, le menu se replie en barre d'icônes (bouton à côté du logo, ou Ctrl/Cmd+B).
+  const collapsed = !isMobile && !open;
+  const currentPath = useRouterState({ select: (r) => r.location.pathname });
+  const isActive = (path: string) => (path === "/dashboard" ? currentPath === path : currentPath.startsWith(path));
+  const { start: startNewChat } = useNewAdConversation();
+
+  // Ferme le tiroir mobile à chaque changement de page.
+  useEffect(() => {
+    if (isMobile) setOpenMobile(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPath]);
+
+  // Indicateur discret : compte Meta Ads pas encore connecté.
+  const fetchMetaCreds = useServerFn(getMetaCredentials);
+  const metaCreds = useQuery({
+    queryKey: ["meta-credentials"],
+    queryFn: () => fetchMetaCreds(),
+    staleTime: 5 * 60_000,
+    gcTime: 30 * 60_000,
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
+  const showMetaTodo = metaCreds.isSuccess && !metaCreds.data?.connected;
+
+  // Compteurs violets de la maquette : lots en cours de fabrication, nouveaux leads du jour.
+  const fetchBatches = useServerFn(listBatches);
+  const batches = useQuery({
+    queryKey: ["batches", "list", "all"],
+    queryFn: () => fetchBatches({ data: { brandId: null } }),
+    staleTime: 60_000,
+    refetchOnWindowFocus: false,
+  });
+  const runningBatches = ((batches.data as any[]) ?? []).filter((b: any) =>
+    ["extracting", "planning", "previewing", "declining"].includes(String(b?.status))).length;
+  const fetchNewLeads = useServerFn(countNewLeadsSince);
+  const dayStart = new Date(); dayStart.setHours(0, 0, 0, 0);
+  const since = dayStart.toISOString();
+  const leads = useQuery({
+    queryKey: ["leads-new-count", since],
+    queryFn: () => fetchNewLeads({ data: { since } }),
+    staleTime: 5 * 60_000,
+    refetchOnWindowFocus: false,
+  });
+  const newLeads = Number(leads.data ?? 0);
+  const counts: Record<string, number> = { "/batch": runningBatches, "/resultats": newLeads };
+
+  const nav = (item: NavItem) => (
+    <Tip key={item.url} show={collapsed} label={item.title}>
+      <Link to={item.to ?? item.url} className="gx-nv" data-tour={item.tour} aria-current={isActive(item.url) ? "page" : undefined}>
+        <item.icon className="gx-i" aria-hidden />
+        <span>{item.title}</span>
+        {counts[item.url] > 0 ? (
+          <em title={item.url === "/batch" ? "Lots en cours" : "Nouveaux leads reçus aujourd'hui"}>
+            {counts[item.url] > 99 ? "99+" : counts[item.url]}
+          </em>
+        ) : null}
+        {item.url === "/connexions" && showMetaTodo ? (
+          <>
+            <em className="gx-warnb" title="Compte Meta Ads non connecté">0/1</em>
+            <i className="gx-ndot" aria-label="Compte Meta Ads non connecté" />
+          </>
+        ) : null}
+      </Link>
+    </Tip>
+  );
+
+  return (
+    <aside className="gx-side" aria-label="Navigation">
+      <div className="gx-brandrow">
+        <Link to="/dashboard" className="gx-brand" aria-label="Growthity">
+          {collapsed ? <Logo variant="icon" className="h-7 w-7" /> : <Logo variant="full" className="h-6 w-auto" />}
+        </Link>
+        {!isMobile && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button type="button" className="gx-colbtn" onClick={toggleSidebar} aria-label={collapsed ? "Déplier le menu" : "Replier le menu"} aria-expanded={!collapsed}>
+                {collapsed ? <PanelLeftOpen className="gx-i" aria-hidden /> : <PanelLeftClose className="gx-i" aria-hidden />}
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="right">{collapsed ? "Déplier le menu" : "Replier le menu"} · Ctrl+B</TooltipContent>
+          </Tooltip>
+        )}
+      </div>
+
+      <WorkspaceBrandCard collapsed={collapsed} />
+
+      <nav>
+        {nav({ title: "Accueil", url: "/dashboard", icon: Home })}
+        <Tip show={collapsed} label="Chat">
+          <button type="button" className="gx-nv" data-tour="chat" onClick={() => void startNewChat()} aria-current={currentPath.startsWith("/create") ? "page" : undefined}>
+            <MessageSquare className="gx-i" aria-hidden /><span>Chat</span>
+          </button>
+        </Tip>
+        {nav({ title: "Ma marque", url: "/ma-marque", icon: Package })}
+
+        <div className="gx-ng">Créer</div>
+        {createItems.map(nav)}
+
+        <div className="gx-ng">Mes pubs</div>
+        {adsItems.map(nav)}
+      </nav>
+
+      <div className="gx-grow" />
+
+      <UsageBadge collapsed={collapsed} />
+      {nav({ title: "Paramètres", url: "/parametres", to: "/parametres/profil", icon: Settings })}
+      {nav({ title: "Aide", url: "/aide", icon: HelpCircle })}
+    </aside>
+  );
+}

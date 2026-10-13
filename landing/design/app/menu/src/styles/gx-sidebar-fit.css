@@ -1,0 +1,29 @@
+/*
+ * Menu latéral : il tient dans la hauteur de l'écran, sans barre de défilement.
+ * Plus l'écran est bas, plus les lignes se resserrent (logo, carte workspace et bloc de crédits restent visibles).
+ * Filet de sécurité : sous 620 px de haut seulement (très petit écran), le menu peut défiler.
+ */
+.gx-side{overflow-y:hidden}
+
+@media (max-height:900px){
+  .gx-side .gx-nv{height:32px}
+  .gx-side .gx-ng{padding:10px 10px 3px}
+}
+@media (max-height:800px){
+  .gx-side{padding-top:10px;padding-bottom:8px}
+  .gx-side .gx-nv{height:30px;font-size:13px}
+  .gx-side .gx-nv .gx-i{width:16px;height:16px}
+  .gx-side .gx-ng{padding:8px 10px 2px;font-size:10.5px}
+  .gx-side .gx-ws{padding:5px 8px;margin-bottom:4px}
+  .gx-side .gx-credits{padding:9px 10px;margin:4px 0 6px}
+  .gx-side .gx-credits small{display:none}
+}
+@media (max-height:700px){
+  .gx-side .gx-nv{height:28px}
+  .gx-side .gx-ng{padding:6px 10px 1px}
+  .gx-side .gx-credits{padding:7px 10px}
+  .gx-side .gx-credits .gx-meter{margin:5px 0 0}
+}
+@media (max-height:620px){
+  .gx-side{overflow-y:auto;scrollbar-width:thin}
+}
