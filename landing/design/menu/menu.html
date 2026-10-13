@@ -1,0 +1,142 @@
+<title>Menu Growthity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,650;12..96,700&family=Geist:wght@400;500;600&display=swap">
+<style>
+/* Layout : comparaison côte à côte du menu latéral actuel et du menu proposé, ouverts ou repliés. Thème clair de la console. */
+:root{--bg:#F3F4F6;--surface:#FFFFFF;--raised:#F9FAFB;--sunk:#ECEEF2;--line:#E3E5EA;--line-2:#D3D6DD;--fg:#101217;--muted:#5A606D;--dim:#676D7B;--accent:#5B3FE4;--accent-soft:#EDEAFE;--accent-ink:#3F27C2;--warn:#C27409;--warn-soft:#FCF1DE;--ok:#14955A;--ok-soft:#E3F5EC;
+--display:"Bricolage Grotesque","Geist",system-ui,sans-serif;--ui:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:light}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 var(--ui)}
+.wrap{max-width:1180px;margin:0 auto;padding-block:28px 64px;padding-inline:clamp(16px,3vw,28px);display:flex;flex-direction:column;gap:20px}
+h1{margin:0;font-family:var(--display);font-weight:650;font-size:clamp(24px,3vw,32px);letter-spacing:-.02em}
+.lead{margin:4px 0 0;color:var(--muted);max-width:70ch}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;gap:2px;padding:3px;border-radius:11px;background:var(--sunk)}
+.seg button{height:32px;padding:0 14px;border:0;border-radius:8px;background:none;color:var(--muted);font:500 13.5px var(--ui);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--fg);font-weight:600;box-shadow:0 0 0 1px var(--line)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-left:auto}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.cmp{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:24px 92px;align-items:start}
+.collapsed.cmp{gap:24px 40px}
+.col{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.col h2{margin:0;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.col.new h2{color:var(--accent-ink)}
+.frame{width:236px;height:760px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 1px 2px rgba(16,18,23,.05),0 12px 32px -18px rgba(16,18,23,.22);overflow:hidden;transition:width .25s}
+.new .frame{border-color:color-mix(in srgb,var(--accent) 40%,var(--line));box-shadow:0 0 0 4px var(--accent-soft),0 12px 32px -18px rgba(16,18,23,.22)}
+.side{height:100%;display:flex;flex-direction:column;gap:2px;padding:14px 10px 12px}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 8px 12px;font-family:var(--display);font-weight:650;font-size:17px;letter-spacing:-.01em;color:var(--fg);text-decoration:none;white-space:nowrap}
+.logo{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:#0E0D14;flex:none}
+.logo svg{width:17px;height:17px}
+.dotai{color:var(--dim);font-weight:500}
+.ws{display:flex;align-items:center;gap:9px;width:100%;padding:7px 8px;margin-bottom:6px;border-radius:10px;border:1px solid var(--line);background:var(--raised);text-align:left;font:inherit;color:inherit}
+.ws .bm{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;font-size:11px;font-weight:700;color:#fff;background:#B5734A;flex:none}
+.ws b{display:block;font-size:13px;font-weight:600;line-height:1.2;white-space:nowrap}
+.ws small{display:block;font-size:11.5px;color:var(--dim);line-height:1.2;white-space:nowrap}
+.ws .i{width:15px;height:15px;margin-left:auto;color:var(--dim)}
+nav{display:flex;flex-direction:column;gap:2px}
+.ng{padding:14px 10px 4px;font-size:11px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
+.nv{position:relative;display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:9px;color:var(--muted);font-size:13.5px;font-weight:500;text-decoration:none;white-space:nowrap}
+.nv .i{width:17px;height:17px;flex:none}
+.nv span{flex:1;overflow:hidden;text-overflow:ellipsis}
+.nv:hover{background:var(--sunk);color:var(--fg)}
+.nv[aria-current="page"]{background:var(--sunk);color:var(--fg);font-weight:600}
+.nv[aria-current="page"] .i{color:var(--accent)}
+.nv[aria-current="page"]::before{content:"";position:absolute;left:-10px;top:8px;bottom:8px;width:3px;border-radius:2px;background:var(--accent)}
+.nv em{font-style:normal;font-size:11px;font-weight:600;min-width:18px;height:18px;padding:0 5px;border-radius:9px;display:grid;place-items:center;background:var(--accent);color:#fff}
+.nv i.todo{width:8px;height:8px;border-radius:4px;background:var(--warn);box-shadow:0 0 0 3px var(--warn-soft);flex:none}
+.flag{position:absolute;right:-6px;top:50%;transform:translate(100%,-50%);font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:999px;white-space:nowrap;pointer-events:none}
+.flag.moved{background:var(--accent-soft);color:var(--accent-ink)}
+.flag.renamed{background:var(--ok-soft);color:#0B7A47}
+.flag.top{background:var(--sunk);color:var(--muted)}
+.new .frame{overflow:visible}
+.grow{flex:1}
+/* replié */
+.collapsed .frame{width:64px}
+.collapsed .brand span:not(.logo),.collapsed .ws>span:not(.bm),.collapsed .ws .i,.collapsed .ng,.collapsed .nv span,.collapsed .nv em,.collapsed .flag{display:none}
+.collapsed .brand{padding:2px 7px 12px}
+.collapsed .ws{padding:6px;justify-content:center;border-color:transparent;background:none}
+.collapsed .nv{justify-content:center;padding:0}
+.collapsed .nv i.todo{position:absolute;top:7px;right:9px;width:7px;height:7px}
+.collapsed nav .ng+.nv{margin-top:10px}
+.collapsed .ng{display:block;height:1px;padding:0;margin:8px 8px 0;background:var(--line);font-size:0}
+/* explications */
+.why{display:flex;flex-direction:column;gap:12px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.card h3{margin:0 0 8px;font-family:var(--display);font-weight:650;font-size:17px}
+.flow{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.flow li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start}
+.flow li i{width:28px;height:28px;border-radius:14px;display:grid;place-items:center;background:var(--accent);color:#fff;font:600 12.5px var(--ui);font-style:normal}
+.flow b{display:block;font-weight:600}
+.flow small{display:block;color:var(--muted);font-size:13px}
+.ch{margin:0;padding-left:18px;color:var(--muted);font-size:13.5px;display:flex;flex-direction:column;gap:6px}
+.ch b{color:var(--fg);font-weight:600}
+@media (max-width:1000px){.cmp{grid-template-columns:auto auto}.why{grid-column:1/-1}}
+@media (max-width:620px){.cmp{grid-template-columns:minmax(0,1fr)}.col.cur{display:none}.flag{display:none}}
+</style>
+<div class="wrap">
+  <div><h1>Le menu, rangé dans l'ordre du travail</h1><p class="lead">À gauche le menu actuel, à droite celui que je propose. Mêmes pages, mêmes icônes : seuls l'ordre, les groupes et deux noms changent.</p></div>
+  <div class="bar">
+    <div class="seg" role="group" aria-label="Affichage du menu"><button type="button" data-m="open" aria-pressed="true">Menu ouvert</button><button type="button" data-m="collapsed" aria-pressed="false">Menu replié</button></div>
+    <div class="legend"><span><b class="flag moved" style="position:static;transform:none">déplacé</b></span><span><b class="flag renamed" style="position:static;transform:none">renommé</b></span><span><i style="width:8px;height:8px;border-radius:4px;background:var(--warn);box-shadow:0 0 0 3px var(--warn-soft);display:inline-block"></i>Meta pas encore connecté</span></div>
+  </div>
+  <div class="cmp" id="cmp">
+    <div class="col cur"><h2>Aujourd'hui</h2><div class="frame"><aside class="side" aria-label="Menu actuel"><a class="brand" href="#accueil"><span class="logo"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><linearGradient id="lgG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2563EB"/><stop offset=".52" stop-color="#7B61FF"/><stop offset="1" stop-color="#B05CF5"/></linearGradient></defs><path d="M2.5 17 8.5 11l5 5L21.5 8M16 8h5.5v5.5" stroke="url(#lgG)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>growthity<span class="dotai">.ai</span></span></a>
+<button class="ws" aria-haspopup="menu"><span class="bm">AS</span><span><b>Atelier Sauge</b><small>Workspace · 1 marque</small></span><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+<nav>
+<a class="nv" href="#" title="Accueil"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg><span>Accueil</span></a>
+<a class="nv" href="#" title="Chat" aria-current="page"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.3A8.5 8.5 0 1 1 21 12Z"/></svg><span>Chat</span></a>
+<div class="ng">Créer</div>
+<a class="nv" href="#" title="Batch Studio"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg><span>Batch Studio</span><em>1</em></a>
+<a class="nv" href="#" title="Galerie d'acteurs"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Galerie d'acteurs</span></a>
+<a class="nv" href="#" title="Créations"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg><span>Créations</span></a>
+<a class="nv" href="#" title="Inspiration"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z"/></svg><span>Inspiration</span></a>
+<a class="nv" href="#" title="Éditeur vidéo"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 10h18M8 4v6M16 4v6M10 14l4 2-4 2Z"/></svg><span>Éditeur vidéo</span></a>
+<div class="ng">Catalogue</div>
+<a class="nv" href="#" title="Ma marque"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg><span>Ma marque</span></a>
+<div class="ng">Publicités Meta</div>
+<a class="nv" href="#" title="Campagnes"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 3 9.2 10.1M22 3l-7 19-3.8-8.9L2 9.4Z"/></svg><span>Campagnes</span></a>
+<a class="nv" href="#" title="Résultats"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg><span>Résultats</span><em>3</em></a>
+<a class="nv" href="#" title="Performance"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-7"/></svg><span>Performance</span></a>
+<a class="nv" href="#" title="Connexion"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v6M15 2v6M6 8h12v3a6 6 0 0 1-12 0Z"/><path d="M12 17v5"/></svg><span>Connexion</span><i class="todo" title="Meta pas encore connecté"></i></a>
+</nav><div class="grow"></div>
+<a class="nv" href="#" title="Paramètres"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg><span>Paramètres</span></a><a class="nv" href="#" title="Aide"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01"/></svg><span>Aide</span></a></aside></div></div>
+    <div class="col new"><h2>Proposé</h2><div class="frame"><aside class="side" aria-label="Menu proposé"><a class="brand" href="#accueil"><span class="logo"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><linearGradient id="lgG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2563EB"/><stop offset=".52" stop-color="#7B61FF"/><stop offset="1" stop-color="#B05CF5"/></linearGradient></defs><path d="M2.5 17 8.5 11l5 5L21.5 8M16 8h5.5v5.5" stroke="url(#lgG)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>growthity<span class="dotai">.ai</span></span></a>
+<button class="ws" aria-haspopup="menu"><span class="bm">AS</span><span><b>Atelier Sauge</b><small>Workspace · 1 marque</small></span><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+<nav>
+<a class="nv" href="#" title="Accueil"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg><span>Accueil</span></a>
+<a class="nv" href="#" title="Chat" aria-current="page"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.3A8.5 8.5 0 1 1 21 12Z"/></svg><span>Chat</span><b class="flag top">seul en haut</b></a>
+<div class="ng">Créer</div>
+<a class="nv" href="#" title="Batch Studio"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg><span>Batch Studio</span><em>1</em></a>
+<a class="nv" href="#" title="Éditeur vidéo"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 10h18M8 4v6M16 4v6M10 14l4 2-4 2Z"/></svg><span>Éditeur vidéo</span><b class="flag moved">déplacé</b></a>
+<a class="nv" href="#" title="Galerie d'acteurs"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Galerie d'acteurs</span></a>
+<a class="nv" href="#" title="Inspiration"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z"/></svg><span>Inspiration</span></a>
+<div class="ng">Mes pubs</div>
+<a class="nv" href="#" title="Créations"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg><span>Créations</span><b class="flag moved">déplacé</b></a>
+<a class="nv" href="#" title="Campagnes"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 3 9.2 10.1M22 3l-7 19-3.8-8.9L2 9.4Z"/></svg><span>Campagnes</span></a>
+<a class="nv" href="#" title="Performance"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-7"/></svg><span>Performance</span></a>
+<a class="nv" href="#" title="Leads"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg><span>Leads</span><em>3</em><b class="flag renamed">renommé</b></a>
+<div class="ng">Ma marque</div>
+<a class="nv" href="#" title="Fiche et produits"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg><span>Fiche et produits</span><b class="flag renamed">renommé</b></a>
+<a class="nv" href="#" title="Connexion Meta"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v6M15 2v6M6 8h12v3a6 6 0 0 1-12 0Z"/><path d="M12 17v5"/></svg><span>Connexion Meta</span><i class="todo" title="Meta pas encore connecté"></i><b class="flag moved">déplacé</b></a>
+</nav><div class="grow"></div>
+<a class="nv" href="#" title="Paramètres"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg><span>Paramètres</span></a><a class="nv" href="#" title="Aide"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01"/></svg><span>Aide</span></a></aside></div></div>
+    <div class="why">
+      <div class="card"><h3>On lit le menu comme on travaille</h3><ol class="flow">
+        <li><i>1</i><div><b>Créer</b><small>Le Chat en premier, puis les outils : Batch Studio, Éditeur vidéo, et les idées : acteurs, inspiration.</small></div></li>
+        <li><i>2</i><div><b>Mes pubs</b><small>Tout le cycle d'une pub : Créations → Campagnes → Performance → Leads.</small></div></li>
+        <li><i>3</i><div><b>Ma marque</b><small>Ce qu'on règle une fois : la fiche, les produits et la connexion Meta (point orange tant qu'elle manque).</small></div></li>
+      </ol></div>
+      <div class="card"><h3>Ce qui change</h3><ul class="ch">
+        <li><b>Créations</b> quitte « Créer » pour ouvrir « Mes pubs » : c'est la page la plus consultée après le Chat.</li>
+        <li><b>Résultats</b> devient <b>Leads</b> : on ne la confond plus avec Performance.</li>
+        <li>Le groupe « Catalogue » à une seule page disparaît : <b>Ma marque</b> devient un groupe avec <b>Fiche et produits</b> et <b>Connexion Meta</b>.</li>
+        <li><b>Éditeur vidéo</b> remonte à côté de Batch Studio : les deux outils de création sont ensemble.</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+<script>
+document.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));document.getElementById("cmp").classList.toggle("collapsed",b.dataset.m==="collapsed");});
+document.querySelectorAll(".nv").forEach(a=>a.addEventListener("click",e=>e.preventDefault()));
+</script>
