@@ -1,0 +1,66 @@
+/* Chat : rangée de contexte au-dessus de la saisie (marque + pièces jointes)
+   et en-tête de la liste des conversations. Chargé APRÈS gx-ux-fixes.css. */
+
+/* 1. La classe .gx-att est définie deux fois dans gx-console.css : petite puce
+   de 30 px avec bordure (accueil) ET conteneur des pièces jointes. Dans le Chat,
+   le conteneur ne doit garder aucune hauteur, bordure ni marge de la puce. */
+.gx-chatv .gx-m .gx-att,
+.gx-chatv .gx-att-w .gx-att{height:auto;padding:0;border:0;border-radius:0;color:inherit;font-size:inherit}
+.gx-chatv .gx-m .gx-att:hover,
+.gx-chatv .gx-att-w .gx-att:hover{border-color:transparent;color:inherit}
+
+/* 2. Rangée de contexte : pastille Marque puis pièces jointes, sur une seule
+   rangée qui passe à la ligne. Remplace .gx-att-w (et le .gx-cbrand isolé). */
+.gx-ctx{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:0 16px 8px;min-width:0}
+.gx-ctx .gx-cbrand{display:contents}
+.gx-ctx .gx-cbrand-p{height:36px;padding:0 12px 0 10px;background:var(--gx-raised)}
+.gx-ctx-sep{width:1px;height:20px;background:var(--gx-line);margin:0 2px;flex:none}
+.gx-ctx-l{font-size:11px;font-weight:600;color:var(--gx-dim);padding:0 2px;flex:none}
+.gx-ctx-full{flex-basis:100%;min-width:0}
+.gx-ctx-full > *{max-width:100%}
+
+/* Puce de pièce jointe (AttachChip) */
+.gx-ac{display:inline-flex;align-items:center;gap:8px;height:36px;max-width:240px;min-width:0;padding:3px 4px 3px 3px;border:1px solid var(--gx-line-2);border-radius:10px;background:var(--gx-raised);color:var(--gx-fg);font-size:12.5px;line-height:1.2;flex:none}
+.gx-ac:hover{border-color:color-mix(in srgb,var(--gx-accent) 40%,var(--gx-line-2))}
+.gx-ac-th{width:28px;height:28px;border-radius:7px;overflow:hidden;flex:none;background:var(--gx-sunk);display:block}
+.gx-ac-th img,.gx-ac-th video{width:100%;height:100%;object-fit:cover;display:block}
+.gx-ac-ic{display:grid;place-items:center;color:var(--gx-accent-ink);background:var(--gx-accent-soft)}
+.gx-ac-ic .gx-i{width:14px;height:14px}
+.gx-ac-tx{display:flex;flex-direction:column;justify-content:center;gap:1px;min-width:0;flex:1}
+.gx-ac-k{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--gx-dim);white-space:nowrap}
+.gx-ac-n{min-width:0;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
+.gx-ac-x{width:22px;height:22px;flex:none;display:grid;place-items:center;border-radius:6px;color:var(--gx-dim)}
+.gx-ac-x:hover{background:var(--gx-sunk);color:var(--gx-fg)}
+.gx-ac-x .gx-i{width:13px;height:13px}
+.gx-ac-x:focus-visible{outline:2px solid var(--gx-accent);outline-offset:1px}
+/* Variante pleine largeur : réponse à un message, audio avec lecteur */
+.gx-ac.gx-ac-wide{flex-basis:100%;max-width:100%;height:auto;min-height:36px}
+.gx-ac.gx-ac-wide .gx-ac-n{max-width:none}
+.gx-ac-wide .gx-att-au{display:block;margin-top:4px;height:28px;width:220px;max-width:100%}
+.gx-ac.gx-ac-reply{border-color:color-mix(in srgb,var(--gx-accent) 35%,transparent);background:var(--gx-accent-soft)}
+.gx-ac.gx-ac-reply .gx-ac-k{color:var(--gx-accent-ink)}
+.gx-ac.gx-ac-reply .gx-ac-ic{background:transparent}
+
+/* Rappel sous la saisie : aligné sur le champ */
+.gx-chatv .gx-cbrand-h{margin:6px 16px 0;padding-bottom:2px}
+
+@media (max-width:899px){
+  .gx-ctx{padding:0 12px 8px}
+  .gx-ctx .gx-cbrand-p{flex:none;max-width:100%}
+  .gx-ctx-sep{display:none}
+  .gx-ac{max-width:calc(50% - 3px);flex:0 1 auto}
+  .gx-ac-n{max-width:none}
+  .gx-chatv .gx-cbrand-h{margin:6px 12px 0}
+}
+
+/* 3. En-tête de la liste des conversations : titre, marque en dessous, actions à droite */
+.gx-convs .gx-cv-h{align-items:flex-start;gap:8px;padding:2px 4px 10px}
+.gx-convs .gx-cv-h .gx-cv-ht{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0;flex:1;overflow:hidden}
+.gx-convs .gx-cv-h .gx-cv-ht > b{font-size:14px;font-weight:600;line-height:20px;color:var(--gx-fg)}
+.gx-convs .gx-cv-hb{display:flex;align-items:center;gap:6px;max-width:100%;min-width:0;font-size:12px;font-weight:500;line-height:16px;color:var(--gx-muted)}
+.gx-convs .gx-cv-hb .gx-i{width:13px;height:13px;flex:none}
+.gx-convs .gx-cv-ha{display:flex;align-items:center;gap:4px;flex:none}
+
+/* Groupes : lien « N dossiers vides » discret */
+.gx-cv-ev{display:block;width:100%;text-align:left;padding:4px 8px 6px;font-size:11.5px;color:var(--gx-dim)}
+.gx-cv-ev:hover{color:var(--gx-fg)}
