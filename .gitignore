@@ -10,3 +10,6 @@ video/out/vstills/
 video/out/render-v-30fps.mp4
 video/out/v-part*.mp4
 video/out/vparts.txt
+video/out/v-part*.mp4
+video/out/v-pub.mp4
+video/out/render-v-30fps-fixed.mp4

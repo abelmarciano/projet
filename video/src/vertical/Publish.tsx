@@ -9,7 +9,7 @@ import {C, DISPLAY, FONT, GRAD} from '../theme';
 import {SAFE, SAFE_CX} from './safe';
 
 const CLICK = 92;
-const CARD_TOP = 560;
+const CARD_TOP = 545;
 
 const Row: React.FC<{label: string; children: React.ReactNode; o: number}> = ({label, children, o}) => (
   <div
@@ -33,7 +33,7 @@ export const PublishV: React.FC = () => {
   const card = prog(f, 10, 28);
   const live = f >= CLICK + 6;
   const cx = interpolate(f, [52, 86], [980, 560], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
-  const cy = interpolate(f, [52, 86], [1600, 1140], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
+  const cy = interpolate(f, [52, 86], [1600, 1062], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
   const press = f >= CLICK ? prog(f, CLICK, 16) : 0;
   const burst = prog(f, CLICK + 4, 26);
   const stats = pop(f, CLICK + 26, 14);
@@ -47,7 +47,7 @@ export const PublishV: React.FC = () => {
           words={[{t: 'En'}, {t: 'ligne'}, {t: 'sur'}, {t: 'Meta', grad: 'brand', br: true}, {t: 'en'}, {t: 'un'}, {t: 'clic.'}]}
           start={8}
           stagger={3}
-          style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 96, lineHeight: 1.04, color: C.ink}}
+          style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 80, lineHeight: 1.04, color: C.ink}}
         />
         <div style={{display: 'flex', gap: 14, marginTop: 22, opacity: prog(f, 30, 20)}}>
           {['Facebook', 'Instagram'].map((p) => (
@@ -150,7 +150,7 @@ export const PublishV: React.FC = () => {
           style={{
             position: 'absolute',
             left: SAFE_CX,
-            top: 1230,
+            top: 1190,
             transform: `translateX(-50%) scale(${stats}) rotate(${(1 - stats) * -6}deg)`,
             opacity: Math.min(1, stats * 1.5),
           }}
