@@ -1,0 +1,559 @@
+<title>Ma marque Growthity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@500&family=Fraunces:opsz,wght@9..144,600&family=Karla:wght@400;500&display=swap">
+<style>
+/* Layout : page « Ma marque » de la console. En-tête = carte d'identité de la marque (logo, nom, site, sélecteur de marque, complétude, analyse).
+   Onglets Fiche / Produits / Concurrents. Fiche : sections éditables à gauche, aperçu « ce que Growthity sait » collant à droite. Thème clair de la console. */
+:root{
+  --bg:#F3F4F6; --surface:#FFFFFF; --raised:#F9FAFB; --sunk:#ECEEF2; --line:#E3E5EA; --line-2:#D3D6DD;
+  --fg:#101217; --muted:#5A606D; --dim:#676D7B;
+  --accent:#5B3FE4; --accent-soft:#EDEAFE; --accent-ink:#3F27C2; --pri-h:#4A2FD2;
+  --ok:#14955A; --ok-soft:#E3F5EC; --ok-ink:#0B7A47; --warn:#C27409; --warn-soft:#FCF1DE; --warn-ink:#9A5A00; --bad:#D9383E; --bad-soft:#FCE8E8;
+  --grad:linear-gradient(120deg,#2563EB 0%,#5B3FE4 52%,#9333EA 100%);
+  --shadow:0 1px 2px rgba(16,18,23,.05),0 12px 32px -18px rgba(16,18,23,.22);
+  --display:"Bricolage Grotesque","Geist",system-ui,sans-serif;
+  --ui:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Geist Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 var(--ui)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--accent-ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+p{margin:0}
+.demo{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 16px;background:var(--fg);color:#fff;font-size:12.5px}
+.demo b{font-weight:600;opacity:.7;margin-right:4px}
+.demo button{border:1px solid rgba(255,255,255,.18);background:transparent;color:#fff;border-radius:999px;padding:4px 11px;font-size:12.5px}
+.demo button[aria-pressed="true"]{background:#fff;color:var(--fg);border-color:#fff}
+
+.top{display:flex;align-items:center;gap:10px;height:57px;padding-inline:24px;border-bottom:1px solid var(--line)}
+.crumb{font-weight:600}.crumb small{font-weight:500;color:var(--dim);margin-right:6px}
+
+.page{max-width:1260px;margin:0 auto;padding-block:24px 72px;padding-inline:clamp(16px,3vw,28px);display:flex;flex-direction:column;gap:18px}
+
+/* ---------- En-tête : carte d'identité ---------- */
+.hero{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:20px 22px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:18px 22px;align-items:center}
+.hlogo{width:68px;height:68px;border-radius:16px;border:1px solid var(--line);background:#F7F1EA;display:grid;place-items:center;overflow:hidden}
+.hlogo svg{width:52px;height:52px}
+.hid{min-width:0;display:flex;flex-direction:column;gap:6px}
+.hname{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.hname h1{margin:0;font-family:var(--display);font-weight:650;font-size:clamp(24px,2.6vw,30px);letter-spacing:-.02em;line-height:1.1}
+.switch{position:relative}
+.sw-btn{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:999px;border:1px solid var(--line);background:var(--raised);font-size:12.5px;font-weight:500;color:var(--muted)}
+.sw-btn:hover{color:var(--fg);border-color:var(--line-2)}
+.sw-btn svg{width:13px;height:13px}
+.menu{position:absolute;top:calc(100% + 6px);left:0;z-index:20;width:260px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 40px -16px rgba(16,18,23,.35);padding:6px}
+.menu .mh{padding:6px 10px 4px;font-size:11px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+.menu button,.menu a{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:0;border-radius:8px;background:none;text-align:left;font-size:13.5px;text-decoration:none;color:var(--fg)}
+.menu button:hover,.menu a:hover{background:var(--sunk)}
+.menu .bi{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-size:10.5px;font-weight:700;color:#fff;flex:none}
+.menu .ck{margin-left:auto;color:var(--accent)}
+.menu hr{border:0;border-top:1px solid var(--line);margin:6px 0}
+.hsite{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.site-in{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px;border:1px solid var(--line);border-radius:9px;background:var(--raised);min-width:0}
+.site-in svg{width:14px;height:14px;color:var(--dim);flex:none}
+.site-in input{border:0;background:none;outline:none;width:180px;max-width:100%;font-size:13px;padding:0}
+.site-in:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.hstat{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.hstat span{display:inline-flex;align-items:center;gap:6px}
+.hstat i{width:7px;height:7px;border-radius:4px;background:var(--ok)}
+.hstat i.run{background:var(--accent);animation:pulse 1.2s ease-in-out infinite}
+.hstat i.off{background:var(--line-2)}
+@keyframes pulse{50%{opacity:.3}}
+.hright{display:flex;align-items:center;gap:16px}
+.ring{--p:78;width:64px;height:64px;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--sunk) 0);display:grid;place-items:center;flex:none}
+.ring b{width:50px;height:50px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font:600 14px var(--mono)}
+.hcta{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.hcta small{font-size:12px;color:var(--dim)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 14px;border-radius:10px;border:1px solid var(--line-2);background:var(--surface);font-weight:600;font-size:13px;white-space:nowrap;text-decoration:none;color:var(--fg)}
+.btn:hover{border-color:var(--fg)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.pri:hover{background:var(--pri-h);border-color:var(--pri-h)}
+.btn.sm{height:30px;padding:0 11px;font-size:12.5px;border-radius:9px}
+.btn.ghost{border-color:transparent;background:none;color:var(--muted)}
+.btn.ghost:hover{color:var(--fg);background:var(--sunk)}
+.btn[disabled]{opacity:.55;cursor:default}
+.btn svg{width:15px;height:15px}
+
+/* Progression d'analyse (remplace la barre bloquée à 4 %) */
+.job{background:var(--surface);border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.job-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.job-h b{font-weight:600}
+.job-h small{color:var(--dim);margin-left:auto}
+.bar{height:6px;border-radius:3px;background:var(--sunk);overflow:hidden}
+.bar i{display:block;height:100%;width:58%;background:var(--accent);border-radius:3px;transition:width .4s}
+.steps{display:flex;flex-wrap:wrap;gap:6px}
+.steps span{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px 0 6px;border-radius:999px;border:1px solid var(--line);background:var(--raised);font-size:12px;color:var(--muted)}
+.steps span i{width:16px;height:16px;border-radius:8px;display:grid;place-items:center;font-style:normal;font-size:10px;font-weight:700;background:var(--sunk);color:var(--dim)}
+.steps span.done i{background:var(--ok);color:#fff}
+.steps span.cur{border-color:var(--accent);color:var(--fg);font-weight:500}
+.steps span.cur i{background:var(--accent);color:#fff}
+.steps span em{font-style:normal;color:var(--dim);font-family:var(--mono);font-size:11px}
+
+/* Onglets */
+.tabs{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.seg{display:inline-flex;gap:2px;padding:3px;border-radius:11px;background:var(--sunk)}
+.seg button{height:32px;padding:0 14px;border:0;border-radius:8px;background:none;color:var(--muted);font-size:13.5px;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.seg button[aria-selected="true"]{background:var(--surface);color:var(--fg);font-weight:600;box-shadow:0 1px 2px rgba(16,18,23,.08),0 0 0 1px var(--line)}
+.seg em{font-style:normal;font:500 11.5px var(--mono);color:var(--dim)}
+.seg .soon{font:600 10.5px var(--ui);color:var(--accent-ink);background:var(--accent-soft);border-radius:999px;padding:1px 6px}
+.saved{margin-left:auto;font-size:12.5px;color:var(--ok-ink);display:inline-flex;align-items:center;gap:6px;opacity:0;transition:opacity .3s}
+.saved.on{opacity:1}
+
+/* ---------- Fiche ---------- */
+.fiche{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;align-items:start}
+.col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+.sec-h{display:flex;align-items:baseline;gap:10px}
+.sec-h h2{margin:0;font-family:var(--display);font-weight:650;font-size:18px;letter-spacing:-.01em}
+.sec-h small{color:var(--dim);font-size:12.5px}
+.sec-h .r{margin-left:auto}
+
+/* À valider */
+.todo{border-color:color-mix(in srgb,var(--accent) 35%,var(--line));background:linear-gradient(180deg,var(--accent-soft),var(--surface) 140px)}
+.props{display:flex;flex-direction:column;gap:8px}
+.prop{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 14px;align-items:center;padding:12px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.prop .k{font-size:12px;font-weight:600;color:var(--dim);display:flex;align-items:center;gap:8px}
+.ia{font-size:10.5px;font-weight:600;color:var(--accent-ink);background:var(--accent-soft);border-radius:999px;padding:1px 7px}
+.prop .v{font-size:14px;margin-top:2px}
+.prop .acts{display:flex;gap:6px}
+.prop.gone{opacity:0;transform:translateX(8px);transition:opacity .25s,transform .25s}
+
+/* Champs */
+.fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px}
+.f{display:flex;flex-direction:column;gap:5px;min-width:0}
+.f.full{grid-column:1/-1}
+.f label{font-size:12.5px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:6px}
+.f label .ia{margin-left:auto}
+.f input,.f textarea,.f select{width:100%;border:1px solid var(--line);border-radius:10px;background:var(--raised);padding:9px 11px;font-size:14px;transition:border-color .15s,background .15s,box-shadow .15s;resize:vertical}
+.f input:hover,.f textarea:hover{border-color:var(--line-2)}
+.f input:focus,.f textarea:focus,.f select:focus{outline:none;border-color:var(--accent);background:var(--surface);box-shadow:0 0 0 3px var(--accent-soft)}
+.f input::placeholder,.f textarea::placeholder{color:#9AA0AB}
+.f .empty{border-style:dashed;background:var(--surface)}
+.f small{font-size:12px;color:var(--dim)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:40px;padding:5px 6px;border:1px solid var(--line);border-radius:10px;background:var(--raised)}
+.chips:focus-within{border-color:var(--accent);background:var(--surface);box-shadow:0 0 0 3px var(--accent-soft)}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 6px 0 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:13px}
+.chip button{width:18px;height:18px;border:0;border-radius:9px;background:none;color:var(--dim);display:grid;place-items:center;font-size:13px;line-height:1}
+.chip button:hover{background:var(--sunk);color:var(--fg)}
+.chip.no{background:var(--bad-soft);border-color:transparent;color:#9B2328}
+.chips input{border:0!important;background:none!important;box-shadow:none!important;padding:4px!important;flex:1;min-width:120px;font-size:13px!important}
+.segf{display:inline-flex;flex-wrap:wrap;gap:2px;padding:3px;border-radius:10px;background:var(--sunk)}
+.segf button{height:30px;padding:0 12px;border:0;border-radius:7px;background:none;color:var(--muted);font-size:13px}
+.segf button[aria-pressed="true"]{background:var(--surface);color:var(--fg);font-weight:600;box-shadow:0 0 0 1px var(--line)}
+.proofs{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.proofs li{display:flex;gap:10px;align-items:flex-start;padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:var(--raised);font-size:13.5px}
+.proofs li::before{content:"“";font:700 20px/1 var(--display);color:var(--accent)}
+.proofs li span{flex:1}
+
+/* Identité visuelle */
+.logos{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.lg{width:72px;height:72px;border-radius:14px;border:1px solid var(--line);background:#F7F1EA;display:grid;place-items:center;padding:8px;position:relative}
+.lg svg{width:100%;height:100%}
+.lg[aria-pressed="true"]{border:2px solid var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.lg[aria-pressed="true"]::after{content:"✓";position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:10px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+.lg.dark{background:#2A2320}
+.lg-up{width:72px;height:72px;border-radius:14px;border:1.5px dashed var(--line-2);background:var(--surface);display:grid;place-items:center;color:var(--dim);font-size:11.5px;text-align:center;line-height:1.25}
+.colors{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.sw{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);position:relative}
+.sw .c{height:58px;position:relative}
+.sw input[type=color]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;border:0;padding:0}
+.sw div.t{padding:8px 10px;display:flex;flex-direction:column;gap:1px}
+.sw b{font-size:12.5px;font-weight:600}
+.sw small{font:500 11.5px var(--mono);color:var(--dim)}
+.sw .ded{font:500 10.5px var(--ui);color:var(--warn-ink)}
+.fonts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fo{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:14px;background:var(--raised)}
+.fo .aa{font-size:30px;line-height:1;width:44px;text-align:center}
+.fo div{min-width:0;flex:1}
+.fo small{display:block;font-size:12px;color:var(--dim)}
+.fo input{border:0;background:none;padding:0;font-size:14px;font-weight:600;width:100%}
+.fo input:focus{outline:none;box-shadow:0 1px 0 var(--accent)}
+
+.adv summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px}
+.adv summary::-webkit-details-marker{display:none}
+.adv summary::after{content:"+";margin-left:auto;color:var(--dim);font-size:16px}
+.adv[open] summary::after{content:"−"}
+.adv[open] summary{margin-bottom:14px}
+.key{display:flex;gap:8px}
+.key input{flex:1}
+
+/* Aperçu collant */
+.aside{position:sticky;top:16px;display:flex;flex-direction:column;gap:14px}
+.card-p{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.bp-top{height:76px;background:linear-gradient(120deg,#B5734A,#6B3E2A);position:relative}
+.bp-logo{position:absolute;left:16px;bottom:-22px;width:52px;height:52px;border-radius:14px;background:#F7F1EA;border:3px solid var(--surface);display:grid;place-items:center}
+.bp-logo svg{width:38px;height:38px}
+.bp{padding:30px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.bp h3{margin:0;font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:20px;color:#3A2418}
+.bp q{font-family:"Karla",var(--ui);font-size:14px;color:#4A3A30;quotes:"« " " »"}
+.bp .dots{display:flex;gap:6px}
+.bp .dots i{width:20px;height:20px;border-radius:6px;border:1px solid rgba(0,0,0,.08)}
+.bp .tone{display:flex;gap:6px;flex-wrap:wrap}
+.bp .tone span{font-size:12px;padding:2px 9px;border-radius:999px;background:#F7F1EA;color:#6B3E2A;font-weight:500}
+.bp small{font-size:12px;color:var(--dim)}
+.miss{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.miss h4{margin:0;font-size:13px;font-weight:600}
+.miss ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px}
+.miss li a{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;text-decoration:none;color:var(--fg);font-size:13px}
+.miss li a:hover{background:var(--sunk)}
+.miss li a i{width:16px;height:16px;border-radius:8px;border:1.5px dashed var(--line-2);flex:none}
+.miss li a span{margin-left:auto;color:var(--accent-ink);font-size:12px;font-weight:600}
+.miss p{font-size:12.5px;color:var(--dim)}
+
+/* ---------- Produits ---------- */
+.ptool{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.addrow{display:flex;gap:8px;flex-wrap:wrap}
+.addin{flex:1;min-width:220px;display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border:1px solid var(--line-2);border-radius:10px;background:var(--surface)}
+.addin:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.addin svg{width:16px;height:16px;color:var(--dim)}
+.addin input{flex:1;border:0;outline:none;background:none;font-size:14px;min-width:0}
+.prow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.prow .sp{flex:1}
+.srch{display:flex;align-items:center;gap:8px;height:34px;padding:0 10px;border:1px solid var(--line);border-radius:10px;background:var(--raised);min-width:200px}
+.srch svg{width:14px;height:14px;color:var(--dim)}
+.srch input{border:0;outline:none;background:none;font-size:13px;flex:1;min-width:0}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.pc{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .15s,border-color .15s}
+.pc:hover{border-color:var(--line-2);box-shadow:var(--shadow)}
+.pc.ret{opacity:.6}
+.pimg{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--sunk)}
+.pimg>svg{position:absolute;inset:0;width:100%;height:100%}
+.ptags{position:absolute;top:8px;left:8px;display:flex;gap:6px;flex-wrap:wrap}
+.ptags span{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.92);color:var(--fg)}
+.ptags .promo{background:#D9383E;color:#fff}
+.ptags .ret{background:var(--fg);color:#fff}
+.star{position:absolute;top:8px;right:8px;width:32px;height:32px;border-radius:16px;border:0;background:rgba(255,255,255,.92);display:grid;place-items:center;color:var(--dim);box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.star svg{width:16px;height:16px}
+.star[aria-pressed="true"]{background:var(--accent);color:#fff}
+.pnph{position:absolute;bottom:8px;left:8px;font:500 11px var(--ui);color:#fff;background:rgba(0,0,0,.45);border-radius:999px;padding:2px 8px}
+.pb{padding:12px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.pb b{font-weight:600;line-height:1.3}
+.price{display:flex;align-items:baseline;gap:8px;font-size:14px}
+.price strong{font-weight:600}
+.price s{color:var(--dim);font-size:13px}
+.price .none{color:var(--dim);font-size:13px}
+.pmeta{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dim);flex-wrap:wrap}
+.pmeta .cp{display:inline-flex;align-items:center;gap:5px}
+.pmeta .cp i{width:28px;height:4px;border-radius:2px;background:var(--sunk);overflow:hidden;display:inline-block}
+.pmeta .cp i b{display:block;height:100%;background:var(--ok);border-radius:2px}
+.flags{font-size:12px;color:var(--muted)}
+.pf{display:flex;align-items:center;gap:6px;padding:8px 10px;border-top:1px solid var(--line)}
+.pf a{font-size:12.5px;font-weight:500;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:5px;padding:4px 6px;border-radius:7px}
+.pf a:hover{color:var(--fg);background:var(--sunk)}
+.pf .sp{flex:1}
+.pf a svg{width:14px;height:14px}
+.empty-s{background:var(--surface);border:1px dashed var(--line-2);border-radius:14px;padding:40px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.empty-s .ei{width:52px;height:52px;border-radius:14px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.empty-s .ei svg{width:26px;height:26px}
+.empty-s h3{margin:0;font-family:var(--display);font-weight:650;font-size:20px}
+.empty-s p{color:var(--muted);max-width:52ch}
+
+/* Concurrents */
+.soonc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px}
+.soonc h3{margin:6px 0 8px;font-family:var(--display);font-weight:650;font-size:24px;letter-spacing:-.015em}
+.soonc p{color:var(--muted)}
+.ghosts{display:flex;flex-direction:column;gap:8px}
+.ghost-r{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--raised)}
+.ghost-r i{width:34px;height:34px;border-radius:9px;background:var(--sunk)}
+.ghost-r div{flex:1;display:flex;flex-direction:column;gap:5px}
+.ghost-r div span{height:8px;border-radius:4px;background:var(--sunk)}
+.ghost-r div span+span{width:60%}
+.ghost-r em{font-style:normal;font-size:11.5px;color:var(--dim)}
+
+.toast{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));padding:10px 14px;border-radius:12px;background:var(--fg);color:#fff;font-size:13px;font-weight:500;box-shadow:0 20px 40px -16px rgba(0,0,0,.5);transform:translateY(16px);opacity:0;transition:all .25s;pointer-events:none;z-index:40}
+.toast.on{transform:none;opacity:1}
+
+@media (max-width:1080px){.fiche{grid-template-columns:minmax(0,1fr)}.aside{position:static;order:-1}.card-p{display:none}}
+@media (max-width:760px){
+  .hero{grid-template-columns:auto minmax(0,1fr)}.hright{grid-column:1/-1;justify-content:space-between}
+  .fgrid,.fonts{grid-template-columns:minmax(0,1fr)}.colors{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .soonc{grid-template-columns:minmax(0,1fr)}.prop{grid-template-columns:minmax(0,1fr)}
+  .top{padding-inline:16px}
+}
+@media (prefers-reduced-motion:reduce){.hstat i.run{animation:none}}
+</style>
+
+<div class="demo" role="toolbar" aria-label="États de la maquette">
+  <b>Maquette</b>
+  <button type="button" data-d="normal" aria-pressed="true">Marque analysée</button>
+  <button type="button" data-d="running" aria-pressed="false">Analyse en cours</button>
+  <button type="button" data-d="new" aria-pressed="false">Nouvelle marque</button>
+</div>
+
+<header class="top"><div class="crumb"><small>Catalogue /</small>Ma marque</div></header>
+
+<main class="page">
+  <section class="hero" aria-label="Identité de la marque">
+    <span class="hlogo" id="hlogo"></span>
+    <div class="hid">
+      <div class="hname">
+        <h1 id="bname">Atelier Sauge</h1>
+        <div class="switch">
+          <button type="button" class="sw-btn" id="swb" aria-haspopup="menu" aria-expanded="false">Changer de marque<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="menu" id="swm" role="menu" hidden>
+            <div class="mh">Marques de ce workspace</div>
+            <button type="button" role="menuitem"><span class="bi" style="background:#B5734A">AS</span>Atelier Sauge<span class="ck">✓</span></button>
+            <button type="button" role="menuitem"><span class="bi" style="background:#2F4A3A">MI</span>Maison Ilara</button>
+            <button type="button" role="menuitem"><span class="bi" style="background:#3B5BDB">CP</span>Caleb Paris</button>
+            <hr>
+            <button type="button" role="menuitem">＋ Nouvelle marque</button>
+            <a href="#" role="menuitem">Gérer les marques</a>
+          </div>
+        </div>
+      </div>
+      <div class="hsite">
+        <label class="site-in" title="Site web de la marque : sert à l'analyse et à la lecture du catalogue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+          <input id="site" value="ateliersauge.fr" aria-label="Site web de la marque" placeholder="Ajoute le site de ta marque">
+        </label>
+        <span>Shopify · Français · vend en France, Belgique, Suisse</span>
+      </div>
+      <div class="hstat" id="hstat"></div>
+    </div>
+    <div class="hright">
+      <div class="ring" id="ring" style="--p:78"><b id="pct">78 %</b></div>
+      <div class="hcta">
+        <button type="button" class="btn pri" id="analyse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></svg><span>Réanalyser mon site</span></button>
+        <small id="hint-an">Tes modifications ne sont jamais écrasées.</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="job" id="job" hidden aria-live="polite">
+    <div class="job-h"><b>Analyse de ta marque en cours…</b><small>Tu peux continuer à créer pendant ce temps.</small></div>
+    <div class="bar"><i id="jbar"></i></div>
+    <div class="steps">
+      <span class="done"><i>✓</i>Lecture du site <em>12 pages lues</em></span>
+      <span class="done"><i>✓</i>Logo <em>3 proposés</em></span>
+      <span class="done"><i>✓</i>Couleurs</span>
+      <span class="cur"><i>4</i>Ton</span>
+      <span><i>5</i>Produits <em>34/146</em></span>
+      <span><i>6</i>Langues</span>
+    </div>
+  </section>
+
+  <div class="tabs">
+    <div class="seg" role="tablist" aria-label="Sections de la marque">
+      <button type="button" role="tab" aria-selected="true" data-t="fiche">Fiche</button>
+      <button type="button" role="tab" aria-selected="false" data-t="produits">Produits <em id="pcount">12</em></button>
+      <button type="button" role="tab" aria-selected="false" data-t="conc">Concurrents <span class="soon">Bientôt</span></button>
+    </div>
+    <span class="saved" id="saved">✓ Enregistré</span>
+  </div>
+
+  <div id="view"></div>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+let demo="normal", tab="fiche";
+const LOGO=(dark)=>`<svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="27" fill="none" stroke="${dark?"#F2DEC4":"#6B3E2A"}" stroke-width="2"/><path d="M30 14c5 6 6 10 0 16-6-6-5-10 0-16z" fill="${dark?"#E9A85B":"#C98B5A"}"/><text x="30" y="43" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="9.5" font-weight="600" fill="${dark?"#F2DEC4":"#3A2418"}">Sauge</text></svg>`;
+const LOGO2=`<svg viewBox="0 0 60 60" aria-hidden="true"><text x="30" y="27" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="10" font-weight="600" fill="#3A2418">ATELIER</text><text x="30" y="40" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="12" font-weight="600" fill="#B5734A">Sauge</text></svg>`;
+const LOGO3=`<svg viewBox="0 0 60 60" aria-hidden="true"><rect x="10" y="10" width="40" height="40" rx="10" fill="#6B3E2A"/><text x="30" y="36" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="16" font-weight="600" fill="#F7F1EA">AS</text></svg>`;
+const I=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const toast=m=>{const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("on"),1800);};
+const saved=()=>{const s=$("#saved");s.classList.add("on");clearTimeout(s._t);s._t=setTimeout(()=>s.classList.remove("on"),1400);};
+
+/* ---------- Données d'exemple (marque fictive) ---------- */
+const COLORS=[["Couleur principale","#B5734A",false],["Couleur secondaire","#2F4A3A",true],["Couleur du texte","#3A2418",false],["Couleur de fond","#F7F1EA",false]];
+let PROPS=[
+  {k:"Promesse",ia:true,v:"Des bougies coulées à la main qui font de chaque soirée un moment à soi."},
+  {k:"Problèmes du client",ia:true,v:"Bougies industrielles qui sentent le chimique · Cadeaux impersonnels"},
+  {k:"Couleur secondaire",ia:false,v:"#2F4A3A"}
+];
+const CANDLE=(x,y,k,c)=>`<g transform="translate(${x} ${y}) scale(${k})"><ellipse cx="0" cy="64" rx="36" ry="6" fill="#000" opacity=".18"/><rect x="-30" y="0" width="60" height="64" rx="10" fill="${c[0]}" stroke="rgba(255,255,255,.55)" stroke-width="1.5"/><rect x="-27" y="5" width="54" height="56" rx="7" fill="${c[1]}"/><ellipse cx="0" cy="6" rx="26" ry="4.5" fill="${c[2]}"/><rect x="-21" y="22" width="42" height="24" rx="3" fill="#FFFDF8"/><text x="0" y="32" text-anchor="middle" font-family="Geist,Arial" font-size="5.6" letter-spacing="1.2" fill="${c[3]}">ATELIER</text><text x="0" y="41" text-anchor="middle" font-family="Fraunces,Georgia" font-size="8" font-weight="600" fill="${c[3]}">Sauge</text><line x1="0" y1="5" x2="0" y2="-3" stroke="#3A2A1E" stroke-width="1.6"/><path d="M0 -20 C5 -13 6 -8 0 -2 C-6 -8 -5 -13 0 -20Z" fill="#FFB43B"/></g>`;
+const AMB=["rgba(255,236,210,.4)","#F2DEC4","#E9CDAA","#5B3A26"],SAG=["rgba(225,240,228,.4)","#E4EADF","#D2DCCB","#2F4A3A"],ROS=["rgba(255,228,234,.4)","#F6E1E4","#EBCBD1","#7A3B52"],NOI=["rgba(60,60,60,.25)","#3A3330","#2A2420","#F2DEC4"];
+const IMG=(b1,b2,body)=>`<svg viewBox="0 0 160 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="g${b1.slice(1)}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${b1}"/><stop offset="1" stop-color="${b2}"/></linearGradient></defs><rect width="160" height="160" fill="url(#g${b1.slice(1)})"/><rect y="118" width="160" height="42" fill="rgba(0,0,0,.12)"/>${body}</svg>`;
+let PRODUCTS=[
+  {n:"Bougie Ambre & Cèdre",p:24,pb:null,ph:5,c:100,promo:true,loc:["France (FR)","Belgique (FR)","Suisse (FR)"],img:IMG("#E9C9A6","#C98B5A",CANDLE(80,62,1,AMB))},
+  {n:"Bougie Sauge & Figue",p:24,pb:29,ph:4,c:100,promo:true,loc:["France (FR)","Belgique (FR)"],img:IMG("#C9D6C4","#7E9884",CANDLE(80,62,1,SAG))},
+  {n:"Coffret trio d'automne",p:59,pb:68,ph:6,c:80,promo:false,loc:["France (FR)"],img:IMG("#EBC3CC","#B87386",CANDLE(44,74,.6,AMB)+CANDLE(116,74,.6,SAG)+CANDLE(80,62,.8,ROS))},
+  {n:"Bougie Rose ancienne",p:22,pb:null,ph:3,c:80,promo:false,loc:["France (FR)"],img:IMG("#F3D9DE","#C99AA6",CANDLE(80,62,1,ROS))},
+  {n:"Bougie Nuit d'encens",p:26,pb:null,ph:2,c:60,promo:false,loc:[],img:IMG("#6E625C","#2E2724",CANDLE(80,62,1,NOI))},
+  {n:"Mèche de rechange (lot de 10)",p:null,pb:null,ph:1,c:40,promo:false,loc:[],img:IMG("#ECE6DE","#CFC4B6",'<g stroke="#3A2A1E" stroke-width="2" stroke-linecap="round">'+[50,62,74,86,98,110].map(x=>`<line x1="${x}" y1="52" x2="${x}" y2="108"/>`).join("")+'</g>')},
+  {n:"Bougie Vanille fumée",p:24,pb:null,ph:4,c:100,promo:false,loc:["France (FR)","Belgique (FR)"],img:IMG("#F1E4CC","#D2B37E",CANDLE(80,62,1,AMB))},
+  {n:"Édition limitée Noël 2025",p:32,pb:null,ph:3,c:80,promo:false,ret:true,loc:["France (FR)"],img:IMG("#C9A7A2","#7A4A44",CANDLE(80,62,1,ROS))}
+];
+let filter="all", q="";
+
+/* ---------- En-tête ---------- */
+function hero(){
+  const nw=demo==="new";
+  $("#hlogo").innerHTML=nw?'<span style="font:700 22px var(--display);color:var(--dim)">MS</span>':LOGO(false);
+  $("#bname").textContent=nw?"Maison Sel":"Atelier Sauge";
+  $("#site").value=nw?"":"ateliersauge.fr";
+  $(".site-in").style.cssText=nw?"border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:var(--surface)":"";
+  $(".hsite>span").textContent=nw?"Ajoute le site : Growthity lira ta marque et tes produits.":"Shopify · Français · vend en France, Belgique, Suisse";
+  const p=nw?8:demo==="running"?64:78; $("#ring").style.setProperty("--p",p); $("#pct").textContent=p+" %";
+  const run=demo==="running";
+  $("#hstat").innerHTML=nw?`<span><i class="off"></i>Catalogue : pas encore lu</span><span><i class="off"></i>Analyse : pas encore faite</span>`
+    :`<span><i class="${run?"run":""}"></i>Catalogue : ${PRODUCTS.filter(x=>!x.ret).length} produits${run?" · lecture en cours…":", à jour le 12 octobre 09:14"}</span><span><i class="${run?"run":""}"></i>Analyse de la fiche : ${run?"en cours…":"faite le 12 octobre"}</span>`;
+  const b=$("#analyse"); b.disabled=run; b.querySelector("span").textContent=run?"Analyse en cours…":nw?"Analyser mon site":"Réanalyser mon site";
+  $("#hint-an").textContent=nw?"Ajoute d'abord le site web de ta marque.":"Tes modifications ne sont jamais écrasées.";
+  if(nw) b.disabled=!$("#site").value.trim();
+  $("#job").hidden=!run;
+}
+
+/* ---------- Fiche ---------- */
+const chipList=(arr,id,no)=>`<div class="chips" data-chips="${id}">${arr.map(v=>`<span class="chip${no?" no":""}">${v}<button type="button" aria-label="Retirer ${v}">×</button></span>`).join("")}<input placeholder="Ajouter…" aria-label="Ajouter"></div>`;
+const F=(label,val,{area,full,ia,ph}={})=>{const empty=!val;const id="f"+label.replace(/\W/g,"");return `<div class="f${full?" full":""}"><label for="${id}">${label}${ia?'<span class="ia">Proposé par l\'IA</span>':""}</label>${area?`<textarea id="${id}" rows="${area}" class="${empty?"empty":""}" placeholder="${ph||"Non trouvé sur le site"}">${val||""}</textarea>`:`<input id="${id}" class="${empty?"empty":""}" value="${val||""}" placeholder="${ph||"Non trouvé sur le site"}">`}</div>`;};
+function fiche(){
+  const nw=demo==="new";
+  const v=(x)=>nw?"":x;
+  const props=nw?[]:PROPS;
+  const missing=nw?["Logo","Site web","Couleur principale","Présentation","Promesse","Ton en 3 mots","Type de client","Lien de destination","Pays de vente"]:["Zone de chalandise","Lien de destination"];
+  return `<div class="fiche"><div class="col">
+  ${props.length?`<section class="sec todo" id="avalider"><div class="sec-h"><h2>À valider</h2><small>${props.length} proposition${props.length>1?"s":""} de la dernière analyse</small><button type="button" class="btn sm r" id="acceptall">Tout accepter</button></div>
+    <div class="props">${props.map((p,i)=>`<div class="prop" data-i="${i}"><div><div class="k">${p.k}${p.ia?'<span class="ia">Proposé par l\'IA</span>':'<span class="ia" style="background:var(--sunk);color:var(--muted)">Trouvé sur le site</span>'}</div><div class="v">${p.k.startsWith("Couleur")?`<span style="display:inline-block;width:14px;height:14px;border-radius:4px;background:${p.v};vertical-align:-2px;margin-right:6px;border:1px solid rgba(0,0,0,.1)"></span>${p.v}`:p.v}</div></div><div class="acts"><button type="button" class="btn sm pri" data-acc="${i}">Accepter</button><button type="button" class="btn sm ghost" data-keep="${i}">Garder le mien</button></div></div>`).join("")}</div></section>`:""}
+
+  <section class="sec" id="s-identite"><div class="sec-h"><h2>Identité visuelle</h2><small>Logo, couleurs et polices utilisés dans tes créations</small></div>
+    <div class="f"><label>Logo</label>
+      ${nw?`<div class="logos"><button type="button" class="lg-up">Ajouter<br>un logo</button><small style="font-size:12.5px;color:var(--dim)">Ou lance l'analyse : on te proposera ceux trouvés sur ton site.</small></div>`
+      :`<div class="logos" id="logos"><button type="button" class="lg" aria-pressed="true" aria-label="Logo 1">${LOGO(false)}</button><button type="button" class="lg dark" aria-pressed="false" aria-label="Logo 2">${LOGO(true)}</button><button type="button" class="lg" aria-pressed="false" aria-label="Logo 3">${LOGO2}</button><button type="button" class="lg" aria-pressed="false" aria-label="Logo 4">${LOGO3}</button><button type="button" class="lg-up">Importer<br>un logo</button></div><small>Trouvés sur ton site : choisis en un clic.</small>`}
+    </div>
+    <div class="f"><label>Couleurs</label><div class="colors">${COLORS.map(([l,c,d])=>nw?`<div class="sw"><div class="c" style="background:repeating-linear-gradient(45deg,var(--raised) 0 6px,var(--sunk) 6px 12px)"><input type="color" value="#888888" aria-label="${l}"></div><div class="t"><b>${l}</b><small>non trouvée</small></div></div>`:`<div class="sw"><div class="c" style="background:${c}"><input type="color" value="${c}" aria-label="${l}"></div><div class="t"><b>${l}</b><small>${c}</small>${d?'<span class="ded">déduite</span>':""}</div></div>`).join("")}</div></div>
+    <div class="f"><label>Polices</label><div class="fonts">
+      <div class="fo"><span class="aa" style="font-family:Fraunces,Georgia,serif;font-weight:600">Aa</span><div><small>Police des titres</small><input value="${v("Fraunces")}" placeholder="Non trouvée" aria-label="Police des titres"></div></div>
+      <div class="fo"><span class="aa" style="font-family:Karla,sans-serif">Aa</span><div><small>Police du texte</small><input value="${v("Karla")}" placeholder="Non trouvée" aria-label="Police du texte"></div></div>
+    </div></div>
+  </section>
+
+  <section class="sec" id="s-positionnement"><div class="sec-h"><h2>Positionnement</h2><small>Ce que tu vends et comment tu le dis</small></div>
+    <div class="fgrid">
+      ${F("Présentation",v("Atelier Sauge coule à la main, à Bordeaux, des bougies parfumées en cire végétale, aux senteurs inspirées des saisons."),{area:2,full:true})}
+      ${F("Promesse",v("Des bougies naturelles qui transforment la maison en refuge."),{area:2,full:true})}
+      <div class="f full"><label>Ton (3 mots)</label>${nw?chipList([],"ton"):chipList(["Chaleureux","Sensoriel","Authentique"],"ton")}</div>
+      ${F("Valeurs",v("Fait main · cire de soja française · zéro plastique"),{area:2,full:true})}
+    </div>
+  </section>
+
+  <section class="sec" id="s-clients"><div class="sec-h"><h2>Clients</h2><small>À qui parlent tes pubs</small></div>
+    <div class="fgrid">
+      ${F("Client type",v("Femmes 28-45 ans, urbaines, qui aiment soigner leur intérieur et offrir des cadeaux qui ont du sens."),{area:2,full:true})}
+      <div class="f full"><label>Problèmes du client</label>${nw?chipList([],"pb"):chipList(["Bougies qui sentent le chimique","Cadeaux impersonnels"],"pb")}</div>
+      <div class="f full"><label>Preuves (avis, labels, chiffres)</label>${nw?`<textarea class="empty" rows="3" placeholder="Une preuve par ligne : un avis client, un label, un chiffre…"></textarea>`:`<ul class="proofs"><li><span>« La meilleure bougie que j'ai achetée, elle tient 50 heures. » Julie, avis Google</span></li><li><span>Cire de soja certifiée, fabriquée en France</span></li><li><span>4,9/5 sur 312 avis</span></li></ul><button type="button" class="btn sm ghost" style="align-self:flex-start">＋ Ajouter une preuve</button>`}</div>
+    </div>
+  </section>
+
+  <section class="sec" id="s-marche"><div class="sec-h"><h2>Marché et activité</h2></div>
+    <div class="fgrid">
+      <div class="f full"><label>Type d'activité</label><div class="segf" role="group" aria-label="Type d'activité">${["Non renseigné","E-commerce","Service local","Autre"].map((t,i)=>`<button type="button" aria-pressed="${nw?i===0:i===1}">${t}</button>`).join("")}</div></div>
+      ${F("Secteur",v("Décoration · bougies parfumées"))}
+      ${F("Zone de chalandise","",{ph:"Seulement pour un service local · ex. Bordeaux · 20 km"})}
+      <div class="f full"><label>Pays de vente</label>${nw?chipList([],"pays"):chipList(["France","Belgique","Suisse"],"pays")}</div>
+    </div>
+  </section>
+
+  <section class="sec" id="s-pub"><div class="sec-h"><h2>Publicité</h2><small>Utilisé par défaut quand tu publies</small></div>
+    <div class="fgrid">
+      ${F("Page Facebook (ID)",v("104827736512"),{ph:"Identifiant de ta Page"})}
+      ${F("Lien de destination par défaut","",{ph:"https://… page où envoyer les clics"})}
+    </div>
+  </section>
+
+  <section class="sec" id="s-garde"><div class="sec-h"><h2>Garde-fous</h2><small>Ce que Growthity ne doit jamais écrire ni montrer</small></div>
+    <div class="fgrid">
+      <div class="f full"><label>Mots interdits</label>${nw?chipList([],"mi",true):chipList(["pas cher","promo flash","chimique"],"mi",true)}</div>
+      <div class="f full"><label>Promesses interdites</label>${nw?chipList([],"pi",true):chipList(["soigne l'anxiété","100 % bio"],"pi",true)}</div>
+    </div>
+  </section>
+
+  <details class="sec adv"><summary><div class="sec-h" style="margin:0"><h2>Avancé</h2><small>Style visuel, valeurs, titres à éviter, clé PrestaShop</small></div></summary>
+    <div class="fgrid">
+      ${F("Style visuel",v("Lumière chaude, matières naturelles (lin, bois), plans serrés sur la flamme."),{area:2,full:true})}
+      ${F("À ne jamais montrer",v("Flamme sans surveillance près d'enfants ou d'animaux."),{area:2,full:true})}
+      <div class="f full"><label>Titres à éviter</label>${nw?chipList([],"ta",true):chipList(["Offre exceptionnelle"],"ta",true)}</div>
+      <div class="f full"><label>Clé PrestaShop <small>(seulement si ta boutique est sur PrestaShop)</small></label><div class="key"><input type="password" placeholder="Colle la clé du webservice"><button type="button" class="btn">Enregistrer</button></div><small>Stockée chiffrée, jamais réaffichée. Elle permet une mise à jour automatique chaque jour.</small></div>
+    </div>
+  </details>
+  </div>
+
+  <aside class="aside">
+    <div class="card-p">
+      <div class="bp-top" style="${nw?"background:var(--sunk)":""}"><span class="bp-logo">${nw?"":LOGO(false)}</span></div>
+      <div class="bp">${nw?`<h3 style="font-family:var(--display);color:var(--fg)">Maison Sel</h3><small>Ton aperçu de marque se remplira après l'analyse.</small>`
+        :`<h3>Atelier Sauge</h3><q>Des bougies naturelles qui transforment la maison en refuge.</q>
+        <div class="dots">${COLORS.map(c=>`<i style="background:${c[1]}"></i>`).join("")}</div>
+        <div class="tone"><span>Chaleureux</span><span>Sensoriel</span><span>Authentique</span></div>
+        <small>Ce que Growthity utilise dans chaque création.</small>`}</div>
+    </div>
+    <div class="miss"><h4>${missing.length?`Il manque ${missing.length} information${missing.length>1?"s":""}`:"Fiche complète"}</h4>
+      <ul>${missing.map(m=>`<li><a href="${m==="Site web"?"#site":"#s-"+(/Logo|Couleur/.test(m)?"identite":/Présentation|Promesse|Ton/.test(m)?"positionnement":/client/i.test(m)?"clients":/Lien/.test(m)?"pub":"marche")}"><i></i>${m}<span>Compléter</span></a></li>`).join("")}</ul>
+      <p>Rien n'est bloquant : tu peux déjà créer.</p></div>
+  </aside></div>`;
+}
+
+/* ---------- Produits ---------- */
+const eur=n=>n==null?null:n.toLocaleString("fr-FR",{style:"currency",currency:"EUR",minimumFractionDigits:0,maximumFractionDigits:2});
+function produits(){
+  if(demo==="new") return `<div class="empty-s"><span class="ei">${I('<path d="M3 7h18l-2 13H5z"/><path d="M8 7a4 4 0 0 1 8 0"/>')}</span><h3>Aucun produit pour l'instant</h3><p>Lance « Analyser mon site » : Growthity lit tout ton catalogue. Ou colle ci-dessous le lien d'un produit.</p>
+    <div class="addrow" style="width:min(100%,560px)"><label class="addin">${I('<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>')}<input placeholder="Ajouter un produit par son lien…" aria-label="Lien du produit"></label><button type="button" class="btn pri" style="height:40px">Ajouter</button></div></div>`;
+  const list=PRODUCTS.filter(p=>(filter==="all"||(filter==="promo"&&p.promo)||(filter==="ret"&&p.ret))&&p.n.toLowerCase().includes(q.toLowerCase()));
+  const run=demo==="running";
+  return `<div class="col">
+  <div class="ptool">
+    <div class="addrow"><label class="addin">${I('<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>')}<input id="addurl" placeholder="Ajouter un produit par son lien…" aria-label="Lien du produit"></label><button type="button" class="btn pri" id="addbtn" style="height:40px">Ajouter</button><button type="button" class="btn" style="height:40px" ${run?"disabled":""}>${I('<path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/>')}${run?"Lecture en cours…":"Relire tout le catalogue"}</button></div>
+    <div class="prow">
+      <div class="segf" role="group" aria-label="Filtrer">${[["all",`Tous (${PRODUCTS.length})`],["promo",`À promouvoir (${PRODUCTS.filter(p=>p.promo).length})`],["ret",`Retirés du site (${PRODUCTS.filter(p=>p.ret).length})`]].map(([k,l])=>`<button type="button" data-f="${k}" aria-pressed="${filter===k}">${l}</button>`).join("")}</div>
+      <span class="sp"></span>
+      <label class="srch">${I('<circle cx="11" cy="11" r="7"/><path d="m21 21-4.6-4.6"/>')}<input id="q" value="${q}" placeholder="Rechercher un produit" aria-label="Rechercher un produit"></label>
+    </div>
+  </div>
+  ${list.length?`<div class="pgrid">${list.map(p=>{const i=PRODUCTS.indexOf(p);const promoPct=p.pb&&p.p&&p.pb>p.p?Math.round((1-p.p/p.pb)*100):0;return `<article class="pc${p.ret?" ret":""}">
+    <div class="pimg">${p.img}<div class="ptags">${promoPct?`<span class="promo">−${promoPct} %</span>`:""}${p.ret?'<span class="ret">Retiré du site</span>':""}</div>
+      <button type="button" class="star" data-star="${i}" aria-pressed="${p.promo}" title="${p.promo?"Ne plus promouvoir":"À promouvoir"}" aria-label="À promouvoir : ${p.n}">${I('<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>')}</button>
+      <span class="pnph">${p.ph} photo${p.ph>1?"s":""}</span></div>
+    <div class="pb"><b title="${p.n}">${p.n}</b>
+      <div class="price">${p.p!=null?`<strong>${eur(p.p)}</strong>${p.pb&&p.pb>p.p?`<s>${eur(p.pb)}</s>`:""}`:'<span class="none">Prix non trouvé</span>'}</div>
+      <div class="pmeta"><span class="cp" title="Fiche produit complète à ${p.c} %"><i><b style="width:${p.c}%"></b></i>${p.c} %</span>${p.loc.length?`<span>· ${p.loc.length} version${p.loc.length>1?"s":""} pays</span>`:""}</div>
+      ${p.loc.length?`<div class="flags">${p.loc.join(" · ")}</div>`:""}
+    </div>
+    <div class="pf"><a href="#">${I('<path d="M7 17 17 7M9 7h8v8"/>')}Voir sur le site</a><span class="sp"></span><a href="#" data-del="${i}" style="color:var(--dim)">Supprimer</a></div>
+  </article>`}).join("")}</div>`:`<div class="empty-s"><h3>Aucun produit ne correspond</h3><p>Change le filtre ou la recherche.</p></div>`}
+  </div>`;
+}
+
+/* ---------- Concurrents ---------- */
+const conc=()=>`<div class="soonc"><div><span class="ia">Bientôt</span><h3>Growthity te proposera tes vrais concurrents</h3><p>Ceux qui diffusent des pubs sur ton marché, pour t'inspirer de ce qui marche.</p></div>
+  <div class="ghosts" aria-hidden="true">${["Concurrent 1","Concurrent 2","Concurrent 3"].map(n=>`<div class="ghost-r"><i></i><div><span></span><span></span></div><em>pubs actives</em></div>`).join("")}</div></div>`;
+
+/* ---------- Rendu et interactions ---------- */
+function render(){
+  hero();
+  $$(".seg [data-t]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.t===tab)));
+  $("#pcount").textContent=demo==="new"?"0":PRODUCTS.length;
+  $("#view").innerHTML=tab==="fiche"?fiche():tab==="produits"?produits():conc();
+  wire();
+}
+function wire(){
+  $$("#view input:not([type=color]):not(#q):not(#addurl), #view textarea").forEach(el=>el.onchange=()=>{el.classList.toggle("empty",!el.value.trim());saved();});
+  $$("#view input[type=color]").forEach(el=>el.oninput=()=>{const sw=el.closest(".sw");sw.querySelector(".c").style.background=el.value;sw.querySelector("small").textContent=el.value;}),$$("#view input[type=color]").forEach(el=>el.onchange=saved);
+  $$("#view .segf[aria-label='Type d\\'activité'] button").forEach(b=>b.onclick=()=>{b.parentElement.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));saved();});
+  $$("#logos .lg").forEach(b=>b.onclick=()=>{$$("#logos .lg").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));saved();});
+  $$(".chip button").forEach(b=>b.onclick=()=>{b.parentElement.remove();saved();});
+  $$(".chips input").forEach(inp=>inp.onkeydown=e=>{if(e.key==="Enter"&&inp.value.trim()){e.preventDefault();const no=inp.parentElement.querySelector(".chip.no")||["mi","pi","ta"].includes(inp.parentElement.dataset.chips);const s=document.createElement("span");s.className="chip"+(no?" no":"");s.innerHTML=`${inp.value.trim()}<button type="button" aria-label="Retirer">×</button>`;s.querySelector("button").onclick=()=>{s.remove();saved();};inp.before(s);inp.value="";saved();}});
+  const resolve=(i,acc)=>{const el=document.querySelector(`.prop[data-i="${i}"]`);el.classList.add("gone");setTimeout(()=>{PROPS=PROPS.filter((_,k)=>k!==i);render();toast(acc?"Proposition acceptée":"On garde ta version");},220);};
+  $$("[data-acc]").forEach(b=>b.onclick=()=>resolve(+b.dataset.acc,true));
+  $$("[data-keep]").forEach(b=>b.onclick=()=>resolve(+b.dataset.keep,false));
+  const all=$("#acceptall"); if(all) all.onclick=()=>{PROPS=[];render();toast("Propositions acceptées");};
+  $$("[data-f]").forEach(b=>b.onclick=()=>{filter=b.dataset.f;render();});
+  const qi=$("#q"); if(qi) qi.oninput=()=>{q=qi.value;const pos=qi.selectionStart;render();const n=$("#q");n.focus();n.setSelectionRange(pos,pos);};
+  $$("[data-star]").forEach(b=>b.onclick=()=>{const p=PRODUCTS[+b.dataset.star];p.promo=!p.promo;render();toast(p.promo?"Produit à promouvoir":"Retiré des produits à promouvoir");});
+  $$("[data-del]").forEach(a=>a.onclick=e=>{e.preventDefault();const i=+a.dataset.del;const pc=a.closest(".pc");pc.querySelector(".pf").innerHTML=`<span style="font-size:12.5px;color:var(--muted)">Supprimer de ta marque ?</span><span class="sp"></span><button type="button" class="btn sm ghost" data-no>Annuler</button><button type="button" class="btn sm" data-yes style="color:#B8282E">Supprimer</button>`;pc.querySelector("[data-no]").onclick=render;pc.querySelector("[data-yes]").onclick=()=>{PRODUCTS.splice(i,1);render();toast("Produit supprimé");};});
+  const ab=$("#addbtn"); if(ab) ab.onclick=()=>{const v=$("#addurl").value.trim(); if(!v){$("#addurl").focus();return;} ab.textContent="Lecture…";ab.disabled=true;setTimeout(()=>{ab.textContent="Ajouter";ab.disabled=false;toast("Produit ajouté");},900);};
+}
+$$(".seg [data-t]").forEach(b=>b.onclick=()=>{tab=b.dataset.t;render();});
+$$(".demo button").forEach(b=>b.onclick=()=>{demo=b.dataset.d;$$(".demo button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));PROPS=[{k:"Promesse",ia:true,v:"Des bougies coulées à la main qui font de chaque soirée un moment à soi."},{k:"Problèmes du client",ia:true,v:"Bougies industrielles qui sentent le chimique · Cadeaux impersonnels"},{k:"Couleur secondaire",ia:false,v:"#2F4A3A"}];render();});
+$("#swb").onclick=e=>{e.stopPropagation();const m=$("#swm");m.hidden=!m.hidden;$("#swb").setAttribute("aria-expanded",String(!m.hidden));};
+document.addEventListener("click",e=>{if(!e.target.closest(".switch")){$("#swm").hidden=true;$("#swb").setAttribute("aria-expanded","false");}});
+$("#site").oninput=()=>{if(demo==="new") $("#analyse").disabled=!$("#site").value.trim();};
+$("#site").onchange=saved;
+$("#analyse").onclick=()=>{demo="running";$$(".demo button").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.d==="running")));render();toast("Analyse lancée");};
+render();
+</script>
