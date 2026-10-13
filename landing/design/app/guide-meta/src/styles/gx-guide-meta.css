@@ -150,3 +150,6 @@
 .gx-gmcard-t b{font-weight:600}
 .gx-gmcard-t span{color:var(--gx-muted);font-size:13px}
 @media (max-width:640px){.gx-gmcard{flex-wrap:wrap}.gx-gmcard .gx-btn{width:100%}}
+/* Dans la grille de la page Connexion (2 colonnes), la carte s'empile verticalement à côté de la carte Meta. */
+.gx-conn .gx-gmcard{flex-direction:column;align-items:flex-start;gap:12px}
+.gx-conn .gx-gmcard .gx-btn{align-self:flex-start}
