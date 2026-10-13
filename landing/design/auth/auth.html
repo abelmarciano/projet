@@ -1,0 +1,291 @@
+<title>Connexion Growthity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@500&display=swap">
+<style>
+/* Layout : écran partagé — formulaire à gauche (charte console Growthity), à droite un aperçu vivant de ce que fait l'app. Thème clair, comme la console. */
+:root{
+  --bg:#F3F4F6; --surface:#FFFFFF; --raised:#F9FAFB; --sunk:#ECEEF2; --line:#E3E5EA; --line-2:#D3D6DD;
+  --fg:#101217; --muted:#5A606D; --dim:#676D7B;
+  --accent:#5B3FE4; --accent-soft:#EDEAFE; --accent-ink:#3F27C2;
+  --ok:#14955A; --ok-soft:#E3F5EC; --warn:#C27409; --warn-soft:#FCF1DE; --bad:#D9383E; --bad-soft:#FCE8E8; --bad-ink:#B8282E;
+  --meta:#0866FF;
+  --grad:linear-gradient(120deg,#2563EB 0%,#5B3FE4 52%,#9333EA 100%);
+  --shadow:0 1px 2px rgba(16,18,23,.05),0 12px 32px -18px rgba(16,18,23,.22);
+  --display:"Bricolage Grotesque","Geist",system-ui,sans-serif;
+  --ui:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Geist Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 var(--ui)}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--accent-ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+
+/* Barre de démonstration (hors maquette) */
+.demo{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 16px;background:var(--fg);color:#fff;font-size:12.5px}
+.demo b{font-weight:600;opacity:.7;margin-right:4px}
+.demo button{border:1px solid rgba(255,255,255,.18);background:transparent;color:#fff;border-radius:999px;padding:4px 11px;font-size:12.5px}
+.demo button[aria-pressed="true"]{background:#fff;color:var(--fg);border-color:#fff}
+
+.page{min-height:calc(100% - 44px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr)}
+
+/* ---------- Colonne formulaire ---------- */
+.left{display:flex;flex-direction:column;padding-block:28px;padding-inline:clamp(16px,5vw,64px);background:var(--surface);min-width:0}
+.left header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{height:28px;width:auto;color:var(--fg)}
+.back{font-size:13px;color:var(--muted);text-decoration:none}
+.back:hover{color:var(--fg)}
+.form-w{flex:1;display:flex;align-items:center;justify-content:center;padding-block:32px}
+.form{width:100%;max-width:400px;display:flex;flex-direction:column;gap:18px}
+.form h1{margin:0;font-family:var(--display);font-weight:650;font-size:30px;letter-spacing:-.02em;line-height:1.12;text-wrap:balance}
+.form .sub{margin:-10px 0 0;color:var(--muted);font-size:15px}
+
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:3px;border-radius:11px;background:var(--sunk)}
+.seg button{height:34px;border:0;border-radius:8px;background:none;color:var(--muted);font-weight:500;font-size:13.5px}
+.seg button[aria-selected="true"]{background:var(--surface);color:var(--fg);font-weight:600;box-shadow:0 1px 2px rgba(16,18,23,.08),0 0 0 1px var(--line)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:44px;padding:0 16px;border-radius:11px;border:1px solid var(--line-2);background:var(--surface);font-weight:600;font-size:14px;text-decoration:none;color:var(--fg);transition:border-color .12s,background .12s;width:100%}
+.btn:hover{border-color:var(--fg)}
+.btn.pri{background:var(--fg);border-color:var(--fg);color:#fff}
+.btn.pri:hover{background:#26232f}
+.btn svg{width:18px;height:18px;flex:none}
+.or{display:flex;align-items:center;gap:12px;color:var(--dim);font-size:12px}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+
+.f{display:flex;flex-direction:column;gap:6px}
+.f-h{display:flex;justify-content:space-between;align-items:baseline}
+.f label{font-size:13px;font-weight:600}
+.lnk{border:0;background:none;padding:0;font-size:12.5px;font-weight:500;color:var(--accent-ink)}
+.lnk:hover{text-decoration:underline}
+.in{position:relative}
+.in input{width:100%;height:44px;border:1px solid var(--line-2);border-radius:11px;padding:0 14px;font:15px var(--ui);color:var(--fg);background:var(--surface);transition:border-color .15s,box-shadow .15s}
+.in input::placeholder{color:#9AA0AB}
+.in input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.in.err input{border-color:var(--bad)}
+.in.err input:focus{box-shadow:0 0 0 4px var(--bad-soft)}
+.in .eye{position:absolute;right:6px;top:6px;height:32px;padding:0 10px;border:0;border-radius:8px;background:none;color:var(--muted);font-size:12.5px;font-weight:500}
+.in .eye:hover{background:var(--sunk);color:var(--fg)}
+.in input[type="password"],.in input.pw{padding-right:84px}
+.hint{font-size:12.5px;color:var(--dim)}
+.meter{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.meter i{height:4px;border-radius:2px;background:var(--sunk);transition:background .2s}
+.meter[data-s="1"] i:nth-child(-n+1){background:var(--bad)}
+.meter[data-s="2"] i:nth-child(-n+2){background:var(--warn)}
+.meter[data-s="3"] i{background:var(--ok)}
+.pw-row{display:flex;justify-content:space-between;gap:10px}
+
+.msg{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;padding:11px 13px;border-radius:11px;font-size:13.5px}
+.msg i{font-style:normal;width:20px;height:20px;border-radius:10px;display:grid;place-items:center;font-size:11.5px;font-weight:700;color:#fff}
+.msg p{margin:0}.msg b{font-weight:600}
+.msg.bad{background:var(--bad-soft);color:var(--bad-ink)}.msg.bad i{background:var(--bad)}
+.msg.ok{background:var(--ok-soft)}.msg.ok i{background:var(--ok)}
+
+.check{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted);cursor:pointer;width:max-content}
+.check input{width:17px;height:17px;margin:0;accent-color:var(--accent)}
+.legal{margin:0;font-size:12px;color:var(--dim);text-align:center;text-wrap:balance}
+.legal a{color:var(--muted)}
+.swap{margin:0;text-align:center;font-size:13.5px;color:var(--muted)}
+
+/* Écran « vérifie ta boîte mail » */
+.mail{display:flex;flex-direction:column;gap:18px;align-items:flex-start}
+.env{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.env svg{width:28px;height:28px}
+.mail .apps{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+.mail .btn{height:42px}
+.steps-mail{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:13.5px;color:var(--muted)}
+.steps-mail li{display:flex;gap:10px}
+.steps-mail li span{width:20px;height:20px;border-radius:10px;background:var(--sunk);display:grid;place-items:center;font-size:11.5px;font-weight:600;color:var(--fg);flex:none}
+
+.left footer{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--dim)}
+.left footer a{color:var(--dim);text-decoration:none}.left footer a:hover{color:var(--fg)}
+
+/* ---------- Colonne aperçu ---------- */
+.right{position:relative;overflow:hidden;background:var(--sunk);display:flex;flex-direction:column;justify-content:center;gap:28px;padding-block:48px;padding-inline:clamp(24px,5vw,72px);min-width:0;border-left:1px solid var(--line)}
+.right::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--line-2) 1px,transparent 1px);background-size:22px 22px;opacity:.55;mask-image:linear-gradient(180deg,#000 0%,transparent 75%)}
+.right>*{position:relative}
+.pitch{max-width:30ch}
+.pitch .eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+.pitch h2{margin:6px 0 0;font-family:var(--display);font-weight:650;font-size:clamp(26px,2.6vw,34px);letter-spacing:-.02em;line-height:1.12;text-wrap:balance}
+
+/* Mini console : un prompt, trois pubs, publication Meta */
+.mock{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:14px;max-width:520px}
+.ask{display:flex;gap:10px;align-items:flex-start}
+.me{width:28px;height:28px;border-radius:14px;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;font-size:11px;font-weight:600;flex:none}
+.bubble{background:var(--raised);border:1px solid var(--line);border-radius:4px 14px 14px 14px;padding:9px 12px;font-size:13.5px;min-height:40px}
+.caret{display:inline-block;width:2px;height:15px;background:var(--accent);vertical-align:-2px;margin-left:1px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.ads{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ad{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--surface);opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s}
+.ad.on{opacity:1;transform:none}
+.ad .vis{aspect-ratio:4/5;position:relative;display:flex;align-items:flex-end;padding:8px}
+.ad .vis span{font:600 11px/1.25 var(--ui);color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.35)}
+.ad .vis em{position:absolute;top:8px;left:8px;font-style:normal;font-size:10px;font-weight:600;color:#fff;background:rgba(0,0,0,.35);border-radius:999px;padding:1px 7px}
+.v1{background:radial-gradient(circle at 70% 30%,#F7D9B7 0 18%,transparent 19%),linear-gradient(160deg,#C98B5A,#6B3E2A)}
+.v2{background:radial-gradient(circle at 30% 40%,#FFE9C2 0 14%,transparent 15%),linear-gradient(200deg,#3F5B4A,#1F2E26)}
+.v3{background:radial-gradient(circle at 60% 55%,#FBE3E8 0 20%,transparent 21%),linear-gradient(170deg,#D98FA0,#7A3B52)}
+.ad .cap{padding:7px 8px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+.ad .cap b{color:var(--fg);font-weight:600}
+.pub{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--raised);border:1px solid var(--line);font-size:13px;opacity:0;transition:opacity .45s}
+.pub.on{opacity:1}
+.pub .f-ic{width:26px;height:26px;border-radius:7px;background:var(--meta);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
+.pub .st{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ok)}
+.pub .st::before{content:"";width:7px;height:7px;border-radius:4px;background:var(--ok);box-shadow:0 0 0 3px var(--ok-soft)}
+.trio{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-width:520px}
+.trio li{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--muted)}
+.trio b{color:var(--fg);font-weight:600;font-size:13.5px}
+.trio .n{font:500 11.5px var(--mono);color:var(--accent-ink)}
+
+@media (max-width:980px){.page{grid-template-columns:minmax(0,1fr)}.right{display:none}}
+@media (max-width:480px){.form h1{font-size:26px}.mail .apps{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.caret{animation:none}.ad,.pub{transition:none}}
+</style>
+
+<div class="demo" role="toolbar" aria-label="États de la maquette">
+  <b>Maquette</b>
+  <button type="button" data-v="signin" aria-pressed="true">Connexion</button>
+  <button type="button" data-v="signup" aria-pressed="false">Inscription</button>
+  <button type="button" data-v="forgot" aria-pressed="false">Mot de passe oublié</button>
+  <button type="button" data-v="error" aria-pressed="false">Erreur</button>
+  <button type="button" data-v="mail" aria-pressed="false">Vérifie ta boîte mail</button>
+</div>
+
+<div class="page">
+  <section class="left">
+    <header>
+      <a href="#" aria-label="growthity.ai">
+        <svg class="logo" viewBox="0 0 746 132" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="growthity.ai">
+          <defs>
+            <linearGradient id="g" x1="18" y1="96" x2="102" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2563EB"/><stop offset="0.52" stop-color="#5B3FE4"/><stop offset="1" stop-color="#9333EA"/></linearGradient>
+            <linearGradient id="gWord" x1="624" y1="104" x2="746" y2="34" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4338CA"/><stop offset="1" stop-color="#9333EA"/></linearGradient>
+          </defs>
+          <g transform="translate(0,6) scale(0.95)">
+            <path d="M22 90 L48 62 L74 71 L99 33" fill="none" stroke="url(#g)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M82 39 L99 33 L99.5 51" fill="none" stroke="url(#g)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="22" cy="90" r="6.5" fill="#FFFFFF" stroke="url(#g)" stroke-width="5"/>
+            <circle cx="48" cy="62" r="6.5" fill="#FFFFFF" stroke="url(#g)" stroke-width="5"/>
+            <circle cx="74" cy="71" r="6.5" fill="#FFFFFF" stroke="url(#g)" stroke-width="5"/>
+            <path d="M104 16 C104.6 20.2 106.3 21.9 110.5 22.5 C106.3 23.1 104.6 24.8 104 29 C103.4 24.8 101.7 23.1 97.5 22.5 C101.7 21.9 103.4 20.2 104 16 Z" fill="url(#g)" opacity="0.92"/>
+          </g>
+          <g transform="translate(136.0,104)">
+            <g fill="currentColor">
+              <path transform="translate(0.00,0) scale(0.10000,-0.10000)" d="M49 245V260Q49 338 80.0 393.5Q111 449 163.0 478.5Q215 508 277 508Q347 508 383.5 483.0Q420 458 437 429H454V494H566V-94Q566 -143 538.0 -171.5Q510 -200 462 -200H130V-100H423Q452 -100 452 -70V73H435Q424 56 405.0 38.5Q386 21 355.0 9.0Q324 -3 277 -3Q215 -3 163.0 26.5Q111 56 80.0 111.5Q49 167 49 245ZM309 98Q371 98 412.0 137.5Q453 177 453 248V258Q453 330 412.5 369.0Q372 408 309 408Q247 408 205.5 369.0Q164 330 164 258V248Q164 177 205.5 137.5Q247 98 309 98Z"/>
+              <path transform="translate(64.40,0) scale(0.10000,-0.10000)" d="M73 0V494H186V437H203Q214 468 240.0 482.0Q266 496 302 496H362V394H300Q250 394 219.0 367.5Q188 341 188 286V0Z"/>
+              <path transform="translate(104.00,0) scale(0.10000,-0.10000)" d="M307 -14Q233 -14 174.5 16.5Q116 47 82.5 103.5Q49 160 49 239V255Q49 334 82.5 391.0Q116 448 174.5 478.0Q233 508 307 508Q381 508 439.0 478.0Q497 448 530.5 391.0Q564 334 564 255V239Q564 160 530.5 103.5Q497 47 439.0 16.5Q381 -14 307 -14ZM307 88Q370 88 410.0 128.5Q450 169 450 242V252Q450 325 410.0 365.5Q370 406 307 406Q244 406 204.0 365.5Q164 325 164 252V242Q164 169 204.0 128.5Q244 88 307 88Z"/>
+              <path transform="translate(165.80,0) scale(0.10000,-0.10000)" d="M120 0 43 494H157L210 77H227L302 494H486L561 77H578L631 494H745L668 0H477L403 417H386L311 0Z"/>
+              <path transform="translate(245.10,0) scale(0.10000,-0.10000)" d="M261 0Q213 0 184.5 28.5Q156 57 156 106V399H27V494H156V653H271V494H413V399H271V125Q271 95 299 95H398V0Z"/>
+              <path transform="translate(291.30,0) scale(0.10000,-0.10000)" d="M73 0V700H188V429H205Q213 446 231.0 463.0Q249 480 278.5 491.0Q308 502 353 502Q410 502 454.0 476.5Q498 451 522.5 405.0Q547 359 547 296V0H432V287Q432 347 402.5 376.5Q373 406 319 406Q258 406 223.0 365.5Q188 325 188 250V0Z"/>
+              <path transform="translate(353.30,0) scale(0.10000,-0.10000)" d="M73 0V494H188V0ZM130 557Q99 557 76.5 577.5Q54 598 54 632Q54 666 76.5 686.5Q99 707 130 707Q163 707 184.5 686.5Q206 666 206 632Q206 598 184.5 577.5Q163 557 130 557Z"/>
+              <path transform="translate(379.90,0) scale(0.10000,-0.10000)" d="M261 0Q213 0 184.5 28.5Q156 57 156 106V399H27V494H156V653H271V494H413V399H271V125Q271 95 299 95H398V0Z"/>
+              <path transform="translate(426.10,0) scale(0.10000,-0.10000)" d="M128 -200V-100H401Q429 -100 429 -70V68H412Q404 50 386.0 32.5Q368 15 338.0 3.5Q308 -8 262 -8Q205 -8 161.0 17.5Q117 43 93.0 89.5Q69 136 69 198V494H183V207Q183 147 212.5 118.0Q242 89 296 89Q357 89 392.5 129.0Q428 169 428 244V494H542V-94Q542 -143 514.0 -171.5Q486 -200 438 -200Z"/>
+            </g>
+            <g fill="url(#gWord)">
+              <path transform="translate(492.10,0) scale(0.10000,-0.10000)" d="M138 -14Q103 -14 79.5 9.0Q56 32 56 68Q56 104 79.5 126.5Q103 149 138 149Q173 149 196.5 126.0Q220 103 220 68Q220 32 196.5 9.0Q173 -14 138 -14Z"/>
+              <path transform="translate(520.20,0) scale(0.10000,-0.10000)" fill-rule="evenodd" clip-rule="evenodd" d="M229 -14Q176 -14 134.5 4.0Q93 22 68.5 57.0Q44 92 44 142Q44 193 68.5 226.5Q93 260 135.5 277.0Q178 294 232 294H382V326Q382 369 356.0 395.0Q330 421 276 421Q223 421 195.0 396.0Q167 371 158 331L62 362Q74 402 100.5 434.5Q127 467 171.0 487.0Q215 507 277 507Q373 507 428.0 458.0Q483 409 483 319V116Q483 86 511 86H553V0H476Q441 0 419.0 18.0Q397 36 397 67V70H382Q374 55 358.0 35.0Q342 15 311.0 0.5Q280 -14 229 -14ZM259 75Q314 75 348.0 105.5Q382 136 382 190V213H247Q204 213 181.5 196.0Q159 179 159 146Q159 113 184.0 94.0Q209 75 259 75Z"/>
+              <path transform="translate(578.40,0) scale(0.10000,-0.10000)" d="M76 0V493H179V0ZM128 560Q98 560 77.5 579.5Q57 599 57 630Q57 661 77.5 680.5Q98 700 128 700Q159 700 179.0 680.5Q199 661 199 630Q199 599 179.0 579.5Q159 560 128 560Z"/>
+            </g>
+          </g>
+        </svg>
+      </a>
+      <a class="back" href="#">← Retour au site</a>
+    </header>
+
+    <div class="form-w"><div class="form" id="form"></div></div>
+
+    <footer>
+      <span>© growthity.ai</span>
+      <a href="#">Conditions générales</a>
+      <a href="#">Confidentialité</a>
+      <a href="#">Aide</a>
+    </footer>
+  </section>
+
+  <aside class="right" aria-label="Aperçu de Growthity">
+    <div class="pitch">
+      <div class="eyebrow">Publicité Meta, sans agence</div>
+      <h2>Tu décris ta pub. Growthity la crée et la publie.</h2>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="ask"><span class="me">AS</span><div class="bubble" id="typed"></div></div>
+      <div class="ads">
+        <div class="ad" id="a1"><div class="vis v1"><em>Vidéo</em><span>La bougie qui sent la maison</span></div><div class="cap"><b>Angle 1</b>9:16</div></div>
+        <div class="ad" id="a2"><div class="vis v2"><em>Image</em><span>Coulée à la main à Bordeaux</span></div><div class="cap"><b>Angle 2</b>4:5</div></div>
+        <div class="ad" id="a3"><div class="vis v3"><em>Carrousel</em><span>3 parfums pour l'automne</span></div><div class="cap"><b>Angle 3</b>1:1</div></div>
+      </div>
+      <div class="pub" id="pub"><span class="f-ic">f</span><div><b>Campagne « Bougies automne »</b><br><small style="color:var(--dim)">Facebook &amp; Instagram · 20 € / jour</small></div><span class="st">En diffusion</span></div>
+    </div>
+    <ul class="trio">
+      <li><span class="n">01</span><b>Décris</b>ton produit, ton offre, ton budget</li>
+      <li><span class="n">02</span><b>Choisis</b>parmi les pubs proposées</li>
+      <li><span class="n">03</span><b>Publie</b>sur Facebook et Instagram</li>
+    </ul>
+  </aside>
+</div>
+
+<script>
+const G=`<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.26 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.07H2.18A11 11 0 0 0 1 12c0 1.77.42 3.45 1.18 4.93l3.66-2.83z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"/></svg>`;
+const ENV=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg>`;
+const $=s=>document.querySelector(s);
+let view="signin", email="camille@ateliersauge.fr";
+
+const seg=m=>`<div class="seg" role="tablist" aria-label="Connexion ou inscription">
+  <button type="button" role="tab" aria-selected="${m==="signin"}" data-go="signin">Se connecter</button>
+  <button type="button" role="tab" aria-selected="${m==="signup"}" data-go="signup">Créer un compte</button></div>`;
+const google=`<button type="button" class="btn">${G}Continuer avec Google</button><div class="or">ou avec ton e-mail</div>`;
+const mailField=(err)=>`<div class="f"><label for="email">Adresse e-mail</label><div class="in${err?" err":""}"><input id="email" type="email" autocomplete="email" placeholder="toi@entreprise.fr" value="${err||view!=="signup"?email:""}"></div></div>`;
+const pwField=(mode,err)=>`<div class="f"><div class="f-h"><label for="pw">Mot de passe</label>${mode==="signin"?`<button type="button" class="lnk" data-go="forgot">Mot de passe oublié ?</button>`:""}</div>
+  <div class="in${err?" err":""}"><input id="pw" class="pw" type="password" autocomplete="${mode==="signup"?"new-password":"current-password"}" ${mode==="signup"?'placeholder="8 caractères minimum"':""} value="${mode==="signin"?"motdepasse":""}"><button type="button" class="eye" id="eye">Afficher</button></div>
+  ${mode==="signup"?`<div class="meter" id="meter" data-s="0"><i></i><i></i><i></i></div><div class="pw-row"><span class="hint" id="pwh">8 caractères minimum, avec un chiffre ou un symbole.</span></div>`:""}</div>`;
+
+const V={
+  signin:()=>`${seg("signin")}<h1>Bon retour</h1><p class="sub">Connecte-toi pour retrouver tes pubs et tes résultats.</p>
+    ${google}<form class="form" style="gap:14px" id="f">${mailField()}${pwField("signin")}
+    <label class="check"><input type="checkbox" id="rem" checked> Rester connecté sur cet appareil</label>
+    <button class="btn pri" type="submit">Se connecter</button></form>`,
+  error:()=>`${seg("signin")}<h1>Bon retour</h1><p class="sub">Connecte-toi pour retrouver tes pubs et tes résultats.</p>
+    <div class="msg bad" role="alert"><i>!</i><p><b>E-mail ou mot de passe incorrect.</b> Vérifie ta saisie, ou <button type="button" class="lnk" data-go="forgot" style="color:inherit;text-decoration:underline">choisis un nouveau mot de passe</button>.</p></div>
+    ${google}<form class="form" style="gap:14px" id="f">${mailField(true)}${pwField("signin",true)}
+    <label class="check"><input type="checkbox" id="rem" checked> Rester connecté sur cet appareil</label>
+    <button class="btn pri" type="submit">Se connecter</button></form>`,
+  signup:()=>`${seg("signup")}<h1>Crée ton compte</h1><p class="sub">Ta première pub prête en quelques minutes.</p>
+    ${google}<form class="form" style="gap:14px" id="f">${mailField()}${pwField("signup")}
+    <button class="btn pri" type="submit">Créer mon compte</button></form>
+    <p class="legal">En créant ton compte, tu acceptes les <a href="#">conditions générales</a> et la <a href="#">politique de confidentialité</a>.</p>`,
+  forgot:()=>`<button type="button" class="lnk" data-go="signin" style="align-self:flex-start;color:var(--muted)">← Retour à la connexion</button>
+    <h1>Mot de passe oublié</h1><p class="sub">Indique ton adresse e-mail : on t'envoie un lien pour en choisir un nouveau.</p>
+    <form class="form" style="gap:14px" id="f">${mailField()}<button class="btn pri" type="submit">Envoyer le lien</button></form>
+    <p class="hint" style="margin:0">Le lien est valable une heure.</p>`,
+  mail:()=>`<div class="mail"><span class="env">${ENV}</span>
+    <div><h1 style="margin:0">Vérifie ta boîte mail</h1><p class="sub" style="margin:6px 0 0">On a envoyé un lien de confirmation à <b style="color:var(--fg)">${email}</b>.</p></div>
+    <ol class="steps-mail"><li><span>1</span>Ouvre l'e-mail de growthity.ai (regarde aussi dans les indésirables).</li><li><span>2</span>Clique sur « Confirmer mon adresse ». Le lien est valable une heure.</li></ol>
+    <div class="apps"><a class="btn" href="https://mail.google.com" target="_blank" rel="noopener">Ouvrir Gmail</a><a class="btn" href="https://outlook.live.com" target="_blank" rel="noopener">Ouvrir Outlook</a></div>
+    <p class="swap" style="text-align:left">Rien reçu ? <button type="button" class="lnk" id="resend" disabled style="opacity:.6">Renvoyer dans <span id="cd">30</span> s</button> · <button type="button" class="lnk" data-go="signup">Changer d'adresse</button></p></div>`
+};
+
+function render(){
+  $("#form").innerHTML=V[view]();
+  document.querySelectorAll(".demo button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===view)));
+  document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{view=b.dataset.go;render();});
+  const f=$("#f"); if(f) f.onsubmit=e=>{e.preventDefault(); if(view==="signup"||view==="forgot"){const m=$("#email"); if(m&&m.value) email=m.value; view=view==="signup"?"mail":"forgot-sent"; if(view==="forgot-sent"){view="forgot";render();$("#form").insertAdjacentHTML("beforeend",`<div class="msg ok" role="status"><i>✓</i><p>Si un compte existe pour <b>${email}</b>, le lien vient de partir.</p></div>`);return;} render();} else {view="error";render();}};
+  const eye=$("#eye"); if(eye) eye.onclick=()=>{const p=$("#pw"); const show=p.type==="password"; p.type=show?"text":"password"; eye.textContent=show?"Masquer":"Afficher";};
+  const pw=$("#pw"), meter=$("#meter"); if(pw&&meter) pw.oninput=()=>{const v=pw.value; const s=!v?0:v.length<8?1:(/[\d\W]/.test(v)&&v.length>=10?3:2); meter.dataset.s=s; $("#pwh").textContent=["8 caractères minimum, avec un chiffre ou un symbole.","Trop court : 8 caractères minimum.","Correct. Ajoute un chiffre ou un symbole pour le renforcer.","Solide."][s];};
+  const cd=$("#cd"); if(cd){let n=30; const t=setInterval(()=>{n--; if(!document.body.contains(cd)){clearInterval(t);return;} cd.textContent=n; if(n<=0){clearInterval(t); const r=$("#resend"); r.disabled=false; r.style.opacity=1; r.textContent="Renvoyer l'e-mail";}},1000);}
+}
+document.querySelectorAll(".demo button").forEach(b=>b.onclick=()=>{view=b.dataset.v;render();});
+render();
+
+/* Aperçu : le prompt se tape, puis les pubs et la campagne apparaissent */
+const PROMPT="Une pub pour mes bougies d'automne, budget 20 € par jour";
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function play(){
+  const el=$("#typed"); ["#a1","#a2","#a3","#pub"].forEach(s=>$(s).classList.remove("on"));
+  if(reduce){el.textContent=PROMPT;["#a1","#a2","#a3","#pub"].forEach(s=>$(s).classList.add("on"));return;}
+  let i=0; el.innerHTML='<span class="caret"></span>';
+  const t=setInterval(()=>{i++; el.innerHTML=PROMPT.slice(0,i)+'<span class="caret"></span>'; if(i>=PROMPT.length){clearInterval(t);
+    ["#a1","#a2","#a3","#pub"].forEach((s,k)=>setTimeout(()=>$(s).classList.add("on"),500+k*450));
+    setTimeout(play,9000);}},38);
+}
+$("#typed").textContent=PROMPT;["#a1","#a2","#a3","#pub"].forEach(s=>$(s).classList.add("on"));
+if(!reduce) setTimeout(play,3000);
+</script>
