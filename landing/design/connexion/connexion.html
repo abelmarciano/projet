@@ -66,16 +66,29 @@ a{color:var(--accent-ink)}
 .can li b{display:block;font-weight:600;font-size:13.5px}
 .can li small{display:block;color:var(--muted);font-size:12.5px}
 
-/* Bande « guide » : une aide, dans la carte, au second plan */
-.guide{display:flex;align-items:center;gap:14px;padding:14px 28px;border-top:1px solid var(--line);background:var(--surface)}
-.guide .gi{width:34px;height:34px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
-.guide .gi svg{width:18px;height:18px}
-.guide div{min-width:0;flex:1}
-.guide b{font-weight:600}
-.guide span{color:var(--muted)}
-.dots{display:inline-flex;gap:3px;vertical-align:middle;margin-left:8px}
-.dots i{width:14px;height:4px;border-radius:2px;background:var(--sunk)}
-.dots i.on{background:var(--ok)}
+/* Panneau « guide » : le second chemin, bien visible pour qui n'a pas encore de compte */
+.guide{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px 28px;align-items:center;padding:22px 28px;border-top:1px solid color-mix(in srgb,var(--accent) 22%,var(--line));background:linear-gradient(180deg,var(--accent-soft),color-mix(in srgb,var(--accent-soft) 35%,var(--surface)))}
+.g-txt{display:flex;flex-direction:column;gap:12px;min-width:0}
+.g-h{display:flex;align-items:center;gap:12px}
+.gi{width:40px;height:40px;border-radius:11px;background:var(--surface);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 25%,var(--line));display:grid;place-items:center;flex:none}
+.gi svg{width:20px;height:20px}
+.g-h b{display:block;font-family:var(--display);font-weight:650;font-size:18px;letter-spacing:-.01em;line-height:1.2}
+.g-h span{display:block;color:var(--muted);font-size:13.5px}
+.path{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+.path li{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px 0 6px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:12.5px;font-weight:500;color:var(--fg)}
+.path li i{width:20px;height:20px;border-radius:10px;display:grid;place-items:center;background:var(--sunk);color:var(--muted);font:600 11px var(--ui);font-style:normal}
+.path li.done i{background:var(--ok);color:#fff}
+.path li.cur{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 14%,transparent)}
+.path li.cur i{background:var(--accent);color:#fff}
+.path .arr{color:var(--dim);font-size:12px}
+.g-cta{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.g-cta small{font-size:12px;color:var(--muted)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff;height:44px;padding:0 18px;font-size:14px}
+.btn.pri:hover{background:#4A2FD2;border-color:#4A2FD2}
+.meter{width:200px;max-width:100%;height:6px;border-radius:3px;background:var(--surface);overflow:hidden;border:1px solid var(--line)}
+.meter i{display:block;height:100%;width:33%;background:var(--accent)}
+.or-guide{font-size:13px;color:var(--muted)}
+.or-guide a{font-weight:600}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 14px;border-radius:10px;border:1px solid var(--line-2);background:var(--surface);font-weight:600;font-size:13px;white-space:nowrap;text-decoration:none;color:var(--fg)}
 .btn:hover{border-color:var(--fg)}
 .btn svg{width:15px;height:15px;flex:none}
@@ -97,8 +110,10 @@ a{color:var(--accent-ink)}
 .ready li.opt i{color:var(--dim);background:var(--sunk)}
 
 @media (max-width:820px){
+  .card{display:flex;flex-direction:column}.main{display:contents}.act{order:1}.guide{order:2}.can{order:3}
   .main{grid-template-columns:minmax(0,1fr)}
-  .can{border-left:0;border-top:1px solid var(--line)}
+  .guide{grid-template-columns:minmax(0,1fr)}.g-cta{align-items:stretch}.g-cta .btn{width:100%}
+  .can{border-left:0;border-top:1px solid var(--line)}.guide{border-top:1px solid color-mix(in srgb,var(--accent) 22%,var(--line))}
   .guide{flex-wrap:wrap;padding-inline:20px}.act,.can{padding:22px 20px}
   .top .pill{display:none}
 }
@@ -137,16 +152,25 @@ const canList=`<div class="can"><p class="lbl">Avec ton accord, Growthity pourra
   <li><i>${I(IC.chart)}</i><div><b>Lire tes résultats</b><small>Dépenses, clics, ventes : tout remonte dans Résultats et Performance.</small></div></li>
   <li><i>${I(IC.users)}</i><div><b>Récupérer tes leads</b><small>Les contacts de tes formulaires Meta arrivent directement dans Growthity.</small></div></li>
 </ul></div>`;
-const guide=(started)=>`<div class="guide"><span class="gi">${I(IC.book)}</span>
-  <div>${started
-    ?`<b>Ton guide est en cours : étape 4 sur 9.</b><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></span><br><span>Reprends là où tu t'es arrêté, puis reviens ici pour connecter Meta.</span>`
-    :`<b>Pas encore de compte publicitaire Meta ?</b> <span>Notre guide te montre chaque écran : 9 étapes, environ 25 minutes.</span>`}</div>
-  <a class="btn" href="#">${started?"Reprendre le guide →":"Ouvrir le guide →"}</a></div>`;
+const STEPS4=["Portefeuille","Page Facebook","Compte pub","Paiement"];
+const guide=(started)=>`<div class="guide" id="sans-compte">
+  <div class="g-txt">
+    <div class="g-h"><span class="gi">${I(IC.book)}</span><div>
+      <b>${started?"Ton guide est en cours : étape 4 sur 9":"Pas encore de compte publicitaire Meta ?"}</b>
+      <span>${started?"Reprends là où tu t'es arrêté, puis reviens ici pour connecter Meta.":"On le crée ensemble, écran par écran, même si tu n'as jamais fait de pub."}</span></div></div>
+    <ol class="path" aria-label="Ce que le guide te fait créer">${STEPS4.map((t,k)=>`${k?'<li class="arr" aria-hidden="true" style="border:0;background:none;padding:0;height:auto">→</li>':''}<li class="${started?(k<1?"done":k===1?"cur":""):""}"><i>${started&&k<1?"✓":k+1}</i>${t}</li>`).join("")}</ol>
+  </div>
+  <div class="g-cta">
+    ${started?`<span class="meter" aria-hidden="true"><i></i></span>`:""}
+    <a class="btn pri" href="#">${started?"Reprendre le guide →":"Créer mon compte avec le guide →"}</a>
+    <small>9 étapes · environ 25 minutes · gratuit chez Meta</small>
+  </div></div>`;
 const V={
   off:()=>`<div class="main"><div class="act">${brand(false)}
-    <h2>Connecte ton compte Meta</h2>
+    <h2>Tu as déjà un compte publicitaire ? Connecte-le.</h2>
     <p class="lead">Une seule connexion, et Growthity publie tes pubs sur Facebook et Instagram.</p>
     <button type="button" class="fb">${FB}Continuer avec Facebook</button>
+    <p class="or-guide" style="margin:-4px 0 0">Pas encore de compte publicitaire ? <a href="#sans-compte">Commence par le guide ↓</a></p>
     <div class="trust"><span>${I(IC.lock)}Connexion sécurisée par Meta</span><span>${I(IC.check)}Tu choisis les comptes à relier</span><span>${I(IC.check)}Accès retirable à tout moment</span></div>
   </div>${canList}</div>${guide(false)}`,
   guide:()=>V.off().replace(guide(false),guide(true)),
