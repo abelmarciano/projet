@@ -1,0 +1,406 @@
+<title>Guide Meta dans le Chat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,650;12..96,700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@500&display=swap">
+<style>
+/* Layout : une conversation du Chat Growthity. Le client dit qu'il n'a pas de compte Meta ; le Chat répond avec une carte « Guide Meta »,
+   puis guide étape par étape avec des cartes (capture annotée + actions + « C'est fait » / « J'ai un problème »). Thème clair de la console. */
+:root{
+  --bg:#F3F4F6; --surface:#FFFFFF; --raised:#F9FAFB; --sunk:#ECEEF2; --line:#E3E5EA; --line-2:#D3D6DD;
+  --fg:#101217; --muted:#5A606D; --dim:#676D7B;
+  --accent:#5B3FE4; --accent-soft:#EDEAFE; --accent-ink:#3F27C2; --pri-h:#4A2FD2;
+  --ok:#14955A; --ok-soft:#E3F5EC; --warn:#C27409; --warn-soft:#FCF1DE;
+  --grad:linear-gradient(120deg,#2563EB 0%,#5B3FE4 52%,#9333EA 100%);
+  --shadow:0 1px 2px rgba(16,18,23,.05),0 12px 32px -18px rgba(16,18,23,.22);
+  --display:"Bricolage Grotesque","Geist",system-ui,sans-serif;
+  --ui:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Geist Mono",ui-monospace,Menlo,monospace;
+  --m-blue:#0866FF; --m-blue-soft:#EBF3FF; --m-bg:#F0F2F5; --m-line:#DADDE1; --m-text:#1C2B33; --m-sub:#65676B; --call:#5B3FE4;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 var(--ui)}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--accent-ink)}
+p{margin:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+.demo{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 16px;background:var(--fg);color:#fff;font-size:12.5px}
+.demo b{font-weight:600;opacity:.7}
+.demo button{border:1px solid rgba(255,255,255,.18);background:transparent;color:#fff;border-radius:999px;padding:4px 11px;font-size:12.5px}
+.top{display:flex;align-items:center;gap:10px;height:57px;padding-inline:24px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--bg) 86%,transparent)}
+.crumb{font-weight:600}.crumb small{font-weight:500;color:var(--dim);margin-right:6px}
+.pill{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:4px 9px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--muted)}
+.pill i{width:7px;height:7px;border-radius:4px;background:var(--warn);box-shadow:0 0 0 3px var(--warn-soft)}
+.pill.on i{background:var(--ok);box-shadow:0 0 0 3px var(--ok-soft)}
+
+.chat{max-width:820px;margin:0 auto;padding-block:24px 160px;padding-inline:16px;display:flex;flex-direction:column;gap:18px}
+.row{display:flex;gap:12px;align-items:flex-start}
+.row.me{justify-content:flex-end}
+.av{width:32px;height:32px;border-radius:10px;background:#0E0D14;display:grid;place-items:center;flex:none}
+.av svg{width:19px;height:19px}
+.me .av{background:#E2832B;color:#fff;border-radius:16px;font:600 12px var(--ui);order:2}
+.bub{max-width:min(560px,85%);padding:10px 14px;border-radius:16px 4px 16px 16px;background:var(--accent);color:#fff}
+.ai-body{display:flex;flex-direction:column;gap:10px;min-width:0;flex:1;max-width:680px}
+.ai-body>p{font-size:14.5px}
+.ai-body b{font-weight:600}
+.chip-r{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent-ink);font-weight:600;font-size:13px}
+.att{display:flex;align-items:center;gap:8px;margin-top:6px;padding:6px;border-radius:10px;background:rgba(255,255,255,.18);font-size:12px}
+.att i{width:46px;height:34px;border-radius:6px;background:linear-gradient(135deg,#fff 0 40%,#E4E6EB 40%);display:block}
+
+/* Carte « Guide Meta » */
+.gcard{background:var(--surface);border:1px solid color-mix(in srgb,var(--accent) 28%,var(--line));border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.gc-h{display:flex;align-items:center;gap:12px;padding:16px 18px;background:linear-gradient(180deg,var(--accent-soft),var(--surface))}
+.gc-i{width:40px;height:40px;border-radius:11px;background:var(--surface);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 25%,var(--line));display:grid;place-items:center;flex:none}
+.gc-i svg{width:20px;height:20px}
+.gc-h b{display:block;font-family:var(--display);font-weight:650;font-size:17px}
+.gc-h small{display:block;color:var(--muted);font-size:13px}
+.path{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:0 18px 14px;margin:0;list-style:none;background:linear-gradient(180deg,var(--surface),var(--surface))}
+.path li{display:inline-flex;align-items:center;gap:6px}
+.path .arr{color:var(--dim);font-size:12px}
+.chipm{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px 0 6px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:12.5px;font-weight:500;white-space:nowrap}
+.chipm i{width:20px;height:20px;border-radius:10px;display:grid;place-items:center;background:var(--sunk);color:var(--muted);font:600 11px var(--ui);font-style:normal}
+.path li.done .chipm i{background:var(--ok);color:#fff}
+.gc-f{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:var(--raised)}
+.gc-f small{color:var(--dim);font-size:12px;margin-left:auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 14px;border-radius:10px;border:1px solid var(--line-2);background:var(--surface);font-weight:600;font-size:13px;white-space:nowrap;text-decoration:none;color:var(--fg)}
+.btn:hover{border-color:var(--fg)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.pri:hover{background:var(--pri-h);border-color:var(--pri-h)}
+.btn.ghost{border-color:transparent;background:none;color:var(--muted)}
+.btn.ghost:hover{background:var(--sunk);color:var(--fg)}
+.btn.fb{background:#1877F2;border-color:#1877F2;color:#fff;height:40px}
+.btn.fb svg{width:18px;height:18px}
+.btn[disabled]{opacity:.5;cursor:default}
+
+/* Carte étape */
+.scard{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.sc-h{display:flex;align-items:center;gap:10px;padding:14px 18px 0}
+.sc-n{font:600 11.5px var(--ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent-ink)}
+.sc-t{font-size:12.5px;color:var(--dim)}
+.sc-bar{flex:1;max-width:140px;height:5px;border-radius:3px;background:var(--sunk);overflow:hidden;margin-left:auto}
+.sc-bar i{display:block;height:100%;background:var(--accent)}
+.sc-b{padding:8px 18px 16px;display:flex;flex-direction:column;gap:12px}
+.sc-b h3{margin:0;font-family:var(--display);font-weight:650;font-size:19px;letter-spacing:-.01em}
+.sc-why{color:var(--muted);font-size:13.5px}
+ol.do{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+ol.do li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:start}
+ol.do li .k{width:24px;height:24px;border-radius:12px;display:grid;place-items:center;font-weight:700;font-size:12px;background:var(--call);color:#fff}
+ol.do li small{display:block;color:var(--dim);font-size:12.5px}
+.note{display:grid;grid-template-columns:20px minmax(0,1fr);gap:10px;padding:10px 12px;border-radius:12px;font-size:13px;background:var(--warn-soft)}
+.note i{font-style:normal;font-weight:700;width:20px;height:20px;border-radius:10px;display:grid;place-items:center;font-size:11px;color:#fff;background:var(--warn)}
+.note.tip{background:var(--accent-soft)}.note.tip i{background:var(--accent)}
+a.lk{color:var(--m-blue);font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+a.lk::after{content:" ↗";font-size:.85em;display:inline-block}
+.term{font-weight:600}
+.sc-shot{padding:0 18px 16px}
+.sc-f{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 18px;border-top:1px solid var(--line);background:var(--raised)}
+.sc-f .sp{flex:1}
+.sc-f .open{font-size:12.5px;color:var(--muted);text-decoration:none}
+.sc-f .open:hover{color:var(--fg);text-decoration:underline}
+.scard.done{box-shadow:none}
+.scard.done .sc-b,.scard.done .sc-shot{display:none}
+.scard.done .sc-f{background:var(--ok-soft);border-top:0}
+.donel{display:inline-flex;align-items:center;gap:6px;color:#0B7A47;font-weight:600;font-size:13px}
+.typing{display:flex;gap:4px;padding:12px 2px}
+.typing i{width:7px;height:7px;border-radius:4px;background:var(--line-2);animation:t 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes t{50%{background:var(--accent)}}
+.endc{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow)}
+.endc h3{margin:0;font-family:var(--display);font-weight:650;font-size:19px}
+.adprev{display:flex;align-items:center;gap:12px;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--raised)}
+.adprev i{width:44px;height:55px;border-radius:8px;background:linear-gradient(160deg,#C98B5A,#6B3E2A);flex:none}
+.adprev b{display:block;font-weight:600}
+.adprev small{color:var(--dim)}
+.compose{position:fixed;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;padding-inline:16px;pointer-events:none}
+.compose div{pointer-events:auto;width:min(788px,100%);display:flex;align-items:center;gap:8px;padding:10px 10px 10px 16px;border:1px solid var(--line-2);border-radius:18px;background:var(--surface);box-shadow:var(--shadow);color:var(--dim)}
+.compose div>span:first-child{flex:1}
+.compose .go{flex:none;width:34px;height:34px;border-radius:10px;background:var(--fg);color:#fff;display:grid;place-items:center}
+.why-note{max-width:820px;margin:0 auto;padding:0 16px;color:var(--dim);font-size:12.5px;text-align:center}
+@media (prefers-reduced-motion:reduce){.typing i{animation:none}}
+@media (max-width:560px){.av{display:none}.me .av{display:none}.bub{max-width:100%}.gc-f small{margin-left:0;width:100%}}
+/* ---------- Capture d'écran Meta (reproduction) ---------- */
+.shotw{display:flex;flex-direction:column;gap:8px;min-width:0}
+.shot{border-radius:12px;overflow:hidden;border:1px solid var(--line-2);background:#fff;box-shadow:var(--shadow);font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--m-text)}
+.chrome{display:flex;align-items:center;gap:6px;padding:8px 10px;background:#E9EBEE;border-bottom:1px solid var(--m-line)}
+.chrome i{width:10px;height:10px;border-radius:5px;background:#FF5F57}.chrome i+i{background:#FEBC2E}.chrome i+i+i{background:#28C840}
+.chrome span{margin-left:8px;flex:1;min-width:0;font:12px -apple-system,"Segoe UI",sans-serif;color:#4B4F56;background:#fff;border-radius:7px;padding:4px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chrome span::before{content:"🔒 ";font-size:10px}
+.mtop{display:flex;align-items:center;gap:10px;padding:9px 14px;background:#fff;border-bottom:1px solid var(--m-line)}
+.mlogo{width:22px;height:22px;border-radius:6px;background:var(--m-blue);flex:none}
+.mtop b{font-size:13.5px;font-weight:700}
+.mtop .acct{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--m-sub)}
+.mtop .acct i{width:24px;height:24px;border-radius:12px;background:#C9CCD1}
+.mbody{display:grid;grid-template-columns:150px minmax(0,1fr);min-height:400px;background:var(--m-bg)}
+.mbody.full{grid-template-columns:minmax(0,1fr)}
+.mside{background:#fff;border-right:1px solid var(--m-line);padding:10px 8px;display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--m-text)}
+.mside .h{font-size:10.5px;font-weight:700;color:var(--m-sub);text-transform:uppercase;letter-spacing:.04em;padding:8px 8px 4px}
+.mside span{padding:6px 8px;border-radius:6px;display:flex;align-items:center;gap:7px}
+.mside span::before{content:"";width:14px;height:14px;border-radius:4px;background:#E4E6EB;flex:none}
+.mside span.on{background:var(--m-blue-soft);color:var(--m-blue);font-weight:600}
+.mside span.on::before{background:var(--m-blue)}
+.mpane{padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.mcard{background:#fff;border:1px solid var(--m-line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.mcard h5{margin:0;font-size:15px;font-weight:700}
+.mcard .s{margin:-6px 0 0;font-size:12px;color:var(--m-sub)}
+.mf{display:flex;flex-direction:column;gap:4px}
+.mf label{font-size:12px;font-weight:600}
+.mf .in{height:36px;border:1px solid #CCD0D5;border-radius:6px;padding:0 10px;display:flex;align-items:center;font-size:13px;background:#fff}
+.mf .in.dd::after{content:"";margin-left:auto;border:5px solid transparent;border-top-color:#606770;margin-top:5px}
+.mf .hint{font-size:11.5px;color:var(--m-sub)}
+.mb{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:34px;padding:0 14px;border-radius:6px;background:var(--m-blue);color:#fff;font-weight:600;font-size:13px;align-self:flex-start}
+.mb.sec{background:#E4E6EB;color:var(--m-text)}
+.mrow{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--m-line);border-radius:8px;background:#fff;font-size:12.5px}
+.mrow .av{width:32px;height:32px;border-radius:8px;background:#E4E6EB;display:grid;place-items:center;font-weight:700;font-size:13px;color:#606770;flex:none}
+.mrow div{flex:1;min-width:0} .mrow small{display:block;color:var(--m-sub);font-size:11.5px}
+.mtag{white-space:nowrap;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#E7F3EC;color:#1A7F37}
+.mtag.off{background:#FDECEC;color:#B42318}
+.mtabs{display:flex;gap:16px;border-bottom:1px solid var(--m-line);font-size:12.5px;font-weight:600;color:var(--m-sub)}
+.mtabs span{padding:0 0 8px}.mtabs span.on{color:var(--m-blue);box-shadow:inset 0 -2px 0 var(--m-blue)}
+.menu{background:#fff;border:1px solid var(--m-line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:6px;display:flex;flex-direction:column;gap:2px;font-size:12.5px;width:240px;align-self:flex-start}
+.menu span{padding:8px 10px;border-radius:6px}.menu span small{display:block;color:var(--m-sub);font-size:11px}
+/* Pastilles numérotées : renvoient aux étapes « Ce que tu fais » */
+.c{position:relative}
+.c::after{content:attr(data-c);position:absolute;top:-10px;right:-10px;width:22px;height:22px;border-radius:11px;background:var(--call);color:#fff;font:700 12px var(--ui);display:grid;place-items:center;box-shadow:0 0 0 3px #fff,0 4px 10px rgba(91,63,228,.4);z-index:2}
+.ring{outline:2.5px solid var(--call);outline-offset:3px;border-radius:8px}
+.mf label.c::after{position:static;display:inline-grid;margin-left:8px;vertical-align:-5px;box-shadow:0 2px 6px rgba(91,63,228,.35)}
+.cap{font-size:11.5px;color:var(--dim);text-align:center}
+.ig{background:linear-gradient(45deg,#F58529,#DD2A7B,#8134AF)!important;color:#fff!important}
+.gx{display:grid;grid-template-columns:118px minmax(0,1fr);min-height:400px;background:var(--bg);font-family:var(--ui);color:var(--fg)}
+.gx .gside{background:#fff;border-right:1px solid var(--line);padding:12px 8px;display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--muted)}
+.gx .gside b{font-family:var(--display);font-size:14px;color:var(--fg);padding:2px 8px 10px}
+.gx .gside span{padding:6px 8px;border-radius:7px}.gx .gside span.on{background:var(--sunk);color:var(--fg);font-weight:600}
+</style>
+<div class="demo" role="toolbar" aria-label="Maquette"><b>Maquette</b><button type="button" id="replay">Rejouer la conversation</button><span style="opacity:.7">Clique sur « Me guider ici », puis « C'est fait » ou « J'ai un problème ».</span></div>
+<header class="top"><div class="crumb"><small>Chat /</small>Pub bougies d'automne</div><span class="pill" id="pill"><i></i><span>Meta pas encore connecté</span></span></header>
+<main class="chat" id="chat" aria-live="polite"></main>
+<div class="compose" aria-hidden="true"><div><span>Écris ta réponse…</span><span class="go">↑</span></div></div>
+<script>
+/* Lien cliquable dans une instruction */
+const L=(t,u)=>`<a class="lk" href="${u}" target="_blank" rel="noopener">${t}</a>`;
+const U={
+  fb:"https://www.facebook.com/", fbNew:"https://www.facebook.com/r.php", bs:"https://business.facebook.com/",
+  sec:"https://accountscenter.facebook.com/password_and_security", tfa:"https://accountscenter.facebook.com/password_and_security/two_factor",
+  bm:"https://business.facebook.com/overview", info:"https://business.facebook.com/settings/info",
+  pages:"https://business.facebook.com/settings/pages", pageNew:"https://www.facebook.com/pages/create",
+  ig:"https://business.facebook.com/settings/instagram-account-v2s", igPro:"https://help.instagram.com/502981923235522",
+  ads:"https://business.facebook.com/settings/ad-accounts", am:"https://adsmanager.facebook.com/", aq:"https://www.facebook.com/accountquality",
+  pay:"https://business.facebook.com/billing_hub/payment_settings", payAct:"https://business.facebook.com/billing_hub/payment_activity",
+  ev:"https://business.facebook.com/events_manager2", shop:"https://apps.shopify.com/facebook"
+};
+/* Mots de Meta : définition au survol, plutôt qu'un lexique à part */
+const DEF={
+  "portefeuille business":"Le dossier de ton entreprise chez Meta (ex-Business Manager). Il range ta Page, tes comptes pub et tes paiements.",
+  "Page":"La vitrine de ton entreprise sur Facebook. Tes pubs sont publiées en son nom.",
+  "compte publicitaire":"Là où tes pubs sont créées et facturées. Un seul suffit.",
+  "double authentification":"Un code envoyé sur ton téléphone en plus du mot de passe.",
+  "pixel":"Un petit code sur ton site qui dit à Meta qui a visité ou acheté. Meta l'appelle aussi « jeu de données »."
+};
+const term=h=>Object.entries(DEF).reduce((s,[k,d])=>s.replace(`<b>${k}</b>`,`<span class="term" tabindex="0" data-def="${d}">${k}</span>`),h);
+
+/* Une étape : une phrase, des actions, au plus une alerte. Le reste va dans « Besoin d'aide ? ». */
+const STEPS = [
+  { t:"Avant de commencer", k:"Avant", time:"2 min",
+    why:"Meta demande 4 éléments qui s'emboîtent : ton profil Facebook, un <b>portefeuille business</b>, une <b>Page</b> et un <b>compte publicitaire</b>. Tu les crées une fois, puis tu les connectes à Growthity.",
+    need:["ton compte Facebook","un e-mail pro","une carte ou PayPal","ton logo"],
+    do:[[`Vérifie que tu arrives à te connecter sur ${L("facebook.com",U.fb)}.`,`Pas de compte ? ${L("Crée-le ici",U.fbNew)}, avec ton vrai nom.`],["Garde ce guide ouvert à côté de Meta.","Ta progression est gardée sur cet appareil."]],
+    more:["Ton profil Facebook personnel reste privé : tes clients ne le voient jamais. Il sert seulement à prouver qui gère l'entreprise."],
+    links:[["Meta Business Suite",U.bs]],
+    faq:[["Je dois vraiment avoir un profil Facebook ?","Oui. Meta n'autorise pas la pub sans profil personnel, mais tes pubs sont publiées au nom de ta Page."],["Je peux utiliser le compte d'un salarié ?","Mieux vaut le tien : le propriétaire du portefeuille doit rester dans l'entreprise."]],
+    url:"business.facebook.com", scr:"flow" },
+  { t:"Sécuriser ton compte Facebook", k:"Sécurité", time:"3 min",
+    why:"La <b>double authentification</b> est obligatoire pour gérer une entreprise chez Meta, et elle protège ton compte pub.",
+    need:["ton téléphone"],
+    do:[[`Ouvre ${L("Mot de passe et sécurité",U.sec)}.`,""],[`Clique sur ${L("Authentification à deux facteurs",U.tfa)} et choisis ton compte Facebook.`,""],["Choisis <b>Application d'authentification</b> (ou SMS) et suis les instructions.","Note bien les codes de récupération."]],
+    alert:["warn","Utilise ton <b>vrai nom</b> sur ton profil : un faux nom peut faire bloquer ton compte pub."],
+    more:["Applications gratuites conseillées : Google Authenticator ou Microsoft Authenticator."],
+    faq:[["Je ne reçois pas le code par SMS","Attends 2 minutes et redemande-le, ou choisis l'application : elle marche même sans réseau."],["J'ai changé de téléphone","Connecte-toi avec un code de récupération, puis réactive la double authentification."]],
+    url:"accountscenter.facebook.com/password_and_security", scr:"twofa" },
+  { t:"Créer ton portefeuille business", k:"Portefeuille", time:"4 min",
+    why:"Le <b>portefeuille business</b> est le dossier de ton entreprise chez Meta : ta Page et tes pubs restent à toi, même si un prestataire part.",
+    need:["le nom de ton entreprise","ton e-mail pro"],
+    do:[[`Va sur ${L("business.facebook.com",U.bm)} et clique sur <b>Créer un compte</b>.`,""],["Saisis le <b>nom de ton entreprise</b>, ton nom et ton <b>e-mail pro</b>.",""],["Clique sur <b>Envoyer</b> et valide l'e-mail de confirmation.","Regarde aussi dans les indésirables."]],
+    alert:["warn","Crée <b>un seul</b> portefeuille : en créer plusieurs d'affilée est un signal suspect pour Meta."],
+    links:[["Informations sur l'entreprise",U.info]],
+    faq:[["Meta dit que je ne peux pas créer de portefeuille","Ton profil est peut-être trop récent, ou un portefeuille existe déjà à ton nom : ouvre business.facebook.com pour vérifier."],["Je n'ai pas reçu l'e-mail","Regarde dans les indésirables, puis vérifie l'adresse dans Informations sur l'entreprise."]],
+    url:"business.facebook.com/overview", scr:"bm" },
+  { t:"Créer ta Page Facebook", k:"Page", time:"5 min",
+    why:"Tes pubs sont publiées au nom de ta <b>Page</b> : c'est son nom et son logo qu'on voit au-dessus de la pub.",
+    need:["ton logo carré","une photo de couverture"],
+    do:[[`Ouvre ${L("Paramètres › Comptes › Pages",U.pages)}.`,""],["Clique sur <b>+ Ajouter</b>.",""],["Choisis <b>Créer une Page</b>, ou <b>Ajouter une Page</b> si tu en as déjà une.","Nom, catégorie, logo et couverture."]],
+    more:["Publie 2 ou 3 posts sur la Page avant ta première pub : une Page vide fait moins sérieux."],
+    links:[["Créer une Page depuis Facebook",U.pageNew]],
+    faq:[["Ma Page existe mais je ne peux pas l'ajouter","Il faut en être administrateur : choisis « Demander l'accès à une Page »."],["Quelle catégorie choisir ?","Celle qui décrit le mieux ton activité. Tu pourras la changer."]],
+    url:"business.facebook.com/settings/pages", scr:"page" },
+  { t:"Relier ton Instagram", k:"Instagram", time:"3 min", opt:true,
+    why:"Tes pubs afficheront ton nom et ta photo Instagram. Sans ça, elles passent quand même sur Instagram, au nom de ta Page.",
+    need:["un compte Instagram pro"],
+    do:[[`Ouvre ${L("Comptes › Comptes Instagram",U.ig)}.`,""],["Clique sur <b>+ Ajouter</b> et connecte-toi à Instagram.",`Ton compte doit être ${L("professionnel",U.igPro)}.`]],
+    faq:[["Instagram refuse la connexion","Vérifie que tu arrives à te connecter dans l'app Instagram, puis réessaie depuis un ordinateur."]],
+    url:"business.facebook.com/settings/instagram-account-v2s", scr:"insta" },
+  { t:"Créer ton compte publicitaire", k:"Compte pub", time:"4 min",
+    why:"Le <b>compte publicitaire</b> contient tes campagnes et tes dépenses : c'est lui que Growthity utilise pour publier.",
+    need:["le nom de ton entreprise"],
+    do:[[`Ouvre ${L("Comptes › Comptes publicitaires",U.ads)}, puis <b>+ Ajouter</b> › <b>Créer un compte publicitaire</b>.`,""],["Nomme-le simplement, ex. « Atelier Sauge – Pubs ».",""],["Choisis <b>Europe/Paris</b> et <b>EUR – Euro</b>, puis <b>Suivant</b>.","À l'écran suivant : « Mon entreprise » et contrôle total pour toi."]],
+    alert:["warn","Le <b>fuseau horaire et la devise ne pourront plus être changés</b>. Vérifie avant de valider."],
+    links:[["Gestionnaire de publicités",U.am],["Qualité du compte",U.aq]],
+    faq:[["Je me suis trompé de devise ou de fuseau","Crée un nouveau compte publicitaire avec les bons réglages et n'utilise plus l'ancien."],["Mon compte pub est désactivé",`Ouvre ${L("Qualité du compte",U.aq)} et demande un examen.`]],
+    url:"business.facebook.com/settings/ad-accounts", scr:"adacc" },
+  { t:"Ajouter un moyen de paiement", k:"Paiement", time:"3 min",
+    why:"Meta prélève uniquement ce que tes pubs ont dépensé. Le budget par jour, c'est toi qui le fixes dans Growthity.",
+    need:["ta carte ou PayPal","ton n° de TVA s'il y en a un"],
+    do:[[`Ouvre ${L("Paramètres de paiement",U.pay)}.`,""],["Clique sur <b>Ajouter un moyen de paiement</b>.","Une autorisation de quelques centimes peut apparaître, puis s'annule."],["Renseigne ton adresse et ton <b>numéro de TVA</b>.","Avec un n° de TVA intracommunautaire, pas de TVA française sur les factures Meta."]],
+    alert:["warn","Si un paiement échoue, toutes tes pubs s'arrêtent : choisis une carte avec un plafond suffisant."],
+    more:["Au début, Meta prélève à de petits seuils (par exemple 25 €), qui augmentent quand tes paiements passent bien."],
+    links:[["Activité et factures",U.payAct]],
+    faq:[["Ma carte est refusée","Vérifie que les paiements en ligne et à l'étranger sont activés (Meta facture depuis l'Irlande), ou essaie une autre carte."],["Où trouver mes factures ?",`Dans ${L("Activité et factures",U.payAct)}, en PDF.`]],
+    url:"business.facebook.com/billing_hub/payment_settings", scr:"pay" },
+  { t:"Installer le pixel sur ton site", k:"Pixel", time:"5 min", opt:true,
+    why:"Le <b>pixel</b> dit à Meta qui a visité ton site ou acheté, pour relancer tes visiteurs et mesurer tes ventes.",
+    need:["l'accès à ton site"],
+    do:[[`Ouvre le ${L("Gestionnaire d'événements",U.ev)} › <b>Connecter des sources de données</b>.`,""],["Choisis <b>Web</b>, donne un nom, puis l'installation <b>via ta plateforme</b>.","Pas de code à copier."],["Le statut passe à <b>Actif</b> après une visite sur ton site.",""]],
+    alert:["tip",`Sur Shopify : installe l'appli ${L("Facebook & Instagram",U.shop)}, tout est automatique.`],
+    faq:[["Le statut reste « Inactif »","Ouvre ton site dans un autre onglet, attends quelques minutes et actualise."],["Une agence a déjà installé un pixel","Pas de doublon : demande-lui de partager son pixel avec ton portefeuille."]],
+    url:"business.facebook.com/events_manager2", scr:"pixel" },
+  { t:"Connecter Meta à Growthity", k:"Growthity", time:"2 min", final:true,
+    why:"Tu autorises Growthity à publier tes pubs et à lire tes résultats. Tu peux retirer l'accès quand tu veux.",
+    do:[["Dans Growthity, ouvre <b>Connexion</b>.",""],["Clique sur <b>Continuer avec Facebook</b>.",""],["Coche ton portefeuille, ta Page et ton compte publicitaire, puis valide.",""]],
+    more:["Tes premières pubs passent par la vérification de Meta : quelques minutes, parfois jusqu'à 24 h pour un nouveau compte."],
+    faq:[["Je ne vois pas mon compte publicitaire","Déconnecte puis reconnecte Meta et coche bien tous les éléments."],["Comment retirer l'accès ?","Dans Growthity › Connexion › Déconnecter."]],
+    url:"app.growthity.ai/connexions", scr:"growthity" }
+];
+
+
+const C=(n)=>`c" data-c="${n}`;
+const mside=(on,items)=>`<div class="mside"><div class="h">Paramètres</div>${items.map(x=>`<span class="${x===on?"on":""}">${x}</span>`).join("")}</div>`;
+const SET=["Utilisateurs","Pages","Comptes publicitaires","Comptes Instagram","Moyens de paiement","Sources de données","Sécurité"];
+const mtop=(t)=>`<div class="mtop"><span class="mlogo"></span><b>${t}</b><span class="acct">Atelier Sauge <i></i></span></div>`;
+const SCR={
+  flow:()=>`${mtop("Comment tout s'emboîte")}<div class="mbody full"><div class="mpane">
+    <div class="mrow"><span class="av">Toi</span><div><b>Ton profil Facebook</b><small>Privé : il prouve qui gère l'entreprise</small></div></div>
+    <div style="height:14px;width:2px;background:var(--m-line);margin-left:25px"></div>
+    <div class="mrow" style="border-color:var(--m-blue)"><span class="av" style="background:var(--m-blue);color:#fff">PB</span><div><b>Portefeuille business</b><small>Le dossier de ton entreprise</small></div></div>
+    <div style="height:14px;width:2px;background:var(--m-line);margin-left:25px"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+      <div class="mrow"><span class="av">P</span><div><b>Page</b><small>Ta vitrine</small></div></div>
+      <div class="mrow"><span class="av ig">IG</span><div><b>Instagram</b><small>Facultatif</small></div></div>
+      <div class="mrow"><span class="av">€</span><div><b>Compte pub</b><small>+ paiement</small></div></div></div>
+    <div style="height:14px;width:2px;background:var(--m-line);margin-left:25px"></div>
+    <div class="mrow" style="border-color:var(--accent)"><span class="av" style="background:var(--grad);color:#fff">G</span><div><b>Growthity</b><small>Crée et publie tes pubs pour toi</small></div></div>
+  </div></div>`,
+  twofa:()=>`${mtop("Espace comptes")}<div class="mbody"><div class="mside"><div class="h">Espace comptes</div><span>Profils</span><span>Expérience connectée</span><span class="on">Mot de passe et sécurité</span><span>Informations personnelles</span><span>Vos informations</span></div>
+    <div class="mpane"><div class="mcard"><h5>Mot de passe et sécurité</h5><p class="s">Connexion et récupération</p>
+      <div class="mrow"><span class="av">🔑</span><div>Changer le mot de passe</div></div>
+      <div class="mrow ring ${C(1)}"><span class="av">🛡</span><div><b>Authentification à deux facteurs</b><small>Désactivée</small></div><span class="mtag off">Désactivée</span></div>
+      <div class="mrow"><span class="av">⌁</span><div>Où vous êtes connecté(e)</div></div></div>
+      <div class="menu"><span class="${C(2)}" style="background:var(--m-blue-soft)">Facebook<small>Camille Martin</small></span><span>Instagram<small>@atelier.sauge</small></span></div>
+      <div class="mb ${C(3)}">Application d'authentification</div></div></div>`,
+  bm:()=>`${mtop("Meta for Business")}<div class="mbody full"><div class="mpane" style="align-items:center">
+    <div class="mcard" style="width:min(100%,380px)"><h5>Créer un portefeuille business</h5><p class="s">Gère ta Page, tes publicités et ton équipe au même endroit.</p>
+      <div class="mf"><label class="${C(2)}">Nom de l'entreprise</label><div class="in ring">Atelier Sauge</div><span class="hint">Le nom officiel de ton entreprise</span></div>
+      <div class="mf"><label>Ton prénom et ton nom</label><div class="in">Camille Martin</div></div>
+      <div class="mf"><label>Adresse e-mail professionnelle</label><div class="in ring">contact@ateliersauge.fr</div></div>
+      <div class="mb ${C(3)}">Envoyer</div></div>
+    <div class="mb sec ${C(1)}" style="align-self:center">Créer un compte</div></div></div>`,
+  page:()=>`${mtop("Paramètres de l'entreprise")}<div class="mbody">${mside("Pages",SET).replace('<span class="on">Pages</span>','<span class="on '+C(1)+'">Pages</span>')}
+    <div class="mpane"><div class="mtabs"><span class="on">Pages</span><span>Demandes</span></div>
+      <div style="display:flex;align-items:center;gap:8px"><b style="font-size:15px">Pages</b><span class="mb ${C(2)}" style="margin-left:auto">+ Ajouter</span></div>
+      <div class="menu" style="margin-left:auto"><span>Ajouter une Page<small>Tu en as déjà une</small></span><span>Demander l'accès à une Page<small>Elle appartient à quelqu'un d'autre</small></span><span class="ring ${C(3)}" style="background:var(--m-blue-soft)">Créer une Page<small>Nouvelle vitrine pour ton entreprise</small></span></div>
+      <div class="mrow"><span class="av">?</span><div>Aucune Page pour l'instant<small>Ajoute ou crée ta Page</small></div></div></div></div>`,
+  insta:()=>`${mtop("Paramètres de l'entreprise")}<div class="mbody">${mside("Comptes Instagram",SET).replace('<span class="on">Comptes Instagram</span>','<span class="on '+C(1)+'">Comptes Instagram</span>')}
+    <div class="mpane"><div style="display:flex;align-items:center;gap:8px"><b style="font-size:15px">Comptes Instagram</b><span class="mb ${C(2)}" style="margin-left:auto">+ Ajouter</span></div>
+      <div class="mrow"><span class="av ig">IG</span><div><b>@atelier.sauge</b><small>Compte professionnel</small></div><span class="mtag">Relié</span></div>
+      <div class="mcard"><h5>Ce que ça change</h5><p class="s" style="margin:0">Tes pubs affichent ton nom et ta photo Instagram, et les gens peuvent aller sur ton profil.</p></div></div></div>`,
+  adacc:()=>`${mtop("Paramètres de l'entreprise")}<div class="mbody">${mside("Comptes publicitaires",SET).replace('<span class="on">Comptes publicitaires</span>','<span class="on '+C(1)+'">Comptes publicitaires</span>')}
+    <div class="mpane"><div class="mcard"><h5>Créer un compte publicitaire</h5>
+      <div class="mf"><label class="${C(2)}">Nom du compte publicitaire</label><div class="in ring">Atelier Sauge – Pubs</div></div>
+      <div class="mf"><label class="${C(3)}">Fuseau horaire</label><div class="in dd ring">(GMT+01:00) Europe/Paris</div><span class="hint">Ne pourra pas être modifié</span></div>
+      <div class="mf"><label>Devise</label><div class="in dd ring">EUR – Euro</div><span class="hint">Ne pourra pas être modifiée</span></div>
+      <div class="mf"><label>Moyen de paiement</label><div class="in dd" style="color:var(--m-sub)">Ajouter plus tard</div></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end"><span class="mb sec">Annuler</span><span class="mb">Suivant</span></div></div></div></div>`,
+  pay:()=>`${mtop("Facturation et paiements")}<div class="mbody"><div class="mside"><div class="h">Facturation</div><span>Activité</span><span class="on ${C(1)}">Paramètres de paiement</span><span>Factures</span></div>
+    <div class="mpane"><div class="mcard"><h5>Moyens de paiement</h5><p class="s">Compte : Atelier Sauge – Pubs</p>
+      <div class="mrow"><span class="av">💳</span><div>Aucun moyen de paiement<small>Tes pubs ne peuvent pas être diffusées</small></div><span class="mtag off">À ajouter</span></div>
+      <div class="mb ${C(2)}">Ajouter un moyen de paiement</div></div>
+      <div class="mcard"><h5>Informations sur l'entreprise</h5>
+        <div class="mf"><label>Adresse</label><div class="in">8 rue des Lilas, 33000 Bordeaux</div></div>
+        <div class="mf"><label class="${C(3)}">Numéro de TVA</label><div class="in ring">FR12 345678901</div></div></div>
+      <div class="mrow"><span class="av">€</span><div>Seuil de facturation<small>Prélèvement à chaque seuil atteint</small></div><b>25,00 €</b></div></div></div>`,
+  pixel:()=>`${mtop("Gestionnaire d'événements")}<div class="mbody"><div class="mside"><div class="h">Événements</div><span class="on">Sources de données</span><span>Événements personnalisés</span><span>Paramètres</span></div>
+    <div class="mpane"><div style="display:flex;align-items:center"><b style="font-size:15px">Sources de données</b><span class="mb ${C(1)}" style="margin-left:auto">+ Connecter des sources de données</span></div>
+      <div class="mcard"><h5>Sélectionne une source</h5>
+        <div class="mrow ring ${C(2)}"><span class="av">🌐</span><div><b>Web</b><small>Mesure les visites et achats sur ton site</small></div></div>
+        <div class="mrow"><span class="av">📱</span><div>Application</div></div><div class="mrow"><span class="av">🏬</span><div>Hors ligne</div></div></div>
+      <div class="mrow ${C(3)}"><span class="av">◉</span><div><b>Pixel Atelier Sauge</b><small>Dernière activité il y a 2 min</small></div><span class="mtag">Actif</span></div></div></div>`,
+  growthity:()=>`<div class="gx"><div class="gside"><b>growthity.ai</b><span>Accueil</span><span>Chat</span><span>Créations</span><span>Campagnes</span><span>Résultats</span><span class="on ${C(1)}">Connexion</span></div>
+    <div class="mpane" style="font-family:var(--ui)"><b style="font-family:var(--display);font-size:20px">Connexion</b>
+      <div class="mcard" style="border-color:var(--line);border-radius:14px"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="av" style="width:36px;height:36px;border-radius:9px;background:#0866FF;color:#fff;display:grid;place-items:center;font-weight:700">f</span><div style="flex:1;min-width:110px"><b style="white-space:nowrap">Meta Ads</b><small style="display:block;color:var(--dim)">Facebook &amp; Instagram</small></div><span class="mtag off">Non connecté</span></div>
+        <span class="mb ${C(2)}" style="background:#0866FF">Continuer avec Facebook</span></div>
+      <div class="menu ${C(3)}" style="width:100%;max-width:330px"><span>☑ Portefeuille : <b>Atelier Sauge</b></span><span>☑ Page : <b>Atelier Sauge</b></span><span>☑ Compte pub : <b>Atelier Sauge – Pubs</b></span></div></div></div>`
+};
+
+
+const $=s=>document.querySelector(s);
+const LOGO=`<svg viewBox="0 0 24 24" fill="none"><defs><linearGradient id="lgA" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2563EB"/><stop offset=".52" stop-color="#7B61FF"/><stop offset="1" stop-color="#B05CF5"/></linearGradient></defs><path d="M2.5 17 8.5 11l5 5L21.5 8M16 8h5.5v5.5" stroke="url(#lgA)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const BOOK=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>`;
+const FB=`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#fff"/><path fill="#1877F2" d="M13.4 21.9v-7h2.4l.4-2.8h-2.8v-1.8c0-.8.2-1.4 1.4-1.4h1.5V6.4a20 20 0 0 0-2.2-.1c-2.2 0-3.7 1.3-3.7 3.8v2.1H8v2.8h2.4v7z"/></svg>`;
+const MS=[["Portefeuille",2],["Page Facebook",3],["Compte pub",5],["Paiement",6]];
+let done=new Set([0]); // « Avant de commencer » coché
+const chat=$("#chat");
+const scroll=()=>window.scrollTo({top:document.body.scrollHeight,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+function me(html){chat.insertAdjacentHTML("beforeend",`<div class="row me"><div class="bub">${html}</div><span class="av">AS</span></div>`);}
+function ai(html){const d=document.createElement("div");d.className="row";d.innerHTML=`<span class="av">${LOGO}</span><div class="ai-body">${html}</div>`;chat.appendChild(d);return d;}
+function typing(cb,ms=700){const t=ai(`<div class="typing" aria-label="Growthity écrit"><i></i><i></i><i></i></div>`);scroll();setTimeout(()=>{t.remove();cb();scroll();},ms);}
+const guideCard=()=>`<div class="gcard"><div class="gc-h"><span class="gc-i">${BOOK}</span><div><b>Créer ton compte publicitaire Meta</b><small>Le guide Growthity, écran par écran · 9 étapes · environ 25 minutes · gratuit chez Meta</small></div></div>
+  <ol class="path" aria-label="Ce que tu vas créer">${MS.map(([l,s],k)=>`<li class="${done.has(s)?"done":""}">${k?'<span class="arr" aria-hidden="true">→</span>':""}<span class="chipm"><i>${done.has(s)?"✓":k+1}</i>${l}</span></li>`).join("")}</ol>
+  <div class="gc-f"><button type="button" class="btn pri" data-act="here">Me guider ici</button><a class="btn" href="#">Ouvrir le guide complet ↗</a><small>Ta pub reste prête dans cette conversation.</small></div></div>`;
+function stepCard(i){
+  const s=STEPS[i]; const pct=Math.round(done.size/STEPS.length*100);
+  return `<div class="scard" id="st${i}"><div class="sc-h"><span class="sc-n">Étape ${i+1} sur ${STEPS.length}</span><span class="sc-t">${s.time}${s.opt?" · facultatif":""}</span><span class="sc-bar" aria-hidden="true"><i style="width:${pct}%"></i></span></div>
+   <div class="sc-b"><h3>${s.t}</h3><p class="sc-why">${term(s.why)}</p>
+    <ol class="do">${s.do.map(([a,b],k)=>`<li><span class="k">${k+1}</span><div><p>${a}</p>${b?`<small>${b}</small>`:""}</div></li>`).join("")}</ol>
+    ${s.alert?`<div class="note ${s.alert[0]==="tip"?"tip":""}"><i>${s.alert[0]==="warn"?"!":"i"}</i><p>${s.alert[1]}</p></div>`:""}</div>
+   <div class="sc-shot"><div class="shot" aria-label="Capture d'écran annotée"><div class="chrome"><i></i><i></i><i></i><span>${s.url}</span></div>${SCR[s.scr]()}</div></div>
+   <div class="sc-f"><button type="button" class="btn pri" data-done="${i}">C'est fait →</button>${s.opt?`<button type="button" class="btn" data-skip="${i}">Passer cette étape</button>`:""}<button type="button" class="btn ghost" data-pb="${i}">J'ai un problème</button><span class="sp"></span><a class="open" href="#">Ouvrir dans le guide ↗</a></div></div>`;
+}
+function collapse(i,label){const c=$("#st"+i); if(!c) return; c.classList.add("done"); c.querySelector(".sc-f").innerHTML=`<span class="donel">✓ Étape ${i+1} : ${STEPS[i].t}</span><span class="sp"></span><span class="sc-t">${label}</span>`;}
+function next(i){
+  const n=STEPS.findIndex((_,k)=>k>i && !done.has(k));
+  if(n<0||n===STEPS.length-1){ return finish(); }
+  typing(()=>{ai(`<p>${i<1?"C'est parti. On commence par sécuriser ton compte Facebook, Meta l'exige pour la pub.":["Parfait.","Bien joué.","Super, on avance.","Top."][n%4]+" Étape suivante :"}</p>${stepCard(n)}`);wire();});
+}
+function finish(){
+  typing(()=>{ai(`<p><b>Ton compte publicitaire est prêt.</b> Dernière étape : relie-le à Growthity, ça prend 30 secondes.</p>
+    <div class="endc"><h3>Connecter Meta à Growthity</h3><p style="color:var(--muted)">Coche ton portefeuille, ta Page et ton compte publicitaire dans la fenêtre Facebook.</p>
+    <button type="button" class="btn fb" data-act="fb">${FB}Continuer avec Facebook</button></div>`);wire();});
+}
+function connected(){
+  $("#pill").classList.add("on"); $("#pill span").textContent="Meta connecté · 1 compte";
+  me("Meta est connecté");
+  typing(()=>{ai(`<p>Tout est en place. On reprend ta pub là où on l'avait laissée :</p><div class="adprev"><i></i><div><b>Pub « Bougies d'automne »</b><small>3 versions prêtes · Facebook et Instagram · 20 € par jour</small></div><span style="margin-left:auto"></span><button type="button" class="btn pri">Publier sur Meta</button></div>`);});
+}
+function problem(i){
+  me(`Je ne reçois pas le code par SMS<div class="att"><i></i>capture-ecran.png</div>`);
+  typing(()=>{ai(`<p>Je vois sur ta capture que Meta attend le code envoyé au <b>06 •• •• •• 42</b>. Deux solutions :</p>
+    <ol class="do"><li><span class="k">1</span><div><p>Attends 2 minutes, puis clique sur <b>Renvoyer le code</b>.</p><small>Vérifie que ton téléphone capte bien le réseau.</small></div></li>
+    <li><span class="k">2</span><div><p>Ou choisis plutôt <b>Application d'authentification</b> : elle marche même sans réseau.</p><small>Google Authenticator ou Microsoft Authenticator, gratuites.</small></div></li></ol>
+    <p style="color:var(--muted);font-size:13px">Dis-moi quand c'est bon, on reprend l'étape ${i+1}.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn pri" data-done="${i}">C'est réglé, étape suivante →</button><button type="button" class="btn ghost" data-pb2="${i}">Toujours bloqué</button></div>`);wire();},1100);
+}
+function wire(){
+  document.querySelectorAll("[data-act=here]").forEach(b=>b.onclick=()=>{b.disabled=true;me("Me guider ici");next(0);});
+  document.querySelectorAll("[data-done]").forEach(b=>b.onclick=()=>{const i=+b.dataset.done;if(done.has(i))return;done.add(i);collapse(i,"Fait");b.disabled=true;me(b.textContent.replace("→","").replace(", étape suivante","").trim());next(i);});
+  document.querySelectorAll("[data-skip]").forEach(b=>b.onclick=()=>{const i=+b.dataset.skip;done.add(i);collapse(i,"Passée");me("Je passe cette étape");next(i);});
+  document.querySelectorAll("[data-pb]").forEach(b=>b.onclick=()=>{b.disabled=true;problem(+b.dataset.pb);});
+  document.querySelectorAll("[data-pb2]").forEach(b=>b.onclick=()=>{b.disabled=true;me("Toujours bloqué");typing(()=>{ai(`<p>Je préviens l'équipe Growthity : un humain te répond sous 24 h, par e-mail et ici. En attendant, tu peux continuer les étapes qui ne demandent pas la double authentification.</p>`);});});
+  document.querySelectorAll("[data-act=fb]").forEach(b=>b.onclick=()=>{b.disabled=true;connected();});
+  document.querySelectorAll(".chat a[href='#']").forEach(a=>a.onclick=e=>e.preventDefault());
+}
+function start(){
+  chat.innerHTML=""; done=new Set([0]); $("#pill").classList.remove("on"); $("#pill span").textContent="Meta pas encore connecté";
+  me("Je veux lancer une pub pour mes bougies d'automne, mais je n'ai pas de compte Meta. Je ne sais pas comment faire.");
+  ai(`<p>Pas de souci, c'est fréquent. Pour diffuser une pub sur Facebook et Instagram, il faut d'abord un <b>compte publicitaire Meta</b> : c'est gratuit et ça prend environ 25 minutes. Ta pub reste prête ici en attendant.</p>${guideCard()}`);
+  wire();
+}
+$("#replay").onclick=start;
+start();
+</script>
