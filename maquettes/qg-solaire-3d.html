@@ -33,6 +33,204 @@ button, select, input { font: inherit; color: inherit; }
 button:focus-visible, select:focus-visible, th button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 .num { font-variant-numeric: tabular-nums; }
 
+/* ===== Pages CRM ===== */
+.page[hidden] { display: none !important; }
+.kbtn { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); border-radius: 10px; padding: 7px 10px; font-size: 13px; font-weight: 600; cursor: pointer; min-width: 280px; margin-right: 8px; }
+.kbtn:hover { border-color: var(--violet); color: var(--ink-2); }
+.kbtn span { flex: 1; text-align: left; }
+kbd { font-family: var(--f); font-size: 10px; font-weight: 800; color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 1px 5px; white-space: nowrap; }
+.btn.primary kbd { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.35); color: #fff; }
+.btn.big { padding: 10px 16px; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; }
+.hact { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.lbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.search { flex: 1 1 340px; display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 11px; padding: 0 12px; min-width: 0; }
+.search:focus-within { border-color: var(--violet); box-shadow: 0 0 0 3px color-mix(in srgb, var(--violet) 18%, transparent); }
+.search input { flex: 1; border: 0; outline: 0; background: none; padding: 11px 0; font-size: 14px; min-width: 0; }
+.search svg { color: var(--muted); flex: 0 0 auto; }
+.lbar select { min-width: 0; }
+.vchips { display: flex; gap: 6px; flex-wrap: wrap; }
+.vchips button { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); background: var(--surface); border-radius: 20px; padding: 7px 13px; font-size: 13px; font-weight: 700; cursor: pointer; color: var(--ink-2); }
+.vchips button i { width: 8px; height: 8px; border-radius: 50%; }
+.vchips button b { font-size: 11px; background: var(--surface-2); border-radius: 10px; padding: 1px 7px; color: var(--ink); }
+.vchips button[aria-pressed="true"] { border-color: var(--violet); background: color-mix(in srgb, var(--violet) 10%, var(--surface)); color: var(--ink); }
+.vchips button[aria-pressed="true"] b { background: var(--violet); color: #fff; }
+.bulk { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 14px; border-radius: 12px; background: var(--ink); color: #fff; font-weight: 700; position: sticky; top: 60px; z-index: 15; }
+.bulk[hidden] { display: none; }
+.bulk select { min-width: 0; background-color: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.2); }
+.bulk select option { color: var(--ink); }
+.bulk button { border: 0; background: none; color: #fff; text-decoration: underline; cursor: pointer; font-weight: 700; }
+.ltable td { padding: 9px 10px; }
+.ltable tbody tr { cursor: pointer; }
+.ltable tbody tr.on td { background: color-mix(in srgb, var(--violet) 8%, var(--surface)); }
+.ltable .cl b { display: block; font-weight: 800; }
+.ltable .cl small { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.ltable input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--violet); cursor: pointer; }
+.spill { border: 0; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 800; padding: 4px 9px; border-radius: 20px; white-space: nowrap; background: color-mix(in srgb, var(--c) 15%, var(--surface)); color: color-mix(in srgb, var(--c) 72%, var(--ink)); }
+.spill::after { content: "▾"; font-size: 9px; opacity: .7; }
+.spill.static::after { content: none; }
+.spill.static { cursor: default; }
+.rowact { display: inline-flex; gap: 4px; opacity: .35; transition: opacity .15s; }
+tr:hover .rowact, tr:focus-within .rowact { opacity: 1; }
+.ib { width: 30px; height: 30px; display: inline-grid; place-items: center; border: 1px solid var(--line); background: var(--surface); border-radius: 8px; cursor: pointer; color: var(--ink-2); }
+.ib:hover { border-color: var(--violet); color: var(--violet-dark); }
+.ib.go { background: var(--good-bg); color: var(--good); border-color: transparent; }
+.mini-av { display: inline-flex; align-items: center; gap: 6px; }
+.mini-av i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-style: normal; font-size: 9px; font-weight: 800; }
+.na { font-size: 12px; font-weight: 700; }
+.na.late { color: var(--bad); }
+.na.soon { color: var(--warn); }
+.more { display: flex; justify-content: center; padding-top: 14px; }
+.pipe { display: grid; grid-template-columns: repeat(6, minmax(220px, 1fr)); gap: 12px; overflow-x: auto; padding-bottom: 6px; }
+.pipe[hidden] { display: none; }
+.col { background: color-mix(in srgb, var(--surface) 70%, transparent); border: 1px solid var(--line); border-radius: 14px; padding: 10px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.col h4 { margin: 2px 4px 4px; font-size: 13px; font-weight: 800; display: flex; align-items: center; gap: 7px; }
+.col h4 i { width: 9px; height: 9px; border-radius: 50%; }
+.col h4 b { margin-left: auto; font-size: 11px; background: var(--surface-2); padding: 1px 7px; border-radius: 10px; }
+.kc { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 11px; cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 4px; font-size: 12px; width: 100%; }
+.kc:hover { border-color: var(--violet); box-shadow: 0 4px 12px rgba(17,24,39,.06); }
+.kc b { font-size: 13px; font-weight: 800; }
+.kc small { color: var(--muted); }
+.kc .mini-av { font-size: 11px; color: var(--ink-2); }
+.col .morek { font-size: 12px; color: var(--muted); text-align: center; padding: 4px; }
+
+/* Tiroir fiche lead */
+.scrim { position: fixed; inset: 0; background: rgba(15,23,42,.28); backdrop-filter: blur(2px); z-index: 60; }
+.scrim[hidden] { display: none; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(520px, 100vw); background: var(--surface); z-index: 61; box-shadow: -20px 0 60px rgba(15,23,42,.18); display: flex; flex-direction: column; animation: slidein .22s ease-out; }
+.drawer[hidden] { display: none; }
+@keyframes slidein { from { transform: translateX(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+.dh { padding: 18px 20px 14px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 12px; }
+.dh .top { display: flex; align-items: center; gap: 12px; }
+.dh .cav { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font-weight: 800; color: #fff; background: linear-gradient(135deg, var(--brand), var(--violet)); flex: 0 0 auto; }
+.dh h3 { margin: 0; font-size: 19px; font-weight: 800; }
+.dh .top p { margin: 2px 0 0; color: var(--muted); font-size: 12px; }
+.dh .tools { margin-left: auto; display: flex; gap: 4px; }
+.contact { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.phone { font-size: 20px; font-weight: 800; letter-spacing: .02em; font-variant-numeric: tabular-nums; user-select: all; }
+.callbtn { display: inline-flex; align-items: center; gap: 7px; background: var(--good); color: #fff; border: 0; border-radius: 10px; padding: 9px 14px; font-weight: 800; cursor: pointer; text-decoration: none; font-size: 13px; }
+.db { flex: 1; overflow-y: auto; padding: 16px 20px 24px; display: flex; flex-direction: column; gap: 18px; }
+.sect h4 { margin: 0 0 10px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+.outs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.out { border: 1px solid var(--line); background: var(--surface); border-radius: 11px; padding: 10px 8px; font-size: 13px; font-weight: 800; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; color: var(--ink); }
+.out small { font-size: 10px; color: var(--muted); font-weight: 700; }
+.out:hover { border-color: var(--c, var(--violet)); background: color-mix(in srgb, var(--c, var(--violet)) 8%, var(--surface)); }
+.out.main { background: var(--violet); border-color: var(--violet); color: #fff; }
+.out.main small { color: rgba(255,255,255,.8); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips[hidden] { display: none; }
+.chips button { border: 1px solid var(--line); background: var(--surface); border-radius: 9px; padding: 7px 10px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.chips button:hover { border-color: var(--violet); background: color-mix(in srgb, var(--violet) 10%, var(--surface)); }
+.chips button small { display: block; color: var(--muted); font-size: 10px; font-weight: 700; }
+.book { border: 1px dashed color-mix(in srgb, var(--violet) 50%, transparent); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; background: color-mix(in srgb, var(--violet) 4%, var(--surface)); }
+.book[hidden] { display: none; }
+.book .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 12px; font-weight: 700; }
+.book select { min-width: 0; padding: 6px 30px 6px 10px; }
+.info { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; }
+.info div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.info small { font-size: 11px; color: var(--muted); }
+.info b { font-size: 13px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tl { list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 2px solid var(--line); display: flex; flex-direction: column; gap: 12px; }
+.tl li { position: relative; font-size: 13px; }
+.tl li::before { content: ""; position: absolute; left: -20px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--c, var(--muted)); border: 2px solid var(--surface); }
+.tl li small { display: block; color: var(--muted); font-size: 11px; }
+textarea { width: 100%; min-height: 70px; border: 1px solid var(--line); border-radius: 10px; padding: 10px; font: inherit; resize: vertical; }
+textarea:focus { outline: 2px solid color-mix(in srgb, var(--violet) 40%, transparent); }
+
+/* Session d'appels */
+.modal { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; padding: 20px; background: rgba(15,23,42,.45); backdrop-filter: blur(6px); }
+.modal[hidden] { display: none; }
+.mbox { background: var(--surface); border-radius: 18px; width: min(1000px, 100%); max-height: calc(100vh - 40px); overflow: auto; box-shadow: 0 30px 80px rgba(15,23,42,.35); display: flex; flex-direction: column; }
+.mhead { display: flex; align-items: center; gap: 14px; padding: 14px 20px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.mhead h3 { margin: 0; font-size: 16px; font-weight: 800; }
+.cstat { display: flex; gap: 16px; font-size: 12px; color: var(--muted); font-weight: 700; margin-left: auto; flex-wrap: wrap; }
+.cstat b { color: var(--ink); font-size: 15px; margin-right: 3px; }
+.cbody { display: grid; grid-template-columns: 1.1fr 1fr; gap: 0; }
+.cl1 { padding: 24px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; }
+.cl2 { padding: 24px; display: flex; flex-direction: column; gap: 14px; background: var(--surface-2); }
+.cl1 h2 { margin: 0; font-size: 26px; font-weight: 800; }
+.script { font-size: 13px; color: var(--ink-2); line-height: 1.55; background: var(--surface-2); border-radius: 12px; padding: 12px 14px; }
+.script b { color: var(--ink); }
+.outs.big .out { padding: 14px 8px; font-size: 14px; }
+.outs.big .out kbd { margin-top: 2px; }
+.progress { height: 4px; background: var(--line); }
+.progress div { height: 100%; background: linear-gradient(90deg, var(--brand), var(--violet)); transition: width .3s; }
+
+/* Palette de commandes */
+.palette { position: fixed; inset: 0; z-index: 80; display: flex; justify-content: center; align-items: flex-start; padding: 12vh 16px 16px; background: rgba(15,23,42,.35); backdrop-filter: blur(4px); }
+.palette[hidden] { display: none; }
+.pbox { width: min(640px, 100%); background: var(--surface); border-radius: 16px; box-shadow: 0 30px 80px rgba(15,23,42,.35); overflow: hidden; }
+.pbox input { width: 100%; border: 0; border-bottom: 1px solid var(--line); padding: 18px 20px; font-size: 17px; outline: 0; }
+.pres { max-height: 50vh; overflow-y: auto; padding: 8px; }
+.pres h6 { margin: 8px 10px 4px; font-size: 10px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.pres button { width: 100%; display: flex; align-items: center; gap: 10px; border: 0; background: none; text-align: left; padding: 10px 12px; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 600; }
+.pres button small { margin-left: auto; color: var(--muted); font-size: 12px; }
+.pres button.on { background: color-mix(in srgb, var(--violet) 12%, var(--surface)); }
+
+/* Menu contextuel */
+.pop { position: fixed; z-index: 90; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 16px 40px rgba(15,23,42,.18); padding: 6px; min-width: 220px; display: flex; flex-direction: column; }
+.pop[hidden] { display: none; }
+.pop h6 { margin: 6px 8px 4px; font-size: 10px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.pop button { border: 0; background: none; text-align: left; padding: 8px 10px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.pop button:hover { background: var(--surface-2); }
+.pop button i { width: 9px; height: 9px; border-radius: 50%; }
+.pop .pdet { padding: 6px 10px 8px; font-size: 12px; color: var(--ink-2); display: flex; flex-direction: column; gap: 3px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+.pop .pdet b { font-size: 14px; color: var(--ink); }
+
+/* Planning */
+.plan { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 14px; align-items: start; }
+.toconf { display: flex; flex-direction: column; gap: 10px; position: sticky; top: 70px; max-height: calc(100vh - 90px); overflow-y: auto; }
+.tc { display: grid; grid-template-columns: 1fr auto; gap: 6px 10px; padding: 10px; border-radius: 10px; background: var(--surface-2); font-size: 12px; }
+.tc b { font-size: 13px; font-weight: 800; }
+.tc small { color: var(--muted); display: block; }
+.tc .acts { display: flex; gap: 4px; align-self: center; }
+.tc .acts button { border: 0; border-radius: 8px; padding: 6px 8px; font-size: 11px; font-weight: 800; cursor: pointer; }
+.tc .ok { background: var(--good-bg); color: var(--good); } .tc .nrp { background: var(--warn-bg); color: var(--warn); } .tc .ko { background: var(--bad-bg); color: var(--bad); }
+.daystrip { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
+.daystrip button { flex: 0 0 auto; border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 8px 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 76px; }
+.daystrip button small { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: capitalize; }
+.daystrip button b { font-size: 16px; font-weight: 800; }
+.daystrip button em { font-style: normal; font-size: 10px; font-weight: 800; color: var(--violet-dark); }
+.daystrip button[aria-pressed="true"] { background: var(--violet); border-color: var(--violet); color: #fff; }
+.daystrip button[aria-pressed="true"] small, .daystrip button[aria-pressed="true"] em { color: rgba(255,255,255,.85); }
+.daystrip button.today b::after { content: " •"; color: var(--brand); }
+.calw { overflow-x: auto; margin-top: 12px; border: 1px solid var(--line); border-radius: 12px; }
+.cal { display: grid; position: relative; min-width: 100%; }
+.cal .ch { position: sticky; top: 0; background: var(--surface); z-index: 2; padding: 8px 6px; border-bottom: 1px solid var(--line); border-left: 1px solid var(--line); display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; min-width: 0; }
+.cal .ch span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cal .ch small { margin-left: auto; color: var(--muted); font-weight: 700; }
+.cal .hcol { border-right: 1px solid var(--line); }
+.cal .hl { height: 52px; font-size: 11px; color: var(--muted); font-weight: 700; text-align: right; padding: 2px 6px 0 0; border-bottom: 1px dashed var(--line); }
+.cal .rc { position: relative; border-left: 1px solid var(--line); background: repeating-linear-gradient(180deg, transparent 0 51px, var(--line) 51px 52px); cursor: copy; }
+.cal .rc:hover { background-color: color-mix(in srgb, var(--violet) 3%, transparent); }
+.ev { position: absolute; left: 4px; right: 4px; border-radius: 9px; padding: 6px 8px; font-size: 11px; cursor: pointer; overflow: hidden; border-left: 3px solid var(--c); background: color-mix(in srgb, var(--c) 13%, var(--surface)); display: flex; flex-direction: column; gap: 1px; box-shadow: 0 1px 2px rgba(17,24,39,.05); }
+.ev:hover { box-shadow: 0 6px 16px rgba(17,24,39,.12); z-index: 1; }
+.ev b { font-size: 12px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ev small { color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ev em { font-style: normal; font-weight: 800; color: color-mix(in srgb, var(--c) 75%, var(--ink)); }
+.nowline { position: absolute; left: 0; right: 0; height: 2px; background: var(--bad); z-index: 1; pointer-events: none; }
+
+/* Paramètres */
+.settings { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 14px; align-items: start; }
+.snav { display: flex; flex-direction: column; gap: 2px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 8px; position: sticky; top: 70px; }
+.snav button { border: 0; background: none; text-align: left; padding: 10px 12px; border-radius: 9px; font-weight: 700; font-size: 13px; cursor: pointer; color: var(--ink-2); }
+.snav button[aria-pressed="true"] { background: color-mix(in srgb, var(--violet) 12%, var(--surface)); color: var(--ink); }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 12px; font-weight: 800; }
+.field input, .tinput { border: 1px solid var(--line); border-radius: 9px; padding: 9px 12px; font-size: 14px; font-weight: 700; background: var(--surface); min-width: 0; }
+.tinput { width: 96px; text-align: right; padding: 6px 10px; font-size: 13px; }
+.switch { appearance: none; width: 38px; height: 22px; border-radius: 12px; background: var(--line); position: relative; cursor: pointer; transition: background .2s; vertical-align: middle; }
+.switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: left .2s; }
+.switch:checked { background: var(--good); }
+.switch:checked::after { left: 19px; }
+.stchips { display: flex; flex-wrap: wrap; gap: 6px; }
+.stchips span { font-size: 12px; font-weight: 800; padding: 5px 10px; border-radius: 20px; background: color-mix(in srgb, var(--c) 14%, var(--surface)); color: color-mix(in srgb, var(--c) 72%, var(--ink)); }
+.stchips span em { font-style: normal; opacity: .7; margin-left: 4px; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 12px); z-index: 100; background: var(--ink); color: #fff; padding: 11px 14px 11px 16px; border-radius: 12px; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 14px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; box-shadow: 0 12px 30px rgba(15,23,42,.3); }
+.toast.on { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.toast button { border: 0; background: rgba(255,255,255,.14); color: #fff; font-weight: 800; padding: 6px 10px; border-radius: 8px; cursor: pointer; }
+@media (max-width: 1100px) { .plan, .settings { grid-template-columns: 1fr; } .toconf, .snav { position: static; max-height: none; } .cbody { grid-template-columns: 1fr; } .cl1 { border-right: 0; border-bottom: 1px solid var(--line); } .kbtn span { display: none; } .kbtn { min-width: 0; } }
+@media (max-width: 560px) { .outs { grid-template-columns: repeat(2, 1fr); } .info { grid-template-columns: 1fr; } }
+
 /* Navigation de l'app */
 .nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: color-mix(in srgb, var(--surface) 82%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
 .nav .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--muted); font-size: 15px; margin-right: 10px; }
@@ -232,16 +430,25 @@ tfoot td { font-weight: 800; background: var(--surface-2); border-bottom: 0; }
 /* Équipe 3D */
 .team { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 14px; }
 .stage-card { padding: 0; overflow: hidden; position: relative; }
-#stage { position: relative; height: max(560px, calc(100vh - 300px)); touch-action: none; cursor: grab; background: linear-gradient(180deg, color-mix(in srgb, var(--brand) 6%, var(--surface)) 0%, var(--surface) 70%); }
+#stage { position: relative; height: max(580px, calc(100vh - 300px)); touch-action: none; cursor: grab; overflow: hidden; isolation: isolate; background: #eef3ff; }
+#stage::before { content: ""; position: absolute; inset: -15%; z-index: -1; filter: blur(48px) saturate(1.15);
+  background: radial-gradient(38% 46% at 18% 22%, rgba(14,165,233,.42), transparent 70%), radial-gradient(34% 42% at 82% 18%, rgba(155,135,245,.45), transparent 70%),
+    radial-gradient(38% 46% at 76% 88%, rgba(249,115,22,.24), transparent 70%), radial-gradient(40% 46% at 22% 90%, rgba(34,197,94,.22), transparent 70%),
+    radial-gradient(30% 34% at 50% 50%, rgba(255,255,255,.9), transparent 70%), linear-gradient(160deg, #e4efff, #f4f0ff 55%, #fff4ec);
+  animation: drift 24s ease-in-out infinite alternate; }
+#stage::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(255,255,255,0) 55%, rgba(255,255,255,.55)); pointer-events: none; }
+@keyframes drift { from { transform: translate3d(-2%, -1%, 0) scale(1); } to { transform: translate3d(2%, 1.5%, 0) scale(1.06); } }
+@media (prefers-reduced-motion: reduce) { #stage::before { animation: none; } }
 #stage.dragging { cursor: grabbing; }
 #stage canvas { display: block; }
 #labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
 #loading { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: var(--muted); pointer-events: none; transition: opacity .5s; }
-.tag { position: absolute; width: max-content; transform: translate(-50%, -100%); display: flex; align-items: center; gap: 6px; padding: 2px 9px 2px 2px; border-radius: 20px; background: var(--surface); border: 1.5px solid color-mix(in srgb, var(--role) 55%, transparent); box-shadow: 0 2px 10px rgba(0,0,0,.07); pointer-events: auto; cursor: pointer; font-size: 11px; font-weight: 700; transition: box-shadow .2s, transform .2s; }
-.tag .ini { width: 20px; height: 20px; border-radius: 50%; background: var(--role); color: #fff; display: grid; place-items: center; font-size: 8px; font-weight: 800; }
+.tag { position: absolute; width: max-content; transform: translate(-50%, -100%); display: flex; align-items: center; gap: 7px; padding: 3px 10px 3px 3px; border-radius: 20px; background: rgba(255,255,255,.92); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1.5px solid color-mix(in srgb, var(--role) 55%, transparent); box-shadow: 0 2px 10px rgba(0,0,0,.07); pointer-events: auto; cursor: pointer; font-size: 11px; font-weight: 700; transition: box-shadow .2s, transform .2s; }
+.tag .ini { width: 26px; height: 26px; border-radius: 50%; background: var(--role); color: #fff; display: grid; place-items: center; font-size: 8px; font-weight: 800; }
 .tag b { font-weight: 800; font-size: 12px; font-variant-numeric: tabular-nums; }
-.tag .nm { display: none; padding-right: 6px; border-right: 1px solid var(--line); }
-.tag:hover .nm, .tag.hover .nm, .tag.sel .nm { display: inline; }
+.tag .nm { display: flex; flex-direction: column; line-height: 1.1; padding-right: 7px; border-right: 1px solid var(--line); text-align: left; }
+.tag .nm span { font-size: 11px; font-weight: 800; }
+.tag .nm small { font-size: 10px; font-weight: 600; color: var(--ink-2); text-transform: uppercase; letter-spacing: .02em; }
 .tag:hover, .tag.hover { transform: translate(-50%, calc(-100% - 2px)); box-shadow: 0 0 0 1.5px var(--brand), 0 6px 16px rgba(0,0,0,.1); z-index: 2; }
 .tag.sel { box-shadow: 0 0 0 2.5px var(--sel), 0 6px 16px rgba(0,0,0,.12); z-index: 3; }
 .rowctl { position: absolute; bottom: 12px; left: 12px; right: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 10px 12px; border-radius: 12px; background: color-mix(in srgb, var(--surface) 88%, transparent); border: 1px solid var(--line); z-index: 4; }
@@ -284,16 +491,17 @@ tfoot td { font-weight: 800; background: var(--surface-2); border-bottom: 0; }
 
 <nav class="nav" aria-label="Navigation">
   <div class="logo"><img src="data:image/png;base64,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" alt="">Classicall</div>
-  <a href="#" class="on"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5V21H3z"/></svg><span>Dashboard</span></a>
-  <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-7 7-7s7 3 7 7M17 3a4 4 0 0 1 0 8M22 21c0-3-1.5-5.5-4-6.5"/></svg><span>Leads</span></a>
-  <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Planning</span></a>
-  <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Paramètres</span></a>
+  <a href="#" class="on" data-page="dashboard"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5V21H3z"/></svg><span>Dashboard</span></a>
+  <a href="#" data-page="leads"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-7 7-7s7 3 7 7M17 3a4 4 0 0 1 0 8M22 21c0-3-1.5-5.5-4-6.5"/></svg><span>Leads</span></a>
+  <a href="#" data-page="planning"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Planning</span></a>
+  <a href="#" data-page="settings"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Paramètres</span></a>
   <div class="sp"></div>
+  <button type="button" class="kbtn" id="openPal"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Rechercher un lead, une page…</span><kbd>Ctrl K</kbd></button>
   <div class="bell" aria-label="34 notifications"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span>34</span></div>
   <div class="user"><div class="av">GM</div><div><b>GABRIEL MARCIANO</b><small>Administrateur</small></div></div>
 </nav>
 
-<main class="wrap">
+<main class="wrap page" id="pg-dashboard">
   <div class="head">
     <div><h1>Dashboard Analytique</h1><p>Vue d'ensemble de la régie · mis à jour mardi 13 octobre 2026, 9 h 05 <span class="sample">Données d'exemple</span></p></div>
   </div>
@@ -426,6 +634,45 @@ tfoot td { font-weight: 800; background: var(--surface-2); border-bottom: 0; }
   </section>
 </main>
 
+<!-- ===== Page Leads ===== -->
+<main class="wrap page" id="pg-leads" hidden>
+  <div class="head"><div><h1>Leads</h1><p id="lSub"></p></div>
+    <div class="hact"><button type="button" class="btn big" id="newLead">+ Nouveau lead</button><button type="button" class="btn primary big" id="startCall"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>Session d'appels <kbd>A</kbd></button></div></div>
+  <div class="lbar">
+    <label class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="lq" type="search" placeholder="Nom, téléphone, ville…" aria-label="Rechercher un lead"><kbd>/</kbd></label>
+    <select id="lCamp" aria-label="Campagne"></select><select id="lTel" aria-label="Téléprospecteur"></select><select id="lZone" aria-label="Zone"></select>
+    <div class="seg" id="lView" role="group" aria-label="Affichage"><button type="button" data-v="list" aria-pressed="true">Liste</button><button type="button" data-v="pipe" aria-pressed="false">Pipeline</button></div>
+  </div>
+  <div class="vchips" id="lViews"></div>
+  <div class="bulk" id="bulk" hidden><span id="bulkN"></span><select id="bulkTel" aria-label="Attribuer à"></select><select id="bulkSt" aria-label="Changer le statut"></select><button type="button" id="bulkClear">Tout désélectionner</button></div>
+  <div class="card" id="lListCard"><div class="tw"><table class="ltable" id="lTable"></table></div><div class="more" id="lMore"></div></div>
+  <div class="pipe" id="lPipe" hidden></div>
+</main>
+
+<!-- ===== Page Planning ===== -->
+<main class="wrap page" id="pg-planning" hidden>
+  <div class="head"><div><h1>Planning</h1><p id="planSub"></p></div>
+    <div class="hact"><div class="seg" id="planZone" role="group" aria-label="Zone"></div></div></div>
+  <div class="plan">
+    <aside class="card toconf"><div><h3>À confirmer</h3><p class="sub" id="tcSub"></p></div><div id="toConf" style="display:flex;flex-direction:column;gap:8px"></div></aside>
+    <section class="card"><div class="daystrip" id="days"></div><div class="calw"><div class="cal" id="cal"></div></div><p class="sub" style="margin-top:10px">Cliquez sur un RDV pour le confirmer ou saisir son résultat. Cliquez sur un créneau vide pour placer un lead.</p></section>
+  </div>
+</main>
+
+<!-- ===== Page Paramètres ===== -->
+<main class="wrap page" id="pg-settings" hidden>
+  <div class="head"><div><h1>Paramètres</h1><p>Équipe, campagnes, objectifs et statuts. Chaque modification est enregistrée tout de suite.</p></div></div>
+  <div class="settings"><nav class="snav" id="snav"></nav><section class="card" id="spanel"></section></div>
+</main>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-label="Fiche lead"></aside>
+<div class="modal" id="callmode" hidden role="dialog" aria-label="Session d'appels"></div>
+<div class="modal" id="newLeadM" hidden role="dialog" aria-label="Nouveau lead"></div>
+<div class="palette" id="palette" hidden role="dialog" aria-label="Recherche"><div class="pbox"><input id="pq" placeholder="Rechercher un lead, une page, une action…" autocomplete="off"><div class="pres" id="pres"></div></div></div>
+<div class="pop" id="pop" hidden></div>
+<div class="toast" id="toast2" role="status"><span id="toastMsg"></span><button type="button" id="toastUndo">Annuler</button></div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
@@ -483,24 +730,27 @@ PEOPLE.forEach(p => { p.ini = p.name.split(' ').map(w => w[0]).join('').slice(0,
 const byId = Object.fromEntries(PEOPLE.map(p => [p.id, p]));
 
 const LEAD_ST_NO_RDV = [['P.I', 41], ['NRP', 18], ['FAUX NUMÉRO', 5.5], ['À RAPPELER', 5.4], ['LOCATAIRE', 3.5], ['INFI', 3], ['DÉJÀ INSTALLÉ', 3], ['HORS CRITÈRE', 2.6], ['DOUBLON', 2.5], ['INFAISABLE', 2.2], ['TROP VIEUX', 2.1], ['PAS INSCRIT', .7], ['HORS ZONE', .6]];
+const GOALV = { ca: 1300000, cont: 90, rdv: 340, inst: 40 };
 const OFFERS = [[3, 9900, 3], [6, 15900, 5], [9, 21500, 2]];
 const leads = [];
 for (let d = 0; d < N; d++) {
   const dow = dateOf(d).getDay();
-  const n = Math.round((dow === 0 ? 6 : dow === 6 ? 11 : 24) * (0.75 + d / N * 0.5) * (0.85 + rnd() * .3));
+  const n = Math.round((dow === 0 ? 12 : dow === 6 ? 26 : 56) * (0.75 + d / N * 0.5) * (0.85 + rnd() * .3));
   for (let i = 0; i < n; i++) {
     const camp = pickW(CAMPS.map(c => [c, c.w])), di = pickW(DEPTS.map((x, j) => [j, DEPT_W[j]]));
     const dept = DEPTS[di], tele = pickW(TEL.map(t => [t, 1]));
     const L = { d, camp: camp.id, tele: tele.id, dept: dept[0], zone: dept[2], dup: rnd() < .012, calls: ri(1, 4), client: `${pick(['M.', 'Mme', 'M. et Mme'])} ${pick(NAMES)}`, city: CITY[dept[0]] };
+    L.id = leads.length; L.hr = d === TODAY ? ri(7, 9) : ri(8, 19); L.phone = `0${pick([6, 7])} ${[0, 0, 0, 0].map(() => String(ri(10, 99))).join(' ')}`; L.email = `${L.client.split(' ').pop().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')}.${ri(10, 99)}@${pick(['gmail.com', 'orange.fr', 'free.fr', 'hotmail.fr', 'sfr.fr'])}`;
     const pRdv = .132 * tele.k * campQ[camp.id] * (L.dup ? .2 : 1);
     if (d >= TODAY - 1 && rnd() < .55) { L.status = 'NOUVEAU'; leads.push(L); continue; }
     if (rnd() < pRdv) {
       L.status = 'RDV'; L.rdvD = Math.min(TODAY, d + ri(0, 3)); L.apptD = L.rdvD + ri(1, 8);
+      L.apptH = pick([9, 10.5, 14, 15.5, 17, 18.5]);
       L.h = pickW([[9, 4], [10, 7], [11, 9], [12, 4], [13, 2], [14, 6], [15, 7], [16, 7], [17, 9], [18, 11], [19, 8], [20, 3]]);
       if (dateOf(L.rdvD).getDay() === 0) L.rdvD = Math.max(d, L.rdvD - 1);
       const zoneComs = COM.filter(c => c.zone === dept[2]); L.com = pickW(zoneComs.map(c => [c.id, c.k])); const com = byId[L.com];
       L.cq = pickW(CQ.map(c => [c.id, c.k]));
-      if (L.apptD > TODAY) { L.rdvSt = pickW([['À CONFIRMER', 4], ['CONFIRMÉ', 3], ['NRP CONFIRMÉ', 1.5]]); }
+      if (L.apptD >= TODAY) { L.rdvSt = pickW([['À CONFIRMER', 4], ['CONFIRMÉ', 3], ['NRP CONFIRMÉ', 1.5]]); }
       else {
         L.confirmed = rnd() < .78;
         L.rdvSt = pickW([['POSITIF BH', 14 * com.k], ['NÉGATIF', 22], ['ANNULÉ', L.confirmed ? 10 : 26], ['ABSENT', L.confirmed ? 4 : 12], ['À TRAVAILLER', 13], ['R2', 4]]);
@@ -519,7 +769,7 @@ for (let d = 0; d < N; d++) {
           }
         }
       }
-    } else L.status = pickW(LEAD_ST_NO_RDV);
+    } else { L.status = pickW(LEAD_ST_NO_RDV); if ((L.status === 'À RAPPELER' || L.status === 'NRP') && d >= TODAY - 6) { L.recallD = Math.min(TODAY + 2, d + ri(1, 5)); L.recallH = pick([10, 11, 14, 17, 18]); } }
     leads.push(L);
   }
 }
@@ -554,7 +804,7 @@ function totals(ls, r) {
   const T = { leads: 0, uniq: 0, dup: 0, rdv: 0, appts: 0, present: 0, absent: 0, cont: 0, ca: 0, caNet: 0, kwc: 0, inst: 0, contAnn: 0 };
   ls.forEach(l => {
     if (inR(l.d, r)) { T.leads++; l.dup ? T.dup++ : T.uniq++; }
-    if (inR(l.rdvD, r)) { T.rdv++; if (l.apptD <= TODAY) { T.appts++; ['ANNULÉ', 'ABSENT'].includes(l.rdvSt) ? T.absent++ : T.present++; } }
+    if (inR(l.rdvD, r)) { T.rdv++; if (l.apptD < TODAY) { T.appts++; ['ANNULÉ', 'ABSENT'].includes(l.rdvSt) ? T.absent++ : T.present++; } }
     if (inR(l.signD, r)) { T.cont++; T.ca += l.eur; T.kwc += l.kwc; if (l.contSt === 'ANNULÉ') T.contAnn++; else T.caNet += l.eur; }
     if (inR(l.instD, r)) T.inst++;
   });
@@ -632,9 +882,9 @@ function personStats(ls, r) {
   ls.forEach(l => {
     const t = S[l.tele];
     if (inR(l.d, r)) { t.leads++; t.calls += l.calls; const a = S[CAMPS.find(c => c.id === l.camp).admin]; a.imp++; if (l.status !== 'NOUVEAU') a.attr++; }
-    if (inR(l.rdvD, r)) { t.rdv++; if (l.com) S[l.com].recv++; if (l.cq && l.apptD <= TODAY) { S[l.cq].conf++; if (l.confirmed) S[l.cq].confOk++; } }
-    if (inR(l.rdvD, r) && l.apptD <= TODAY) { ['ANNULÉ', 'ABSENT'].includes(l.rdvSt) ? t.absent++ : t.present++; }
-    if (inR(l.apptD, r) && l.apptD <= TODAY) S[l.com].appts++;
+    if (inR(l.rdvD, r)) { t.rdv++; if (l.com) S[l.com].recv++; if (l.cq && l.apptD < TODAY) { S[l.cq].conf++; if (l.confirmed) S[l.cq].confOk++; } }
+    if (inR(l.rdvD, r) && l.apptD < TODAY) { ['ANNULÉ', 'ABSENT'].includes(l.rdvSt) ? t.absent++ : t.present++; }
+    if (inR(l.apptD, r) && l.apptD < TODAY) S[l.com].appts++;
     if (inR(l.signD, r)) { t.cont++; const c = S[l.com]; c.cont++; c.ca += l.eur; if (l.contSt !== 'ANNULÉ') c.caNet += l.eur; c.delay += l.signD - l.d; c.camp[l.camp] = (c.camp[l.camp] || 0) + 1; }
     if (inR(l.cqD, r)) { const q = S[l.cq]; q.ctrl++; if (l.cqOk) q.ctrlOk++; }
     if (inR(l.instD, r)) S[l.com].inst++;
@@ -675,7 +925,7 @@ function renderApercu(ls, r, T, P) {
     kpi('CA signé', 'var(--c2)', keur(T.ca).replace(' k€', '<small>k€</small>').replace(' €', '<small>€</small>'), `net ${keur(T.caNet)}`, delta(T.ca, P.ca), sp('ca', 'c2'));
   // Objectifs du mois en cours (indépendants de la période choisie, mais suivent les filtres)
   const M = totals(ls, [MONTH_START, TODAY]), elapsed = TODAY - MONTH_START + 1, dim = new Date(2026, dateOf(TODAY).getMonth() + 1, 0).getDate(), pace = elapsed / dim;
-  const GOALS = [['CA signé', M.ca, 600000, keur, 'c2'], ['Contrats signés', M.cont, 40, fmt, 'c3'], ['RDV pris', M.rdv, 150, fmt, 'c7'], ['Installations', M.inst, 20, fmt, 'c4']];
+  const GOALS = [['CA signé', M.ca, GOALV.ca, keur, 'c2'], ['Contrats signés', M.cont, GOALV.cont, fmt, 'c3'], ['RDV pris', M.rdv, GOALV.rdv, fmt, 'c7'], ['Installations', M.inst, GOALV.inst, fmt, 'c4']];
   $('#goalSub').textContent = `Au ${dLong(TODAY)} · jour ${elapsed} sur ${dim} · le trait noir indique le rythme attendu aujourd'hui`;
   $('#goals').innerHTML = GOALS.map(([l, v, g, f, c]) => { const proj = v / pace, ratio = proj / g, st = ratio >= 1 ? ['good', 'En avance'] : ratio >= .85 ? ['warn', 'Juste'] : ['bad', 'En retard'];
     return `<div class="goal-i"><div class="gl"><span>${l}</span><span class="pill ${st[0]}">${st[1]}</span></div><b>${f(v)} <small>/ ${f(g)}</small></b><div class="gbar"><div style="width:${Math.min(100, v / g * 100)}%;background:var(--${c})"></div><i style="left:${pace * 100}%"></i></div><small>Projection fin de mois : <b>${f(proj)}</b> (${Math.round(ratio * 100)} % de l'objectif)</small></div>`; }).join('');
@@ -800,7 +1050,7 @@ function renderLeads(ls, r) {
 /* ---------- RDV ---------- */
 const RDV_ST = [['POSITIF BH', 'c3'], ['À TRAVAILLER', 'c5'], ['R2', 'c7'], ['NÉGATIF', 'c-other'], ['ANNULÉ', 'c8'], ['ABSENT', 'c2'], ['À CONFIRMER', 'c4'], ['CONFIRMÉ', 'c1'], ['NRP CONFIRMÉ', 'c6']];
 function renderRdv(ls, r, T, P) {
-  const R = ls.filter(l => inR(l.rdvD, r)), future = R.filter(l => l.apptD > TODAY).length;
+  const R = ls.filter(l => inR(l.rdvD, r)), future = R.filter(l => l.apptD >= TODAY).length;
   const delays = R.map(l => l.rdvD - l.d), avgD = delays.length ? delays.reduce((a, b) => a + b, 0) / delays.length : 0;
   $('#kpiRdv').innerHTML = kpi('RDV pris', 'var(--c7)', fmt(T.rdv), `${fmt(future)} encore à venir`, delta(T.rdv, P.rdv)) +
     kpi('RDV honorés', 'var(--c3)', fmt(T.present), `sur ${fmt(T.appts)} RDV déjà passés`, delta(T.present, P.present)) +
@@ -977,8 +1227,8 @@ const team = (() => {
   const ROLE_LABEL = { tele: 'Téléprospection', terrain: 'Commerciaux terrain', cq: 'Contrôle qualité', admin: 'Administration' };
   const val = (p, k) => { const s = S[p.id]; if (k === 'rRdv') return pct(s.rdv, s.leads); if (k === 'rConv') return pct(s.cont, s.appts); if (k === 'rOk') return pct(s.ctrlOk, s.ctrl); return s[k]; };
   const show = (p, k, long) => { const m = METRICS[p.role].find(x => x[0] === k), v = val(p, k); return m[2] === 'pct' ? p1(v) : m[2] === 'eur' ? keur(v) : long ? fmt(v) + ' ' + m[1].toLowerCase().replace('rdv', 'RDV') : fmt(v); };
-  const SP = 5.2, ROWS = [{ role: 'tele', z: -11 }, { role: 'terrain', z: 0 }, { role: 'cq', z: 11, x0: -11 }, { role: 'admin', z: 11, x0: 7 }];
-  const HOME = new THREE.Vector3(-1, 0, 1.5), cam = { theta: 0, phi: .92, r: 100, t: HOME.clone() }, goal = { theta: 0, phi: .92, r: 76, t: HOME.clone() }, par = { x: 0, y: 0 };
+  const SP = 6.4, ROWS = [{ role: 'tele', z: -11 }, { role: 'terrain', z: 0 }, { role: 'cq', z: 11, x0: -14 }, { role: 'admin', z: 11, x0: 8 }];
+  const HOME = new THREE.Vector3(-1, 0, 1.5), cam = { theta: 0, phi: .92, r: 100, t: HOME.clone() }, goal = { theta: 0, phi: .92, r: 86, t: HOME.clone() }, par = { x: 0, y: 0 };
   const tmp = new THREE.Vector3(); let hemi, sun, edgeM, floorM, selRing; const pick = [];
   function build() {
     built = true;
@@ -990,7 +1240,7 @@ const team = (() => {
     sun = new THREE.DirectionalLight(0xffffff, .75); sun.position.set(-10, 46, 30); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -.0005;
     Object.assign(sun.shadow.camera, { left: -40, right: 40, top: 26, bottom: -26, near: 5, far: 140 }); scene.add(sun);
     const std = (o = {}) => new THREE.MeshStandardMaterial(Object.assign({ roughness: .8, metalness: 0 }, o));
-    floorM = std(); const floor = new THREE.Mesh(new THREE.CircleGeometry(100, 96), floorM); floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+    floorM = new THREE.ShadowMaterial({ opacity: .13 }); const floor = new THREE.Mesh(new THREE.CircleGeometry(100, 96), floorM); floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
     edgeM = new THREE.LineBasicMaterial({ color: 0xc9d4ea });
     const plinthG = new THREE.BoxGeometry(3, 1, 2.3), stripG = new THREE.BoxGeometry(3.04, .16, .08), ringG = new THREE.RingGeometry(.6, .67, 48), hitG = new THREE.CylinderGeometry(1.1, 1.1, 3.2, 12), hitM = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
     ROWS.forEach(r => {
@@ -1005,9 +1255,9 @@ const team = (() => {
         p.body = new THREE.Group(); p.g.add(p.body);
         p.ring = new THREE.Mesh(ringG, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .5 })); p.ring.rotation.x = -Math.PI / 2; p.ring.position.y = .02; p.body.add(p.ring);
         const hit = new THREE.Mesh(hitG, hitM); hit.position.y = 1.4; hit.userData.id = p.id; p.body.add(hit); pick.push(hit);
-        p.h = p.ht = .4;
+        p.h = p.ht = .4; p.stag = i % 2 === 1 && mem.length > 1;
         const tag = document.createElement('button'); tag.type = 'button'; tag.className = 'tag'; tag.style.setProperty('--role', `var(--${p.role})`);
-        tag.innerHTML = `<span class="ini">${p.ini}</span><span class="nm">${p.name.split(' ')[0]}</span><b></b>`; tag.title = p.name; tag.onclick = () => select(p.id); labels.appendChild(tag); p.tag = tag;
+        const [fn0, ...ln0] = p.name.split(' '); tag.innerHTML = `<span class="ini">${p.ini}</span><span class="nm"><span>${fn0}</span><small>${ln0.join(' ')}</small></span><b></b>`; tag.title = p.name; tag.onclick = () => select(p.id); labels.appendChild(tag); p.tag = tag;
       });
       const lab = document.createElement('div'); lab.className = 'rowlab'; lab.style.setProperty('--role', `var(--${r.role})`);
       lab.innerHTML = `<h4><i></i>${ROLE_LABEL[r.role]} · ${mem.length}</h4><div class="mini">${METRICS[r.role].map(([k, l]) => `<button type="button" data-k="${k}" aria-pressed="${metric[r.role] === k}">${l}</button>`).join('')}</div>`;
@@ -1045,14 +1295,14 @@ const team = (() => {
     const end = e => { if (!drag) return; if (Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) < 6) { const h = hitAt(e); if (h) select(h.object.userData.id); } drag = null; stage.classList.remove('dragging'); };
     stage.addEventListener('pointerup', end); stage.addEventListener('pointercancel', end); stage.addEventListener('pointerleave', () => { par.x = par.y = 0; });
     stage.addEventListener('wheel', e => { e.preventDefault(); goal.r = THREE.MathUtils.clamp(goal.r * (1 + Math.sign(e.deltaY) * .08), 50, 150); }, { passive: false });
-    stage.addEventListener('dblclick', () => { goal.theta = 0; goal.phi = .92; goal.r = 76; goal.t.copy(HOME); });
+    stage.addEventListener('dblclick', () => { goal.theta = 0; goal.phi = .92; goal.r = 86; goal.t.copy(HOME); });
     new ResizeObserver(resize).observe(stage); resize();
   }
   function resize() { if (!renderer) return; const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); }
   function theme() {
     if (!built) return;
     const dark = false; // le dashboard est volontairement en mode clair
-    hemi.intensity = dark ? .5 : .8; sun.intensity = dark ? .55 : .75; floorM.color.set(tok('s-floor')); edgeM.color.set(dark ? 0x3a4d78 : 0xc9d4ea);
+    hemi.intensity = dark ? .5 : .8; sun.intensity = dark ? .55 : .75; edgeM.color.set(dark ? 0x3a4d78 : 0xc9d4ea);
     ROWS.forEach(r => { const c = new THREE.Color(tok(r.role)); r.mat.color.set(tok('s-row')).lerp(c, dark ? .28 : .22); r.pmat.color.set(tok('s-plinth')).lerp(c, dark ? .22 : .12); });
     PEOPLE.forEach(p => { if (!p.g) return; const c = new THREE.Color(tok(p.role)); p.strip.material.color.copy(c); p.ring.material.color.copy(c); if (p.jm) p.jm.color.copy(c); if (p.bm) p.bm.color.set(0xffffff).lerp(c, .42); });
     selRing.material.color.set(tok('sel'));
@@ -1074,7 +1324,7 @@ const team = (() => {
     if (p.role === 'cq') { kv = [['RDV traités', fmt(s.conf)], ['RDV confirmés', fmt(s.confOk)], ['Dossiers contrôlés', fmt(s.ctrl)], ['Refusés', fmt(s.ctrl - s.ctrlOk)]]; rates = rate('Taux de confirmation', pct(s.confOk, s.conf), 'c7') + rate('Conformité des dossiers', pct(s.ctrlOk, s.ctrl), 'c3'); goto = 'cq'; }
     if (p.role === 'admin') { const camps = CAMPS.filter(c => c.admin === p.id).map(c => c.name); kv = [['Leads importés', fmt(s.imp)], ['Leads attribués', fmt(s.attr)], ['Campagnes gérées', camps.length], ['En attente', fmt(s.imp - s.attr)]]; rates = rate('Leads attribués', pct(s.attr, s.imp), 'c1') + `<div class="sub">${camps.map(c => `<span class="pill camp">${c}</span>`).join(' ')}</div>`; goto = 'campagnes'; }
     const spark = p.role === 'admin' ? '' : `<div><div class="eyebrow" style="margin-bottom:6px"><span>${{ tele: 'RDV fixés', terrain: 'Contrats signés', cq: 'Dossiers contrôlés' }[p.role]} · 7 derniers jours</span></div>${sparkSvg(s.last7, tok(p.role)).replace('width="72" height="22"', 'width="100%" height="48" preserveAspectRatio="none"')}</div>`;
-    $('#person').innerHTML = `<div class="eyebrow"><span>${ROLE_LABEL[p.role]}</span><span>${$('#range').textContent}</span></div>
+    $('#person').innerHTML = `<div class="eyebrow"><span>${ROLE_LABEL[p.role]}</span><span>${rangeText(F.from, F.to)}</span></div>
       <div class="id"><span class="av" style="background:var(--${p.role})">${p.ini}</span><div><h3>${p.name}</h3><p class="sub">${p.zone ? 'Secteur ' + p.zone : ROLE_LABEL[p.role]}</p></div></div>
       <div class="rank"><b>${pos}<sup>${pos === 1 ? 'er' : 'e'}</sup></b><span>sur ${mem.length} en ${ml} · ${show(p, k, true)}</span></div>
       <div class="kv">${kv.map(([l, v]) => `<div><small>${l}</small><b>${v}</b></div>`).join('')}</div>${spark}${rates}
@@ -1098,7 +1348,7 @@ const team = (() => {
     const s = byId[sel]; selRing.position.set(s.g.position.x, s.h + .03, s.g.position.z);
     renderer.render(scene, camera);
     const w = stage.clientWidth, h = stage.clientHeight, proj = v => { tmp.copy(v).project(camera); return [(tmp.x * .5 + .5) * w, (-tmp.y * .5 + .5) * h]; };
-    PEOPLE.forEach(p => { const [x, y] = proj(tmp.set(p.g.position.x, p.h + 2.65, p.g.position.z)); p.tag.style.left = x + 'px'; p.tag.style.top = y + 'px'; });
+    PEOPLE.forEach(p => { const [x, y] = proj(tmp.set(p.g.position.x, p.h + 2.65, p.g.position.z)); p.tag.style.left = x + 'px'; p.tag.style.top = (y - (p.stag ? 34 : 0)) + 'px'; });
     requestAnimationFrame(loop);
   }
   return {
@@ -1110,8 +1360,402 @@ const team = (() => {
   };
 })();
 
-/* ================= Thème ================= */
+/* ================================================================
+   PAGES CRM : Leads, fiche lead, session d'appels, Planning, Paramètres, recherche
+   ================================================================ */
+const fh = h => h % 1 ? `${Math.floor(h)} h 30` : `${h} h`;
+const dayLabel = d => d === TODAY ? "aujourd'hui" : d === TODAY - 1 ? 'hier' : d === TODAY + 1 ? 'demain' : d > TODAY ? dateOf(d).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }).replace('.', '') : d > TODAY - 7 ? `il y a ${TODAY - d} j` : dShort(d);
+const GROUPS = {
+  new: ['Nouveau', 'c1'], recall: ['À rappeler', 'c4'], rdv: ['RDV à venir', 'c7'], rdvdone: ['RDV passé', 'c5'], sign: ['Signé', 'c3'], inst: ['Installé', 'c6'], lost: ['Perdu', 'c-other'],
+};
+function stOf(l) {
+  if (l.instD !== undefined) return { g: 'inst', label: 'INSTALLÉ' };
+  if (l.signD !== undefined) return l.contSt === 'ANNULÉ' ? { g: 'lost', label: 'CONTRAT ANNULÉ' } : { g: 'sign', label: l.contSt };
+  if (l.rdvSt) {
+    if (['ANNULÉ', 'ABSENT', 'NÉGATIF'].includes(l.rdvSt)) return { g: 'lost', label: 'RDV ' + l.rdvSt };
+    if (l.apptD > TODAY || ['À CONFIRMER', 'CONFIRMÉ', 'NRP CONFIRMÉ'].includes(l.rdvSt)) return { g: 'rdv', label: 'RDV ' + l.rdvSt };
+    if (['POSITIF BH', 'À TRAVAILLER', 'R2'].includes(l.rdvSt)) return { g: 'rdvdone', label: l.rdvSt };
+    return { g: 'lost', label: 'RDV ' + l.rdvSt };
+  }
+  if (l.status === 'NOUVEAU') return { g: 'new', label: 'NOUVEAU' };
+  if (l.status === 'À RAPPELER' || l.status === 'NRP') return { g: 'recall', label: l.status };
+  return { g: 'lost', label: l.status };
+}
+const camName = id => CAMPS.find(c => c.id === id).name;
+const miniAv = p => p ? `<span class="mini-av"><i style="background:var(--${p.role})">${p.ini}</i>${p.name.split(' ')[0]}</span>` : '<span class="dim">—</span>';
+function nextAction(l) {
+  const g = stOf(l).g;
+  if (g === 'new') { const late = l.d < TODAY || (TODAY - l.d === 0 && l.hr < 8); return `<span class="na ${late ? 'late' : 'soon'}">À appeler ${late ? '· en retard' : 'maintenant'}</span>`; }
+  if (g === 'recall') return `<span class="na ${l.recallD <= TODAY ? 'late' : ''}">Rappel ${dayLabel(l.recallD)} ${fh(l.recallH)}</span>`;
+  if (g === 'rdv') return `<span class="na">RDV ${dayLabel(l.apptD)} ${fh(l.apptH)}</span>`;
+  if (g === 'sign') return `<span class="na">${l.contSt === 'MANQUE DOC' ? 'Relancer les documents' : 'Suivi du dossier'}</span>`;
+  return '<span class="dim">—</span>';
+}
+const snap = l => JSON.parse(JSON.stringify(l));
+const restore = (l, o) => { Object.keys(l).forEach(k => delete l[k]); Object.assign(l, o); };
+
+/* ---------- Toast avec annulation ---------- */
+let toastT2, undoFn = null;
+function toast(msg, undo) {
+  $('#toastMsg').textContent = msg; undoFn = undo || null; $('#toastUndo').hidden = !undo;
+  $('#toast2').classList.add('on'); clearTimeout(toastT2); toastT2 = setTimeout(() => $('#toast2').classList.remove('on'), 5000);
+}
+$('#toastUndo').onclick = () => { if (undoFn) { undoFn(); undoFn = null; } $('#toast2').classList.remove('on'); refresh(); };
+document.addEventListener('click', e => { const b = e.target.closest('[data-act]'); if (b) toast(b.dataset.act); });
+
+/* ---------- Actions métier ---------- */
+const SLOT_H = [9, 10.5, 14, 15.5, 17, 18.5];
+const taken = (com, d, h) => leads.some(x => x.com === com && x.apptD === d && x.apptH === h && x.rdvSt !== 'ANNULÉ');
+function freeSlots(com, n = 6) {
+  const out = []; for (let d = TODAY + 1; d <= TODAY + 6 && out.length < n; d++) { if (dateOf(d).getDay() === 0) continue; for (const h of SLOT_H) { if (!taken(com, d, h)) out.push([d, h]); if (out.length >= n) break; } }
+  return out;
+}
+function suggestCom(l) {
+  const zc = COM.filter(c => c.zone === l.zone);
+  return zc.map(c => [c, leads.filter(x => x.com === c.id && x.apptD > TODAY && x.apptD <= TODAY + 6).length]).sort((a, b) => a[1] - b[1])[0][0];
+}
+function setStatus(l, st, extra = {}) {
+  const before = snap(l);
+  delete l.recallD; delete l.recallH;
+  l.status = st; Object.assign(l, extra);
+  if (st === 'À RAPPELER' || st === 'NRP') { l.recallD = l.recallD ?? (st === 'NRP' ? TODAY + 1 : TODAY); l.recallH = l.recallH ?? 17; }
+  toast(`${l.client} · ${st === 'NRP' ? 'NRP, rappel programmé demain 17 h' : st === 'À RAPPELER' ? `rappel ${dayLabel(l.recallD)} ${fh(l.recallH)}` : 'statut : ' + st}`, () => restore(l, before));
+}
+function book(l, com, d, h) {
+  const before = snap(l);
+  delete l.recallD; delete l.recallH;
+  Object.assign(l, { status: 'RDV', rdvD: TODAY, apptD: d, apptH: h, com, rdvSt: 'À CONFIRMER', cq: l.cq || 'lea', h: 11 });
+  toast(`RDV fixé : ${l.client} avec ${byId[com].name}, ${dayLabel(d)} ${fh(h)}`, () => restore(l, before));
+}
+function setRdv(l, st) {
+  const before = snap(l); l.rdvSt = st; if (st === 'CONFIRMÉ') l.confirmed = true;
+  if (st === 'POSITIF BH' && l.signD === undefined) { Object.assign(l, { signD: TODAY, kwc: 6, eur: 15900, contSt: 'EN ATTENTE DE TRAITEMENT' }); }
+  toast(`${l.client} · ${st === 'POSITIF BH' ? 'contrat signé, dossier envoyé au contrôle qualité' : 'RDV ' + st.toLowerCase()}`, () => restore(l, before));
+}
+
+/* ---------- Routage des pages ---------- */
+let page = 'dashboard';
+try { const sp = localStorage.getItem('cc-page'); if (['dashboard', 'leads', 'planning', 'settings'].includes(sp)) page = sp; } catch (e) {}
+function go(pg) {
+  page = pg; try { localStorage.setItem('cc-page', pg); } catch (e) {}
+  document.querySelectorAll('.nav [data-page]').forEach(a => a.classList.toggle('on', a.dataset.page === pg));
+  ['dashboard', 'leads', 'planning', 'settings'].forEach(x => { $('#pg-' + x).hidden = x !== pg; });
+  if (pg === 'dashboard' && tab === 'equipe') team.start(); else team.stop();
+  refresh(); window.scrollTo(0, 0);
+}
+function refresh() { if (page === 'leads') renderLeadsPage(); if (page === 'planning') renderPlan(); if (page === 'settings') renderSettings(); if (page === 'dashboard') render(); if (!$('#drawer').hidden && drawerId !== null) openDrawer(drawerId, true); }
+document.querySelectorAll('.nav [data-page]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); go(a.dataset.page); }));
+
+/* ================= Page Leads ================= */
+const LV = { view: 'all', q: '', camp: '', tel: '', zone: '', mode: 'list', limit: 40, sel: new Set() };
+const VIEWS = [['all', 'Tous', 'c-other'], ['new', 'À appeler', 'c1'], ['recall', 'À rappeler', 'c4'], ['rdv', 'RDV à venir', 'c7'], ['toconf', 'RDV à confirmer', 'c2'], ['sign', 'Signés', 'c3'], ['inst', 'Installés', 'c6']];
+const fillSel = (sel, first, list) => { $(sel).innerHTML = `<option value="">${first}</option>` + list.map(x => `<option value="${x.id || x}">${x.name || x}</option>`).join(''); };
+fillSel('#lCamp', 'Toutes les campagnes', CAMPS); fillSel('#lTel', 'Tous les télépros', TEL); fillSel('#lZone', 'Toutes les zones', [...new Set(DEPTS.map(d => d[2]))]);
+fillSel('#bulkTel', 'Attribuer à…', TEL);
+$('#bulkSt').innerHTML = '<option value="">Changer le statut…</option>' + ['À RAPPELER', 'NRP', 'P.I', 'FAUX NUMÉRO', 'HORS CRITÈRE'].map(x => `<option>${x}</option>`).join('');
+function leadMatches(l) {
+  if (LV.camp && l.camp !== LV.camp) return false; if (LV.tel && l.tele !== LV.tel) return false; if (LV.zone && l.zone !== LV.zone) return false;
+  if (LV.q) { const q = LV.q.toLowerCase().replace(/\s/g, ''); if (!(l.client.toLowerCase().replace(/\s/g, '').includes(q) || l.phone.replace(/\s/g, '').includes(q) || l.city.toLowerCase().includes(q) || l.dept === q)) return false; }
+  return true;
+}
+function inView(l, v) { const g = stOf(l).g; if (v === 'all') return true; if (v === 'toconf') return g === 'rdv' && (l.rdvSt === 'À CONFIRMER' || l.rdvSt === 'NRP CONFIRMÉ'); if (v === 'recall') return g === 'recall' && l.recallD !== undefined && l.recallD <= TODAY + 1; return g === v; }
+function sortLeads(list, v) {
+  if (v === 'recall') return list.sort((a, b) => a.recallD - b.recallD || a.recallH - b.recallH);
+  if (v === 'rdv' || v === 'toconf') return list.sort((a, b) => a.apptD - b.apptD || a.apptH - b.apptH);
+  return list.sort((a, b) => b.d - a.d || b.hr - a.hr);
+}
+function renderLeadsPage() {
+  const base0 = leads.filter(leadMatches);
+  const counts = Object.fromEntries(VIEWS.map(([v]) => [v, base0.filter(l => inView(l, v)).length]));
+  $('#lViews').innerHTML = VIEWS.map(([v, l, c]) => `<button type="button" data-v="${v}" aria-pressed="${LV.view === v}"><i style="background:var(--${c})"></i>${l}<b>${fmt(counts[v])}</b></button>`).join('');
+  $('#lSub').textContent = `${fmt(leads.length)} leads au total · ${fmt(counts.new)} à appeler maintenant · ${fmt(counts.recall)} rappels prévus aujourd'hui ou demain`;
+  const list = sortLeads(base0.filter(l => inView(l, LV.view)), LV.view);
+  LV.current = list.map(l => l.id);
+  $('#lListCard').hidden = LV.mode !== 'list'; $('#lPipe').hidden = LV.mode !== 'pipe';
+  document.querySelectorAll('#lView button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === LV.mode));
+  if (LV.mode === 'list') {
+    const rows = list.slice(0, LV.limit);
+    $('#lTable').innerHTML = `<thead><tr><th class="l"><input type="checkbox" id="selAll" aria-label="Tout sélectionner"></th><th class="l">Client</th><th class="l">Ville</th><th class="l">Campagne</th><th class="l">Statut</th><th class="l">Télépro</th><th class="l">Commercial</th><th class="l">Reçu</th><th class="l">Prochaine action</th><th>Actions</th></tr></thead><tbody>${rows.map(l => { const st = stOf(l);
+      return `<tr data-id="${l.id}" class="${LV.sel.has(l.id) ? 'on' : ''}"><td class="l"><input type="checkbox" data-sel="${l.id}" ${LV.sel.has(l.id) ? 'checked' : ''} aria-label="Sélectionner ${l.client}"></td>
+      <td class="l cl"><b>${l.client}</b><small>${l.phone}</small></td><td class="l">${l.city} <span class="dim">(${l.dept})</span></td><td class="l"><span class="pill camp">${camName(l.camp)}</span></td>
+      <td class="l"><button type="button" class="spill" data-st="${l.id}" style="--c:var(--${GROUPS[st.g][1]})">${st.label}</button></td><td class="l">${miniAv(byId[l.tele])}</td><td class="l">${miniAv(byId[l.com])}</td>
+      <td class="l">${dayLabel(l.d)}${l.d >= TODAY - 1 ? ' ' + fh(l.hr) : ''}</td><td class="l">${nextAction(l)}</td>
+      <td><span class="rowact"><a class="ib go" href="tel:${l.phone.replace(/\s/g, '')}" data-call="${l.id}" title="Appeler ${l.phone}" aria-label="Appeler"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></a><button type="button" class="ib" data-rdv="${l.id}" title="Fixer un RDV" aria-label="Fixer un RDV"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></button></span></td></tr>`; }).join('') || '<tr><td colspan="10" class="l dim" style="padding:30px">Aucun lead ne correspond. Essayez une autre vue ou effacez la recherche.</td></tr>'}</tbody>`;
+    $('#lMore').innerHTML = list.length > LV.limit ? `<button type="button" class="btn" id="moreBtn">Afficher 40 de plus · ${fmt(list.length - LV.limit)} restants</button>` : `<span class="sub">${fmt(list.length)} lead${list.length > 1 ? 's' : ''}</span>`;
+  } else {
+    const cols = ['new', 'recall', 'rdv', 'rdvdone', 'sign', 'inst'];
+    $('#lPipe').innerHTML = cols.map(g => { const items = sortLeads(base0.filter(l => stOf(l).g === g && (g !== 'recall' || l.recallD <= TODAY + 3) && (g !== 'new' || l.d >= TODAY - 30) && (!['sign', 'inst', 'rdvdone'].includes(g) || (l.signD ?? l.apptD) >= TODAY - 30)), g === 'recall' ? 'recall' : g === 'rdv' ? 'rdv' : 'all');
+      return `<div class="col"><h4><i style="background:var(--${GROUPS[g][1]})"></i>${GROUPS[g][0]}<b>${fmt(items.length)}</b></h4>${items.slice(0, 12).map(l => `<button type="button" class="kc" data-open="${l.id}"><b>${l.client}</b><small>${l.city} · ${camName(l.camp)}</small>${nextAction(l)}${miniAv(byId[g === 'new' || g === 'recall' ? l.tele : l.com])}</button>`).join('')}${items.length > 12 ? `<div class="morek">+ ${fmt(items.length - 12)} autres</div>` : ''}</div>`; }).join('');
+  }
+  $('#bulk').hidden = !LV.sel.size; $('#bulkN').textContent = `${LV.sel.size} lead${LV.sel.size > 1 ? 's' : ''} sélectionné${LV.sel.size > 1 ? 's' : ''}`;
+}
+$('#lViews').onclick = e => { const b = e.target.closest('button'); if (!b) return; LV.view = b.dataset.v; LV.limit = 40; renderLeadsPage(); };
+$('#lView').onclick = e => { const b = e.target.closest('button'); if (!b) return; LV.mode = b.dataset.v; renderLeadsPage(); };
+let qT; $('#lq').oninput = e => { clearTimeout(qT); qT = setTimeout(() => { LV.q = e.target.value.trim(); LV.limit = 40; renderLeadsPage(); }, 120); };
+$('#lCamp').onchange = e => { LV.camp = e.target.value; renderLeadsPage(); };
+$('#lTel').onchange = e => { LV.tel = e.target.value; renderLeadsPage(); };
+$('#lZone').onchange = e => { LV.zone = e.target.value; renderLeadsPage(); };
+$('#lMore').onclick = e => { if (e.target.id === 'moreBtn') { LV.limit += 40; renderLeadsPage(); } };
+$('#lPipe').onclick = e => { const b = e.target.closest('[data-open]'); if (b) openDrawer(+b.dataset.open); };
+$('#lTable').addEventListener('click', e => {
+  const t = e.target;
+  if (t.id === 'selAll') { const ids = LV.current.slice(0, LV.limit); t.checked ? ids.forEach(i => LV.sel.add(i)) : ids.forEach(i => LV.sel.delete(i)); renderLeadsPage(); return; }
+  const cb = t.closest('[data-sel]'); if (cb) { const i = +cb.dataset.sel; cb.checked ? LV.sel.add(i) : LV.sel.delete(i); renderLeadsPage(); return; }
+  const sp = t.closest('[data-st]'); if (sp) { statusMenu(leads[+sp.dataset.st], sp); return; }
+  const call = t.closest('[data-call]'); if (call) { openDrawer(+call.dataset.call); return; }
+  const rd = t.closest('[data-rdv]'); if (rd) { openDrawer(+rd.dataset.rdv, false, true); return; }
+  const tr = t.closest('tr[data-id]'); if (tr) openDrawer(+tr.dataset.id);
+});
+$('#bulkTel').onchange = e => { const v = e.target.value; if (!v) return; const ids = [...LV.sel], prev = ids.map(i => [i, leads[i].tele]); ids.forEach(i => leads[i].tele = v); toast(`${ids.length} leads attribués à ${byId[v].name}`, () => prev.forEach(([i, t]) => leads[i].tele = t)); LV.sel.clear(); e.target.value = ''; renderLeadsPage(); };
+$('#bulkSt').onchange = e => { const v = e.target.value; if (!v) return; const ids = [...LV.sel], prev = ids.map(i => [i, snap(leads[i])]); ids.forEach(i => { leads[i].status = v; if (v === 'À RAPPELER' || v === 'NRP') { leads[i].recallD = TODAY + 1; leads[i].recallH = 11; } }); toast(`${ids.length} leads passés en ${v}`, () => prev.forEach(([i, o]) => restore(leads[i], o))); LV.sel.clear(); e.target.value = ''; renderLeadsPage(); };
+$('#bulkClear').onclick = () => { LV.sel.clear(); renderLeadsPage(); };
+
+/* Menu de statut rapide */
+function popAt(el, html) { const p = $('#pop'), r = el.getBoundingClientRect(); p.innerHTML = html; p.hidden = false; const w = p.offsetWidth, h = p.offsetHeight; p.style.left = Math.max(8, Math.min(innerWidth - w - 8, r.left)) + 'px'; p.style.top = (r.bottom + h + 8 > innerHeight ? Math.max(8, r.top - h - 6) : r.bottom + 6) + 'px'; }
+const closePop = () => { $('#pop').hidden = true; };
+document.addEventListener('click', e => { if (!$('#pop').hidden && !e.target.closest('#pop') && !e.target.closest('[data-st]') && !e.target.closest('.ev') && !e.target.closest('.rc')) closePop(); });
+function statusMenu(l, el) {
+  const opts = [['RDV fixé…', 'c7', 'rdv'], ['À rappeler', 'c4', 'À RAPPELER'], ['NRP', 'c-other', 'NRP'], ['Pas intéressé (P.I)', 'c8', 'P.I'], ['Faux numéro', 'c8', 'FAUX NUMÉRO'], ['Hors critère', 'c-other', 'HORS CRITÈRE'], ['Locataire', 'c-other', 'LOCATAIRE']];
+  popAt(el, `<h6>Changer le statut</h6>${opts.map(([t, c, v]) => `<button type="button" data-v="${v}"><i style="background:var(--${c})"></i>${t}</button>`).join('')}`);
+  $('#pop').onclick = e => { const b = e.target.closest('[data-v]'); if (!b) return; closePop(); if (b.dataset.v === 'rdv') openDrawer(l.id, false, true); else { setStatus(l, b.dataset.v); refresh(); } };
+}
+
+/* ================= Fiche lead (tiroir) ================= */
+let drawerId = null;
+function timeline(l) {
+  const ev = [[l.d, 'c1', `Lead reçu · ${camName(l.camp)}`, `${dShort(l.d)} ${fh(l.hr)} · attribué à ${byId[l.tele].name}`]];
+  for (let i = 1; i <= Math.min(l.calls, 3); i++) ev.push([Math.min(TODAY, l.d + Math.min(i - 1, 2)), 'c-other', `Appel n° ${i} par ${byId[l.tele].name.split(' ')[0]}`, i < l.calls || !l.rdvD ? 'Pas de réponse' : 'Décroché']);
+  if (l.rdvD !== undefined) ev.push([l.rdvD, 'c7', `RDV fixé avec ${byId[l.com].name}`, `pour le ${dShort(l.apptD)} à ${fh(l.apptH)}`]);
+  if (l.confirmed) ev.push([Math.max(l.rdvD, l.apptD - 1), 'c2', `RDV confirmé par ${byId[l.cq].name}`, 'appel de confirmation']);
+  if (l.apptD !== undefined && l.apptD < TODAY && l.rdvSt) ev.push([l.apptD, l.rdvSt === 'POSITIF BH' ? 'c3' : 'c5', `Résultat du RDV : ${l.rdvSt}`, byId[l.com].name]);
+  if (l.signD !== undefined) ev.push([l.signD, 'c3', `Contrat signé · ${l.kwc} kWc · ${eur(l.eur)}`, `statut du dossier : ${l.contSt}`]);
+  if (l.cqD !== undefined) ev.push([l.cqD, l.cqOk ? 'c3' : 'c8', `Contrôle qualité ${l.cqOk ? 'validé' : 'refusé'}`, byId[l.cq].name]);
+  if (l.instD !== undefined) ev.push([l.instD, 'c6', 'Installation réalisée', 'panneaux raccordés']);
+  if (l.recallD !== undefined) ev.push([l.recallD, 'c4', `Rappel prévu ${dayLabel(l.recallD)} à ${fh(l.recallH)}`, '']);
+  return ev.sort((a, b) => b[0] - a[0]).map(([d, c, t, s2]) => `<li style="--c:var(--${c})">${t}<small>${dayLabel(d)}${s2 ? ' · ' + s2 : ''}</small></li>`).join('');
+}
+function bookBlock(l, show) {
+  const sc = l.com && byId[l.com] && byId[l.com].zone === l.zone ? byId[l.com] : suggestCom(l);
+  return `<div class="book" id="bookBox" ${show ? '' : 'hidden'}><div class="row">Avec <select id="bookCom">${COM.filter(c => c.zone === l.zone).map(c => `<option value="${c.id}" ${c.id === sc.id ? 'selected' : ''}>${c.name}</option>`).join('')}</select><span class="dim">secteur ${l.zone} · suggéré : le moins chargé</span></div><div class="chips" id="bookSlots">${slotChips(sc.id)}</div></div>`;
+}
+const slotChips = com => freeSlots(com).map(([d, h]) => `<button type="button" data-slot="${d}|${h}">${fh(h)}<small>${dayLabel(d)}</small></button>`).join('');
+function openDrawer(id, keep, booking) {
+  const l = leads[id]; drawerId = id; const st = stOf(l), pos = (LV.current || []).indexOf(id);
+  const showBook = booking || (keep && !$('#bookBox')?.hidden);
+  const notes = keep ? ($('#dNote') || {}).value : undefined;
+  $('#drawer').innerHTML = `<div class="dh"><div class="top"><div class="cav">${l.client.split(' ').pop().slice(0, 2).toUpperCase()}</div><div><h3>${l.client}</h3><p>${l.city} (${l.dept}) · ${camName(l.camp)} · reçu ${dayLabel(l.d)}</p></div>
+      <div class="tools">${pos >= 0 ? `<button type="button" class="ib" id="dPrev" title="Lead précédent (↑)" aria-label="Lead précédent">↑</button><button type="button" class="ib" id="dNext" title="Lead suivant (↓)" aria-label="Lead suivant">↓</button>` : ''}<button type="button" class="ib" id="dClose" title="Fermer (Échap)" aria-label="Fermer">✕</button></div></div>
+    <div class="contact"><span class="phone">${l.phone}</span><a class="callbtn" href="tel:${l.phone.replace(/\s/g, '')}"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>Appeler</a><button type="button" class="btn" data-act="SMS envoyé à ${l.client} (modèle « Suite à notre appel »)">SMS</button><button type="button" class="btn" id="dCopy">Copier</button><span class="spill static" style="--c:var(--${GROUPS[st.g][1]});margin-left:auto">${st.label}</span></div></div>
+  <div class="db">
+    <div class="sect"><h4><span>Résultat de l'appel</span><span>un clic suffit</span></h4>
+      <div class="outs"><button type="button" class="out main" data-o="rdv">RDV fixé<small>choisir le créneau</small></button><button type="button" class="out" style="--c:var(--c4)" data-o="recall">À rappeler<small>choisir l'heure</small></button><button type="button" class="out" data-o="NRP">NRP<small>rappel demain 17 h</small></button><button type="button" class="out" style="--c:var(--c8)" data-o="P.I">Pas intéressé<small>P.I</small></button><button type="button" class="out" style="--c:var(--c8)" data-o="FAUX NUMÉRO">Faux numéro</button><button type="button" class="out" data-o="HORS CRITÈRE">Hors critère</button></div>
+      <div class="chips" id="recallChips" hidden style="margin-top:10px">${[[TODAY, 14], [TODAY, 17], [TODAY, 18.5], [TODAY + 1, 10], [TODAY + 1, 14], [TODAY + 2, 10]].map(([d, h]) => `<button type="button" data-rc="${d}|${h}">${fh(h)}<small>${dayLabel(d)}</small></button>`).join('')}</div>
+      <div style="margin-top:10px">${bookBlock(l, showBook)}</div></div>
+    ${l.apptD !== undefined && st.g === 'rdv' ? `<div class="sect"><h4>Rendez-vous</h4><div class="info"><div><small>Date</small><b>${dayLabel(l.apptD)} · ${fh(l.apptH)}</b></div><div><small>Commercial</small><b>${byId[l.com].name}</b></div></div><div class="chips" style="margin-top:10px"><button type="button" data-r="CONFIRMÉ">✓ Confirmé</button><button type="button" data-r="NRP CONFIRMÉ">NRP confirmation</button><button type="button" data-r="ANNULÉ">Annulé</button></div></div>` : ''}
+    <div class="sect"><h4>Informations</h4><div class="info">
+      <div><small>Téléprospecteur</small><b>${byId[l.tele].name}</b></div><div><small>Commercial</small><b>${l.com ? byId[l.com].name : '—'}</b></div>
+      <div><small>E-mail</small><b>${l.email}</b></div><div><small>Campagne</small><b>${camName(l.camp)} · ${eur(CAMPS.find(c => c.id === l.camp).price)}</b></div>
+      <div><small>Projet</small><b>${l.kwc ? l.kwc + ' kWc · ' + eur(l.eur) : 'À qualifier'}</b></div><div><small>Appels</small><b>${l.calls} tentative${l.calls > 1 ? 's' : ''}</b></div></div></div>
+    <div class="sect"><h4>Note</h4><textarea id="dNote" placeholder="Ajouter une note (enregistrée automatiquement)">${notes ?? (l.note || '')}</textarea></div>
+    <div class="sect"><h4>Historique</h4><ul class="tl">${timeline(l)}</ul></div>
+  </div>`;
+  $('#drawer').hidden = false; $('#scrim').hidden = false;
+  if (booking) $('#bookBox').scrollIntoView({ block: 'nearest' });
+}
+function closeDrawer() { $('#drawer').hidden = true; $('#scrim').hidden = true; drawerId = null; }
+$('#scrim').onclick = closeDrawer;
+$('#drawer').addEventListener('input', e => { if (e.target.id === 'dNote') leads[drawerId].note = e.target.value; });
+$('#drawer').addEventListener('change', e => { if (e.target.id === 'bookCom') $('#bookSlots').innerHTML = slotChips(e.target.value); });
+$('#drawer').addEventListener('click', e => {
+  const l = leads[drawerId], t = e.target;
+  if (t.closest('#dClose')) return closeDrawer();
+  if (t.closest('#dPrev') || t.closest('#dNext')) { const c = LV.current, i = c.indexOf(drawerId) + (t.closest('#dNext') ? 1 : -1); if (c[i] !== undefined) openDrawer(c[i]); return; }
+  if (t.closest('#dCopy')) { navigator.clipboard?.writeText(l.phone).then(() => toast('Numéro copié'), () => toast('Sélectionnez le numéro pour le copier')); return; }
+  const o = t.closest('[data-o]');
+  if (o) { const v = o.dataset.o;
+    if (v === 'rdv') { $('#bookBox').hidden = false; $('#recallChips').hidden = true; $('#bookBox').scrollIntoView({ block: 'nearest', behavior: 'smooth' }); return; }
+    if (v === 'recall') { $('#recallChips').hidden = false; $('#bookBox').hidden = true; return; }
+    setStatus(l, v); afterAction(); return; }
+  const rc = t.closest('[data-rc]'); if (rc) { const [d, h] = rc.dataset.rc.split('|').map(Number); setStatus(l, 'À RAPPELER', { recallD: d, recallH: h }); afterAction(); return; }
+  const sl = t.closest('[data-slot]'); if (sl) { const [d, h] = sl.dataset.slot.split('|').map(Number); book(l, $('#bookCom').value, d, h); afterAction(); return; }
+  const r = t.closest('[data-r]'); if (r) { setRdv(l, r.dataset.r); refresh(); }
+});
+// Après un résultat : on passe directement au lead suivant de la liste
+function afterAction() { const c = LV.current || [], i = c.indexOf(drawerId); refresh(); const nx = c.slice(i + 1).find(x => x !== drawerId); if (page === 'leads' && nx !== undefined && !$('#drawer').hidden) openDrawer(nx); else if (drawerId !== null) openDrawer(drawerId, true); }
+
+/* ================= Session d'appels ================= */
+const CS = { queue: [], i: 0, done: 0, rdv: 0, t0: 0, sub: null };
+function startCalls() {
+  CS.queue = sortLeads(leads.filter(l => leadMatches(l) && (stOf(l).g === 'new' || (stOf(l).g === 'recall' && l.recallD <= TODAY))), 'all').map(l => l.id);
+  if (!CS.queue.length) { toast('Aucun lead à appeler pour ces filtres.'); return; }
+  Object.assign(CS, { i: 0, done: 0, rdv: 0, t0: Date.now(), sub: null }); $('#callmode').hidden = false; renderCall();
+}
+function renderCall() {
+  const l = leads[CS.queue[CS.i]]; if (!l) { $('#callmode').hidden = true; toast(`Session terminée : ${CS.done} leads traités, ${CS.rdv} RDV fixés`); refresh(); return; }
+  const min = Math.max(1, Math.round((Date.now() - CS.t0) / 60000)), st = stOf(l);
+  const sc = suggestCom(l);
+  $('#callmode').innerHTML = `<div class="mbox"><div class="mhead"><h3>Session d'appels</h3><span class="pill neutral">${byId[LV.tel || l.tele].name}</span>
+    <div class="cstat"><span><b>${CS.i + 1}</b>/ ${CS.queue.length} leads</span><span><b>${CS.done}</b>traités</span><span><b>${CS.rdv}</b>RDV fixés</span><span><b>${min}</b>min</span></div><button type="button" class="ib" id="cmClose" aria-label="Terminer la session">✕</button></div>
+    <div class="progress"><div style="width:${(CS.i) / CS.queue.length * 100}%"></div></div>
+    <div class="cbody"><div class="cl1"><span class="spill static" style="--c:var(--${GROUPS[st.g][1]});align-self:flex-start">${st.label}${st.g === 'recall' ? ' · rappel prévu ' + fh(l.recallH) : ''}</span><h2>${l.client}</h2>
+      <div class="contact"><span class="phone" style="font-size:28px">${l.phone}</span><a class="callbtn" href="tel:${l.phone.replace(/\s/g, '')}">Appeler</a></div>
+      <div class="info"><div><small>Ville</small><b>${l.city} (${l.dept})</b></div><div><small>Campagne</small><b>${camName(l.camp)}</b></div><div><small>Reçu</small><b>${dayLabel(l.d)} ${fh(l.hr)}</b></div><div><small>Tentatives</small><b>${l.calls}</b></div></div>
+      <div class="script"><b>Script :</b> « Bonjour ${l.client}, je vous appelle suite à votre demande sur les panneaux solaires. Vous êtes bien propriétaire de votre maison à ${l.city} ? … Un conseiller passe dans votre secteur cette semaine, je vous propose <b>${fh(freeSlots(sc.id, 1)[0]?.[1] || 14)} ${dayLabel(freeSlots(sc.id, 1)[0]?.[0] || TODAY + 1)}</b> ? »</div></div>
+    <div class="cl2"><div class="eyebrow"><span>Résultat · touches 1 à 6</span><span>S = passer</span></div>
+      <div class="outs big"><button type="button" class="out main" data-co="rdv">RDV fixé<kbd>1</kbd></button><button type="button" class="out" style="--c:var(--c4)" data-co="recall">À rappeler<kbd>2</kbd></button><button type="button" class="out" data-co="NRP">NRP<kbd>3</kbd></button><button type="button" class="out" style="--c:var(--c8)" data-co="P.I">Pas intéressé<kbd>4</kbd></button><button type="button" class="out" style="--c:var(--c8)" data-co="FAUX NUMÉRO">Faux numéro<kbd>5</kbd></button><button type="button" class="out" data-co="HORS CRITÈRE">Hors critère<kbd>6</kbd></button></div>
+      ${CS.sub === 'rdv' ? `<div class="book"><div class="row">Avec ${sc.name} · ${sc.zone}</div><div class="chips">${freeSlots(sc.id).map(([d, h]) => `<button type="button" data-cs="${sc.id}|${d}|${h}">${fh(h)}<small>${dayLabel(d)}</small></button>`).join('')}</div></div>` : ''}
+      ${CS.sub === 'recall' ? `<div class="chips">${[[TODAY, 14], [TODAY, 17], [TODAY, 18.5], [TODAY + 1, 10], [TODAY + 1, 14]].map(([d, h]) => `<button type="button" data-cr="${d}|${h}">${fh(h)}<small>${dayLabel(d)}</small></button>`).join('')}</div>` : ''}
+      <button type="button" class="btn" data-co="skip" style="align-self:flex-start">Passer ce lead <kbd>S</kbd></button></div></div></div>`;
+}
+function callOutcome(v) {
+  const l = leads[CS.queue[CS.i]];
+  if (v === 'rdv' || v === 'recall') { CS.sub = CS.sub === v ? null : v; renderCall(); return; }
+  if (v !== 'skip') { setStatus(l, v); CS.done++; }
+  CS.i++; CS.sub = null; renderCall();
+}
+$('#startCall').onclick = startCalls;
+$('#callmode').addEventListener('click', e => {
+  const t = e.target; if (t.closest('#cmClose')) { $('#callmode').hidden = true; toast(`Session arrêtée : ${CS.done} leads traités, ${CS.rdv} RDV fixés`); refresh(); return; }
+  const o = t.closest('[data-co]'); if (o) return callOutcome(o.dataset.co);
+  const s0 = t.closest('[data-cs]'); if (s0) { const [c, d, h] = s0.dataset.cs.split('|'); book(leads[CS.queue[CS.i]], c, +d, +h); CS.done++; CS.rdv++; CS.i++; CS.sub = null; renderCall(); return; }
+  const r0 = t.closest('[data-cr]'); if (r0) { const [d, h] = r0.dataset.cr.split('|').map(Number); setStatus(leads[CS.queue[CS.i]], 'À RAPPELER', { recallD: d, recallH: h }); CS.done++; CS.i++; CS.sub = null; renderCall(); }
+});
+
+/* ================= Nouveau lead ================= */
+$('#newLead').onclick = () => {
+  $('#newLeadM').innerHTML = `<div class="mbox" style="width:min(520px,100%)"><div class="mhead"><h3>Nouveau lead</h3><button type="button" class="ib" id="nlClose" style="margin-left:auto" aria-label="Fermer">✕</button></div>
+    <form id="nlForm" style="padding:20px;display:flex;flex-direction:column;gap:14px">
+      <div class="field"><label for="nlName">Nom du client</label><input id="nlName" required placeholder="Mme Dupont"></div>
+      <div class="field"><label for="nlPhone">Téléphone</label><input id="nlPhone" required placeholder="06 12 34 56 78" inputmode="tel"></div>
+      <div class="grid g2"><div class="field"><label for="nlDept">Département</label><select id="nlDept">${DEPTS.map(d => `<option value="${d[0]}">${d[0]} · ${d[1]}</option>`).join('')}</select></div><div class="field"><label for="nlCamp">Campagne</label><select id="nlCamp">${CAMPS.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}</select></div></div>
+      <div class="field"><label for="nlTel">Attribuer à</label><select id="nlTel">${TEL.map(t => `<option value="${t.id}">${t.name}</option>`).join('')}</select></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="btn" id="nlCancel">Annuler</button><button type="submit" class="btn primary">Créer et ouvrir la fiche</button></div></form></div>`;
+  $('#newLeadM').hidden = false; $('#nlName').focus();
+};
+$('#newLeadM').addEventListener('click', e => { if (e.target.id === 'newLeadM' || e.target.closest('#nlClose') || e.target.id === 'nlCancel') $('#newLeadM').hidden = true; });
+$('#newLeadM').addEventListener('submit', e => {
+  e.preventDefault(); const dpt = DEPTS.find(d => d[0] === $('#nlDept').value);
+  const L = { id: leads.length, d: TODAY, hr: 9, camp: $('#nlCamp').value, tele: $('#nlTel').value, dept: dpt[0], zone: dpt[2], dup: false, calls: 0, client: $('#nlName').value.trim(), city: CITY[dpt[0]], phone: $('#nlPhone').value.trim(), email: '—', status: 'NOUVEAU' };
+  leads.push(L); $('#newLeadM').hidden = true; LV.view = 'new'; go('leads'); openDrawer(L.id); toast(`Lead créé : ${L.client}`, () => { leads.pop(); closeDrawer(); });
+});
+
+/* ================= Planning ================= */
+const PV = { day: TODAY, zone: '' };
+const RDV_C = { 'À CONFIRMER': 'c4', 'CONFIRMÉ': 'c1', 'NRP CONFIRMÉ': 'c2', 'POSITIF BH': 'c3', 'NÉGATIF': 'c-other', 'ANNULÉ': 'c8', 'ABSENT': 'c8', 'À TRAVAILLER': 'c5', 'R2': 'c7' };
+const ZONES = [...new Set(DEPTS.map(d => d[2]))];
+function renderPlan() {
+  $('#planZone').innerHTML = [['', 'Toutes les zones'], ...ZONES.map(z => [z, z.replace('Nouvelle-Aquitaine', 'N.-Aquitaine').replace('Auvergne-Rhône-Alpes', 'AURA')])].map(([v, l]) => `<button type="button" data-z="${v}" aria-pressed="${PV.zone === v}">${l}</button>`).join('');
+  const coms = COM.filter(c => !PV.zone || c.zone === PV.zone), ids = new Set(coms.map(c => c.id));
+  const appts = d => leads.filter(l => l.apptD === d && ids.has(l.com));
+  const days = []; for (let d = TODAY - 2; d <= TODAY + 7; d++) if (dateOf(d).getDay() !== 0) days.push(d);
+  $('#days').innerHTML = days.map(d => `<button type="button" data-d="${d}" aria-pressed="${PV.day === d}" class="${d === TODAY ? 'today' : ''}"><small>${dateOf(d).toLocaleDateString('fr-FR', { weekday: 'short' }).replace('.', '')}</small><b>${dateOf(d).getDate()}</b><em>${appts(d).filter(l => l.rdvSt !== 'ANNULÉ').length} RDV</em></button>`).join('');
+  const dayA = appts(PV.day), H0 = 8, H1 = 20, RH = 52;
+  $('#planSub').textContent = `${dateOf(PV.day).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })} · ${dayA.filter(l => l.rdvSt !== 'ANNULÉ').length} rendez-vous pour ${coms.length} commerciaux`;
+  const cal = $('#cal'); cal.style.gridTemplateColumns = `56px repeat(${coms.length}, minmax(150px, 1fr))`;
+  let html = '<div class="ch" style="border-left:0"></div>' + coms.map(c => `<div class="ch"><span class="mini-av"><i style="background:var(--terrain)">${c.ini}</i></span><span>${c.name}</span><small>${dayA.filter(l => l.com === c.id && l.rdvSt !== 'ANNULÉ').length}</small></div>`).join('');
+  html += `<div class="hcol">${Array.from({ length: H1 - H0 }, (_, i) => `<div class="hl">${H0 + i} h</div>`).join('')}</div>`;
+  html += coms.map(c => `<div class="rc" data-com="${c.id}" style="height:${(H1 - H0) * RH}px">${dayA.filter(l => l.com === c.id).map(l => `<div class="ev" data-ev="${l.id}" style="--c:var(--${RDV_C[l.rdvSt] || 'c1'});top:${(l.apptH - H0) * RH + 2}px;height:${1.4 * RH - 4}px;${l.rdvSt === 'ANNULÉ' ? 'opacity:.5' : ''}"><b>${fh(l.apptH)} · ${l.client}</b><small>${l.city} · par ${byId[l.tele].name.split(' ')[0]}</small><em>${l.rdvSt}</em></div>`).join('')}${PV.day === TODAY ? `<div class="nowline" style="top:${(9.1 - H0) * RH}px"></div>` : ''}</div>`).join('');
+  cal.innerHTML = html;
+  const tc = leads.filter(l => ids.has(l.com) && l.apptD >= TODAY && (l.rdvSt === 'À CONFIRMER' || l.rdvSt === 'NRP CONFIRMÉ')).sort((a, b) => a.apptD - b.apptD || a.apptH - b.apptH);
+  $('#tcSub').textContent = `${tc.length} RDV à confirmer · un clic par RDV`;
+  $('#toConf').innerHTML = tc.slice(0, 25).map(l => `<div class="tc"><div><b>${l.client}</b><small>${dayLabel(l.apptD)} ${fh(l.apptH)} · ${byId[l.com].name}</small><small>${l.phone}${l.rdvSt === 'NRP CONFIRMÉ' ? ' · <span style="color:var(--warn);font-weight:800">déjà NRP</span>' : ''}</small></div><div class="acts"><button type="button" class="ok" data-tc="${l.id}|CONFIRMÉ" title="Confirmé">✓</button><button type="button" class="nrp" data-tc="${l.id}|NRP CONFIRMÉ" title="Pas de réponse">NRP</button><button type="button" class="ko" data-tc="${l.id}|ANNULÉ" title="Annulé">✕</button></div></div>`).join('') || '<p class="sub">Tout est confirmé.</p>';
+}
+$('#planZone').onclick = e => { const b = e.target.closest('button'); if (b) { PV.zone = b.dataset.z; renderPlan(); } };
+$('#days').onclick = e => { const b = e.target.closest('button'); if (b) { PV.day = +b.dataset.d; renderPlan(); } };
+$('#toConf').onclick = e => { const b = e.target.closest('[data-tc]'); if (!b) return; const [id, st] = b.dataset.tc.split('|'); setRdv(leads[+id], st); renderPlan(); };
+$('#cal').addEventListener('click', e => {
+  const ev = e.target.closest('[data-ev]');
+  if (ev) { const l = leads[+ev.dataset.ev], past = l.apptD < TODAY || (l.apptD === TODAY && l.apptH < 9.1);
+    const acts = past ? [['POSITIF BH', 'c3', 'Positif · contrat signé'], ['À TRAVAILLER', 'c5', 'À retravailler'], ['R2', 'c7', 'Deuxième RDV'], ['NÉGATIF', 'c-other', 'Négatif'], ['ABSENT', 'c8', 'Client absent']] : [['CONFIRMÉ', 'c1', 'Confirmé'], ['NRP CONFIRMÉ', 'c2', 'NRP à la confirmation'], ['ANNULÉ', 'c8', 'Annulé']];
+    popAt(ev, `<div class="pdet"><b>${l.client}</b><span>${dayLabel(l.apptD)} ${fh(l.apptH)} · ${byId[l.com].name}</span><span>${l.phone} · ${l.city}</span><span>RDV fixé par ${byId[l.tele].name}</span></div><h6>${past ? 'Résultat du RDV' : 'Confirmation'}</h6>${acts.map(([v, c, t]) => `<button type="button" data-pv="${v}"><i style="background:var(--${c})"></i>${t}</button>`).join('')}<h6>Fiche</h6><button type="button" data-pv="open">Ouvrir la fiche complète</button>`);
+    $('#pop').onclick = e2 => { const b = e2.target.closest('[data-pv]'); if (!b) return; closePop(); if (b.dataset.pv === 'open') openDrawer(l.id); else { setRdv(l, b.dataset.pv); renderPlan(); } };
+    return; }
+  const rc = e.target.closest('.rc'); if (!rc) return;
+  const y = e.clientY - rc.getBoundingClientRect().top, h = Math.min(18.5, Math.max(8, Math.round((8 + y / 52) * 2) / 2)), com = byId[rc.dataset.com];
+  if (PV.day < TODAY) { toast('Choisissez un jour à venir pour placer un RDV.'); return; }
+  const cand = sortLeads(leads.filter(l => l.zone === com.zone && (stOf(l).g === 'recall' || stOf(l).g === 'new') && l.d >= TODAY - 20), 'all').slice(0, 6);
+  const anchor = { getBoundingClientRect: () => ({ left: e.clientX, right: e.clientX, top: e.clientY, bottom: e.clientY }) };
+  popAt(anchor, `<div class="pdet"><b>Nouveau RDV · ${fh(h)}</b><span>${dayLabel(PV.day)} avec ${com.name}</span></div><h6>Leads chauds du secteur ${com.zone}</h6>${cand.map(l => `<button type="button" data-pb="${l.id}"><i style="background:var(--${GROUPS[stOf(l).g][1]})"></i>${l.client} <span class="dim" style="margin-left:auto;font-weight:600">${l.city}</span></button>`).join('') || '<span class="sub" style="padding:8px">Aucun lead à placer dans ce secteur.</span>'}`);
+  $('#pop').onclick = e2 => { const b = e2.target.closest('[data-pb]'); if (!b) return; closePop(); if (taken(com.id, PV.day, h)) { toast('Ce créneau est déjà pris.'); return; } book(leads[+b.dataset.pb], com.id, PV.day, h); renderPlan(); };
+});
+
+/* ================= Paramètres ================= */
+let SP = 'team';
+const SECTIONS = [['team', 'Équipe et accès'], ['camps', 'Campagnes et prix des leads'], ['goals', 'Objectifs du mois'], ['status', 'Statuts'], ['notif', 'Notifications']];
+const ROLE_N = { tele: 'Téléprospecteur', terrain: 'Commercial', cq: 'Confirmateur (CQ)', admin: 'Administrateur' };
+function renderSettings() {
+  $('#snav').innerHTML = SECTIONS.map(([k, l]) => `<button type="button" data-s="${k}" aria-pressed="${SP === k}">${l}</button>`).join('');
+  let h = '';
+  if (SP === 'team') h = `<div class="card-h"><div><h3>Équipe et accès</h3><p class="sub">${PEOPLE.length} utilisateurs · le rôle définit ce que chacun voit dans le CRM</p></div><button type="button" class="btn primary" data-act="Invitation envoyée par e-mail">+ Inviter un utilisateur</button></div>
+    <div class="tw"><table><thead><tr><th class="l">Utilisateur</th><th class="l">Rôle</th><th class="l">Secteur</th><th class="l">Dernière connexion</th><th>Actif</th></tr></thead><tbody>${PEOPLE.map((p, i) => `<tr><td class="l"><span class="who">${av(p)}<b>${p.name}</b></span></td><td class="l"><select data-role="${p.id}" style="min-width:190px">${Object.entries(ROLE_N).map(([k, l]) => `<option value="${k}" ${p.role === k ? 'selected' : ''}>${l}</option>`).join('')}</select></td><td class="l">${p.zone || '<span class="dim">Toutes</span>'}</td><td class="l">${i % 4 === 3 ? 'hier ' + (14 + (i % 5)) + ' h' : "aujourd'hui " + (7 + (i % 2)) + ' h'} ${String((i * 7) % 60).padStart(2, '0')}</td><td><input type="checkbox" class="switch" checked aria-label="Compte actif de ${p.name}" data-act="Accès de ${p.name} mis à jour"></td></tr>`).join('')}</tbody></table></div>`;
+  if (SP === 'camps') h = `<div class="card-h"><div><h3>Campagnes et prix des leads</h3><p class="sub">Le prix sert au calcul du coût par RDV, par contrat et du ROI dans le dashboard</p></div><button type="button" class="btn primary" data-act="Nouvelle campagne créée">+ Nouvelle campagne</button></div>
+    <div class="tw"><table><thead><tr><th class="l">Campagne</th><th>Prix du lead</th><th class="l">Gérée par</th><th>Leads (30 j)</th><th>Active</th></tr></thead><tbody>${CAMPS.map(c => `<tr><td class="l"><span class="pill camp">${c.name}</span></td><td><input class="tinput" type="number" min="0" step="1" value="${c.price}" data-price="${c.id}" aria-label="Prix du lead ${c.name}"> €</td><td class="l">${byId[c.admin].name}</td><td>${fmt(leads.filter(l => l.camp === c.id && l.d > TODAY - 30).length)}</td><td><input type="checkbox" class="switch" checked aria-label="Campagne active" data-act="Campagne ${c.name} mise à jour"></td></tr>`).join('')}</tbody></table></div>`;
+  if (SP === 'goals') h = `<div class="card-h"><div><h3>Objectifs du mois</h3><p class="sub">Utilisés par le bloc « Objectifs du mois » du dashboard (projection et statut)</p></div></div>
+    <div class="grid g4">${[['ca', 'CA signé (€)'], ['cont', 'Contrats signés'], ['rdv', 'RDV pris'], ['inst', 'Installations']].map(([k, l]) => `<div class="field"><label for="g_${k}">${l}</label><input id="g_${k}" type="number" min="0" value="${GOALV[k]}" data-goal="${k}"></div>`).join('')}</div>`;
+  if (SP === 'status') { const cnt = {}; leads.forEach(l => { const x = stOf(l).label; cnt[x] = (cnt[x] || 0) + 1; });
+    const blk = (t, list, c) => `<div class="sect" style="margin-bottom:18px"><h4>${t}</h4><div class="stchips">${list.map(x => `<span style="--c:var(--${typeof c === 'function' ? c(x) : c})">${x}<em>${fmt(cnt[x] || cnt['RDV ' + x] || 0)}</em></span>`).join('')}</div></div>`;
+    h = `<div class="card-h"><div><h3>Statuts</h3><p class="sub">Les statuts et leur nombre de leads actuel. Les couleurs sont les mêmes partout dans le CRM.</p></div><button type="button" class="btn" data-act="Nouveau statut ajouté">+ Ajouter un statut</button></div>
+      ${blk('Leads', ['NOUVEAU', 'À RAPPELER', 'NRP', 'P.I', 'FAUX NUMÉRO', 'LOCATAIRE', 'INFI', 'DÉJÀ INSTALLÉ', 'HORS CRITÈRE', 'DOUBLON', 'INFAISABLE', 'TROP VIEUX', 'PAS INSCRIT', 'HORS ZONE'], x => x === 'NOUVEAU' ? 'c1' : x === 'À RAPPELER' ? 'c4' : 'c-other')}
+      ${blk('Rendez-vous', Object.keys(RDV_C), x => RDV_C[x])}
+      ${blk('Contrats', ['EN ATTENTE DE TRAITEMENT', 'ATTENTE CONTRÔLE QUALITÉ', 'MANQUE DOC', 'FINANCEMENT ACCEPTÉ', 'FINANCEMENT REFUSÉ', 'INFINANÇABLE', 'PAIEMENT COMPTANT', 'TERMINÉ PAYÉ', 'ATTENTE ANNULATION', 'INSTALLÉ'], x => /REFUS|INFIN|ANNUL/.test(x) ? 'c8' : /ACCEPT|PAY|COMPTANT|INSTALL/.test(x) ? 'c3' : 'c4')}`; }
+  if (SP === 'notif') h = `<div class="card-h"><div><h3>Notifications</h3><p class="sub">Qui est prévenu, et quand</p></div></div><div class="tw"><table><tbody>${[['Nouveau lead attribué', 'Télépro concerné', true], ['RDV fixé dans mon agenda', 'Commercial concerné', true], ['RDV non confirmé la veille à 18 h', 'Confirmateurs', true], ['Contrat signé', 'Admins et contrôle qualité', true], ['Document manquant depuis 48 h', 'Commercial et admins', true], ['Rapport quotidien à 20 h', 'Admins', false]].map(([t, w, on]) => `<tr><td class="l"><b>${t}</b><br><span class="sub">${w}</span></td><td><input type="checkbox" class="switch" ${on ? 'checked' : ''} aria-label="${t}" data-act="Notification mise à jour"></td></tr>`).join('')}</tbody></table></div>`;
+  $('#spanel').innerHTML = h;
+}
+$('#snav').onclick = e => { const b = e.target.closest('button'); if (b) { SP = b.dataset.s; renderSettings(); } };
+$('#spanel').addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset.price) { const c = CAMPS.find(x => x.id === t.dataset.price), old = c.price; c.price = Math.max(0, +t.value || 0); toast(`Prix du lead ${c.name} : ${eur(c.price)}`, () => { c.price = old; }); }
+  if (t.dataset.goal) { const k = t.dataset.goal, old = GOALV[k]; GOALV[k] = Math.max(1, +t.value || 1); toast('Objectif mis à jour, visible dans le dashboard', () => { GOALV[k] = old; }); }
+  if (t.dataset.role) { const p = byId[t.dataset.role]; toast(`${p.name} : ${ROLE_N[t.value]}`); }
+});
+
+/* ================= Recherche globale (Ctrl K) ================= */
+let palSel = 0, palItems = [];
+function openPal() { $('#palette').hidden = false; $('#pq').value = ''; renderPal(); setTimeout(() => $('#pq').focus(), 0); }
+function closePal() { $('#palette').hidden = true; }
+function renderPal() {
+  const q = $('#pq').value.trim().toLowerCase(), qn = q.replace(/\s/g, '');
+  const pages = [['Dashboard', () => go('dashboard'), 'page'], ['Leads', () => go('leads'), 'page'], ['Planning', () => go('planning'), 'page'], ['Paramètres', () => go('settings'), 'page'],
+    ["Lancer une session d'appels", () => { go('leads'); startCalls(); }, 'action'], ['Créer un nouveau lead', () => { go('leads'); $('#newLead').click(); }, 'action'], ['Voir les RDV à confirmer', () => go('planning'), 'action'], ['Voir les leads à appeler', () => { LV.view = 'new'; go('leads'); }, 'action'], ["Voir l'équipe en 3D", () => { go('dashboard'); setTab('equipe'); }, 'action']];
+  const P = pages.filter(x => !q || x[0].toLowerCase().includes(q));
+  const L = q.length >= 2 ? leads.filter(l => l.client.toLowerCase().replace(/\s/g, '').includes(qn) || l.phone.replace(/\s/g, '').includes(qn) || l.city.toLowerCase().includes(q)).sort((a, b) => b.d - a.d).slice(0, 8) : [];
+  palItems = [...P.map(x => ({ t: x[0], k: x[2], f: x[1] })), ...L.map(l => ({ t: l.client, k: `${l.phone} · ${l.city} · ${stOf(l).label}`, f: () => { if (page !== 'leads') go('leads'); openDrawer(l.id); }, lead: true }))];
+  palSel = Math.min(palSel, Math.max(0, palItems.length - 1));
+  const sec = (title, arr, off) => arr.length ? `<h6>${title}</h6>` + arr.map((it, j) => `<button type="button" data-pi="${off + j}" class="${off + j === palSel ? 'on' : ''}">${it.t}<small>${it.k === 'page' ? 'Page' : it.k === 'action' ? 'Action' : it.k}</small></button>`).join('') : '';
+  $('#pres').innerHTML = sec('Pages et actions', palItems.filter(x => !x.lead), 0) + sec('Leads', palItems.filter(x => x.lead), palItems.filter(x => !x.lead).length) || '<p class="sub" style="padding:12px">Aucun résultat. Essayez un nom, un numéro ou une ville.</p>';
+}
+$('#openPal').onclick = openPal;
+$('#pq').oninput = () => { palSel = 0; renderPal(); };
+$('#palette').addEventListener('click', e => { if (e.target.id === 'palette') return closePal(); const b = e.target.closest('[data-pi]'); if (b) { closePal(); palItems[+b.dataset.pi].f(); } });
+document.addEventListener('keydown', e => {
+  const typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); $('#palette').hidden ? openPal() : closePal(); return; }
+  if (!$('#palette').hidden) {
+    if (e.key === 'Escape') closePal();
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); palSel = (palSel + (e.key === 'ArrowDown' ? 1 : -1) + palItems.length) % palItems.length; renderPal(); }
+    if (e.key === 'Enter' && palItems[palSel]) { e.preventDefault(); closePal(); palItems[palSel].f(); }
+    return;
+  }
+  if (!$('#callmode').hidden) {
+    if (e.key === 'Escape') { $('#callmode').hidden = true; refresh(); return; }
+    if (typing) return; const map = { 1: 'rdv', 2: 'recall', 3: 'NRP', 4: 'P.I', 5: 'FAUX NUMÉRO', 6: 'HORS CRITÈRE', s: 'skip', S: 'skip' };
+    if (map[e.key]) { e.preventDefault(); callOutcome(map[e.key]); } return;
+  }
+  if (!$('#newLeadM').hidden) { if (e.key === 'Escape') $('#newLeadM').hidden = true; return; }
+  if (!$('#drawer').hidden) {
+    if (e.key === 'Escape') return closeDrawer();
+    if (!typing && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) { e.preventDefault(); const c = LV.current || [], i = c.indexOf(drawerId) + (e.key === 'ArrowDown' ? 1 : -1); if (c[i] !== undefined) openDrawer(c[i]); }
+    return;
+  }
+  if (typing) return;
+  if (page === 'leads' && e.key === '/') { e.preventDefault(); $('#lq').focus(); }
+  if (page === 'leads' && (e.key === 'a' || e.key === 'A')) { e.preventDefault(); startCalls(); }
+  if (e.key === 'Escape') closePop();
+});
+
+/* ================= Démarrage ================= */
 Chart.defaults.font.family = 'Nunito'; Chart.defaults.color = tok('muted');
 setTab(tab);
+go(page);
 })();
 </script>
