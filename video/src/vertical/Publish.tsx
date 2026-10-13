@@ -32,7 +32,7 @@ export const PublishV: React.FC = () => {
   const f = useCurrentFrame();
   const card = prog(f, 10, 28);
   const live = f >= CLICK + 6;
-  const cx = interpolate(f, [52, 86], [980, 560], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
+  const cx = interpolate(f, [52, 86], [1020, 600], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
   const cy = interpolate(f, [52, 86], [1600, 1062], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
   const press = f >= CLICK ? prog(f, CLICK, 16) : 0;
   const burst = prog(f, CLICK + 4, 26);

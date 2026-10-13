@@ -4,10 +4,10 @@ import {AbsoluteFill} from 'remotion';
 // 1080×1920 safe area shared by TikTok, Reels, Facebook Reels and YouTube Shorts:
 // top bar (tabs / search), right action column (like, comment, share),
 // bottom caption + music strip. Everything that matters stays inside this box.
-export const SAFE = {x: 80, y: 250, w: 820, h: 1170};
-export const SAFE_R = SAFE.x + SAFE.w; // 900
+export const SAFE = {x: 120, y: 250, w: 840, h: 1170};
+export const SAFE_R = SAFE.x + SAFE.w; // 960
 export const SAFE_B = SAFE.y + SAFE.h; // 1420
-export const SAFE_CX = SAFE.x + SAFE.w / 2; // 490
+export const SAFE_CX = SAFE.x + SAFE.w / 2; // 540
 
 // Debug overlay, only drawn on preview stills
 export const SafeOverlay: React.FC = () => {

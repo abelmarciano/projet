@@ -43,7 +43,7 @@ const GAP = 24;
 const STEP = W + GAP;
 const ROW_Y = 520;
 // Charlotte's tile stays centred in the safe area while she is selected
-const X0_A = 385 + 165 - SELECTED * STEP;
+const X0_A = 430 + 165 - SELECTED * STEP;
 
 const Tile: React.FC<{a: Actor; highlight?: number}> = ({a, highlight = 0}) => (
   <div

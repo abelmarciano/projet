@@ -28,7 +28,7 @@ export const SpyV: React.FC = () => {
   const q = typed('pompe à chaleur', f, 26, 26);
   const scan = interpolate(f, [56, 100], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
   // the "S'inspirer" button sits bottom-right of the panel
-  const cx = interpolate(f, [104, 136], [960, 790], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
+  const cx = interpolate(f, [104, 136], [1000, 850], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
   const cy = interpolate(f, [104, 136], [1560, 1320], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
   const press = f >= 138 ? prog(f, 138, 16) : 0;
   const sent = prog(f, 146, 18);
