@@ -349,3 +349,11 @@ body.dark:has(.console-app) :is(.fixed.inset-0.z-50[class*="bg-black/80"], .fixe
 .console-app .gx-skel.gx-skel-num { display: block; width: 64%; height: 20px; margin: 4px 0 2px; }
 .console-app .gx-range-l { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
 .console-app label.gx-btn[aria-busy="true"] { opacity: .6; pointer-events: none; }
+
+/* Accueil : titre de bienvenue à la même taille que les autres en-têtes de page. */
+.console-app .gx-hello h1 { font-size: clamp(24px, 2.6vw, 30px); }
+.console-app .gx-tn.gx-tn-ic { display: grid; place-items: center; background: var(--gx-sunk); color: var(--gx-dim); }
+.console-app .gx-reco .gx-skel-line { display: block; }
+.console-app .gx-skel.gx-skel-w40 { width: 40%; }
+.console-app .gx-skel.gx-skel-w70 { width: 70%; }
+.console-app .gx-reco .gx-k .gx-ii, .console-app .gx-link .gx-ii, .console-app .gx-lh .gx-ii { vertical-align: -0.16em; }
