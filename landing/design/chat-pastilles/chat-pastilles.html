@@ -91,9 +91,12 @@ svg.i{width:18px;height:18px;flex:none}
 .pill .pr{color:var(--dim);font-weight:400;font-variant-numeric:tabular-nums}
 .pill .x{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;color:var(--dim);margin-right:-4px}
 .pill .x:hover{background:var(--sunk);color:var(--fg)}
-.add{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px 0 8px;border-radius:999px;border:1px dashed var(--line-2);background:var(--surface);color:var(--muted);font-size:13px;font-weight:500}
-.add:hover{border-style:solid;border-color:#B7BBC4;color:var(--fg);background:var(--raised)}
-.add .pl{width:20px;height:20px;border-radius:50%;background:var(--sunk);display:grid;place-items:center;color:var(--nav)}
+.add{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px 0 6px;border-radius:999px;border:1px dashed #C2C6CE;background:var(--surface);color:var(--fg);font-size:13px;font-weight:500}
+.add:hover{border-style:solid;border-color:#B7BBC4;background:var(--raised)}
+.add .pl{width:20px;height:20px;border-radius:50%;background:var(--accent-soft);display:grid;place-items:center;color:var(--accent)}
+.welcome{display:flex;flex-direction:column;gap:6px}
+.down{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:13.5px}
+.down svg{width:16px;height:16px;color:var(--accent)}
 .add .pl svg{width:12px;height:12px}
 .bm{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-size:10px;font-weight:700;color:var(--onacc);flex:none}
 .who{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;flex:none}
@@ -205,12 +208,13 @@ svg.i{width:18px;height:18px;flex:none}
 
     <div class="work">
       <aside class="convs" aria-label="Conversations">
-        <div class="ch"><div><b>Conversations</b><small id="cvSub">Jwel</small></div><div class="bt"><button class="ib" type="button" aria-label="Nouvelle conversation"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div></div>
+        <div class="ch"><div><b>Conversations</b><small id="cvSub">Jwel</small></div><div class="bt"><button class="ib" type="button" data-newconv aria-label="Nouvelle conversation"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div></div>
         <div class="sbox"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>Rechercher…<kbd>/</kbd></div>
         <div class="cg"><span>Dossiers</span></div>
         <small style="padding:0 8px;color:var(--dim)">2 dossiers</small>
         <div class="cg"><span>Conversations</span></div>
-        <button class="cv" type="button" aria-current="true"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="var(--dim)" stroke-width="1.75"><path d="M4 5h16v11H9l-5 4z"/></svg><div><b>Soldes d'hiver — Bracelet Trèfle</b><small>Vidéo · à l'instant</small></div></button>
+        <button class="cv" type="button" id="cvNew" hidden aria-current="true"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="var(--dim)" stroke-width="1.75"><path d="M4 5h16v11H9l-5 4z"/></svg><div><b>Nouvelle pub</b><small>Discussion · à l'instant</small></div></button>
+        <button class="cv" type="button" id="cvMain" data-back aria-current="true"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="var(--dim)" stroke-width="1.75"><path d="M4 5h16v11H9l-5 4z"/></svg><div><b>Soldes d'hiver — Bracelet Trèfle</b><small>Vidéo · à l'instant</small></div></button>
         <button class="cv" type="button"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="var(--dim)" stroke-width="1.75"><path d="M4 5h16v11H9l-5 4z"/></svg><div><b>Lancement Jwel — 3 bracelets</b><small>5 images · 11:58</small></div></button>
         <button class="cv" type="button"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="var(--dim)" stroke-width="1.75"><path d="M4 5h16v11H9l-5 4z"/></svg><div><b>Bague Nina — photo seule</b><small>1 image · 13:20</small></div></button>
       </aside>
@@ -278,6 +282,14 @@ function render(){
   document.getElementById('wsSub').textContent=b.name;document.getElementById('cvSub').textContent=b.name;
   document.getElementById('wsIc').innerHTML=blank?ic('user'):`<span class="bm" style="background:${b.color}">J</span>`;
   const qui=a?`${a.n}, face caméra`:'Voix off, sans personne à l\'image';
+  if(S.empty){
+    document.getElementById('msgs').innerHTML=`
+    <div class="ai"><span class="av">${ic('logo','i',2.2)}</span><div class="tx welcome">
+      <p>Prêt à créer ta pub 👋 <b>Dis-moi ce que tu veux promouvoir</b> : le produit, l'offre, et surtout qui est ta cible.</p>
+      <span class="down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>Tu peux choisir un acteur ou tes produits juste en dessous, ou me laisser décider.</span>
+    </div></div>
+    ${S.note?`<div class="note">${S.note}</div>`:''}`;
+  } else
   document.getElementById('msgs').innerHTML=`
     <div class="you">Fais-moi une vidéo pour les soldes d'hiver, -30 % sur le bracelet</div>
     <div class="ai"><span class="av">${ic('logo','i',2.2)}</span><div class="tx">
@@ -355,6 +367,8 @@ function renderModal(){
 }
 document.addEventListener('click',e=>{
   if(e.target.closest('#plusBtn')){S.plus=!S.plus;return renderPlus()}
+  if(e.target.closest('[data-newconv]')){S.empty=true;S.actor=null;S.prods=[];S.note='';document.getElementById('cvNew').hidden=false;document.getElementById('cvMain').removeAttribute('aria-current');return render()}
+  if(e.target.closest('[data-back]')&&S.empty){S.empty=false;S.actor='isa';S.prods=['trefle','cercle','acier'];S.note='';document.getElementById('cvNew').hidden=true;document.getElementById('cvMain').setAttribute('aria-current','true');return render()}
   const pi=e.target.closest('[data-plus]');
   if(pi){const L={photos:'« Importer un fichier » ouvre la sélection de photos, vidéos ou sons.',creations:'« Mes créations » ouvre la grille de tes créations à cocher.',inspi:'« Pubs d\'inspiration » ouvre la galerie Inspiration à cocher.',campagnes:'« Mes campagnes » ouvre la liste de tes campagnes à cocher.'};S.plus=false;S.note=L[pi.dataset.plus];return render()}
   if(S.plus&&!e.target.closest('#plusMenu')){S.plus=false;renderPlus()}
