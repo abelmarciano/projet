@@ -136,12 +136,12 @@ function PricingAdminPage() {
                   <tr>
                     <th>Palier</th>
                     <th>Prix / mois</th>
-                    <th>Annuel -20 %</th>
+                    <th className="ad-num">Annuel -20 %</th>
                     <th>Crédits / mois</th>
                     <th>Ratio marge</th>
                     <th>Actif</th>
                     <th>Mis en avant</th>
-                    <th><span className="sr-only">Enregistrer</span></th>
+                    <th aria-label="Enregistrer" />
                   </tr>
                 </thead>
                 <tbody>
@@ -168,9 +168,9 @@ function PricingAdminPage() {
                   <tr>
                     <th>Crédits</th>
                     <th>Prix</th>
-                    <th>€ / 1000 crédits</th>
+                    <th className="ad-num">€ / 1000 crédits</th>
                     <th>Actif</th>
-                    <th><span className="sr-only">Enregistrer</span></th>
+                    <th aria-label="Enregistrer" />
                   </tr>
                 </thead>
                 <tbody>

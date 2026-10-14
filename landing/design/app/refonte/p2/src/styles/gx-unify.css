@@ -348,3 +348,4 @@ body.dark:has(.console-app) :is(.fixed.inset-0.z-50[class*="bg-black/80"], .fixe
 .console-app .gx-sort-i { margin-left: 3px; }
 .console-app .gx-skel.gx-skel-num { display: block; width: 64%; height: 20px; margin: 4px 0 2px; }
 .console-app .gx-range-l { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.console-app label.gx-btn[aria-busy="true"] { opacity: .6; pointer-events: none; }

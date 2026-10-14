@@ -11,7 +11,7 @@
 .gx-ad .ad-lab-h small{font-size:12.5px;color:var(--gx-dim)}
 .gx-ad .ad-lab-bt{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0}
 .gx-ad .ad-lab-bt h2{max-width:100%;overflow-wrap:anywhere}
-.gx-ad .ad-lab-runs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.gx-ad .ad-lab-runs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;align-items:start}
 .gx-ad .ad-lab-run{display:flex;flex-direction:column;gap:10px;padding:12px;border:1px solid var(--gx-line);border-radius:12px;background:var(--gx-raised);min-width:0}
 .gx-ad .ad-lab-rh{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
 .gx-ad .ad-lab-model{font-family:var(--gx-mono);font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
