@@ -28,6 +28,8 @@ def build_pages(b):
                   "Décrivez votre produit en une phrase : vidéos UGC, visuels et carrousels sont créés par l'IA, puis publiés sur Meta en un clic. Conçu en France, hébergé en Europe.",
                   stack(
                       blk('hero'),
+                      sec(blk('team-hub').replace('<!--team-nodes-->', __import__('characters').nodes()), sid='equipe'),
+                      sec(blk('brain'), cls='tint', sid='cerveau', style='padding-top:40px'),
                       sec(stack(b.with_more(blk('chat-head'), 'chat-ia', 'Tout savoir sur le chat'), blk('chat-demo')), sid='demo'),
                       sec(stack(feat(b.with_more(blk('fmt-copy'), 'formats'), blk('fmt-stage')),
                                 feat(b.with_more(blk('ed-copy'), 'editeur-video'), blk('ed-stage'), flip=True)), cls='tint', style='padding-top:40px'),
