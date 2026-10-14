@@ -1690,10 +1690,10 @@ footer a:hover{color:var(--fg)}
 .orb-h2{animation-delay:1.8s}
 @keyframes orb-halo{from{transform:scale(1);opacity:.8}to{transform:scale(1.9);opacity:0}}
 .orb-m{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:10px;padding:0;border:0;background:none;color:inherit;cursor:pointer;z-index:3}
-.orb-ph{display:block;width:84px;height:84px;border-radius:50%;background-size:cover;background-color:var(--night-3);
-  filter:grayscale(1) brightness(.72) contrast(1.05);box-shadow:0 0 0 1px rgba(255,255,255,.14),0 18px 40px -16px rgba(0,0,0,.8);transition:filter .5s,transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s}
+.orb-ph{display:block;width:84px;height:84px;border-radius:50%;background-size:118%;background-color:#1B1830;
+  filter:saturate(.7) brightness(.74);box-shadow:0 0 0 1px rgba(255,255,255,.14),0 18px 40px -16px rgba(0,0,0,.8);transition:filter .5s,transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s}
 .orb-lb{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,255,.5);white-space:nowrap;transition:color .4s}
-.orb-m:hover .orb-ph{filter:grayscale(.3) brightness(.95)}
+.orb-m:hover .orb-ph{filter:saturate(.9) brightness(.9)}
 .orb-m.on .orb-ph{filter:none;transform:scale(1.12);box-shadow:0 0 0 2px var(--night),0 0 0 3.5px #A898FF,0 0 40px 4px rgba(168,152,255,.45),0 24px 50px -16px rgba(0,0,0,.9)}
 .orb-m.on .orb-lb{color:var(--night-fg)}
 .orb-m:focus-visible{outline:none}
