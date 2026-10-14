@@ -1,0 +1,1218 @@
+{
+ "tokensLight": {
+  "--gx-bg": "#F3F4F6",
+  "--gx-surface": "#FFFFFF",
+  "--gx-raised": "#F9FAFB",
+  "--gx-sunk": "#ECEEF2",
+  "--gx-line": "#E3E5EA",
+  "--gx-line-2": "#D3D6DD",
+  "--gx-fg": "#101217",
+  "--gx-muted": "#5A606D",
+  "--gx-dim": "#676D7B",
+  "--gx-accent": "#5B3FE4",
+  "--gx-accent-soft": "#EDEAFE",
+  "--gx-accent-ink": "#3F27C2",
+  "--gx-ok": "#14955A",
+  "--gx-ok-soft": "#E3F5EC",
+  "--gx-warn": "#C27409",
+  "--gx-warn-soft": "#FCF1DE",
+  "--gx-bad": "#D9383E",
+  "--gx-bad-soft": "#FCE8E8",
+  "--gx-meta": "#0866FF",
+  "--gx-shadow": "0 1px 2px rgba(16,18,23,.05),0 12px 32px -18px rgba(16,18,23,.22)",
+  "--gx-display": "\"Bricolage Grotesque\",\"Geist\",system-ui,sans-serif",
+  "--gx-ui": "\"Geist\",system-ui,-apple-system,\"Segoe UI\",sans-serif",
+  "--gx-mono": "\"Geist Mono\",ui-monospace,\"SFMono-Regular\",Menlo,monospace",
+  "--gx-r": "14px",
+  "--gx-pri": "#5B3FE4",
+  "--gx-pri-h": "#4A2FD2",
+  "--gx-grad": "linear-gradient(120deg,#2563EB 0%,#5B3FE4 52%,#9333EA 100%)",
+  "--gx-ok-ink": "#0B7A47",
+  "--gx-warn-ink": "#9A5A00",
+  "--gx-bad-ink": "#B8282E",
+  "--gx-new-ink": "#0756D6"
+ },
+ "tokensDark": {
+  "--gx-bg": "#0B0C0F",
+  "--gx-surface": "#131519",
+  "--gx-raised": "#181B20",
+  "--gx-sunk": "#0F1114",
+  "--gx-line": "#23272E",
+  "--gx-line-2": "#2E333B",
+  "--gx-fg": "#ECEDF0",
+  "--gx-muted": "#A3A8B3",
+  "--gx-dim": "#868C98",
+  "--gx-accent": "#8F7DFF",
+  "--gx-accent-soft": "#221D3D",
+  "--gx-accent-ink": "#C5BBFF",
+  "--gx-ok": "#3BC48A",
+  "--gx-ok-soft": "#10261D",
+  "--gx-warn": "#E9A23B",
+  "--gx-warn-soft": "#2A1F0E",
+  "--gx-bad": "#F06469",
+  "--gx-bad-soft": "#2C1416",
+  "--gx-meta": "#4C8DFF",
+  "--gx-shadow": "0 1px 2px rgba(0,0,0,.4),0 16px 40px -20px rgba(0,0,0,.7)",
+  "--gx-ok-ink": "var(--gx-ok)",
+  "--gx-warn-ink": "var(--gx-warn)",
+  "--gx-bad-ink": "var(--gx-bad)",
+  "--gx-new-ink": "#6EA4FF"
+ },
+ "count": 139,
+ "byColor": {
+  "#ffffff": 49,
+  "#17181c": 11,
+  "#000000": 7,
+  "rgba(0,0,0,.55)": 6,
+  "rgba(0,0,0,.45)": 5,
+  "rgba(0,0,0,.4)": 5,
+  "rgba(0,0,0,.5)": 4,
+  "rgba(0,0,0,.25)": 4,
+  "#ffd84d": 4,
+  "rgba(0,0,0,.6)": 3,
+  "#e2832b": 3,
+  "rgba(16,18,23,.08)": 3,
+  "rgba(91,63,228,.8)": 3,
+  "#ffb45e": 2,
+  "#7cf7ff": 2,
+  "#34e1f2": 2,
+  "#e2382b": 2,
+  "#f29a2e": 2,
+  "rgba(0,0,0,.72)": 1,
+  "rgba(255,255,255,.85)": 1,
+  "#5a606d": 1,
+  "#e9a23b": 1,
+  "#101217": 1,
+  "rgba(255,255,255,.9)": 1,
+  "#2a2333": 1,
+  "rgba(0,0,0,.85)": 1,
+  "#5e8e3e": 1,
+  "rgba(255,255,255,.75)": 1,
+  "#0e0d14": 1,
+  "rgba(255,255,255,.1)": 1,
+  "rgba(8,8,14,.55)": 1,
+  "rgba(16,18,23,.55)": 1,
+  "rgba(255,255,255,.8)": 1,
+  "rgba(255,255,255,.45)": 1,
+  "#0866ff": 1,
+  "#95bf47": 1,
+  "rgba(0,0,0,.18)": 1,
+  "#d3d6dd": 1,
+  "rgba(16,18,23,.06)": 1,
+  "rgba(16,18,23,.04)": 1
+ },
+ "items": [
+  {
+   "line": 101,
+   "selector": ".gx-prev .gx-fmt",
+   "prop": "background",
+   "color": "rgba(0,0,0,.55)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 101,
+   "selector": ".gx-prev .gx-fmt",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 102,
+   "selector": ".gx-prev .gx-cap",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 102,
+   "selector": ".gx-prev .gx-cap",
+   "prop": "text-shadow",
+   "color": "rgba(0,0,0,.6)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 103,
+   "selector": ".gx-prev .gx-cap em",
+   "prop": "color",
+   "color": "#FFB45E",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 128,
+   "selector": ".gx-pal-box",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.45)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 137,
+   "selector": ".gx-toast",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.5)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 152,
+   "selector": ".gx-ws .gx-bm",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 152,
+   "selector": ".gx-ws .gx-bm",
+   "prop": "background",
+   "color": "#E2832B",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 160,
+   "selector": ".gx-nv em",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 210,
+   "selector": ".gx-seg button[aria-selected=\"true\"]",
+   "prop": "box-shadow",
+   "color": "rgba(16,18,23,.08)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 243,
+   "selector": ".gx-tg::after",
+   "prop": "background",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 243,
+   "selector": ".gx-tg::after",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.25)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 295,
+   "selector": ".gx-fmt",
+   "prop": "background",
+   "color": "rgba(0,0,0,.55)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 295,
+   "selector": ".gx-fmt",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 328,
+   "selector": ".gx-stepper span.gx-on",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 342,
+   "selector": ".gx-bgrid span",
+   "prop": "background",
+   "color": "rgba(0,0,0,.55)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 342,
+   "selector": ".gx-bgrid span",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 350,
+   "selector": ".gx-atile>div",
+   "prop": "background",
+   "color": "rgba(0,0,0,.72)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 350,
+   "selector": ".gx-atile>div",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 353,
+   "selector": ".gx-atile .gx-fav",
+   "prop": "background",
+   "color": "rgba(255,255,255,.85)",
+   "proposal": "garder (calque blanc translucide sur média)",
+   "note": "translucide"
+  },
+  {
+   "line": 353,
+   "selector": ".gx-atile .gx-fav",
+   "prop": "color",
+   "color": "#5A606D",
+   "proposal": "var(--gx-muted)",
+   "note": "change le rendu en sombre (--gx-muted=#A3A8B3)"
+  },
+  {
+   "line": 355,
+   "selector": ".gx-atile .gx-fav[aria-pressed=\"true\"]",
+   "prop": "color",
+   "color": "#E9A23B",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 357,
+   "selector": ".gx-atile .gx-use",
+   "prop": "background",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 357,
+   "selector": ".gx-atile .gx-use",
+   "prop": "color",
+   "color": "#101217",
+   "proposal": "var(--gx-fg)",
+   "note": "change le rendu en sombre (--gx-fg=#ECEDF0)"
+  },
+  {
+   "line": 373,
+   "selector": ".gx-ccard .gx-ck",
+   "prop": "background",
+   "color": "rgba(255,255,255,.9)",
+   "proposal": "garder (calque blanc translucide sur média)",
+   "note": "translucide"
+  },
+  {
+   "line": 376,
+   "selector": ".gx-ccard .gx-ty",
+   "prop": "background",
+   "color": "rgba(0,0,0,.55)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 376,
+   "selector": ".gx-ccard .gx-ty",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 380,
+   "selector": ".gx-selbar",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.55)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 383,
+   "selector": ".gx-selbar .gx-btn.gx-pri",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 417,
+   "selector": ".gx-tt span",
+   "prop": "background",
+   "color": "#17181C",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 417,
+   "selector": ".gx-tt span",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 418,
+   "selector": ".gx-tt span:nth-child(2)",
+   "prop": "color",
+   "color": "#17181C",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 418,
+   "selector": ".gx-tt span:nth-child(2)",
+   "prop": "background",
+   "color": "#17181C",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 418,
+   "selector": ".gx-tt span:nth-child(2)",
+   "prop": "background",
+   "color": "#FFD84D",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 418,
+   "selector": ".gx-tt span:nth-child(2)",
+   "prop": "background",
+   "color": "#17181C",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 420,
+   "selector": ".gx-tt span:nth-child(4)",
+   "prop": "color",
+   "color": "#FFB45E",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 421,
+   "selector": ".gx-tt span:nth-child(5)",
+   "prop": "color",
+   "color": "#7CF7FF",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 421,
+   "selector": ".gx-tt span:nth-child(5)",
+   "prop": "text-shadow",
+   "color": "#34E1F2",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 422,
+   "selector": ".gx-tt span:nth-child(6)",
+   "prop": "background",
+   "color": "#2A2333",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 422,
+   "selector": ".gx-tt span:nth-child(6)",
+   "prop": "background",
+   "color": "#17181C",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 423,
+   "selector": ".gx-tt span:nth-child(7)",
+   "prop": "background",
+   "color": "#E2382B",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 424,
+   "selector": ".gx-tt span:nth-child(8)",
+   "prop": "background",
+   "color": "#FFD84D",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 424,
+   "selector": ".gx-tt span:nth-child(8)",
+   "prop": "color",
+   "color": "#17181C",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 427,
+   "selector": ".gx-pv",
+   "prop": "background",
+   "color": "#000",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 427,
+   "selector": ".gx-pv",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.5)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 429,
+   "selector": ".gx-pv .gx-cap",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 429,
+   "selector": ".gx-pv .gx-cap",
+   "prop": "text-shadow",
+   "color": "rgba(0,0,0,.85)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 429,
+   "selector": ".gx-pv .gx-cap",
+   "prop": "text-shadow",
+   "color": "rgba(0,0,0,.55)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 430,
+   "selector": ".gx-pv .gx-cap em",
+   "prop": "color",
+   "color": "#F29A2E",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 437,
+   "selector": ".gx-sw",
+   "prop": "background",
+   "color": "#F29A2E",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 457,
+   "selector": ".gx-sh-l, .gx-lg",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 457,
+   "selector": ".gx-sh-l, .gx-lg",
+   "prop": "background",
+   "color": "#5E8E3E",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 519,
+   "selector": ".gx-wsi",
+   "prop": "background",
+   "color": "#E2832B",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 519,
+   "selector": ".gx-wsi",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 522,
+   "selector": ".gx-mc .gx-bm",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 536,
+   "selector": ".gx-sheet-b",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.4)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 548,
+   "selector": ".gx-wsteps .gx-done i",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 564,
+   "selector": ".gx-wnav-item.gx-on",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 565,
+   "selector": ".gx-wnav-item.gx-on .gx-hint",
+   "prop": "color",
+   "color": "rgba(255,255,255,.75)",
+   "proposal": "garder (calque blanc translucide sur média)",
+   "note": "translucide"
+  },
+  {
+   "line": 574,
+   "selector": ".gx-logo",
+   "prop": "background",
+   "color": "#0E0D14",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 574,
+   "selector": ".gx-logo",
+   "prop": "box-shadow",
+   "color": "rgba(255,255,255,.1)",
+   "proposal": "garder (calque blanc translucide sur média)",
+   "note": "translucide"
+  },
+  {
+   "line": 575,
+   "selector": ".gx-btn.gx-pri",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 577,
+   "selector": ".gx-btn.gx-pri.gx-grad, .gx-go",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 577,
+   "selector": ".gx-btn.gx-pri.gx-grad, .gx-go",
+   "prop": "box-shadow",
+   "color": "rgba(91,63,228,.8)",
+   "proposal": "color-mix(in srgb,var(--gx-pri) X%,transparent)",
+   "note": "violet translucide"
+  },
+  {
+   "line": 579,
+   "selector": ".gx-btn.gx-danger",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 580,
+   "selector": ".gx-act.gx-pri",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 583,
+   "selector": ".gx-m.gx-you p",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 584,
+   "selector": ".gx-vers button[aria-pressed=\"true\"]",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 585,
+   "selector": ".gx-av.gx-ai",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 587,
+   "selector": ".gx-wsteps .gx-on i",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 605,
+   "selector": "[data-tip]:hover::after, [data-tip]:focus-visible::after",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.4)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 623,
+   "selector": ".gx-onb-l li.gx-done>i",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 628,
+   "selector": ".gx-menu",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.45)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 633,
+   "selector": ".gx-menu .gx-bm",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 635,
+   "selector": ".gx-tour-hole",
+   "prop": "box-shadow",
+   "color": "rgba(8,8,14,.55)",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 636,
+   "selector": ".gx-tour-tip",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.5)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 663,
+   "selector": ".gx-fbh .gx-bm",
+   "prop": "background",
+   "color": "#E2832B",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 663,
+   "selector": ".gx-fbh .gx-bm",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 675,
+   "selector": ".gx-wsteps button.gx-done i",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 676,
+   "selector": ".gx-wsteps button.gx-on i",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 688,
+   "selector": ".gx-play",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 696,
+   "selector": ".gx-pv .gx-cap:focus",
+   "prop": "background",
+   "color": "rgba(0,0,0,.25)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 697,
+   "selector": ".gx-pv .gx-cap[data-s=\"1\"] em",
+   "prop": "background",
+   "color": "#FFD84D",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 697,
+   "selector": ".gx-pv .gx-cap[data-s=\"1\"] em",
+   "prop": "color",
+   "color": "#17181C",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 699,
+   "selector": ".gx-pv .gx-cap[data-s=\"4\"]",
+   "prop": "color",
+   "color": "#7CF7FF",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 699,
+   "selector": ".gx-pv .gx-cap[data-s=\"4\"]",
+   "prop": "text-shadow",
+   "color": "#34E1F2",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 701,
+   "selector": ".gx-pv .gx-cap[data-s=\"6\"]",
+   "prop": "background",
+   "color": "#E2382B",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 702,
+   "selector": ".gx-pv .gx-cap[data-s=\"7\"]",
+   "prop": "background",
+   "color": "#FFD84D",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 702,
+   "selector": ".gx-pv .gx-cap[data-s=\"7\"]",
+   "prop": "color",
+   "color": "#17181C",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 706,
+   "selector": ".gx-atile.gx-mine .gx-ph0",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 716,
+   "selector": ".gx-ph0b",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 757,
+   "selector": ".gx-side",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.4)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 759,
+   "selector": ".gx-app.gx-nav-open .gx-scrim",
+   "prop": "background",
+   "color": "#000",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 764,
+   "selector": ".gx-tab.gx-mid span.gx-ic",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 764,
+   "selector": ".gx-tab.gx-mid span.gx-ic",
+   "prop": "box-shadow",
+   "color": "rgba(91,63,228,.8)",
+   "proposal": "color-mix(in srgb,var(--gx-pri) X%,transparent)",
+   "note": "violet translucide"
+  },
+  {
+   "line": 822,
+   "selector": ".gx-newad",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 822,
+   "selector": ".gx-newad",
+   "prop": "box-shadow",
+   "color": "rgba(91,63,228,.8)",
+   "proposal": "color-mix(in srgb,var(--gx-pri) X%,transparent)",
+   "note": "violet translucide"
+  },
+  {
+   "line": 895,
+   "selector": ".gx-icard .gx-vbadge",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 895,
+   "selector": ".gx-icard .gx-vbadge",
+   "prop": "background",
+   "color": "rgba(16,18,23,.55)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 901,
+   "selector": ".gx-ins-d video",
+   "prop": "background",
+   "color": "#000",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 970,
+   "selector": ".gx-pthumb>button",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.25)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1037,
+   "selector": ".gx-cr-stage",
+   "prop": "background",
+   "color": "#000",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1075,
+   "selector": ".gx-ctip",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.4)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1100,
+   "selector": ".gx-pop",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.45)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1180,
+   "selector": ".gx-fs-l",
+   "prop": "color",
+   "color": "rgba(255,255,255,.8)",
+   "proposal": "garder (calque blanc translucide sur média)",
+   "note": "translucide"
+  },
+  {
+   "line": 1230,
+   "selector": ".gx-cp-th img+.gx-i",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 1230,
+   "selector": ".gx-cp-th img+.gx-i",
+   "prop": "filter",
+   "color": "rgba(0,0,0,.6)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1244,
+   "selector": ".console-app-portal.gx-dmenu",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.45)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1369,
+   "selector": ".gx-rv video, .gx-rv > img",
+   "prop": "background",
+   "color": "#000",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1410,
+   "selector": ".gx-chatv .gx-att-x",
+   "prop": "background",
+   "color": "rgba(0,0,0,.6)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1410,
+   "selector": ".gx-chatv .gx-att-x",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 1434,
+   "selector": ".gx-ib.gx-rec",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 1445,
+   "selector": ".gx-chatv.gx-cv-open .gx-convs",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.4)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1446,
+   "selector": ".gx-chatv.gx-cv-open .gx-cv-scrim",
+   "prop": "background",
+   "color": "#000",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1461,
+   "selector": ".gx-pth",
+   "prop": "background",
+   "color": "#17181C",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 1462,
+   "selector": ".gx-pth>img,.gx-pth>video,.gx-pth>div",
+   "prop": "background",
+   "color": "#17181C",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 1463,
+   "selector": ".gx-pth-0",
+   "prop": "color",
+   "color": "rgba(255,255,255,.45)",
+   "proposal": "garder (calque blanc translucide sur média)",
+   "note": "translucide"
+  },
+  {
+   "line": 1499,
+   "selector": ".gx-ttr button",
+   "prop": "background",
+   "color": "#17181C",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 1499,
+   "selector": ".gx-ttr button",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 1507,
+   "selector": ".gx-ed-canvas",
+   "prop": "background",
+   "color": "#000",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1507,
+   "selector": ".gx-ed-canvas",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.5)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1508,
+   "selector": ".gx-ed-ov",
+   "prop": "background",
+   "color": "rgba(0,0,0,.45)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1508,
+   "selector": ".gx-ed-ov",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 1516,
+   "selector": ".gx-ed-hdl",
+   "prop": "background",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 1516,
+   "selector": ".gx-ed-hdl",
+   "prop": "box-shadow",
+   "color": "rgba(0,0,0,.25)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1517,
+   "selector": ".gx-ed-tag",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 1522,
+   "selector": ".gx-ed-r .gx-seg button[data-state=\"active\"]",
+   "prop": "box-shadow",
+   "color": "rgba(16,18,23,.08)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1616,
+   "selector": ".gx-seg>a[aria-selected=\"true\"]",
+   "prop": "box-shadow",
+   "color": "rgba(16,18,23,.08)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1625,
+   "selector": ".gx-sheet-h .gx-bm-img",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 1632,
+   "selector": ".gx-qr",
+   "prop": "background",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 1654,
+   "selector": ".gx-lg.gx-meta",
+   "prop": "background",
+   "color": "#0866FF",
+   "proposal": "var(--gx-meta)",
+   "note": "change le rendu en sombre (--gx-meta=#4C8DFF)"
+  },
+  {
+   "line": 1655,
+   "selector": ".gx-lg.gx-shop",
+   "prop": "background",
+   "color": "#95BF47",
+   "proposal": "à décider",
+   "note": "aucun jeton de même valeur"
+  },
+  {
+   "line": 1723,
+   "selector": ".gx-crea-tile:hover .gx-crea-tile-ov",
+   "prop": "background",
+   "color": "rgba(0,0,0,.18)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1725,
+   "selector": ".gx-crea-tile-check",
+   "prop": "color",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 1732,
+   "selector": ".gx-think .gx-think-ghost",
+   "prop": "stroke",
+   "color": "#D3D6DD",
+   "proposal": "var(--gx-line-2)",
+   "note": "change le rendu en sombre (--gx-line-2=#2E333B)"
+  },
+  {
+   "line": 1735,
+   "selector": ".gx-think .gx-think-dot",
+   "prop": "fill",
+   "color": "#fff",
+   "proposal": "var(--gx-surface)",
+   "note": "change le rendu en sombre (--gx-surface=#131519)"
+  },
+  {
+   "line": 1754,
+   "selector": ".gx-av.gx-ai.gx-logo",
+   "prop": "box-shadow",
+   "color": "rgba(16,18,23,.06)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  },
+  {
+   "line": 1766,
+   "selector": ".gx-convs .gx-srch",
+   "prop": "box-shadow",
+   "color": "rgba(16,18,23,.04)",
+   "proposal": "garder (ombre/voile/fond média)",
+   "note": "ombre ou voile"
+  }
+ ]
+}

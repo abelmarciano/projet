@@ -365,3 +365,29 @@ body.dark:has(.console-app) :is(.fixed.inset-0.z-50[class*="bg-black/80"], .fixe
 .console-app-portal.gx-adlg.gx-confirm { z-index: 70; }
 /* Toute confirmation (AlertDialog .gx-adlg) passe au-dessus des panneaux latéraux .gx-sheet (z-index 55). */
 .console-app-portal.gx-adlg { z-index: 70; }
+
+/* ------------------------------------------------------------------ */
+/* 9. Icônes un peu plus marquées : trait 1,5 → 1,75 (les traits choisis */
+/*    explicitement par une page ne changent pas).                      */
+/* ------------------------------------------------------------------ */
+:is(.console-app,.console-app-portal) svg:is(.lucide,.gx-i) :is(path,circle,rect,line,polyline,polygon,ellipse)[stroke-width="1.5"]{stroke-width:1.75}
+
+/* ------------------------------------------------------------------ */
+/* 10. Menu latéral et onglets mobiles au repos : encre plus foncée.    */
+/*     Contraste sur le fond du menu (--gx-surface) : entrées 10,5:1    */
+/*     (clair) et 10,9:1 (sombre) ; titres de groupe 4,6:1 et 5,7:1.    */
+/*     Survol et page ouverte inchangés.                                */
+/* ------------------------------------------------------------------ */
+.console-app,.console-app-portal{--gx-nav-ink:#3A3F4B}
+.dark .console-app,.dark .console-app-portal,.dark.console-app-portal{--gx-nav-ink:#C4C8D1}
+.console-app .gx-nv:not(:hover):not([aria-current="page"]),
+.console-app .gx-nv:not(:hover):not([aria-current="page"]) .gx-i{color:var(--gx-nav-ink)}
+.console-app .gx-ng{color:color-mix(in srgb,var(--gx-nav-ink) 70%,var(--gx-bg))}
+.console-app .gx-tabbar .gx-tab:not([aria-current="page"]),
+.console-app .gx-tabbar .gx-tab:not([aria-current="page"]) .gx-i{color:var(--gx-nav-ink)}
+.console-app .gx-tabbar .gx-tab.gx-mid span.gx-ic,
+.console-app .gx-tabbar .gx-tab.gx-mid span.gx-ic .gx-i{color:#fff}
+
+/* Pages de connexion (gx-auth) : icônes dans les pastilles et le lien retour. */
+.gxa-msg > i > svg.gxa-ic { width: 13px; height: 13px; }
+.gxa-backlnk .gxa-ic { width: 14px; height: 14px; margin-right: 4px; vertical-align: -2px; }

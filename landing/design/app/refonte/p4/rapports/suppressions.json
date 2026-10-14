@@ -1,0 +1,584 @@
+{
+ "input": "base/gx-console.css",
+ "removedDeclarations": [
+  {
+   "line": 9,
+   "selector": ".gx-num",
+   "context": null,
+   "decl": "font-family:var(--gx-mono)",
+   "overriddenAtLine": 144,
+   "by": "font-family:var(--gx-mono)",
+   "sameRule": false
+  },
+  {
+   "line": 9,
+   "selector": ".gx-num",
+   "context": null,
+   "decl": "font-variant-numeric:tabular-nums",
+   "overriddenAtLine": 144,
+   "by": "font-variant-numeric:tabular-nums",
+   "sameRule": false
+  },
+  {
+   "line": 9,
+   "selector": ".gx-num",
+   "context": null,
+   "decl": "letter-spacing:-.01em",
+   "overriddenAtLine": 144,
+   "by": "letter-spacing:-.01em",
+   "sameRule": false
+  },
+  {
+   "line": 34,
+   "selector": ".gx-sh h2",
+   "context": null,
+   "decl": "font-size:13px",
+   "overriddenAtLine": 247,
+   "by": "font-size:15px",
+   "sameRule": false
+  },
+  {
+   "line": 63,
+   "selector": ".gx-act:hover",
+   "context": null,
+   "decl": "border-color:var(--gx-fg)",
+   "overriddenAtLine": 591,
+   "by": "border-color:var(--gx-pri)",
+   "sameRule": false
+  },
+  {
+   "line": 64,
+   "selector": ".gx-act.gx-pri",
+   "context": null,
+   "decl": "background:var(--gx-fg)",
+   "overriddenAtLine": 590,
+   "by": "background:var(--gx-pri)",
+   "sameRule": false
+  },
+  {
+   "line": 64,
+   "selector": ".gx-act.gx-pri",
+   "context": null,
+   "decl": "color:var(--gx-bg)",
+   "overriddenAtLine": 590,
+   "by": "color:#fff",
+   "sameRule": false
+  },
+  {
+   "line": 64,
+   "selector": ".gx-act.gx-pri",
+   "context": null,
+   "decl": "border-color:var(--gx-fg)",
+   "overriddenAtLine": 590,
+   "by": "border-color:var(--gx-pri)",
+   "sameRule": false
+  },
+  {
+   "line": 112,
+   "selector": ".gx-vers button[aria-pressed=\"true\"]",
+   "context": null,
+   "decl": "background:var(--gx-fg)",
+   "overriddenAtLine": 594,
+   "by": "background:var(--gx-pri)",
+   "sameRule": false
+  },
+  {
+   "line": 112,
+   "selector": ".gx-vers button[aria-pressed=\"true\"]",
+   "context": null,
+   "decl": "color:var(--gx-bg)",
+   "overriddenAtLine": 594,
+   "by": "color:#fff",
+   "sameRule": false
+  },
+  {
+   "line": 112,
+   "selector": ".gx-vers button[aria-pressed=\"true\"]",
+   "context": null,
+   "decl": "border-color:var(--gx-fg)",
+   "overriddenAtLine": 594,
+   "by": "border-color:var(--gx-pri)",
+   "sameRule": false
+  },
+  {
+   "line": 127,
+   "selector": ".gx-st.gx-new",
+   "context": null,
+   "decl": "color:var(--gx-meta)",
+   "overriddenAtLine": 742,
+   "by": "color:var(--gx-new-ink)",
+   "sameRule": false
+  },
+  {
+   "line": 141,
+   "selector": ".gx-toast",
+   "context": null,
+   "decl": "right:20px",
+   "overriddenAtLine": 731,
+   "by": "right:auto",
+   "sameRule": false
+  },
+  {
+   "line": 141,
+   "selector": ".gx-toast",
+   "context": null,
+   "decl": "bottom:calc(20px + env(safe-area-inset-bottom,0px))",
+   "overriddenAtLine": 731,
+   "by": "bottom:auto",
+   "sameRule": false
+  },
+  {
+   "line": 141,
+   "selector": ".gx-toast",
+   "context": null,
+   "decl": "transform:translateY(16px)",
+   "overriddenAtLine": 731,
+   "by": "transform:translate(-50%,-16px)",
+   "sameRule": false
+  },
+  {
+   "line": 142,
+   "selector": ".gx-toast.gx-on",
+   "context": null,
+   "decl": "transform:none",
+   "overriddenAtLine": 732,
+   "by": "transform:translate(-50%,0)",
+   "sameRule": false
+  },
+  {
+   "line": 152,
+   "selector": ".gx-logo",
+   "context": null,
+   "decl": "background:var(--gx-fg)",
+   "overriddenAtLine": 584,
+   "by": "background:#0E0D14",
+   "sameRule": false
+  },
+  {
+   "line": 164,
+   "selector": ".gx-nv em",
+   "context": null,
+   "decl": "background:var(--gx-accent)",
+   "overriddenAtLine": 599,
+   "by": "background:var(--gx-pri)",
+   "sameRule": false
+  },
+  {
+   "line": 207,
+   "selector": ".gx-btn.gx-pri",
+   "context": null,
+   "decl": "background:var(--gx-fg)",
+   "overriddenAtLine": 585,
+   "by": "background:var(--gx-pri)",
+   "sameRule": false
+  },
+  {
+   "line": 207,
+   "selector": ".gx-btn.gx-pri",
+   "context": null,
+   "decl": "color:var(--gx-bg)",
+   "overriddenAtLine": 585,
+   "by": "color:#fff",
+   "sameRule": false
+  },
+  {
+   "line": 207,
+   "selector": ".gx-btn.gx-pri",
+   "context": null,
+   "decl": "border-color:var(--gx-fg)",
+   "overriddenAtLine": 585,
+   "by": "border-color:var(--gx-pri)",
+   "sameRule": false
+  },
+  {
+   "line": 208,
+   "selector": ".gx-btn.gx-pri:hover",
+   "context": null,
+   "decl": "background:color-mix(in srgb,var(--gx-fg) 86%,var(--gx-accent))",
+   "overriddenAtLine": 586,
+   "by": "background:var(--gx-pri-h)",
+   "sameRule": false
+  },
+  {
+   "line": 236,
+   "selector": ".gx-av.gx-ai",
+   "context": null,
+   "decl": "background:var(--gx-fg)",
+   "overriddenAtLine": 595,
+   "by": "background:var(--gx-grad)",
+   "sameRule": false
+  },
+  {
+   "line": 236,
+   "selector": ".gx-av.gx-ai",
+   "context": null,
+   "decl": "color:var(--gx-bg)",
+   "overriddenAtLine": 595,
+   "by": "color:#fff",
+   "sameRule": false
+  },
+  {
+   "line": 256,
+   "selector": ".gx-chatv",
+   "context": null,
+   "decl": "grid-template-columns:250px minmax(0,1fr)",
+   "overriddenAtLine": 1776,
+   "by": "grid-template-columns:280px minmax(0,1fr)",
+   "sameRule": false
+  },
+  {
+   "line": 258,
+   "selector": ".gx-convs",
+   "context": null,
+   "decl": "padding:12px",
+   "overriddenAtLine": 1777,
+   "by": "padding:14px 12px",
+   "sameRule": false
+  },
+  {
+   "line": 260,
+   "selector": ".gx-convs .gx-srch",
+   "context": null,
+   "decl": "min-width:0",
+   "overriddenAtLine": 1778,
+   "by": "min-width:0",
+   "sameRule": false
+  },
+  {
+   "line": 260,
+   "selector": ".gx-convs .gx-srch",
+   "context": null,
+   "decl": "height:44px",
+   "overriddenAtLine": 1778,
+   "by": "height:40px",
+   "sameRule": false
+  },
+  {
+   "line": 260,
+   "selector": ".gx-convs .gx-srch",
+   "context": null,
+   "decl": "padding:0 14px",
+   "overriddenAtLine": 1778,
+   "by": "padding:0 12px",
+   "sameRule": false
+  },
+  {
+   "line": 260,
+   "selector": ".gx-convs .gx-srch",
+   "context": null,
+   "decl": "font-size:14px",
+   "overriddenAtLine": 1778,
+   "by": "font-size:13.5px",
+   "sameRule": false
+  },
+  {
+   "line": 260,
+   "selector": ".gx-convs .gx-srch",
+   "context": null,
+   "decl": "margin-bottom:8px",
+   "overriddenAtLine": 1778,
+   "by": "margin:2px 0 12px",
+   "sameRule": false
+  },
+  {
+   "line": 261,
+   "selector": ".gx-convs .gx-srch .gx-i",
+   "context": null,
+   "decl": "width:16px",
+   "overriddenAtLine": 1781,
+   "by": "width:16px",
+   "sameRule": false
+  },
+  {
+   "line": 261,
+   "selector": ".gx-convs .gx-srch .gx-i",
+   "context": null,
+   "decl": "height:16px",
+   "overriddenAtLine": 1781,
+   "by": "height:16px",
+   "sameRule": false
+  },
+  {
+   "line": 272,
+   "selector": ".gx-m.gx-you p",
+   "context": null,
+   "decl": "background:var(--gx-fg)",
+   "overriddenAtLine": 593,
+   "by": "background:var(--gx-pri)",
+   "sameRule": false
+  },
+  {
+   "line": 272,
+   "selector": ".gx-m.gx-you p",
+   "context": null,
+   "decl": "color:var(--gx-bg)",
+   "overriddenAtLine": 593,
+   "by": "color:#fff",
+   "sameRule": false
+  },
+  {
+   "line": 336,
+   "selector": ".gx-stepper span.gx-on",
+   "context": null,
+   "decl": "background:var(--gx-accent)",
+   "overriddenAtLine": 598,
+   "by": "background:var(--gx-pri)",
+   "sameRule": false
+  },
+  {
+   "line": 435,
+   "selector": ".gx-pv",
+   "context": null,
+   "decl": "max-height:62vh",
+   "overriddenAtLine": 1684,
+   "by": "max-height:none",
+   "sameRule": false
+  },
+  {
+   "line": 466,
+   "selector": ".gx-lg.gx-meta",
+   "context": null,
+   "decl": "background:var(--gx-meta)",
+   "overriddenAtLine": 1666,
+   "by": "background:#0866FF",
+   "sameRule": false
+  },
+  {
+   "line": 466,
+   "selector": ".gx-lg.gx-meta",
+   "context": null,
+   "decl": "font-family:Georgia,serif",
+   "overriddenAtLine": 1666,
+   "by": "font-family:inherit",
+   "sameRule": false
+  },
+  {
+   "line": 1666,
+   "selector": ".gx-lg.gx-meta",
+   "context": null,
+   "decl": "font-family:inherit",
+   "overriddenAtLine": 1707,
+   "by": "font-family:inherit",
+   "sameRule": false
+  },
+  {
+   "line": 467,
+   "selector": ".gx-lg.gx-shop",
+   "context": null,
+   "decl": "background:#5E8E3E",
+   "overriddenAtLine": 1667,
+   "by": "background:#95BF47",
+   "sameRule": false
+  },
+  {
+   "line": 521,
+   "selector": ".gx-note",
+   "context": null,
+   "decl": "color:var(--gx-warn)",
+   "overriddenAtLine": 744,
+   "by": "color:var(--gx-warn-ink)",
+   "sameRule": false
+  },
+  {
+   "line": 557,
+   "selector": ".gx-wsteps .gx-on i",
+   "context": null,
+   "decl": "background:var(--gx-fg)",
+   "overriddenAtLine": 597,
+   "by": "background:var(--gx-pri)",
+   "sameRule": false
+  },
+  {
+   "line": 557,
+   "selector": ".gx-wsteps .gx-on i",
+   "context": null,
+   "decl": "color:var(--gx-bg)",
+   "overriddenAtLine": 597,
+   "by": "color:#fff",
+   "sameRule": false
+  },
+  {
+   "line": 738,
+   "selector": "#ctab td:nth-child(2) small",
+   "context": null,
+   "decl": "white-space:normal",
+   "overriddenAtLine": 1227,
+   "by": "white-space:nowrap",
+   "sameRule": false
+  },
+  {
+   "line": 778,
+   "selector": ".gx-chatv",
+   "context": "@media (max-width:899px)",
+   "decl": "height:calc(100vh - 57px - 36px - 64px)",
+   "overriddenAtLine": 792,
+   "by": "height:calc(100vh - 57px - 36px)",
+   "sameRule": false
+  },
+  {
+   "line": 792,
+   "selector": ".gx-chatv",
+   "context": "@media (max-width:899px)",
+   "decl": "grid-template-columns:minmax(0,1fr)",
+   "overriddenAtLine": 1789,
+   "by": "grid-template-columns:minmax(0,1fr)",
+   "sameRule": false
+  },
+  {
+   "line": 842,
+   "selector": ".gx-wsbtn .gx-bm",
+   "context": null,
+   "decl": "color:#fff",
+   "overriddenAtLine": 1668,
+   "by": "color:var(--gx-fg)",
+   "sameRule": false
+  },
+  {
+   "line": 842,
+   "selector": ".gx-wsbtn .gx-bm",
+   "context": null,
+   "decl": "background:var(--gx-pri)",
+   "overriddenAtLine": 1668,
+   "by": "background:var(--gx-sunk)",
+   "sameRule": false
+  },
+  {
+   "line": 1811,
+   "selector": ".gx-editor-header .gx-ed-sub",
+   "context": null,
+   "decl": "flex:1",
+   "overriddenAtLine": 1849,
+   "by": "flex:0 1 auto",
+   "sameRule": false
+  },
+  {
+   "line": 1812,
+   "selector": ".gx-editor-header .gx-ed-name",
+   "context": null,
+   "decl": "width:100%",
+   "overriddenAtLine": 1850,
+   "by": "width:auto",
+   "sameRule": false
+  },
+  {
+   "line": 1812,
+   "selector": ".gx-editor-header .gx-ed-name",
+   "context": null,
+   "decl": "min-width:70px",
+   "overriddenAtLine": 1850,
+   "by": "min-width:0",
+   "sameRule": false
+  }
+ ],
+ "removedRules": [
+  {
+   "line": 9,
+   "selector": ".gx-num",
+   "context": null,
+   "hadComments": false
+  },
+  {
+   "line": 63,
+   "selector": ".gx-act:hover",
+   "context": null,
+   "hadComments": false
+  },
+  {
+   "line": 64,
+   "selector": ".gx-act.gx-pri",
+   "context": null,
+   "hadComments": false
+  },
+  {
+   "line": 112,
+   "selector": ".gx-vers button[aria-pressed=\"true\"]",
+   "context": null,
+   "hadComments": false
+  },
+  {
+   "line": 207,
+   "selector": ".gx-btn.gx-pri",
+   "context": null,
+   "hadComments": false
+  },
+  {
+   "line": 208,
+   "selector": ".gx-btn.gx-pri:hover",
+   "context": null,
+   "hadComments": false
+  },
+  {
+   "line": 260,
+   "selector": ".gx-convs .gx-srch",
+   "context": null,
+   "hadComments": false
+  },
+  {
+   "line": 261,
+   "selector": ".gx-convs .gx-srch .gx-i",
+   "context": null,
+   "hadComments": false
+  },
+  {
+   "line": 467,
+   "selector": ".gx-lg.gx-shop",
+   "context": null,
+   "hadComments": false
+  },
+  {
+   "line": 557,
+   "selector": ".gx-wsteps .gx-on i",
+   "context": null,
+   "hadComments": false
+  },
+  {
+   "line": 738,
+   "selector": "#ctab td:nth-child(2) small",
+   "context": null,
+   "hadComments": false
+  },
+  {
+   "line": 778,
+   "selector": ".gx-chatv",
+   "context": "@media (max-width:899px)",
+   "hadComments": false
+  }
+ ],
+ "removedKeyframes": [],
+ "keptFallbacks": [
+  {
+   "line": 435,
+   "selector": ".gx-pv",
+   "decl": "height:440px",
+   "laterLine": 1684,
+   "later": "height:clamp(320px,calc(100vh - 300px),860px)"
+  },
+  {
+   "line": 1501,
+   "selector": ".gx-ed-l,.gx-ed-r",
+   "decl": "max-height:calc(min(440px,62vh) + 130px)",
+   "laterLine": 1683,
+   "later": "max-height:calc(clamp(300px,calc(100vh - 560px),820px) + 130px)"
+  },
+  {
+   "line": 1518,
+   "selector": ".gx-ed-stage",
+   "decl": "height:min(440px,62vh)",
+   "laterLine": 1682,
+   "later": "height:clamp(300px,calc(100vh - 560px),820px)"
+  }
+ ],
+ "emptiedRules": 12,
+ "linesBefore": 1853,
+ "linesAfter": 1841,
+ "bytesBefore": 145025,
+ "bytesAfter": 143612,
+ "counts": {
+  "removedDeclarations": 52,
+  "removedRules": 12,
+  "removedKeyframes": 0,
+  "keptFallbacks": 3
+ },
+ "duplicateSelectorsBefore": 47,
+ "duplicateSelectorsAfter": 37
+}

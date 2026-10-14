@@ -1,0 +1,155 @@
+{
+ "summary": {
+  "compared": "new.html",
+  "runs": 16,
+  "elementsCompared": 91616,
+  "valuesCompared": 120329888,
+  "elementsWithDifferences": 0
+ },
+ "results": [
+  {
+   "width": 1680,
+   "theme": "light",
+   "reducedMotion": false,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  },
+  {
+   "width": 1680,
+   "theme": "dark",
+   "reducedMotion": false,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  },
+  {
+   "width": 1440,
+   "theme": "light",
+   "reducedMotion": false,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  },
+  {
+   "width": 1440,
+   "theme": "dark",
+   "reducedMotion": false,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  },
+  {
+   "width": 1100,
+   "theme": "light",
+   "reducedMotion": false,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  },
+  {
+   "width": 1100,
+   "theme": "dark",
+   "reducedMotion": false,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  },
+  {
+   "width": 850,
+   "theme": "light",
+   "reducedMotion": false,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  },
+  {
+   "width": 850,
+   "theme": "dark",
+   "reducedMotion": false,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  },
+  {
+   "width": 700,
+   "theme": "light",
+   "reducedMotion": false,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  },
+  {
+   "width": 700,
+   "theme": "dark",
+   "reducedMotion": false,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  },
+  {
+   "width": 600,
+   "theme": "light",
+   "reducedMotion": false,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  },
+  {
+   "width": 600,
+   "theme": "dark",
+   "reducedMotion": false,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  },
+  {
+   "width": 390,
+   "theme": "light",
+   "reducedMotion": false,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  },
+  {
+   "width": 390,
+   "theme": "dark",
+   "reducedMotion": false,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  },
+  {
+   "width": 1440,
+   "theme": "light",
+   "reducedMotion": true,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  },
+  {
+   "width": 390,
+   "theme": "dark",
+   "reducedMotion": true,
+   "elements": 5726,
+   "propertiesCompared": 7520618,
+   "elementsWithDifferences": 0,
+   "details": []
+  }
+ ]
+}

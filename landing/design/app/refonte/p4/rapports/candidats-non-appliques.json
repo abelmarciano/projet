@@ -1,0 +1,140 @@
+[
+ {
+  "line": 9,
+  "selector": ".gx-wrap",
+  "decl": "max-width:980px",
+  "by": ".gx-page,.gx-page:has(.gx-chatv),.gx-wrap { max-width:none } l.1663"
+ },
+ {
+  "line": 15,
+  "selector": ".gx-up",
+  "decl": "color:var(--gx-ok)",
+  "by": ".gx-k7 em.gx-up, .gx-up { color:var(--gx-ok-ink) } l.732"
+ },
+ {
+  "line": 26,
+  "selector": ".gx-go",
+  "decl": "background:var(--gx-fg)",
+  "by": ".gx-btn.gx-pri.gx-grad, .gx-go { background:var(--gx-grad) } l.577"
+ },
+ {
+  "line": 26,
+  "selector": ".gx-go",
+  "decl": "color:var(--gx-bg)",
+  "by": ".gx-btn.gx-pri.gx-grad, .gx-go { color:#fff } l.577"
+ },
+ {
+  "line": 55,
+  "selector": ".gx-reco.gx-boost .gx-k",
+  "decl": "color:var(--gx-ok)",
+  "by": ".gx-st.gx-on, .gx-reco.gx-boost .gx-k, .gx-anc.gx-boost .gx-k, .gx-sig.gx-ok, .g { color:var(--gx-ok-ink) } l.728"
+ },
+ {
+  "line": 57,
+  "selector": ".gx-reco.gx-cut .gx-k",
+  "decl": "color:var(--gx-bad)",
+  "by": ".gx-st.gx-bad, .gx-reco.gx-cut .gx-k, .gx-anc.gx-cut .gx-k { color:var(--gx-bad-ink) } l.730"
+ },
+ {
+  "line": 91,
+  "selector": ".gx-st.gx-on",
+  "decl": "color:var(--gx-ok)",
+  "by": ".gx-st.gx-on, .gx-reco.gx-boost .gx-k, .gx-anc.gx-boost .gx-k, .gx-sig.gx-ok, .g { color:var(--gx-ok-ink) } l.728"
+ },
+ {
+  "line": 92,
+  "selector": ".gx-st.gx-rev",
+  "decl": "color:var(--gx-warn)",
+  "by": ".gx-st.gx-warn, .gx-st.gx-rev { color:var(--gx-warn-ink) } l.729"
+ },
+ {
+  "line": 172,
+  "selector": ".gx-meter i",
+  "decl": "background:var(--gx-accent)",
+  "by": ".gx-credits .gx-meter i, .gx-meter i { background:var(--gx-grad) } l.586"
+ },
+ {
+  "line": 194,
+  "selector": ".gx-page",
+  "decl": "max-width:1260px",
+  "by": ".gx-page,.gx-page:has(.gx-chatv),.gx-wrap { max-width:none } l.1663"
+ },
+ {
+  "line": 237,
+  "selector": ".gx-st.gx-warn",
+  "decl": "color:var(--gx-warn)",
+  "by": ".gx-st.gx-warn, .gx-st.gx-rev { color:var(--gx-warn-ink) } l.729"
+ },
+ {
+  "line": 238,
+  "selector": ".gx-st.gx-bad",
+  "decl": "color:var(--gx-bad)",
+  "by": ".gx-st.gx-bad, .gx-reco.gx-cut .gx-k, .gx-anc.gx-cut .gx-k { color:var(--gx-bad-ink) } l.730"
+ },
+ {
+  "line": 251,
+  "selector": ".gx-page:has(.gx-chatv)",
+  "decl": "max-width:1360px",
+  "by": ".gx-page,.gx-page:has(.gx-chatv),.gx-wrap { max-width:none } l.1663"
+ },
+ {
+  "line": 275,
+  "selector": ".gx-sig.gx-ok",
+  "decl": "color:var(--gx-ok)",
+  "by": ".gx-st.gx-on, .gx-reco.gx-boost .gx-k, .gx-anc.gx-boost .gx-k, .gx-sig.gx-ok, .g { color:var(--gx-ok-ink) } l.728"
+ },
+ {
+  "line": 323,
+  "selector": ".gx-ms i.gx-done",
+  "decl": "color:var(--gx-ok)",
+  "by": ".gx-st.gx-on, .gx-reco.gx-boost .gx-k, .gx-anc.gx-boost .gx-k, .gx-sig.gx-ok, .g { color:var(--gx-ok-ink) } l.728"
+ },
+ {
+  "line": 327,
+  "selector": ".gx-stepper span.gx-done",
+  "decl": "color:var(--gx-ok)",
+  "by": ".gx-st.gx-on, .gx-reco.gx-boost .gx-k, .gx-anc.gx-boost .gx-k, .gx-sig.gx-ok, .g { color:var(--gx-ok-ink) } l.728"
+ },
+ {
+  "line": 391,
+  "selector": ".gx-icard .gx-win",
+  "decl": "color:var(--gx-ok)",
+  "by": ".gx-st.gx-on, .gx-reco.gx-boost .gx-k, .gx-anc.gx-boost .gx-k, .gx-sig.gx-ok, .g { color:var(--gx-ok-ink) } l.728"
+ },
+ {
+  "line": 475,
+  "selector": ".gx-k7 em.gx-up",
+  "decl": "color:var(--gx-ok)",
+  "by": ".gx-k7 em.gx-up, .gx-up { color:var(--gx-ok-ink) } l.732"
+ },
+ {
+  "line": 496,
+  "selector": ".gx-anc.gx-boost .gx-k",
+  "decl": "color:var(--gx-ok)",
+  "by": ".gx-st.gx-on, .gx-reco.gx-boost .gx-k, .gx-anc.gx-boost .gx-k, .gx-sig.gx-ok, .g { color:var(--gx-ok-ink) } l.728"
+ },
+ {
+  "line": 498,
+  "selector": ".gx-anc.gx-cut .gx-k",
+  "decl": "color:var(--gx-bad)",
+  "by": ".gx-st.gx-bad, .gx-reco.gx-cut .gx-k, .gx-anc.gx-cut .gx-k { color:var(--gx-bad-ink) } l.730"
+ },
+ {
+  "line": 812,
+  "selector": ".gx-pv",
+  "decl": "height:auto",
+  "by": ".gx-pv { height:clamp(320px,calc(100vh - 300px),860px) } l.1672 (B hors @media)"
+ },
+ {
+  "line": 1654,
+  "selector": ".gx-lg.gx-meta",
+  "decl": "background:#0866FF",
+  "by": ".gx-lg.gx-meta,.gx-lg.gx-shop { background:color-mix(in srgb,var(--lgc) 10%,transparent) } l.1692"
+ },
+ {
+  "line": 1655,
+  "selector": ".gx-lg.gx-shop",
+  "decl": "background:#95BF47",
+  "by": ".gx-lg.gx-meta,.gx-lg.gx-shop { background:color-mix(in srgb,var(--lgc) 10%,transparent) } l.1692"
+ }
+]
