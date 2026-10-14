@@ -84,16 +84,16 @@ svg.i{width:18px;height:18px;flex:none}
 /* ---- Zone de saisie (la seule partie revue) ---- */
 .composer{padding:14px 40px 22px;border-top:1px solid var(--line);background:var(--surface)}
 .field{border:1px solid var(--line-2);border-radius:18px;background:var(--surface);padding:10px 10px 10px 12px;display:flex;flex-direction:column;gap:8px;transition:border-color .15s,box-shadow .15s}
-.field:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.field:focus-within{border-color:#B7BBC4;box-shadow:0 0 0 4px var(--sunk)}
 .ctx{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .pill{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 10px 0 4px;border-radius:999px;border:1px solid var(--line);background:var(--raised);font-size:13px;font-weight:500}
 .pill:hover{border-color:var(--line-2);background:var(--surface)}
 .pill .pr{color:var(--dim);font-weight:400;font-variant-numeric:tabular-nums}
 .pill .x{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;color:var(--dim);margin-right:-4px}
 .pill .x:hover{background:var(--sunk);color:var(--fg)}
-.add{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px 0 8px;border-radius:999px;border:1px dashed #B9AEF5;background:var(--surface);color:var(--accent-ink);font-size:13px;font-weight:600}
-.add:hover{background:var(--accent-soft);border-style:solid}
-.add .pl{width:20px;height:20px;border-radius:50%;background:var(--accent-soft);display:grid;place-items:center}
+.add{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px 0 8px;border-radius:999px;border:1px dashed var(--line-2);background:var(--surface);color:var(--muted);font-size:13px;font-weight:500}
+.add:hover{border-style:solid;border-color:#B7BBC4;color:var(--fg);background:var(--raised)}
+.add .pl{width:20px;height:20px;border-radius:50%;background:var(--sunk);display:grid;place-items:center;color:var(--nav)}
 .add .pl svg{width:12px;height:12px}
 .bm{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-size:10px;font-weight:700;color:var(--onacc);flex:none}
 .who{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;flex:none}
@@ -112,7 +112,7 @@ svg.i{width:18px;height:18px;flex:none}
 .send{width:38px;height:38px;border-radius:11px;border:0;background:var(--accent);color:var(--onacc);display:grid;place-items:center;flex:none}
 .hint{margin-top:8px;font-size:12.5px;color:var(--dim)}
 .plw{position:relative;flex:none}
-.tb[aria-expanded="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink)}
+.tb[aria-expanded="true"]{border-color:#B7BBC4;background:var(--sunk);color:var(--fg)}
 .plm{position:absolute;left:0;bottom:calc(100% + 10px);z-index:30;width:340px;max-width:calc(100vw - 40px);background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 50px -18px rgba(16,18,23,.38);padding:8px}
 .plm .lb{padding:8px 10px 4px;font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
 .pmi{display:flex;align-items:center;gap:12px;width:100%;padding:9px 10px;border:0;border-radius:11px;background:none;text-align:left}
@@ -228,7 +228,6 @@ svg.i{width:18px;height:18px;flex:none}
               <button class="send" type="button" aria-label="Envoyer"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
             </div>
           </div>
-          <div class="hint" id="hint"></div>
         </div>
       </section>
     </div>
@@ -305,25 +304,18 @@ function render(){
     c+=`<button class="add" type="button" data-open="prod"><span class="pl">${ic('plus','',2.4)}</span>Ajouter un produit</button>`;
   }
   document.getElementById('ctx').innerHTML=c;
-  document.getElementById('hint').textContent=`Claude génère pour ${b.name}${a?`, avec ${a.n} face caméra`:', et choisit qui parle'}${ps.length?`, avec ${names}`:''}.`;
   renderModal();
 }
 const PLUS=[
-  ['Ajouter à ta pub',[
-    ['up','Importer des photos','Produit, logo, décor… depuis ton ordinateur','photos'],
-    ['link','Coller un lien produit','Je lis la page et récupère photos et prix','lien'],
-    ['vid','Joindre une vidéo ou un son','Je l\'analyse, ou je m\'en sers comme base','media'],
-  ]],
-  ['Depuis Growthity',[
-    ['img','Mes créations','Refaire, décliner ou prolonger une pub','creations'],
-    ['bulb','Pubs d\'inspiration','Des pubs concurrentes comme référence','inspi'],
-    ['mega','Mes campagnes','Pour en parler ou les améliorer','campagnes'],
-  ]],
+  [['up','Importer un fichier','Photo, vidéo ou son depuis ton appareil','photos']],
+  [['img','Mes créations','Refaire, décliner ou prolonger une pub','creations'],
+   ['bulb','Pubs d\'inspiration','Des pubs concurrentes comme référence','inspi'],
+   ['mega','Mes campagnes','Pour en parler ou les améliorer','campagnes']],
 ];
 function renderPlus(){
   const m=document.getElementById('plusMenu'),b=document.getElementById('plusBtn');
   b.setAttribute('aria-expanded',S.plus?'true':'false');m.hidden=!S.plus;
-  m.innerHTML=S.plus?PLUS.map(([lb,items],gi)=>`${gi?'<hr>':''}<div class="lb">${lb}</div>${items.map(([icn,t,s,k])=>`<button class="pmi" type="button" role="menuitem" data-plus="${k}"><span class="pmic">${ic(icn)}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}`).join(''):'';
+  m.innerHTML=S.plus?PLUS.map((items,gi)=>`${gi?'<hr>':''}${items.map(([icn,t,s,k])=>`<button class="pmi" type="button" role="menuitem" data-plus="${k}"><span class="pmic">${ic(icn)}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}`).join(''):'';
 }
 function renderModal(){
   renderPlus();
@@ -364,7 +356,7 @@ function renderModal(){
 document.addEventListener('click',e=>{
   if(e.target.closest('#plusBtn')){S.plus=!S.plus;return renderPlus()}
   const pi=e.target.closest('[data-plus]');
-  if(pi){const L={photos:'« Importer des photos » ouvre la sélection de fichiers.',lien:'« Coller un lien produit » place le curseur dans le champ pour coller l\'adresse.',media:'« Joindre une vidéo ou un son » ouvre la sélection de fichiers.',creations:'« Mes créations » ouvre la grille de tes créations à cocher.',inspi:'« Pubs d\'inspiration » ouvre la galerie Inspiration à cocher.',campagnes:'« Mes campagnes » ouvre la liste de tes campagnes à cocher.'};S.plus=false;S.note=L[pi.dataset.plus];return render()}
+  if(pi){const L={photos:'« Importer un fichier » ouvre la sélection de photos, vidéos ou sons.',creations:'« Mes créations » ouvre la grille de tes créations à cocher.',inspi:'« Pubs d\'inspiration » ouvre la galerie Inspiration à cocher.',campagnes:'« Mes campagnes » ouvre la liste de tes campagnes à cocher.'};S.plus=false;S.note=L[pi.dataset.plus];return render()}
   if(S.plus&&!e.target.closest('#plusMenu')){S.plus=false;renderPlus()}
   const t=e.target.closest('[data-open],[data-clear],[data-close],[data-flt],[data-pick],[data-multi],[data-pickset],[data-confirm],[data-new],[data-brand]');
   if(!t){if(e.target.id==='scrim'){S.modal=null;render()}return}
