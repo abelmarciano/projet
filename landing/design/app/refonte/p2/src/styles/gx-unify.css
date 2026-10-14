@@ -357,3 +357,5 @@ body.dark:has(.console-app) :is(.fixed.inset-0.z-50[class*="bg-black/80"], .fixe
 .console-app .gx-skel.gx-skel-w40 { width: 40%; }
 .console-app .gx-skel.gx-skel-w70 { width: 70%; }
 .console-app .gx-reco .gx-k .gx-ii, .console-app .gx-link .gx-ii, .console-app .gx-lh .gx-ii { vertical-align: -0.16em; }
+.console-app .gx-empty .gx-empty-raw { display: block; margin-top: 6px; overflow-wrap: anywhere; }
+.console-app .gx-empty-a > .gx-mq-emptyadd { width: 100%; max-width: 560px; }
