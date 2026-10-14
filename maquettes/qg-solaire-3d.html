@@ -341,11 +341,133 @@ body.split #pg-leads { padding-right: calc(min(580px, 100vw) + 24px); }
 @media (max-width: 1100px) { .plwrap, .settings { grid-template-columns: 1fr; } .wait, .snav { position: static; max-height: none; } .kbtn span { display: none; } .kbtn { min-width: 0; } }
 @media (max-width: 640px) { .fgrid { grid-template-columns: 1fr; } .lpanel { top: 0; } .pl-nav h2 { min-width: 0; font-size: 15px; } .search { max-width: none; } }
 
+/* ===== Arène télépro (mode jeu) ===== */
+#pg-arena { max-width: none; margin: 0; padding: 18px 24px 40px; min-height: calc(100vh - 52px); color: #e9e7ff;
+  background: radial-gradient(900px 500px at 15% -10%, rgba(14,165,233,.35), transparent 60%), radial-gradient(900px 600px at 95% 10%, rgba(155,135,245,.42), transparent 60%), radial-gradient(800px 500px at 50% 120%, rgba(249,115,22,.22), transparent 60%), linear-gradient(180deg, #17153a, #0d1029 70%); position: relative; overflow: hidden; }
+#pg-arena::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px); background-size: 40px 40px; mask-image: linear-gradient(180deg, #000, transparent 85%); pointer-events: none; }
+#pg-arena > * { position: relative; }
+.ar-hud { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 14px 18px; border-radius: 18px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(10px); }
+.ar-me { display: flex; align-items: center; gap: 12px; }
+.ar-av { width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; font-weight: 900; font-size: 18px; color: #fff; background: linear-gradient(135deg, #0EA5E9, #9b87f5); box-shadow: 0 0 0 3px rgba(255,255,255,.15), 0 8px 24px rgba(155,135,245,.5); position: relative; }
+.ar-av b { position: absolute; bottom: -8px; right: -8px; font-size: 11px; background: #fbbf24; color: #1c1917; border-radius: 8px; padding: 2px 6px; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
+.ar-me h2 { margin: 0; font-size: 18px; font-weight: 900; color: #fff; }
+.ar-me select { margin-top: 3px; background: rgba(255,255,255,.08); color: #e9e7ff; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; padding: 3px 26px 3px 8px; font-size: 12px; min-width: 0; background-position: right 6px center; }
+.ar-me select option { color: #111827; }
+.xpbar { flex: 1 1 260px; min-width: 200px; display: flex; flex-direction: column; gap: 6px; }
+.xpbar .t { display: flex; justify-content: space-between; font-size: 12px; font-weight: 800; color: #c4b5fd; }
+.xpbar .b { height: 14px; border-radius: 10px; background: rgba(255,255,255,.08); overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,.4); }
+.xpbar .b div { height: 100%; border-radius: 10px; background: linear-gradient(90deg, #22d3ee, #a78bfa, #f472b6); box-shadow: 0 0 16px rgba(167,139,250,.7); transition: width .6s cubic-bezier(.2,.8,.2,1); }
+.ar-stats { display: flex; gap: 10px; flex-wrap: wrap; }
+.ar-stat { min-width: 92px; padding: 8px 12px; border-radius: 12px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); }
+.ar-stat small { display: block; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: #a5b4fc; }
+.ar-stat b { font-size: 22px; font-weight: 900; color: #fff; font-variant-numeric: tabular-nums; }
+.ar-stat b span { font-size: 12px; color: #a5b4fc; }
+.ar-stat.combo b { color: #fbbf24; text-shadow: 0 0 12px rgba(251,191,36,.6); }
+.ar-snd { border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.06); color: #e9e7ff; border-radius: 10px; padding: 8px 10px; font-weight: 800; font-size: 12px; cursor: pointer; }
+.ar-main { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 18px; margin-top: 18px; align-items: start; }
+.ar-boardhead { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.ar-boardhead h3 { margin: 0; font-size: 16px; font-weight: 900; color: #fff; letter-spacing: .02em; }
+.ar-boardhead p { margin: 2px 0 0; font-size: 12px; color: #a5b4fc; }
+.ar-legend { display: flex; gap: 12px; font-size: 11px; font-weight: 800; color: #c7d2fe; flex-wrap: wrap; }
+.ar-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.ar-legend i { width: 10px; height: 10px; border-radius: 3px; }
+.board { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; perspective: 1000px; }
+.tile { --g: #38bdf8; position: relative; border-radius: 18px; padding: 14px; min-height: 150px; cursor: pointer; text-align: left; color: #fff; border: 1px solid color-mix(in srgb, var(--g) 55%, transparent);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--g) 30%, #1e1b4b), #141238 75%); box-shadow: 0 0 0 1px rgba(255,255,255,.04) inset, 0 10px 30px rgba(0,0,0,.35), 0 0 22px color-mix(in srgb, var(--g) 25%, transparent);
+  display: flex; flex-direction: column; gap: 8px; transition: transform .18s, box-shadow .18s; animation: dropin .45s cubic-bezier(.2,1.4,.4,1) both; font: inherit; }
+.tile:hover { transform: translateY(-4px) rotateX(4deg); box-shadow: 0 0 0 1px rgba(255,255,255,.08) inset, 0 18px 40px rgba(0,0,0,.45), 0 0 34px color-mix(in srgb, var(--g) 45%, transparent); }
+.tile:focus-visible { outline: 3px solid #fbbf24; outline-offset: 3px; }
+.tile .tt { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.tile .kind { font-size: 10px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 8px; background: color-mix(in srgb, var(--g) 30%, transparent); color: color-mix(in srgb, var(--g) 30%, #fff); }
+.tile .xp { font-size: 12px; font-weight: 900; color: #fde68a; }
+.tile h4 { margin: 4px 0 0; font-size: 17px; font-weight: 900; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tile p { margin: 0; font-size: 12px; color: #c7d2fe; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tile .foot { margin-top: auto; display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 800; }
+.tile .timer { color: color-mix(in srgb, var(--g) 30%, #fff); }
+.tile.hot { --g: #fbbf24; }
+.tile.hot::after { content: ""; position: absolute; inset: -2px; border-radius: 19px; background: conic-gradient(from var(--a, 0deg), transparent 0 70%, #fde047, transparent); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 2px; animation: spin 3s linear infinite; pointer-events: none; }
+@property --a { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes spin { to { --a: 360deg; } }
+.tile.recall { --g: #a78bfa; }
+.tile.late { --g: #f43f5e; animation: dropin .45s both, throb 1.4s ease-in-out infinite; }
+.tile.nrp { --g: #94a3b8; }
+.tile.empty { cursor: default; border-style: dashed; background: rgba(255,255,255,.03); box-shadow: none; align-items: center; justify-content: center; color: #6b6fa8; font-weight: 800; font-size: 12px; }
+.tile.empty:hover { transform: none; }
+.tile.boom { animation: boom .45s ease-in forwards; pointer-events: none; }
+@keyframes dropin { from { opacity: 0; transform: translateY(-30px) scale(.9); } to { opacity: 1; transform: none; } }
+@keyframes throb { 50% { box-shadow: 0 0 0 1px rgba(255,255,255,.04) inset, 0 10px 30px rgba(0,0,0,.35), 0 0 38px rgba(244,63,94,.65); } }
+@keyframes boom { 40% { transform: scale(1.08); filter: brightness(1.6); } to { transform: scale(.2) rotate(8deg); opacity: 0; } }
+.ar-side { display: flex; flex-direction: column; gap: 14px; }
+.ar-box { padding: 14px 16px; border-radius: 18px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(10px); }
+.ar-box h4 { margin: 0 0 12px; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; color: #c4b5fd; display: flex; justify-content: space-between; }
+.quest { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+.quest:last-child { margin-bottom: 0; }
+.quest .qt { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; font-weight: 800; color: #fff; }
+.quest .qt em { font-style: normal; color: #fde68a; font-size: 11px; white-space: nowrap; }
+.quest .qb { height: 8px; border-radius: 6px; background: rgba(255,255,255,.08); overflow: hidden; }
+.quest .qb div { height: 100%; border-radius: 6px; background: linear-gradient(90deg, #34d399, #22d3ee); transition: width .5s; }
+.quest.done .qt { color: #6ee7b7; }
+.quest.done .qt::before { content: "✓ "; }
+.lb { display: flex; flex-direction: column; gap: 6px; }
+.lb div { display: grid; grid-template-columns: 22px 30px 1fr auto; gap: 8px; align-items: center; padding: 6px 8px; border-radius: 10px; font-size: 13px; font-weight: 800; color: #e0e7ff; transition: background .3s; }
+.lb div.me { background: rgba(167,139,250,.22); box-shadow: inset 0 0 0 1px rgba(167,139,250,.5); }
+.lb div.flash { background: rgba(251,191,36,.25); }
+.lb .r { color: #a5b4fc; font-size: 12px; }
+.lb .r.g1 { color: #fbbf24; } .lb .r.g2 { color: #e5e7eb; } .lb .r.g3 { color: #f59e0b; }
+.lb i { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 10px; font-weight: 900; color: #fff; background: #0EA5E9; }
+.lb b { font-size: 13px; color: #fff; }
+.lb b small { color: #a5b4fc; font-size: 11px; font-weight: 700; margin-left: 4px; }
+.arfeed { display: flex; flex-direction: column; gap: 7px; font-size: 12px; color: #c7d2fe; max-height: 170px; overflow: hidden; }
+.arfeed div { animation: dropin .4s both; }
+.arfeed b { color: #fff; }
+/* Carte d'action */
+.ar-modal { position: fixed; inset: 0; z-index: 75; display: grid; place-items: center; padding: 20px; background: rgba(8,8,30,.7); backdrop-filter: blur(6px); }
+.ar-modal[hidden] { display: none; }
+.ar-card { width: min(720px, 100%); max-height: calc(100vh - 40px); overflow: auto; border-radius: 24px; padding: 22px; color: #fff; background: linear-gradient(160deg, color-mix(in srgb, var(--g) 35%, #1e1b4b), #110f30 70%); border: 1px solid color-mix(in srgb, var(--g) 60%, transparent); box-shadow: 0 30px 90px rgba(0,0,0,.6), 0 0 60px color-mix(in srgb, var(--g) 35%, transparent); animation: flip .4s cubic-bezier(.2,1.2,.4,1) both; display: flex; flex-direction: column; gap: 16px; }
+@keyframes flip { from { transform: rotateY(70deg) scale(.85); opacity: 0; } to { transform: none; opacity: 1; } }
+.ar-card .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.ar-card h2 { margin: 6px 0 2px; font-size: 28px; font-weight: 900; }
+.ar-card .sub2 { font-size: 13px; color: #c7d2fe; }
+.ar-phone { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.ar-phone b { font-size: 30px; font-weight: 900; letter-spacing: .03em; font-variant-numeric: tabular-nums; user-select: all; }
+.ar-call { display: inline-flex; align-items: center; gap: 8px; border: 0; border-radius: 14px; padding: 12px 18px; font-weight: 900; font-size: 15px; color: #052e16; background: linear-gradient(135deg, #4ade80, #22c55e); box-shadow: 0 8px 24px rgba(34,197,94,.45); text-decoration: none; cursor: pointer; }
+.ar-info { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.ar-info div { background: rgba(255,255,255,.06); border-radius: 12px; padding: 8px 10px; min-width: 0; }
+.ar-info small { display: block; font-size: 10px; font-weight: 800; color: #a5b4fc; text-transform: uppercase; letter-spacing: .05em; }
+.ar-info b { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
+.ar-script { font-size: 13px; line-height: 1.55; color: #e0e7ff; background: rgba(255,255,255,.05); border-left: 3px solid #fbbf24; border-radius: 10px; padding: 10px 14px; }
+.ar-outs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.ar-out { --c: #94a3b8; border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); background: color-mix(in srgb, var(--c) 18%, rgba(255,255,255,.04)); color: #fff; border-radius: 14px; padding: 12px 10px; font-weight: 900; font-size: 14px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: transform .12s, background .12s; font-family: inherit; }
+.ar-out:hover { transform: translateY(-2px); background: color-mix(in srgb, var(--c) 32%, rgba(255,255,255,.04)); }
+.ar-out small { font-size: 11px; color: #fde68a; font-weight: 800; }
+.ar-out kbd { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.2); }
+.ar-out.big { --c: #22c55e; }
+.ar-slots { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; border-radius: 14px; background: rgba(255,255,255,.05); border: 1px dashed rgba(255,255,255,.2); }
+.ar-slots[hidden] { display: none; }
+.ar-slots p { width: 100%; margin: 0 0 2px; font-size: 12px; color: #c7d2fe; font-weight: 700; }
+.ar-slots button { border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.08); color: #fff; border-radius: 10px; padding: 8px 12px; font-weight: 900; cursor: pointer; font-family: inherit; }
+.ar-slots button small { display: block; font-size: 10px; color: #a5b4fc; font-weight: 700; }
+.ar-slots button:hover { background: #22c55e; border-color: #22c55e; }
+.ar-x { border: 0; background: rgba(255,255,255,.1); color: #fff; width: 34px; height: 34px; border-radius: 10px; cursor: pointer; font-weight: 900; }
+/* Effets */
+.fxl { position: fixed; inset: 0; pointer-events: none; z-index: 95; overflow: hidden; }
+.xpfly { position: absolute; font-weight: 900; font-size: 22px; color: #fde047; text-shadow: 0 2px 12px rgba(0,0,0,.6), 0 0 18px rgba(253,224,71,.8); animation: fly 1.2s ease-out forwards; white-space: nowrap; }
+@keyframes fly { from { transform: translate(-50%, 0) scale(.6); opacity: 0; } 20% { transform: translate(-50%, -10px) scale(1.15); opacity: 1; } to { transform: translate(-50%, -90px) scale(1); opacity: 0; } }
+.conf { position: absolute; top: -20px; width: 10px; height: 14px; border-radius: 3px; animation: fall linear forwards; }
+@keyframes fall { to { transform: translate(var(--dx), 110vh) rotate(var(--r)); } }
+.bigwin { position: absolute; left: 50%; top: 38%; transform: translate(-50%, -50%); font-size: clamp(36px, 7vw, 76px); font-weight: 900; color: #fff; text-shadow: 0 0 30px rgba(34,197,94,.9), 0 6px 30px rgba(0,0,0,.6); animation: pop 1.6s cubic-bezier(.2,1.5,.4,1) forwards; text-align: center; line-height: 1; }
+.bigwin small { display: block; font-size: .3em; color: #fde68a; margin-top: 8px; }
+@keyframes pop { 0% { transform: translate(-50%, -50%) scale(.3); opacity: 0; } 25% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; } 75% { opacity: 1; } 100% { transform: translate(-50%, -60%) scale(1); opacity: 0; } }
+@media (max-width: 1200px) { .ar-main { grid-template-columns: 1fr; } .board { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .board { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ar-info { grid-template-columns: 1fr 1fr; } .ar-outs { grid-template-columns: 1fr 1fr; } #pg-arena { padding: 14px 16px 30px; } }
+@media (prefers-reduced-motion: reduce) { .tile, .tile.late, .ar-card, .xpfly, .bigwin { animation: none !important; } .tile.hot::after { animation: none; } .conf { display: none; } }
+
 /* Navigation de l'app */
 .nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: color-mix(in srgb, var(--surface) 82%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
 .nav .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--muted); font-size: 15px; margin-right: 10px; }
 .nav .logo img { width: 26px; height: 26px; border-radius: 7px; }
 .nav a { display: flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 8px; color: var(--ink-2); text-decoration: none; font-weight: 600; font-size: 14px; }
+.nav a.arena-link { background: linear-gradient(135deg, rgba(14,165,233,.12), rgba(155,135,245,.18)); color: #6d28d9; }
 .nav a.on { background: color-mix(in srgb, var(--brand) 14%, transparent); color: var(--brand-ink); }
 .nav .sp { flex: 1; }
 .nav .user { display: flex; align-items: center; gap: 10px; }
@@ -605,6 +727,7 @@ tfoot td { font-weight: 800; background: var(--surface-2); border-bottom: 0; }
   <a href="#" data-page="leads"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-7 7-7s7 3 7 7M17 3a4 4 0 0 1 0 8M22 21c0-3-1.5-5.5-4-6.5"/></svg><span>Leads</span></a>
   <a href="#" data-page="planning"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Planning</span></a>
   <a href="#" data-page="settings"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Paramètres</span></a>
+  <a href="#" data-page="arena" class="arena-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="12" rx="5"/><path d="M7 11v4M5 13h4M15 12h.01M18 14h.01"/></svg><span>Arène télépro</span></a>
   <div class="sp"></div>
   <button type="button" class="kbtn" id="openPal"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Rechercher un lead, une page…</span><kbd>Ctrl K</kbd></button>
   <div class="bell" aria-label="34 notifications"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span>34</span></div>
@@ -784,6 +907,30 @@ tfoot td { font-weight: 800; background: var(--surface-2); border-bottom: 0; }
   <div class="ph2"><div><h1>Paramètres</h1><p>Chaque modification est enregistrée immédiatement.</p></div></div>
   <div class="settings"><nav class="snav" id="snav"></nav><section class="card" id="spanel"></section></div>
 </main>
+
+<!-- ===== Arène télépro ===== -->
+<main class="wrap page" id="pg-arena" hidden>
+  <div class="ar-hud">
+    <div class="ar-me"><div class="ar-av" id="arAv"></div><div><h2 id="arName"></h2><select id="arWho" aria-label="Jouer en tant que"></select></div></div>
+    <div class="xpbar"><div class="t"><span id="arLvl"></span><span id="arXp"></span></div><div class="b"><div id="arXpBar"></div></div></div>
+    <div class="ar-stats"><div class="ar-stat"><small>Appels</small><b id="arCalls"></b></div><div class="ar-stat"><small>RDV du jour</small><b id="arRdv"></b></div><div class="ar-stat combo"><small>Combo</small><b id="arCombo"></b></div><div class="ar-stat"><small>Série</small><b id="arStreak"></b></div></div>
+    <button type="button" class="ar-snd" id="arSnd" aria-pressed="true">Son : activé</button>
+  </div>
+  <div class="ar-main">
+    <section>
+      <div class="ar-boardhead"><div><h3>Ton plateau</h3><p id="arPile"></p></div>
+        <div class="ar-legend"><span><i style="background:#fbbf24"></i>Lead chaud (reçu aujourd'hui) · XP ×1,5</span><span><i style="background:#38bdf8"></i>Nouveau</span><span><i style="background:#a78bfa"></i>Rappel</span><span><i style="background:#f43f5e"></i>Rappel en retard</span><span><i style="background:#94a3b8"></i>NRP à retenter</span></div></div>
+      <div class="board" id="board"></div>
+    </section>
+    <aside class="ar-side">
+      <div class="ar-box"><h4><span>Quêtes du jour</span><span id="arQ"></span></h4><div id="quests"></div></div>
+      <div class="ar-box"><h4><span>Classement du jour</span><span>RDV · XP</span></h4><div class="lb" id="lb"></div></div>
+      <div class="ar-box"><h4>En direct sur le plateau</h4><div class="arfeed" id="arFeed"></div></div>
+    </aside>
+  </div>
+</main>
+<div class="ar-modal" id="arModal" hidden role="dialog" aria-label="Appel"></div>
+<div class="fxl" id="fxl"></div>
 
 <aside class="lpanel" id="lpanel" hidden aria-label="Fiche lead"></aside>
 <div class="bulk" id="bulk" hidden></div>
@@ -1584,17 +1731,17 @@ function choicePop(anchor, title, options, cur, onPick) {
 
 /* ---------- Routage ---------- */
 let page = 'dashboard';
-try { const sp = localStorage.getItem('cc-page'); if (['dashboard', 'leads', 'planning', 'settings'].includes(sp)) page = sp; } catch (e) {}
+try { const sp = localStorage.getItem('cc-page'); if (['dashboard', 'leads', 'planning', 'settings', 'arena'].includes(sp)) page = sp; } catch (e) {}
 function go(pg) {
   page = pg; try { localStorage.setItem('cc-page', pg); } catch (e) {}
   document.querySelectorAll('.nav [data-page]').forEach(a => a.classList.toggle('on', a.dataset.page === pg));
-  ['dashboard', 'leads', 'planning', 'settings'].forEach(x => { $('#pg-' + x).hidden = x !== pg; });
+  ['dashboard', 'leads', 'planning', 'settings', 'arena'].forEach(x => { $('#pg-' + x).hidden = x !== pg; });
   if (pg === 'dashboard' && tab === 'equipe') team.start(); else team.stop();
   if (pg !== 'leads' && pg !== 'planning') closePanel();
   document.body.classList.toggle('split', pg === 'leads' && OPEN !== null);
   refresh(); window.scrollTo(0, 0);
 }
-function refresh() { if (page === 'leads') renderLeads(); if (page === 'planning') renderPlan(); if (page === 'settings') renderSettings(); if (page === 'dashboard') render(); if (OPEN !== null) renderPanel(); }
+function refresh() { if (page === 'leads') renderLeads(); if (page === 'planning') renderPlan(); if (page === 'settings') renderSettings(); if (page === 'arena') { buildPile(); renderArena(); } if (page === 'dashboard') render(); if (OPEN !== null) renderPanel(); }
 document.querySelectorAll('.nav [data-page]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); go(a.dataset.page); }));
 
 /* ================================================================
@@ -2095,6 +2242,114 @@ document.addEventListener('keydown', e => {
   if (page === 'leads' && e.key === '/') { e.preventDefault(); $('#lq').focus(); }
   if (page === 'leads' && OPEN !== null && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) { e.preventDefault(); const i = LS.list.indexOf(OPEN) + (e.key === 'ArrowDown' ? 1 : -1); if (LS.list[i] !== undefined) { if (Math.floor(i / PER) !== LS.page) { LS.page = Math.floor(i / PER); renderLeads(); } openLead(LS.list[i], PTAB === 'rdv' || PTAB === 'contrat' ? undefined : PTAB); } }
 });
+
+/* ================================================================
+   ARÈNE TÉLÉPRO : les leads du télépro deviennent des cases à jouer.
+   Chaque action modifie le vrai lead (statut, rappel, RDV) dans le CRM.
+   ================================================================ */
+const AR = { who: 'ines', board: [], pile: [], combo: 0, best: 0, last: 0, sound: true, played: new Set(), stats: {} };
+const AR_T0 = Date.now();
+const XP = { rdv: 150, recall: 15, nrp: 10, out: 10 };
+const LVL = 2500;
+TEL.forEach(t => { const mine = leads.filter(l => l.tele === t.id);
+  AR.stats[t.id] = { calls: Math.round(18 + t.k * 14), rdv: mine.filter(l => l.rdvD === TODAY).length, xp: 0, total: mine.filter(l => l.rdvD >= TODAY - 45 && l.rdvD < TODAY).length * XP.rdv + mine.filter(l => l.d >= TODAY - 45 && l.d < TODAY).length * 2 * XP.nrp, streak: Math.round(2 + t.k * 4) };
+  const s = AR.stats[t.id]; s.xp = s.rdv * XP.rdv + s.calls * XP.nrp; });
+const kindOf = l => { if (l.recallD !== undefined && l.status !== 'NOUVEAU') return recallLate(l) ? 'late' : 'recall'; if (l.status === 'NRP') return 'nrp'; return l.d === TODAY ? 'hot' : 'new'; };
+const KIND = { hot: ['Lead chaud', '#fbbf24'], new: ['Nouveau', '#38bdf8'], recall: ['Rappel', '#a78bfa'], late: ['En retard', '#f43f5e'], nrp: ['NRP', '#94a3b8'] };
+function buildPile() {
+  const mine = leads.filter(l => l.tele === AR.who && l.signD === undefined && l.apptD === undefined && !AR.played.has(l.id));
+  const late = mine.filter(l => l.recallD !== undefined && recallLate(l)).sort((a, b) => a.recallD - b.recallD || a.recallH - b.recallH);
+  const hot = mine.filter(l => l.status === 'NOUVEAU' && l.d === TODAY).sort((a, b) => b.hr - a.hr);
+  const rc = mine.filter(l => l.recallD !== undefined && !recallLate(l) && l.recallD <= TODAY).sort((a, b) => a.recallH - b.recallH);
+  const nw = mine.filter(l => l.status === 'NOUVEAU' && l.d < TODAY).sort((a, b) => b.d - a.d);
+  const nrp = mine.filter(l => l.status === 'NRP' && l.recallD === undefined && l.d >= TODAY - 10).sort((a, b) => b.d - a.d);
+  const seen = new Set(); AR.pile = [...late, ...hot, ...rc, ...nw, ...nrp].filter(l => !seen.has(l.id) && seen.add(l.id)).map(l => l.id);
+  AR.board = AR.pile.splice(0, 12);
+}
+const level = xp => Math.floor(xp / LVL) + 1;
+const xpOf = (l, base) => Math.round(base * (kindOf(l) === 'hot' ? 1.5 : 1) * (1 + .25 * Math.min(4, AR.combo)));
+function tileHTML(id, i) {
+  if (id === undefined || id === null) return `<div class="tile empty">Pioche vide · bravo !</div>`;
+  const l = leads[id], k = kindOf(l), [kl, kc] = KIND[k];
+  const foot = k === 'late' ? `<span class="timer">En retard de ${l.recallD < TODAY ? (TODAY - l.recallD) + ' j' : Math.max(1, Math.round((NOW_H - l.recallH) * 60)) + ' min'}</span>` : k === 'recall' ? `<span class="timer">Rappel ${dayLabel(l.recallD)} ${fh(l.recallH)}</span>` : k === 'nrp' ? `<span class="timer">${l.calls} tentative${l.calls > 1 ? 's' : ''}</span>` : `<span class="timer">Reçu ${l.d === TODAY ? 'à ' + l.hr + ' h' : ago(l.d)}</span>`;
+  return `<button type="button" class="tile ${k}" data-tile="${id}" style="--g:${kc};animation-delay:${i * 35}ms"><div class="tt"><span class="kind">${kl}</span><span class="xp">+${xpOf(l, XP.rdv)} XP</span></div><h4>${esc(l.fn)} ${esc(l.ln.toUpperCase())}</h4><p>${esc(l.city)} (${l.dept}) · ${camName(l.camp)}</p><p>${l.slot ? 'Préfère le ' + l.slot.toLowerCase() : 'Créneau non précisé'}</p><div class="foot">${foot}<span>${ICO.call}</span></div></button>`;
+}
+function renderArena(keepBoard) {
+  const me = byId[AR.who], s = AR.stats[AR.who], xp = s.total + s.xp;
+  $('#arWho').innerHTML = TEL.map(t => `<option value="${t.id}" ${t.id === AR.who ? 'selected' : ''}>Jouer en tant que ${t.name}</option>`).join('');
+  $('#arAv').innerHTML = `${me.ini}<b>N${level(xp)}</b>`; $('#arName').textContent = me.name;
+  $('#arLvl').textContent = `Niveau ${level(xp)}`; $('#arXp').textContent = `${fmt(xp % LVL)} / ${fmt(LVL)} XP`; $('#arXpBar').style.width = (xp % LVL) / LVL * 100 + '%';
+  $('#arCalls').textContent = s.calls; $('#arRdv').innerHTML = `${s.rdv}<span> / 6</span>`; $('#arCombo').textContent = '×' + (1 + .25 * Math.min(4, AR.combo)).toFixed(2).replace('.', ',').replace(/,00$/, ''); $('#arStreak').innerHTML = `${s.streak}<span> j</span>`;
+  $('#arPile').textContent = `${AR.board.filter(x => x != null).length} cases sur le plateau · ${AR.pile.length} leads dans la pioche · les rappels en retard sortent en premier`;
+  if (!keepBoard) $('#board').innerHTML = Array.from({ length: 12 }, (_, i) => tileHTML(AR.board[i], i)).join('');
+  renderSide();
+}
+function renderSide() {
+  const s = AR.stats[AR.who], lateN = leads.filter(l => l.tele === AR.who && l.signD === undefined && l.apptD === undefined && recallLate(l)).length;
+  const Q = [['Fixer 6 RDV', s.rdv, 6, '+500 XP'], ['Passer 50 appels', s.calls, 50, '+300 XP'], ['Vider les rappels en retard', lateN ? 0 : 1, 1, '+200 XP', lateN ? `${lateN} restant${lateN > 1 ? 's' : ''}` : 'fait'], ['Atteindre un combo ×2', Math.min(4, AR.best), 4, 'badge « Mitraillette »']];
+  $('#quests').innerHTML = Q.map(([t, v, m, r, txt]) => `<div class="quest ${v >= m ? 'done' : ''}"><div class="qt"><span>${t}</span><em>${txt || `${Math.min(v, m)}/${m}`} · ${r}</em></div><div class="qb"><div style="width:${Math.min(100, v / m * 100)}%"></div></div></div>`).join('');
+  $('#arQ').textContent = `${Q.filter(q => q[1] >= q[2]).length}/${Q.length}`;
+  const rank = TEL.map(t => [t, AR.stats[t.id]]).sort((a, b) => b[1].rdv - a[1].rdv || b[1].xp - a[1].xp);
+  $('#lb').innerHTML = rank.map(([t, st], i) => `<div class="${t.id === AR.who ? 'me' : ''}" data-lb="${t.id}"><span class="r g${i + 1}">${i + 1}</span><i>${t.ini}</i><span>${t.name.split(' ')[0]}</span><b>${st.rdv} RDV<small>${fmt(st.xp)} XP</small></b></div>`).join('');
+}
+function arFeed(html) { const f = $('#arFeed'); const d = document.createElement('div'), m = Math.round(NOW_H * 60 + (Date.now() - AR_T0) / 60000 * 4); d.innerHTML = `<span class="dim" style="color:#818cf8">${Math.floor(m / 60)} h ${String(m % 60).padStart(2, '0')}</span> · ${html}`; f.prepend(d); while (f.children.length > 6) f.lastChild.remove(); }
+// Sons courts générés (aucun fichier)
+let actx; function beep(notes) { if (!AR.sound || reduced) return; try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); notes.forEach(([f, t, d]) => { const o = actx.createOscillator(), g = actx.createGain(); o.type = 'triangle'; o.frequency.value = f; g.gain.setValueAtTime(.0001, actx.currentTime + t); g.gain.exponentialRampToValueAtTime(.12, actx.currentTime + t + .02); g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime + t + d); o.connect(g).connect(actx.destination); o.start(actx.currentTime + t); o.stop(actx.currentTime + t + d + .05); }); } catch (e) {} }
+function fxXP(x, y, txt) { const e = document.createElement('div'); e.className = 'xpfly'; e.style.left = x + 'px'; e.style.top = y + 'px'; e.textContent = txt; $('#fxl').appendChild(e); setTimeout(() => e.remove(), 1300); }
+function confetti(title, sub) {
+  if (!reduced) for (let i = 0; i < 70; i++) { const c = document.createElement('i'); c.className = 'conf'; c.style.left = Math.random() * 100 + 'vw'; c.style.background = ['#fbbf24', '#22d3ee', '#a78bfa', '#f472b6', '#4ade80'][i % 5]; c.style.setProperty('--dx', (Math.random() * 200 - 100) + 'px'); c.style.setProperty('--r', (Math.random() * 720) + 'deg'); c.style.animationDuration = (1.4 + Math.random() * 1.2) + 's'; c.style.animationDelay = Math.random() * .3 + 's'; $('#fxl').appendChild(c); setTimeout(() => c.remove(), 3000); }
+  const w = document.createElement('div'); w.className = 'bigwin'; w.innerHTML = `${title}<small>${sub}</small>`; $('#fxl').appendChild(w); setTimeout(() => w.remove(), 1700);
+}
+/* ---------- Carte d'appel ---------- */
+let AR_CUR = null, arFrom = null;
+function slotsFor(l) { const com = newBooking(l).com, out = []; for (const d of workDays(6)) for (const h of HOURS) { if (out.length >= 8) break; if (!(d === TODAY && h < NOW_H + 1) && !busy(com, d, h, l)) out.push([d, h]); } return [com, out]; }
+function openCard(id, tileEl) {
+  const l = leads[id], k = kindOf(l), [kl, kc] = KIND[k], [com, slots] = slotsFor(l); AR_CUR = id; arFrom = tileEl ? tileEl.getBoundingClientRect() : null;
+  const last = l.comments[l.comments.length - 1];
+  $('#arModal').innerHTML = `<div class="ar-card" style="--g:${kc}"><div class="top"><div><span class="kind" style="font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:8px;background:color-mix(in srgb, ${kc} 30%, transparent)">${kl}</span><h2>${esc(l.fn)} ${esc(l.ln.toUpperCase())}</h2><div class="sub2">${esc(l.addr)}, ${l.cp} ${esc(l.city)} · ${camName(l.camp)}</div></div><button type="button" class="ar-x" data-arx aria-label="Fermer">✕</button></div>
+    <div class="ar-phone"><b>${esc(l.phone)}</b><a class="ar-call" href="tel:${l.phone.replace(/\s/g, '')}">${ICO.call} Appeler</a>${l.phone2 ? `<span class="sub2">2ᵉ numéro : ${esc(l.phone2)}</span>` : ''}</div>
+    <div class="ar-info"><div><small>Chauffage</small><b>${l.heat}</b></div><div><small>Facture élec.</small><b>${l.elec} € / mois</b></div><div><small>Situation</small><b>${l.fam} · ${l.kids} enf.</b></div><div><small>Créneau</small><b>${l.slot || '—'}</b></div></div>
+    ${last ? `<div class="ar-script"><b>Dernier commentaire :</b> ${esc(last.t)}</div>` : `<div class="ar-script">« Bonjour ${esc(l.fn)}, je vous appelle suite à votre demande sur les panneaux solaires. Vous êtes bien propriétaire à ${esc(l.city)} ? Un conseiller passe dans votre secteur, je vous propose <b>${slots[0] ? dayLabel(slots[0][0]) + ' à ' + fh(slots[0][1]) : 'cette semaine'}</b> ? »</div>`}
+    <div class="ar-outs"><button type="button" class="ar-out big" data-o="rdv">RDV fixé <small>+${xpOf(l, XP.rdv)} XP</small><kbd>1</kbd></button><button type="button" class="ar-out" style="--c:#a78bfa" data-o="recall">À rappeler <small>+${xpOf(l, XP.recall)} XP</small><kbd>2</kbd></button><button type="button" class="ar-out" data-o="NRP">NRP <small>+${xpOf(l, XP.nrp)} XP</small><kbd>3</kbd></button><button type="button" class="ar-out" style="--c:#e11d48" data-o="P.I">Pas intéressé <small>+${xpOf(l, XP.out)} XP</small><kbd>4</kbd></button><button type="button" class="ar-out" style="--c:#334155" data-o="FAUX NUMÉRO">Faux numéro <small>+${xpOf(l, XP.out)} XP</small><kbd>5</kbd></button><button type="button" class="ar-out" style="--c:#be123c" data-o="HORS CRITÈRE">Hors critère <small>+${xpOf(l, XP.out)} XP</small><kbd>6</kbd></button></div>
+    <div class="ar-slots" id="arSlots" hidden><p>RDV avec ${byId[com].name} (${byId[com].zone}) · choisis le créneau :</p>${slots.map(([d, h]) => `<button type="button" data-slot="${d}|${h}">${fh(h)}<small>${dayLabel(d)}</small></button>`).join('')}</div>
+    <div class="ar-slots" id="arRecall" hidden><p>Rappeler quand ?</p>${[[TODAY, 14], [TODAY, 17], [TODAY, 18.5], [TODAY + 1, 10], [TODAY + 1, 14], [TODAY + 1, 17]].map(([d, h]) => `<button type="button" data-rc="${d}|${h}">${fh(h)}<small>${dayLabel(d)}</small></button>`).join('')}</div></div>`;
+  $('#arModal').hidden = false; $('#arModal').dataset.com = com; beep([[660, 0, .08]]);
+}
+function finish(l, base, msg, big) {
+  const now = Date.now(); AR.combo = now - AR.last < 120000 ? AR.combo + 1 : 0; AR.last = now; AR.best = Math.max(AR.best, AR.combo);
+  const gain = xpOf(l, base), s = AR.stats[AR.who]; s.xp += gain; s.calls++; l.calls++; if (big) s.rdv++; AR.played.add(l.id);
+  $('#arModal').hidden = true; const r = arFrom || { left: innerWidth / 2, top: innerHeight / 2, width: 0 };
+  fxXP(r.left + r.width / 2, r.top + 20, `+${gain} XP${AR.combo ? ' · combo ×' + (1 + .25 * Math.min(4, AR.combo)).toString().replace('.', ',') : ''}`);
+  const prevLvl = level(s.total + s.xp - gain);
+  if (big) { confetti('RDV !', `+${gain} XP · ${msg}`); beep([[523, 0, .12], [659, .12, .12], [784, .24, .12], [1046, .36, .3]]); arFeed(`<b>${byId[AR.who].name.split(' ')[0]}</b> fixe un RDV · ${esc(l.city)}`); }
+  else beep([[440, 0, .07], [554, .07, .1]]);
+  if (level(s.total + s.xp) > prevLvl) setTimeout(() => { confetti(`Niveau ${level(s.total + s.xp)} !`, 'Nouveau palier atteint'); beep([[392, 0, .15], [523, .15, .15], [659, .3, .15], [784, .45, .4]]); }, big ? 1500 : 200);
+  const el = document.querySelector(`[data-tile="${l.id}"]`); if (el) el.classList.add('boom');
+  setTimeout(() => { const i = AR.board.indexOf(l.id); if (i >= 0) AR.board[i] = AR.pile.length ? AR.pile.shift() : null; const old = document.querySelector(`[data-tile="${l.id}"]`); renderArena(true); if (old && i >= 0) { const tmp = document.createElement('div'); tmp.innerHTML = tileHTML(AR.board[i], 0); old.replaceWith(tmp.firstElementChild); } }, 430);
+}
+$('#board').addEventListener('click', e => { const t = e.target.closest('[data-tile]'); if (t) openCard(+t.dataset.tile, t); });
+$('#arModal').addEventListener('click', e => {
+  const l = leads[AR_CUR], t = e.target;
+  if (e.target.id === 'arModal' || t.closest('[data-arx]')) { $('#arModal').hidden = true; return; }
+  const o = t.closest('[data-o]');
+  if (o) { const v = o.dataset.o;
+    if (v === 'rdv') { $('#arSlots').hidden = false; $('#arRecall').hidden = true; return; }
+    if (v === 'recall') { $('#arRecall').hidden = false; $('#arSlots').hidden = true; return; }
+    l.status = v; if (v === 'NRP') { l.recallD = TODAY + 1; l.recallH = 17; } else { delete l.recallD; delete l.recallH; }
+    logH(l, `Arène : ${v}`); return finish(l, v === 'NRP' ? XP.nrp : XP.out, v); }
+  const sl = t.closest('[data-slot]'); if (sl) { const [d, h] = sl.dataset.slot.split('|').map(Number), com = $('#arModal').dataset.com;
+    Object.assign(l, { status: 'RDV', rdvD: TODAY, apptD: d, apptH: h, com, rdvSt: 'À CONFIRMER', type: 'Présentiel', label: 'Normal', cq: l.cq || 'lea', h: 10 }); delete l.recallD; delete l.recallH;
+    logH(l, `RDV pris (Arène) : ${dayLabel(d)} ${fh(h)} avec ${byId[com].name}`, 'c7'); return finish(l, XP.rdv, `${dayLabel(d)} ${fh(h)} avec ${byId[com].name.split(' ')[0]}`, true); }
+  const rc = t.closest('[data-rc]'); if (rc) { const [d, h] = rc.dataset.rc.split('|').map(Number); l.recallD = d; l.recallH = h; l.status = 'À RAPPELER'; logH(l, `Rappel (Arène) : ${dayLabel(d)} ${fh(h)}`, 'c4'); return finish(l, XP.recall, 'rappel'); }
+});
+$('#arWho').onchange = e => { AR.who = e.target.value; AR.combo = 0; buildPile(); renderArena(); };
+$('#arSnd').onclick = e => { AR.sound = !AR.sound; e.currentTarget.setAttribute('aria-pressed', AR.sound); e.currentTarget.textContent = 'Son : ' + (AR.sound ? 'activé' : 'coupé'); };
+document.addEventListener('keydown', e => { if ($('#arModal').hidden) return; if (e.key === 'Escape') { $('#arModal').hidden = true; return; } const m = { 1: 'rdv', 2: 'recall', 3: 'NRP', 4: 'P.I', 5: 'FAUX NUMÉRO', 6: 'HORS CRITÈRE' }[e.key]; if (m) { e.preventDefault(); $(`#arModal [data-o="${m}"]`).click(); } });
+// Les autres télépros jouent aussi : le classement bouge en direct
+setInterval(() => { if (page !== 'arena') return; const t = pick(TEL.filter(x => x.id !== AR.who)), s = AR.stats[t.id]; s.calls++; s.xp += XP.nrp;
+  if (Math.random() < .22) { s.rdv++; s.xp += XP.rdv; arFeed(`<b>${t.name.split(' ')[0]}</b> fixe un RDV`); const row = document.querySelector(`[data-lb="${t.id}"]`); renderSide(); const r2 = document.querySelector(`[data-lb="${t.id}"]`); if (r2) { r2.classList.add('flash'); setTimeout(() => r2.classList.remove('flash'), 900); } }
+  else if (Math.random() < .3) arFeed(`<b>${t.name.split(' ')[0]}</b> enchaîne ${2 + Math.floor(Math.random() * 4)} appels`); }, 6000);
+buildPile();
 
 /* ================= Démarrage ================= */
 Chart.defaults.font.family = 'Nunito'; Chart.defaults.color = tok('muted');
