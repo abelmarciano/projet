@@ -1,0 +1,322 @@
+<title>Chat Growthity — pastilles</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,650;12..96,700&family=Geist:wght@400;500;600&display=swap">
+<style>
+/* Même maquette que « Marques dans le Chat » (console, thème clair), avec deux pastilles en plus dans la zone de saisie : Acteur et Produit.
+   Layout : menu · conversations · chat, la barre de saisie porte Marque · Acteur · Produit. Données d'exemple. */
+:root{--bg:#F3F4F6;--surface:#FFFFFF;--raised:#F9FAFB;--sunk:#ECEEF2;--line:#E3E5EA;--line-2:#D3D6DD;--fg:#101217;--muted:#5A606D;--dim:#676D7B;
+--accent:#5B3FE4;--accent-soft:#EDEAFE;--accent-ink:#3F27C2;--ok:#14955A;--ok-soft:#E3F5EC;
+--fem:#B4235F;--fem-soft:#FCE7F1;--hom:#0756D6;--hom-soft:#E1ECFF;--onacc:#FFFFFF;
+--display:"Bricolage Grotesque","Geist",system-ui,sans-serif;--ui:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:light}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:14px/1.5 var(--ui)}
+button{font:inherit;color:inherit}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+svg.i{width:16px;height:16px;flex:none}
+.mock{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-block:8px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));background:var(--fg);color:#E8E9EE;font-size:12.5px}
+.mock b{font-weight:600}.mock span{opacity:.75}
+.wrap{max-width:1280px;margin:0 auto;padding-block:24px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:18px}
+h1{margin:0;font-family:var(--display);font-weight:650;font-size:clamp(22px,3vw,28px);letter-spacing:-.02em;text-wrap:balance}
+.lead{margin:4px 0 0;color:var(--muted);max-width:76ch}
+.app{display:grid;grid-template-columns:236px 280px minmax(0,1fr);height:780px;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 1px 2px rgba(16,18,23,.05),0 18px 40px -24px rgba(16,18,23,.25)}
+
+/* ---- Menu principal ---- */
+.side{border-right:1px solid var(--line);background:var(--surface);padding:14px 10px;display:flex;flex-direction:column;gap:2px;min-height:0}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 8px 12px;font-family:var(--display);font-weight:650;font-size:17px;letter-spacing:-.01em}
+.logo{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:#0E0D14;flex:none}
+.logo svg{width:17px;height:17px}
+.dotai{color:var(--dim);font-weight:500}
+.side .bsw{margin-bottom:8px}
+.nv{display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:9px;color:var(--muted);font-size:13.5px;font-weight:500;position:relative}
+.nv[aria-current="page"]{background:var(--sunk);color:var(--fg);font-weight:600}
+.nv[aria-current="page"] svg{color:var(--accent)}
+.nv[aria-current="page"]::before{content:"";position:absolute;left:-10px;top:8px;bottom:8px;width:3px;border-radius:2px;background:var(--accent)}
+.ng{padding:12px 10px 4px;font-size:11px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:.07em}
+
+/* ---- Conversations ---- */
+.list{border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0;background:var(--raised)}
+.lhead{padding:14px 12px 10px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--line)}
+.ltitle{display:flex;align-items:baseline;gap:8px;font-size:15px;font-weight:600}
+.ltitle small{font-size:12px;font-weight:400;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bsw{position:relative}
+.bbtn{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer;text-align:left}
+.bbtn:hover{border-color:var(--line-2)}
+.bbtn b{display:block;font-size:13.5px;font-weight:600;line-height:1.2}
+.bbtn small{display:block;font-size:11.5px;color:var(--dim);line-height:1.25}
+.bbtn .chev{margin-left:auto;color:var(--dim)}
+.mark{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;flex:none;font-size:11.5px;font-weight:700;color:var(--onacc);overflow:hidden}
+.mark.sm{width:20px;height:20px;border-radius:6px;font-size:9px}
+.mark.blank{background:var(--surface);border:1.5px dashed var(--line-2);color:var(--dim)}
+.mark.all{background:var(--sunk);color:var(--muted)}
+.menu{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 48px -18px rgba(16,18,23,.35);padding:6px}
+.mi{display:flex;align-items:center;gap:10px;width:100%;padding:8px;border:0;border-radius:9px;background:none;cursor:pointer;text-align:left}
+.mi:hover{background:var(--sunk)}
+.mi b{font-size:13px;font-weight:600;display:block;line-height:1.2}
+.mi small{font-size:11.5px;color:var(--dim);display:block}
+.mi .ck{margin-left:auto;color:var(--accent)}
+.mi .pr{margin-left:auto;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.menu hr,.pmenu hr{border:0;border-top:1px solid var(--line);margin:6px 2px}
+.newc{display:flex;align-items:center;justify-content:center;gap:8px;height:36px;border-radius:10px;border:0;background:var(--accent);color:var(--onacc);font-weight:600;font-size:13.5px;cursor:pointer}
+.search{display:flex;align-items:center;gap:8px;height:34px;padding:0 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--dim);font-size:13px}
+.scroll{flex:1;overflow-y:auto;padding:8px 8px 16px}
+.grp{display:flex;align-items:center;gap:8px;padding:12px 8px 6px;font-size:12px;font-weight:600}
+.grp .n{margin-left:auto;font-weight:500;color:var(--dim);font-size:11.5px}
+.rows{display:flex;flex-direction:column;gap:1px}
+.row{display:flex;gap:10px;align-items:flex-start;width:100%;padding:8px;border:0;border-radius:9px;background:none;cursor:pointer;text-align:left}
+.row:hover{background:var(--sunk)}
+.row[aria-current="true"]{background:var(--surface);box-shadow:0 0 0 1px var(--line)}
+.row .ic{margin-top:2px;color:var(--dim)}
+.row .ic.v{color:var(--accent)}
+.row div{min-width:0;flex:1}
+.row b{display:block;font-size:13px;font-weight:500;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row[aria-current="true"] b{font-weight:600}
+.row small{display:block;font-size:11.5px;color:var(--dim);line-height:1.3;margin-top:1px}
+
+/* ---- Chat ---- */
+.chat{display:flex;flex-direction:column;min-width:0;min-height:0}
+.chead{display:flex;align-items:center;gap:10px;padding:14px 20px;border-bottom:1px solid var(--line)}
+.chead b{font-size:14.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chead small{color:var(--dim);font-size:12px;white-space:nowrap}
+.msgs{flex:1;overflow-y:auto;padding:24px 20px;display:flex;flex-direction:column;gap:14px}
+.m{max-width:600px;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.55}
+.m.u{align-self:flex-end;background:var(--accent);color:var(--onacc);border-bottom-right-radius:4px}
+.m.a{align-self:flex-start;background:var(--raised);border:1px solid var(--line);border-bottom-left-radius:4px}
+.plan{display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 12px;margin-top:8px;font-size:13px}
+.plan dt{color:var(--dim)}.plan dd{margin:0}
+.brief{align-self:flex-start;width:min(600px,100%);display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:0 1px 2px rgba(16,18,23,.05),0 12px 32px -18px rgba(16,18,23,.22)}
+.brief div{flex:1;min-width:0}.brief b{display:block;font-size:13.5px}.brief small{display:block;font-size:12px;color:var(--dim)}
+.go{height:36px;padding:0 14px;border:0;border-radius:10px;background:var(--accent);color:var(--onacc);font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap}
+.sugs{display:flex;gap:8px;flex-wrap:wrap}
+.sug{height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:12.5px;cursor:pointer}
+.sug:hover{border-color:var(--accent);color:var(--accent-ink)}
+.note{align-self:center;display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:var(--sunk);color:var(--muted);font-size:12px}
+.comp{padding:12px 20px 18px;border-top:1px solid var(--line)}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;position:relative}
+.pill{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 8px 0 4px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:12.5px;cursor:pointer}
+.pill:hover{border-color:var(--line-2)}
+.pill[aria-expanded="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink)}
+.pill .lab{color:var(--dim)}
+.pill b{font-weight:600}
+.pill .pr{color:var(--dim);font-variant-numeric:tabular-nums}
+.pill.blank{border-style:dashed;color:var(--muted);padding-left:8px}
+.who{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex:none}
+.who svg{width:14px;height:14px}
+.who.f{background:var(--fem-soft);color:var(--fem)}
+.who.h{background:var(--hom-soft);color:var(--hom)}
+.who.n{background:var(--sunk);color:var(--muted)}
+.prod{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;flex:none;border:1px solid var(--line);background:var(--surface);color:var(--muted)}
+.prod svg{width:13px;height:13px}
+.pmenu{position:absolute;left:0;bottom:calc(100% + 6px);z-index:20;width:300px;max-width:calc(100vw - 32px);background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 48px -18px rgba(16,18,23,.35);padding:6px}
+.pmenu.wide{width:420px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{height:30px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:12.5px;cursor:pointer}
+.tab[aria-selected="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+.agrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.act{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:0;overflow:hidden;cursor:pointer;text-align:left}
+.act[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.act .ph{position:relative;height:84px}
+.act .ph .who{position:absolute;left:6px;bottom:6px}
+.act span.nm{padding:6px 8px;font-size:12.5px;font-weight:500}
+.pfoot{display:flex;align-items:center;gap:8px;border-top:1px solid var(--line);padding-top:10px}
+.lnk{border:0;background:none;color:var(--accent-ink);font-weight:600;font-size:12.5px;cursor:pointer;padding:0}
+.none{margin-left:auto;height:32px;padding:0 12px;border:1px solid var(--line);border-radius:9px;background:var(--surface);font-size:12.5px;cursor:pointer}
+.box{display:flex;align-items:flex-end;gap:10px;padding:10px 10px 10px 14px;border:1px solid var(--line-2);border-radius:14px;background:var(--surface)}
+.box span{flex:1;color:var(--dim);font-size:13.5px;padding-bottom:4px}
+.send{width:34px;height:34px;border-radius:10px;border:0;background:var(--accent);color:var(--onacc);display:grid;place-items:center}
+.plus{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--muted);display:grid;place-items:center}
+.hint{margin-top:8px;font-size:12px;color:var(--dim)}
+
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.nt{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.nt b{display:block;font-size:13.5px;margin-bottom:4px}
+.nt p{margin:0;font-size:13px;color:var(--muted)}
+.nt i{font-style:normal;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--accent);color:var(--onacc);font-size:11px;font-weight:700;margin-right:6px;vertical-align:1px}
+
+@media (max-width:980px){.app{grid-template-columns:240px minmax(0,1fr)}.side{display:none}}
+@media (max-width:700px){
+  .app{grid-template-columns:minmax(0,1fr);height:auto}
+  .list{border-right:0;border-bottom:1px solid var(--line);max-height:300px}
+  .chat{min-height:620px}
+  .pills{flex-wrap:nowrap;overflow-x:auto}
+  .pmenu.wide{width:calc(100vw - 48px)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="mock"><b>Maquette · Chat avec pastilles Marque, Acteur, Produit</b><span>Données d'exemple. Clique les pastilles sous la conversation : « Acteur » ouvre le choix rapide (Femmes / Hommes), « Produit » ouvre le catalogue. Change de marque dans le menu en haut à gauche.</span></div>
+
+<div class="wrap">
+  <div>
+    <h1>Marque, acteur et produit, visibles au moment d'écrire</h1>
+    <p class="lead">Même Chat qu'avant. Trois pastilles au-dessus de la saisie disent avec quoi Claude va générer : la marque, la personne à l'image et le produit. Rien de choisi = pointillés, et Claude décide. Le « + » reste pour les pièces jointes ponctuelles.</p>
+  </div>
+
+  <div class="app">
+    <nav class="side" aria-label="Menu principal">
+      <div class="brand"><span class="logo"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><linearGradient id="lgG" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2563EB"/><stop offset=".52" stop-color="#7B61FF"/><stop offset="1" stop-color="#B05CF5"/></linearGradient></defs><path d="M2.5 17 8.5 11l5 5L21.5 8M16 8h5.5v5.5" stroke="url(#lgG)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>growthity<span class="dotai">.ai</span></span></div>
+      <div class="bsw">
+        <button class="bbtn" id="bbtn" aria-haspopup="menu" aria-expanded="false"></button>
+        <div class="menu" id="bmenu" role="menu" hidden></div>
+      </div>
+      <span class="nv"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-ic="home"></svg>Accueil</span>
+      <span class="nv" aria-current="page"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-ic="msg"></svg>Chat</span>
+      <span class="nv"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-ic="tag"></svg>Ma marque</span>
+      <div class="ng">Créer</div>
+      <span class="nv"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-ic="grid"></svg>Batch Studio</span>
+      <span class="nv"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-ic="vid"></svg>Éditeur vidéo</span>
+      <span class="nv"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-ic="user"></svg>Galerie d'acteurs</span>
+      <div class="ng">Mes pubs</div>
+      <span class="nv"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-ic="img"></svg>Créations</span>
+      <span class="nv"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-ic="mega"></svg>Campagnes</span>
+    </nav>
+    <aside class="list" aria-label="Conversations">
+      <div class="lhead">
+        <div class="ltitle" id="ltitle"></div>
+        <button class="newc" id="newc"></button>
+        <div class="search"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>Rechercher une conversation</div>
+      </div>
+      <div class="scroll" id="rows"></div>
+    </aside>
+
+    <section class="chat" aria-label="Conversation">
+      <header class="chead" id="chead"></header>
+      <div class="msgs" id="msgs"></div>
+      <div class="comp">
+        <div class="pills" id="pills"></div>
+        <div class="box"><button class="plus" aria-label="Joindre une photo, une vidéo ou une création"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><span>Demande une modification, une variante…</span><button class="send" aria-label="Envoyer"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button></div>
+        <div class="hint" id="hint"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="notes">
+    <div class="nt"><b><i>1</i>Trois pastilles, pas plus</b><p>Marque, Acteur, Produit : ce qui change chaque génération. Les pièces jointes ponctuelles (photos, créations, pubs de référence) restent dans le « + ».</p></div>
+    <div class="nt"><b><i>2</i>L'acteur en un coup d'œil</b><p>Petite icône femme (rose) ou homme (bleu) et le prénom. Le choix rapide montre les acteurs récents, filtrés Femmes / Hommes, sans quitter le Chat.</p></div>
+    <div class="nt"><b><i>3</i>Ce qui est choisi, Claude le suit</b><p>Un acteur choisi = vidéo face caméra avec lui. « Sans acteur » rend la main à Claude (voix off, produit seul…). Pareil pour le produit.</p></div>
+    <div class="nt"><b><i>4</i>Une seule validation</b><p>Claude annonce ce qu'il prépare, puis la carte « Brief prêt ». Tu vois le prompt et le coût avant de lancer.</p></div>
+  </div>
+</div>
+
+<script>
+const I={
+  chev:'<path d="m6 9 6 6 6-6"/>',check:'<path d="M20 6 9 17l-5-5"/>',plus:'<path d="M5 12h14M12 5v14"/>',
+  vid:'<path d="m16 13 5.2 3.5a.5.5 0 0 0 .8-.4V7.9a.5.5 0 0 0-.8-.4L16 11"/><rect x="2" y="6" width="14" height="12" rx="2"/>',
+  img:'<rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/>',
+  msg:'<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  home:'<path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/>',tag:'<path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/>',mega:'<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',grid:'<rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-3.5 4.5-5 8-5s6.5 1.5 8 5"/>',
+  box:'<path d="M3 8l9-5 9 5-9 5-9-5z"/><path d="M3 8v8l9 5 9-5V8"/>',
+  fem:'<path d="M6 21c.5-3.5 3-5.5 6-5.5s5.5 2 6 5.5"/><path d="M7.5 11c-1 2.5-.5 4.5.5 5M16.5 11c1 2.5.5 4.5-.5 5"/><circle cx="12" cy="9" r="3.5"/><path d="M7.5 11c0-5 2-7 4.5-7s4.5 2 4.5 7"/>',
+  hom:'<path d="M5 21c.8-3.8 3.6-5.5 7-5.5s6.2 1.7 7 5.5"/><circle cx="12" cy="9" r="3.8"/><path d="M8.2 8.2c.6-2.4 2-3.4 3.8-3.4s3.4 1 3.8 3.4"/>',
+};
+const ic=(n,c='i')=>`<svg class="${c}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]}</svg>`;
+const BRANDS=[
+  {id:'jwel',name:'Jwel',color:'#8A5A2B',sub:'Bijoux acier et plaqué or',prods:[{n:'Bracelet Trèfle',p:'19,99 €'},{n:'Bracelet Cercle',p:'15,99 €'},{n:'Bracelet en acier',p:'19,99 €'}]},
+  {id:'ilara',name:'Maison Ilara',color:'#6C5BD4',sub:'Bijoux fins',prods:[{n:'Collier Lyséa',p:'25 €'},{n:'Bague Nina',p:'35 €'},{n:'Collier Romy',p:'55 €'}]},
+  {id:'lead',name:'Leadeurs',color:'#3E7C6B',sub:'Agence web',prods:[]},
+];
+const ACTORS=[
+  {id:'isa',n:'Isabella',g:'f',bg:'linear-gradient(160deg,#EBD9CC,#C9A27E)'},
+  {id:'sarah',n:'Sarah A.',g:'f',bg:'linear-gradient(160deg,#F1E1D8,#B98B73)'},
+  {id:'lena',n:'Léna',g:'f',bg:'linear-gradient(160deg,#EADCE6,#A98AA0)'},
+  {id:'karim',n:'Karim',g:'h',bg:'linear-gradient(160deg,#DCE4EE,#8197B3)'},
+  {id:'thomas',n:'Thomas',g:'h',bg:'linear-gradient(160deg,#DFE7DD,#86A07E)'},
+  {id:'yanis',n:'Yanis',g:'h',bg:'linear-gradient(160deg,#E6E1D6,#9E9177)'},
+];
+const initials=n=>n.split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+const mark=(b,sm)=>b==='all'?`<span class="mark all${sm?' sm':''}">${ic('grid')}</span>`:b==='blank'?`<span class="mark blank${sm?' sm':''}">∅</span>`:`<span class="mark${sm?' sm':''}" style="background:${b.color}">${initials(b.name)}</span>`;
+const who=a=>a?`<span class="who ${a.g}">${ic(a.g==='f'?'fem':'hom','')}</span>`:`<span class="who n">${ic('user','')}</span>`;
+const CONVS=[
+  {id:1,b:'jwel',t:'Soldes d\'hiver — Bracelet Trèfle',v:1,i:0,d:'à l\'instant',actor:'isa',prod:'Bracelet Trèfle',ask:'Fais-moi une vidéo pour les soldes d\'hiver, -30 % sur le bracelet'},
+  {id:2,b:'jwel',t:'Lancement Jwel — 3 bracelets',v:0,i:5,d:'11:58',actor:null,prod:null,ask:'Je veux lancer la marque avec mes 3 bracelets'},
+  {id:3,b:'ilara',t:'Parure Lyséa — visuel sans texte',v:0,i:1,d:'12:36',actor:null,prod:'Collier Lyséa',ask:'Une image de la parure Lyséa, sans texte'},
+  {id:4,b:'lead',t:'Mobilier de bureau en gros — devis',v:1,i:0,d:'hier',actor:null,prod:null,ask:'Je vends des chaises, bureaux et écrans en gros'},
+  {id:5,b:'blank',t:'Vidéo générique « artisan RGE »',v:1,i:0,d:'ven.',actor:'karim',prod:null,ask:'Une vidéo neutre pour un artisan RGE'},
+];
+const S={brand:'jwel',cur:1,menu:null,filter:'all',bmenu:false,note:''};
+const brandOf=id=>id==='blank'?'blank':BRANDS.find(b=>b.id===id);
+const actorOf=id=>ACTORS.find(a=>a.id===id)||null;
+const meta=c=>[c.v?`${c.v} vidéo${c.v>1?'s':''}`:'',c.i?`${c.i} image${c.i>1?'s':''}`:'',c.v||c.i?'':'Discussion',c.d].filter(Boolean).join(' · ');
+const rowHtml=c=>`<button class="row" data-c="${c.id}" ${S.cur===c.id?'aria-current="true"':''}>${ic(c.v?'vid':c.i?'img':'msg','i ic'+(c.v||c.i?' v':''))}<div><b>${c.t}</b><small>${meta(c)}</small></div></button>`;
+document.querySelectorAll('[data-ic]').forEach(el=>{el.innerHTML=I[el.dataset.ic]});
+
+function plan(c,cb){
+  const a=actorOf(c.actor);const blank=cb==='blank';
+  const pr=!blank&&c.prod?cb.prods.find(p=>p.n===c.prod):null;
+  const qui=a?`${a.n}, face caméra`:'Voix off, sans personne à l\'image';
+  const fmt=c.i&&!c.v?'Image 4:5':'Vidéo verticale 9:16 · 8 s';
+  const ia=c.i&&!c.v?'Nano Banana 2 — rendu photo fidèle au produit':a?'Veo 3.1 — français naturel, lèvres synchronisées':'Veo 3.1 — image soignée et voix française naturelle';
+  const sujet=pr?`${pr.n} (${pr.p})`:blank?'Brief seul, sans marque':'Produit à préciser ou générique';
+  return `${a?`Je pars sur une vidéo face caméra avec <b>${a.n}</b>.`:'Je pars sur la formule qui convient le mieux, sans acteur.'} Voici ce que je prépare :
+    <dl class="plan"><dt>Format</dt><dd>${fmt}</dd><dt>Qui parle</dt><dd>${qui}</dd><dt>Produit</dt><dd>${sujet}</dd><dt>IA</dt><dd>${ia}</dd></dl>`;
+}
+function render(){
+  const b=S.brand==='all'?'all':brandOf(S.brand);
+  const bb=document.getElementById('bbtn');
+  const label=b==='all'?'Toutes les marques':b==='blank'?'Marque blanche':b.name;
+  const sub=b==='all'?`${CONVS.length} conversations`:b==='blank'?'Pubs neutres, sans marque':b.sub;
+  bb.innerHTML=`${mark(b)}<span><b>${label}</b><small>${sub}</small></span>${ic('chev','i chev')}`;
+  bb.setAttribute('aria-expanded',S.bmenu);
+  const m=document.getElementById('bmenu');m.hidden=!S.bmenu;
+  const opt=(id,bo,l,s)=>`<button class="mi" role="menuitemradio" aria-checked="${S.brand===id}" data-b="${id}">${mark(bo)}<span><b>${l}</b><small>${s}</small></span>${S.brand===id?ic('check','i ck'):''}</button>`;
+  m.innerHTML=BRANDS.map(x=>opt(x.id,x,x.name,x.sub)).join('')+'<hr>'+opt('blank','blank','Marque blanche','Ni nom, ni logo, ni couleurs')+opt('all','all','Toutes les marques','Voir toutes les conversations');
+  document.getElementById('ltitle').innerHTML=`Conversations<small>${label}</small>`;
+  document.getElementById('newc').innerHTML=`${ic('plus')}Nouvelle conversation`;
+  const R=document.getElementById('rows');
+  if(S.brand==='all'){
+    R.innerHTML=[...BRANDS,'blank'].map(x=>{const id=x==='blank'?'blank':x.id;const l=CONVS.filter(c=>c.b===id);if(!l.length)return '';return `<div class="grp">${mark(x,true)}${x==='blank'?'Marque blanche':x.name}<span class="n">${l.length}</span></div><div class="rows">${l.map(rowHtml).join('')}</div>`}).join('');
+  } else {const l=CONVS.filter(c=>c.b===S.brand);R.innerHTML=l.length?`<div class="rows">${l.map(rowHtml).join('')}</div>`:'<p class="hint" style="padding:8px">Aucune conversation ici pour l\'instant.</p>'}
+  const c=CONVS.find(x=>x.id===S.cur)||CONVS[0];const cb=brandOf(c.b);const blank=cb==='blank';
+  const a=actorOf(c.actor);
+  document.getElementById('chead').innerHTML=`${ic(c.v?'vid':c.i?'img':'msg','i')}<b>${c.t}</b><small>· ${meta(c)}</small>`;
+  document.getElementById('msgs').innerHTML=`
+    <div class="m u">${c.ask}</div>
+    <div class="m a">${plan(c,cb)}</div>
+    <div class="brief"><div><b>Brief prêt</b><small>Tu verras le prompt et le coût avant de lancer. Rien n'est débité sans ton accord.</small></div><button class="go">Rédiger le prompt</button></div>
+    <div class="sugs"><button class="sug">Une autre accroche</button>${c.v?'<button class="sug">Aussi en image 4:5</button>':'<button class="sug">Aussi en vidéo</button>'}<button class="sug">${a?'Sans acteur, en voix off':'Avec un acteur face caméra'}</button></div>
+    ${S.note?`<div class="note">${S.note}</div>`:''}`;
+  // Pastilles
+  const pr=!blank&&c.prod?cb.prods.find(p=>p.n===c.prod):null;
+  let html=`<button class="pill${blank?' blank':''}" data-pill="brand" aria-haspopup="menu" aria-expanded="${S.menu==='brand'}">${mark(cb,true)}<b>${blank?'Marque blanche':cb.name}</b>${ic('chev')}</button>`;
+  html+=a?`<button class="pill" data-pill="actor" aria-haspopup="dialog" aria-expanded="${S.menu==='actor'}">${who(a)}<b>${a.n}</b>${ic('chev')}</button>`
+         :`<button class="pill blank" data-pill="actor" aria-haspopup="dialog" aria-expanded="${S.menu==='actor'}">${ic('user')}Acteur</button>`;
+  html+=pr?`<button class="pill" data-pill="prod" aria-haspopup="menu" aria-expanded="${S.menu==='prod'}"><span class="prod">${ic('box','')}</span><b>${pr.n}</b><span class="pr">${pr.p}</span>${ic('chev')}</button>`
+          :`<button class="pill blank" data-pill="prod" aria-haspopup="menu" aria-expanded="${S.menu==='prod'}">${ic('box')}Produit</button>`;
+  if(S.menu==='brand'){
+    html+=`<div class="pmenu" role="menu">${BRANDS.map(x=>`<button class="mi" data-pb="${x.id}">${mark(x,true)}<span><b>${x.name}</b></span>${c.b===x.id?ic('check','i ck'):''}</button>`).join('')}<hr><button class="mi" data-pb="blank">${mark('blank',true)}<span><b>Marque blanche</b><small>Ni nom, ni logo, ni couleurs</small></span>${blank?ic('check','i ck'):''}</button></div>`;
+  }
+  if(S.menu==='actor'){
+    const list=ACTORS.filter(x=>S.filter==='all'||x.g===S.filter);
+    html+=`<div class="pmenu wide" role="dialog" aria-label="Choisir un acteur">
+      <div class="tabs" role="tablist">${[['all','Tous'],['f','Femmes'],['h','Hommes']].map(([k,l])=>`<button class="tab" role="tab" aria-selected="${S.filter===k}" data-flt="${k}">${l}</button>`).join('')}</div>
+      <div class="agrid">${list.map(x=>`<button class="act" data-actor="${x.id}" aria-pressed="${c.actor===x.id}"><span class="ph" style="background:${x.bg}">${who(x)}</span><span class="nm">${x.n}</span></button>`).join('')}</div>
+      <div class="pfoot"><button class="lnk" data-act="gallery">Voir toute la galerie</button><button class="none" data-actor="">Sans acteur (Claude choisit)</button></div></div>`;
+  }
+  if(S.menu==='prod'){
+    const prods=blank?[]:cb.prods;
+    html+=`<div class="pmenu" role="menu">${prods.length?prods.map(p=>`<button class="mi" data-prod="${p.n}"><span class="prod">${ic('box','')}</span><span><b>${p.n}</b></span><span class="pr">${p.p}</span>${c.prod===p.n?ic('check','i ck'):''}</button>`).join(''):`<div class="mi" style="cursor:default"><span><b>${blank?'Pas de catalogue en marque blanche':'Catalogue vide'}</b><small>Importe des photos avec le « + »</small></span></div>`}<hr><button class="mi" data-prod=""><span><b>Sans produit</b><small>Claude travaille à partir du brief</small></span></button></div>`;
+  }
+  document.getElementById('pills').innerHTML=html;
+  document.getElementById('hint').textContent=blank?'Marque blanche : aucune identité de marque dans cette conversation.':`Claude génère pour ${cb.name}${a?`, avec ${a.n} face caméra`:''}${pr?`, sur le ${pr.n}`:''}.`;
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-b],[data-c],[data-pb],[data-pill],[data-flt],[data-actor],[data-prod],[data-act],#bbtn');
+  const inside=e.target.closest('.pmenu,.menu');
+  if(!t){if(!inside&&(S.bmenu||S.menu)){S.bmenu=false;S.menu=null;render()}return}
+  const d=t.dataset;const c=CONVS.find(x=>x.id===S.cur);
+  if(t.id==='bbtn'){S.bmenu=!S.bmenu;S.menu=null;return render()}
+  if(d.pill){S.menu=S.menu===d.pill?null:d.pill;S.bmenu=false;return render()}
+  if(d.flt){S.filter=d.flt;return render()}
+  if(d.actor!==undefined){c.actor=d.actor||null;if(c.actor){c.v=Math.max(c.v,1)}S.note=c.actor?`${actorOf(c.actor).n} choisie pour cette conversation : Claude prépare une vidéo face caméra avec elle.`.replace(/elle\.$/,actorOf(c.actor).g==='h'?'lui.':'elle.').replace(/choisie/,actorOf(c.actor).g==='h'?'choisi':'choisie'):'Sans acteur : Claude choisit la formule (voix off, produit seul…).';S.menu=null;return render()}
+  if(d.prod!==undefined){c.prod=d.prod||null;S.note=c.prod?`Produit choisi : ${c.prod}.`:'Sans produit : Claude part du brief.';S.menu=null;return render()}
+  if(d.act==='gallery'){S.note='« Voir toute la galerie » ouvre la Galerie d\'acteurs complète.';S.menu=null;return render()}
+  if(d.b){S.brand=d.b;S.bmenu=false;S.note='';const first=CONVS.find(x=>d.b==='all'||x.b===d.b);if(first&&d.b!=='all'&&!CONVS.some(x=>x.id===S.cur&&x.b===d.b))S.cur=first.id;return render()}
+  if(d.c){S.cur=+d.c;S.note='';S.menu=null;return render()}
+  if(d.pb){if(c.b!==d.pb){c.b=d.pb;if(d.pb==='blank')c.prod=null;const nb=brandOf(d.pb);S.note=d.pb==='blank'?'Conversation passée en marque blanche':`Conversation déplacée vers ${nb.name}`;if(S.brand!=='all')S.brand=d.pb}S.menu=null;return render()}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(S.bmenu||S.menu)){S.bmenu=false;S.menu=null;render()}});
+render();
+</script>
