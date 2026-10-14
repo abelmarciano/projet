@@ -108,6 +108,15 @@ svg.i{width:18px;height:18px;flex:none}
 .tb.ghost{border-color:transparent}
 .send{width:38px;height:38px;border-radius:11px;border:0;background:var(--accent);color:var(--onacc);display:grid;place-items:center;flex:none}
 .hint{margin-top:8px;font-size:12.5px;color:var(--dim)}
+.plw{position:relative;flex:none}
+.tb[aria-expanded="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink)}
+.plm{position:absolute;left:0;bottom:calc(100% + 10px);z-index:30;width:340px;max-width:calc(100vw - 40px);background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 50px -18px rgba(16,18,23,.38);padding:8px}
+.plm .lb{padding:8px 10px 4px;font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.pmi{display:flex;align-items:center;gap:12px;width:100%;padding:9px 10px;border:0;border-radius:11px;background:none;text-align:left}
+.pmi:hover{background:var(--raised)}
+.pmi .pmic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--sunk);color:var(--nav);flex:none}
+.pmi b{display:block;font-size:14px;font-weight:500;line-height:1.25}.pmi small{display:block;font-size:12px;color:var(--dim);line-height:1.3}
+.plm hr{border:0;border-top:1px solid var(--line);margin:6px 4px}
 
 /* ---- Grandes fenêtres de choix ---- */
 .scrim{position:fixed;inset:0;background:var(--scrim);display:grid;place-items:center;z-index:50;padding:24px}
@@ -209,7 +218,7 @@ svg.i{width:18px;height:18px;flex:none}
           <div class="field">
             <div class="ctx" id="ctx"></div>
             <div class="inrow">
-              <button class="tb" type="button" aria-label="Joindre une photo, une vidéo ou une création"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+              <span class="plw"><button class="tb" type="button" id="plusBtn" aria-haspopup="menu" aria-expanded="false" aria-label="Joindre"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button><div class="plm" id="plusMenu" role="menu" hidden></div></span>
               <label for="msg" hidden>Message</label>
               <textarea id="msg" rows="1" placeholder="Décris ta pub, ou demande une modification…"></textarea>
               <button class="tb ghost" type="button" aria-label="Dicter"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
@@ -234,7 +243,10 @@ const I={
   up:'<path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>',
   fem:'<path d="M6 21c.5-3.5 3-5.5 6-5.5s5.5 2 6 5.5"/><path d="M7.5 11c-1 2.5-.5 4.5.5 5M16.5 11c1 2.5.5 4.5-.5 5"/><circle cx="12" cy="9" r="3.5"/><path d="M7.5 11c0-5 2-7 4.5-7s4.5 2 4.5 7"/>',
   hom:'<path d="M5 21c.8-3.8 3.6-5.5 7-5.5s6.2 1.7 7 5.5"/><circle cx="12" cy="9" r="3.8"/><path d="M8.2 8.2c.6-2.4 2-3.4 3.8-3.4s3.4 1 3.8 3.4"/>',
-  logo:'<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',vid:'<rect x="3" y="5" width="14" height="14" rx="3"/><path d="M17 10l4-2v8l-4-2"/>',img:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 15l5-5 4 4 3-3 6 6"/>',spark:'<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/>',
+  logo:'<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
+  link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+  bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0 0 12 3z"/>',
+  mega:'<path d="M3 11v2l11 5V6z"/><path d="M14 8a4 4 0 0 1 0 8"/>',vid:'<rect x="3" y="5" width="14" height="14" rx="3"/><path d="M17 10l4-2v8l-4-2"/>',img:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 15l5-5 4 4 3-3 6 6"/>',spark:'<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/>',
 };
 const ic=(n,c='i',w=1.75)=>`<svg class="${c}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]}</svg>`;
 const BRANDS={jwel:{name:'Jwel',color:'#8A5A2B',prods:[
@@ -288,7 +300,25 @@ function render(){
   document.getElementById('hint').textContent=`Claude génère pour ${b.name}${a?`, avec ${a.n} face caméra`:', et choisit qui parle'}${ps.length?`, avec ${names}`:''}.`;
   renderModal();
 }
+const PLUS=[
+  ['Ajouter à ta pub',[
+    ['up','Importer des photos','Produit, logo, décor… depuis ton ordinateur','photos'],
+    ['link','Coller un lien produit','Je lis la page et récupère photos et prix','lien'],
+    ['vid','Joindre une vidéo ou un son','Je l\'analyse, ou je m\'en sers comme base','media'],
+  ]],
+  ['Depuis Growthity',[
+    ['img','Mes créations','Refaire, décliner ou prolonger une pub','creations'],
+    ['bulb','Pubs d\'inspiration','Des pubs concurrentes comme référence','inspi'],
+    ['mega','Mes campagnes','Pour en parler ou les améliorer','campagnes'],
+  ]],
+];
+function renderPlus(){
+  const m=document.getElementById('plusMenu'),b=document.getElementById('plusBtn');
+  b.setAttribute('aria-expanded',S.plus?'true':'false');m.hidden=!S.plus;
+  m.innerHTML=S.plus?PLUS.map(([lb,items],gi)=>`${gi?'<hr>':''}<div class="lb">${lb}</div>${items.map(([icn,t,s,k])=>`<button class="pmi" type="button" role="menuitem" data-plus="${k}"><span class="pmic">${ic(icn)}</span><span><b>${t}</b><small>${s}</small></span></button>`).join('')}`).join(''):'';
+}
 function renderModal(){
+  renderPlus();
   const el=document.getElementById('scrim');
   if(!S.modal){el.hidden=true;el.innerHTML='';return}
   el.hidden=false;
@@ -324,6 +354,10 @@ function renderModal(){
   }
 }
 document.addEventListener('click',e=>{
+  if(e.target.closest('#plusBtn')){S.plus=!S.plus;return renderPlus()}
+  const pi=e.target.closest('[data-plus]');
+  if(pi){const L={photos:'« Importer des photos » ouvre la sélection de fichiers.',lien:'« Coller un lien produit » place le curseur dans le champ pour coller l\'adresse.',media:'« Joindre une vidéo ou un son » ouvre la sélection de fichiers.',creations:'« Mes créations » ouvre la grille de tes créations à cocher.',inspi:'« Pubs d\'inspiration » ouvre la galerie Inspiration à cocher.',campagnes:'« Mes campagnes » ouvre la liste de tes campagnes à cocher.'};S.plus=false;S.note=L[pi.dataset.plus];return render()}
+  if(S.plus&&!e.target.closest('#plusMenu')){S.plus=false;renderPlus()}
   const t=e.target.closest('[data-open],[data-clear],[data-close],[data-flt],[data-pick],[data-multi],[data-pickset],[data-confirm],[data-new],[data-brand]');
   if(!t){if(e.target.id==='scrim'){S.modal=null;render()}return}
   const d=t.dataset;
@@ -338,6 +372,6 @@ document.addEventListener('click',e=>{
   if(d.new){S.note=d.new==='actor'?'« Créer un acteur » ouvre la création d\'avatar (photo ou description).':'« Importer un produit » ouvre l\'import de photos ou de lien.';S.modal=null;return render()}
   if(d.brand){S.brand=d.brand;if(d.brand==='blank')S.prods=[];S.note=d.brand==='blank'?'Conversation passée en marque blanche.':'Conversation passée sur Jwel.';S.modal=null;return render()}
 });
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.modal){S.modal=null;render()}});
+document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(S.plus){S.plus=false;renderPlus()}if(S.modal){S.modal=null;render()}});
 render();
 </script>
