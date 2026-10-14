@@ -1690,7 +1690,7 @@ footer a:hover{color:var(--fg)}
 .orb-h2{animation-delay:1.8s}
 @keyframes orb-halo{from{transform:scale(1);opacity:.8}to{transform:scale(1.9);opacity:0}}
 .orb-m{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:10px;padding:0;border:0;background:none;color:inherit;cursor:pointer;z-index:3}
-.orb-ph{display:block;width:78px;height:78px;border-radius:50%;background-size:118%;background-position:50% 30%;background-color:#1B1830;
+.orb-ph{display:block;width:78px;height:78px;border-radius:50%;background-size:112%;background-position:50% 22%;background-color:#1B1830;
   filter:saturate(.7) brightness(.74);box-shadow:0 0 0 1px rgba(255,255,255,.14),0 18px 40px -16px rgba(0,0,0,.8);transition:filter .5s,transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s}
 .orb-lb{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,255,.5);white-space:nowrap;transition:color .4s}
 .orb-m:hover .orb-ph{filter:saturate(.9) brightness(.9)}
