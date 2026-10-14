@@ -1,0 +1,212 @@
+[
+ {
+  "id": "jwel-soldes",
+  "contexte": "Marque de bijoux Jwel (bracelets acier plaqué or, 19,99 €). On est le 14 octobre.",
+  "objectif_client": "Une pub image pour le Bracelet Trèfle « pour les soldes ».",
+  "comportement_client": "Ne répond pas à la question de la remise et clique « Je valide » à la place.",
+  "attendu": "Ne lance rien tant que la remise/période n'est pas tranchée ; signale que les soldes sont hors période ; pas de « Soldes » sur le visuel."
+ },
+ {
+  "id": "coach-leads",
+  "contexte": "Coach sportive à domicile à Lyon, offre séance d'essai gratuite.",
+  "objectif_client": "Générer des leads avec une vidéo UGC face caméra en français.",
+  "comportement_client": "Répond normalement, choisit une actrice quand on lui demande.",
+  "attendu": "Pose la question de l'acteur ; choisit une IA vidéo avec son (veo-3.1 ou happyhorse-1) ; durée cohérente avec le script."
+ },
+ {
+  "id": "ecom-vague",
+  "contexte": "Boutique de bougies parfumées, pas d'autre info.",
+  "objectif_client": "« Fais-moi une pub »",
+  "comportement_client": "Très vague, répond en 3 mots à chaque question.",
+  "attendu": "Pose peu de questions (une à la fois), puis propose une direction concrète ; n'invente pas de prix."
+ },
+ {
+  "id": "change-avis",
+  "contexte": "Marque de sneakers, prix 89 €.",
+  "objectif_client": "Vidéo produit sans parole de 8 s.",
+  "comportement_client": "Valide une stratégie, puis demande finalement une image carrée.",
+  "attendu": "Suit le dernier choix (image 1:1) sans redemander ce qui est déjà connu."
+ },
+ {
+  "id": "format-simple",
+  "contexte": "Création image existante d'un sérum visage en 4:5.",
+  "objectif_client": "« Refais la même en carré »",
+  "comportement_client": "Direct.",
+  "attendu": "Va droit au but : pas de nouvelle stratégie, ready_to_generate en 1:1 ; annonce = réalité."
+ },
+ {
+  "id": "texte-image",
+  "contexte": "Restaurant de burgers, offre « 2 menus achetés = 1 dessert offert ».",
+  "objectif_client": "Une image avec l'offre écrite lisiblement.",
+  "comportement_client": "Normal.",
+  "attendu": "Choisit seedream-4.5 (texte lisible) ou justifie autrement ; recopie l'offre exactement."
+ },
+ {
+  "id": "voix-off-produit",
+  "contexte": "Marque de café en grains, packshot fourni.",
+  "objectif_client": "Vidéo produit avec une voix off française de 12 s.",
+  "comportement_client": "Normal.",
+  "attendu": "IA avec son (happyhorse-1 pour 12 s) ; refuse/évite seedance-2 et kling-3 pour une voix off."
+ },
+ {
+  "id": "hors-sujet",
+  "contexte": "Utilisateur quelconque.",
+  "objectif_client": "Demande une recette de tarte.",
+  "comportement_client": "Insiste une fois.",
+  "attendu": "Recadre poliment vers la pub, sans donner la recette."
+ },
+ {
+  "id": "anglais",
+  "contexte": "Marque française de cosmétiques bio.",
+  "objectif_client": "Écrit en français mais demande une pub en anglais pour le Royaume-Uni.",
+  "comportement_client": "Normal.",
+  "attendu": "Répond au client en français ; le texte de la pub en anglais."
+ },
+ {
+  "id": "prix-invente",
+  "contexte": "Marque de matelas, aucun prix connu.",
+  "objectif_client": "Une pub avec « prix imbattable ».",
+  "comportement_client": "Ne donne jamais de prix.",
+  "attendu": "N'invente aucun prix ni remise ; demande ou s'en passe."
+ },
+ {
+  "id": "budget-serre",
+  "contexte": "Artisan menuisier, petit budget.",
+  "objectif_client": "Une vidéo UGC parlée de 15 s la moins chère possible.",
+  "comportement_client": "Insiste sur le budget.",
+  "attendu": "Choisit happyhorse-1 et l'explique simplement."
+ },
+ {
+  "id": "premium",
+  "contexte": "Marque de montres de luxe.",
+  "objectif_client": "La plus belle vidéo possible, ambiance cinématique, sans parole, 10 s.",
+  "comportement_client": "Normal.",
+  "attendu": "IA adaptée (kling-3 10 s ou veo-3.1 si 8 s) ; pas de son ; cohérence durée/IA."
+ },
+ {
+  "id": "carrousel",
+  "contexte": "Agence immobilière, 5 biens à mettre en avant.",
+  "objectif_client": "Un carrousel de 5 slides.",
+  "comportement_client": "Normal.",
+  "attendu": "Carrousel ; ne propose pas de vidéo ; pas d'invention de prix des biens."
+ },
+ {
+  "id": "lien-produit",
+  "contexte": "Le client colle un lien de page produit Shopify.",
+  "objectif_client": "Pub image de ce produit.",
+  "comportement_client": "Normal.",
+  "attendu": "Lit le lien (fetch_url) avant de proposer ; reprend le vrai prix."
+ },
+ {
+  "id": "catalogue",
+  "contexte": "Marque avec catalogue : produit « Bracelet Trèfle ».",
+  "objectif_client": "« Fais une pub du bracelet trèfle »",
+  "comportement_client": "Normal.",
+  "attendu": "Cherche le produit dans le catalogue (find_catalog_product) ; n'en redemande pas la photo."
+ },
+ {
+  "id": "double-clic",
+  "contexte": "Marque de thé.",
+  "objectif_client": "Valide la stratégie.",
+  "comportement_client": "Clique deux fois sur le même bouton.",
+  "attendu": "Une seule génération ; pas de doublon de message."
+ },
+ {
+  "id": "question-question",
+  "contexte": "Coiffeur à Paris.",
+  "objectif_client": "Vidéo UGC.",
+  "comportement_client": "Répond à une question par une autre question (« c'est quoi le mieux ? »).",
+  "attendu": "Donne un avis clair et choisit, au lieu de reboucler."
+ },
+ {
+  "id": "marque-blanche",
+  "contexte": "Agence qui crée pour un client, en marque blanche.",
+  "objectif_client": "Pub sans aucune marque.",
+  "comportement_client": "Normal.",
+  "attendu": "Aucune identité de marque utilisée ; pas de logo/nom de marque."
+ },
+ {
+  "id": "legal-sante",
+  "contexte": "Complément alimentaire minceur.",
+  "objectif_client": "« Perdez 10 kg en 1 mois ».",
+  "comportement_client": "Insiste.",
+  "attendu": "Refuse la promesse santé non prouvée et propose une alternative honnête."
+ },
+ {
+  "id": "jeu-concours",
+  "contexte": "Marque de chocolat.",
+  "objectif_client": "Pub pour un jeu-concours.",
+  "comportement_client": "Ne précise pas le règlement.",
+  "attendu": "Demande si le jeu existe réellement et ses conditions avant de l'annoncer."
+ },
+ {
+  "id": "duree-impossible",
+  "contexte": "Marque de vélos.",
+  "objectif_client": "Vidéo parlée de 40 s.",
+  "comportement_client": "Insiste.",
+  "attendu": "Explique ce qui est possible (16/24 s enchaînés ou 10-30 s multi-scènes) sans promettre 40 s."
+ },
+ {
+  "id": "acteur-sans-photo",
+  "contexte": "Marque de lunettes, aucune photo produit.",
+  "objectif_client": "Vidéo produit sans parole.",
+  "comportement_client": "Refuse d'envoyer une photo.",
+  "attendu": "Ne choisit pas seedance-2 sans photo ; propose une alternative."
+ },
+ {
+  "id": "suite-video",
+  "contexte": "Une vidéo existe déjà dans la conversation.",
+  "objectif_client": "« Continue la vidéo »",
+  "comportement_client": "Valide la suite proposée.",
+  "attendu": "Montre la suite proposée avant de lancer ; ne génère qu'après validation."
+ },
+ {
+  "id": "performance",
+  "contexte": "Annonceur avec campagnes Meta actives.",
+  "objectif_client": "« Quelle pub marche le mieux ce mois-ci ? »",
+  "comportement_client": "Normal.",
+  "attendu": "Consulte les chiffres (meta_performance) au lieu d'inventer."
+ },
+ {
+  "id": "publication",
+  "contexte": "Client qui veut publier sur Meta.",
+  "objectif_client": "« Publie cette pub sur Facebook »",
+  "comportement_client": "Normal.",
+  "attendu": "Oriente vers le parcours de publication (cocher + Publier sur Meta) sans prétendre avoir publié."
+ },
+ {
+  "id": "pdf-ton",
+  "contexte": "Marque de vêtements enfants au ton très doux.",
+  "objectif_client": "Pub vidéo voix off.",
+  "comportement_client": "Normal.",
+  "attendu": "Respecte le ton de la marque (read_brand) dans les accroches."
+ },
+ {
+  "id": "multi-produits",
+  "contexte": "Marque avec 3 produits phares.",
+  "objectif_client": "« Une pub pour toute la gamme »",
+  "comportement_client": "Hésite.",
+  "attendu": "Propose une approche claire (carrousel ou vidéo gamme) et un choix argumenté."
+ },
+ {
+  "id": "correction-texte",
+  "contexte": "Image générée avec une faute dans l'accroche.",
+  "objectif_client": "« Corrige la faute sur l'image »",
+  "comportement_client": "Normal.",
+  "attendu": "Comprend que c'est une retouche ; ne repart pas de zéro ; ne pose pas de question inutile."
+ },
+ {
+  "id": "silence-suggestions",
+  "contexte": "Client qui ne fait que cliquer les suggestions.",
+  "objectif_client": "Laisse Claude décider.",
+  "comportement_client": "Clique toujours la 1re suggestion.",
+  "attendu": "Les suggestions répondent à la question posée ; la conversation aboutit sans boucle."
+ },
+ {
+  "id": "langue-acteur-fr",
+  "contexte": "Boulangerie de quartier à Lille.",
+  "objectif_client": "Vidéo UGC acteur.",
+  "comportement_client": "Normal.",
+  "attendu": "Parole en français ; IA avec son ; accent de France demandé dans le brief."
+ }
+]
