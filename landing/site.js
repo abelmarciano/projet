@@ -638,7 +638,7 @@
       m.addEventListener('mouseenter',function(){hold=Date.now()+5000;show(j)});
       m.addEventListener('click',function(){hold=Date.now()+8000;show(j)});
     });
-    show(5,true);
+    show(0,true);
     if(!REDUCE){onScreen(hub,function(v){vis=v});setInterval(function(){if(vis&&Date.now()>hold)show((i+1)%ms.length)},3200)}
   }
 

@@ -1668,9 +1668,9 @@ footer a:hover{color:var(--fg)}
 .orbsec::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 50% at 50% 58%,rgba(124,108,242,.22),transparent 70%),radial-gradient(30% 30% at 85% 15%,rgba(255,122,194,.08),transparent 70%);}
 .orbsec .head p{color:var(--night-muted)}
 .orb{position:relative;max-width:1100px;margin:0 auto}
-.orb-stage{position:relative;aspect-ratio:1000/640;max-width:100%}
+.orb-stage{position:relative;aspect-ratio:1000/660;max-width:100%}
 .orb-ring{position:absolute;left:50%;top:50%;border-radius:50%;border:1px solid rgba(255,255,255,.08);transform:translate(-50%,-50%)}
-.orb-r1{width:80%;height:78.1%}
+.orb-r1{width:84%;height:80.3%}
 .orb-r2{width:52%;height:50%;border-style:dashed;border-color:rgba(255,255,255,.07);animation:orb-spin 90s linear infinite}
 .orb-ring i{position:absolute;left:50%;top:-3px;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:#A898FF;box-shadow:0 0 12px 2px rgba(168,152,255,.7)}
 .orb-r1{animation:orb-spin 140s linear infinite reverse}
@@ -1690,7 +1690,7 @@ footer a:hover{color:var(--fg)}
 .orb-h2{animation-delay:1.8s}
 @keyframes orb-halo{from{transform:scale(1);opacity:.8}to{transform:scale(1.9);opacity:0}}
 .orb-m{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:10px;padding:0;border:0;background:none;color:inherit;cursor:pointer;z-index:3}
-.orb-ph{display:block;width:84px;height:84px;border-radius:50%;background-size:118%;background-color:#1B1830;
+.orb-ph{display:block;width:78px;height:78px;border-radius:50%;background-size:118%;background-position:50% 30%;background-color:#1B1830;
   filter:saturate(.7) brightness(.74);box-shadow:0 0 0 1px rgba(255,255,255,.14),0 18px 40px -16px rgba(0,0,0,.8);transition:filter .5s,transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s}
 .orb-lb{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,255,.5);white-space:nowrap;transition:color .4s}
 .orb-m:hover .orb-ph{filter:saturate(.9) brightness(.9)}
@@ -1711,7 +1711,7 @@ footer a:hover{color:var(--fg)}
   .orb-r2{width:50%;height:50%}
   .orb-lines{display:none}
   .orb-m{left:var(--mx);top:var(--my)}
-  .orb-ph{width:58px;height:58px}
+  .orb-ph{width:48px;height:48px}
   .orb-lb{display:none}
   .orb-core{width:112px;height:112px}
   .orb-core svg{width:34px;height:34px}
