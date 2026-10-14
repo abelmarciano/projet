@@ -101,6 +101,9 @@ svg.i{width:18px;height:18px;flex:none}
 .who.f{background:var(--fem-soft);color:var(--fem)}
 .who.h{background:var(--hom-soft);color:var(--hom)}
 .pth{width:24px;height:24px;border-radius:7px;flex:none}
+.stack{display:flex;align-items:center}
+.pth.st{position:relative;border:2px solid var(--surface);box-shadow:0 0 0 1px var(--line);margin-left:-9px}
+.pth.st:first-child{margin-left:0}
 .inrow{display:flex;align-items:flex-end;gap:8px}
 .inrow textarea{flex:1;min-width:0;border:0;outline:0;resize:none;font:15px/1.5 var(--ui);color:var(--fg);padding:6px 2px;background:transparent;min-height:36px}
 .inrow textarea::placeholder{color:var(--dim)}
@@ -266,7 +269,7 @@ const ACTORS=[
   {id:'yanis',n:'Yanis',g:'h',t:'20-25 ans · énergique',bg:'linear-gradient(170deg,#EDE8DD 0%,#BFAF8E 55%,#7A6A4A 100%)'},
   {id:'marc',n:'Marc',g:'h',t:'40-45 ans · expert',bg:'linear-gradient(170deg,#E6E6EC 0%,#ABADBE 55%,#62647A 100%)'},
 ];
-const S={brand:'jwel',actor:'isa',prods:['trefle'],modal:null,filter:'all',pick:null,picks:[],note:''};
+const S={brand:'jwel',actor:'isa',prods:['trefle','cercle','acier'],modal:null,filter:'all',pick:null,picks:[],note:''};
 const A=id=>ACTORS.find(a=>a.id===id)||null;
 const P=id=>BRANDS[S.brand].prods.find(p=>p.id===id)||null;
 const who=a=>`<span class="who ${a.g}">${ic(a.g==='f'?'fem':'hom','',2)}</span>`;
@@ -292,10 +295,15 @@ function render(){
   c+=a?`<button class="pill" type="button" data-open="actor">${who(a)}${a.n}<span class="x" role="button" aria-label="Retirer l'acteur" data-clear="actor">${ic('x','i',2).replace('class="i"','class="i" style="width:12px;height:12px"')}</span></button>`
       :`<button class="add" type="button" data-open="actor"><span class="pl">${ic('plus','',2.4)}</span>Ajouter un acteur</button>`;
   const xs=ic('x','i',2).replace('class="i"','class="i" style="width:12px;height:12px"');
-  const shown=ps.slice(0,2);
-  c+=shown.map(x=>`<button class="pill" type="button" data-open="prod"><span class="pth" style="background:${x.bg}"></span>${x.n}${ps.length===1?`<span class="pr">${x.p}</span>`:''}<span class="x" role="button" aria-label="Retirer ${x.n}" data-clear="prod:${x.id}">${xs}</span></button>`).join('');
-  if(ps.length>2)c+=`<button class="pill" type="button" data-open="prod" style="padding-left:10px">+${ps.length-2} produit${ps.length>3?'s':''}</button>`;
-  c+=`<button class="add" type="button" data-open="prod"><span class="pl">${ic('plus','',2.4)}</span>${ps.length?'Produit':'Ajouter un produit'}</button>`;
+  if(ps.length===1){
+    const x=ps[0];
+    c+=`<button class="pill" type="button" data-open="prod" title="Changer ou ajouter des produits"><span class="pth" style="background:${x.bg}"></span>${x.n}<span class="pr">${x.p}</span><span class="x" role="button" aria-label="Retirer ${x.n}" data-clear="prods">${xs}</span></button>`;
+  } else if(ps.length>1){
+    const st=ps.slice(0,3).map((x,i)=>`<span class="pth st" style="background:${x.bg};z-index:${3-i}"></span>`).join('');
+    c+=`<button class="pill" type="button" data-open="prod" title="${names}"><span class="stack">${st}</span>${ps.length} produits<span class="x" role="button" aria-label="Retirer tous les produits" data-clear="prods">${xs}</span></button>`;
+  } else {
+    c+=`<button class="add" type="button" data-open="prod"><span class="pl">${ic('plus','',2.4)}</span>Ajouter un produit</button>`;
+  }
   document.getElementById('ctx').innerHTML=c;
   document.getElementById('hint').textContent=`Claude génère pour ${b.name}${a?`, avec ${a.n} face caméra`:', et choisit qui parle'}${ps.length?`, avec ${names}`:''}.`;
   renderModal();
@@ -361,7 +369,7 @@ document.addEventListener('click',e=>{
   const t=e.target.closest('[data-open],[data-clear],[data-close],[data-flt],[data-pick],[data-multi],[data-pickset],[data-confirm],[data-new],[data-brand]');
   if(!t){if(e.target.id==='scrim'){S.modal=null;render()}return}
   const d=t.dataset;
-  if(d.clear!==undefined){e.stopPropagation();if(d.clear==='actor'){S.actor=null;S.note='Acteur retiré : Claude choisit qui parle.'}else{const id=d.clear.split(':')[1];S.prods=S.prods.filter(x=>x!==id);S.note=`${P(id).n} retiré.`}return render()}
+  if(d.clear!==undefined){e.stopPropagation();if(d.clear==='actor'){S.actor=null;S.note='Acteur retiré : Claude choisit qui parle.'}else{S.note=S.prods.length>1?'Produits retirés.':'Produit retiré.';S.prods=[]}return render()}
   if(d.open){S.modal=d.open;S.pick=d.open==='actor'?S.actor:null;S.picks=[...S.prods];return render()}
   if(d.close!==undefined){S.modal=null;return render()}
   if(d.flt){S.filter=d.flt;return renderModal()}
