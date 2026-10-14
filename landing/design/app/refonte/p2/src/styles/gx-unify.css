@@ -359,3 +359,9 @@ body.dark:has(.console-app) :is(.fixed.inset-0.z-50[class*="bg-black/80"], .fixe
 .console-app .gx-reco .gx-k .gx-ii, .console-app .gx-link .gx-ii, .console-app .gx-lh .gx-ii { vertical-align: -0.16em; }
 .console-app .gx-empty .gx-empty-raw { display: block; margin-top: 6px; overflow-wrap: anywhere; }
 .console-app .gx-empty-a > .gx-mq-emptyadd { width: 100%; max-width: 560px; }
+/* Connexion : tuile du logo Meta lisible en sombre (plus de blanc en dur). */
+.dark .console-app .gx-cx-mlogo { background: var(--gx-raised); border-color: var(--gx-line); }
+/* Une confirmation ouverte depuis un panneau latéral (gx-sheet, z-index 55) passe au-dessus. */
+.console-app-portal.gx-adlg.gx-confirm { z-index: 70; }
+/* Toute confirmation (AlertDialog .gx-adlg) passe au-dessus des panneaux latéraux .gx-sheet (z-index 55). */
+.console-app-portal.gx-adlg { z-index: 70; }
