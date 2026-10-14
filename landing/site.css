@@ -1690,7 +1690,7 @@ footer a:hover{color:var(--fg)}
 .orb-h2{animation-delay:1.8s}
 @keyframes orb-halo{from{transform:scale(1);opacity:.8}to{transform:scale(1.9);opacity:0}}
 .orb-m{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:10px;padding:0;border:0;background:none;color:inherit;cursor:pointer;z-index:3}
-.orb-ph{display:block;width:78px;height:78px;border-radius:50%;background-size:112%;background-position:50% 22%;background-color:#1B1830;
+.orb-ph{display:block;width:86px;height:86px;border-radius:50%;background-size:104%;background-position:50% 35%;background-color:#1B1830;
   filter:saturate(.7) brightness(.74);box-shadow:0 0 0 1px rgba(255,255,255,.14),0 18px 40px -16px rgba(0,0,0,.8);transition:filter .5s,transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s}
 .orb-lb{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,255,.5);white-space:nowrap;transition:color .4s}
 .orb-m:hover .orb-ph{filter:saturate(.9) brightness(.9)}
@@ -1698,7 +1698,11 @@ footer a:hover{color:var(--fg)}
 .orb-m.on .orb-lb{color:var(--night-fg)}
 .orb-m:focus-visible{outline:none}
 .orb-m:focus-visible .orb-ph{box-shadow:0 0 0 2px var(--night),0 0 0 4px #FFFFFF}
-.orb-cap{position:relative;max-width:620px;margin:8px auto 0;min-height:120px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.orb-cap{position:relative;max-width:760px;margin:12px auto 0;min-height:150px;display:flex;align-items:center;gap:28px;text-align:left}
+.orb-txt{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0}
+.orb-big{flex:none;width:150px;height:150px;border-radius:28px;background-size:cover;background-position:center;background-color:#1B1830;box-shadow:0 0 0 1px rgba(255,255,255,.14),0 0 0 6px rgba(168,152,255,.08),0 30px 70px -24px rgba(124,108,242,.7);transition:opacity .35s,transform .35s}
+.orb-cap.swap .orb-big{opacity:0;transform:scale(.96)}
+@media (max-width:760px){.orb-cap{flex-direction:column;text-align:center;gap:16px}.orb-txt{align-items:center}.orb-big{width:180px;height:180px}}
 .orb-n{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:rgba(245,243,255,.4)}
 .orb-n b{color:var(--night-fg);font-weight:500}
 .orb-role{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;background:linear-gradient(100deg,#A898FF,#D58BFF 55%,#FF7AC2);-webkit-background-clip:text;background-clip:text;color:transparent}

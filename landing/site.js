@@ -630,7 +630,7 @@
     function show(k,instant){
       if(k===i)return;i=k;
       ms.forEach(function(m,j){m.classList.toggle('on',j===k)});lit.forEach(function(p,j){p.classList.toggle('on',j===k)});
-      function txt(){role.textContent=ms[k].querySelector('.orb-lb').textContent;task.textContent=ms[k].dataset.task;num.textContent=('0'+(k+1)).slice(-2)}
+      function txt(){role.textContent=ms[k].querySelector('.orb-lb').textContent;task.textContent=ms[k].dataset.task;num.textContent=('0'+(k+1)).slice(-2);var bg=document.getElementById('tmbig');if(bg)bg.style.backgroundImage=ms[k].querySelector('.orb-ph').style.backgroundImage}
       if(instant||REDUCE){txt();return}
       cap.classList.add('swap');setTimeout(function(){txt();cap.classList.remove('swap')},300);
     }
