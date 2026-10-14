@@ -1,47 +1,43 @@
 <div class="head rv">
   <div class="eyebrow">Le cerveau</div>
   <h2>Un cerveau qui pense <span class="grad">comme votre client.</span></h2>
-  <p>Growthity ne remplit pas un modèle. Il lit votre marque, votre produit et votre cible, puis choisit l'angle, la personne à l'écran, le format et l'IA la plus adaptée. Un e-commerce, un cabinet B2B ou un artisan n'ont pas la même vidéo.</p>
+  <p>Growthity lit votre marque, votre produit et votre cible, puis décide de l'angle, de la personne à l'écran, du format et de l'IA la plus juste. Chaque activité a sa vidéo.</p>
 </div>
 <div class="br rv" id="brain">
   <div class="br-tabs" role="tablist" aria-label="Exemples de clients">
-    <button type="button" role="tab" aria-selected="true" data-s="0">Cosmétique<span class="pg"><i></i></span></button>
-    <button type="button" role="tab" aria-selected="false" data-s="1">Service B2B<span class="pg"><i></i></span></button>
-    <button type="button" role="tab" aria-selected="false" data-s="2">Déco maison<span class="pg"><i></i></span></button>
-    <button type="button" role="tab" aria-selected="false" data-s="3">Artisan local<span class="pg"><i></i></span></button>
+    <button type="button" role="tab" aria-selected="true" data-s="0">Cosmétique<i></i></button>
+    <button type="button" role="tab" aria-selected="false" data-s="1">Service B2B<i></i></button>
+    <button type="button" role="tab" aria-selected="false" data-s="2">Déco maison<i></i></button>
+    <button type="button" role="tab" aria-selected="false" data-s="3">Artisan local<i></i></button>
   </div>
 
   <div class="br-grid">
-    <div class="br-card br-in">
-      <div class="br-lb">Votre client</div>
-      <b class="br-who" id="brwho">Marque de soins visage</b>
-      <dl>
-        <dt>Vend</dt><dd id="brsell">Sérum éclat, 29 €</dd>
-        <dt>Cible</dt><dd id="brtarget">Femmes de 25 à 40 ans</dd>
-        <dt>Objectif</dt><dd id="brgoal">Ventes en ligne</dd>
-      </dl>
-      <div class="br-know"><small>Déjà dans votre espace</small><span>Votre marque</span><span>Vos produits</span><span>Vos pubs passées</span></div>
-    </div>
-
-    <div class="br-mind">
-      <div class="br-core" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4M17.6 6.5a3 3 0 0 0 .4-1.4M6 5.1a3 3 0 0 0 .4 1.4M12 18v-5"/></svg>
+    <div class="br-left">
+      <div class="br-brief">
+        <span class="br-lb">Le client</span>
+        <b class="br-who" id="brwho">Marque de soins visage</b>
+        <span class="br-meta" id="brmeta">Sérum éclat · Femmes de 25 à 40 ans · Ventes en ligne</span>
       </div>
       <ol class="br-steps" id="brsteps">
-        <li><small>Angle</small><span>Montrer le résultat sur la peau, en vrai</span></li>
-        <li><small>À l'écran</small><span>Une actrice qui teste le sérum face caméra</span></li>
-        <li><small>Format</small><span>Vidéo UGC 9:16 de 15 s pour les Reels</span></li>
-        <li><small>IA choisie</small><span>Veo 3.1, pour la voix et les lèvres synchronisées</span></li>
+        <li><span class="br-dot">01</span><span><small>Angle</small><b>Montrer le résultat sur la peau, en vrai</b></span></li>
+        <li><span class="br-dot">02</span><span><small>À l'écran</small><b>Une actrice qui teste le sérum face caméra</b></span></li>
+        <li><span class="br-dot">03</span><span><small>Format</small><b>Vidéo UGC 9:16 de 15 s pour les Reels</b></span></li>
+        <li><span class="br-dot">04</span><span><small>IA choisie</small><b>Veo 3.1, pour la voix et les lèvres synchronisées</b></span></li>
       </ol>
     </div>
 
-    <div class="br-card br-out">
-      <div class="br-lb">La vidéo choisie</div>
-      <div class="br-media"><video id="brvid" muted loop playsinline preload="none" poster="media/lena-serum.poster.webp" data-src="media/lena-serum.mp4"></video><span class="br-tag" id="brtag">UGC démo produit</span></div>
+    <div class="br-right">
+      <div class="br-glow" aria-hidden="true"></div>
+      <div class="br-phone">
+        <div class="br-screen"><video id="brvid" muted loop playsinline preload="none" poster="media/lena-serum.poster.webp" data-src="media/lena-serum.mp4"></video></div>
+      </div>
+      <div class="br-chips" aria-label="Choix retenus">
+        <span class="br-chip" id="brc0">UGC démo produit</span>
+        <span class="br-chip" id="brc1">9:16 · 15 s</span>
+        <span class="br-chip" id="brc2">Veo 3.1</span>
+      </div>
     </div>
   </div>
 
-  <div class="br-types" aria-label="Types de vidéos possibles">
-    <span data-t="ugc" class="on">Face caméra UGC</span><span data-t="demo" class="on">Démo produit</span><span data-t="temoin">Témoignage</span><span data-t="terrain">Sur le terrain</span><span data-t="avap">Avant / après</span><span data-t="cine">Voix off cinématique</span><span data-t="motion">Motion design</span><span data-t="anim">Animation d'image</span><span data-t="carrousel">Carrousel</span><span data-t="visuel">Visuel produit</span>
-  </div>
+  <p class="br-types" aria-label="Types de vidéos possibles"><span data-t="ugc" class="on">Face caméra</span><span data-t="demo" class="on">Démo produit</span><span data-t="temoin">Témoignage</span><span data-t="terrain">Sur le terrain</span><span data-t="avap">Avant / après</span><span data-t="cine">Voix off cinématique</span><span data-t="motion">Motion design</span><span data-t="anim">Animation d'image</span><span data-t="carrousel">Carrousel</span><span data-t="visuel">Visuel produit</span></p>
 </div>

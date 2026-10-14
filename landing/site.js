@@ -618,64 +618,72 @@
   })});
 })();
 
-/* Tout-en-un : chaque métier s'allume à tour de rôle et dit ce qu'il fait. Le cerveau : un client, un raisonnement, une vidéo. */
+/* Tout-en-un : chaque membre de l'équipe s'allume à tour de rôle. Le cerveau : un client, un raisonnement, une vidéo. */
 (function(){
   var REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
   function onScreen(el,cb){if('IntersectionObserver' in window)new IntersectionObserver(function(es){cb(es[0].isIntersecting)},{rootMargin:'0px 0px -10% 0px'}).observe(el);else cb(true)}
 
   var hub=document.getElementById('tmhub');
   if(hub){
-    var nodes=[].slice.call(hub.querySelectorAll('.tm-node')),paths=[].slice.call(hub.querySelectorAll('.tm-lines path')),
-        role=document.getElementById('tmrole'),task=document.getElementById('tmtask'),i=-1,t=0,vis=false;
-    function show(k){
-      i=k;nodes.forEach(function(n,j){n.classList.toggle('on',j===k)});paths.forEach(function(p,j){p.classList.toggle('on',j===k)});
-      role.textContent=nodes[k].querySelector('b').textContent;task.textContent=nodes[k].dataset.task;
-      var av=document.getElementById('tmav'),src=nodes[k].querySelector('.tm-av>svg');if(av&&src)av.innerHTML=src.outerHTML.replace(/\bcc(\d)/g,'ch$1');
+    var ms=[].slice.call(hub.querySelectorAll('.orb-m')),lit=[].slice.call(hub.querySelectorAll('.orb-lit path')),cap=hub.querySelector('.orb-cap'),
+        role=document.getElementById('tmrole'),task=document.getElementById('tmtask'),num=document.getElementById('tmnum'),i=-1,vis=false,hold=0;
+    function show(k,instant){
+      if(k===i)return;i=k;
+      ms.forEach(function(m,j){m.classList.toggle('on',j===k)});lit.forEach(function(p,j){p.classList.toggle('on',j===k)});
+      function txt(){role.textContent=ms[k].querySelector('.orb-lb').textContent;task.textContent=ms[k].dataset.task;num.textContent=('0'+(k+1)).slice(-2)}
+      if(instant||REDUCE){txt();return}
+      cap.classList.add('swap');setTimeout(function(){txt();cap.classList.remove('swap')},300);
     }
-    function tick(){if(vis)show((i+1)%nodes.length);t=setTimeout(tick,2600)}
-    nodes.forEach(function(n,j){n.addEventListener('mouseenter',function(){show(j)})});
-    show(5);
-    if(!REDUCE){onScreen(hub,function(v){vis=v});tick()}
+    ms.forEach(function(m,j){
+      m.addEventListener('mouseenter',function(){hold=Date.now()+5000;show(j)});
+      m.addEventListener('click',function(){hold=Date.now()+8000;show(j)});
+    });
+    show(5,true);
+    if(!REDUCE){onScreen(hub,function(v){vis=v});setInterval(function(){if(vis&&Date.now()>hold)show((i+1)%ms.length)},3200)}
   }
 
   var br=document.getElementById('brain');
   if(br){
     var S=[
-      {who:'Marque de soins visage',sell:'Sérum éclat, 29 €',target:'Femmes de 25 à 40 ans',goal:'Ventes en ligne',
+      {who:'Marque de soins visage',meta:'Sérum éclat · Femmes de 25 à 40 ans · Ventes en ligne',
        steps:['Montrer le résultat sur la peau, en vrai','Une actrice qui teste le sérum face caméra','Vidéo UGC 9:16 de 15 s pour les Reels','Veo 3.1, pour la voix et les lèvres synchronisées'],
-       vid:'lena-serum',tag:'UGC démo produit',types:['ugc','demo']},
-      {who:'Cabinet de conseil RH',sell:'Audit gratuit de 30 min',target:'Dirigeants de PME',goal:'Prospects qualifiés',
+       vid:'lena-serum',chips:['UGC démo produit','9:16 · 15 s','Veo 3.1'],types:['ugc','demo']},
+      {who:'Cabinet de conseil RH',meta:'Audit offert · Dirigeants de PME · Prospects qualifiés',
        steps:['Rassurer : un expert qui parle à un dirigeant','Un consultant en tenue pro, face caméra','Vidéo 4:5 avec formulaire de contact Meta','Veo 3.1, pour un ton posé et crédible'],
-       vid:'actor-thomas',tag:'Témoignage face caméra',types:['ugc','temoin']},
-      {who:'Bougies artisanales',sell:'Bougie parfumée, 24 €',target:'Amateurs de déco',goal:'Faire connaître la marque',
+       vid:'actor-thomas',chips:['Témoignage expert','4:5 · formulaire','Veo 3.1'],types:['ugc','temoin']},
+      {who:'Bougies artisanales',meta:'Bougie parfumée · Amateurs de déco · Notoriété',
        steps:["Créer l'ambiance plutôt qu'argumenter",'Personne à l’écran : le produit est la star','Vidéo cinématique 9:16 avec voix off','Kling 3.0, pour des mouvements de caméra fluides'],
-       vid:'bougie-916',tag:'Voix off cinématique',types:['cine','anim']},
-      {who:'Installateur de pompes à chaleur',sell:'Devis gratuit à domicile',target:'Propriétaires à 30 km',goal:'Demandes de devis',
+       vid:'bougie-916',chips:['Voix off cinématique','9:16 · 10 s','Kling 3.0'],types:['cine','anim']},
+      {who:'Installateur de pompes à chaleur',meta:'Devis gratuit · Propriétaires à 30 km · Demandes de devis',
        steps:['Montrer un vrai chantier, près de chez eux','Une technicienne sur le terrain, face caméra','Vidéo UGC 9:16 ciblée sur la zone','Veo 3.1, pour la voix et le décor réalistes'],
-       vid:'ugc-pac-awa',tag:'UGC sur le terrain',types:['ugc','terrain']}
+       vid:'ugc-pac-awa',chips:['UGC sur le terrain','9:16 · 20 s','Veo 3.1'],types:['ugc','terrain']}
     ];
-    var tabs=[].slice.call(br.querySelectorAll('.br-tabs button')),lis=[].slice.call(br.querySelectorAll('#brsteps li')),
-        chips=[].slice.call(br.querySelectorAll('.br-types span')),media=br.querySelector('.br-media'),cur=0,gen=0,vis2=false,DUR=7000;
+    var tabs=[].slice.call(br.querySelectorAll('.br-tabs button')),ol=document.getElementById('brsteps'),lis=[].slice.call(ol.querySelectorAll('li')),
+        types=[].slice.call(br.querySelectorAll('.br-types span')),screen=br.querySelector('.br-screen'),gen=0,vis2=false,DUR=8000;
     br.style.setProperty('--br-d',DUR+'ms');
     function set(id,v){document.getElementById(id).textContent=v}
     function wait(ms,g){return new Promise(function(r,x){setTimeout(function(){g===gen?r():x()},ms)})}
     async function play(k,g){
-      cur=k;tabs.forEach(function(b,j){b.setAttribute('aria-selected',j===k?'true':'false')});
-      var s=S[k];set('brwho',s.who);set('brsell',s.sell);set('brtarget',s.target);set('brgoal',s.goal);
-      lis.forEach(function(li,j){li.classList.remove('in');li.querySelector('span').textContent=s.steps[j]});
-      chips.forEach(function(c){c.classList.remove('on')});
-      if(REDUCE){lis.forEach(function(li){li.classList.add('in')})}
-      else{br.classList.add('think');for(var j=0;j<lis.length;j++){await wait(550,g);lis[j].classList.add('in')}await wait(300,g);br.classList.remove('think')}
-      var v=media.querySelector('video');
+      tabs.forEach(function(b,j){b.setAttribute('aria-selected',j===k?'true':'false')});
+      var s=S[k];
+      br.classList.remove('done');br.classList.add('swap');
+      if(!REDUCE)await wait(300,g);
+      set('brwho',s.who);set('brmeta',s.meta);br.classList.remove('swap');
+      lis.forEach(function(li,j){li.classList.remove('in');li.querySelector('b').textContent=s.steps[j]});ol.style.setProperty('--fill','0%');
+      types.forEach(function(c){c.classList.remove('on')});
+      var v=screen.querySelector('video');
       if(v.dataset.src!=='media/'+s.vid+'.mp4'){
         var nv=document.createElement('video');nv.muted=true;nv.loop=true;nv.playsInline=true;nv.setAttribute('playsinline','');nv.setAttribute('muted','');nv.preload='none';
         nv.poster='media/'+s.vid+'.poster.webp';nv.dataset.src='media/'+s.vid+'.mp4';v.replaceWith(nv);
       }
-      set('brtag',s.tag);chips.forEach(function(c){c.classList.toggle('on',s.types.indexOf(c.dataset.t)>=0)});
+      if(REDUCE){lis.forEach(function(li){li.classList.add('in')});ol.style.setProperty('--fill','100%')}
+      else{br.classList.add('think');for(var j=0;j<lis.length;j++){await wait(650,g);lis[j].classList.add('in');ol.style.setProperty('--fill',(j/(lis.length-1)*100)+'%')}await wait(350,g);br.classList.remove('think')}
+      s.chips.forEach(function(c,j){set('brc'+j,c)});br.classList.add('done');
+      types.forEach(function(c){c.classList.toggle('on',s.types.indexOf(c.dataset.t)>=0)});
     }
     async function loop(start){
       var g=++gen,k=start;
-      try{while(true){await play(k,g);if(REDUCE)return;await wait(DUR-2800,g);while(!vis2)await wait(400,g);k=(k+1)%S.length}}catch(e){}
+      try{while(true){await play(k,g);if(REDUCE)return;await wait(DUR-3300,g);while(!vis2)await wait(400,g);k=(k+1)%S.length}}catch(e){}
     }
     tabs.forEach(function(b,j){b.addEventListener('click',function(){loop(j)})});
     onScreen(br,function(v){vis2=v});
