@@ -130,6 +130,9 @@ svg.i{width:18px;height:18px;flex:none}
 .card .ph .who{position:absolute;left:8px;top:8px}
 .card .ph .ok{position:absolute;right:8px;top:8px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--onacc);display:grid;place-items:center}
 .card .ph .ok svg{width:14px;height:14px}
+.box2{position:absolute;right:8px;top:8px;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line-2);background:var(--surface);display:grid;place-items:center;color:var(--onacc)}
+.box2.on{background:var(--accent);border-color:var(--accent)}
+.box2 svg{width:14px;height:14px}
 .card .cb{padding:10px 12px;display:flex;flex-direction:column;gap:1px}
 .card .cb b{font-size:14px;font-weight:600}.card .cb small{font-size:12.5px;color:var(--dim)}
 .card.new{border:1.5px dashed #B9AEF5;background:var(--raised);align-items:center;justify-content:center;gap:10px;text-align:center;color:var(--accent-ink);min-height:220px;padding:16px}
@@ -251,12 +254,13 @@ const ACTORS=[
   {id:'yanis',n:'Yanis',g:'h',t:'20-25 ans · énergique',bg:'linear-gradient(170deg,#EDE8DD 0%,#BFAF8E 55%,#7A6A4A 100%)'},
   {id:'marc',n:'Marc',g:'h',t:'40-45 ans · expert',bg:'linear-gradient(170deg,#E6E6EC 0%,#ABADBE 55%,#62647A 100%)'},
 ];
-const S={brand:'jwel',actor:'isa',prod:'trefle',modal:null,filter:'all',pick:null,note:''};
+const S={brand:'jwel',actor:'isa',prods:['trefle'],modal:null,filter:'all',pick:null,picks:[],note:''};
 const A=id=>ACTORS.find(a=>a.id===id)||null;
 const P=id=>BRANDS[S.brand].prods.find(p=>p.id===id)||null;
 const who=a=>`<span class="who ${a.g}">${ic(a.g==='f'?'fem':'hom','',2)}</span>`;
 function render(){
-  const b=BRANDS[S.brand],a=A(S.actor),p=P(S.prod),blank=S.brand==='blank';
+  const b=BRANDS[S.brand],a=A(S.actor),ps=S.prods.map(P).filter(Boolean),p=ps.length===1?ps[0]:null,blank=S.brand==='blank';
+  const names=ps.map(x=>x.n).join(', ').replace(/, ([^,]*)$/,' et $1');
   document.getElementById('wsSub').textContent=b.name;document.getElementById('cvSub').textContent=b.name;
   document.getElementById('wsIc').innerHTML=blank?ic('user'):`<span class="bm" style="background:${b.color}">J</span>`;
   const qui=a?`${a.n}, face caméra`:'Voix off, sans personne à l\'image';
@@ -264,7 +268,7 @@ function render(){
     <div class="you">Fais-moi une vidéo pour les soldes d'hiver, -30 % sur le bracelet</div>
     <div class="ai"><span class="av">${ic('logo','i',2.2)}</span><div class="tx">
       <p>C'est noté : <b>-30 %</b>${p?`, le ${p.n} passe de ${p.p} à <b>13,99 €</b>`:''}. ${a?`Je pars sur une vidéo face caméra avec <b>${a.n}</b>.`:'Sans acteur choisi, je pars sur une voix off.'} Voici ce que je prépare :</p>
-      <dl class="plan"><dt>Format</dt><dd>Vidéo verticale 9:16 · 8 s</dd><dt>Qui parle</dt><dd>${qui}</dd><dt>Produit</dt><dd>${p?`${p.n} (${p.p})`:'Générique, aucun produit choisi'}</dd><dt>IA</dt><dd>${a?'Veo 3.1 — français naturel, lèvres synchronisées':'Veo 3.1 — image soignée, voix française naturelle'}</dd></dl>
+      <dl class="plan"><dt>Format</dt><dd>Vidéo verticale 9:16 · 8 s</dd><dt>Qui parle</dt><dd>${qui}</dd><dt>${ps.length>1?'Produits':'Produit'}</dt><dd>${ps.length?ps.map(x=>`${x.n} (${x.p})`).join(' · '):'Générique, aucun produit choisi'}${ps.length>1?`<br><small style="color:var(--dim)">${ps.length} produits dans la même vidéo, chacun avec ses vraies photos.</small>`:''}</dd><dt>IA</dt><dd>${a?'Veo 3.1 — français naturel, lèvres synchronisées':'Veo 3.1 — image soignée, voix française naturelle'}</dd></dl>
     </div></div>
     <div class="brief"><div><b>Brief prêt</b><small>Tu verras le prompt et le coût avant de lancer. Rien n'est débité sans ton accord.</small></div><button class="go" type="button">Rédiger le prompt</button></div>
     <div class="slist">
@@ -275,10 +279,13 @@ function render(){
   let c=`<button class="pill" type="button" data-open="brand">${blank?`<span class="bm" style="background:var(--sunk);color:var(--muted)">∅</span>`:`<span class="bm" style="background:${b.color}">J</span>`}${b.name}${ic('chev','i',1.75).replace('class="i"','class="i" style="width:14px;height:14px;color:var(--dim)"')}</button>`;
   c+=a?`<button class="pill" type="button" data-open="actor">${who(a)}${a.n}<span class="x" role="button" aria-label="Retirer l'acteur" data-clear="actor">${ic('x','i',2).replace('class="i"','class="i" style="width:12px;height:12px"')}</span></button>`
       :`<button class="add" type="button" data-open="actor"><span class="pl">${ic('plus','',2.4)}</span>Ajouter un acteur</button>`;
-  c+=p?`<button class="pill" type="button" data-open="prod"><span class="pth" style="background:${p.bg};background-size:cover"></span>${p.n}<span class="pr">${p.p}</span><span class="x" role="button" aria-label="Retirer le produit" data-clear="prod">${ic('x','i',2).replace('class="i"','class="i" style="width:12px;height:12px"')}</span></button>`
-      :`<button class="add" type="button" data-open="prod"><span class="pl">${ic('plus','',2.4)}</span>Ajouter un produit</button>`;
+  const xs=ic('x','i',2).replace('class="i"','class="i" style="width:12px;height:12px"');
+  const shown=ps.slice(0,2);
+  c+=shown.map(x=>`<button class="pill" type="button" data-open="prod"><span class="pth" style="background:${x.bg}"></span>${x.n}${ps.length===1?`<span class="pr">${x.p}</span>`:''}<span class="x" role="button" aria-label="Retirer ${x.n}" data-clear="prod:${x.id}">${xs}</span></button>`).join('');
+  if(ps.length>2)c+=`<button class="pill" type="button" data-open="prod" style="padding-left:10px">+${ps.length-2} produit${ps.length>3?'s':''}</button>`;
+  c+=`<button class="add" type="button" data-open="prod"><span class="pl">${ic('plus','',2.4)}</span>${ps.length?'Produit':'Ajouter un produit'}</button>`;
   document.getElementById('ctx').innerHTML=c;
-  document.getElementById('hint').textContent=`Claude génère pour ${b.name}${a?`, avec ${a.n} face caméra`:', et choisit qui parle'}${p?`, sur le ${p.n}`:''}.`;
+  document.getElementById('hint').textContent=`Claude génère pour ${b.name}${a?`, avec ${a.n} face caméra`:', et choisit qui parle'}${ps.length?`, avec ${names}`:''}.`;
   renderModal();
 }
 function renderModal(){
@@ -299,13 +306,13 @@ function renderModal(){
   } else if(S.modal==='prod'){
     const prods=BRANDS[S.brand].prods;
     el.innerHTML=`<div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt">
-      <div class="mh"><div><h2 id="mt">Choisir un produit</h2><small>${S.brand==='blank'?'Pas de catalogue en marque blanche : importe des photos du produit.':`Catalogue ${BRANDS[S.brand].name} · ses vraies photos servent de référence.`}</small></div><button class="ib cl" type="button" data-close aria-label="Fermer">${ic('x')}</button></div>
+      <div class="mh"><div><h2 id="mt">Choisir des produits</h2><small>${S.brand==='blank'?'Pas de catalogue en marque blanche : importe des photos du produit.':`Catalogue ${BRANDS[S.brand].name} · ses vraies photos servent de référence.`}</small></div><button class="ib cl" type="button" data-close aria-label="Fermer">${ic('x')}</button></div>
       <div class="mbar"><div class="msrch" style="margin-left:0">${ic('srch')}Rechercher un produit</div></div>
       <div class="mbody"><div class="grid">
         <button class="card new" type="button" data-new="prod" style="min-height:200px"><span class="pl">${ic('up','i',2)}</span><b>Importer un produit</b><small>Photos, ou lien de la page produit</small></button>
-        ${prods.map(x=>`<button class="card prod" type="button" data-pick="${x.id}" aria-pressed="${S.pick===x.id}"><span class="ph" style="background:${x.bg}">${S.pick===x.id?`<span class="ok">${ic('check','',2.4)}</span>`:''}</span><span class="cb"><b>${x.n}</b><small>${x.p}</small></span></button>`).join('')}
+        ${prods.map(x=>{const on=S.picks.includes(x.id);return `<button class="card prod" type="button" data-multi="${x.id}" aria-pressed="${on}"><span class="ph" style="background:${x.bg}"><span class="box2${on?' on':''}">${on?ic('check','',2.6):''}</span></span><span class="cb"><b>${x.n}</b><small>${x.p}</small></span></button>`}).join('')}
       </div></div>
-      <div class="mf"><button class="btn" type="button" data-pickset="">Sans produit</button><small>Claude part du brief.</small><span class="sp"></span><button class="btn" type="button" data-close>Annuler</button><button class="btn pri" type="button" data-confirm ${S.pick?'':'disabled'}>Choisir ${S.pick?P(S.pick).n:''}</button></div>
+      <div class="mf"><button class="btn" type="button" data-pickset="">Sans produit</button><small>${S.picks.length?`${S.picks.length} sélectionné${S.picks.length>1?'s':''} · plusieurs produits possibles`:'Coche un ou plusieurs produits.'}</small><span class="sp"></span><button class="btn" type="button" data-close>Annuler</button><button class="btn pri" type="button" data-confirm ${S.picks.length?'':'disabled'}>${S.picks.length>1?`Choisir ces ${S.picks.length} produits`:S.picks.length?`Choisir ${P(S.picks[0]).n}`:'Choisir'}</button></div>
     </div>`;
   } else if(S.modal==='brand'){
     el.innerHTML=`<div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt" style="width:min(460px,100%)">
@@ -317,18 +324,19 @@ function renderModal(){
   }
 }
 document.addEventListener('click',e=>{
-  const t=e.target.closest('[data-open],[data-clear],[data-close],[data-flt],[data-pick],[data-pickset],[data-confirm],[data-new],[data-brand]');
+  const t=e.target.closest('[data-open],[data-clear],[data-close],[data-flt],[data-pick],[data-multi],[data-pickset],[data-confirm],[data-new],[data-brand]');
   if(!t){if(e.target.id==='scrim'){S.modal=null;render()}return}
   const d=t.dataset;
-  if(d.clear!==undefined){e.stopPropagation();if(d.clear==='actor'){S.actor=null;S.note='Acteur retiré : Claude choisit qui parle.'}else{S.prod=null;S.note='Produit retiré.'}return render()}
-  if(d.open){S.modal=d.open;S.pick=d.open==='actor'?S.actor:d.open==='prod'?S.prod:null;return render()}
+  if(d.clear!==undefined){e.stopPropagation();if(d.clear==='actor'){S.actor=null;S.note='Acteur retiré : Claude choisit qui parle.'}else{const id=d.clear.split(':')[1];S.prods=S.prods.filter(x=>x!==id);S.note=`${P(id).n} retiré.`}return render()}
+  if(d.open){S.modal=d.open;S.pick=d.open==='actor'?S.actor:null;S.picks=[...S.prods];return render()}
   if(d.close!==undefined){S.modal=null;return render()}
   if(d.flt){S.filter=d.flt;return renderModal()}
   if(d.pick){S.pick=d.pick;return renderModal()}
-  if(d.pickset!==undefined){if(S.modal==='actor'){S.actor=null;S.note='Sans acteur : Claude choisit la formule.'}else{S.prod=null;S.note='Sans produit : Claude part du brief.'}S.modal=null;return render()}
-  if(d.confirm!==undefined&&S.pick){if(S.modal==='actor'){S.actor=S.pick;const a=A(S.pick);S.note=`${a.n} ${a.g==='f'?'choisie':'choisi'} : vidéo face caméra avec ${a.g==='f'?'elle':'lui'}.`}else{S.prod=S.pick;S.note=`Produit choisi : ${P(S.pick).n}.`}S.modal=null;return render()}
+  if(d.multi){S.picks=S.picks.includes(d.multi)?S.picks.filter(x=>x!==d.multi):[...S.picks,d.multi];return renderModal()}
+  if(d.pickset!==undefined){if(S.modal==='actor'){S.actor=null;S.note='Sans acteur : Claude choisit la formule.'}else{S.prods=[];S.note='Sans produit : Claude part du brief.'}S.modal=null;return render()}
+  if(d.confirm!==undefined){if(S.modal==='actor'&&S.pick){S.actor=S.pick;const a=A(S.pick);S.note=`${a.n} ${a.g==='f'?'choisie':'choisi'} : vidéo face caméra avec ${a.g==='f'?'elle':'lui'}.`}else if(S.modal==='prod'&&S.picks.length){S.prods=[...S.picks];S.note=S.prods.length>1?`${S.prods.length} produits choisis : ils apparaîtront ensemble dans la pub.`:`Produit choisi : ${P(S.prods[0]).n}.`}else return;S.modal=null;return render()}
   if(d.new){S.note=d.new==='actor'?'« Créer un acteur » ouvre la création d\'avatar (photo ou description).':'« Importer un produit » ouvre l\'import de photos ou de lien.';S.modal=null;return render()}
-  if(d.brand){S.brand=d.brand;if(d.brand==='blank')S.prod=null;S.note=d.brand==='blank'?'Conversation passée en marque blanche.':'Conversation passée sur Jwel.';S.modal=null;return render()}
+  if(d.brand){S.brand=d.brand;if(d.brand==='blank')S.prods=[];S.note=d.brand==='blank'?'Conversation passée en marque blanche.':'Conversation passée sur Jwel.';S.modal=null;return render()}
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.modal){S.modal=null;render()}});
 render();
