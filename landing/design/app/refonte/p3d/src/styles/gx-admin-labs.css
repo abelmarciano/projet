@@ -1,0 +1,56 @@
+/* Admin : Model Lab, Grille tarifaire, Voice Lab. Même règle que gx-admin.css :
+   classes ad-, limitées à .gx-ad, jetons --gx-* (clair par défaut, sombre via .dark). */
+
+/* ---------- Model Lab ---------- */
+.gx-ad .ad-lab-form{display:flex;flex-direction:column;gap:16px}
+.gx-ad .ad-lab-g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.gx-ad .ad-lab-g3 .ad-sel{width:100%}
+.gx-ad .ad-chipf small{font-size:11px}
+.gx-ad .ad-lab-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:6px}
+.gx-ad .ad-lab-h h2{margin:0;font-family:var(--gx-display);font-size:18px;font-weight:650;letter-spacing:-.01em;color:var(--gx-fg)}
+.gx-ad .ad-lab-h small{font-size:12.5px;color:var(--gx-dim)}
+.gx-ad .ad-lab-bt{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0}
+.gx-ad .ad-lab-bt h2{max-width:100%;overflow-wrap:anywhere}
+.gx-ad .ad-lab-runs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.gx-ad .ad-lab-run{display:flex;flex-direction:column;gap:10px;padding:12px;border:1px solid var(--gx-line);border-radius:12px;background:var(--gx-raised);min-width:0}
+.gx-ad .ad-lab-rh{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
+.gx-ad .ad-lab-model{font-family:var(--gx-mono);font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.gx-ad .ad-lab-media{display:block;width:100%;border-radius:8px;background:var(--gx-sunk)}
+.gx-ad .ad-lab-916{aspect-ratio:9/16;object-fit:contain}
+.gx-ad .ad-lab-wait{display:flex;align-items:center;justify-content:center;gap:8px;height:128px;border-radius:8px;background:var(--gx-sunk);font-size:12.5px;color:var(--gx-dim)}
+.gx-ad .ad-lab-err{padding:8px 10px;border-radius:8px;background:var(--gx-bad-soft);color:var(--gx-bad-ink);font-size:12.5px;overflow-wrap:anywhere}
+.gx-ad .ad-lab-rf{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;color:var(--gx-dim)}
+.gx-ad .ad-ib.ad-lab-open{width:30px;height:30px;border-radius:8px}
+
+/* ---------- Grille tarifaire ---------- */
+.gx-ad .ad-pr-info{display:flex;flex-direction:column;gap:4px;padding:12px 16px;border:1px solid var(--gx-line);border-radius:var(--gx-r,14px);background:var(--gx-surface);font-size:13px;color:var(--gx-muted)}
+.gx-ad .ad-pr-info p{margin:0}
+.gx-ad .ad-pr-info b{color:var(--gx-fg);font-weight:600}
+.gx-ad .ad-cb.ad-pr-cb{padding:14px 0 4px}
+.gx-ad .ad-pr-table{min-width:900px}
+.gx-ad .ad-pr-table.ad-pr-packs{min-width:560px}
+.gx-ad .ad-pr-table td{padding:8px 14px}
+.gx-ad .ad-pr-in{width:100%;min-width:90px;height:34px;padding:0 10px;border:1px solid var(--gx-line);border-radius:9px;background:var(--gx-surface);color:var(--gx-fg);font:inherit;font-size:13px;outline:0}
+.gx-ad .ad-pr-in:focus{border-color:var(--gx-accent);box-shadow:0 0 0 3px var(--gx-accent-soft)}
+.gx-ad .ad-pr-annual{display:block;font-weight:600;color:var(--gx-fg)}
+.gx-ad .ad-pr-table small{display:block;font-size:12px}
+.gx-ad .ad-pr-table .ad-btn.sm{width:34px;padding:0}
+
+/* ---------- Voice Lab ---------- */
+.gx-ad .ad-vl{display:flex;flex-direction:column;gap:12px;padding:16px 18px}
+.gx-ad .ad-vl-h{display:flex;align-items:flex-start;gap:12px;min-width:0}
+.gx-ad .ad-vl-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--gx-accent-soft);color:var(--gx-accent-ink);flex:none}
+.gx-ad .ad-vl-h .ad-grow{flex:1;min-width:0}
+.gx-ad .ad-vl-h b{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600}
+.gx-ad .ad-vl-h small{display:block;font-size:12.5px;color:var(--gx-muted)}
+.gx-ad .ad-vl-id{display:block;margin-top:2px;font-family:var(--gx-mono);font-size:11px;color:var(--gx-dim);overflow-wrap:anywhere}
+.gx-ad .ad-vl-audio{width:100%;height:36px}
+.gx-ad .ad-vl-ld{margin-left:8px;font-size:13px}
+
+@media (max-width:640px){
+  .gx-ad .ad-lab-g3{grid-template-columns:minmax(0,1fr)}
+  .gx-ad .ad-lab-ch{flex-wrap:wrap}
+  .gx-ad .ad-lab-ch .ad-r{margin-left:0}
+  .gx-ad .ad-lab-runs{grid-template-columns:minmax(0,1fr)}
+  .gx-ad .ad-vl-h{flex-wrap:wrap}
+}
