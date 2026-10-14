@@ -462,6 +462,24 @@ body.split #pg-leads { padding-right: calc(min(580px, 100vw) + 24px); }
 @media (max-width: 700px) { .board { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ar-info { grid-template-columns: 1fr 1fr; } .ar-outs { grid-template-columns: 1fr 1fr; } #pg-arena { padding: 14px 16px 30px; } }
 @media (prefers-reduced-motion: reduce) { .tile, .tile.late, .ar-card, .xpfly, .bigwin { animation: none !important; } .tile.hot::after { animation: none; } .conf { display: none; } }
 
+#arStage { position: relative; height: max(560px, calc(100vh - 250px)); border-radius: 20px; overflow: hidden; touch-action: none; cursor: grab; background: radial-gradient(70% 60% at 50% 40%, rgba(99,102,241,.22), transparent 70%), rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.08); }
+#arStage canvas { display: block; }
+#arTags { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+#arLoad { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: #a5b4fc; font-weight: 800; }
+.boxlab { position: absolute; transform: translate(-50%, 4px); display: flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 12px; background: color-mix(in srgb, var(--c) 22%, rgba(15,13,46,.85)); border: 1px solid color-mix(in srgb, var(--c) 60%, transparent); box-shadow: 0 0 24px color-mix(in srgb, var(--c) 35%, transparent); white-space: nowrap; color: #fff; font-size: 13px; }
+.boxlab b { font-weight: 900; letter-spacing: .02em; }
+.boxlab span { font-weight: 900; font-size: 12px; background: var(--c); color: #0b0a24; border-radius: 8px; padding: 1px 8px; }
+.boxlab small { font-size: 10px; color: #c7d2fe; font-weight: 700; }
+.ctag { position: absolute; transform: translate(-50%, -100%); pointer-events: auto; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 1px; border: 1px solid color-mix(in srgb, var(--c) 60%, transparent); background: rgba(15,13,46,.82); color: #fff; border-radius: 9px; padding: 3px 8px; font: inherit; font-size: 11px; white-space: nowrap; line-height: 1.15; transition: transform .15s, box-shadow .15s, opacity .2s; }
+.ctag b { font-weight: 800; }
+.ctag em { font-style: normal; font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: .05em; color: color-mix(in srgb, var(--c) 40%, #fff); }
+.ctag.hot { border-color: #fbbf24; box-shadow: 0 0 14px rgba(251,191,36,.55); } .ctag.hot em { color: #fde68a; }
+.ctag.late { border-color: #f43f5e; box-shadow: 0 0 14px rgba(244,63,94,.6); animation: throb 1.4s infinite; } .ctag.late em { color: #fda4af; }
+.ctag.quiet { opacity: .6; font-size: 10px; padding: 2px 6px; }
+.ctag.quiet em { display: none; }
+.ctag.quiet.hover em { display: block; }
+.ctag:hover, .ctag.hover { transform: translate(-50%, calc(-100% - 3px)) scale(1.08); opacity: 1; z-index: 5; box-shadow: 0 0 0 2px #fbbf24, 0 8px 20px rgba(0,0,0,.4); }
+.ar-hint { font-size: 12px; color: #a5b4fc; margin-top: 10px; }
 /* Navigation de l'app */
 .nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: color-mix(in srgb, var(--surface) 82%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
 .nav .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--muted); font-size: 15px; margin-right: 10px; }
@@ -918,9 +936,9 @@ tfoot td { font-weight: 800; background: var(--surface-2); border-bottom: 0; }
   </div>
   <div class="ar-main">
     <section>
-      <div class="ar-boardhead"><div><h3>Ton plateau</h3><p id="arPile"></p></div>
-        <div class="ar-legend"><span><i style="background:#fbbf24"></i>Lead chaud (reçu aujourd'hui) · XP ×1,5</span><span><i style="background:#38bdf8"></i>Nouveau</span><span><i style="background:#a78bfa"></i>Rappel</span><span><i style="background:#f43f5e"></i>Rappel en retard</span><span><i style="background:#94a3b8"></i>NRP à retenter</span></div></div>
-      <div class="board" id="board"></div>
+      <div class="ar-boardhead"><div><h3>Tes clients</h3><p id="arPile"></p></div>
+        <div class="ar-legend"><span><i style="background:#fbbf24"></i>Anneau doré : reçu aujourd’hui · XP ×1,5</span><span><i style="background:#f43f5e"></i>Anneau rouge : rappel en retard</span></div></div>
+      <div id="arStage"><div id="arTags"></div><div id="arLoad">Chargement des clients…</div></div><p class="ar-hint">Clique sur un client pour l’appeler. Après l’appel, il rejoint sa nouvelle case. Glisse pour pivoter, molette pour zoomer, double-clic pour recentrer.</p>
     </section>
     <aside class="ar-side">
       <div class="ar-box"><h4><span>Quêtes du jour</span><span id="arQ"></span></h4><div id="quests"></div></div>
@@ -1737,6 +1755,7 @@ function go(pg) {
   document.querySelectorAll('.nav [data-page]').forEach(a => a.classList.toggle('on', a.dataset.page === pg));
   ['dashboard', 'leads', 'planning', 'settings', 'arena'].forEach(x => { $('#pg-' + x).hidden = x !== pg; });
   if (pg === 'dashboard' && tab === 'equipe') team.start(); else team.stop();
+  if (pg === 'arena') A3.start(); else A3.stop();
   if (pg !== 'leads' && pg !== 'planning') closePanel();
   document.body.classList.toggle('split', pg === 'leads' && OPEN !== null);
   refresh(); window.scrollTo(0, 0);
@@ -2280,8 +2299,8 @@ function renderArena(keepBoard) {
   $('#arAv').innerHTML = `${me.ini}<b>N${level(xp)}</b>`; $('#arName').textContent = me.name;
   $('#arLvl').textContent = `Niveau ${level(xp)}`; $('#arXp').textContent = `${fmt(xp % LVL)} / ${fmt(LVL)} XP`; $('#arXpBar').style.width = (xp % LVL) / LVL * 100 + '%';
   $('#arCalls').textContent = s.calls; $('#arRdv').innerHTML = `${s.rdv}<span> / 6</span>`; $('#arCombo').textContent = '×' + (1 + .25 * Math.min(4, AR.combo)).toFixed(2).replace('.', ',').replace(/,00$/, ''); $('#arStreak').innerHTML = `${s.streak}<span> j</span>`;
-  $('#arPile').textContent = `${AR.board.filter(x => x != null).length} cases sur le plateau · ${AR.pile.length} leads dans la pioche · les rappels en retard sortent en premier`;
-  if (!keepBoard) $('#board').innerHTML = Array.from({ length: 12 }, (_, i) => tileHTML(AR.board[i], i)).join('');
+  const mine = leads.filter(l => l.tele === AR.who && l.signD === undefined), late = mine.filter(l => recallLate(l) && l.apptD === undefined).length; $('#arPile').textContent = `${mine.filter(l => l.status === 'NOUVEAU').length} clients à appeler · ${mine.filter(l => l.recallD !== undefined && l.recallD <= TODAY && l.apptD === undefined).length} rappels aujourd'hui${late ? ` dont ${late} en retard` : ''} · un personnage par client, une case par statut`;
+  if (!keepBoard) A3.sync();
   renderSide();
 }
 function renderSide() {
@@ -2324,10 +2343,8 @@ function finish(l, base, msg, big) {
   if (big) { confetti('RDV !', `+${gain} XP · ${msg}`); beep([[523, 0, .12], [659, .12, .12], [784, .24, .12], [1046, .36, .3]]); arFeed(`<b>${byId[AR.who].name.split(' ')[0]}</b> fixe un RDV · ${esc(l.city)}`); }
   else beep([[440, 0, .07], [554, .07, .1]]);
   if (level(s.total + s.xp) > prevLvl) setTimeout(() => { confetti(`Niveau ${level(s.total + s.xp)} !`, 'Nouveau palier atteint'); beep([[392, 0, .15], [523, .15, .15], [659, .3, .15], [784, .45, .4]]); }, big ? 1500 : 200);
-  const el = document.querySelector(`[data-tile="${l.id}"]`); if (el) el.classList.add('boom');
-  setTimeout(() => { const i = AR.board.indexOf(l.id); if (i >= 0) AR.board[i] = AR.pile.length ? AR.pile.shift() : null; const old = document.querySelector(`[data-tile="${l.id}"]`); renderArena(true); if (old && i >= 0) { const tmp = document.createElement('div'); tmp.innerHTML = tileHTML(AR.board[i], 0); old.replaceWith(tmp.firstElementChild); } }, 430);
+  A3.move(l.id); renderArena(true);
 }
-$('#board').addEventListener('click', e => { const t = e.target.closest('[data-tile]'); if (t) openCard(+t.dataset.tile, t); });
 $('#arModal').addEventListener('click', e => {
   const l = leads[AR_CUR], t = e.target;
   if (e.target.id === 'arModal' || t.closest('[data-arx]')) { $('#arModal').hidden = true; return; }
@@ -2350,6 +2367,132 @@ setInterval(() => { if (page !== 'arena') return; const t = pick(TEL.filter(x =>
   if (Math.random() < .22) { s.rdv++; s.xp += XP.rdv; arFeed(`<b>${t.name.split(' ')[0]}</b> fixe un RDV`); const row = document.querySelector(`[data-lb="${t.id}"]`); renderSide(); const r2 = document.querySelector(`[data-lb="${t.id}"]`); if (r2) { r2.classList.add('flash'); setTimeout(() => r2.classList.remove('flash'), 900); } }
   else if (Math.random() < .3) arFeed(`<b>${t.name.split(' ')[0]}</b> enchaîne ${2 + Math.floor(Math.random() * 4)} appels`); }, 6000);
 buildPile();
+
+/* ================================================================
+   ARÈNE 3D : un personnage par client, une case 3D par statut.
+   Quand le télépro traite un client, le personnage marche vers sa nouvelle case.
+   ================================================================ */
+const A3 = (() => {
+  const stage = $('#arStage'), tagsEl = $('#arTags');
+  const BOX = [['new', 'À appeler', '#38bdf8', -15.5, 6.5], ['recall', 'Rappels', '#a78bfa', 0, 6.5], ['nrp', 'NRP à retenter', '#94a3b8', 15.5, 6.5], ['rdv', 'RDV fixés', '#22c55e', -15.5, -9.5], ['pi', 'Pas intéressés', '#e11d48', 0, -9.5], ['out', 'Hors cible', '#64748b', 15.5, -9.5]];
+  const W = 13, D = 10, CAP = { new: 12, recall: 12, nrp: 12, rdv: 12, pi: 8, out: 8 }, OUT = ['FAUX NUMÉRO', 'HORS CRITÈRE', 'LOCATAIRE', 'INFI', 'DÉJÀ INSTALLÉ', 'DOUBLON', 'INFAISABLE', 'TROP VIEUX', 'PAS INSCRIT', 'HORS ZONE'];
+  let renderer, scene, camera, built = false, running = false, bot = null, idle, walk, who = null, hovered = null;
+  const chars = {}, boxes = {}, pickables = [], tmp = new THREE.Vector3();
+  const cam = { th: 0, ph: .66, r: 74, gth: 0, gph: .66, gr: 62 }, par = { x: 0, y: 0 };
+  const boxOf = l => l.apptD !== undefined && l.rdvD !== undefined ? 'rdv' : l.status === 'NOUVEAU' ? 'new' : l.status === 'NRP' ? 'nrp' : (l.status === 'À RAPPELER' || l.recallD !== undefined) ? 'recall' : l.status === 'P.I' ? 'pi' : 'out';
+  function leadsFor(id) {
+    return leads.filter(l => l.tele === id && l.signD === undefined && (AR.played.has(l.id) || l.status === 'NOUVEAU' || (l.recallD !== undefined && l.recallD <= TODAY + 1 && l.status !== 'NRP') || (l.status === 'NRP' && l.d >= TODAY - 7) || (l.rdvD !== undefined && l.rdvD >= TODAY - 6) || ((l.status === 'P.I' || OUT.includes(l.status)) && l.d >= TODAY - 2)));
+  }
+  const prio = l => (recallLate(l) ? 0 : l.d === TODAY ? 1 : 2) * 1e6 - l.d * 100 - (l.recallH || 0);
+  function build() {
+    built = true;
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap; renderer.outputEncoding = THREE.sRGBEncoding;
+    stage.prepend(renderer.domElement);
+    scene = new THREE.Scene(); camera = new THREE.PerspectiveCamera(30, 1, .5, 400);
+    scene.add(new THREE.HemisphereLight(0xc7d2fe, 0x1e1b4b, .9));
+    const sun = new THREE.DirectionalLight(0xffffff, .8); sun.position.set(-12, 40, 26); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
+    Object.assign(sun.shadow.camera, { left: -36, right: 36, top: 24, bottom: -24, near: 5, far: 120 }); scene.add(sun);
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), new THREE.ShadowMaterial({ opacity: .35 })); floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+    BOX.forEach(([k, label, col, x, z]) => {
+      const c = new THREE.Color(col), g = new THREE.Group(); g.position.set(x, 0, z); scene.add(g);
+      const slab = new THREE.Mesh(new THREE.BoxGeometry(W, .4, D), new THREE.MeshStandardMaterial({ color: new THREE.Color(0x1e1b4b).lerp(c, .35), roughness: .7, metalness: .1 })); slab.position.y = .2; slab.receiveShadow = true; g.add(slab);
+      const top = new THREE.Mesh(new THREE.PlaneGeometry(W - .6, D - .6), new THREE.MeshStandardMaterial({ color: new THREE.Color(0x0f0d2e).lerp(c, .22), roughness: .9 })); top.rotation.x = -Math.PI / 2; top.position.y = .41; top.receiveShadow = true; g.add(top);
+      const wm = new THREE.MeshStandardMaterial({ color: c, emissive: c, emissiveIntensity: .55, transparent: true, opacity: .9 });
+      [[0, -D / 2, W, .18], [0, D / 2, W, .18], [-W / 2, 0, .18, D], [W / 2, 0, .18, D]].forEach(([wx, wz, ww, wd]) => { const w = new THREE.Mesh(new THREE.BoxGeometry(ww, .7, wd), wm); w.position.set(wx, .75, wz); w.castShadow = true; g.add(w); });
+      const glow = new THREE.Mesh(new THREE.PlaneGeometry(W + 3, D + 3), new THREE.MeshBasicMaterial({ color: c, transparent: true, opacity: .12, depthWrite: false })); glow.rotation.x = -Math.PI / 2; glow.position.y = .02; g.add(glow);
+      const lab = document.createElement('div'); lab.className = 'boxlab'; lab.style.setProperty('--c', col); tagsEl.appendChild(lab);
+      boxes[k] = { k, label, col, x, z, lab, ids: [] };
+    });
+    try { const bin = atob(window.XBOT_GLB), buf = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+      new THREE.GLTFLoader().parse(buf.buffer, '', b => { bot = b; const q = n => { const c = b.animations.find(x => x.name === n); return new THREE.AnimationClip(n, c.duration, c.tracks.filter(t => t.name.endsWith('.quaternion'))); }; idle = q('idle'); walk = q('walk');
+        b.scene.updateMatrixWorld(true); bot.top = 1.78; b.scene.traverse(o => { if (/HeadTop_End/.test(o.name)) bot.top = o.getWorldPosition(new THREE.Vector3()).y; }); $('#arLoad').hidden = true; sync(); }, () => { $('#arLoad').textContent = 'Personnages indisponibles'; }); } catch (e) {}
+    // Interactions : glisser pour pivoter, molette pour zoomer, clic sur un client pour le jouer
+    let drag = null; const ray = new THREE.Raycaster(), m = new THREE.Vector2();
+    const hitAt = e => { const r = renderer.domElement.getBoundingClientRect(); m.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1); ray.setFromCamera(m, camera); return ray.intersectObjects(pickables, false)[0]; };
+    stage.addEventListener('pointerdown', e => { if (e.target.closest('.ctag')) return; drag = { x: e.clientX, y: e.clientY, sx: e.clientX, sy: e.clientY }; stage.setPointerCapture(e.pointerId); });
+    stage.addEventListener('pointermove', e => { const r = stage.getBoundingClientRect(); par.x = (e.clientX - r.left) / r.width - .5; par.y = (e.clientY - r.top) / r.height - .5;
+      if (drag) { cam.gth = THREE.MathUtils.clamp(cam.gth - (e.clientX - drag.x) * .004, -.6, .6); cam.gph = THREE.MathUtils.clamp(cam.gph - (e.clientY - drag.y) * .003, .5, 1.15); drag.x = e.clientX; drag.y = e.clientY; return; }
+      if (e.target.closest('.ctag')) return; const h = hitAt(e), id = h ? h.object.userData.id : null;
+      if (hovered !== id) { if (hovered !== null && chars[hovered]) chars[hovered].tag.classList.remove('hover'); hovered = id; if (id !== null && chars[id]) chars[id].tag.classList.add('hover'); stage.style.cursor = id !== null ? 'pointer' : ''; } });
+    const end = e => { if (!drag) return; if (Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) < 6) { const h = hitAt(e); if (h) play(h.object.userData.id); } drag = null; };
+    stage.addEventListener('pointerup', end); stage.addEventListener('pointercancel', end); stage.addEventListener('pointerleave', () => { par.x = par.y = 0; });
+    stage.addEventListener('wheel', e => { e.preventDefault(); cam.gr = THREE.MathUtils.clamp(cam.gr * (1 + Math.sign(e.deltaY) * .08), 34, 90); }, { passive: false });
+    stage.addEventListener('dblclick', () => { cam.gth = 0; cam.gph = .66; cam.gr = 62; });
+    tagsEl.addEventListener('click', e => { const t = e.target.closest('[data-cid]'); if (t) play(+t.dataset.cid); });
+    new ResizeObserver(resize).observe(stage); resize();
+  }
+  function play(id) { const l = leads[id], b = boxOf(l), ch = chars[id]; if (ch && ch.path.length) return; if (['new', 'recall', 'nrp'].includes(b)) openCard(id, ch ? ch.tag : null); else openLead(id, b === 'rdv' ? 'rdv' : 'fiche'); }
+  function resize() { if (!renderer) return; const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+  const slotPos = (b, i) => { const B = boxes[b], col = i % 4, row = Math.floor(i / 4) % 3; return new THREE.Vector3(B.x - W / 2 + 2 + col * 3, .42, B.z + D / 2 - 2 - row * 3); };
+  function make(l) {
+    const g = new THREE.Group(), model = THREE.SkeletonUtils.clone(bot.scene); model.scale.setScalar(1.9 / bot.top); g.add(model);
+    const ch = { id: l.id, g, model, mats: [], path: [], walking: false };
+    model.traverse(o => { if (!o.isMesh) return; o.castShadow = true; o.frustumCulled = false; o.material = o.material.clone(); o.material.roughness = .45; o.material.metalness = .05; if (/Joints/.test(o.material.name)) ch.joint = o.material; else ch.body = o.material; });
+    ch.ring = new THREE.Mesh(new THREE.RingGeometry(.55, .72, 40), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .9 })); ch.ring.rotation.x = -Math.PI / 2; ch.ring.position.y = .03; g.add(ch.ring);
+    const hit = new THREE.Mesh(new THREE.CylinderGeometry(.8, .8, 2.2, 10), new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false })); hit.position.y = 1.1; hit.userData.id = l.id; g.add(hit); ch.hit = hit; pickables.push(hit);
+    ch.mixer = new THREE.AnimationMixer(model); ch.idle = ch.mixer.clipAction(idle); ch.walk = ch.mixer.clipAction(walk); ch.walk.timeScale = 1.6; ch.idle.play(); ch.idle.time = Math.random() * idle.duration;
+    ch.tag = document.createElement('button'); ch.tag.type = 'button'; ch.tag.className = 'ctag'; ch.tag.dataset.cid = l.id; tagsEl.appendChild(ch.tag);
+    scene.add(g); chars[l.id] = ch; return ch;
+  }
+  function style(ch) {
+    const l = leads[ch.id], b = boxOf(l), c = new THREE.Color(boxes[b].col), late = recallLate(l), hot = l.d === TODAY && b === 'new';
+    if (ch.body) ch.body.color.set(0xffffff).lerp(c, .45); if (ch.joint) ch.joint.color.copy(c);
+    ch.ring.material.color.set(late ? '#f43f5e' : hot ? '#fbbf24' : boxes[b].col); ch.ring.visible = late || hot || b === 'rdv';
+    ch.late = late && b !== 'rdv';
+    ch.tag.className = `ctag ${late ? 'late' : hot ? 'hot' : ''} ${['new', 'recall', 'nrp'].includes(b) ? '' : 'quiet'}`;
+    ch.tag.style.setProperty('--c', boxes[b].col);
+    ch.tag.innerHTML = `<b>${esc(l.fn)} ${esc(l.ln[0])}.</b>${late ? '<em>En retard</em>' : hot ? '<em>Chaud</em>' : b === 'recall' ? `<em>${fh(l.recallH)}</em>` : b === 'rdv' ? `<em>${dayLabel(l.apptD)}</em>` : ''}`;
+    ch.tag.title = `${l.client} · ${l.city} · ${l.phone}`;
+  }
+  function remove(id) { const ch = chars[id]; scene.remove(ch.g); ch.tag.remove(); const i = pickables.indexOf(ch.hit); if (i >= 0) pickables.splice(i, 1); delete chars[id]; }
+  function sync(full) {
+    if (!built || !bot) return;
+    if (full || who !== AR.who) { Object.keys(chars).forEach(id => remove(+id)); who = AR.who; }
+    const list = leadsFor(who), groups = {}; BOX.forEach(([k]) => { groups[k] = []; });
+    list.forEach(l => groups[boxOf(l)].push(l));
+    const keep = new Set();
+    BOX.forEach(([k]) => { groups[k].sort((a, b) => prio(a) - prio(b)); const B = boxes[k]; B.total = groups[k].length; B.ids = groups[k].slice(0, CAP[k]).map(l => l.id); B.ids.forEach(id => keep.add(id)); });
+    Object.keys(chars).forEach(id => { const ch = chars[id]; if (!keep.has(+id) && !ch.path.length) remove(+id); });
+    BOX.forEach(([k]) => boxes[k].ids.forEach((id, i) => { const p = slotPos(k, i); let ch = chars[id]; if (!ch) { ch = make(leads[id]); ch.g.position.copy(p); } else if (!ch.path.length) ch.g.position.copy(p); ch.home = p; ch.g.rotation.y = 0; style(ch); }));
+    labels();
+  }
+  function labels() { BOX.forEach(([k, label]) => { const B = boxes[k], more = (B.total || 0) - B.ids.length; B.lab.innerHTML = `<b>${label}</b><span>${B.total || 0}</span>${more > 0 ? `<small>+${more} hors écran</small>` : ''}`; }); }
+  // Le client change de statut : il marche jusqu'à sa nouvelle case
+  function move(id) {
+    const l = leads[id], ch = chars[id], to = boxOf(l); if (!ch) return sync();
+    const from = Object.values(boxes).find(B => B.ids.includes(id)); if (from) { from.ids = from.ids.filter(x => x !== id); from.total--; }
+    const B = boxes[to]; B.total = (B.total || 0) + 1; const idx = B.ids.length < CAP[to] ? B.ids.length : -1; if (idx >= 0) B.ids.push(id);
+    const target = idx >= 0 ? slotPos(to, idx) : new THREE.Vector3(B.x, .42, B.z - D / 2 + 1);
+    const mid = new THREE.Vector3((ch.g.position.x + target.x) / 2, .42, -2);
+    ch.path = [new THREE.Vector3(ch.g.position.x, .42, -2), new THREE.Vector3(target.x, .42, -2), target].filter((p, i, a) => i === a.length - 1 || p.distanceTo(i ? a[i - 1] : ch.g.position) > .3);
+    ch.drop = idx < 0; style(ch); labels();
+    if (!reduced) { ch.idle.fadeOut(.25); ch.walk.reset().fadeIn(.25).play(); } else { ch.g.position.copy(target); ch.path = []; if (ch.drop) remove(id); }
+  }
+  let last = 0;
+  function loop(t) {
+    if (!running) return; const dt = Math.min(.05, (t - (last || t)) / 1000); last = t; const e = 1 - Math.exp(-dt * 3);
+    cam.th += (cam.gth + (reduced ? 0 : par.x * .08) - cam.th) * e; cam.ph += (cam.gph + (reduced ? 0 : par.y * .05) - cam.ph) * e; cam.r += (cam.gr - cam.r) * e;
+    const R = cam.r * THREE.MathUtils.clamp(1.6 / camera.aspect, 1, 1.8), tgt = new THREE.Vector3(0, 0, -.5);
+    camera.position.set(tgt.x + R * Math.sin(cam.ph) * Math.sin(cam.th), R * Math.cos(cam.ph), tgt.z + R * Math.sin(cam.ph) * Math.cos(cam.th)); camera.lookAt(tgt);
+    Object.values(chars).forEach(ch => {
+      ch.mixer.update(dt);
+      if (ch.path.length) { const p = ch.path[0]; tmp.subVectors(p, ch.g.position); tmp.y = 0; const d = tmp.length(), st = 7 * dt;
+        if (d <= st) { ch.g.position.copy(p); ch.path.shift(); if (!ch.path.length) { ch.walk.fadeOut(.3); ch.idle.reset().fadeIn(.3).play(); ch.g.rotation.y = 0; if (ch.drop) setTimeout(() => remove(ch.id), 400); } }
+        else { tmp.normalize(); ch.g.position.addScaledVector(tmp, st); ch.g.rotation.y = Math.atan2(tmp.x, tmp.z); } }
+      if (ch.late) ch.ring.material.opacity = .55 + Math.sin(t / 180) * .4;
+    });
+    renderer.render(scene, camera);
+    const w = stage.clientWidth, h = stage.clientHeight, pr = v => { tmp.copy(v).project(camera); return [(tmp.x * .5 + .5) * w, (-tmp.y * .5 + .5) * h]; };
+    Object.values(chars).forEach(ch => { const [x, y] = pr(tmp.set(ch.g.position.x, ch.g.position.y + 2.35, ch.g.position.z)); ch.tag.style.left = x + 'px'; ch.tag.style.top = y + 'px'; });
+    BOX.forEach(([k]) => { const B = boxes[k], [x, y] = pr(tmp.set(B.x, .4, B.z + D / 2 + .5)); B.lab.style.left = x + 'px'; B.lab.style.top = y + 'px'; });
+    requestAnimationFrame(loop);
+  }
+  return {
+    start() { if (!built) build(); resize(); sync(); if (!running) { running = true; last = 0; requestAnimationFrame(loop); } },
+    stop() { running = false; }, sync, move,
+  };
+})();
 
 /* ================= Démarrage ================= */
 Chart.defaults.font.family = 'Nunito'; Chart.defaults.color = tok('muted');
