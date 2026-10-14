@@ -1,0 +1,98 @@
+/* Barre de saisie du Chat : pastilles Marque · Acteur · Produits au-dessus du champ,
+   menu « + » à deux lignes, grandes fenêtres de choix. Jetons gx uniquement (thème clair et sombre).
+   Le violet plein est réservé au bouton Envoyer ; les pastilles restent neutres. Chargé en dernier. */
+
+.gx-composer.gx-cmp2{display:block;padding:12px 16px 16px}
+.gx-cmp2 .gx-cmp-box{display:flex;flex-direction:column;gap:8px;padding:10px 10px 10px 12px;border:1px solid var(--gx-line-2);border-radius:18px;background:var(--gx-surface);transition:border-color .15s,box-shadow .15s}
+.gx-cmp2 .gx-cmp-box:focus-within{border-color:color-mix(in srgb,var(--gx-fg) 22%,var(--gx-line-2));box-shadow:0 0 0 4px var(--gx-sunk)}
+.gx-cmp2 .gx-cmp-ctx{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-width:0}
+.gx-cmp2 .gx-cmp-ctx:empty{display:none}
+.gx-cmp2 .gx-cmp-row{display:flex;align-items:flex-end;gap:8px}
+
+/* Le champ n'a plus son propre cadre : c'est la boîte entière qui en tient lieu. */
+.gx-cmp2 .gx-cmp-f{flex:1;min-width:0;min-height:38px;padding:0 2px;border:0;border-radius:0;background:transparent;box-shadow:none;align-items:center}
+.gx-cmp2 .gx-cmp-f:focus-within{border:0;box-shadow:none}
+.gx-cmp2 .gx-cmp-f textarea{font:15px/22px var(--gx-ui);padding:8px 0}
+.gx-cmp2 .gx-cmp-row > .gx-ib,
+.gx-cmp2 .gx-cmp-row > .gx-btn{flex:none;width:38px;height:38px;padding:0;border-radius:11px;display:grid;place-items:center}
+.gx-cmp2 .gx-cmp-row > .gx-ib.gx-up[aria-expanded="true"]{background:var(--gx-sunk);color:var(--gx-fg)}
+
+/* Pastille Marque : même gabarit que les autres pastilles. */
+.gx-cmp-ctx .gx-cbrand-in{display:inline-flex;align-items:center;gap:6px;flex:none;height:32px;max-width:220px;padding:0 10px 0 6px;border:1px solid var(--gx-line);border-radius:999px;background:var(--gx-raised);color:var(--gx-fg);font:500 13px/1 var(--gx-ui);cursor:pointer;transition:background .12s,border-color .12s}
+.gx-cmp-ctx .gx-cbrand-in:hover{border-color:var(--gx-line-2);background:var(--gx-surface)}
+.gx-cmp-ctx .gx-cbrand-in:focus-visible{outline:2px solid var(--gx-accent);outline-offset:2px}
+.gx-cmp-ctx .gx-cbrand-in:disabled{opacity:.6;cursor:default}
+.gx-cmp-ctx .gx-cbrand-in .gx-brandmark{display:inline-flex;align-items:center;gap:6px;min-width:0}
+.gx-cmp-ctx .gx-cbrand-in .gx-brandmark-n{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gx-cmp-ctx .gx-cbrand-in > .gx-i{width:13px;height:13px;flex:none;color:var(--gx-dim)}
+.gx-cmp-ctx .gx-cbrand-in .gx-brandmark > .gx-i{width:14px;height:14px;flex:none}
+.gx-cmp-ctx .gx-cbrand-in.gx-white{background:var(--gx-raised);color:var(--gx-fg)}
+
+/* Pastille choisie (acteur, produits) : fond neutre, clic = changer, croix = retirer. */
+.gx-cpill{display:inline-flex;align-items:center;flex:none;max-width:100%;height:32px;border:1px solid var(--gx-line);border-radius:999px;background:var(--gx-raised);transition:background .12s,border-color .12s}
+.gx-cpill:hover{border-color:var(--gx-line-2);background:var(--gx-surface)}
+.gx-cpill-b{display:inline-flex;align-items:center;gap:8px;min-width:0;height:100%;padding:0 6px 0 4px;border:0;border-radius:999px;background:none;color:var(--gx-fg);font:500 13px/1 var(--gx-ui);cursor:pointer}
+.gx-cpill-b:disabled{cursor:default;opacity:.6}
+.gx-cpill-n{min-width:0;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gx-cpill-pr{color:var(--gx-dim);font-weight:400;font-variant-numeric:tabular-nums}
+.gx-cpill-x{display:grid;place-items:center;width:22px;height:22px;margin-right:4px;border:0;border-radius:50%;background:none;color:var(--gx-dim);cursor:pointer}
+.gx-cpill-x:hover{background:var(--gx-sunk);color:var(--gx-fg)}
+.gx-cpill-x .gx-i{width:13px;height:13px}
+.gx-cpill :is(.gx-cpill-b,.gx-cpill-x):focus-visible{outline:2px solid var(--gx-accent);outline-offset:1px}
+
+/* Bouton « Ajouter » : pointillés, texte lisible, petit + violet clair pour être repéré. */
+.gx-cadd{display:inline-flex;align-items:center;gap:6px;flex:none;height:32px;padding:0 12px 0 6px;border:1px dashed color-mix(in srgb,var(--gx-fg) 22%,var(--gx-line-2));border-radius:999px;background:var(--gx-surface);color:var(--gx-fg);font:500 13px/1 var(--gx-ui);cursor:pointer;transition:background .12s,border-color .12s}
+.gx-cadd:hover{border-style:solid;background:var(--gx-raised)}
+.gx-cadd:focus-visible{outline:2px solid var(--gx-accent);outline-offset:2px}
+.gx-cadd:disabled{opacity:.6;cursor:default}
+.gx-cadd-pl{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--gx-accent-soft);color:var(--gx-accent)}
+.gx-cadd-pl .gx-i{width:12px;height:12px}
+
+/* Icône femme (rose) / homme (bleu). */
+.gx-who{display:grid;place-items:center;flex:none;width:24px;height:24px;border-radius:50%}
+.gx-who svg{width:15px;height:15px}
+.gx-who.gx-f{background:color-mix(in srgb,#D63A7E 14%,var(--gx-surface));color:color-mix(in srgb,#B4235F 85%,var(--gx-fg))}
+.gx-who.gx-h{background:color-mix(in srgb,var(--gx-meta) 14%,var(--gx-surface));color:color-mix(in srgb,#0756D6 85%,var(--gx-fg))}
+
+/* Vignettes produit, empilées quand il y en a plusieurs. */
+.gx-pth{display:block;flex:none;width:24px;height:24px;border-radius:7px;object-fit:cover;background:var(--gx-sunk)}
+.gx-pstack{display:flex;align-items:center}
+.gx-pstack .gx-pth{position:relative;margin-left:-9px;border:2px solid var(--gx-surface);box-shadow:0 0 0 1px var(--gx-line)}
+.gx-pstack .gx-pth:first-child{margin-left:0}
+
+/* Menu « + » : titre et sous-titre sur deux lignes. */
+.gx-plm{width:320px;max-width:calc(100vw - 32px);padding:6px}
+.gx-plm .gx-pmi{display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:10px;cursor:pointer}
+.gx-plm .gx-pmic{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:10px;background:var(--gx-sunk);color:var(--gx-muted)}
+.gx-plm .gx-pmic .gx-i{width:17px;height:17px}
+.gx-plm .gx-pmi b{display:block;font-size:14px;font-weight:500;line-height:1.25;color:var(--gx-fg)}
+.gx-plm .gx-pmi small{display:block;font-size:12px;line-height:1.3;color:var(--gx-dim)}
+
+/* Grandes fenêtres de choix (acteurs, produits). */
+.gx-cat.gx-cat-xl{width:min(1040px,calc(100vw - 32px));max-width:min(1040px,calc(100vw - 32px));max-height:min(86vh,860px);display:flex;flex-direction:column;border-radius:20px}
+.gx-cat-xl .gx-cat-sc{flex:1;min-height:0;max-height:calc(min(86vh,860px) - 230px)}
+.gx-cat-xl .gx-cat-g,
+.gx-cat-xl .gx-cat-g.gx-cat-g4{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.gx-cat-xl .gx-cat-t{border-radius:14px}
+.gx-cat-filt{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.gx-cat-filt button{height:32px;padding:0 14px;border:1px solid var(--gx-line);border-radius:999px;background:var(--gx-surface);color:var(--gx-fg);font:500 13px/1 var(--gx-ui);cursor:pointer}
+.gx-cat-filt button[aria-pressed="true"]{border-color:var(--gx-accent);background:var(--gx-accent-soft);color:var(--gx-accent-ink);font-weight:600}
+.gx-cat-new{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:200px;padding:16px;border:1.5px dashed color-mix(in srgb,var(--gx-accent) 40%,var(--gx-line-2));border-radius:14px;background:var(--gx-raised);color:var(--gx-accent-ink);font:600 14px/1.3 var(--gx-ui);text-align:center;text-decoration:none}
+.gx-cat-new:hover{background:var(--gx-accent-soft)}
+.gx-cat-new small{color:var(--gx-dim);font-weight:400;font-size:12.5px}
+.gx-cat-new-pl{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--gx-accent-soft);color:var(--gx-accent)}
+.gx-cat-new-pl .gx-i{width:20px;height:20px}
+.gx-cat-g > .gx-cat-new{min-height:0;aspect-ratio:3/4}
+.gx-cat-g > .gx-cat-new.gx-sq{aspect-ratio:1}
+
+@media (max-width:599px){
+  .gx-composer.gx-cmp2{padding:10px 12px 12px}
+  .gx-cmp2 .gx-cmp-ctx{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .gx-cmp2 .gx-cmp-ctx::-webkit-scrollbar{display:none}
+  .gx-cpill-n{max-width:120px}
+  .gx-cat-xl .gx-cat-g,
+  .gx-cat-xl .gx-cat-g.gx-cat-g4{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+}
+@media (prefers-reduced-motion:reduce){
+  .gx-cmp2 .gx-cmp-box,.gx-cpill,.gx-cadd{transition:none}
+}
