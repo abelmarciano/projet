@@ -4,7 +4,7 @@ import { WHATSAPP_URL } from "@/data";
 
 type Ember = { x: number; y: number; vx: number; vy: number; r: number; life: number; max: number; hue: number };
 
-/** Braises qui montent du bas de l'écran et s'écartent du curseur. */
+/** Fines particules qui montent lentement et s'écartent du curseur. */
 function useEmbers(ref: React.RefObject<HTMLCanvasElement>) {
   useEffect(() => {
     const canvas = ref.current;
@@ -31,11 +31,11 @@ function useEmbers(ref: React.RefObject<HTMLCanvasElement>) {
         x: w * (0.15 + Math.random() * 0.7),
         y: anywhere ? Math.random() * h : h + 10,
         vx: (Math.random() - 0.5) * 0.3,
-        vy: -(0.35 + Math.random() * 1.1),
-        r: 0.6 + Math.random() * 2.2,
+        vy: -(0.12 + Math.random() * 0.35),
+        r: 0.4 + Math.random() * 1.2,
         life: anywhere ? Math.random() * max : 0,
         max,
-        hue: 18 + Math.random() * 30,
+        hue: 220,
       };
     };
 
@@ -59,13 +59,13 @@ function useEmbers(ref: React.RefObject<HTMLCanvasElement>) {
         e.y += e.vy;
         e.life += 1;
         const t = e.life / e.max;
-        const a = Math.max(0, Math.sin(Math.PI * Math.min(1, t))) * 0.9;
-        const g = ctx.createRadialGradient(e.x, e.y, 0, e.x, e.y, e.r * 6);
-        g.addColorStop(0, `hsla(${e.hue}, 100%, 62%, ${a})`);
-        g.addColorStop(1, `hsla(${e.hue}, 100%, 50%, 0)`);
+        const a = Math.max(0, Math.sin(Math.PI * Math.min(1, t))) * 0.45;
+        const g = ctx.createRadialGradient(e.x, e.y, 0, e.x, e.y, e.r * 4);
+        g.addColorStop(0, `hsla(${e.hue}, 12%, 92%, ${a})`);
+        g.addColorStop(1, `hsla(${e.hue}, 12%, 80%, 0)`);
         ctx.fillStyle = g;
         ctx.beginPath();
-        ctx.arc(e.x, e.y, e.r * 6, 0, Math.PI * 2);
+        ctx.arc(e.x, e.y, e.r * 4, 0, Math.PI * 2);
         ctx.fill();
         if (e.life > e.max || e.y < -20) Object.assign(e, spawn());
       }
@@ -101,7 +101,7 @@ export default function Hero() {
         <span className="badge"><b>LIVE</b> Leads B2C exclusifs, livrés à la seconde</span>
         <h1 className="display">
           <span className="line"><span>Vos clients</span></span>
-          <span className="line"><span className="flame-text">arrivent.</span></span>
+          <span className="line"><span className="flame-text">arrivent tout seuls.</span></span>
         </h1>
         <p className="lede">
           Leadeurs génère, vérifie et livre des prospects prêts à signer, directement dans votre CRM.

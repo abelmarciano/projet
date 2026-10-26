@@ -41,12 +41,12 @@ function Curve() {
   return (
     <svg className="curve" viewBox="0 0 400 150" preserveAspectRatio="none" aria-hidden="true">
       <defs>
-        <linearGradient id="cv-l" x1="0" x2="1"><stop offset="0" stopColor="#ffd34d" /><stop offset=".5" stopColor="#ff8b00" /><stop offset="1" stopColor="#ec2700" /></linearGradient>
-        <linearGradient id="cv-f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ff8b00" stopOpacity=".28" /><stop offset="1" stopColor="#ff8b00" stopOpacity="0" /></linearGradient>
+        <linearGradient id="cv-l" x1="0" x2="1"><stop offset="0" stopColor="#ffffff" stopOpacity=".4" /><stop offset="1" stopColor="#ffffff" /></linearGradient>
+        <linearGradient id="cv-f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ffffff" stopOpacity=".12" /><stop offset="1" stopColor="#ffffff" stopOpacity="0" /></linearGradient>
       </defs>
       {[37.5, 75, 112.5].map((y) => <line key={y} x1="0" x2="400" y1={y} y2={y} stroke="rgba(255,255,255,.07)" />)}
       <path d="M0,130 C40,124 60,110 100,108 S160,96 200,80 S260,70 300,46 S360,22 400,12 L400,150 L0,150 Z" fill="url(#cv-f)" />
-      <path className="stroke" d="M0,130 C40,124 60,110 100,108 S160,96 200,80 S260,70 300,46 S360,22 400,12" fill="none" stroke="url(#cv-l)" strokeWidth="3" />
+      <path className="stroke" d="M0,130 C40,124 60,110 100,108 S160,96 200,80 S260,70 300,46 S360,22 400,12" fill="none" stroke="url(#cv-l)" strokeWidth="2" />
     </svg>
   );
 }
