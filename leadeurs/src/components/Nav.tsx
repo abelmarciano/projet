@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { BadgeCheck, Clock, Phone } from "lucide-react";
 import logo from "@/assets/logo.png";
-import { WHATSAPP_URL } from "@/data";
+import { EMAIL, PHONE_DISPLAY, WHATSAPP_URL } from "@/data";
 
 const links = [
+  { href: "#offres", label: "Nos offres" },
   { href: "#secteurs", label: "Secteurs" },
   { href: "#methode", label: "Méthode" },
   { href: "#crm", label: "CRM" },
-  { href: "#avis", label: "Avis" },
+  { href: "#avis", label: "Avis clients" },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -15,29 +16,42 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 50);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <header className={`nav${scrolled ? " is-scrolled" : ""}`}>
-      <div className="wrap nav-inner">
-        <a href="#top" className="brand" aria-label="Leadeurs, accueil">
-          <img src={logo} alt="" />
-          <span>LEADEURS</span>
-        </a>
-        <nav className="nav-links" aria-label="Navigation principale">
-          {links.map((l) => (
-            <a key={l.href} href={l.href}>{l.label}</a>
-          ))}
-        </nav>
-        <a className="btn btn-fire" href={WHATSAPP_URL} target="_blank" rel="noreferrer" aria-label="Recevoir des leads">
-          <span>Recevoir des leads</span>
-          <ArrowRight />
-        </a>
+    <>
+      <div className="topbar">
+        <div className="wrap topbar-inner">
+          <div className="topbar-items">
+            <span><BadgeCheck /> Leads 100 % exclusifs et vérifiés</span>
+            <span><Clock /> Réponse sous 24 h</span>
+          </div>
+          <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+        </div>
       </div>
-    </header>
+      <header className={`nav${scrolled ? " is-scrolled" : ""}`}>
+        <div className="wrap nav-inner">
+          <a href="#top" className="brand" aria-label="Leadeurs, accueil">
+            <img src={logo} alt="" />
+            <span>LEADEURS</span>
+          </a>
+          <nav className="nav-links" aria-label="Navigation principale">
+            {links.map((l) => (
+              <a key={l.href} href={l.href}>{l.label}</a>
+            ))}
+          </nav>
+          <div className="nav-actions">
+            <span className="nav-phone"><Phone /> {PHONE_DISPLAY}</span>
+            <a className="btn btn-primary" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
+              Devis gratuit
+            </a>
+          </div>
+        </div>
+      </header>
+    </>
   );
 }

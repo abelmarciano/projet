@@ -1,35 +1,30 @@
-import { ArrowUpRight } from "lucide-react";
-import { WHATSAPP_URL, sectors } from "@/data";
+import { Building2, Hammer, Heater, Home, LampWallUp, Lightbulb, ShowerHead, Sun } from "lucide-react";
+import { sectors } from "@/data";
+
+const icons = [Sun, Home, Heater, Hammer, Building2, ShowerHead, Lightbulb, LampWallUp];
 
 export default function Sectors() {
   return (
-    <section className="section" id="secteurs">
-      <div className="wrap split">
-        <div className="split-intro">
-          <span className="eyebrow">Secteurs</span>
-          <h2 className="h2">Huit marchés.<br />Un seul standard.</h2>
-          <p className="lede">
-            Chaque secteur a ses propres critères de qualification. On les définit avec vous avant la
-            première campagne, puis on les applique à chaque lead.
-          </p>
-          <div>
-            <a className="btn btn-ghost" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
-              Votre secteur n'est pas listé ?
-            </a>
-          </div>
+    <section className="section bg-mist" id="secteurs">
+      <div className="wrap">
+        <div className="head center">
+          <span className="kicker">Secteurs couverts</span>
+          <h2 className="h2">Des leads dans les marchés qui comptent.</h2>
+          <p className="sub">Chaque secteur a ses propres critères de qualification, appliqués à chaque prospect avant livraison.</p>
         </div>
-        <ul className="sector-list">
-          {sectors.map((s) => (
-            <li key={s.code} className="sector">
-              <span className="sector-code">{s.code}</span>
-              <div>
+        <div className="sectors">
+          {sectors.map((s, i) => {
+            const Icon = icons[i];
+            return (
+              <article key={s.code} className="sector">
+                <span className="sector-ico"><Icon /></span>
                 <h3>{s.name}</h3>
                 <p>{s.detail}</p>
-              </div>
-              <span className="sector-arrow" aria-hidden="true"><ArrowUpRight /></span>
-            </li>
-          ))}
-        </ul>
+                <span className="badge">Exclusif</span>
+              </article>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

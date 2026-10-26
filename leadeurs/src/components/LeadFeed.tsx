@@ -24,8 +24,7 @@ export default function LeadFeed() {
 
     let next = VISIBLE;
     const push = setInterval(() => {
-      const base = sampleLeads[next % sampleLeads.length];
-      const lead = { ...base, id: next, at: Date.now() };
+      const lead = { ...sampleLeads[next % sampleLeads.length], id: next, at: Date.now() };
       next += 1;
       setLeads((prev) => [lead, ...prev].slice(0, VISIBLE));
       setCount((c) => c + 1);
@@ -37,9 +36,12 @@ export default function LeadFeed() {
   }, []);
 
   return (
-    <div className="feed" role="img" aria-label="Aperçu animé de leads qui arrivent en temps réel">
-      <div className="feed-head">
-        <span className="feed-title">Flux entrant</span>
+    <div className="board" role="img" aria-label="Aperçu animé de leads livrés en temps réel">
+      <div className="board-head">
+        <div className="board-title">
+          Leads livrés
+          <small>Tableau de bord client</small>
+        </div>
         <span className="live"><i />En direct</span>
       </div>
       <ul className="feed-list">
@@ -51,17 +53,16 @@ export default function LeadFeed() {
               <span>{l.profile}</span>
             </div>
             <div className="lead-meta">
-              <span className="tag">✓ vérifié</span>
+              <span className="tag">✓ Vérifié</span>
               <span className="lead-time">{ago(now - l.at)}</span>
             </div>
           </li>
         ))}
       </ul>
-      <div className="feed-foot">
-        <span>Leads livrés aujourd'hui <b>{count}</b></span>
-        <span>Exclusifs <b>100 %</b></span>
+      <div className="board-foot">
+        <span>Aujourd'hui <b>{count} leads</b></span>
+        <span>Taux d'exclusivité <b>100 %</b></span>
       </div>
-      <p className="feed-note">Exemples fictifs, à titre d'illustration.</p>
     </div>
   );
 }

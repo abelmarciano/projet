@@ -1,13 +1,18 @@
 import { Plus } from "lucide-react";
-import { faqs } from "@/data";
+import { PHONE_DISPLAY, faqs } from "@/data";
 
 export default function Faq() {
   return (
-    <section className="section" id="faq" style={{ paddingTop: 0 }}>
+    <section className="section" id="faq">
       <div className="wrap faq">
-        <div style={{ display: "grid", gap: 20, alignContent: "start" }}>
-          <span className="eyebrow">Questions fréquentes</span>
-          <h2 className="h2">Ce qu'on nous demande avant de signer.</h2>
+        <div className="faq-aside">
+          <span className="kicker">FAQ</span>
+          <h2 className="h2">Les questions qu'on nous pose le plus.</h2>
+          <div className="help">
+            <strong>Une autre question ?</strong>
+            <p>Notre équipe vous répond directement, sous 24 h maximum.</p>
+            <p style={{ color: "var(--navy)", fontWeight: 700, userSelect: "all" }}>{PHONE_DISPLAY}</p>
+          </div>
         </div>
         <div className="faq-list">
           {faqs.map((f, i) => (
