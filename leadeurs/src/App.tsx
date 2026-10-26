@@ -1,31 +1,31 @@
+import Effects from "./components/Effects";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
-import Stats from "./components/Stats";
-import Offers from "./components/Offers";
+import Stage from "./components/Stage";
+import Ticker from "./components/Ticker";
+import Bento from "./components/Bento";
 import Sectors from "./components/Sectors";
 import Method from "./components/Method";
-import Trust from "./components/Trust";
-import Crm from "./components/Crm";
-import Testimonials from "./components/Testimonials";
+import Reviews from "./components/Reviews";
 import Faq from "./components/Faq";
-import Cta from "./components/Cta";
+import Final from "./components/Final";
 import Footer from "./components/Footer";
 
 export default function App() {
   return (
     <>
+      <Effects />
       <Nav />
       <main>
         <Hero />
-        <Stats />
-        <Offers />
+        <Stage />
+        <Ticker />
+        <Bento />
         <Sectors />
         <Method />
-        <Trust />
-        <Crm />
-        <Testimonials />
+        <Reviews />
         <Faq />
-        <Cta />
+        <Final />
       </main>
       <Footer />
     </>
