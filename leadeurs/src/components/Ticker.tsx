@@ -1,10 +1,12 @@
+import { icon3d } from "@/icons";
+
 const items = [
-  { v: "250K+", l: "leads vendus" },
-  { v: "2 M€+", l: "investis en publicité" },
-  { v: "98 %", l: "de clients satisfaits" },
-  { v: "24 h", l: "délai de livraison max." },
-  { v: "100 %", l: "exclusifs" },
-  { v: "8", l: "secteurs couverts" },
+  { i: "chart_increasing", v: "250K+", l: "leads vendus" },
+  { i: "rocket", v: "2 M€+", l: "investis en publicité" },
+  { i: "star", v: "98 %", l: "de clients satisfaits" },
+  { i: "stopwatch", v: "24 h", l: "délai de livraison max." },
+  { i: "locked", v: "100 %", l: "exclusifs" },
+  { i: "bullseye", v: "8", l: "secteurs couverts" },
 ];
 
 export default function Ticker() {
@@ -12,7 +14,7 @@ export default function Ticker() {
     <div aria-hidden={hidden || undefined}>
       {items.map((it) => (
         <div key={it.l} className="ticker-item">
-          <span className="ticker-dot" />
+          <img src={icon3d(it.i)} alt="" />
           <strong>{it.v}</strong>
           <span>{it.l}</span>
         </div>

@@ -1,5 +1,6 @@
 import { Star } from "lucide-react";
 import { testimonials } from "@/data";
+import { icon3d } from "@/icons";
 
 // Captures d'avis clients : remplacer les fichiers src/assets/avis/avis1..8.png par les vraies images.
 const images = Object.values(
@@ -27,10 +28,10 @@ export default function Reviews() {
   const half = Math.ceil(images.length / 2);
   return (
     <section className="section" id="avis" style={{ paddingTop: 0 }}>
-      <div className="wrap reveal" style={{ display: "grid", gap: 24, justifyItems: "center", textAlign: "center" }}>
-        <span className="label"><i />Avis clients</span>
-        <h2 className="display h2">Ils ne cherchent plus.<br /><span className="flame-text">Ils reçoivent.</span></h2>
-        <p className="lede center">98 % de nos clients sont satisfaits. Voici ce qu'ils en disent.</p>
+      <div className="wrap head center reveal">
+        <span className="label"><img src={icon3d("star")} alt="" />Avis clients</span>
+        <h2 className="h2">Ils ne cherchent plus.<br /><span className="grad-text">Ils reçoivent.</span></h2>
+        <p className="lede">98 % de nos clients sont satisfaits. Voici ce qu'ils en disent.</p>
       </div>
       <div className="reviews">
         <div className="reviews-3d">

@@ -22,7 +22,7 @@ export default function Nav() {
           <nav className="nav-links" aria-label="Navigation principale">
             {links.map((l) => <a key={l.href} href={l.href}>{l.label}</a>)}
           </nav>
-          <a className="btn btn-flame" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
+          <a className="btn btn-primary" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
             Devis gratuit <ArrowRight />
           </a>
         </div>

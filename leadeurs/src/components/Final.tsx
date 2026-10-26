@@ -1,18 +1,17 @@
 import { ArrowRight } from "lucide-react";
-import logo from "@/assets/logo.png";
+import { icon3d } from "@/icons";
 import { EMAIL, PHONE_DISPLAY, WHATSAPP_URL } from "@/data";
 
 export default function Final() {
   return (
-    <section className="final">
-      <div className="final-orb" aria-hidden="true" />
-      <div className="wrap final-inner reveal">
-        <img src={logo} alt="" />
-        <h2 className="display">Allumez<br /><span className="flame-text">la machine.</span></h2>
-        <p className="lede center">Votre secteur, votre zone, votre volume. On revient vers vous sous 24 h avec une proposition chiffrée.</p>
-        <div className="hero-ctas" style={{ animation: "none" }}>
-          <a className="btn btn-flame" href={WHATSAPP_URL} target="_blank" rel="noreferrer">Démarrer sur WhatsApp <ArrowRight /></a>
-          <a className="btn btn-glass ring" href={`mailto:${EMAIL}`}>Envoyer un email</a>
+    <section className="wrap reveal" aria-label="Contact">
+      <div className="final-band">
+        <img className="rocket" src={icon3d("rocket")} alt="" />
+        <h2>Prêt à recevoir<br />vos premiers leads ?</h2>
+        <p className="lede">Votre secteur, votre zone, votre volume. On revient vers vous sous 24 h avec une proposition chiffrée.</p>
+        <div className="ctas">
+          <a className="btn btn-primary" href={WHATSAPP_URL} target="_blank" rel="noreferrer">Démarrer sur WhatsApp <ArrowRight /></a>
+          <a className="btn btn-white" href={`mailto:${EMAIL}`}>Envoyer un email</a>
         </div>
         <div className="contacts"><span>{PHONE_DISPLAY}</span><span>{EMAIL}</span></div>
       </div>

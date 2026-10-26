@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { sampleLeads } from "@/data";
+import { leadIcon } from "@/icons";
 
 type Lead = (typeof sampleLeads)[number] & { id: number; at: number };
 const VISIBLE = 5;
@@ -52,23 +53,23 @@ export default function Stage() {
   }, []);
 
   return (
-    <section className="stage wrap" aria-label="Aperçu du tableau de bord client">
+    <section className="stage wrap reveal" aria-label="Aperçu du tableau de bord client">
       <div className="screen" ref={screen}>
         <div className="screen-inner">
           <div className="screen-top">
             <i /><i /><i />
-            <span>app.leadeurs.fr / flux</span>
+            <span>app.leadeurs.fr</span>
             <span className="live"><i />En direct</span>
           </div>
           <div className="screen-body">
-            <div className="card">
-              <div className="card-title"><span>Leads entrants</span><span>Exclusifs · vérifiés</span></div>
+            <div className="panel">
+              <div className="panel-title"><span>Leads entrants</span><span>Exclusifs · vérifiés</span></div>
               <ul className="feed">
                 {leads.map((l, i) => (
                   <li key={l.id} className={`lead${i === 0 && now - l.at < 2400 ? " is-new" : ""}`}>
-                    <span className="dept">{l.dept}</span>
+                    <span className="lead-ico"><img src={leadIcon(l.sector)} alt="" /></span>
                     <div className="lead-main">
-                      <strong>{l.sector} · {l.place}</strong>
+                      <strong>{l.sector} · {l.place} ({l.dept})</strong>
                       <span>{l.profile}</span>
                     </div>
                     <div className="lead-meta">
@@ -80,16 +81,16 @@ export default function Stage() {
               </ul>
             </div>
             <div className="screen-side">
-              <div className="card">
-                <div className="card-title"><span>Livrés aujourd'hui</span></div>
+              <div className="panel">
+                <div className="panel-title"><span>Livrés aujourd'hui</span></div>
                 <div className="big-num">{count}<small>leads</small></div>
                 <div className="bars" aria-hidden="true">
                   {bars.map((b, i) => <span key={i} style={{ height: `${b}%`, animationDelay: `${i * 60}ms` }} />)}
                 </div>
               </div>
-              <div className="mini-stats">
-                <div className="card"><strong>100 %</strong><span>exclusifs</span></div>
-                <div className="card"><strong>&lt; 1 s</strong><span>délai de livraison</span></div>
+              <div className="mini">
+                <div className="panel"><strong>100 %</strong><span>exclusifs</span></div>
+                <div className="panel"><strong>&lt; 1 s</strong><span>délai de livraison</span></div>
               </div>
             </div>
           </div>
