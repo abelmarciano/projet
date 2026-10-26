@@ -1,22 +1,31 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import GlobalBackground from "@/components/GlobalBackground";
-import { GradientDefs } from "@/components/ui/gradient-icon";
-import Index from "./pages/Index";
+import Nav from "./components/Nav";
+import Hero from "./components/Hero";
+import Sectors from "./components/Sectors";
+import Method from "./components/Method";
+import Guarantees from "./components/Guarantees";
+import Crm from "./components/Crm";
+import Testimonials from "./components/Testimonials";
+import Faq from "./components/Faq";
+import FinalCta from "./components/FinalCta";
+import Footer from "./components/Footer";
 
-const App = () => (
-  <HelmetProvider>
-    <TooltipProvider>
-      <GradientDefs />
-      <GlobalBackground />
-      <BrowserRouter>
-        <Routes>
-          <Route path="*" element={<Index />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </HelmetProvider>
-);
-
-export default App;
+export default function App() {
+  return (
+    <>
+      <Nav />
+      <main>
+        <Hero />
+        <Sectors />
+        <Method />
+        <Guarantees />
+        <Crm />
+        <div className="paper">
+          <Testimonials />
+          <Faq />
+        </div>
+        <FinalCta />
+      </main>
+      <Footer />
+    </>
+  );
+}

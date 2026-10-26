@@ -1,13 +1,14 @@
-# Landing Leadeurs (leadeurs.fr)
+# Landing Leadeurs (leadeurs.fr), nouvelle version
 
-Copie de la page d'accueil du projet Lovable « leadeurs-art-code » (Vite + React + Tailwind + framer-motion).
+Refonte complète de la page d'accueil : React + Vite, CSS sur-mesure (pas de Tailwind), polices Bricolage Grotesque / Geist / Geist Mono.
 
 ```bash
 npm install
-npm run dev     # http://localhost:8080
-npm run build
+npm run dev      # http://localhost:8080
+npm run build    # site statique dans dist/
+npx vite build -c vite.artifact.config.ts   # un seul fichier HTML autonome (dist-artifact/)
 ```
 
-Les images dans `src/assets/` (avis, portfolio, icônes des leads, équipe, blog) sont des **placeholders** :
-les binaires n'ont pas pu être exportés depuis Lovable. Remplace-les par les vrais fichiers en gardant les mêmes noms.
-Le logo a été extrait d'une capture d'écran (basse résolution) : remplace `src/assets/logo.png` et `public/favicon.png` par l'original.
+- Tous les textes sont dans `src/data.ts` (secteurs, chiffres, avis, FAQ, contacts).
+- Les styles et les couleurs (variables en haut du fichier) sont dans `src/styles.css`.
+- Le logo `src/assets/logo.png` a été extrait d'une capture d'écran : remplace-le par l'original en haute définition.
