@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mon Toit Solaire – Étude gratuite pour vos panneaux solaires</title>
+  <meta name="description" content="Vérifiez en 1 minute si votre maison est éligible à une installation de panneaux solaires et recevez une étude personnalisée gratuite.">
+  <meta name="theme-color" content="#1b3a7a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- En-tête -->
+  <header class="header">
+    <div class="container header__inner">
+      <a class="brand" href="#" aria-label="Mon Toit Solaire – accueil">
+        <span class="brand__logo" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="18" r="8" fill="#f5b301"/><g stroke="#f5b301" stroke-width="3" stroke-linecap="round"><path d="M24 3v4M9 18H5M43 18h-4M13 7l3 3M35 7l-3 3"/></g><path d="M6 44l6-14h24l6 14z" fill="#1b3a7a"/><path d="M14 33h20M11 39h26M20 30l-2 14M28 30l2 14" stroke="#fff" stroke-width="1.6"/></svg>
+        </span>
+        <span class="brand__text">
+          <strong>Mon Toit Solaire</strong>
+          <small>Étude solaire pour les particuliers</small>
+        </span>
+      </a>
+      <a class="btn btn--secondary header__cta" href="#eligibilite">Tester mon éligibilité</a>
+    </div>
+  </header>
+
+  <main id="contenu">
+
+    <!-- Hero + formulaire -->
+    <section class="hero">
+      <div class="container hero__grid">
+        <div class="hero__text">
+          <p class="tag">Panneaux solaires · Maison individuelle</p>
+          <h1>Produisez votre propre électricité et réduisez vos factures</h1>
+          <p class="lead">Vérifiez en moins d'une minute si votre maison est adaptée à une installation de panneaux solaires et recevez une étude personnalisée, gratuite et sans engagement.</p>
+          <ul class="checks">
+            <li>Étude de votre toiture et de votre consommation</li>
+            <li>Estimation des économies et des aides possibles</li>
+            <li>Installateurs certifiés RGE QualiPV</li>
+          </ul>
+        </div>
+
+        <div class="card form-card" id="eligibilite">
+          <div class="stepper" aria-hidden="true">
+            <span class="stepper__label">Étape <b id="stepNum">1</b> sur 2</span>
+            <span class="stepper__title" id="stepTitle">Votre logement</span>
+            <div class="stepper__bar"><span id="stepBar"></span></div>
+          </div>
+
+          <form id="leadForm" novalidate>
+            <!-- Étape 1 -->
+            <fieldset class="step" id="step1">
+              <legend class="q">Êtes-vous propriétaire de votre maison ?</legend>
+              <div class="choices">
+                <label class="choice">
+                  <input type="radio" name="proprietaire" value="oui" required>
+                  <span>Oui</span>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="proprietaire" value="non">
+                  <span>Non</span>
+                </label>
+              </div>
+              <p class="error" id="err-proprietaire" role="alert"></p>
+              <div class="notice notice--info" id="nonProprio" hidden>
+                <p>Cette étude est réservée aux propriétaires d'une maison individuelle. Pour un conseil gratuit sur votre situation, vous pouvez contacter <a href="https://france-renov.gouv.fr" target="_blank" rel="noopener">France Rénov'</a> au 0 808 800 700.</p>
+              </div>
+              <button type="button" class="btn btn--primary btn--block" id="toStep2">Continuer</button>
+            </fieldset>
+
+            <!-- Étape 2 -->
+            <fieldset class="step" id="step2" hidden>
+              <legend class="q">Vos coordonnées pour recevoir votre étude</legend>
+
+              <div class="field">
+                <label for="nom">Nom complet</label>
+                <input id="nom" name="nom" type="text" autocomplete="name" placeholder="Ex : Marie Dupont" required>
+                <p class="error" id="err-nom" role="alert"></p>
+              </div>
+
+              <div class="field">
+                <label for="telephone">Téléphone <span class="hint">Format : 06 12 34 56 78</span></label>
+                <input id="telephone" name="telephone" type="tel" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78" required>
+                <p class="error" id="err-telephone" role="alert"></p>
+              </div>
+
+              <div class="field">
+                <label for="email">E-mail</label>
+                <input id="email" name="email" type="text" autocomplete="email" placeholder="Votre adresse e-mail" required>
+                <p class="error" id="err-email" role="alert"></p>
+              </div>
+
+              <div class="field">
+                <label for="cp">Code postal <span class="hint">4 ou 5 chiffres</span></label>
+                <input id="cp" name="code_postal" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="75001" required>
+                <p class="error" id="err-cp" role="alert"></p>
+              </div>
+
+              <div class="field field--check">
+                <input id="rgpd" name="consentement" type="checkbox" required>
+                <label for="rgpd">J'accepte d'être recontacté(e) par téléphone ou e-mail au sujet de mon projet solaire. Mes données sont traitées conformément à la <a href="#confidentialite">politique de confidentialité</a>.</label>
+              </div>
+              <p class="error" id="err-rgpd" role="alert"></p>
+
+              <div class="actions">
+                <button type="button" class="btn btn--tertiary" id="back">Retour</button>
+                <button type="submit" class="btn btn--primary" id="submitBtn">Recevoir mon étude gratuite</button>
+              </div>
+            </fieldset>
+
+            <!-- Confirmation -->
+            <div class="step success" id="done" hidden tabindex="-1">
+              <div class="success__icon" aria-hidden="true">✓</div>
+              <h2>Merci, votre demande est enregistrée</h2>
+              <p>Un conseiller vous contactera sous 48 h ouvrées pour réaliser votre étude solaire gratuite.</p>
+            </div>
+          </form>
+          <p class="form-card__legal">Gratuit et sans engagement · Vos données ne sont jamais revendues.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Étapes -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section__title">Comment ça marche ?</h2>
+        <ol class="steps">
+          <li class="tile"><span class="tile__num">1</span><h3>Vous répondez</h3><p>Quelques questions sur votre logement, en moins d'une minute.</p></li>
+          <li class="tile"><span class="tile__num">2</span><h3>On étudie votre projet</h3><p>Analyse de votre toiture, de l'ensoleillement et de votre consommation.</p></li>
+          <li class="tile"><span class="tile__num">3</span><h3>Vous décidez</h3><p>Vous recevez une proposition chiffrée, libre à vous de l'accepter ou non.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Avantages -->
+    <section class="section section--alt">
+      <div class="container">
+        <h2 class="section__title">Pourquoi passer au solaire ?</h2>
+        <div class="grid3">
+          <article class="tile tile--icon"><span class="ico" aria-hidden="true">⚡</span><h3>Autoconsommation</h3><p>Consommez l'électricité que vous produisez et dépendez moins des hausses de prix.</p></article>
+          <article class="tile tile--icon"><span class="ico" aria-hidden="true">€</span><h3>Revente du surplus</h3><p>L'électricité non consommée peut être revendue sous contrat d'obligation d'achat.</p></article>
+          <article class="tile tile--icon"><span class="ico" aria-hidden="true">🏠</span><h3>Valorisation du bien</h3><p>Une maison qui produit son énergie gagne en attractivité et en performance.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <div class="container container--narrow">
+        <h2 class="section__title">Questions fréquentes</h2>
+        <details class="faq"><summary>L'étude est-elle vraiment gratuite ?</summary><p>Oui. L'étude et le devis sont gratuits et sans engagement.</p></details>
+        <details class="faq"><summary>Pourquoi faut-il être propriétaire ?</summary><p>L'installation de panneaux sur la toiture nécessite d'être propriétaire du bâtiment.</p></details>
+        <details class="faq"><summary>Quelles aides existent pour le photovoltaïque ?</summary><p>Selon votre situation : prime à l'autoconsommation, TVA réduite sous conditions et tarif d'achat du surplus. Les montants dépendent de la puissance installée et sont fixés par la réglementation en vigueur.</p></details>
+        <details class="faq"><summary>Ce site est-il un service public ?</summary><p>Non. Mon Toit Solaire est un service privé. Le service public de la rénovation de l'habitat est France Rénov' : <a href="https://france-renov.gouv.fr" target="_blank" rel="noopener">france-renov.gouv.fr</a>.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pied de page -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div>
+        <strong>Mon Toit Solaire</strong>
+        <p>Site édité par une société privée, non affiliée à l'État ni à France Rénov'.</p>
+      </div>
+      <nav class="footer__links" aria-label="Liens légaux">
+        <a href="#mentions">Mentions légales</a>
+        <a href="#confidentialite">Politique de confidentialité</a>
+        <a href="#cookies">Cookies</a>
+      </nav>
+    </div>
+    <p class="container footer__small">Conformément au Code de la consommation, vous pouvez vous inscrire gratuitement sur la liste d'opposition au démarchage téléphonique Bloctel (bloctel.gouv.fr).</p>
+  </footer>
+
+  <!-- Bandeau d'information France Rénov' (toujours visible) -->
+  <aside class="fr-banner" id="frBanner" role="complementary" aria-label="Information France Rénov'">
+    <div class="container fr-banner__inner">
+      <span class="fr-banner__icon" aria-hidden="true">i</span>
+      <p><strong>France Rénov'</strong> est le service public de la rénovation de l'habitat. Conseil gratuit et indépendant&nbsp;: <a href="https://france-renov.gouv.fr" target="_blank" rel="noopener">france-renov.gouv.fr</a> ou <a href="tel:+33808800700">0&nbsp;808&nbsp;800&nbsp;700</a><span class="fr-banner__long"> (service gratuit + prix d'un appel)</span>. <span class="fr-banner__disclaimer">Ce site privé n'est pas affilié à France Rénov'.</span></p>
+    </div>
+  </aside>
+
+  <script src="script.js"></script>
+</body>
+</html>
