@@ -11,7 +11,6 @@
   --error: #c9191e;
   --success: #18753c;
   --radius: 4px;
-  --banner-h: 0px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -25,8 +24,6 @@ body {
   line-height: 1.5;
   color: var(--text);
   background: var(--bg);
-  /* laisse la place au bandeau fixe en bas */
-  padding-bottom: var(--banner-h);
 }
 
 img, svg { max-width: 100%; display: block; }
@@ -150,34 +147,21 @@ h1 { font-size: clamp(1.75rem, 1.2rem + 2.4vw, 2.75rem); line-height: 1.15; font
 .footer__links a { color: var(--text); }
 .footer__small { color: var(--muted); font-size: .8rem; margin-top: 16px; }
 
-/* ---------- Bandeau France Rénov' (fixe en bas, non masquable) ----------
-   Proportions reprises de la règle des supports écrits :
-   hauteur >= 7 % de l'écran, marge >= 2 % de l'écran sous le bandeau. */
-.fr-banner {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 1000;
-  display: block; text-decoration: none; color: var(--text);
-  background: #fff;
-  padding-bottom: max(2vh, env(safe-area-inset-bottom));
-  padding-bottom: max(2svh, env(safe-area-inset-bottom));
-  box-shadow: 0 -4px 14px rgba(0,0,18,.15);
+/* ---------- Bandeau France Rénov' (dans la page, non fixe) ----------
+   Affiche le visuel officiel du kit Anah ; texte de secours tant que le fichier est absent. */
+.fr-zone { padding: 24px 0 0; }
+.fr-zone--bottom { padding: 40px 0 24px; }
+.fr-banner { display: block; text-decoration: none; color: var(--text); }
+.fr-banner__img { display: block; width: 100%; max-width: 1400px; height: auto; margin: 0 auto; }
+.fr-banner__fallback { display: none; }
+.fr-banner.is-fallback .fr-banner__img { display: none; }
+.fr-banner.is-fallback .fr-banner__fallback {
+  display: block; padding: 16px 20px; text-align: center;
+  border: 1px solid var(--border); border-top: 4px solid var(--blue); background: #fff;
+  font-size: clamp(14px, .8rem + .4vw, 19px); line-height: 1.4; font-weight: 500;
 }
-.fr-banner__band {
-  display: flex; align-items: center;
-  min-height: 7vh; min-height: 7svh;
-  border-top: 3px solid var(--blue); border-bottom: 1px solid var(--border);
-  background: #fff; padding: 8px 0;
-}
-.fr-banner__inner { display: flex; align-items: center; justify-content: center; text-align: center; }
-.fr-banner__text { font-size: clamp(14px, 0.75rem + 0.45vw, 20px); line-height: 1.35; font-weight: 500; }
 .fr-banner__url { font-weight: 800; color: var(--blue); text-decoration: underline; white-space: nowrap; }
-.fr-banner:hover .fr-banner__band { background: var(--blue-light); }
-
-.fr-encart { padding: 24px 0 0; }
-.fr-encart__box {
-  display: block; padding: 16px 20px; border: 1px solid var(--border); border-left: 4px solid var(--blue);
-  background: var(--blue-light); color: var(--text); text-decoration: none; line-height: 1.45;
-}
-.fr-encart__box:hover .fr-banner__url { color: var(--blue-dark); }
+.fr-banner:hover .fr-banner__url { color: var(--blue-dark); }
 
 /* ---------- Tablette ---------- */
 /* Mobile : formulaire plus haut dans la page */

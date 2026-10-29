@@ -125,11 +125,14 @@
       </div>
     </section>
 
-    <!-- Encart d'information France Rénov' (sites internet proposant des travaux) -->
-    <section class="fr-encart" aria-label="Information du service public France Rénov'">
+    <!-- Bandeau obligatoire France Rénov' (art. L. 122-26 C. conso., arrêté du 7 juillet 2026).
+         Visuel officiel du kit Anah à déposer dans assets/bandeau-france-renov.png. -->
+    <section class="fr-zone" aria-label="Information du service public France Rénov'">
       <div class="container">
-        <a class="fr-encart__box" href="https://france-renov.gouv.fr" target="_blank" rel="noopener">
-          <span class="fr-encart__text">Avant de vous engager, le service public vous informe gratuitement pour préparer et sécuriser votre projet&nbsp;: <span class="fr-banner__url">www.france-renov.gouv.fr</span></span>
+        <a class="fr-banner" href="https://france-renov.gouv.fr" target="_blank" rel="noopener">
+          <img class="fr-banner__img" src="assets/bandeau-france-renov.png" width="1400" height="300"
+               alt="Avant de vous engager, le service public vous informe gratuitement pour préparer et sécuriser votre projet : www.france-renov.gouv.fr">
+          <span class="fr-banner__fallback">Avant de vous engager, le service public vous informe gratuitement pour préparer et sécuriser votre projet&nbsp;: <span class="fr-banner__url">www.france-renov.gouv.fr</span></span>
         </a>
       </div>
     </section>
@@ -170,6 +173,17 @@
     </section>
   </main>
 
+  <!-- Bandeau obligatoire France Rénov' en bas de page -->
+  <section class="fr-zone fr-zone--bottom" aria-label="Information du service public France Rénov'">
+    <div class="container">
+      <a class="fr-banner" href="https://france-renov.gouv.fr" target="_blank" rel="noopener">
+        <img class="fr-banner__img" src="assets/bandeau-france-renov.png" width="1400" height="300"
+             alt="Avant de vous engager, le service public vous informe gratuitement pour préparer et sécuriser votre projet : www.france-renov.gouv.fr">
+        <span class="fr-banner__fallback">Avant de vous engager, le service public vous informe gratuitement pour préparer et sécuriser votre projet&nbsp;: <span class="fr-banner__url">www.france-renov.gouv.fr</span></span>
+      </a>
+    </div>
+  </section>
+
   <!-- Pied de page -->
   <footer class="footer">
     <div class="container footer__inner">
@@ -185,16 +199,6 @@
     </div>
     <p class="container footer__small">Conformément au Code de la consommation, vous pouvez vous inscrire gratuitement sur la liste d'opposition au démarchage téléphonique Bloctel (bloctel.gouv.fr).</p>
   </footer>
-
-  <!-- Bandeau obligatoire France Rénov' (art. L. 122-26 C. conso., arrêté du 7 juillet 2026, annexe I).
-       Le message doit être reproduit mot pour mot : ne rien ajouter dans ce bandeau. -->
-  <a class="fr-banner" id="frBanner" href="https://france-renov.gouv.fr" target="_blank" rel="noopener" aria-label="Information du service public France Rénov' – ouvre france-renov.gouv.fr">
-    <span class="fr-banner__band">
-      <span class="container fr-banner__inner">
-        <span class="fr-banner__text">Avant de vous engager, le service public vous informe gratuitement pour préparer et sécuriser votre projet&nbsp;: <span class="fr-banner__url">www.france-renov.gouv.fr</span></span>
-      </span>
-    </span>
-  </a>
 
   <script src="script.js"></script>
 </body>
