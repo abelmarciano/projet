@@ -150,23 +150,34 @@ h1 { font-size: clamp(1.75rem, 1.2rem + 2.4vw, 2.75rem); line-height: 1.15; font
 .footer__links a { color: var(--text); }
 .footer__small { color: var(--muted); font-size: .8rem; margin-top: 16px; }
 
-/* ---------- Bandeau France Rénov' (fixe en bas, non masquable) ---------- */
+/* ---------- Bandeau France Rénov' (fixe en bas, non masquable) ----------
+   Proportions reprises de la règle des supports écrits :
+   hauteur >= 7 % de l'écran, marge >= 2 % de l'écran sous le bandeau. */
 .fr-banner {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 1000;
-  background: #fff; color: var(--text);
-  border-top: 3px solid var(--blue);
+  display: block; text-decoration: none; color: var(--text);
+  background: #fff;
+  padding-bottom: max(2vh, env(safe-area-inset-bottom));
+  padding-bottom: max(2svh, env(safe-area-inset-bottom));
   box-shadow: 0 -4px 14px rgba(0,0,18,.15);
-  padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
 }
-.fr-banner__inner { display: flex; align-items: flex-start; gap: 10px; }
-.fr-banner__icon {
-  flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--blue); color: #fff;
-  display: grid; place-items: center; font-weight: 800; font-style: italic; font-family: Georgia, serif; font-size: .85rem; margin-top: 1px;
+.fr-banner__band {
+  display: flex; align-items: center;
+  min-height: 7vh; min-height: 7svh;
+  border-top: 3px solid var(--blue); border-bottom: 1px solid var(--border);
+  background: #fff; padding: 8px 0;
 }
-.fr-banner p { margin: 0; font-size: 13px; line-height: 1.4; }
-.fr-banner a { font-weight: 700; color: var(--blue); white-space: nowrap; }
-.fr-banner__disclaimer { color: var(--muted); }
-.fr-banner__long { display: none; }
+.fr-banner__inner { display: flex; align-items: center; justify-content: center; text-align: center; }
+.fr-banner__text { font-size: clamp(14px, 0.75rem + 0.45vw, 20px); line-height: 1.35; font-weight: 500; }
+.fr-banner__url { font-weight: 800; color: var(--blue); text-decoration: underline; white-space: nowrap; }
+.fr-banner:hover .fr-banner__band { background: var(--blue-light); }
+
+.fr-encart { padding: 24px 0 0; }
+.fr-encart__box {
+  display: block; padding: 16px 20px; border: 1px solid var(--border); border-left: 4px solid var(--blue);
+  background: var(--blue-light); color: var(--text); text-decoration: none; line-height: 1.45;
+}
+.fr-encart__box:hover .fr-banner__url { color: var(--blue-dark); }
 
 /* ---------- Tablette ---------- */
 /* Mobile : formulaire plus haut dans la page */
@@ -182,7 +193,6 @@ h1 { font-size: clamp(1.75rem, 1.2rem + 2.4vw, 2.75rem); line-height: 1.15; font
   .actions { flex-direction: row; justify-content: space-between; }
   .actions .btn { width: auto; }
   .actions .btn--primary { flex: 1; }
-  .fr-banner p { font-size: 15px; }
 }
 
 @media (min-width: 768px) {
@@ -190,10 +200,6 @@ h1 { font-size: clamp(1.75rem, 1.2rem + 2.4vw, 2.75rem); line-height: 1.15; font
   .steps, .grid3 { grid-template-columns: repeat(3, 1fr); }
   .footer__inner { grid-template-columns: 1fr auto; align-items: start; }
   .section { padding: 56px 0; }
-  .fr-banner { padding-top: 12px; padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
-  .fr-banner__inner { align-items: center; justify-content: center; }
-  .fr-banner__icon { width: 26px; height: 26px; font-size: 1rem; }
-  .fr-banner__long { display: inline; }
 }
 
 /* ---------- Desktop ---------- */
@@ -201,12 +207,10 @@ h1 { font-size: clamp(1.75rem, 1.2rem + 2.4vw, 2.75rem); line-height: 1.15; font
   .hero { padding: 56px 0 64px; }
   .hero__grid { grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
   .form-card { padding: 32px; }
-  .fr-banner p { font-size: 16px; }
 }
 
 @media (min-width: 1440px) {
   .container { max-width: 1320px; }
-  .fr-banner p { font-size: 17px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

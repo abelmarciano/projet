@@ -125,6 +125,15 @@
       </div>
     </section>
 
+    <!-- Encart d'information France Rénov' (sites internet proposant des travaux) -->
+    <section class="fr-encart" aria-label="Information du service public France Rénov'">
+      <div class="container">
+        <a class="fr-encart__box" href="https://france-renov.gouv.fr" target="_blank" rel="noopener">
+          <span class="fr-encart__text">Avant de vous engager, le service public vous informe gratuitement pour préparer et sécuriser votre projet&nbsp;: <span class="fr-banner__url">www.france-renov.gouv.fr</span></span>
+        </a>
+      </div>
+    </section>
+
     <!-- Étapes -->
     <section class="section">
       <div class="container">
@@ -177,13 +186,15 @@
     <p class="container footer__small">Conformément au Code de la consommation, vous pouvez vous inscrire gratuitement sur la liste d'opposition au démarchage téléphonique Bloctel (bloctel.gouv.fr).</p>
   </footer>
 
-  <!-- Bandeau d'information France Rénov' (toujours visible) -->
-  <aside class="fr-banner" id="frBanner" role="complementary" aria-label="Information France Rénov'">
-    <div class="container fr-banner__inner">
-      <span class="fr-banner__icon" aria-hidden="true">i</span>
-      <p><strong>France Rénov'</strong> est le service public de la rénovation de l'habitat. Conseil gratuit et indépendant&nbsp;: <a href="https://france-renov.gouv.fr" target="_blank" rel="noopener">france-renov.gouv.fr</a> ou <a href="tel:+33808800700">0&nbsp;808&nbsp;800&nbsp;700</a><span class="fr-banner__long"> (service gratuit + prix d'un appel)</span>. <span class="fr-banner__disclaimer">Ce site privé n'est pas affilié à France Rénov'.</span></p>
-    </div>
-  </aside>
+  <!-- Bandeau obligatoire France Rénov' (art. L. 122-26 C. conso., arrêté du 7 juillet 2026, annexe I).
+       Le message doit être reproduit mot pour mot : ne rien ajouter dans ce bandeau. -->
+  <a class="fr-banner" id="frBanner" href="https://france-renov.gouv.fr" target="_blank" rel="noopener" aria-label="Information du service public France Rénov' – ouvre france-renov.gouv.fr">
+    <span class="fr-banner__band">
+      <span class="container fr-banner__inner">
+        <span class="fr-banner__text">Avant de vous engager, le service public vous informe gratuitement pour préparer et sécuriser votre projet&nbsp;: <span class="fr-banner__url">www.france-renov.gouv.fr</span></span>
+      </span>
+    </span>
+  </a>
 
   <script src="script.js"></script>
 </body>
