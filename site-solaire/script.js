@@ -15,13 +15,6 @@
   var nonProprio = document.getElementById("nonProprio");
   var submitBtn = document.getElementById("submitBtn");
 
-  // ---- Bandeau France Rénov' : texte de secours si le visuel officiel est absent ----
-  document.querySelectorAll(".fr-banner__img").forEach(function (img) {
-    function fallback() { img.parentNode.classList.add("is-fallback"); }
-    if (img.complete && img.naturalWidth === 0) fallback();
-    else img.addEventListener("error", fallback);
-  });
-
   // ---- Validation ----
   // Numéros français : 0X XX XX XX XX ou +33 / 0033 X XX XX XX XX (X de 1 à 9)
   function normalizePhone(v) {

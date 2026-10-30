@@ -147,21 +147,56 @@ h1 { font-size: clamp(1.75rem, 1.2rem + 2.4vw, 2.75rem); line-height: 1.15; font
 .footer__links a { color: var(--text); }
 .footer__small { color: var(--muted); font-size: .8rem; margin-top: 16px; }
 
-/* ---------- Bandeau France Rénov' (dans la page, non fixe) ----------
-   Affiche le visuel officiel du kit Anah ; texte de secours tant que le fichier est absent. */
-.fr-zone { padding: 24px 0 0; }
-.fr-zone--bottom { padding: 40px 0 24px; }
-.fr-banner { display: block; text-decoration: none; color: var(--text); }
-.fr-banner__img { display: block; width: 100%; max-width: 1400px; height: auto; margin: 0 auto; }
-.fr-banner__fallback { display: none; }
-.fr-banner.is-fallback .fr-banner__img { display: none; }
-.fr-banner.is-fallback .fr-banner__fallback {
-  display: block; padding: 16px 20px; text-align: center;
-  border: 1px solid var(--border); border-top: 4px solid var(--blue); background: #fff;
-  font-size: clamp(14px, .8rem + .4vw, 19px); line-height: 1.4; font-weight: 500;
+/* ---------- Encart obligatoire France Rénov' (charte Anah 2026, « Site web ») ----------
+   Fond blanc, deux liserés noirs, bloc République française + France Rénov',
+   écart logo / message = moitié du mot « Rénov' », message en Marianne Regular, URL en Bold,
+   hauteur >= 150 px, marges latérales entre 1 et 3 fois la forme du visage. */
+.fr-encart-zone { background: #fff; padding: 16px 0; }
+.fr-encart-zone__inner { padding: 0; }
+.fr-encart {
+  --logo-h: 40px;
+  --lisere: 2px;
+  display: flex; align-items: center; justify-content: center;
+  gap: calc(var(--logo-h) * 0.55);
+  min-height: 150px;
+  padding: 0 calc(var(--logo-h) * 0.6);
+  background: #fff; color: #000; text-decoration: none;
+  border-top: var(--lisere) solid #000; border-bottom: var(--lisere) solid #000;
+  font-family: "Marianne", Arial, Helvetica, sans-serif;
 }
-.fr-banner__url { font-weight: 800; color: var(--blue); text-decoration: underline; white-space: nowrap; }
-.fr-banner:hover .fr-banner__url { color: var(--blue-dark); }
+.fr-encart__logos { flex: none; height: var(--logo-h); width: auto; max-width: none; }
+.fr-encart__msg { font-size: 12.5px; line-height: 1.3; font-weight: 400; }
+.fr-encart__msg b { font-weight: 700; white-space: nowrap; }
+.fr-encart__l2, .fr-encart__l3 { display: none; }
+.fr-encart__msg > span { white-space: nowrap; }
+
+/* Très petits écrans : message au-dessus des logos (déclinaison verticale de la charte) */
+@media (max-width: 359px) {
+  .fr-encart { flex-direction: column-reverse; gap: 10px; padding: 16px 12px; text-align: center; --logo-h: 38px; }
+}
+.fr-encart:focus-visible { outline: 3px solid #0a76f6; outline-offset: 3px; }
+
+@media (min-width: 400px) {
+  .fr-encart { --logo-h: 46px; }
+  .fr-encart__msg { font-size: 13.5px; }
+}
+@media (min-width: 576px) {
+  .fr-encart-zone__inner { padding: 0 16px; }
+  .fr-encart { --logo-h: 56px; }
+  .fr-encart__msg { font-size: 16px; }
+}
+@media (min-width: 768px) {
+  .fr-encart { --logo-h: 64px; }
+  .fr-encart__msg { font-size: 17px; }
+  .fr-encart__l5 { display: none; }
+  .fr-encart__l3 { display: inline; }
+}
+@media (min-width: 1100px) {
+  .fr-encart { --logo-h: 100px; --lisere: 3px; min-height: 150px; }
+  .fr-encart__msg { font-size: 18px; }
+  .fr-encart__l3 { display: none; }
+  .fr-encart__l2 { display: inline; }
+}
 
 /* ---------- Tablette ---------- */
 /* Mobile : formulaire plus haut dans la page */

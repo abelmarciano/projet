@@ -1,4 +1,0 @@
-Déposer ici le bandeau web officiel du kit France Rénov' (Anah), renommé :
-  bandeau-france-renov.png
-Le kit se télécharge depuis l'espace professionnels de france-renov.gouv.fr.
-Tant que le fichier est absent, le site affiche le message obligatoire en texte.
