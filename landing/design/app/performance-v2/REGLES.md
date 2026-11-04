@@ -2,18 +2,19 @@
 
 Maquette : `maquette.html` (artifact https://claude.ai/artifact/2yRCQnnosVbmXbV5hx4wsG, version épurée).
 
-## Mise en page épurée (validée par l'utilisateur)
-- La page doit rester simple : pas de multiplication de cartes et de blocs.
-- **En-tête** : un seul bouton « Toutes mes campagnes » qui ouvre le choix du compte, de la page et du produit, puis la période.
-- **Onglets d'objectif** : ils n'apparaissent que si les campagnes choisies ont plusieurs objectifs. Il n'y a pas de vue « Tous » qui mélange les objectifs.
-- **Bloc principal** :
-  - un grand chiffre et le coût par résultat, avec l'évolution ;
-  - une phrase simple ;
-  - une courbe, avec la période précédente en pointillés ;
-  - 4 chiffres secondaires en bas du bloc.
-- **« À faire »** : une ligne par conseil, avec un seul bouton.
-- **« Par produit »** : une ligne par produit, qui se déplie pour montrer ses campagnes (comparées au produit) et ses 2 meilleures pubs.
-- Le tableau détaillé complet reste disponible derrière un lien.
+## Mise en page : cartes visuelles (choix de l'utilisateur ; la version épurée a été refusée)
+- **En-tête** : bouton « Toutes mes campagnes » (compte, page, produit) et période.
+- **Objectifs** en pastilles, avec le nombre de campagnes de chacun. Ils n'apparaissent que s'il y a plusieurs objectifs.
+- **8 cartes de chiffres**, adaptées à l'objectif :
+  - 4 grandes cartes avec icône de couleur, valeur, évolution et mini-courbe ;
+  - 4 petites cartes ;
+  - un clic sur une carte l'affiche dans la grande courbe.
+- **Grande courbe** (période précédente en pointillés), avec à côté un anneau « Dépense par produit » dont la légende filtre la page.
+- **« À faire »** : 3 cartes de conseil (À booster, À relancer, À couper), chacune avec son bouton.
+- **« Tes produits »** :
+  - une carte par produit : coût par résultat et évolution, mini-courbe, dépense, résultats ;
+  - un bouton déplie les campagnes, comparées au produit.
+- Le tableau complet reste derrière un lien.
 
 ## Filtres
 - Compte publicitaire, page Facebook et groupe de campagnes, en haut de la page.
