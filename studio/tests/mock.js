@@ -1,7 +1,7 @@
 (() => {
   const seed = window.__SEED;
-  const cols = {media: new Map(Object.entries(seed.media)), posts: new Map(Object.entries(seed.posts))};
-  const subs = {media: [], posts: []};
+  const cols = {media: new Map(Object.entries(seed.media)), posts: new Map(Object.entries(seed.posts)), config: new Map(Object.entries(seed.config || {}))};
+  const subs = {media: [], posts: [], config: []};
   const snap = (c) => ({docs: [...cols[c]].map(([id, d]) => ({id, exists: true, data: () => JSON.parse(JSON.stringify(d))})), size: cols[c].size, empty: !cols[c].size});
   const notify = (c) => setTimeout(() => subs[c].forEach((f) => f(snap(c))), 5);
   window.__log = [];

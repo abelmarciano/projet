@@ -374,6 +374,8 @@ tbody tr:hover td { background: #FAFAFC }
 .reel .cta { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,.95); color: #111; border-radius: 9px; padding: 9px 12px; font-weight: 700; font-size: 13px }
 .reel .side { position: absolute; right: 10px; bottom: 30px; display: grid; gap: 18px; justify-items: center; color: #fff }
 .reel .side svg { width: 25px; height: 25px }
+.snd { position: absolute; left: 10px; bottom: 10px; z-index: 4; border: 0; border-radius: 99px; background: rgba(11,11,16,.72); color: #fff; font: 600 12px var(--f-ui); padding: 7px 12px; backdrop-filter: blur(6px) }
+.reel .snd { top: 74px; bottom: auto; left: auto; right: 12px }
 .pv-note { font-size: 11.5px; color: var(--muted); text-align: center; max-width: 330px }
 
 /* media detail */
@@ -849,7 +851,7 @@ function vMedias(main) {
   main.innerHTML = `<div class="page">
     <div class="ph"><div><div class="eyebrow">${IC.image.replace('<svg', '<svg width="14" height="14"')} Bibliothèque</div><h1>Médias</h1><p>Vidéos, visuels et carrousels générés par Claude ou importés par l’équipe.</p></div></div>
     ${S.assets ? `<label class="drop" id="drop"><input type="file" id="file" multiple accept="image/png,image/jpeg,image/webp,video/mp4,video/webm" hidden>
-      <span class="btn accent">${IC.upload} Importer</span><span><b>Glissez vos fichiers ici.</b> Plusieurs images d’un coup forment un carrousel, dans l’ordre des noms.</span>
+      <span class="btn accent">${IC.upload} Importer</span><span><b>Glissez vos fichiers ici.</b> Plusieurs images d’un coup forment un carrousel. Les vidéos du Drive (3_Finales) remplacent automatiquement leur lien, dans la bonne catégorie.</span>
       ${up ? `<div class="progress"><i style="width:${(up.done / up.total) * 100}%"></i></div><span style="font-size:12.5px">Envoi ${up.done}/${up.total}…</span>` : ''}</label>` : ''}
     <div class="toolbar"><label class="search">${IC.search}<span class="sr">Rechercher</span><input id="q" type="search" placeholder="Rechercher un média…" value="${esc(S.q)}"></label>
       <div class="seg" role="group" aria-label="Format">${['all', ...FORMATS].map((x) => `<button data-act="mff" data-v="${x}" aria-pressed="${f.format === x}">${x === 'all' ? 'Tous formats' : x}</button>`).join('')}</div>
@@ -875,6 +877,17 @@ function vMedias(main) {
     drop.addEventListener('drop', (e) => { if (S.dragId) return; e.preventDefault(); drop.classList.remove('over'); uploadFiles([...e.dataTransfer.files]); });
   }
 }
+function posterOf(file) {
+  return new Promise((res) => {
+    const url = URL.createObjectURL(file); const v = document.createElement('video'); v.muted = true; v.playsInline = true; v.preload = 'auto';
+    const done = (b) => { URL.revokeObjectURL(url); res(b); };
+    const t = setTimeout(() => done(null), 8000);
+    v.onloadeddata = () => { v.currentTime = Math.min(1.2, (v.duration || 2) / 3); };
+    v.onseeked = () => { try { const c = document.createElement('canvas'); const sc = 540 / (v.videoWidth || 540); c.width = 540; c.height = Math.round((v.videoHeight || 960) * sc); c.getContext('2d').drawImage(v, 0, 0, c.width, c.height); c.toBlob((b) => { clearTimeout(t); done(b); }, 'image/jpeg', 0.82); } catch { clearTimeout(t); done(null); } };
+    v.onerror = () => { clearTimeout(t); done(null); };
+    v.src = url;
+  });
+}
 function guessFormat(w, h) { const r = w / h; return Object.entries({'9:16': 9 / 16, '4:5': 0.8, '1:1': 1, '16:9': 16 / 9}).sort((a, b) => Math.abs(a[1] - r) - Math.abs(b[1] - r))[0][0]; }
 function dims(file) {
   return new Promise((res) => {
@@ -894,11 +907,19 @@ async function uploadFiles(files) {
   for (const g of groups) {
     const items = []; let fmt = '4:5';
     for (const f of g) {
-      try { const [w, h] = await dims(f); if (!items.length) fmt = guessFormat(w, h); const r = await S.assets.upload(f); items.push({asset: r.id, ct: r.contentType, name: f.name}); }
+      try {
+        const [w, h] = await dims(f); if (!items.length) fmt = guessFormat(w, h);
+        const r = await S.assets.upload(f); const it = {asset: r.id, ct: r.contentType, name: f.name};
+        if (f.type.startsWith('video')) { const pb = await posterOf(f); if (pb) { try { it.poster = (await S.assets.upload(pb, {type: 'image/jpeg'})).id; } catch {} } }
+        items.push(it);
+      }
       catch (e) { toast(`${f.name} : ${errMsg(e)}`, true); }
       S.upload.done++; if (S.view === 'medias') render();
     }
     if (!items.length) continue;
+    const norm = (n) => n.toLowerCase().replace(/\s*\(\d+\)(?=\.[^.]+$)/, '');
+    const match = g.length === 1 && S.media.find((m) => m.drive && !(m.items || []).length && norm(m.drive.file || '') === norm(g[0].name));
+    if (match) { try { await S.db.collection('media').doc(match.id).update({items, format: fmt}); ok++; } catch (e) { toast('Enregistrement : ' + errMsg(e), true); } continue; }
     const kind = isVid(items[0]) ? 'video' : items.length > 1 ? 'carousel' : 'image';
     const title = (g.length > 1 ? 'Carrousel – ' : '') + g[0].name.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ');
     try { await S.db.collection('media').doc(uid()).set({title, kind, format: fmt, items, niche: '', note: '', source: 'upload', createdAt: Date.now(), createdBy: S.me || null}); ok++; }
@@ -1048,7 +1069,8 @@ function renderPreview() {
   const p = S.ed.draft; const m = mediaById(p.mediaId); const isAd = p.type === 'ad';
   const vertical = (S.ed.pv || (p.format === '9:16' ? 'reel' : 'feed')) === 'reel';
   const items = m?.items || []; const i = Math.min(S.ed.slide, Math.max(0, items.length - 1)); const it = items[i];
-  const mediaEl = it ? (isVid(it) ? `<video src="${blob(it.asset)}" ${it.poster ? `poster="${blob(it.poster)}"` : ''} muted loop playsinline autoplay preload="metadata"></video>` : `<img src="${blob(it.asset)}" alt="">`) : '';
+  const snd = `<button class="snd" data-act="pv-sound" aria-label="${S.ed.sound ? 'Couper le son' : 'Activer le son'}">${S.ed.sound ? '🔊 Son' : '🔇 Activer le son'}</button>`;
+  const mediaEl = it ? (isVid(it) ? `<video id="pv-video" src="${blob(it.asset)}" ${it.poster ? `poster="${blob(it.poster)}"` : ''} ${S.ed.sound ? '' : 'muted'} loop playsinline autoplay preload="metadata"></video>${snd}` : `<img src="${blob(it.asset)}" alt="">`) : '';
   const av = `<span class="ig-av"><div>${IC.logo}</div></span>`;
   const cap = (p.caption || '').trim();
   let screen;
@@ -1070,6 +1092,14 @@ function renderPreview() {
   box.innerHTML = `<div class="pv-tabs"><span>Aperçu en direct</span><div class="seg" role="group" aria-label="Aperçu"><button data-act="pv" data-v="feed" aria-pressed="${!vertical}">Fil</button><button data-act="pv" data-v="reel" aria-pressed="${vertical}">Reel / Story</button></div></div>
     <div class="phone"><div class="screen"><span class="island"></span>${screen}</div></div>
     <div class="pv-note">Aperçu indicatif${isAd ? ' d’une publicité' : ''} sur Instagram${m ? ' · ' + esc(m.title) : ''}</div>`;
+}
+function updPreviewCaption() {
+  const cap = (S.ed?.draft.caption || '').trim();
+  const reelTxt = $('#pv .reel .txt'), feedCap = $('#pv .ig-cap');
+  if (!$('#pv video')) { renderPreview(); return; }
+  if (reelTxt) reelTxt.textContent = cap;
+  else if (feedCap) { const short = cap.length > 110 && !S.ed.capOpen; feedCap.innerHTML = cap ? `<b>growthity.ai</b> ${esc(short ? cap.slice(0, 110).trimEnd() + '…' : cap)}${short ? ' <button class="more" data-act="cap-more">plus</button>' : ''}` : '<span class="empty-cap">La légende apparaîtra ici.</span>'; }
+  else renderPreview();
 }
 async function saveEditor() {
   const e = S.ed; if (!e) return; const p = e.draft;
@@ -1184,6 +1214,7 @@ document.addEventListener('click', async (ev) => {
     case 'copy': { const t = S.ed.draft.caption || ''; try { await navigator.clipboard.writeText(t); toast('Texte copié.'); } catch { const ta = $('#e-cap'); ta.focus(); ta.select(); toast('Texte sélectionné : copiez avec Ctrl/Cmd + C.'); } return; }
     case 'pv': S.ed.pv = d.v; renderPreview(); return;
     case 'pv-slide': S.ed.slide += Number(d.d); renderPreview(); return;
+    case 'pv-sound': { S.ed.sound = !S.ed.sound; const v = $('#pv-video'); if (v) { v.muted = !S.ed.sound; if (S.ed.sound) { v.currentTime = 0; v.play().catch(() => {}); } } el.textContent = S.ed.sound ? '🔊 Son' : '🔇 Activer le son'; return; }
     case 'cap-more': S.ed.capOpen = true; renderPreview(); return;
     case 'dup': { const c = JSON.parse(JSON.stringify(S.ed.draft)); c.id = uid(); c.title = c.title + ' (copie)'; c.date = ''; c.status = c.type === 'ad' ? 'draft' : 'idea'; c.createdAt = Date.now();
       try { await writePost(c); toast('Copie créée.'); go('post-' + c.id); } catch (er) { toast('Duplication impossible : ' + errMsg(er), true); } return; }
@@ -1194,7 +1225,7 @@ document.addEventListener('click', async (ev) => {
 });
 document.addEventListener('input', (ev) => {
   if (!S.ed || S.view !== 'post') return; const t = ev.target;
-  if (t.dataset.f) { S.ed.draft[t.dataset.f] = t.value; markDirty(); if (t.dataset.f === 'caption') { updCount(); renderPreview(); } }
+  if (t.dataset.f) { S.ed.draft[t.dataset.f] = t.value; markDirty(); if (t.dataset.f === 'caption') { updCount(); updPreviewCaption(); } }
   if (t.dataset.af) { S.ed.draft.ad ||= {}; S.ed.draft.ad[t.dataset.af] = t.value; markDirty(); if (t.dataset.af === 'cta') renderPreview(); }
 });
 document.addEventListener('change', (ev) => { const t = ev.target; if (S.ed && S.view === 'post' && (t.dataset.f || t.dataset.af)) { if (t.dataset.f) S.ed.draft[t.dataset.f] = t.value; else { S.ed.draft.ad ||= {}; S.ed.draft.ad[t.dataset.af] = t.value; } markDirty(); renderPreview(); } });
