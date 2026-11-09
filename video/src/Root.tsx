@@ -6,6 +6,7 @@ import {Short} from './shorts/Short';
 import {SHORT_IDS, totalFrames} from './shorts/timeline';
 import {CREAS} from './creas/Creas';
 import {ORGANIC} from './organic/Organic';
+import {ReelComp, REEL_LIST} from './reels/Reels';
 
 export const Root: React.FC = () => (
   <>
@@ -16,6 +17,9 @@ export const Root: React.FC = () => (
     ))}
     {CREAS.map((c) => (
       <Still key={c.id} id={c.id} component={c.C} width={c.w} height={c.h} />
+    ))}
+    {REEL_LIST.map((r) => (
+      <Composition key={r.id} id={`Reel${r.id.slice(1)}`} component={ReelComp} durationInFrames={r.frames} fps={30} width={1080} height={1920} defaultProps={{id: r.id, withAudio: true}} />
     ))}
     {ORGANIC.map((c) => (
       <Still key={c.id} id={c.id} component={c.C} width={c.w} height={c.h} />

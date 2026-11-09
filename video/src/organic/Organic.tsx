@@ -520,6 +520,311 @@ const P7: React.FC = () => (
   </Slide>
 );
 
+// =====================================================================
+// POST 8 — Carrousel « Growthity est en ligne » (6 slides)
+// =====================================================================
+const P8N = 6;
+const P8Cover: React.FC = () => (
+  <Slide n={1} of={P8N} handle swipe>
+    <div style={{position: 'absolute', left: M, right: M, top: 200}}>
+      <Kicker>Lancement</Kicker>
+      <Title size={136} style={{marginTop: 30}}>Growthity<br /><span style={{color: ACCENT}}>est en ligne.</span></Title>
+      <Body size={40} style={{marginTop: 46, maxWidth: 840}}>Vos pubs Meta, de la phrase à la publication. Voici comment ça marche, en 4 étapes.</Body>
+    </div>
+  </Slide>
+);
+const StepHead: React.FC<{k: string; t: string}> = ({k, t}) => (
+  <div style={{position: 'absolute', left: M, right: M, top: 150}}>
+    <Kicker>{k}</Kicker>
+    <Title size={76} style={{marginTop: 24}}>{t}</Title>
+  </div>
+);
+const P8S1: React.FC = () => (
+  <Slide n={2} of={P8N}>
+    <StepHead k="Étape 1 · Décrivez" t="Une phrase sur votre produit." />
+    <Prompt text="Coffret de thés bio pour les fêtes. Une cliente le déballe et le goûte au coin du feu." size={50} style={{left: M, right: M, top: 460}} />
+    <Body size={36} style={{position: 'absolute', left: M, right: M, top: 1080}}>Le produit, la personne, la situation. <b style={{color: INK}}>C’est tout.</b></Body>
+  </Slide>
+);
+const P8S2: React.FC = () => (
+  <Slide n={3} of={P8N}>
+    <StepHead k="Étape 2 · Growthity crée" t="Script, acteur, voix, sous-titres." />
+    {['scierie.jpg', 'solaire.jpg', 'homme.jpg', 'femme.jpg'].map((p, i) => (
+      <Photo key={p} p={p} pos="50% 28%" style={{left: M + (i % 2) * 470, top: 420 + Math.floor(i / 2) * 400, width: 450, height: 380}} radius={30} />
+    ))}
+    <Body size={32} style={{position: 'absolute', left: M, right: M, top: 1225}}>Des acteurs IA au rendu naturel, pour chaque métier.</Body>
+  </Slide>
+);
+const Frame: React.FC<{p: string; x: number; y: number; w: number; ar: number; label: string; sub: string; pos?: string}> = ({p, x, y, w, ar, label, sub, pos = '50% 35%'}) => (
+  <>
+    <Photo p={p} pos={pos} style={{left: x, top: y, width: w, height: w / ar}} radius={26} />
+    <div style={{position: 'absolute', left: x, top: y + w / ar + 18, width: w}}>
+      <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 40, letterSpacing: '-0.02em'}}>{label}</div>
+      <div style={{fontWeight: 500, fontSize: 26, color: MUTED, marginTop: 4}}>{sub}</div>
+    </div>
+  </>
+);
+const P8S3: React.FC = () => (
+  <Slide n={4} of={P8N}>
+    <StepHead k="Étape 3 · Choisissez le format" t="Reel, fil ou carrousel." />
+    <Frame p="femme.jpg" x={M} y={430} w={300} ar={9 / 16} label="9:16" sub="Reels · Stories" pos="50% 30%" />
+    <Frame p="pates.jpg" x={M + 330} y={430} w={290} ar={4 / 5} label="4:5" sub="Fil Instagram" />
+    <Frame p="sneakers.jpg" x={M + 650} y={430} w={270} ar={1} label="1:1" sub="Fil · carrousel" pos="50% 65%" />
+  </Slide>
+);
+const P8S4: React.FC = () => (
+  <Slide n={5} of={P8N}>
+    <StepHead k="Étape 4 · Publiez" t="Directement sur Meta." />
+    <div style={{position: 'absolute', left: M, right: M, top: 480, display: 'grid', gap: 22}}>
+      {[{n: 'Instagram', c: 'linear-gradient(135deg,#F9A13A,#E1306C 55%,#833AB4)'}, {n: 'Facebook', c: '#1877F2'}].map((s) => (
+        <div key={s.n} style={{display: 'flex', alignItems: 'center', gap: 26, background: '#fff', borderRadius: 30, padding: '30px 32px', boxShadow: '0 30px 60px -40px rgba(0,0,0,0.35)'}}>
+          <div style={{width: 92, height: 92, borderRadius: 24, background: s.c}} />
+          <div style={{flex: 1}}>
+            <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 46}}>{s.n}</div>
+            <div style={{fontSize: 28, color: MUTED, fontWeight: 500}}>Reels · Stories · Fil</div>
+          </div>
+          <span style={{display: 'flex', alignItems: 'center', gap: 10, background: C.success, color: '#fff', fontWeight: 800, fontSize: 28, padding: '12px 22px', borderRadius: 999}}>En ligne</span>
+        </div>
+      ))}
+    </div>
+    <Body size={36} style={{position: 'absolute', left: M, right: M, top: 1000}}>Sans changer d’outil, <b style={{color: INK}}>sans exporter de fichier.</b></Body>
+  </Slide>
+);
+const P8End: React.FC = () => (
+  <Slide n={6} of={P8N} dark handle>
+    <div style={{position: 'absolute', left: M, right: M, top: 300}}>
+      <Title size={110} style={{color: '#fff'}}>Votre prochaine pub est <span style={{color: '#B9A8FF'}}>à une phrase.</span></Title>
+      <div style={{marginTop: 70, display: 'inline-flex', alignItems: 'center', gap: 14, background: '#fff', color: INK, fontWeight: 800, fontSize: 40, padding: '22px 38px', borderRadius: 999}}>Lien en bio pour commencer ↑</div>
+    </div>
+  </Slide>
+);
+
+// =====================================================================
+// POST 9 — Carrousel « 5 idées de pubs vidéo sans tournage » (7 slides)
+// =====================================================================
+const IDEAS = [
+  {p: 'homme.jpg', pos: '50% 30%', t: 'Le témoignage', d: 'Un client raconte, simplement, ce qui a changé pour lui.'},
+  {p: 'sneakers.jpg', pos: '50% 62%', t: 'La démonstration', d: 'Le produit en action, en gros plan, sans discours.'},
+  {p: 'porte-savon.jpg', pos: '50% 26%', t: 'La réaction', d: 'La surprise se lit sur le visage avant les mots.'},
+  {p: 'bougie.jpg', pos: '50% 42%', t: 'Le POV', d: '« POV : … » pour que votre client se projette tout de suite.'},
+  {p: 'pates.jpg', pos: '50% 40%', t: 'Les coulisses', d: 'L’atelier, les mains, la fabrication. Ce qu’on ne voit jamais.'},
+];
+const P9N = 7;
+const P9Cover: React.FC = () => (
+  <Slide n={1} of={P9N} handle swipe>
+    <div style={{position: 'absolute', left: M, right: M, top: 200}}>
+      <Kicker>Idées de pubs</Kicker>
+      <Title size={122} style={{marginTop: 30}}>5 pubs vidéo<br /><span style={{color: ACCENT}}>sans tournage.</span></Title>
+      <Body size={40} style={{marginTop: 46, maxWidth: 840}}>Les formats qui marchent sur Reels, faisables sans caméra ni studio.</Body>
+    </div>
+  </Slide>
+);
+const P9Idea: React.FC<{i: number}> = ({i}) => {
+  const x = IDEAS[i];
+  return (
+    <Slide n={i + 2} of={P9N}>
+      <Photo p={x.p} pos={x.pos} style={{left: M, right: M, top: 140, height: 820}} />
+      <div style={{position: 'absolute', left: M + 30, top: 172, fontFamily: DISPLAY, fontWeight: 700, fontSize: 30, background: '#fff', borderRadius: 999, padding: '8px 22px'}}>Idée {String(i + 1).padStart(2, '0')}</div>
+      <div style={{position: 'absolute', left: M, right: M, top: 1000}}>
+        <Title size={72}>{x.t}</Title>
+        <Body size={34} style={{marginTop: 16}}>{x.d}</Body>
+      </div>
+    </Slide>
+  );
+};
+const P9End: React.FC = () => (
+  <Slide n={7} of={P9N} dark handle>
+    <div style={{position: 'absolute', left: M, right: M, top: 170}}>
+      <Kicker color="#B9A8FF">À tester cette semaine</Kicker>
+      <div style={{marginTop: 40}}>
+        {IDEAS.map((x, i) => (
+          <div key={i} style={{display: 'flex', gap: 28, padding: '26px 0', borderTop: i ? '2px solid rgba(255,255,255,0.12)' : 'none'}}>
+            <span style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 36, color: '#B9A8FF', width: 56}}>{String(i + 1).padStart(2, '0')}</span>
+            <span style={{fontWeight: 600, fontSize: 38, color: '#fff'}}>{x.t}</span>
+          </div>
+        ))}
+      </div>
+      <Title size={58} style={{marginTop: 50, color: '#fff'}}>Laquelle allez-vous lancer en premier ?</Title>
+    </div>
+  </Slide>
+);
+
+// =====================================================================
+// POST 10 — Carrousel « 3 scripts UGC à copier » (5 slides)
+// =====================================================================
+const SCRIPTS = [
+  {n: 'Le témoignage', p: 'femme.jpg', l: [['Accroche', '« Je n’y croyais pas trop… »'], ['Problème', '« J’avais [votre problème] depuis des mois. »'], ['Solution', '« Puis j’ai essayé [produit] : [bénéfice concret]. »'], ['Appel', '« Le lien est en bio. »']]},
+  {n: 'La démonstration', p: 'scierie.jpg', l: [['Accroche', '« Regardez ce que fait [produit]. »'], ['Avant', '« Avant : [la galère du quotidien]. »'], ['Après', '« Maintenant : [le geste simple]. »'], ['Appel', '« Commandez en un clic, lien en bio. »']]},
+  {n: 'L’objection', p: 'solaire.jpg', l: [['Accroche', '« Trop cher ? Je pensais pareil. »'], ['Recadrage', '« Mais comparé à [l’alternative]… »'], ['Preuve', '« … [ce que vous y gagnez vraiment]. »'], ['Appel', '« Faites-vous votre avis : lien en bio. »']]},
+];
+const P10N = 5;
+const P10Cover: React.FC = () => (
+  <Slide n={1} of={P10N} handle swipe>
+    <div style={{position: 'absolute', left: M, right: M, top: 200}}>
+      <Kicker>Scripts UGC</Kicker>
+      <Title size={128} style={{marginTop: 30}}>3 scripts<br /><span style={{color: ACCENT}}>à copier-coller.</span></Title>
+      <Body size={40} style={{marginTop: 46, maxWidth: 840}}>Remplacez les [crochets] par votre produit. Collez dans Growthity. C’est prêt.</Body>
+    </div>
+  </Slide>
+);
+const P10Script: React.FC<{i: number}> = ({i}) => {
+  const s = SCRIPTS[i];
+  return (
+    <Slide n={i + 2} of={P10N}>
+      <div style={{position: 'absolute', left: M, right: M, top: 140, display: 'flex', alignItems: 'center', gap: 28}}>
+        <Photo p={s.p} pos="50% 26%" style={{position: 'relative', width: 170, height: 170, flex: 'none'}} radius={85} />
+        <div>
+          <Kicker>Script {i + 1}</Kicker>
+          <Title size={72} style={{marginTop: 10}}>{s.n}</Title>
+        </div>
+      </div>
+      <div style={{position: 'absolute', left: M, right: M, top: 400, background: '#fff', borderRadius: 34, padding: '14px 40px', boxShadow: '0 30px 60px -40px rgba(0,0,0,0.3)'}}>
+        {s.l.map(([k, t], j) => (
+          <div key={k} style={{padding: '30px 0', borderTop: j ? `2px solid ${LINE}` : 'none'}}>
+            <div style={{fontFamily: DISPLAY, fontWeight: 600, fontSize: 24, letterSpacing: '0.07em', textTransform: 'uppercase', color: ACCENT}}>{k}</div>
+            <div style={{fontWeight: 600, fontSize: 40, lineHeight: 1.3, marginTop: 8}}>{t}</div>
+          </div>
+        ))}
+      </div>
+    </Slide>
+  );
+};
+const P10End: React.FC = () => (
+  <Slide n={5} of={P10N} dark handle>
+    <div style={{position: 'absolute', left: M, right: M, top: 330}}>
+      <Title size={100} style={{color: '#fff'}}>Enregistrez ce post.</Title>
+      <Body size={42} style={{marginTop: 40, color: 'rgba(255,255,255,0.75)', maxWidth: 860}}>La prochaine fois qu’il vous faut une pub, vous aurez déjà le script.</Body>
+    </div>
+  </Slide>
+);
+
+// =====================================================================
+// POST 11 — Carrousel « FAQ Growthity » (6 slides)
+// =====================================================================
+const FAQ = [
+  {q: 'Les acteurs sont-ils réels ?', a: 'Non. Ce sont des acteurs IA, au rendu naturel. Vous choisissez le visage qui parle le mieux à votre public.'},
+  {q: 'Faut-il savoir monter une vidéo ?', a: 'Non. Vous décrivez votre pub en une phrase : Growthity écrit le script, monte la vidéo et ajoute les sous-titres.'},
+  {q: 'Quels formats ?', a: 'Des vidéos 9:16 pour Reels et Stories, des visuels et des carrousels pour le fil. Les formats attendus par Meta.'},
+  {q: 'Peut-on publier directement ?', a: 'Oui. Growthity génère vos pubs et les publie sur Facebook et Instagram, sans exporter de fichier.'},
+];
+const P11N = 6;
+const P11Cover: React.FC = () => (
+  <Slide n={1} of={P11N} handle swipe>
+    <div style={{position: 'absolute', left: M, right: M, top: 200}}>
+      <Kicker>FAQ</Kicker>
+      <Title size={128} style={{marginTop: 30}}>Vos questions<br /><span style={{color: ACCENT}}>sur Growthity.</span></Title>
+      <Body size={40} style={{marginTop: 46, maxWidth: 840}}>Les 4 qu’on nous pose le plus, avec des réponses courtes.</Body>
+    </div>
+  </Slide>
+);
+const P11Q: React.FC<{i: number}> = ({i}) => {
+  const x = FAQ[i];
+  return (
+    <Slide n={i + 2} of={P11N}>
+      <div style={{position: 'absolute', left: M, right: M, top: 230}}>
+        <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 200, lineHeight: 0.8, color: ACCENT, opacity: 0.18}}>?</div>
+        <Title size={92} style={{marginTop: 10}}>{x.q}</Title>
+        <div style={{marginTop: 60, background: '#fff', borderRadius: 34, padding: '40px 44px', boxShadow: '0 30px 60px -40px rgba(0,0,0,0.3)'}}>
+          <div style={{fontWeight: 600, fontSize: 44, lineHeight: 1.38}}>{x.a}</div>
+        </div>
+      </div>
+    </Slide>
+  );
+};
+const P11End: React.FC = () => (
+  <Slide n={6} of={P11N} dark handle>
+    <div style={{position: 'absolute', left: M, right: M, top: 360}}>
+      <Title size={100} style={{color: '#fff'}}>Une autre question ?</Title>
+      <Body size={42} style={{marginTop: 40, color: 'rgba(255,255,255,0.75)'}}>Posez-la en commentaire, on vous répond.</Body>
+    </div>
+  </Slide>
+);
+
+// =====================================================================
+// IMAGES 12 → 17
+// =====================================================================
+const CHECK = ['Une accroche dans la première seconde', 'Des sous-titres lisibles sans le son', 'Le format 9:16 pour Reels et Stories', 'Un seul message, un seul bénéfice', 'Un appel à l’action clair', 'Deux ou trois versions à tester'];
+const P12: React.FC = () => (
+  <Slide handle>
+    <div style={{position: 'absolute', left: M, right: M, top: 120}}>
+      <Kicker>Checklist</Kicker>
+      <Title size={84} style={{marginTop: 20}}>Avant de lancer une pub Meta</Title>
+      <div style={{marginTop: 50, display: 'grid', gap: 20}}>
+        {CHECK.map((t) => (
+          <div key={t} style={{display: 'flex', alignItems: 'center', gap: 24, background: '#fff', borderRadius: 24, padding: '24px 28px', boxShadow: '0 20px 40px -32px rgba(0,0,0,0.35)'}}>
+            <div style={{width: 52, height: 52, borderRadius: 14, border: `3px solid ${ACCENT}`, display: 'grid', placeItems: 'center', flex: 'none'}}>
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke={ACCENT} strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </div>
+            <span style={{fontWeight: 600, fontSize: 38}}>{t}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </Slide>
+);
+const FMT = [{r: '9:16', s: '1080 × 1920', u: 'Reels · Stories', w: 230, ar: 9 / 16}, {r: '4:5', s: '1080 × 1350', u: 'Fil Instagram', w: 290, ar: 4 / 5}, {r: '1:1', s: '1080 × 1080', u: 'Fil · carrousel', w: 290, ar: 1}];
+const P13: React.FC = () => (
+  <Slide handle>
+    <div style={{position: 'absolute', left: M, right: M, top: 120}}>
+      <Kicker>À enregistrer</Kicker>
+      <Title size={84} style={{marginTop: 20}}>Les 3 formats Meta à connaître</Title>
+    </div>
+    <div style={{position: 'absolute', left: M, right: M, top: 470, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end'}}>
+      {FMT.map((f) => (
+        <div key={f.r} style={{width: f.w}}>
+          <div style={{width: f.w, height: f.w / f.ar, borderRadius: 24, background: `linear-gradient(160deg, ${ACCENT}, #9A86FF)`, display: 'grid', placeItems: 'center', color: '#fff', fontFamily: DISPLAY, fontWeight: 700, fontSize: 64}}>{f.r}</div>
+          <div style={{marginTop: 20, fontFamily: DISPLAY, fontWeight: 700, fontSize: 34}}>{f.u}</div>
+          <div style={{fontFamily: 'ui-monospace, monospace', fontSize: 26, color: MUTED, marginTop: 6}}>{f.s} px</div>
+        </div>
+      ))}
+    </div>
+  </Slide>
+);
+const P14: React.FC = () => (
+  <Slide handle>
+    <div style={{position: 'absolute', left: M, right: M, top: 140}}>
+      <div style={{borderRadius: 34, padding: '44px 46px', background: '#fff', border: `2px solid ${LINE}`}}>
+        <Kicker color="#C2410C">Mythe</Kicker>
+        <Title size={70} style={{marginTop: 18, color: '#6B6370', textDecoration: 'line-through', textDecorationThickness: 5, textDecorationColor: '#E2543A'}}>« Une pub vidéo, il faut un tournage. »</Title>
+      </div>
+      <div style={{marginTop: 34, borderRadius: 34, padding: '44px 46px', background: INK, color: '#fff'}}>
+        <Kicker color="#B9A8FF">Réalité</Kicker>
+        <Title size={76} style={{marginTop: 18, color: '#fff'}}>Une phrase suffit pour la créer.</Title>
+        <Body size={34} style={{marginTop: 22, color: 'rgba(255,255,255,0.72)'}}>Script, acteur IA, voix et sous-titres sont générés pour vous.</Body>
+      </div>
+    </div>
+  </Slide>
+);
+const P15: React.FC = () => (
+  <Slide dark handle>
+    <div style={{position: 'absolute', left: M, right: M, top: 300}}>
+      <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 220, lineHeight: 0.6, color: '#B9A8FF'}}>“</div>
+      <Title size={98} style={{color: '#fff', marginTop: 30}}>La meilleure pub n’est pas la plus chère.</Title>
+      <Title size={98} style={{color: '#B9A8FF', marginTop: 30}}>C’est celle que vous lancez.</Title>
+    </div>
+  </Slide>
+);
+const PhotoPost: React.FC<{p: string; pos: string; lines: string[]; small: string}> = ({p, pos, lines, small}) => (
+  <Slide bg="#000">
+    <div style={{position: 'absolute', inset: 0}}>
+      <Img src={ig(p)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: pos}} />
+      <Grain />
+    </div>
+    <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, height: 560, background: 'linear-gradient(0deg, rgba(0,0,0,0.8), transparent)'}} />
+    <div style={{position: 'absolute', left: M, right: M, bottom: 150, display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
+      {lines.map((l, i) => (
+        <span key={i} style={{fontWeight: 800, fontSize: 64, lineHeight: 1.16, background: '#fff', color: INK, padding: '6px 22px', borderRadius: 18, marginTop: i ? -6 : 0}}>{l}</span>
+      ))}
+      <span style={{marginTop: 26, color: 'rgba(255,255,255,0.88)', fontWeight: 600, fontSize: 32}}>{small}</span>
+    </div>
+    <div style={{position: 'absolute', right: M, bottom: 70, display: 'flex', alignItems: 'center', gap: 10, opacity: 0.85}}>
+      <LogoMark size={28} color="#fff" /><span style={{fontFamily: DISPLAY, fontWeight: 600, fontSize: 26, color: '#fff'}}>growthity.ai</span>
+    </div>
+  </Slide>
+);
+const P16: React.FC = () => <PhotoPost p="scierie.jpg" pos="50% 30%" lines={['Votre métier', 'n’a pas besoin', 'd’un studio.']} small="Juste d’une phrase bien écrite." />;
+const P17: React.FC = () => <PhotoPost p="femme.jpg" pos="50% 26%" lines={['POV : vous lancez', 'votre pub ce soir.']} small="Sans tournage, sans agence." />;
+
 // ---------- registry ----------
 export const ORGANIC: {id: string; C: React.FC; w: number; h: number; file: string}[] = [];
 const add = (post: string, slides: React.FC[]) =>
@@ -534,3 +839,13 @@ add('post-04-6-conseils', [P4Cover, ...TIPS.map((_, i) => bind(P4Tip, {i}))]);
 add('post-05-anatomie-ugc', [P5]);
 add('post-06-citation', [P6]);
 add('post-07-tape-obtenu', [P7]);
+add('post-08-lancement', [P8Cover, P8S1, P8S2, P8S3, P8S4, P8End]);
+add('post-09-5-idees-pubs', [P9Cover, ...IDEAS.map((_, i) => bind(P9Idea, {i})), P9End]);
+add('post-10-3-scripts-ugc', [P10Cover, ...SCRIPTS.map((_, i) => bind(P10Script, {i})), P10End]);
+add('post-11-faq', [P11Cover, ...FAQ.map((_, i) => bind(P11Q, {i})), P11End]);
+add('post-12-checklist', [P12]);
+add('post-13-formats-meta', [P13]);
+add('post-14-mythe-realite', [P14]);
+add('post-15-citation-lancer', [P15]);
+add('post-16-photo-scierie', [P16]);
+add('post-17-photo-pov', [P17]);
