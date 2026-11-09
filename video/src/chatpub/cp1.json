@@ -1,0 +1,24 @@
+{
+  "id": "cp1",
+  "title": "Du chat à la pub – Charlotte (chauffage)",
+  "video": "chat/charlotte-virale.mp4",
+  "videoFrames": 366,
+  "prompt": "Vidéo face caméra 9:16 : une femme alerte les propriétaires qui se chauffent au gaz ou au fioul sur les aides disponibles. Ton direct, 16 s.",
+  "actor": {"name": "Charlotte A.", "img": "chat/actors/a021.jpg"},
+  "product": null,
+  "gallery": [
+    {"name": "Freja", "img": "chat/actors/a059.jpg"},
+    {"name": "Sabrina", "img": "chat/actors/a150.jpg"},
+    {"name": "Anaïs", "img": "chat/actors/a154.jpg"},
+    {"name": "Justine", "img": "chat/actors/a176.jpg"},
+    {"name": "Charlotte A.", "img": "chat/actors/a021.jpg"},
+    {"name": "Sandra", "img": "chat/actors/a184.jpg"},
+    {"name": "Hana", "img": "chat/actors/a058.jpg"},
+    {"name": "Camille B.", "img": "chat/actors/a189.jpg"},
+    {"name": "Beatriz", "img": "chat/actors/a061.jpg"}
+  ],
+  "publishPrompt": "Publie-la sur Meta, Instagram et Facebook.",
+  "objective": "Prospects",
+  "cta": "En savoir plus",
+  "voice": {"a": "cp1-a", "b1": "cp1-b1", "b2": "cp1-b2", "b3": "cp1-b3", "d1": "cp1-d1", "d2": "cp1-d2"}
+}

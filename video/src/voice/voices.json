@@ -38,5 +38,41 @@
  "V10": {
   "text": "À ceux qui fendent le bois, qui posent les cuisines, qui montent sur les toits. Vous n’avez pas choisi votre métier pour faire des vidéos. Et c’est normal. Mais vos futurs clients sont sur Instagram et Facebook, et ils veulent voir des gens comme vous. Décrivez votre travail en une phrase. Growthity en fait une pub qui vous ressemble. Lien en bio.",
   "voice": "kENkNtk0xyzG09WW40xE"
+ },
+ "cp1-a": {
+  "text": "Cette pub… personne ne l'a tournée.",
+  "voice": "kENkNtk0xyzG09WW40xE",
+  "stability": 0.38,
+  "style": 0.3
+ },
+ "cp1-b1": {
+  "text": "J'ai juste écrit ce que je voulais, dans le chat Growthity.",
+  "voice": "kENkNtk0xyzG09WW40xE",
+  "stability": 0.38,
+  "style": 0.3
+ },
+ "cp1-b2": {
+  "text": "J'ai choisi mon actrice dans la galerie…",
+  "voice": "kENkNtk0xyzG09WW40xE",
+  "stability": 0.38,
+  "style": 0.3
+ },
+ "cp1-b3": {
+  "text": "et la vidéo est sortie. Regardez.",
+  "voice": "kENkNtk0xyzG09WW40xE",
+  "stability": 0.38,
+  "style": 0.3
+ },
+ "cp1-d1": {
+  "text": "Et pour la mettre en ligne ? Je demande au chat de la publier sur Meta.",
+  "voice": "kENkNtk0xyzG09WW40xE",
+  "stability": 0.38,
+  "style": 0.3
+ },
+ "cp1-d2": {
+  "text": "C'est en ligne. Growthity, le lien est dans la bio.",
+  "voice": "kENkNtk0xyzG09WW40xE",
+  "stability": 0.38,
+  "style": 0.3
  }
 }
