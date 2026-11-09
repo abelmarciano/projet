@@ -1,0 +1,652 @@
+<title>Growthity Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: left rail of rubriques + one working surface; phone = top tabs. Brand indigo from Growthity, cool slate neutrals. */
+:root {
+  --bg: #F3F4F8;
+  --surface: #FFFFFF;
+  --surface-2: #ECEEF5;
+  --fg: #12131C;
+  --muted: #5D6178;
+  --line: #DDE0EA;
+  --accent: #5B3FE4;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E9E4FF;
+  --st-idea: #8A8FA6;
+  --st-make: #D98A1C;
+  --st-review: #C2410C;
+  --st-sched: #2563EB;
+  --st-live: #16A34A;
+  --st-pause: #9333EA;
+  --danger: #DC2626;
+  --shadow: 0 1px 2px rgba(18,19,28,.06), 0 12px 32px -18px rgba(18,19,28,.28);
+  --f-display: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
+  --f-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r: 14px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0E0F16; --surface: #171925; --surface-2: #212435; --fg: #ECEDF5; --muted: #9A9EB7; --line: #2A2D40;
+  --accent: #8D78FF; --accent-ink: #0E0F16; --accent-soft: #2A2450;
+  --st-idea: #8A8FA6; --st-make: #F0A63A; --st-review: #F97316; --st-sched: #60A5FA; --st-live: #4ADE80; --st-pause: #C084FC; --danger: #F87171;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -18px rgba(0,0,0,.8); color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0E0F16; --surface: #171925; --surface-2: #212435; --fg: #ECEDF5; --muted: #9A9EB7; --line: #2A2D40;
+  --accent: #8D78FF; --accent-ink: #0E0F16; --accent-soft: #2A2450;
+  --st-idea: #8A8FA6; --st-make: #F0A63A; --st-review: #F97316; --st-sched: #60A5FA; --st-live: #4ADE80; --st-pause: #C084FC; --danger: #F87171;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -18px rgba(0,0,0,.8); color-scheme: dark }
+
+* { box-sizing: border-box }
+html, body { height: 100% }
+body { background: var(--bg); color: var(--fg); font: 15px/1.45 var(--f-body); }
+button, input, select, textarea { font: inherit; color: inherit }
+button { cursor: pointer }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important } }
+
+.app { display: grid; grid-template-columns: 232px minmax(0,1fr); min-height: 100%; }
+.rail { position: sticky; top: env(safe-area-inset-top, 0px); align-self: start; height: 100vh; display: flex; flex-direction: column; gap: 22px; padding-block: 24px; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: 18px; border-right: 1px solid var(--line); background: var(--surface); }
+.brand { display: flex; align-items: center; gap: 10px; font: 700 21px/1 var(--f-display); letter-spacing: -.02em }
+.brand small { display: block; font: 500 12px/1.2 var(--f-body); color: var(--muted); letter-spacing: 0; margin-top: 3px }
+.nav { display: flex; flex-direction: column; gap: 4px }
+.nav a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; color: var(--muted); text-decoration: none; font-weight: 600 }
+.nav a:hover { background: var(--surface-2); color: var(--fg) }
+.nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent) }
+.nav .count { margin-left: auto; font: 500 12px var(--f-mono); color: var(--muted) }
+.nav svg { width: 18px; height: 18px; flex: none }
+.rail-foot { margin-top: auto; font-size: 12.5px; color: var(--muted); display: grid; gap: 8px }
+.meter { height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden }
+.meter i { display: block; height: 100%; background: var(--accent) }
+
+main { min-width: 0; padding-block: 26px 60px; padding-left: max(28px, env(safe-area-inset-left, 0px)); padding-right: max(28px, env(safe-area-inset-right, 0px)); }
+.head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-bottom: 20px }
+.head h1 { font: 700 30px/1.1 var(--f-display); letter-spacing: -.03em; margin: 0; text-wrap: balance }
+.head .sub { color: var(--muted); font-size: 14px; flex-basis: 100% ; margin-top: -6px }
+.spacer { flex: 1 }
+.btn { display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); font-weight: 600; font-size: 14px; white-space: nowrap }
+.btn:hover { border-color: var(--muted) }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink) }
+.btn.primary:hover { filter: brightness(1.08) }
+.btn.ghost { background: transparent }
+.btn.danger { color: var(--danger) }
+.btn[disabled] { opacity: .5; cursor: not-allowed }
+.btn svg { width: 16px; height: 16px }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 3px; gap: 2px; flex-wrap: wrap }
+.seg button { border: 0; background: transparent; padding: 6px 11px; border-radius: 7px; font-weight: 600; font-size: 13px; color: var(--muted) }
+.seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent) }
+
+.chip { display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 8px; border-radius: 6px; background: var(--surface-2); font: 600 11.5px/1 var(--f-body); color: var(--muted); white-space: nowrap }
+.chip.fmt { font-family: var(--f-mono); font-weight: 500 }
+.chip.ad { background: var(--fg); color: var(--bg) }
+.dot { width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--st-idea) }
+.st { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600 }
+
+.empty { border: 1.5px dashed var(--line); border-radius: var(--r); padding: 34px 22px; text-align: center; color: var(--muted); background: var(--surface) }
+.empty b { display: block; color: var(--fg); font: 700 18px var(--f-display); margin-bottom: 6px }
+.notice { padding: 12px 14px; border-radius: 10px; background: var(--accent-soft); color: var(--fg); font-size: 14px; margin-bottom: 16px }
+
+/* Planning */
+.cal-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px }
+.cal-bar h2 { margin: 0; font: 700 20px var(--f-display); text-transform: capitalize; min-width: 170px }
+.cal { display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; background: var(--line); gap: 1px }
+.cal .dow { background: var(--surface); padding: 8px 10px; font: 600 11px var(--f-body); text-transform: uppercase; letter-spacing: .08em; color: var(--muted) }
+.day { background: var(--surface); min-height: 118px; padding: 6px; display: flex; flex-direction: column; gap: 4px; min-width: 0 }
+.day.out { background: var(--bg) }
+.day.out .num { opacity: .45 }
+.day .num { display: flex; justify-content: space-between; align-items: center; font: 500 12px var(--f-mono); color: var(--muted); padding: 2px 4px }
+.day.today .num b { background: var(--accent); color: var(--accent-ink); border-radius: 6px; padding: 1px 6px }
+.day .add { opacity: 0; border: 0; background: transparent; color: var(--muted); width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center }
+.day:hover .add, .day .add:focus-visible { opacity: 1 }
+.day .add:hover { background: var(--surface-2); color: var(--fg) }
+.evt { display: flex; align-items: center; gap: 6px; width: 100%; border: 0; text-align: left; padding: 4px 6px; border-radius: 7px; background: var(--surface-2); font-size: 12px; font-weight: 600; min-width: 0 }
+.evt:hover { outline: 1px solid var(--line) }
+.evt img, .evt .ph { width: 22px; height: 22px; border-radius: 5px; object-fit: cover; flex: none; background: var(--line) }
+.evt span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0 }
+.evt .t { font: 500 10.5px var(--f-mono); color: var(--muted); flex: none }
+.evt.ad { box-shadow: inset 3px 0 0 var(--fg) }
+.unsched { margin-top: 22px }
+.unsched h3, .section-h { font: 700 15px var(--f-display); margin: 0 0 10px; display: flex; gap: 8px; align-items: baseline }
+.unsched h3 small, .section-h small { font: 500 12px var(--f-mono); color: var(--muted) }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 12px; font-size: 12.5px; color: var(--muted) }
+
+/* Board */
+.board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(250px, 1fr); gap: 14px; overflow-x: auto; padding-bottom: 8px }
+.col { background: var(--surface-2); border-radius: var(--r); padding: 10px; display: flex; flex-direction: column; gap: 10px; min-height: 160px }
+.col-h { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13.5px; padding: 4px 4px 0 }
+.col-h .n { margin-left: auto; font: 500 12px var(--f-mono); color: var(--muted) }
+.card { background: var(--surface); border-radius: 12px; box-shadow: var(--shadow); border: 0; text-align: left; padding: 0; overflow: hidden; display: flex; flex-direction: column; width: 100% }
+.card:hover { outline: 1.5px solid var(--accent) }
+.card .thumb { aspect-ratio: 16/10; background: var(--line); position: relative; overflow: hidden }
+.card .thumb img, .card .thumb video { width: 100%; height: 100%; object-fit: cover; display: block }
+.card .thumb .badge { position: absolute; left: 8px; top: 8px }
+.card .body { padding: 10px 12px 12px; display: grid; gap: 6px; min-width: 0 }
+.card .title { font-weight: 700; font-size: 14px; line-height: 1.3 }
+.card .meta { display: flex; flex-wrap: wrap; gap: 5px; align-items: center }
+.card .when { font: 500 11.5px var(--f-mono); color: var(--muted) }
+
+/* Ads table */
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface) }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px }
+th { text-align: left; font: 600 11px var(--f-body); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 11px 14px; border-bottom: 1px solid var(--line); background: var(--surface) }
+td { padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: middle }
+tr:last-child td { border-bottom: 0 }
+tbody tr { cursor: pointer }
+tbody tr:hover td { background: var(--surface-2) }
+.ad-name { display: flex; align-items: center; gap: 10px; font-weight: 700 }
+.ad-name img, .ad-name .ph { width: 40px; height: 50px; border-radius: 7px; object-fit: cover; background: var(--line); flex: none }
+.num-c { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap }
+
+/* Media */
+.filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; align-items: center }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px }
+.m { border: 0; background: transparent; padding: 0; text-align: left; display: grid; gap: 8px; min-width: 0 }
+.m .frame { position: relative; border-radius: 12px; overflow: hidden; background: var(--line); box-shadow: var(--shadow); aspect-ratio: var(--ar, 4/5); max-width: 100% }
+.m .frame img, .m .frame video { width: 100%; height: 100%; object-fit: cover; display: block }
+.m:hover .frame { outline: 2px solid var(--accent) }
+.m .stack { position: absolute; right: 8px; top: 8px; display: flex; gap: 4px }
+.m .play { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: rgba(0,0,0,.45); display: grid; place-items: center }
+.m .cap { font-weight: 700; font-size: 13.5px; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.m .sub { display: flex; gap: 5px; flex-wrap: wrap }
+.drop { border: 1.5px dashed var(--line); border-radius: var(--r); padding: 18px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; background: var(--surface); margin-bottom: 18px; color: var(--muted); font-size: 14px }
+.drop.over { border-color: var(--accent); background: var(--accent-soft) }
+
+/* Dialogs */
+dialog { border: 0; padding: 0; border-radius: 18px; background: var(--surface); color: var(--fg); box-shadow: 0 30px 80px -20px rgba(0,0,0,.5); width: min(920px, calc(100vw - 32px)); max-height: calc(100vh - 32px) }
+dialog::backdrop { background: rgba(10,10,20,.55) }
+.dlg { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); max-height: calc(100vh - 32px) }
+.dlg-media { background: var(--bg); padding: 18px; display: flex; flex-direction: column; gap: 10px; align-items: center; justify-content: center; min-height: 300px; position: relative }
+.dlg-media .viewer { position: relative; width: 100%; display: grid; place-items: center }
+.dlg-media img, .dlg-media video { max-width: 100%; max-height: 62vh; border-radius: 12px; display: block; box-shadow: var(--shadow) }
+.nav-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center }
+.nav-btn.prev { left: 0 } .nav-btn.next { right: 0 }
+.dots { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center }
+.dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line) }
+.dots i.on { background: var(--accent) }
+.dlg-form { padding: 20px 22px; overflow-y: auto; display: grid; gap: 14px; align-content: start }
+.dlg-form h2 { margin: 0; font: 700 22px var(--f-display); letter-spacing: -.02em }
+.field { display: grid; gap: 6px; min-width: 0 }
+.field > span { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em }
+.field input, .field select, .field textarea { width: 100%; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 9px 11px; font-size: 14.5px }
+.field textarea { min-height: 150px; resize: vertical; line-height: 1.5 }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px }
+.checks { display: flex; flex-wrap: wrap; gap: 6px }
+.checks label { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 9px; padding: 6px 10px; font-size: 13.5px; font-weight: 600; cursor: pointer }
+.checks input { accent-color: var(--accent) }
+.hint { font-size: 12px; color: var(--muted) }
+.picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 8px; max-height: 220px; overflow-y: auto; padding: 2px }
+.picker button { border: 2px solid transparent; border-radius: 9px; padding: 0; overflow: hidden; aspect-ratio: 4/5; background: var(--line); position: relative }
+.picker button img, .picker button video { width: 100%; height: 100%; object-fit: cover; display: block }
+.picker button[aria-pressed="true"] { border-color: var(--accent) }
+.picker .lbl { position: absolute; left: 3px; bottom: 3px; font: 500 9.5px var(--f-mono); background: rgba(0,0,0,.6); color: #fff; padding: 1px 4px; border-radius: 4px }
+.dlg-actions { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 4px; align-items: center }
+.ad-box { border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 12px; background: var(--bg) }
+.confirm { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--danger); font-weight: 600 }
+.x { position: absolute; right: 12px; top: 12px; z-index: 2; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center }
+.copyrow { display: flex; gap: 8px; align-items: center }
+
+.toast { position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; z-index: 50; box-shadow: var(--shadow) }
+
+@media (max-width: 860px) {
+  .app { grid-template-columns: minmax(0,1fr) }
+  .rail { position: sticky; top: env(safe-area-inset-top, 0px); height: auto; z-index: 5; flex-direction: row; align-items: center; gap: 10px; padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); border-right: 0; border-bottom: 1px solid var(--line); overflow-x: auto }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface) }
+  .brand small, .rail-foot, .nav .count { display: none }
+  .brand { font-size: 17px }
+  .nav { flex-direction: row }
+  .nav a { padding: 8px 10px; font-size: 14px }
+  main { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 18px 50px }
+  .dlg { grid-template-columns: minmax(0,1fr); overflow-y: auto }
+  .dlg-form { overflow: visible }
+  .day { min-height: 74px; padding: 3px }
+  .evt span, .evt .t { display: none }
+  .evt { justify-content: center; padding: 3px }
+  .row2 { grid-template-columns: 1fr }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) }
+}
+</style>
+
+<div class="app">
+  <aside class="rail">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 7h6v6" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div>Studio<small>Contenus Growthity</small></div>
+    </div>
+    <nav class="nav" aria-label="Rubriques">
+      <a href="#planning" data-v="planning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Planning</a>
+      <a href="#posts" data-v="posts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Posts<span class="count" id="c-posts"></span></a>
+      <a href="#ads" data-v="ads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M17 9a4 4 0 0 1 0 6"/></svg>Ads<span class="count" id="c-ads"></span></a>
+      <a href="#medias" data-v="medias"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>Médias<span class="count" id="c-media"></span></a>
+    </nav>
+    <div class="rail-foot" id="rail-foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+
+<dialog id="dlg" aria-label="Détail"></dialog>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(() => {
+const STATUS = {
+  idea: {l: 'Idée', c: 'var(--st-idea)'},
+  make: {l: 'En création', c: 'var(--st-make)'},
+  review: {l: 'À valider', c: 'var(--st-review)'},
+  sched: {l: 'Programmé', c: 'var(--st-sched)'},
+  live: {l: 'Publié', c: 'var(--st-live)'},
+};
+const AD_STATUS = {
+  draft: {l: 'Brouillon', c: 'var(--st-idea)'},
+  review: {l: 'À valider', c: 'var(--st-review)'},
+  ready: {l: 'Prête', c: 'var(--st-sched)'},
+  live: {l: 'En ligne', c: 'var(--st-live)'},
+  pause: {l: 'En pause', c: 'var(--st-pause)'},
+  done: {l: 'Terminée', c: 'var(--st-idea)'},
+};
+const NETS = ['Instagram', 'Facebook', 'TikTok', 'LinkedIn'];
+const FORMATS = ['9:16', '4:5', '1:1', '16:9'];
+const KINDS = {video: 'Vidéo', image: 'Image', carousel: 'Carrousel'};
+const OBJ = ['Ventes', 'Prospects', 'Trafic', 'Notoriété', 'Interactions'];
+const CTAS = ['Commencer', 'En savoir plus', 'S’inscrire', 'Réserver', 'Acheter', 'Nous contacter'];
+const AR = {'9:16': '9/16', '4:5': '4/5', '1:1': '1/1', '16:9': '16/9'};
+
+const S = {db: null, assets: null, user: null, me: null, media: [], posts: [], loaded: {media: false, posts: false}, failed: false,
+  view: 'planning', month: startOfMonth(new Date()), mf: {format: 'all', kind: 'all'}, usage: null};
+
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+const blob = (id) => '/_blob/' + id;
+function startOfMonth(d) { return new Date(d.getFullYear(), d.getMonth(), 1); }
+function ymd(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+const fmtDate = (s) => { if (!s) return 'Non planifié'; const d = new Date(s); return d.toLocaleDateString('fr-FR', {weekday: 'short', day: 'numeric', month: 'short'}) + ' · ' + d.toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'}); };
+const toast = (t) => { const el = $('#toast'); el.textContent = t; el.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => (el.hidden = true), 2600); };
+const mediaById = (id) => S.media.find((m) => m.id === id);
+const isVideo = (it) => (it?.ct || '').startsWith('video');
+const cover = (m) => m?.items?.[0];
+
+function thumbHTML(m, cls = '') {
+  const it = cover(m);
+  if (!it) return `<div class="ph ${cls}"></div>`;
+  if (isVideo(it)) return it.poster ? `<img class="${cls}" src="${blob(it.poster)}" alt="" loading="lazy">` : `<video class="${cls}" src="${blob(it.asset)}#t=0.5" muted playsinline preload="metadata"></video>`;
+  return `<img class="${cls}" src="${blob(it.asset)}" alt="" loading="lazy">`;
+}
+const statusDot = (st, map) => `<span class="st"><span class="dot" style="background:${(map[st] || Object.values(map)[0]).c}"></span>${esc((map[st] || Object.values(map)[0]).l)}</span>`;
+
+// ---------- data ----------
+async function boot() {
+  route();
+  const c = window.claude;
+  if (!c?.use) { S.failed = true; render(); return; }
+  const timer = setTimeout(() => { if (!S.loaded.media || !S.loaded.posts) { S.failed = !S.db; render(); } }, 10000);
+  const [db, assets, user] = await Promise.all([c.use('db'), c.use('assets'), c.use('user')]);
+  S.db = db; S.assets = assets; S.user = user;
+  if (user) { try { S.me = await user.id(); } catch {} }
+  if (!db) { clearTimeout(timer); S.failed = true; render(); return; }
+  db.collection('media').onSnapshot((snap) => {
+    S.media = snap.docs.map((d) => ({id: d.id, ...d.data()})).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    S.loaded.media = true; render();
+  }, (e) => { clearTimeout(timer); toast('Médias indisponibles : ' + (e.message || e.code)); });
+  db.collection('posts').onSnapshot((snap) => {
+    S.posts = snap.docs.map((d) => ({id: d.id, ...d.data()}));
+    S.loaded.posts = true; clearTimeout(timer); render();
+  }, (e) => { clearTimeout(timer); toast('Posts indisponibles : ' + (e.message || e.code)); });
+  if (assets) refreshUsage();
+}
+async function refreshUsage() { try { const r = await S.assets.list(); S.usage = r.usage; renderFoot(); } catch {} }
+
+async function savePost(p) {
+  const {id, ...data} = p;
+  data.updatedAt = Date.now();
+  try { await S.db.collection('posts').doc(id).set(data); return true; }
+  catch (e) { toast('Enregistrement refusé : ' + (e.message || e.code)); return false; }
+}
+
+// ---------- routing ----------
+function route() {
+  const h = location.hash.replace('#', '');
+  S.view = ['planning', 'posts', 'ads', 'medias'].includes(h) ? h : 'planning';
+  document.querySelectorAll('.nav a').forEach((a) => { if (a.dataset.v === S.view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  render();
+}
+addEventListener('hashchange', route);
+
+// ---------- render ----------
+function render() {
+  $('#c-posts').textContent = S.posts.filter((p) => p.type !== 'ad').length || '';
+  $('#c-ads').textContent = S.posts.filter((p) => p.type === 'ad').length || '';
+  $('#c-media').textContent = S.media.length || '';
+  renderFoot();
+  const main = $('#main');
+  if (S.failed && !S.db) {
+    main.innerHTML = `<div class="head"><h1>Growthity Studio</h1></div><div class="empty"><b>Connectez-vous pour voir vos contenus</b>Les posts, ads et médias sont enregistrés dans une base partagée. Ouvrez cette page connecté à claude.ai pour y accéder.</div>`;
+    return;
+  }
+  const loading = !S.loaded.media || !S.loaded.posts;
+  ({planning: renderPlanning, posts: renderPosts, ads: renderAds, medias: renderMedia})[S.view](main, loading);
+}
+function renderFoot() {
+  const f = $('#rail-foot');
+  if (!f) return;
+  const u = S.usage;
+  f.innerHTML = u ? `<div>Stockage : ${(u.bytes / 1048576).toFixed(0)} Mo / ${(u.maxBytes / 1073741824).toFixed(0)} Go</div><div class="meter"><i style="width:${Math.min(100, (u.bytes / u.maxBytes) * 100).toFixed(1)}%"></i></div>` : (S.assets === null && S.db ? '<div>Lecture seule : demandez un accès Éditeur pour ajouter des médias.</div>' : '');
+}
+
+// Planning
+function renderPlanning(main, loading) {
+  const m = S.month;
+  const first = new Date(m); const offset = (first.getDay() + 6) % 7;
+  const start = new Date(first); start.setDate(1 - offset);
+  const days = [];
+  for (let i = 0; i < 42; i++) { const d = new Date(start); d.setDate(start.getDate() + i); days.push(d); }
+  const lastRowNeeded = days.slice(35).some((d) => d.getMonth() === m.getMonth());
+  const shown = lastRowNeeded ? days : days.slice(0, 35);
+  const byDay = {};
+  S.posts.filter((p) => p.date).forEach((p) => { (byDay[p.date.slice(0, 10)] ||= []).push(p); });
+  Object.values(byDay).forEach((l) => l.sort((a, b) => a.date.localeCompare(b.date)));
+  const today = ymd(new Date());
+  const unsched = S.posts.filter((p) => !p.date && p.status !== 'live');
+  main.innerHTML = `
+    <div class="head"><h1>Planning</h1><span class="spacer"></span>
+      <button class="btn" data-new="ad">+ Ad</button><button class="btn primary" data-new="post">+ Post</button></div>
+    <div class="cal-bar">
+      <button class="btn ghost" id="prev" aria-label="Mois précédent">‹</button>
+      <h2>${m.toLocaleDateString('fr-FR', {month: 'long', year: 'numeric'})}</h2>
+      <button class="btn ghost" id="next" aria-label="Mois suivant">›</button>
+      <button class="btn ghost" id="today">Aujourd’hui</button>
+    </div>
+    ${loading ? '<div class="notice">Chargement des contenus…</div>' : ''}
+    <div class="cal">
+      ${['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((d) => `<div class="dow">${d}</div>`).join('')}
+      ${shown.map((d) => {
+        const k = ymd(d); const l = byDay[k] || [];
+        return `<div class="day ${d.getMonth() !== m.getMonth() ? 'out' : ''} ${k === today ? 'today' : ''}">
+          <div class="num"><b>${d.getDate()}</b><button class="add" data-day="${k}" aria-label="Ajouter un post le ${d.toLocaleDateString('fr-FR')}">+</button></div>
+          ${l.map((p) => evtHTML(p)).join('')}
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="legend">${Object.values(STATUS).map((s) => `<span class="st"><span class="dot" style="background:${s.c}"></span>${s.l}</span>`).join('')}<span class="st"><span class="chip ad">AD</span> publicité</span></div>
+    <div class="unsched">
+      <h3>À planifier <small>${unsched.length}</small></h3>
+      ${unsched.length ? `<div class="grid">${unsched.map(cardHTML).join('')}</div>` : `<div class="empty">Tout est planifié. Ajoutez une idée avec « + Post » : elle apparaîtra ici tant qu’elle n’a pas de date.</div>`}
+    </div>`;
+  $('#prev').onclick = () => { S.month = new Date(m.getFullYear(), m.getMonth() - 1, 1); render(); };
+  $('#next').onclick = () => { S.month = new Date(m.getFullYear(), m.getMonth() + 1, 1); render(); };
+  $('#today').onclick = () => { S.month = startOfMonth(new Date()); render(); };
+  wire(main);
+}
+function evtHTML(p) {
+  const st = (p.type === 'ad' ? AD_STATUS : STATUS)[p.status];
+  return `<button class="evt ${p.type === 'ad' ? 'ad' : ''}" data-open="${p.id}" title="${esc(p.title)}">
+    ${thumbHTML(mediaById(p.mediaId))}<span class="dot" style="background:${st ? st.c : 'var(--st-idea)'}"></span><span class="t">${p.date.slice(11, 16)}</span><span>${esc(p.title)}</span></button>`;
+}
+function cardHTML(p) {
+  const m = mediaById(p.mediaId);
+  const map = p.type === 'ad' ? AD_STATUS : STATUS;
+  return `<button class="card" data-open="${p.id}">
+    <div class="thumb">${thumbHTML(m)}${p.type === 'ad' ? '<span class="chip ad badge">AD</span>' : ''}</div>
+    <div class="body"><div class="title">${esc(p.title || 'Sans titre')}</div>
+      <div class="meta">${statusDot(p.status, map)}</div>
+      <div class="meta">${m ? `<span class="chip">${KINDS[m.kind] || ''}${m.kind === 'carousel' ? ' · ' + m.items.length : ''}</span>` : ''}<span class="chip fmt">${esc(p.format || m?.format || '')}</span>${(p.networks || []).map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div>
+      <div class="when">${fmtDate(p.date)}</div></div></button>`;
+}
+
+// Posts board
+function renderPosts(main, loading) {
+  const posts = S.posts.filter((p) => p.type !== 'ad');
+  main.innerHTML = `<div class="head"><h1>Posts</h1><span class="spacer"></span><button class="btn primary" data-new="post">+ Post</button>
+    <div class="sub">Posts organiques du feed, des Reels et des Stories, du brouillon à la publication.</div></div>
+    ${loading ? '<div class="notice">Chargement des contenus…</div>' : ''}
+    <div class="board">${Object.entries(STATUS).map(([k, s]) => {
+      const l = posts.filter((p) => (p.status || 'idea') === k).sort((a, b) => (a.date || '9').localeCompare(b.date || '9'));
+      return `<section class="col"><div class="col-h"><span class="dot" style="background:${s.c}"></span>${s.l}<span class="n">${l.length}</span></div>
+        ${l.map(cardHTML).join('') || '<div class="hint" style="padding:6px">Rien pour l’instant.</div>'}</section>`;
+    }).join('')}</div>`;
+  wire(main);
+}
+
+// Ads
+function renderAds(main, loading) {
+  const ads = S.posts.filter((p) => p.type === 'ad').sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+  main.innerHTML = `<div class="head"><h1>Ads</h1><span class="spacer"></span><button class="btn primary" data-new="ad">+ Ad</button>
+    <div class="sub">Publicités Meta : créa, objectif, budget, appel à l’action et lien.</div></div>
+    ${loading ? '<div class="notice">Chargement des contenus…</div>' : ''}
+    ${ads.length ? `<div class="tbl-wrap"><table><thead><tr><th>Publicité</th><th>Statut</th><th>Objectif</th><th>Format</th><th>Budget / jour</th><th>CTA</th><th>Lancement</th></tr></thead><tbody>
+      ${ads.map((a) => { const m = mediaById(a.mediaId); const ad = a.ad || {}; return `<tr data-open="${a.id}" tabindex="0">
+        <td><div class="ad-name">${thumbHTML(m)}<span>${esc(a.title || 'Sans titre')}</span></div></td>
+        <td>${statusDot(a.status, AD_STATUS)}</td><td>${esc(ad.objective || '—')}</td>
+        <td><span class="chip fmt">${esc(a.format || m?.format || '—')}</span></td>
+        <td class="num-c">${ad.budget ? esc(ad.budget) + ' €' : '—'}</td><td>${esc(ad.cta || '—')}</td>
+        <td class="num-c">${a.date ? new Date(a.date).toLocaleDateString('fr-FR', {day: 'numeric', month: 'short'}) : '—'}</td></tr>`; }).join('')}
+    </tbody></table></div>` : `<div class="empty"><b>Aucune publicité</b>Créez une ad à partir d’une vidéo ou d’un visuel de la médiathèque avec « + Ad ».</div>`}`;
+  wire(main);
+  main.querySelectorAll('tr[data-open]').forEach((tr) => tr.addEventListener('keydown', (e) => { if (e.key === 'Enter') openPost(tr.dataset.open); }));
+}
+
+// Media library
+function renderMedia(main, loading) {
+  const f = S.mf;
+  const list = S.media.filter((m) => (f.format === 'all' || m.format === f.format) && (f.kind === 'all' || m.kind === f.kind));
+  main.innerHTML = `<div class="head"><h1>Médias</h1>
+    <div class="sub">Vidéos, visuels et carrousels générés par Claude ou ajoutés par l’équipe.</div></div>
+    ${S.assets ? `<label class="drop" id="drop"><input type="file" id="file" multiple accept="image/png,image/jpeg,image/webp,video/mp4,video/webm" hidden>
+      <span class="btn primary">Ajouter des fichiers</span><span>ou glissez-les ici. Plusieurs images d’un coup = un carrousel.</span></label>` : ''}
+    <div class="filters">
+      <div class="seg" role="group" aria-label="Format">${['all', ...FORMATS].map((x) => `<button data-ff="${x}" aria-pressed="${f.format === x}">${x === 'all' ? 'Tous formats' : x}</button>`).join('')}</div>
+      <div class="seg" role="group" aria-label="Type">${['all', ...Object.keys(KINDS)].map((x) => `<button data-fk="${x}" aria-pressed="${f.kind === x}">${x === 'all' ? 'Tout' : KINDS[x]}</button>`).join('')}</div>
+    </div>
+    ${loading ? '<div class="notice">Chargement des médias…</div>' : ''}
+    ${list.length ? `<div class="grid">${list.map((m) => `<button class="m" data-media="${m.id}">
+        <div class="frame" style="--ar:${AR[m.format] || '4/5'}">${thumbHTML(m)}
+          ${m.kind === 'video' ? '<span class="play"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></span>' : ''}
+          <span class="stack">${m.kind === 'carousel' ? `<span class="chip">${m.items.length} slides</span>` : ''}</span></div>
+        <div class="cap">${esc(m.title)}</div>
+        <div class="sub"><span class="chip">${KINDS[m.kind]}</span><span class="chip fmt">${esc(m.format)}</span>${m.source === 'claude' ? '<span class="chip">Claude</span>' : ''}${usedCount(m.id) ? `<span class="chip">${usedCount(m.id)} post${usedCount(m.id) > 1 ? 's' : ''}</span>` : ''}</div>
+      </button>`).join('')}</div>` : `<div class="empty"><b>${S.media.length ? 'Aucun média pour ces filtres' : 'La médiathèque est vide'}</b>${S.media.length ? 'Changez de format ou de type.' : 'Ajoutez des fichiers, ou demandez à Claude de générer une vidéo : elle arrivera ici.'}</div>`}`;
+  main.querySelectorAll('[data-ff]').forEach((b) => (b.onclick = () => { S.mf.format = b.dataset.ff; render(); }));
+  main.querySelectorAll('[data-fk]').forEach((b) => (b.onclick = () => { S.mf.kind = b.dataset.fk; render(); }));
+  main.querySelectorAll('[data-media]').forEach((b) => (b.onclick = () => openMedia(b.dataset.media)));
+  const inp = $('#file'), drop = $('#drop');
+  if (inp) {
+    inp.onchange = () => { uploadFiles([...inp.files]); inp.value = ''; };
+    drop.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('over'); });
+    drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+    drop.addEventListener('drop', (e) => { e.preventDefault(); drop.classList.remove('over'); uploadFiles([...e.dataTransfer.files]); });
+  }
+}
+const usedCount = (id) => S.posts.filter((p) => p.mediaId === id).length;
+
+function guessFormat(w, h) {
+  const r = w / h; const opts = {'9:16': 9 / 16, '4:5': 0.8, '1:1': 1, '16:9': 16 / 9};
+  return Object.entries(opts).sort((a, b) => Math.abs(a[1] - r) - Math.abs(b[1] - r))[0][0];
+}
+function dims(file) {
+  return new Promise((res) => {
+    const url = URL.createObjectURL(file);
+    if (file.type.startsWith('video')) { const v = document.createElement('video'); v.preload = 'metadata'; v.onloadedmetadata = () => { res([v.videoWidth, v.videoHeight]); URL.revokeObjectURL(url); }; v.onerror = () => res([4, 5]); v.src = url; }
+    else { const i = new Image(); i.onload = () => { res([i.naturalWidth, i.naturalHeight]); URL.revokeObjectURL(url); }; i.onerror = () => res([4, 5]); i.src = url; }
+  });
+}
+async function uploadFiles(files) {
+  files = files.filter((f) => /^(image\/(png|jpeg|webp)|video\/(mp4|webm))$/.test(f.type));
+  if (!files.length) { toast('Formats acceptés : PNG, JPEG, WebP, MP4, WebM.'); return; }
+  const imgs = files.filter((f) => f.type.startsWith('image')).sort((a, b) => a.name.localeCompare(b.name, 'fr', {numeric: true}));
+  const vids = files.filter((f) => f.type.startsWith('video'));
+  const groups = [...vids.map((v) => [v]), ...(imgs.length ? [imgs] : [])];
+  let done = 0;
+  for (const g of groups) {
+    const items = [];
+    let fmt = '4:5';
+    for (const f of g) {
+      toast(`Envoi ${++done}/${files.length} : ${f.name}`);
+      try {
+        const [w, h] = await dims(f); if (!items.length) fmt = guessFormat(w, h);
+        const r = await S.assets.upload(f);
+        items.push({asset: r.id, ct: r.contentType, name: f.name});
+      } catch (e) { toast(`${f.name} refusé : ${e.message || e.code}`); }
+    }
+    if (!items.length) continue;
+    const kind = isVideo(items[0]) ? 'video' : items.length > 1 ? 'carousel' : 'image';
+    const title = g.length > 1 ? `Carrousel – ${g[0].name.replace(/\.[^.]+$/, '')}` : g[0].name.replace(/\.[^.]+$/, '');
+    try { await S.db.collection('media').doc(uid()).set({title, kind, format: fmt, items, source: 'upload', createdAt: Date.now(), createdBy: S.me || null}); }
+    catch (e) { toast('Enregistrement refusé : ' + (e.message || e.code)); }
+  }
+  toast('Médias ajoutés.'); refreshUsage();
+}
+
+function wire(root) {
+  root.querySelectorAll('[data-open]').forEach((b) => b.addEventListener('click', () => openPost(b.dataset.open)));
+  root.querySelectorAll('[data-new]').forEach((b) => (b.onclick = () => newPost(b.dataset.new)));
+  root.querySelectorAll('[data-day]').forEach((b) => (b.onclick = () => newPost('post', b.dataset.day + 'T18:00')));
+}
+
+// ---------- dialogs ----------
+const dlg = $('#dlg');
+function viewerHTML(m, i = 0) {
+  if (!m) return `<div class="empty" style="width:100%">Aucun média associé.<br>Choisissez-en un dans la liste.</div>`;
+  const it = m.items[i];
+  const el = isVideo(it) ? `<video src="${blob(it.asset)}" controls playsinline preload="metadata"></video>` : `<img src="${blob(it.asset)}" alt="${esc(m.title)} – ${i + 1}">`;
+  const many = m.items.length > 1;
+  return `<div class="viewer">${el}${many ? `<button class="nav-btn prev" data-step="-1" aria-label="Slide précédente">‹</button><button class="nav-btn next" data-step="1" aria-label="Slide suivante">›</button>` : ''}</div>
+    ${many ? `<div class="dots">${m.items.map((_, j) => `<i class="${j === i ? 'on' : ''}"></i>`).join('')}</div><div class="hint">Slide ${i + 1} / ${m.items.length}</div>` : ''}
+    <div class="copyrow"><a class="btn" href="${blob(it.asset)}" target="_blank" rel="noopener">Ouvrir le fichier</a></div>`;
+}
+function bindViewer(box, m, idx) {
+  box.querySelectorAll('[data-step]').forEach((b) => (b.onclick = () => { idx.i = (idx.i + Number(b.dataset.step) + m.items.length) % m.items.length; box.innerHTML = viewerHTML(m, idx.i); bindViewer(box, m, idx); }));
+}
+
+function openMedia(id) {
+  const m = mediaById(id); if (!m) return;
+  const idx = {i: 0};
+  const posts = S.posts.filter((p) => p.mediaId === id);
+  dlg.innerHTML = `<button class="x" aria-label="Fermer" data-close>✕</button><div class="dlg">
+    <div class="dlg-media" id="vbox">${viewerHTML(m, 0)}</div>
+    <form class="dlg-form" id="mform">
+      <h2>${esc(m.title)}</h2>
+      <div class="meta" style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip">${KINDS[m.kind]}${m.kind === 'carousel' ? ' · ' + m.items.length + ' slides' : ''}</span><span class="chip fmt">${esc(m.format)}</span><span class="chip">${m.source === 'claude' ? 'Généré par Claude' : 'Ajouté par l’équipe'}</span>${m.createdAt ? `<span class="chip">${new Date(m.createdAt).toLocaleDateString('fr-FR')}</span>` : ''}</div>
+      <label class="field"><span>Titre</span><input id="m-title" value="${esc(m.title)}"></label>
+      <div class="row2">
+        <label class="field"><span>Format</span><select id="m-format">${FORMATS.map((f) => `<option ${f === m.format ? 'selected' : ''}>${f}</option>`).join('')}</select></label>
+        <label class="field"><span>Thème / niche</span><input id="m-niche" value="${esc(m.niche || '')}" placeholder="ex. bijoux, B2B, restauration"></label>
+      </div>
+      ${m.note ? `<label class="field"><span>Note</span><textarea id="m-note" style="min-height:90px">${esc(m.note)}</textarea></label>` : `<label class="field"><span>Note</span><textarea id="m-note" style="min-height:70px" placeholder="Prompt utilisé, acteur, remarques…"></textarea></label>`}
+      <div class="hint">${posts.length ? 'Utilisé dans : ' + posts.map((p) => esc(p.title)).join(', ') : 'Pas encore utilisé dans un post ou une ad.'}</div>
+      <div class="dlg-actions">
+        <button class="btn primary" type="submit">Enregistrer</button>
+        <button class="btn" type="button" data-mk="post">Créer un post</button>
+        <button class="btn" type="button" data-mk="ad">Créer une ad</button>
+        <span class="spacer"></span>
+        ${S.assets ? `<span id="mdel"><button class="btn ghost danger" type="button" data-del>Supprimer</button></span>` : ''}
+      </div>
+    </form></div>`;
+  dlg.showModal();
+  bindViewer($('#vbox'), m, idx);
+  $('#mform').onsubmit = async (e) => {
+    e.preventDefault();
+    try { await S.db.collection('media').doc(id).update({title: $('#m-title').value.trim() || m.title, format: $('#m-format').value, niche: $('#m-niche').value.trim(), note: $('#m-note').value.trim()}); toast('Média enregistré.'); dlg.close(); }
+    catch (er) { toast('Enregistrement refusé : ' + (er.message || er.code)); }
+  };
+  dlg.querySelectorAll('[data-mk]').forEach((b) => (b.onclick = () => { dlg.close(); newPost(b.dataset.mk, '', id); }));
+  const del = dlg.querySelector('[data-del]');
+  if (del) del.onclick = () => {
+    $('#mdel').innerHTML = `<span class="confirm">Supprimer ${m.items.length > 1 ? 'les ' + m.items.length + ' fichiers' : 'le fichier'} pour tout le monde ?</span><button class="btn danger" type="button" id="mdel-yes">Oui, supprimer</button><button class="btn ghost" type="button" id="mdel-no">Annuler</button>`;
+    $('#mdel-no').onclick = () => { dlg.close(); openMedia(id); };
+    $('#mdel-yes').onclick = async () => {
+      try {
+        for (const it of m.items) { await S.assets.delete(it.asset); if (it.poster) await S.assets.delete(it.poster); }
+        await S.db.collection('media').doc(id).delete();
+        for (const p of posts) await S.db.collection('posts').doc(p.id).update({mediaId: null});
+        toast('Média supprimé.'); dlg.close(); refreshUsage();
+      } catch (er) { toast('Suppression refusée : ' + (er.message || er.code)); }
+    };
+  };
+}
+
+function newPost(type, date = '', mediaId = null) {
+  const m = mediaById(mediaId);
+  openPost(null, {id: uid(), type, title: m ? m.title : '', networks: ['Instagram', 'Facebook'], format: m?.format || (type === 'ad' ? '9:16' : '4:5'), mediaId, caption: '', date, status: type === 'ad' ? 'draft' : 'idea', ad: type === 'ad' ? {objective: 'Ventes', budget: '', cta: 'Commencer', link: 'https://growthity.ai', audience: ''} : null, createdAt: Date.now(), createdBy: S.me || null});
+}
+function openPost(id, draft) {
+  const p = draft || S.posts.find((x) => x.id === id); if (!p) return;
+  const isAd = p.type === 'ad';
+  const map = isAd ? AD_STATUS : STATUS;
+  const st = {mediaId: p.mediaId, i: 0};
+  const ad = p.ad || {};
+  dlg.innerHTML = `<button class="x" aria-label="Fermer" data-close>✕</button><div class="dlg">
+    <div class="dlg-media" id="vbox"></div>
+    <form class="dlg-form" id="pform">
+      <h2>${draft ? (isAd ? 'Nouvelle ad' : 'Nouveau post') : esc(p.title || 'Sans titre')}</h2>
+      <label class="field"><span>Titre interne</span><input id="p-title" value="${esc(p.title)}" placeholder="ex. Carrousel accroches" required></label>
+      <div class="row2">
+        <label class="field"><span>Statut</span><select id="p-status">${Object.entries(map).map(([k, s]) => `<option value="${k}" ${k === p.status ? 'selected' : ''}>${s.l}</option>`).join('')}</select></label>
+        <label class="field"><span>${isAd ? 'Lancement' : 'Publication'}</span><input type="datetime-local" id="p-date" value="${esc(p.date || '')}"></label>
+      </div>
+      <div class="field"><span>Réseaux</span><div class="checks">${NETS.map((n) => `<label><input type="checkbox" value="${n}" ${(p.networks || []).includes(n) ? 'checked' : ''}>${n}</label>`).join('')}</div></div>
+      <div class="field"><span>Format</span><div class="seg" role="group" id="p-format">${FORMATS.map((f) => `<button type="button" data-f="${f}" aria-pressed="${f === p.format}">${f}</button>`).join('')}</div></div>
+      <div class="field"><span>Média</span><div class="picker" id="picker"></div><div class="hint">Ajoutez de nouveaux fichiers dans la rubrique Médias.</div></div>
+      <label class="field"><span>${isAd ? 'Texte principal' : 'Légende'}</span><textarea id="p-caption" placeholder="${isAd ? 'Le texte au-dessus de la pub…' : 'Accroche, corps, appel à l’action, hashtags…'}">${esc(p.caption)}</textarea><span class="hint" id="p-count"></span></label>
+      ${isAd ? `<div class="ad-box">
+        <div class="row2">
+          <label class="field"><span>Objectif</span><select id="a-obj">${OBJ.map((o) => `<option ${o === ad.objective ? 'selected' : ''}>${o}</option>`).join('')}</select></label>
+          <label class="field"><span>Budget / jour (€)</span><input id="a-budget" inputmode="decimal" value="${esc(ad.budget || '')}" placeholder="ex. 20"></label>
+        </div>
+        <div class="row2">
+          <label class="field"><span>Bouton</span><select id="a-cta">${CTAS.map((o) => `<option ${o === ad.cta ? 'selected' : ''}>${o}</option>`).join('')}</select></label>
+          <label class="field"><span>Lien</span><input id="a-link" value="${esc(ad.link || '')}" placeholder="https://growthity.ai"></label>
+        </div>
+        <label class="field"><span>Audience</span><input id="a-aud" value="${esc(ad.audience || '')}" placeholder="ex. e-commerçants, France, 25-55 ans"></label>
+      </div>` : ''}
+      <div class="dlg-actions">
+        <button class="btn primary" type="submit">Enregistrer</button>
+        <button class="btn" type="button" id="copycap">Copier le texte</button>
+        <span class="spacer"></span>
+        ${draft ? '' : '<span id="pdel"><button class="btn ghost danger" type="button" data-del>Supprimer</button></span>'}
+      </div>
+    </form></div>`;
+  dlg.showModal();
+  const drawViewer = () => { const box = $('#vbox'); const m = mediaById(st.mediaId); st.i = 0; box.innerHTML = viewerHTML(m, 0); if (m) bindViewer(box, m, st); };
+  const drawPicker = () => {
+    const fmt = dlg.querySelector('#p-format [aria-pressed="true"]')?.dataset.f;
+    const list = [...S.media].sort((a, b) => (b.format === fmt) - (a.format === fmt));
+    $('#picker').innerHTML = list.length ? list.map((m) => `<button type="button" data-pick="${m.id}" aria-pressed="${m.id === st.mediaId}" title="${esc(m.title)}">${thumbHTML(m)}<span class="lbl">${esc(m.format)}${m.kind === 'carousel' ? ' · ' + m.items.length : ''}${m.kind === 'video' ? ' · vidéo' : ''}</span></button>`).join('') : '<div class="hint">Aucun média pour l’instant.</div>';
+    $('#picker').querySelectorAll('[data-pick]').forEach((b) => (b.onclick = () => {
+      st.mediaId = st.mediaId === b.dataset.pick ? null : b.dataset.pick;
+      const m = mediaById(st.mediaId); if (m) { dlg.querySelectorAll('#p-format button').forEach((x) => x.setAttribute('aria-pressed', x.dataset.f === m.format)); if (!$('#p-title').value) $('#p-title').value = m.title; }
+      drawPicker(); drawViewer();
+    }));
+  };
+  dlg.querySelectorAll('#p-format button').forEach((b) => (b.onclick = () => { dlg.querySelectorAll('#p-format button').forEach((x) => x.setAttribute('aria-pressed', x === b)); drawPicker(); }));
+  const cap = $('#p-caption'), cnt = $('#p-count');
+  const upd = () => (cnt.textContent = `${cap.value.length} / 2 200 caractères` + (isAd && cap.value.length > 125 ? ' · au-delà de 125, Meta coupe avec « Voir plus »' : ''));
+  cap.oninput = upd; upd();
+  drawPicker(); drawViewer();
+  $('#copycap').onclick = () => {
+    const fallback = () => { cap.select(); toast('Texte sélectionné : copiez avec Ctrl/Cmd + C.'); };
+    try { navigator.clipboard.writeText(cap.value).then(() => toast('Texte copié.'), fallback); } catch { fallback(); }
+  };
+  $('#pform').onsubmit = async (e) => {
+    e.preventDefault();
+    const out = {...p,
+      title: $('#p-title').value.trim(), status: $('#p-status').value, date: $('#p-date').value || '',
+      networks: [...dlg.querySelectorAll('.checks input:checked')].map((x) => x.value),
+      format: dlg.querySelector('#p-format [aria-pressed="true"]')?.dataset.f || p.format,
+      mediaId: st.mediaId || null, caption: cap.value,
+    };
+    if (isAd) out.ad = {objective: $('#a-obj').value, budget: $('#a-budget').value.trim(), cta: $('#a-cta').value, link: $('#a-link').value.trim(), audience: $('#a-aud').value.trim()};
+    if (await savePost(out)) { toast(isAd ? 'Ad enregistrée.' : 'Post enregistré.'); dlg.close(); }
+  };
+  const del = dlg.querySelector('[data-del]');
+  if (del) del.onclick = () => {
+    $('#pdel').innerHTML = `<span class="confirm">Supprimer ?</span><button class="btn danger" type="button" id="pdel-yes">Oui</button><button class="btn ghost" type="button" id="pdel-no">Non</button>`;
+    $('#pdel-no').onclick = () => { $('#pdel').innerHTML = ''; };
+    $('#pdel-yes').onclick = async () => { try { await S.db.collection('posts').doc(p.id).delete(); toast('Supprimé.'); dlg.close(); } catch (er) { toast('Suppression refusée : ' + (er.message || er.code)); } };
+  };
+}
+dlg.addEventListener('click', (e) => { if (e.target === dlg || e.target.closest('[data-close]')) dlg.close(); });
+dlg.addEventListener('close', () => { dlg.querySelectorAll('video').forEach((v) => v.pause()); dlg.innerHTML = ''; });
+
+boot();
+})();
+</script>
