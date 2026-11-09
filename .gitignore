@@ -14,3 +14,5 @@ video/out/v-part*.mp4
 video/out/v-pub.mp4
 video/out/render-v-30fps-fixed.mp4
 video/out/shorts/stills/
+video/out/shorts/raw-*.mp4
+video/out/shorts/*.log
