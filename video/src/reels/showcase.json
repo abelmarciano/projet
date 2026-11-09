@@ -1,0 +1,16 @@
+[
+ {"id": "s01", "src": "gw-40", "label": "Fitness", "prompt": "je vends des compléments alimentaires fitness je veux K…", "title": "Pub fitness – compléments alimentaires"},
+ {"id": "s02", "src": "gw-44", "label": "Mode · t-shirt", "prompt": "je vend un t shirt et je veux faire une video de pub de…", "title": "Pub t-shirt – skate au coucher du soleil"},
+ {"id": "s03", "src": "gw-35", "label": "Sneakers", "prompt": "Nouvelle pub : sneakers en toile, un client les présente face caméra.", "title": "Pub sneakers – face caméra", "reconstructed": true},
+ {"id": "s04", "src": "gw-41", "label": "Primeur · grossiste", "prompt": "je vend des banane et je veux faire du leads pour des g…", "title": "Pub bananes – leads grossistes"},
+ {"id": "s05", "src": "gw-49", "label": "Énergie solaire", "prompt": "9:16 vertical video UGC style. A frustrated person in the…", "title": "Pub solaire – la facture qui fâche"},
+ {"id": "s06", "src": "gw-48", "label": "Conseil · services", "prompt": "Pub « En savoir plus » pour ClairConseil, cabinet d’accompagnement.", "title": "Pub ClairConseil – cinématique", "reconstructed": true},
+ {"id": "s07", "src": "gw-45", "label": "Studio de jardin", "prompt": "je vend des studio de jardin (tiny house) je veux gener…", "title": "Pub studio de jardin – tiny house"},
+ {"id": "s08", "src": "gw-27", "label": "Mode · t-shirt", "prompt": "Créer une vidéo publicitaire UGC verticale 9:16 de 12…", "title": "Pub t-shirt blanc – UGC en extérieur"},
+ {"id": "s09", "src": "gw-28", "label": "Énergie solaire", "prompt": "L’entreprise vend des panneaux solaires et met en avant…", "title": "Pub panneaux solaires – au bord du lac"},
+ {"id": "s10", "src": "gw-42", "label": "Mode · t-shirt", "prompt": "je vend un t shirt et je veux faire une video de pub de…", "title": "Pub t-shirt cœur – street"},
+ {"id": "s11", "src": "gw-37", "label": "Énergie solaire", "prompt": "Nouvelle pub : installateur solaire, un client témoigne face caméra.", "title": "Pub solaire – témoignage", "reconstructed": true},
+ {"id": "s12", "src": "gw-43", "label": "Mode · t-shirt", "prompt": "je vend un t shirt et je veux faire une video de pub de…", "title": "Pub t-shirt imprimé – lifestyle"},
+ {"id": "s13", "src": "gw-03", "label": "Studio de jardin", "prompt": "Alice : visite d’un studio de jardin, 16 s, UGC 9:16.", "title": "Pub studio de jardin – visite avec Alice"},
+ {"id": "s14", "src": "gw-07", "label": "B2B · logiciel", "prompt": "Vidéo UGC 30 s : une consultante présente l’outil sur tablette.", "title": "Pub B2B – présentation sur tablette", "reconstructed": true}
+]

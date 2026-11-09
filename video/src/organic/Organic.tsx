@@ -825,6 +825,200 @@ const PhotoPost: React.FC<{p: string; pos: string; lines: string[]; small: strin
 const P16: React.FC = () => <PhotoPost p="scierie.jpg" pos="50% 30%" lines={['Votre métier', 'n’a pas besoin', 'd’un studio.']} small="Juste d’une phrase bien écrite." />;
 const P17: React.FC = () => <PhotoPost p="femme.jpg" pos="50% 26%" lines={['POV : vous lancez', 'votre pub ce soir.']} small="Sans tournage, sans agence." />;
 
+// =====================================================================
+// POST 18 — Carrousel « Une pub pour chaque métier » (8 slides)
+// =====================================================================
+const METIERS = [
+  {p: 'gw40.jpg', pos: '50% 30%', m: 'Salle de sport · compléments', d: 'Un coach présente son shaker, entre deux séries.'},
+  {p: 'gw44.jpg', pos: '50% 40%', m: 'Marque de t-shirts', d: 'Le t-shirt porté en skate, au coucher du soleil.'},
+  {p: 'gw35.jpg', pos: '50% 40%', m: 'Sneakers', d: 'Un client les montre face caméra, sans studio.'},
+  {p: 'gw41.jpg', pos: '50% 35%', m: 'Primeur · grossiste', d: 'Des fruits frais, une livraison, une vraie personne.'},
+  {p: 'gw49.jpg', pos: '50% 35%', m: 'Installateur solaire', d: 'La facture qui fâche… puis la solution sur le toit.'},
+  {p: 'gw45.jpg', pos: '50% 30%', m: 'Studios de jardin', d: 'Le fondateur fait visiter, comme à un client.'},
+];
+const P18N = 8;
+const P18Cover: React.FC = () => (
+  <Slide n={1} of={P18N} handle swipe>
+    <div style={{position: 'absolute', left: M, right: M, top: 200}}>
+      <Kicker>Créé avec Growthity</Kicker>
+      <Title size={124} style={{marginTop: 30}}>Une pub<br /><span style={{color: ACCENT}}>pour chaque métier.</span></Title>
+      <Body size={40} style={{marginTop: 46, maxWidth: 840}}>6 vraies pubs générées avec Growthity, à partir d’une phrase. Glissez pour les voir.</Body>
+    </div>
+  </Slide>
+);
+const P18M: React.FC<{i: number}> = ({i}) => {
+  const x = METIERS[i];
+  return (
+    <Slide n={i + 2} of={P18N} bg="#000">
+      <div style={{position: 'absolute', inset: 0}}><Img src={ig(x.p)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: x.pos}} /><Grain /></div>
+      <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, height: 520, background: 'linear-gradient(0deg, rgba(0,0,0,0.82), transparent)'}} />
+      <div style={{position: 'absolute', left: M, top: 56, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 20px', borderRadius: 999, background: 'rgba(255,255,255,0.92)', fontSize: 26, fontWeight: 700, color: INK}}>
+        <div style={{width: 12, height: 12, borderRadius: 6, background: C.success}} /> Pub générée avec Growthity
+      </div>
+      <div style={{position: 'absolute', left: M, right: M, bottom: 110}}>
+        <Title size={64} style={{color: '#fff'}}>{x.m}</Title>
+        <div style={{marginTop: 14, color: 'rgba(255,255,255,0.86)', fontWeight: 500, fontSize: 32}}>{x.d}</div>
+      </div>
+    </Slide>
+  );
+};
+const P18End: React.FC = () => (
+  <Slide n={8} of={P18N} dark handle>
+    <div style={{position: 'absolute', left: M, right: M, top: 330}}>
+      <Title size={104} style={{color: '#fff'}}>Et pour <span style={{color: '#B9A8FF'}}>votre métier</span> ?</Title>
+      <Body size={42} style={{marginTop: 40, color: 'rgba(255,255,255,0.75)'}}>Dites-nous ce que vous vendez en commentaire. Lien en bio pour commencer.</Body>
+    </div>
+  </Slide>
+);
+
+// =====================================================================
+// POST 19 — Carrousel « 4 phrases, 4 pubs » (9 slides)
+// =====================================================================
+const PAIRS2 = [
+  {niche: 'T-shirt', prompt: 'je vend un t shirt et je veux faire une video de pub de…', p: 'gw42.jpg', pos: '50% 35%'},
+  {niche: 'Panneaux solaires', prompt: 'L’entreprise vend des panneaux solaires et met en avant…', p: 'gw28.jpg', pos: '50% 30%'},
+  {niche: 'Bananes · grossistes', prompt: 'je vend des banane et je veux faire du leads pour des g…', p: 'gw41b.jpg', pos: '50% 50%'},
+  {niche: 'T-shirt blanc', prompt: 'Créer une vidéo publicitaire UGC verticale 9:16 de 12…', p: 'gw27.jpg', pos: '50% 30%'},
+];
+const P19N = 9;
+const P19Cover: React.FC = () => (
+  <Slide n={1} of={P19N} handle swipe>
+    <div style={{position: 'absolute', left: M, right: M, top: 200}}>
+      <Kicker>Coulisses</Kicker>
+      <Title size={150} style={{marginTop: 30}}>4 phrases.<br /><span style={{color: ACCENT}}>4 pubs.</span></Title>
+      <Body size={40} style={{marginTop: 46, maxWidth: 820}}>Les phrases telles qu’elles ont été tapées, fautes comprises. Puis les vidéos obtenues.</Body>
+    </div>
+  </Slide>
+);
+const P19Prompt: React.FC<{i: number}> = ({i}) => {
+  const x = PAIRS2[i];
+  return (
+    <Slide n={2 + i * 2} of={P19N} swipe>
+      <div style={{position: 'absolute', left: M, right: M, top: 150}}>
+        <Kicker>{`${i + 1}/4 · ${x.niche}`}</Kicker>
+        <Title size={80} style={{marginTop: 24}}>La phrase :</Title>
+      </div>
+      <Prompt text={x.prompt} size={56} style={{left: M, right: M, top: 400}} />
+      <Body size={34} style={{position: 'absolute', left: M, right: 300, bottom: 62}}>Le résultat, juste après →</Body>
+    </Slide>
+  );
+};
+const P19Video: React.FC<{i: number}> = ({i}) => {
+  const x = PAIRS2[i];
+  return (
+    <Slide n={3 + i * 2} of={P19N} bg="#000">
+      <div style={{position: 'absolute', inset: 0}}><Img src={ig(x.p)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: x.pos}} /><Grain /></div>
+      <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, height: 380, background: 'linear-gradient(0deg, rgba(0,0,0,0.75), transparent)'}} />
+      <div style={{position: 'absolute', left: M, top: 56, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 20px', borderRadius: 999, background: 'rgba(255,255,255,0.92)', fontSize: 26, fontWeight: 700, color: INK}}>
+        <div style={{width: 12, height: 12, borderRadius: 6, background: C.success}} /> La vidéo obtenue
+      </div>
+      <div style={{position: 'absolute', left: M, right: M, bottom: 90, fontFamily: DISPLAY, fontWeight: 700, fontSize: 56, color: '#fff', letterSpacing: '-0.02em'}}>{x.niche}</div>
+    </Slide>
+  );
+};
+
+// =====================================================================
+// POST 20 — Carrousel « 5 erreurs qui coûtent cher sur Meta » (7 slides)
+// =====================================================================
+const ERRS = [
+  {t: 'Parler de vous au lieu de votre client.', d: 'Le client veut savoir ce que ça change pour lui, pas l’histoire de la marque.', p: 'gw07.jpg', pos: '50% 25%'},
+  {t: 'Une accroche qui arrive trop tard.', d: 'Si rien n’accroche dans la première seconde, la pub est déjà passée.', p: 'gw37.jpg', pos: '50% 30%'},
+  {t: 'Un visuel qui ressemble à une pub.', d: 'Sur Reels, ce qui ressemble à un contenu normal est regardé. Le reste est zappé.', p: 'gw43.jpg', pos: '50% 35%'},
+  {t: 'Oublier les sous-titres.', d: 'Une grande partie des vidéos est regardée sans le son.', p: 'gw27.jpg', pos: '50% 30%'},
+  {t: 'Juger une pub en 24 heures.', d: 'Laissez à Meta le temps d’apprendre avant de couper ou de changer la pub.', p: 'gw28.jpg', pos: '50% 30%'},
+];
+const P20N = 7;
+const P20Cover: React.FC = () => (
+  <Slide n={1} of={P20N} handle swipe>
+    <div style={{position: 'absolute', left: M, right: M, top: 200}}>
+      <Kicker>Pubs Meta · À éviter</Kicker>
+      <Title size={122} style={{marginTop: 30}}>5 erreurs qui<br /><span style={{color: ACCENT}}>coûtent cher.</span></Title>
+      <Body size={40} style={{marginTop: 46, maxWidth: 820}}>Les plus fréquentes chez les PME qui lancent leurs premières pubs.</Body>
+    </div>
+  </Slide>
+);
+const P20E: React.FC<{i: number}> = ({i}) => {
+  const e = ERRS[i];
+  return (
+    <Slide n={i + 2} of={P20N}>
+      <div style={{position: 'absolute', left: M, top: 140, fontFamily: DISPLAY, fontWeight: 700, fontSize: 30, color: '#E2543A', letterSpacing: '0.06em', textTransform: 'uppercase'}}>Erreur {i + 1}</div>
+      <div style={{position: 'absolute', left: M, right: M, top: 200}}>
+        <Title size={e.t.length > 32 ? 66 : 74} style={{lineHeight: 1.04}}>{e.t}</Title>
+        <Body size={33} style={{marginTop: 20}}>{e.d}</Body>
+      </div>
+      <Photo p={e.p} pos={e.pos} style={{left: M, right: M, top: 640, height: 630}} />
+    </Slide>
+  );
+};
+const P20End: React.FC = () => (
+  <Slide n={7} of={P20N} dark handle>
+    <div style={{position: 'absolute', left: M, right: M, top: 330}}>
+      <Title size={100} style={{color: '#fff'}}>Laquelle faites-vous en ce moment&nbsp;?</Title>
+      <Body size={42} style={{marginTop: 40, color: 'rgba(255,255,255,0.75)'}}>Enregistrez ce post avant votre prochaine campagne.</Body>
+    </div>
+  </Slide>
+);
+
+// =====================================================================
+// POST 21 — Carrousel « Noël : 4 idées de pubs » (6 slides)
+// =====================================================================
+const NOEL = [
+  {p: 'gw39.jpg', pos: '50% 30%', t: 'La carte cadeau', d: 'Pour ceux qui ne savent pas quoi offrir : une personne la présente, simplement.'},
+  {p: 'bougie916.jpg', pos: '50% 50%', t: 'L’ambiance', d: 'Pas de discours : une main, une bougie, un salon. On a envie d’y être.'},
+  {p: 'lena.jpg', pos: '50% 30%', t: 'Le POV cadeau', d: '« POV : vous avez enfin trouvé le cadeau de votre sœur. »'},
+  {p: 'gw35.jpg', pos: '50% 40%', t: 'Le déballage', d: 'Le produit sort de sa boîte, face caméra. Le classique qui marche.'},
+];
+const P21N = 6;
+const P21Cover: React.FC = () => (
+  <Slide n={1} of={P21N} handle swipe bg="#F6EFE7">
+    <div style={{position: 'absolute', left: M, right: M, top: 200}}>
+      <Kicker color="#B42318">Spécial fêtes</Kicker>
+      <Title size={124} style={{marginTop: 30}}>4 idées de pubs<br /><span style={{color: '#B42318'}}>pour Noël.</span></Title>
+      <Body size={40} style={{marginTop: 46, maxWidth: 820}}>À lancer maintenant, pendant que vos clients cherchent leurs cadeaux.</Body>
+    </div>
+  </Slide>
+);
+const P21I: React.FC<{i: number}> = ({i}) => {
+  const x = NOEL[i];
+  return (
+    <Slide n={i + 2} of={P21N} bg="#F6EFE7">
+      <Photo p={x.p} pos={x.pos} style={{left: M, right: M, top: 140, height: 820}} />
+      <div style={{position: 'absolute', left: M + 30, top: 172, fontFamily: DISPLAY, fontWeight: 700, fontSize: 30, background: '#fff', borderRadius: 999, padding: '8px 22px', color: '#B42318'}}>Idée {i + 1}</div>
+      <div style={{position: 'absolute', left: M, right: M, top: 1000}}>
+        <Title size={72}>{x.t}</Title>
+        <Body size={34} style={{marginTop: 16}}>{x.d}</Body>
+      </div>
+    </Slide>
+  );
+};
+const P21End: React.FC = () => (
+  <Slide n={6} of={P21N} dark handle>
+    <div style={{position: 'absolute', left: M, right: M, top: 330}}>
+      <Title size={100} style={{color: '#fff'}}>Votre pub de Noël, <span style={{color: '#FFB4A8'}}>ce soir.</span></Title>
+      <Body size={42} style={{marginTop: 40, color: 'rgba(255,255,255,0.75)'}}>Une phrase suffit. Lien en bio pour commencer.</Body>
+    </div>
+  </Slide>
+);
+
+// =====================================================================
+// IMAGES 22 → 25 — « Tapé / Obtenu » avec de vraies pubs Growthity
+// =====================================================================
+const TapeObtenu: React.FC<{prompt: string; p: string; pos: string; niche: string}> = ({prompt, p, pos, niche}) => (
+  <Slide handle>
+    <div style={{position: 'absolute', left: M, top: 90}}><Kicker>Tapé dans Growthity</Kicker></div>
+    <Prompt text={prompt} size={38} style={{left: M, right: M, top: 150}} />
+    <div style={{position: 'absolute', left: M, top: 540}}><Kicker>Obtenu · {niche}</Kicker></div>
+    <Photo p={p} pos={pos} style={{left: M, right: M, top: 600, height: 620}} />
+    <div style={{position: 'absolute', left: M + 26, top: 626, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 18px', borderRadius: 999, background: 'rgba(255,255,255,0.92)', fontSize: 24, fontWeight: 700}}>
+      <div style={{width: 10, height: 10, borderRadius: 5, background: C.success}} /> Vidéo générée
+    </div>
+  </Slide>
+);
+const P22: React.FC = () => <TapeObtenu prompt="je vends des compléments alimentaires fitness je veux K…" p="gw40.jpg" pos="50% 28%" niche="fitness" />;
+const P23: React.FC = () => <TapeObtenu prompt="je vend des banane et je veux faire du leads pour des g…" p="gw41.jpg" pos="50% 30%" niche="primeur" />;
+const P24: React.FC = () => <TapeObtenu prompt="je vend un t shirt et je veux faire une video de pub de…" p="gw44.jpg" pos="50% 42%" niche="mode" />;
+const P25: React.FC = () => <TapeObtenu prompt="je vend des studio de jardin (tiny house) je veux gener…" p="gw45.jpg" pos="50% 28%" niche="studio de jardin" />;
+
 // ---------- registry ----------
 export const ORGANIC: {id: string; C: React.FC; w: number; h: number; file: string}[] = [];
 const add = (post: string, slides: React.FC[]) =>
@@ -849,3 +1043,11 @@ add('post-14-mythe-realite', [P14]);
 add('post-15-citation-lancer', [P15]);
 add('post-16-photo-scierie', [P16]);
 add('post-17-photo-pov', [P17]);
+add('post-18-une-pub-par-metier', [P18Cover, ...METIERS.map((_, i) => bind(P18M, {i})), P18End]);
+add('post-19-4-phrases-4-pubs', [P19Cover, ...PAIRS2.flatMap((_, i) => [bind(P19Prompt, {i}), bind(P19Video, {i})])]);
+add('post-20-5-erreurs', [P20Cover, ...ERRS.map((_, i) => bind(P20E, {i})), P20End]);
+add('post-21-noel', [P21Cover, ...NOEL.map((_, i) => bind(P21I, {i})), P21End]);
+add('post-22-tape-fitness', [P22]);
+add('post-23-tape-bananes', [P23]);
+add('post-24-tape-tshirt', [P24]);
+add('post-25-tape-studio', [P25]);
