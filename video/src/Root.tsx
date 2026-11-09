@@ -5,6 +5,7 @@ import {TOTAL} from './timeline';
 import {Short} from './shorts/Short';
 import {SHORT_IDS, totalFrames} from './shorts/timeline';
 import {CREAS} from './creas/Creas';
+import {ORGANIC} from './organic/Organic';
 
 export const Root: React.FC = () => (
   <>
@@ -14,6 +15,9 @@ export const Root: React.FC = () => (
       <Composition key={id} id={`Short${i + 1}`} component={Short} durationInFrames={totalFrames(id)} fps={30} width={1080} height={1920} defaultProps={{id, withAudio: true}} />
     ))}
     {CREAS.map((c) => (
+      <Still key={c.id} id={c.id} component={c.C} width={c.w} height={c.h} />
+    ))}
+    {ORGANIC.map((c) => (
       <Still key={c.id} id={c.id} component={c.C} width={c.w} height={c.h} />
     ))}
   </>

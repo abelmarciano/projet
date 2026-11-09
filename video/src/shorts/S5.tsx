@@ -107,7 +107,6 @@ export const S5Publish: React.FC<SceneProps> = ({lines}) => {
   const insta = wordAt(l, 'instagram', 50);
   const fb = wordAt(l, 'facebook', 70);
   const up = prog(f, send, 16, INOUT);
-  const stats = Math.round(interpolate(f, [insta, insta + 60], [0, 12480], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}));
   return (
     <LightBg>
       <div style={{position: 'absolute', left: R.x, top: mix(520, R.y + 10, up), width: R.w, transform: `scale(${1 - up * 0.12})`, transformOrigin: 'top center'}}>
@@ -133,7 +132,7 @@ export const S5Publish: React.FC<SceneProps> = ({lines}) => {
           );
         })}
         <div style={{textAlign: 'center', fontFamily: DISPLAY, fontWeight: 700, fontSize: 54, color: C.ink, marginTop: 10, opacity: prog(f, insta + 6, 10)}}>
-          <span style={{fontVariantNumeric: 'tabular-nums'}}>{stats.toLocaleString('fr-FR')}</span> <span style={{fontSize: 30, color: C.slate}}>personnes touchées</span>
+          Diffusée <span style={{fontSize: 40, color: C.slate}}>autour de votre atelier</span>
         </div>
       </div>
       <Sticker at={fb + 12} rot={-6} size={34} bg={WARM} style={{left: R.x + 520, top: 560}}>
