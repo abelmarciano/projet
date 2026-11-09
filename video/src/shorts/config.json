@@ -1,0 +1,132 @@
+{
+ "gap": 10,
+ "lead": 4,
+ "endMin": 105,
+ "shorts": {
+  "s1": {
+   "title": "Aucune de ces personnes n'existe",
+   "scenes": [
+    [
+     0,
+     1
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     4
+    ]
+   ],
+   "extra": [
+    6,
+    0,
+    0,
+    12,
+    0
+   ]
+  },
+  "s2": {
+   "title": "J'ai demandé à une IA ma pub",
+   "scenes": [
+    [
+     0
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     3
+    ],
+    [
+     4
+    ]
+   ],
+   "extra": [
+    6,
+    0,
+    8,
+    84,
+    0
+   ]
+  },
+  "s3": {
+   "title": "Arrêtez de payer 3000 €",
+   "scenes": [
+    [
+     0
+    ],
+    [
+     1
+    ],
+    [
+     2
+    ],
+    [
+     3
+    ],
+    [
+     4
+    ]
+   ],
+   "extra": [
+    8,
+    4,
+    10,
+    18,
+    0
+   ]
+  },
+  "s4": {
+   "title": "Espionnez vos concurrents",
+   "scenes": [
+    [
+     0
+    ],
+    [
+     1,
+     2,
+     3
+    ],
+    [
+     4
+    ]
+   ],
+   "extra": [
+    6,
+    4,
+    6,
+    24,
+    0
+   ]
+  },
+  "s5": {
+   "title": "Chrono : pub en ligne",
+   "scenes": [
+    [
+     0
+    ],
+    [
+     1
+    ],
+    [
+     2
+    ],
+    [
+     3
+    ],
+    [
+     4
+    ]
+   ],
+   "extra": [
+    12,
+    8,
+    14,
+    16,
+    30
+   ]
+  }
+ }
+}

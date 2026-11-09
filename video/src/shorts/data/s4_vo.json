@@ -1,0 +1,261 @@
+{
+ "id": "s4",
+ "beats": [
+  {
+   "text": "Vos concurrents ont déjà trouvé la pub qui marche.",
+   "audio": null,
+   "dur": 3.45,
+   "words": [
+    {
+     "w": "Vos",
+     "s": 0.0,
+     "e": 0.345
+    },
+    {
+     "w": "concurrents",
+     "s": 0.383,
+     "e": 0.728
+    },
+    {
+     "w": "ont",
+     "s": 0.766,
+     "e": 1.111
+    },
+    {
+     "w": "déjà",
+     "s": 1.149,
+     "e": 1.494
+    },
+    {
+     "w": "trouvé",
+     "s": 1.533,
+     "e": 1.877
+    },
+    {
+     "w": "la",
+     "s": 1.916,
+     "e": 2.261
+    },
+    {
+     "w": "pub",
+     "s": 2.299,
+     "e": 2.644
+    },
+    {
+     "w": "qui",
+     "s": 2.682,
+     "e": 3.027
+    },
+    {
+     "w": "marche.",
+     "s": 3.065,
+     "e": 3.41
+    }
+   ]
+  },
+  {
+   "text": "Growthity scanne la bibliothèque publicitaire Meta de votre marché…",
+   "audio": null,
+   "dur": 4.62,
+   "words": [
+    {
+     "w": "Growthity",
+     "s": 0.0,
+     "e": 0.462
+    },
+    {
+     "w": "scanne",
+     "s": 0.513,
+     "e": 0.975
+    },
+    {
+     "w": "la",
+     "s": 1.027,
+     "e": 1.489
+    },
+    {
+     "w": "bibliothèque",
+     "s": 1.54,
+     "e": 2.002
+    },
+    {
+     "w": "publicitaire",
+     "s": 2.054,
+     "e": 2.516
+    },
+    {
+     "w": "Meta",
+     "s": 2.567,
+     "e": 3.029
+    },
+    {
+     "w": "de",
+     "s": 3.08,
+     "e": 3.543
+    },
+    {
+     "w": "votre",
+     "s": 3.594,
+     "e": 4.056
+    },
+    {
+     "w": "marché…",
+     "s": 4.107,
+     "e": 4.569
+    }
+   ]
+  },
+  {
+   "text": "repère les pubs qui gagnent, celles qui tournent depuis des semaines…",
+   "audio": null,
+   "dur": 4.76,
+   "words": [
+    {
+     "w": "repère",
+     "s": 0.0,
+     "e": 0.389
+    },
+    {
+     "w": "les",
+     "s": 0.433,
+     "e": 0.822
+    },
+    {
+     "w": "pubs",
+     "s": 0.865,
+     "e": 1.255
+    },
+    {
+     "w": "qui",
+     "s": 1.298,
+     "e": 1.687
+    },
+    {
+     "w": "gagnent,",
+     "s": 1.73,
+     "e": 2.12
+    },
+    {
+     "w": "celles",
+     "s": 2.163,
+     "e": 2.552
+    },
+    {
+     "w": "qui",
+     "s": 2.596,
+     "e": 2.985
+    },
+    {
+     "w": "tournent",
+     "s": 3.028,
+     "e": 3.418
+    },
+    {
+     "w": "depuis",
+     "s": 3.461,
+     "e": 3.85
+    },
+    {
+     "w": "des",
+     "s": 3.893,
+     "e": 4.283
+    },
+    {
+     "w": "semaines…",
+     "s": 4.326,
+     "e": 4.715
+    }
+   ]
+  },
+  {
+   "text": "et s'en inspire pour créer les vôtres.",
+   "audio": null,
+   "dur": 2.62,
+   "words": [
+    {
+     "w": "et",
+     "s": 0.0,
+     "e": 0.337
+    },
+    {
+     "w": "s'en",
+     "s": 0.374,
+     "e": 0.711
+    },
+    {
+     "w": "inspire",
+     "s": 0.749,
+     "e": 1.086
+    },
+    {
+     "w": "pour",
+     "s": 1.123,
+     "e": 1.46
+    },
+    {
+     "w": "créer",
+     "s": 1.498,
+     "e": 1.834
+    },
+    {
+     "w": "les",
+     "s": 1.872,
+     "e": 2.209
+    },
+    {
+     "w": "vôtres.",
+     "s": 2.246,
+     "e": 2.583
+    }
+   ]
+  },
+  {
+   "text": "Ne partez plus jamais de zéro. Growthity !",
+   "audio": null,
+   "dur": 2.9,
+   "words": [
+    {
+     "w": "Ne",
+     "s": 0.0,
+     "e": 0.326
+    },
+    {
+     "w": "partez",
+     "s": 0.362,
+     "e": 0.688
+    },
+    {
+     "w": "plus",
+     "s": 0.724,
+     "e": 1.05
+    },
+    {
+     "w": "jamais",
+     "s": 1.086,
+     "e": 1.412
+    },
+    {
+     "w": "de",
+     "s": 1.448,
+     "e": 1.774
+    },
+    {
+     "w": "zéro.",
+     "s": 1.81,
+     "e": 2.136
+    },
+    {
+     "w": "Growthity",
+     "s": 2.172,
+     "e": 2.498
+    },
+    {
+     "w": "!",
+     "s": 2.534,
+     "e": 2.86
+    }
+   ]
+  }
+ ],
+ "placeholder": true
+}
