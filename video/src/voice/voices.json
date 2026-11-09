@@ -46,13 +46,13 @@
   "style": 0.3
  },
  "cp1-b1": {
-  "text": "J'ai juste écrit ce que je voulais, dans le chat Growthity.",
+  "text": "J'ai choisi mon actrice dans Growthity…",
   "voice": "kENkNtk0xyzG09WW40xE",
   "stability": 0.38,
   "style": 0.3
  },
  "cp1-b2": {
-  "text": "J'ai choisi mon actrice dans la galerie…",
+  "text": "j'ai décrit ma pub en une phrase…",
   "voice": "kENkNtk0xyzG09WW40xE",
   "stability": 0.38,
   "style": 0.3
@@ -64,7 +64,7 @@
   "style": 0.3
  },
  "cp1-d1": {
-  "text": "Et pour la mettre en ligne ? Je demande au chat de la publier sur Meta.",
+  "text": "Pour la mettre en ligne ? Un clic : Publier sur Meta.",
   "voice": "kENkNtk0xyzG09WW40xE",
   "stability": 0.38,
   "style": 0.3

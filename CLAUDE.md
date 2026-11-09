@@ -30,3 +30,14 @@ Drive : vidéos finales rangées dans CREA-POST › Growthity-video › 3_Finale
 
 Google Drive : le connecteur ne permet d'envoyer des images qu'en base64 dans la conversation (trop lourd au-delà de quelques Ko).
 Dossiers créés : CREA-POST › IMAGES › « Carrousel 1…4 », « Posts simples organiques (5-6-7) ».
+
+### Catégorie « Du chat à la pub » (demande type : « fais-moi un Du chat à la pub avec <vidéo>, acteur X, produit Y »)
+1. Mettre la vidéo dans `video/public/media/chat/`, copier `video/src/chatpub/cp1.json` en `cpN.json` (prompt, acteur, produit ou null,
+   marque fictive liée au sujet ou `brand: null` pour marque blanche, galerie d'acteurs réalistes, `videoFrames`).
+2. Voix off ElevenLabs (clé injectée par le proxy) : textes dans `video/src/voice/voices.json`, `python3 video/scripts/voice_tts.py …`,
+   normaliser (`loudnorm=I=-13`) en `*-n.mp3`, recopier les mots dans `cpN.json` (`words`).
+3. `python3 video/scripts/chatpub_audio.py cpN` puis enregistrer la composition `ChatPub-cpN` dans `Root.tsx` et rendre.
+4. Transcrire la vidéo source avec ElevenLabs speech-to-text (`scribe_v1`) pour vérifier ce que dit l'acteur.
+UI du chat reproduite : écran « Que veux-tu créer aujourd'hui ? », puces marque / « Ajouter un acteur » / « Catalogue »,
+fenêtre « Choisir un acteur », cartes ACTEUR/PRODUIT au-dessus du message, carte résultat « Prête » + « Publier sur Meta ».
+Acteurs : seulement les réalistes (`studio/data/actors_growthity.json`, `realiste: true`).

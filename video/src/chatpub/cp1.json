@@ -1,24 +1,317 @@
 {
-  "id": "cp1",
-  "title": "Du chat à la pub – Charlotte (chauffage)",
-  "video": "chat/charlotte-virale.mp4",
-  "videoFrames": 366,
-  "prompt": "Vidéo face caméra 9:16 : une femme alerte les propriétaires qui se chauffent au gaz ou au fioul sur les aides disponibles. Ton direct, 16 s.",
-  "actor": {"name": "Charlotte A.", "img": "chat/actors/a021.jpg"},
-  "product": null,
-  "gallery": [
-    {"name": "Freja", "img": "chat/actors/a059.jpg"},
-    {"name": "Sabrina", "img": "chat/actors/a150.jpg"},
-    {"name": "Anaïs", "img": "chat/actors/a154.jpg"},
-    {"name": "Justine", "img": "chat/actors/a176.jpg"},
-    {"name": "Charlotte A.", "img": "chat/actors/a021.jpg"},
-    {"name": "Sandra", "img": "chat/actors/a184.jpg"},
-    {"name": "Hana", "img": "chat/actors/a058.jpg"},
-    {"name": "Camille B.", "img": "chat/actors/a189.jpg"},
-    {"name": "Beatriz", "img": "chat/actors/a061.jpg"}
+ "id": "cp1",
+ "title": "Alerte chauffage – aides gaz/fioul – Vidéo 9:16",
+ "video": "chat/charlotte-virale.mp4",
+ "videoFrames": 366,
+ "prompt": "Vidéo face caméra 9:16 : une femme alerte les propriétaires qui se chauffent au gaz ou au fioul sur les aides disponibles. Ton direct, 16 s.",
+ "actor": {
+  "name": "Charlotte A.",
+  "style": "Solaire",
+  "img": "chat/actors/a021.jpg",
+  "desc": "Femme · face caméra"
+ },
+ "product": null,
+ "gallery": [
+  {
+   "name": "Freja",
+   "style": "E-commerce / Maison",
+   "img": "chat/actors/a059.jpg"
+  },
+  {
+   "name": "Sabrina",
+   "style": "Casual",
+   "img": "chat/actors/a150.jpg"
+  },
+  {
+   "name": "Justine",
+   "style": "Lifestyle",
+   "img": "chat/actors/a176.jpg"
+  },
+  {
+   "name": "Sandra",
+   "style": "Créatif",
+   "img": "chat/actors/a184.jpg"
+  },
+  {
+   "name": "Charlotte A.",
+   "style": "Solaire",
+   "img": "chat/actors/a021.jpg"
+  },
+  {
+   "name": "Hana",
+   "style": "E-commerce / Café",
+   "img": "chat/actors/a058.jpg"
+  },
+  {
+   "name": "Camille B.",
+   "style": "Casual",
+   "img": "chat/actors/a189.jpg"
+  },
+  {
+   "name": "Beatriz",
+   "style": "E-commerce / Mode",
+   "img": "chat/actors/a061.jpg"
+  }
+ ],
+ "voice": {
+  "a": "cp1-a-n",
+  "b1": "cp1-b1-n",
+  "b2": "cp1-b2-n",
+  "b3": "cp1-b3-n",
+  "d1": "cp1-d1-n",
+  "d2": "cp1-d2-n"
+ },
+ "brand": {
+  "name": "Maison Énergie",
+  "icon": "house"
+ },
+ "words": {
+  "cp1-a-n": [
+   {
+    "w": "Cette",
+    "s": 0.0,
+    "e": 0.255
+   },
+   {
+    "w": "pub…",
+    "s": 0.279,
+    "e": 0.639
+   },
+   {
+    "w": "personne",
+    "s": 0.755,
+    "e": 1.126
+   },
+   {
+    "w": "ne",
+    "s": 1.196,
+    "e": 1.277
+   },
+   {
+    "w": "l'a",
+    "s": 1.324,
+    "e": 1.405
+   },
+   {
+    "w": "tournée.",
+    "s": 1.463,
+    "e": 2.136
+   }
   ],
-  "publishPrompt": "Publie-la sur Meta, Instagram et Facebook.",
-  "objective": "Prospects",
-  "cta": "En savoir plus",
-  "voice": {"a": "cp1-a", "b1": "cp1-b1", "b2": "cp1-b2", "b3": "cp1-b3", "d1": "cp1-d1", "d2": "cp1-d2"}
+  "cp1-b1-n": [
+   {
+    "w": "J'ai",
+    "s": 0.0,
+    "e": 0.186
+   },
+   {
+    "w": "choisi",
+    "s": 0.209,
+    "e": 0.464
+   },
+   {
+    "w": "mon",
+    "s": 0.511,
+    "e": 0.604
+   },
+   {
+    "w": "actrice",
+    "s": 0.662,
+    "e": 0.964
+   },
+   {
+    "w": "dans",
+    "s": 0.987,
+    "e": 1.103
+   },
+   {
+    "w": "Growthity…",
+    "s": 1.126,
+    "e": 1.858
+   }
+  ],
+  "cp1-b2-n": [
+   {
+    "w": "j'ai",
+    "s": 0.0,
+    "e": 0.186
+   },
+   {
+    "w": "décrit",
+    "s": 0.221,
+    "e": 0.488
+   },
+   {
+    "w": "ma",
+    "s": 0.511,
+    "e": 0.592
+   },
+   {
+    "w": "pub",
+    "s": 0.639,
+    "e": 0.813
+   },
+   {
+    "w": "en",
+    "s": 0.871,
+    "e": 0.929
+   },
+   {
+    "w": "une",
+    "s": 0.987,
+    "e": 1.091
+   },
+   {
+    "w": "phrase…",
+    "s": 1.115,
+    "e": 1.904
+   }
+  ],
+  "cp1-b3-n": [
+   {
+    "w": "et",
+    "s": 0.0,
+    "e": 0.139
+   },
+   {
+    "w": "la",
+    "s": 0.163,
+    "e": 0.221
+   },
+   {
+    "w": "vidéo",
+    "s": 0.267,
+    "e": 0.627
+   },
+   {
+    "w": "est",
+    "s": 0.685,
+    "e": 0.766
+   },
+   {
+    "w": "sortie.",
+    "s": 0.789,
+    "e": 1.219
+   },
+   {
+    "w": "Regardez.",
+    "s": 1.393,
+    "e": 2.09
+   }
+  ],
+  "cp1-d1-n": [
+   {
+    "w": "Pour",
+    "s": 0.0,
+    "e": 0.197
+   },
+   {
+    "w": "la",
+    "s": 0.221,
+    "e": 0.29
+   },
+   {
+    "w": "mettre",
+    "s": 0.337,
+    "e": 0.569
+   },
+   {
+    "w": "en",
+    "s": 0.592,
+    "e": 0.639
+   },
+   {
+    "w": "ligne",
+    "s": 0.673,
+    "e": 0.987
+   },
+   {
+    "w": "?",
+    "s": 1.01,
+    "e": 1.045
+   },
+   {
+    "w": "Un",
+    "s": 1.161,
+    "e": 1.265
+   },
+   {
+    "w": "clic",
+    "s": 1.312,
+    "e": 1.625
+   },
+   {
+    "w": ":",
+    "s": 1.672,
+    "e": 1.695
+   },
+   {
+    "w": "Publier",
+    "s": 1.776,
+    "e": 2.241
+   },
+   {
+    "w": "sur",
+    "s": 2.287,
+    "e": 2.45
+   },
+   {
+    "w": "Meta.",
+    "s": 2.496,
+    "e": 3.111
+   }
+  ],
+  "cp1-d2-n": [
+   {
+    "w": "C'est",
+    "s": 0.0,
+    "e": 0.279
+   },
+   {
+    "w": "en",
+    "s": 0.395,
+    "e": 0.557
+   },
+   {
+    "w": "ligne.",
+    "s": 0.627,
+    "e": 0.964
+   },
+   {
+    "w": "Growthity,",
+    "s": 1.242,
+    "e": 1.985
+   },
+   {
+    "w": "le",
+    "s": 2.113,
+    "e": 2.206
+   },
+   {
+    "w": "lien",
+    "s": 2.264,
+    "e": 2.461
+   },
+   {
+    "w": "est",
+    "s": 2.519,
+    "e": 2.589
+   },
+   {
+    "w": "dans",
+    "s": 2.635,
+    "e": 2.763
+   },
+   {
+    "w": "la",
+    "s": 2.786,
+    "e": 2.856
+   },
+   {
+    "w": "bio.",
+    "s": 2.926,
+    "e": 3.437
+   }
+  ]
+ }
 }
