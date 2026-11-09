@@ -8,12 +8,15 @@ const errors = [];
 async function mk(w, h) {
   const p = await b.newPage({viewport: {width: w, height: h}});
   p.on('pageerror', (e) => errors.push('pageerror ' + e.message));
-  p.on('console', (m) => m.type() === 'error' && errors.push('console ' + m.text()));
+  p.on('response', (r) => r.status() >= 400 && errors.push(r.status() + ' ' + r.url()));
   await p.addInitScript(`window.__SEED=${seed};` + mock);
   return p;
 }
 const p = await mk(1440, 960);
 const shot = (n) => p.screenshot({path: `${T}/${n}.png`});
+await p.goto('http://localhost:8765/index.html'); await p.waitForTimeout(900); await shot('00-home');
+await p.keyboard.press('Control+k'); await p.keyboard.type('bijou'); await p.waitForTimeout(200); await shot('00b-cmdk');
+await p.keyboard.press('Enter'); await p.waitForTimeout(300); console.log('cmdk enter ->', await p.evaluate(() => location.hash));
 await p.goto('http://localhost:8765/index.html#planning'); await p.waitForTimeout(800);
 // month on Nov 2026 (today is Nov 9)
 await shot('01-planning');
