@@ -44,7 +44,7 @@ export const S1Wall: React.FC<SceneProps> = ({lines}) => {
   const l2 = lines[1].start;
   const hookOut = prog(f, l2 - 6, 12, INOUT);
   const countIn = prog(f, l2, 16);
-  const count = Math.round(interpolate(f, [wordAt(lines[1], 'cinq', 40) - 6, wordAt(lines[1], 'cinq', 40) + 14], [0, 500], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}));
+  const count = Math.round(interpolate(f, [l2, wordAt(lines[1], 'cinq', 40) + 10], [0, 500], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}));
   return (
     <StudioBg>
       <Wall tag={wordAt(lines[1], 'acteurs', 10)} />
@@ -72,8 +72,8 @@ export const S1Phone: React.FC<SceneProps> = ({lines}) => {
   const PW = 420;
   return (
     <LightBg>
-      <div style={{position: 'absolute', left: R.x, top: R.y + 10, transform: `scale(${1 - phone * 0.22}) translateY(${-phone * 40}px)`, transformOrigin: 'top center', opacity: 1 - phone * 0.15}}>
-        <PromptBox text="Une actrice face caméra pour mes pompes à chaleur, avec sous-titres." start={2} cps={46} send={send} size={32} />
+      <div style={{position: 'absolute', left: R.x, top: 560 - phone * 300, transform: `scale(${1 - phone * 0.22})`, transformOrigin: 'top center', opacity: 1 - phone * 0.15}}>
+        <PromptBox text="Une actrice face caméra pour mes pompes à chaleur, avec sous-titres." start={2} cps={46} send={send} size={38} />
       </div>
       <div style={{position: 'absolute', left: SAFE_CX - PW / 2, top: 450, opacity: phone, transform: `translateY(${(1 - phone) * 240}px) scale(${0.9 + phone * 0.1 + ready * 0.04})`}}>
         <Phone src="ugc-charlotte.mp4" w={PW} from={send}>
