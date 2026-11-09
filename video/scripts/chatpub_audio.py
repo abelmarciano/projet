@@ -9,9 +9,9 @@ exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'click', 'chime', 'pop_sfx', 'rng'])
 
 def T_of(c):
-    T = dict(hookEnd=78, tapActorChip=112, modalIn=118, tapCharlotte=156, tapUse=182, modalOut=188, actorChip=194, typeStart=206, send=280, threadIn=282, reply=298, genStart=306, genDone=372, zoom=386, videoStart=404)
+    T = dict(hookEnd=66, tapActorChip=80, modalIn=84, tapCharlotte=104, tapUse=120, modalOut=124, actorChip=128, typeStart=134, send=180, threadIn=182, reply=192, genStart=196, genDone=236, zoom=246, videoStart=262)
     T['videoEnd'] = T['videoStart'] + c['videoFrames']; T['back'] = T['videoEnd']
-    T['tapPublish'] = T['back'] + 62; T['published'] = T['tapPublish'] + 6; T['end'] = T['back'] + 104; T['total'] = T['end'] + 100
+    T['tapPublish'] = T['back'] + 58; T['published'] = T['tapPublish'] + 6; T['end'] = T['back'] + 80; T['total'] = T['end'] + 72
     return T
 
 def add(buf, x, at, gain=1.0):
@@ -24,7 +24,7 @@ c = json.load(open(f'src/chatpub/{cid}.json'))
 T = T_of(c); s = lambda k: T[k] / 30
 n = int(s('total') * SR) + SR
 mus = np.zeros(n); sfx = np.zeros(n)
-bpm = 112; beat = 60 / bpm; bar = beat * 4
+bpm = 124; beat = 60 / bpm; bar = beat * 4
 chords = [[57, 60, 64, 67, 71], [53, 57, 60, 64, 69], [55, 59, 62, 66, 69], [52, 55, 59, 62, 67]]
 bass = [45, 41, 43, 40]
 for b in range(int(s('total') / bar) + 2):

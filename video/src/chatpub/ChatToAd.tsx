@@ -43,27 +43,27 @@ const BLUE = '#3B6EF5';
 
 export const timeline = (c: ChatPubCfg) => {
   const T: Record<string, number> = {};
-  T.hookEnd = 78;
-  T.tapActorChip = 112;
-  T.modalIn = 118;
-  T.tapCharlotte = 156;
-  T.tapUse = 182;
-  T.modalOut = 188;
-  T.actorChip = 194;
-  T.typeStart = 206;
-  T.send = 280;
-  T.threadIn = 282;
-  T.reply = 298;
-  T.genStart = 306;
-  T.genDone = 372;
-  T.zoom = 386;
-  T.videoStart = 404;
+  T.hookEnd = 66;
+  T.tapActorChip = 80;
+  T.modalIn = 84;
+  T.tapCharlotte = 104;
+  T.tapUse = 120;
+  T.modalOut = 124;
+  T.actorChip = 128;
+  T.typeStart = 134;
+  T.send = 180;
+  T.threadIn = 182;
+  T.reply = 192;
+  T.genStart = 196;
+  T.genDone = 236;
+  T.zoom = 246;
+  T.videoStart = 262;
   T.videoEnd = T.videoStart + c.videoFrames;
   T.back = T.videoEnd;
-  T.tapPublish = T.back + 62;
+  T.tapPublish = T.back + 58;
   T.published = T.tapPublish + 6;
-  T.end = T.back + 104;
-  T.total = T.end + 100;
+  T.end = T.back + 80;
+  T.total = T.end + 72;
   return T;
 };
 
@@ -438,7 +438,7 @@ const EndScene: React.FC = () => {
         <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#C4B5FD" strokeWidth="2.6" strokeLinecap="round"><path d="M12 19V5M6 11l6-6 6 6" /></svg>
         Lien en bio
       </div>
-      <AbsoluteFill style={{background: '#000', opacity: interpolate(f, [88, 100], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}} />
+      <AbsoluteFill style={{background: '#000', opacity: interpolate(f, [60, 72], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}} />
     </AbsoluteFill>
   );
 };
@@ -453,7 +453,7 @@ export const ChatToAd: React.FC<{cfg: ChatPubCfg}> = ({cfg: c}) => {
   const W = c.words ?? {};
   const V = c.voice;
   // camera
-  const cam = interpolate(f, [T.hookEnd, T.tapActorChip - 6, T.modalIn, T.modalOut + 10, T.typeStart, T.send, T.threadIn + 18, T.genStart + 10, T.genDone, T.zoom, T.videoStart], [1.0, 1.05, 1.0, 1.0, 1.05, 1.05, 1.0, 1.0, 1.03, 1.03, 3.0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: EXPO});
+  const cam = interpolate(f, [T.hookEnd, T.tapActorChip - 6, T.modalIn, T.modalOut + 6, T.typeStart, T.send, T.threadIn + 18, T.genStart + 10, T.genDone, T.zoom, T.videoStart], [1.0, 1.05, 1.0, 1.0, 1.05, 1.05, 1.0, 1.0, 1.03, 1.03, 3.0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: EXPO});
   const origin = f < T.threadIn ? '50% 52%' : f < T.genDone ? '50% 60%' : '21% 54%';
   const camPub = interpolate(f, [T.back, T.back + 20, T.tapPublish - 10, T.published + 10], [1.12, 1.0, 1.0, 1.04], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: EXPO});
   return (
@@ -474,7 +474,7 @@ export const ChatToAd: React.FC<{cfg: ChatPubCfg}> = ({cfg: c}) => {
         </AbsoluteFill>
         <VoCaption words={W[V.b1] ?? []} at={T.tapActorChip - 4 - T.hookEnd} y={92} dark size={44} />
         <VoCaption words={W[V.b2] ?? []} at={T.typeStart + 4 - T.hookEnd} y={1460} dark size={44} />
-        <VoCaption words={W[V.b3] ?? []} at={T.genStart - T.hookEnd} y={1480} dark size={44} />
+        <VoCaption words={W[V.b3] ?? []} at={T.genStart - 6 - T.hookEnd} y={1480} dark size={44} />
         <AbsoluteFill style={{background: '#000', opacity: prog(f, T.videoStart - 10, 10)}} />
       </Sequence>
       {/* 3. the full ad with its sound */}
@@ -499,7 +499,7 @@ export const ChatToAd: React.FC<{cfg: ChatPubCfg}> = ({cfg: c}) => {
       <Sequence from={6}><Audio src={staticFile(`voice/${V.a}.mp3`)} /></Sequence>
       <Sequence from={T.tapActorChip - 4}><Audio src={staticFile(`voice/${V.b1}.mp3`)} /></Sequence>
       <Sequence from={T.typeStart + 4}><Audio src={staticFile(`voice/${V.b2}.mp3`)} /></Sequence>
-      <Sequence from={T.genStart}><Audio src={staticFile(`voice/${V.b3}.mp3`)} /></Sequence>
+      <Sequence from={T.genStart - 6}><Audio src={staticFile(`voice/${V.b3}.mp3`)} /></Sequence>
       <Sequence from={T.back + 4}><Audio src={staticFile(`voice/${V.d1}.mp3`)} /></Sequence>
       <Sequence from={T.published + 8}><Audio src={staticFile(`voice/${V.d2}.mp3`)} /></Sequence>
       <Audio src={staticFile(`chatpub/${c.id}-bed.wav`)} />
