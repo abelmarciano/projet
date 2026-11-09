@@ -1,642 +1,932 @@
 <title>Growthity Studio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
 <style>
-/* Layout: left rail of rubriques + one working surface; phone = top tabs. Brand indigo from Growthity, cool slate neutrals. */
+/* Layout: white rail (brand, Nouveau, rubriques) + working surface; editor = full view with live Instagram preview. Light only. */
 :root {
-  --bg: #F3F4F8;
+  --bg: #F5F6F8;
   --surface: #FFFFFF;
-  --surface-2: #ECEEF5;
-  --fg: #12131C;
-  --muted: #5D6178;
-  --line: #DDE0EA;
-  --accent: #5B3FE4;
-  --accent-ink: #FFFFFF;
-  --accent-soft: #E9E4FF;
-  --st-idea: #8A8FA6;
-  --st-make: #D98A1C;
-  --st-review: #C2410C;
-  --st-sched: #2563EB;
-  --st-live: #16A34A;
-  --st-pause: #9333EA;
-  --danger: #DC2626;
-  --shadow: 0 1px 2px rgba(18,19,28,.06), 0 12px 32px -18px rgba(18,19,28,.28);
+  --sunk: #EEF0F4;
+  --ink: #0F1115;
+  --ink-2: #353944;
+  --muted: #6A6F7C;
+  --line: #E3E5EA;
+  --line-2: #D3D6DE;
+  --accent: #4F3BE0;
+  --accent-2: #3B28C4;
+  --accent-soft: #EEEBFF;
+  --st-idea: #9097A6;
+  --st-make: #E08A12;
+  --st-review: #E2543A;
+  --st-sched: #2E6BF0;
+  --st-live: #14A355;
+  --st-pause: #A044E0;
+  --danger: #D92D20;
+  --shadow-1: 0 1px 2px rgba(15,17,21,.06);
+  --shadow-2: 0 1px 2px rgba(15,17,21,.05), 0 8px 24px -12px rgba(15,17,21,.18);
+  --shadow-3: 0 2px 6px rgba(15,17,21,.06), 0 24px 60px -24px rgba(15,17,21,.35);
   --f-display: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
   --f-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --r: 14px;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
   color-scheme: light;
 }
-
 * { box-sizing: border-box }
 html, body { height: 100% }
-body { background: var(--bg); color: var(--fg); font: 15px/1.45 var(--f-body); }
+body { background: var(--bg); color: var(--ink); font: 15px/1.45 var(--f-body); -webkit-font-smoothing: antialiased }
 button, input, select, textarea { font: inherit; color: inherit }
-button { cursor: pointer }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent }
+a { color: inherit }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important } }
+[hidden] { display: none !important }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0) }
 
-.app { display: grid; grid-template-columns: 232px minmax(0,1fr); min-height: 100%; }
-.rail { position: sticky; top: env(safe-area-inset-top, 0px); align-self: start; height: 100vh; display: flex; flex-direction: column; gap: 22px; padding-block: 24px; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: 18px; border-right: 1px solid var(--line); background: var(--surface); }
-.brand { display: flex; align-items: center; gap: 10px; font: 700 21px/1 var(--f-display); letter-spacing: -.02em }
-.brand small { display: block; font: 500 12px/1.2 var(--f-body); color: var(--muted); letter-spacing: 0; margin-top: 3px }
-.nav { display: flex; flex-direction: column; gap: 4px }
-.nav a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; color: var(--muted); text-decoration: none; font-weight: 600 }
-.nav a:hover { background: var(--surface-2); color: var(--fg) }
+/* ---------- shell ---------- */
+.app { display: grid; grid-template-columns: 248px minmax(0,1fr); min-height: 100% }
+.rail { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; gap: 18px; padding-block: max(22px, env(safe-area-inset-top, 0px)) 18px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px; background: var(--surface); border-right: 1px solid var(--line) }
+.brand { display: flex; align-items: center; gap: 10px; padding: 0 6px }
+.brand .logo { width: 34px; height: 34px; border-radius: 10px; background: var(--accent); display: grid; place-items: center; flex: none }
+.brand b { display: block; font: 800 18px/1 var(--f-display); letter-spacing: -.02em }
+.brand small { display: block; font-size: 12px; color: var(--muted); margin-top: 3px }
+.newbtn { position: relative }
+.nav { display: grid; gap: 2px }
+.nav a { display: flex; align-items: center; gap: 11px; height: 40px; padding: 0 10px; border-radius: 10px; color: var(--ink-2); text-decoration: none; font-weight: 600; font-size: 14.5px }
+.nav a:hover { background: var(--sunk) }
 .nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent) }
-.nav .count { margin-left: auto; font: 500 12px var(--f-mono); color: var(--muted) }
-.nav svg { width: 18px; height: 18px; flex: none }
-.rail-foot { margin-top: auto; font-size: 12.5px; color: var(--muted); display: grid; gap: 8px }
-.meter { height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden }
-.meter i { display: block; height: 100%; background: var(--accent) }
+.nav a svg { width: 19px; height: 19px; flex: none }
+.nav .n { margin-left: auto; font: 600 11.5px var(--f-mono); color: var(--muted); background: var(--sunk); border-radius: 6px; padding: 2px 6px }
+.nav a[aria-current="page"] .n { background: #fff; color: var(--accent) }
+.rail-foot { margin-top: auto; display: grid; gap: 10px; font-size: 12.5px; color: var(--muted); padding: 0 6px }
+.meter { height: 6px; border-radius: 3px; background: var(--sunk); overflow: hidden }
+.meter i { display: block; height: 100%; background: var(--accent); border-radius: 3px }
+.tabbar { display: none }
 
-main { min-width: 0; padding-block: 26px 60px; padding-left: max(28px, env(safe-area-inset-left, 0px)); padding-right: max(28px, env(safe-area-inset-right, 0px)); }
-.head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-bottom: 20px }
-.head h1 { font: 700 30px/1.1 var(--f-display); letter-spacing: -.03em; margin: 0; text-wrap: balance }
-.head .sub { color: var(--muted); font-size: 14px; flex-basis: 100% ; margin-top: -6px }
-.spacer { flex: 1 }
-.btn { display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); font-weight: 600; font-size: 14px; white-space: nowrap }
-.btn:hover { border-color: var(--muted) }
-.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink) }
-.btn.primary:hover { filter: brightness(1.08) }
-.btn.ghost { background: transparent }
+main { min-width: 0; padding-block: 28px 80px; padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)) }
+.page { max-width: 1320px; margin: 0 auto }
+.ph { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 16px; margin-bottom: 22px }
+.ph h1 { margin: 0; font: 800 32px/1.05 var(--f-display); letter-spacing: -.035em }
+.ph p { margin: 6px 0 0; color: var(--muted); font-size: 14.5px; max-width: 60ch }
+.grow { flex: 1 }
+
+/* ---------- controls ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--surface); font-weight: 700; font-size: 14px; white-space: nowrap; box-shadow: var(--shadow-1); transition: background .12s, border-color .12s }
+.btn:hover { border-color: var(--ink-2) }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff }
+.btn.primary:hover { background: var(--accent-2); border-color: var(--accent-2) }
+.btn.quiet { border-color: transparent; background: transparent; box-shadow: none; color: var(--ink-2) }
+.btn.quiet:hover { background: var(--sunk) }
 .btn.danger { color: var(--danger) }
-.btn[disabled] { opacity: .5; cursor: not-allowed }
-.btn svg { width: 16px; height: 16px }
-.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 3px; gap: 2px; flex-wrap: wrap }
-.seg button { border: 0; background: transparent; padding: 6px 11px; border-radius: 7px; font-weight: 600; font-size: 13px; color: var(--muted) }
-.seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent) }
+.btn.danger.solid { background: var(--danger); border-color: var(--danger); color: #fff }
+.btn.sm { height: 32px; padding: 0 11px; font-size: 13px; border-radius: 8px }
+.btn.icon { width: 40px; padding: 0 }
+.btn.sm.icon { width: 32px }
+.btn svg { width: 17px; height: 17px; flex: none }
+.btn[disabled] { opacity: .5; pointer-events: none }
+.seg { display: inline-flex; background: var(--sunk); border-radius: 10px; padding: 3px; gap: 2px; flex-wrap: wrap }
+.seg button { border: 0; background: transparent; height: 32px; padding: 0 12px; border-radius: 8px; font-weight: 700; font-size: 13px; color: var(--muted) }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-1) }
+.search { display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--surface); min-width: 0; flex: 0 1 260px }
+.search input { border: 0; outline: 0; background: transparent; width: 100%; min-width: 0; font-size: 14px }
+.search svg { width: 16px; height: 16px; color: var(--muted); flex: none }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 18px }
 
-.chip { display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 8px; border-radius: 6px; background: var(--surface-2); font: 600 11.5px/1 var(--f-body); color: var(--muted); white-space: nowrap }
-.chip.fmt { font-family: var(--f-mono); font-weight: 500 }
-.chip.ad { background: var(--fg); color: var(--bg) }
-.dot { width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--st-idea) }
-.st { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600 }
+.pill { white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 9px; border-radius: 999px; font-size: 12px; font-weight: 700; background: color-mix(in srgb, var(--c) 12%, white); color: color-mix(in srgb, var(--c) 75%, black) }
+.pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c) }
+.tag { display: inline-flex; align-items: center; height: 22px; padding: 0 7px; border-radius: 6px; background: var(--sunk); color: var(--ink-2); font-size: 11.5px; font-weight: 700; white-space: nowrap }
+.tag.mono { font: 600 11px var(--f-mono) }
+.tag.ad { background: var(--ink); color: #fff; letter-spacing: .04em }
+.net { width: 20px; height: 20px; border-radius: 6px; display: inline-grid; place-items: center; color: #fff; font: 800 10px var(--f-body); flex: none }
+.net.Instagram { background: linear-gradient(135deg,#F58529,#DD2A7B 55%,#8134AF) }
+.net.Facebook { background: #1877F2 }
+.net.TikTok { background: #111 }
+.net.LinkedIn { background: #0A66C2 }
+.nets { display: inline-flex; gap: 3px }
 
-.empty { border: 1.5px dashed var(--line); border-radius: var(--r); padding: 34px 22px; text-align: center; color: var(--muted); background: var(--surface) }
-.empty b { display: block; color: var(--fg); font: 700 18px var(--f-display); margin-bottom: 6px }
-.notice { padding: 12px 14px; border-radius: 10px; background: var(--accent-soft); color: var(--fg); font-size: 14px; margin-bottom: 16px }
+.empty { border: 1.5px dashed var(--line-2); border-radius: 16px; padding: 36px 24px; text-align: center; color: var(--muted); background: var(--surface) }
+.empty b { display: block; color: var(--ink); font: 800 19px var(--f-display); margin-bottom: 6px; letter-spacing: -.02em }
+.empty .btn { margin-top: 14px }
+.notice { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; background: var(--accent-soft); color: var(--ink); font-size: 14px; margin-bottom: 16px }
+.skel { background: linear-gradient(90deg, var(--sunk), #F7F8FA, var(--sunk)); background-size: 200% 100%; animation: sk 1.2s infinite linear; border-radius: 12px }
+@keyframes sk { to { background-position: -200% 0 } }
 
-/* Planning */
-.cal-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px }
-.cal-bar h2 { margin: 0; font: 700 20px var(--f-display); text-transform: capitalize; min-width: 170px }
-.cal { display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; background: var(--line); gap: 1px }
-.cal .dow { background: var(--surface); padding: 8px 10px; font: 600 11px var(--f-body); text-transform: uppercase; letter-spacing: .08em; color: var(--muted) }
-.day { background: var(--surface); min-height: 118px; padding: 6px; display: flex; flex-direction: column; gap: 4px; min-width: 0 }
-.day.out { background: var(--bg) }
-.day.out .num { opacity: .45 }
-.day .num { display: flex; justify-content: space-between; align-items: center; font: 500 12px var(--f-mono); color: var(--muted); padding: 2px 4px }
-.day.today .num b { background: var(--accent); color: var(--accent-ink); border-radius: 6px; padding: 1px 6px }
-.day .add { opacity: 0; border: 0; background: transparent; color: var(--muted); width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center }
-.day:hover .add, .day .add:focus-visible { opacity: 1 }
-.day .add:hover { background: var(--surface-2); color: var(--fg) }
-.evt { display: flex; align-items: center; gap: 6px; width: 100%; border: 0; text-align: left; padding: 4px 6px; border-radius: 7px; background: var(--surface-2); font-size: 12px; font-weight: 600; min-width: 0 }
-.evt:hover { outline: 1px solid var(--line) }
-.evt img, .evt .ph { width: 22px; height: 22px; border-radius: 5px; object-fit: cover; flex: none; background: var(--line) }
-.evt span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0 }
-.evt .t { font: 500 10.5px var(--f-mono); color: var(--muted); flex: none }
-.evt.ad { box-shadow: inset 3px 0 0 var(--fg) }
-.unsched { margin-top: 22px }
-.unsched h3, .section-h { font: 700 15px var(--f-display); margin: 0 0 10px; display: flex; gap: 8px; align-items: baseline }
-.unsched h3 small, .section-h small { font: 500 12px var(--f-mono); color: var(--muted) }
-.legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 12px; font-size: 12.5px; color: var(--muted) }
+.thumb { position: relative; overflow: hidden; background: var(--sunk) }
+.thumb img, .thumb video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block }
+.thumb .ico { position: absolute; right: 6px; top: 6px; width: 22px; height: 22px; border-radius: 6px; background: rgba(0,0,0,.55); display: grid; place-items: center }
+.thumb .ico svg { width: 13px; height: 13px }
 
-/* Board */
-.board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(250px, 1fr); gap: 14px; overflow-x: auto; padding-bottom: 8px }
-.col { background: var(--surface-2); border-radius: var(--r); padding: 10px; display: flex; flex-direction: column; gap: 10px; min-height: 160px }
-.col-h { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13.5px; padding: 4px 4px 0 }
-.col-h .n { margin-left: auto; font: 500 12px var(--f-mono); color: var(--muted) }
-.card { background: var(--surface); border-radius: 12px; box-shadow: var(--shadow); border: 0; text-align: left; padding: 0; overflow: hidden; display: flex; flex-direction: column; width: 100% }
-.card:hover { outline: 1.5px solid var(--accent) }
-.card .thumb { aspect-ratio: 16/10; background: var(--line); position: relative; overflow: hidden }
-.card .thumb img, .card .thumb video { width: 100%; height: 100%; object-fit: cover; display: block }
-.card .thumb .badge { position: absolute; left: 8px; top: 8px }
-.card .body { padding: 10px 12px 12px; display: grid; gap: 6px; min-width: 0 }
-.card .title { font-weight: 700; font-size: 14px; line-height: 1.3 }
-.card .meta { display: flex; flex-wrap: wrap; gap: 5px; align-items: center }
+/* ---------- planning ---------- */
+.cal-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px }
+.cal-head h2 { margin: 0 8px 0 4px; font: 800 22px var(--f-display); letter-spacing: -.02em; text-transform: capitalize; min-width: 190px }
+.plan { display: grid; grid-template-columns: minmax(0,1fr) 280px; gap: 18px; align-items: start }
+.cal { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow-1) }
+.cal-dow { display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); border-bottom: 1px solid var(--line) }
+.cal-dow div { padding: 10px 12px; font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em }
+.cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0,1fr)) }
+.day { min-height: 128px; padding: 6px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 4px; min-width: 0; transition: background .12s }
+.day:nth-child(7n) { border-right: 0 }
+.day.out { background: #FAFBFC }
+.day.out .dn { color: var(--line-2) }
+.day.past:not(.today) { background: #FBFBFC }
+.day.over { background: var(--accent-soft) }
+.day-top { display: flex; align-items: center; justify-content: space-between; padding: 2px 3px 2px 5px }
+.dn { font: 600 12.5px var(--f-mono); color: var(--muted) }
+.today .dn { background: var(--accent); color: #fff; border-radius: 7px; padding: 2px 7px }
+.day .plus { opacity: 0; width: 24px; height: 24px; border: 0; border-radius: 7px; background: transparent; color: var(--muted); display: grid; place-items: center }
+.day:hover .plus, .day .plus:focus-visible { opacity: 1 }
+.day .plus:hover { background: var(--sunk); color: var(--ink) }
+.ev { display: flex; align-items: center; gap: 7px; width: 100%; border: 1px solid var(--line); background: var(--surface); border-radius: 9px; padding: 3px 7px 3px 3px; text-align: left; min-width: 0; box-shadow: var(--shadow-1); cursor: grab }
+.ev:hover { border-color: var(--accent) }
+.ev .thumb { width: 26px; height: 32px; border-radius: 6px; flex: none }
+.ev .tx { min-width: 0; display: grid; line-height: 1.2 }
+.ev .tt { font-size: 12px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.ev .tm { font: 500 10.5px var(--f-mono); color: var(--muted); display: flex; gap: 5px; align-items: center }
+.ev .tm i { width: 7px; height: 7px; border-radius: 50%; background: var(--c) }
+.ev .ico, .trow .ico, .adn .ico { display: none }
+.ev.is-ad { border-left: 3px solid var(--ink) }
+.ev.dragging { opacity: .4 }
+.week { display: grid; grid-template-columns: repeat(7, minmax(0,1fr)); gap: 10px }
+.wcol { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; min-height: 420px; padding: 8px; display: flex; flex-direction: column; gap: 8px; min-width: 0; transition: background .12s }
+.wcol.over { background: var(--accent-soft) }
+.wcol h4 { margin: 2px 4px 4px; display: flex; justify-content: space-between; align-items: baseline; font: 700 13px var(--f-body); color: var(--muted); text-transform: capitalize }
+.wcol h4 b { font: 800 20px var(--f-display); color: var(--ink) }
+.wcol.today h4 b { color: var(--accent) }
+.wcard { border: 1px solid var(--line); border-radius: 11px; overflow: hidden; background: var(--surface); text-align: left; padding: 0; display: block; width: 100%; cursor: grab; box-shadow: var(--shadow-1) }
+.wcard:hover { border-color: var(--accent) }
+.wcard .thumb { aspect-ratio: 4/5 }
+.wcard .wb { padding: 7px 8px 8px; display: grid; gap: 5px; justify-items: start }
+.wcard .pill { font-size: 11px; height: 21px; padding: 0 7px }
+.wcard .tt { font-size: 12.5px; font-weight: 700; line-height: 1.25 }
+.wcard .tm { font: 500 11px var(--f-mono); color: var(--muted) }
+.tray { position: sticky; top: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px; box-shadow: var(--shadow-1); max-height: calc(100vh - 40px); overflow: auto }
+.tray.over { background: var(--accent-soft) }
+.tray h3 { margin: 0 0 4px; font: 800 16px var(--f-display); display: flex; justify-content: space-between; align-items: baseline }
+.tray h3 small { font: 600 12px var(--f-mono); color: var(--muted) }
+.tray p { margin: 0 0 12px; font-size: 12.5px; color: var(--muted) }
+.tray .list { display: grid; gap: 8px }
+.trow { display: flex; gap: 10px; align-items: center; width: 100%; border: 1px solid var(--line); border-radius: 11px; background: var(--surface); padding: 6px; text-align: left; cursor: grab }
+.trow:hover { border-color: var(--accent) }
+.trow .thumb { width: 40px; height: 50px; border-radius: 7px; flex: none }
+.trow .tt { font-size: 13px; font-weight: 700; line-height: 1.25 }
+.trow .meta { display: flex; gap: 5px; align-items: center; margin-top: 4px }
+.legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px }
+
+/* ---------- board ---------- */
+.board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(200px, 1fr); gap: 14px; overflow-x: auto; padding-bottom: 10px; align-items: start }
+.col { background: var(--sunk); border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 10px; min-height: 220px; transition: background .12s, outline-color .12s; outline: 2px dashed transparent; outline-offset: -2px }
+.col.over { background: var(--accent-soft); outline-color: var(--accent) }
+.col-h { display: flex; align-items: center; gap: 8px; padding: 4px 4px 2px; font-weight: 800; font-size: 14px }
+.col-h i { width: 9px; height: 9px; border-radius: 50%; background: var(--c) }
+.col-h .n { margin-left: auto; font: 600 12px var(--f-mono); color: var(--muted) }
+.col .add { border: 1.5px dashed var(--line-2); border-radius: 12px; background: transparent; height: 38px; font-weight: 700; font-size: 13px; color: var(--muted) }
+.col .add:hover { color: var(--accent); border-color: var(--accent) }
+.card { background: var(--surface); border-radius: 13px; border: 1px solid var(--line); box-shadow: var(--shadow-1); text-align: left; padding: 0; overflow: hidden; display: block; width: 100%; cursor: grab; transition: border-color .12s, box-shadow .12s }
+.card:hover { border-color: var(--accent); box-shadow: var(--shadow-2) }
+.card.dragging { opacity: .4 }
+.card { display: grid; grid-template-columns: 62px minmax(0,1fr); gap: 11px; padding: 9px; align-items: start }
+.card .thumb { aspect-ratio: 4/5; border-radius: 8px; width: 62px }
+.card .thumb .ico { right: 3px; top: 3px; width: 18px; height: 18px }
+.card .cb { display: grid; gap: 6px; min-width: 0 }
+.card .tt { font-size: 13.5px; font-weight: 800; line-height: 1.3; letter-spacing: -.005em }
+.card .row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap }
 .card .when { font: 500 11.5px var(--f-mono); color: var(--muted) }
+.card .cap { font-size: 12.5px; color: var(--muted); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden }
 
-/* Ads table */
-.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface) }
-table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px }
-th { text-align: left; font: 600 11px var(--f-body); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 11px 14px; border-bottom: 1px solid var(--line); background: var(--surface) }
+/* ---------- ads ---------- */
+.stats { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px }
+.stat { border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 8px 12px; display: flex; gap: 8px; align-items: center; font-size: 13px; font-weight: 700; cursor: pointer }
+.stat[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft) }
+.stat b { font: 700 14px var(--f-mono) }
+.tbl { border: 1px solid var(--line); border-radius: 16px; background: var(--surface); overflow-x: auto; box-shadow: var(--shadow-1) }
+table { border-collapse: collapse; width: 100%; min-width: 820px; font-size: 14px }
+th { text-align: left; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); padding: 12px 14px; border-bottom: 1px solid var(--line) }
 td { padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: middle }
-tr:last-child td { border-bottom: 0 }
+tbody tr:last-child td { border-bottom: 0 }
 tbody tr { cursor: pointer }
-tbody tr:hover td { background: var(--surface-2) }
-.ad-name { display: flex; align-items: center; gap: 10px; font-weight: 700 }
-.ad-name img, .ad-name .ph { width: 40px; height: 50px; border-radius: 7px; object-fit: cover; background: var(--line); flex: none }
-.num-c { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap }
+tbody tr:hover td { background: #FAFAFC }
+.adn { display: flex; align-items: center; gap: 12px; font-weight: 800 }
+.adn .thumb { width: 44px; height: 55px; border-radius: 8px; flex: none }
+.adn small { display: block; font-weight: 500; color: var(--muted); font-size: 12px; margin-top: 2px }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; font-size: 13px }
 
-/* Media */
-.filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; align-items: center }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px }
-.m { border: 0; background: transparent; padding: 0; text-align: left; display: grid; gap: 8px; min-width: 0 }
-.m .frame { position: relative; border-radius: 12px; overflow: hidden; background: var(--line); box-shadow: var(--shadow); aspect-ratio: var(--ar, 4/5); max-width: 100% }
-.m .frame img, .m .frame video { width: 100%; height: 100%; object-fit: cover; display: block }
-.m:hover .frame { outline: 2px solid var(--accent) }
-.m .stack { position: absolute; right: 8px; top: 8px; display: flex; gap: 4px }
-.m .play { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: rgba(0,0,0,.45); display: grid; place-items: center }
-.m .cap { font-weight: 700; font-size: 13.5px; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-.m .sub { display: flex; gap: 5px; flex-wrap: wrap }
-.drop { border: 1.5px dashed var(--line); border-radius: var(--r); padding: 18px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; background: var(--surface); margin-bottom: 18px; color: var(--muted); font-size: 14px }
+/* ---------- media ---------- */
+.mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); gap: 18px 16px; align-items: start }
+.mc { border: 0; background: transparent; padding: 0; text-align: left; display: grid; gap: 8px; min-width: 0 }
+.mc .thumb { border-radius: 13px; aspect-ratio: var(--ar, 4/5); box-shadow: var(--shadow-2); max-width: 100%; transition: transform .15s }
+.mc:hover .thumb { transform: translateY(-2px); outline: 2px solid var(--accent) }
+.mc .play { position: absolute; left: 50%; top: 50%; width: 48px; height: 48px; margin: -24px 0 0 -24px; border-radius: 50%; background: rgba(0,0,0,.45); backdrop-filter: blur(4px); display: grid; place-items: center }
+.mc .badge { position: absolute; left: 8px; top: 8px; display: flex; gap: 4px }
+.mc .badge .tag { background: rgba(255,255,255,.92) }
+.mc .tt { font-weight: 800; font-size: 13.5px; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.mc .row { display: flex; gap: 5px; flex-wrap: wrap }
+.drop { border: 1.5px dashed var(--line-2); border-radius: 16px; padding: 16px 18px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; background: var(--surface); margin-bottom: 18px; color: var(--muted); font-size: 14px; cursor: pointer }
 .drop.over { border-color: var(--accent); background: var(--accent-soft) }
+.drop b { color: var(--ink) }
+.progress { height: 6px; border-radius: 3px; background: var(--sunk); overflow: hidden; flex-basis: 100% }
+.progress i { display: block; height: 100%; background: var(--accent); transition: width .2s }
 
-/* Dialogs */
-dialog { border: 0; padding: 0; border-radius: 18px; background: var(--surface); color: var(--fg); box-shadow: 0 30px 80px -20px rgba(0,0,0,.5); width: min(920px, calc(100vw - 32px)); max-height: calc(100vh - 32px) }
-dialog::backdrop { background: rgba(10,10,20,.55) }
-.dlg { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); max-height: calc(100vh - 32px) }
-.dlg-media { background: var(--bg); padding: 18px; display: flex; flex-direction: column; gap: 10px; align-items: center; justify-content: center; min-height: 300px; position: relative }
-.dlg-media .viewer { position: relative; width: 100%; display: grid; place-items: center }
-.dlg-media img, .dlg-media video { max-width: 100%; max-height: 62vh; border-radius: 12px; display: block; box-shadow: var(--shadow) }
-.nav-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center }
-.nav-btn.prev { left: 0 } .nav-btn.next { right: 0 }
-.dots { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center }
-.dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line) }
-.dots i.on { background: var(--accent) }
-.dlg-form { padding: 20px 22px; overflow-y: auto; display: grid; gap: 14px; align-content: start }
-.dlg-form h2 { margin: 0; font: 700 22px var(--f-display); letter-spacing: -.02em }
-.field { display: grid; gap: 6px; min-width: 0 }
-.field > span { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em }
-.field input, .field select, .field textarea { width: 100%; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 9px 11px; font-size: 14.5px }
-.field textarea { min-height: 150px; resize: vertical; line-height: 1.5 }
-.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px }
-.checks { display: flex; flex-wrap: wrap; gap: 6px }
-.checks label { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 9px; padding: 6px 10px; font-size: 13.5px; font-weight: 600; cursor: pointer }
-.checks input { accent-color: var(--accent) }
-.hint { font-size: 12px; color: var(--muted) }
-.picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 8px; max-height: 220px; overflow-y: auto; padding: 2px }
-.picker button { border: 2px solid transparent; border-radius: 9px; padding: 0; overflow: hidden; aspect-ratio: 4/5; background: var(--line); position: relative }
-.picker button img, .picker button video { width: 100%; height: 100%; object-fit: cover; display: block }
-.picker button[aria-pressed="true"] { border-color: var(--accent) }
-.picker .lbl { position: absolute; left: 3px; bottom: 3px; font: 500 9.5px var(--f-mono); background: rgba(0,0,0,.6); color: #fff; padding: 1px 4px; border-radius: 4px }
-.dlg-actions { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 4px; align-items: center }
-.ad-box { border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 12px; background: var(--bg) }
-.confirm { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--danger); font-weight: 600 }
-.x { position: absolute; right: 12px; top: 12px; z-index: 2; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center }
-.copyrow { display: flex; gap: 8px; align-items: center }
+/* ---------- editor ---------- */
+.ed-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; position: sticky; top: 0; z-index: 4; background: var(--bg); padding-block: 10px; margin-top: -10px }
+.ed-top h1 { margin: 0; font: 800 24px var(--f-display); letter-spacing: -.03em; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1 }
+.saved { font-size: 12.5px; color: var(--muted); font-weight: 600 }
+.saved.dirty { color: var(--st-make) }
+.ed { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 24px; align-items: start }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px; box-shadow: var(--shadow-1); display: grid; gap: 16px }
+.panel + .panel { margin-top: 16px }
+.panel h3 { margin: 0; font: 800 15px var(--f-display); display: flex; align-items: center; gap: 8px }
+.panel h3 small { font: 500 12px var(--f-body); color: var(--muted) }
+.fld { display: grid; gap: 6px; min-width: 0 }
+.fld > label, .fld > .lb { font-size: 12.5px; font-weight: 700; color: var(--ink-2) }
+.fld input[type=text], .fld input[type=datetime-local], .fld input:not([type]), .fld select, .fld textarea { width: 100%; border: 1px solid var(--line-2); border-radius: 10px; background: var(--surface); padding: 10px 12px; font-size: 14.5px; transition: border-color .12s, box-shadow .12s }
+.fld input:focus, .fld select:focus, .fld textarea:focus { outline: 0; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft) }
+.fld textarea { min-height: 200px; resize: vertical; line-height: 1.55 }
+.fld .big { font: 800 20px var(--f-display) !important; letter-spacing: -.02em; padding: 10px 12px }
+.cnt { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted) }
+.cnt .warn { color: var(--st-make); font-weight: 700 }
+.r2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px }
+.r3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px }
+.chips { display: flex; flex-wrap: wrap; gap: 6px }
+.chk { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line-2); border-radius: 10px; height: 38px; padding: 0 12px 0 8px; font-size: 13.5px; font-weight: 700; cursor: pointer; background: var(--surface); user-select: none }
+.chk[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent) }
+.stsel { display: flex; flex-wrap: wrap; gap: 6px }
+.stsel button { border: 1px solid var(--line-2); background: var(--surface); border-radius: 999px; height: 32px; padding: 0 12px; font-size: 12.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 7px }
+.stsel button i { width: 8px; height: 8px; border-radius: 50%; background: var(--c) }
+.stsel button[aria-pressed="true"] { border-color: var(--c); background: color-mix(in srgb, var(--c) 12%, white); color: color-mix(in srgb, var(--c) 75%, black) }
+.picker { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; max-height: 300px; overflow-y: auto; padding: 2px }
+.picker button { border: 2px solid transparent; border-radius: 10px; padding: 0 0 125% 0; height: 0; overflow: hidden; position: relative; background: var(--sunk); display: block; width: 100% }
+.picker button img, .picker button video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block }
+.picker .ico { display: none }
+.picker button[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft) }
+.picker .lb { position: absolute; left: 4px; bottom: 4px; font: 600 9.5px var(--f-mono); background: rgba(0,0,0,.62); color: #fff; padding: 2px 5px; border-radius: 4px }
+.picker .ok { position: absolute; right: 4px; top: 4px; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); display: none; place-items: center }
+.picker button[aria-pressed="true"] .ok { display: grid }
+.ad-panel { border-color: color-mix(in srgb, var(--ink) 20%, white) }
+.danger-zone { display: flex; align-items: center; gap: 8px; flex-wrap: wrap }
+.confirm { font-size: 13px; font-weight: 700; color: var(--danger) }
 
-.toast { position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; z-index: 50; box-shadow: var(--shadow) }
+/* preview */
+.pv { position: sticky; top: 72px; display: grid; gap: 12px; justify-items: center }
+.pv-tabs { justify-self: stretch; display: flex; justify-content: space-between; align-items: center }
+.pv-tabs span { font-size: 12.5px; font-weight: 700; color: var(--muted) }
+.phone { width: 340px; max-width: 100%; border-radius: 44px; background: #0B0B0E; padding: 10px; box-shadow: var(--shadow-3) }
+.screen { border-radius: 35px; overflow: hidden; background: #fff; position: relative; aspect-ratio: 9/19; display: flex; flex-direction: column; color: #111; font-size: 13px }
+.ig-top { height: 38px; display: flex; align-items: center; justify-content: center; font: 700 15px var(--f-display); border-bottom: 1px solid #EFEFEF; flex: none }
+.ig-feed { overflow-y: auto; flex: 1; scrollbar-width: none }
+.ig-head { display: flex; align-items: center; gap: 8px; padding: 8px 10px }
+.ig-av { width: 30px; height: 30px; border-radius: 50%; padding: 2px; background: linear-gradient(135deg,#F58529,#DD2A7B,#8134AF); flex: none }
+.ig-av div { width: 100%; height: 100%; border-radius: 50%; background: #fff; display: grid; place-items: center; border: 1.5px solid #fff }
+.ig-name { font-weight: 700; font-size: 12.5px; line-height: 1.15 }
+.ig-name small { display: block; font-weight: 400; font-size: 11px; color: #555 }
+.ig-media { position: relative; background: #F2F2F2; overflow: hidden }
+.ig-media img, .ig-media video { width: 100%; height: 100%; object-fit: cover; display: block }
+.ig-media .count { position: absolute; right: 8px; top: 8px; background: rgba(0,0,0,.62); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 99px }
+.ig-media .arr { position: absolute; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border-radius: 50%; border: 0; background: rgba(255,255,255,.85); display: grid; place-items: center; box-shadow: 0 1px 4px rgba(0,0,0,.2) }
+.ig-media .arr.l { left: 8px } .ig-media .arr.r { right: 8px }
+.ig-cta { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: #F4F6FA; border-bottom: 1px solid #ECECEC; font-weight: 700; font-size: 13px; color: #0B5CD7 }
+.ig-act { display: flex; align-items: center; gap: 14px; padding: 9px 12px 4px }
+.ig-act svg { width: 22px; height: 22px }
+.ig-dots { display: flex; gap: 4px; justify-content: center; flex: 1; margin-right: 50px }
+.ig-dots i { width: 6px; height: 6px; border-radius: 50%; background: #CFCFCF }
+.ig-dots i.on { background: #0095F6 }
+.ig-cap { padding: 4px 12px 14px; font-size: 12.5px; line-height: 1.42; white-space: pre-wrap; word-wrap: break-word }
+.ig-cap b { font-weight: 700 }
+.ig-cap .more { color: #737373; background: none; border: 0; padding: 0; font-size: 12.5px }
+.ig-cap .empty-cap { color: #9A9A9A }
+.reel { position: absolute; inset: 0; background: #000 }
+.reel img, .reel video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover }
+.reel .shade { position: absolute; inset: auto 0 0 0; height: 46%; background: linear-gradient(0deg, rgba(0,0,0,.72), transparent) }
+.reel .lbl { position: absolute; top: 14px; left: 14px; color: #fff; font: 800 17px var(--f-display) }
+.reel .info { position: absolute; left: 12px; right: 56px; bottom: 16px; color: #fff; display: grid; gap: 8px }
+.reel .who { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px }
+.reel .who .ig-av { width: 28px; height: 28px }
+.reel .txt { font-size: 12.5px; line-height: 1.38; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: pre-wrap }
+.reel .cta { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,.95); color: #111; border-radius: 9px; padding: 9px 12px; font-weight: 800; font-size: 13px }
+.reel .side { position: absolute; right: 10px; bottom: 26px; display: grid; gap: 18px; justify-items: center; color: #fff }
+.reel .side svg { width: 25px; height: 25px }
+.pv-note { font-size: 12px; color: var(--muted); text-align: center; max-width: 340px }
 
+/* media detail */
+.md { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 24px; align-items: start }
+.viewer { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 18px; display: grid; gap: 12px; justify-items: center; box-shadow: var(--shadow-1); position: relative }
+.viewer .stage { position: relative; width: 100%; display: grid; place-items: center }
+.viewer .stage img, .viewer .stage video { max-width: 100%; max-height: 70vh; border-radius: 12px; box-shadow: var(--shadow-2); display: block }
+.viewer .nav-b { position: absolute; top: 50%; transform: translateY(-50%) }
+.viewer .nav-b.l { left: 0 } .viewer .nav-b.r { right: 0 }
+.strip { display: flex; gap: 8px; overflow-x: auto; max-width: 100%; padding: 2px }
+.strip button { width: 56px; aspect-ratio: 4/5; border-radius: 8px; border: 2px solid transparent; padding: 0; overflow: hidden; flex: none; position: relative; background: var(--sunk) }
+.strip button[aria-pressed="true"] { border-color: var(--accent) }
+.strip img { width: 100%; height: 100%; object-fit: cover; display: block }
+.uses { display: grid; gap: 8px }
+.use { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 11px; padding: 8px 10px; background: var(--surface); text-align: left; width: 100% }
+.use:hover { border-color: var(--accent) }
+
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: #fff; padding: 11px 16px; border-radius: 12px; font-weight: 700; font-size: 14px; z-index: 60; box-shadow: var(--shadow-3); display: flex; align-items: center; gap: 10px; max-width: calc(100vw - 32px) }
+.toast.err { background: var(--danger) }
+.menu { position: absolute; left: 0; right: 0; top: calc(100% + 6px); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow-3); padding: 6px; z-index: 20; display: grid; gap: 2px }
+.menu button { border: 0; background: transparent; text-align: left; padding: 9px 10px; border-radius: 8px; font-weight: 700; font-size: 14px; display: flex; gap: 10px; align-items: center }
+.menu button:hover { background: var(--sunk) }
+.menu small { display: block; font-weight: 500; font-size: 12px; color: var(--muted) }
+
+@media (max-width: 1180px) {
+  .plan { grid-template-columns: minmax(0,1fr) }
+  .tray { position: static; max-height: none }
+  .ed { grid-template-columns: minmax(0,1fr) }
+  .pv { position: static }
+  .md { grid-template-columns: minmax(0,1fr) }
+}
 @media (max-width: 860px) {
   .app { grid-template-columns: minmax(0,1fr) }
-  .rail { position: sticky; top: env(safe-area-inset-top, 0px); height: auto; z-index: 5; flex-direction: row; align-items: center; gap: 10px; padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); border-right: 0; border-bottom: 1px solid var(--line); overflow-x: auto }
-  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface) }
-  .brand small, .rail-foot, .nav .count { display: none }
-  .brand { font-size: 17px }
-  .nav { flex-direction: row }
-  .nav a { padding: 8px 10px; font-size: 14px }
-  main { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 18px 50px }
-  .dlg { grid-template-columns: minmax(0,1fr); overflow-y: auto }
-  .dlg-form { overflow: visible }
-  .day { min-height: 74px; padding: 3px }
-  .evt span, .evt .t { display: none }
-  .evt { justify-content: center; padding: 3px }
-  .row2 { grid-template-columns: 1fr }
-  .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) }
+  .rail { display: none }
+  .tabbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: var(--surface); border-top: 1px solid var(--line); padding: 6px max(8px, env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px)); justify-content: space-around }
+  .tabbar a { display: grid; justify-items: center; gap: 2px; font-size: 11px; font-weight: 700; color: var(--muted); text-decoration: none; padding: 4px 8px; border-radius: 10px }
+  .tabbar a svg { width: 22px; height: 22px }
+  .tabbar a[aria-current="page"] { color: var(--accent) }
+  main { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 18px 96px }
+  .ph h1 { font-size: 26px }
+  .day { min-height: 70px; padding: 3px }
+  .ev .tx { display: none }
+  .ev { justify-content: center; padding: 2px }
+  .ev .thumb { width: 100%; height: 34px }
+  .week { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 70%; overflow-x: auto }
+  .r2, .r3 { grid-template-columns: 1fr }
+  .mgrid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) }
+  .toast { bottom: calc(80px + env(safe-area-inset-bottom, 0px)) }
 }
 </style>
 
 <div class="app">
   <aside class="rail">
     <div class="brand">
-      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 7h6v6" stroke="var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <div>Studio<small>Contenus Growthity</small></div>
+      <span class="logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div><b>Growthity Studio</b><small>Posts, ads & médias</small></div>
     </div>
-    <nav class="nav" aria-label="Rubriques">
-      <a href="#planning" data-v="planning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Planning</a>
-      <a href="#posts" data-v="posts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Posts<span class="count" id="c-posts"></span></a>
-      <a href="#ads" data-v="ads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M17 9a4 4 0 0 1 0 6"/></svg>Ads<span class="count" id="c-ads"></span></a>
-      <a href="#medias" data-v="medias"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>Médias<span class="count" id="c-media"></span></a>
-    </nav>
-    <div class="rail-foot" id="rail-foot"></div>
+    <div class="newbtn">
+      <button class="btn primary" style="width:100%" data-act="newmenu" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Nouveau</button>
+      <div class="menu" id="newmenu" hidden>
+        <button data-act="new" data-type="post"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="3"/></svg><span>Post<small>Feed, Reel, Story, carrousel</small></span></button>
+        <button data-act="new" data-type="ad"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1z"/></svg><span>Ad Meta<small>Publicité Facebook / Instagram</small></span></button>
+        <button data-act="goupload"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4M6 10l6-6 6 6M4 20h16"/></svg><span>Importer des médias<small>Images, vidéos, carrousels</small></span></button>
+      </div>
+    </div>
+    <nav class="nav" aria-label="Rubriques" id="nav"></nav>
+    <div class="rail-foot" id="foot"></div>
   </aside>
   <main id="main"></main>
 </div>
-
-<dialog id="dlg" aria-label="Détail"></dialog>
-<div class="toast" id="toast" hidden></div>
+<nav class="tabbar" id="tabbar" aria-label="Rubriques"></nav>
+<div class="toast" id="toast" role="status" hidden></div>
 
 <script>
 (() => {
-const STATUS = {
-  idea: {l: 'Idée', c: 'var(--st-idea)'},
-  make: {l: 'En création', c: 'var(--st-make)'},
-  review: {l: 'À valider', c: 'var(--st-review)'},
-  sched: {l: 'Programmé', c: 'var(--st-sched)'},
-  live: {l: 'Publié', c: 'var(--st-live)'},
-};
-const AD_STATUS = {
-  draft: {l: 'Brouillon', c: 'var(--st-idea)'},
-  review: {l: 'À valider', c: 'var(--st-review)'},
-  ready: {l: 'Prête', c: 'var(--st-sched)'},
-  live: {l: 'En ligne', c: 'var(--st-live)'},
-  pause: {l: 'En pause', c: 'var(--st-pause)'},
-  done: {l: 'Terminée', c: 'var(--st-idea)'},
-};
+'use strict';
+// ---------- constants ----------
+const STATUS = {idea: {l: 'Idée', c: 'var(--st-idea)'}, make: {l: 'En création', c: 'var(--st-make)'}, review: {l: 'À valider', c: 'var(--st-review)'}, sched: {l: 'Programmé', c: 'var(--st-sched)'}, live: {l: 'Publié', c: 'var(--st-live)'}};
+const AD_STATUS = {draft: {l: 'Brouillon', c: 'var(--st-idea)'}, review: {l: 'À valider', c: 'var(--st-review)'}, ready: {l: 'Prête', c: 'var(--st-sched)'}, live: {l: 'En ligne', c: 'var(--st-live)'}, pause: {l: 'En pause', c: 'var(--st-pause)'}, done: {l: 'Terminée', c: 'var(--st-idea)'}};
 const NETS = ['Instagram', 'Facebook', 'TikTok', 'LinkedIn'];
+const NET_L = {Instagram: 'IG', Facebook: 'f', TikTok: 'TT', LinkedIn: 'in'};
 const FORMATS = ['9:16', '4:5', '1:1', '16:9'];
+const FORMAT_L = {'9:16': 'Reel / Story', '4:5': 'Feed portrait', '1:1': 'Carré', '16:9': 'Paysage'};
 const KINDS = {video: 'Vidéo', image: 'Image', carousel: 'Carrousel'};
 const OBJ = ['Ventes', 'Prospects', 'Trafic', 'Notoriété', 'Interactions'];
 const CTAS = ['Commencer', 'En savoir plus', 'S’inscrire', 'Réserver', 'Acheter', 'Nous contacter'];
 const AR = {'9:16': '9/16', '4:5': '4/5', '1:1': '1/1', '16:9': '16/9'};
+const VIEWS = [
+  {v: 'planning', l: 'Planning', i: '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>'},
+  {v: 'posts', l: 'Posts', i: '<rect x="3" y="3" width="7" height="18" rx="2"/><rect x="14" y="3" width="7" height="11" rx="2"/>'},
+  {v: 'ads', l: 'Ads', i: '<path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M17 9a4 4 0 0 1 0 6"/>'},
+  {v: 'medias', l: 'Médias', i: '<rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/>'},
+];
+const IC = {
+  play: '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg>',
+  stack: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><rect x="7" y="7" width="13" height="13" rx="2"/><path d="M4 16V5a1 1 0 0 1 1-1h11"/></svg>',
+  back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
+  next: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
+  plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  check: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>',
+  comment: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>',
+  share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M22 3L11 13M22 3l-7 18-4-8-8-4z"/></svg>',
+  save: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12v18l-6-5-6 5z"/></svg>',
+  logo: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 17l6-6 4 4 8-8M15 7h6v6" stroke="#4F3BE0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+};
 
-const S = {db: null, assets: null, user: null, me: null, media: [], posts: [], loaded: {media: false, posts: false}, failed: false,
-  view: 'planning', month: startOfMonth(new Date()), mf: {format: 'all', kind: 'all'}, usage: null};
+// ---------- state ----------
+const S = {
+  db: null, assets: null, me: null, failed: false,
+  media: [], posts: [], loaded: {media: false, posts: false},
+  view: 'planning', param: null,
+  month: som(new Date()), calMode: 'month', weekStart: sow(new Date()),
+  q: '', netFilter: 'all', adFilter: 'all', mf: {format: 'all', kind: 'all'},
+  ed: null, // {draft, isNew, dirty, slide, pv, confirm}
+  md: null, // {id, slide, confirm}
+  usage: null, upload: null, menuOpen: false,
+};
 
+// ---------- helpers ----------
 const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
-const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 const blob = (id) => '/_blob/' + id;
-function startOfMonth(d) { return new Date(d.getFullYear(), d.getMonth(), 1); }
+function som(d) { return new Date(d.getFullYear(), d.getMonth(), 1); }
+function sow(d) { const x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; }
 function ymd(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
-const fmtDate = (s) => { if (!s) return 'Non planifié'; const d = new Date(s); return d.toLocaleDateString('fr-FR', {weekday: 'short', day: 'numeric', month: 'short'}) + ' · ' + d.toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'}); };
-const toast = (t) => { const el = $('#toast'); el.textContent = t; el.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => (el.hidden = true), 2600); };
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const fmtWhen = (s) => { if (!s) return 'Non planifié'; const d = new Date(s); if (isNaN(d)) return 'Non planifié'; return d.toLocaleDateString('fr-FR', {weekday: 'short', day: 'numeric', month: 'short'}) + ' · ' + d.toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'}); };
 const mediaById = (id) => S.media.find((m) => m.id === id);
-const isVideo = (it) => (it?.ct || '').startsWith('video');
-const cover = (m) => m?.items?.[0];
+const postById = (id) => S.posts.find((p) => p.id === id);
+const isVid = (it) => (it?.ct || '').startsWith('video');
+const stMap = (p) => (p.type === 'ad' ? AD_STATUS : STATUS);
+const stOf = (p) => stMap(p)[p.status] || Object.values(stMap(p))[0];
+const pill = (st) => `<span class="pill" style="--c:${st.c}">${esc(st.l)}</span>`;
+const netsHTML = (nets) => `<span class="nets">${(nets || []).map((n) => `<span class="net ${esc(n)}" title="${esc(n)}">${NET_L[n] || ''}</span>`).join('')}</span>`;
+function toast(t, err) { const el = $('#toast'); el.textContent = t; el.className = 'toast' + (err ? ' err' : ''); el.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => (el.hidden = true), err ? 5000 : 2400); }
+const errMsg = (e) => ({not_granted: 'accès refusé (il faut être Éditeur de la page)', unavailable: 'service momentanément indisponible, réessayez', quota_exceeded: 'quota atteint', too_large: 'fichier trop lourd (20 Mo max)', unsupported_type: 'format non accepté'}[e?.code] || e?.message || 'erreur inconnue');
 
-function thumbHTML(m, cls = '') {
-  const it = cover(m);
-  if (!it) return `<div class="ph ${cls}"></div>`;
-  if (isVideo(it)) return it.poster ? `<img class="${cls}" src="${blob(it.poster)}" alt="" loading="lazy">` : `<video class="${cls}" src="${blob(it.asset)}#t=0.5" muted playsinline preload="metadata"></video>`;
-  return `<img class="${cls}" src="${blob(it.asset)}" alt="" loading="lazy">`;
+function thumb(m, extra = '') {
+  const it = m?.items?.[0];
+  let inner = '';
+  if (it) inner = isVid(it) ? (it.poster ? `<img src="${blob(it.poster)}" alt="" loading="lazy">` : `<video src="${blob(it.asset)}#t=0.5" muted playsinline preload="metadata"></video>`) : `<img src="${blob(it.asset)}" alt="" loading="lazy">`;
+  const ico = m?.kind === 'carousel' ? `<span class="ico">${IC.stack}</span>` : m?.kind === 'video' ? `<span class="ico">${IC.play}</span>` : '';
+  return `<div class="thumb" ${extra}>${inner}${ico}</div>`;
 }
-const statusDot = (st, map) => `<span class="st"><span class="dot" style="background:${(map[st] || Object.values(map)[0]).c}"></span>${esc((map[st] || Object.values(map)[0]).l)}</span>`;
 
 // ---------- data ----------
 async function boot() {
   route();
   const c = window.claude;
-  if (!c?.use) { S.failed = true; render(); return; }
-  const timer = setTimeout(() => { if (!S.loaded.media || !S.loaded.posts) { S.failed = !S.db; render(); } }, 10000);
-  const [db, assets, user] = await Promise.all([c.use('db'), c.use('assets'), c.use('user')]);
-  S.db = db; S.assets = assets; S.user = user;
-  if (user) { try { S.me = await user.id(); } catch {} }
+  if (!c || typeof c.use !== 'function') { S.failed = true; render(); return; }
+  const timer = setTimeout(() => { if (!S.db) { S.failed = true; render(); } }, 10000);
+  let db = null, assets = null, user = null;
+  try { [db, assets, user] = await Promise.all([c.use('db'), c.use('assets'), c.use('user')]); } catch {}
+  S.db = db; S.assets = assets;
   if (!db) { clearTimeout(timer); S.failed = true; render(); return; }
+  clearTimeout(timer);
+  if (user) { try { S.me = await user.id(); } catch {} }
   db.collection('media').onSnapshot((snap) => {
     S.media = snap.docs.map((d) => ({id: d.id, ...d.data()})).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-    S.loaded.media = true; render();
-  }, (e) => { clearTimeout(timer); toast('Médias indisponibles : ' + (e.message || e.code)); });
+    S.loaded.media = true; onData();
+  }, (e) => toast('Médias : ' + errMsg(e), true));
   db.collection('posts').onSnapshot((snap) => {
     S.posts = snap.docs.map((d) => ({id: d.id, ...d.data()}));
-    S.loaded.posts = true; clearTimeout(timer); render();
-  }, (e) => { clearTimeout(timer); toast('Posts indisponibles : ' + (e.message || e.code)); });
-  if (assets) refreshUsage();
+    S.loaded.posts = true; onData();
+  }, (e) => toast('Posts : ' + errMsg(e), true));
+  refreshUsage();
 }
-async function refreshUsage() { try { const r = await S.assets.list(); S.usage = r.usage; renderFoot(); } catch {} }
-
-async function savePost(p) {
+function onData() {
+  renderNav();
+  // keep an open editor untouched while typing; only fill it once data arrives
+  if (S.view === 'post') { if (!S.ed) openEditorFromRoute(); else refreshPicker(); return; }
+  if (S.view === 'media' && S.md) { renderMediaDetail(); return; }
+  render();
+}
+async function refreshUsage() { if (!S.assets) return; try { const r = await S.assets.list(); S.usage = r.usage; renderFoot(); } catch {} }
+async function writePost(p) {
   const {id, ...data} = p;
   data.updatedAt = Date.now();
-  try { await S.db.collection('posts').doc(id).set(data); return true; }
-  catch (e) { toast('Enregistrement refusé : ' + (e.message || e.code)); return false; }
+  await S.db.collection('posts').doc(id).set(JSON.parse(JSON.stringify(data)));
 }
 
 // ---------- routing ----------
+function go(h) { if (location.hash === '#' + h) route(); else location.hash = h; }
 function route() {
-  const h = location.hash.replace('#', '');
+  const h = decodeURIComponent(location.hash.replace(/^#/, ''));
+  S.menuOpen = false; $('#newmenu').hidden = true;
+  if (h.startsWith('post-') || h === 'nouveau') {
+    S.view = 'post'; S.param = h === 'nouveau' ? null : h.slice(5);
+    if (S.param && S.ed && S.ed.draft.id === S.param) { render(); return; }
+    if (!S.param && S.ed?.isNew) { render(); return; }
+    S.ed = null; openEditorFromRoute(); return;
+  }
+  if (h.startsWith('media-')) { S.view = 'media'; S.md = {id: h.slice(6), slide: 0, confirm: false}; render(); return; }
   S.view = ['planning', 'posts', 'ads', 'medias'].includes(h) ? h : 'planning';
-  document.querySelectorAll('.nav a').forEach((a) => { if (a.dataset.v === S.view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  S.ed = null; S.md = null;
   render();
+  window.scrollTo(0, 0);
 }
 addEventListener('hashchange', route);
+function openEditorFromRoute() {
+  if (S.param) {
+    const p = postById(S.param);
+    if (!p) { render(); return; }
+    S.ed = {draft: JSON.parse(JSON.stringify(p)), isNew: false, dirty: false, slide: 0, pv: null, confirm: false};
+  } else if (!S.ed) { go('planning'); return; }
+  render();
+}
+function newDraft(type, opts = {}) {
+  const m = mediaById(opts.mediaId);
+  const draft = {id: uid(), type, title: m ? m.title.replace(/^(Carrousel|Visuel pub|Short)\s*\d*\s*[–-]\s*/i, '') : '', networks: ['Instagram', 'Facebook'],
+    format: m?.format || (type === 'ad' ? '9:16' : '4:5'), mediaId: m?.id || null, caption: '', date: opts.date || '',
+    status: opts.status || (type === 'ad' ? 'draft' : 'idea'),
+    ad: type === 'ad' ? {objective: 'Ventes', budget: '', cta: 'Commencer', link: 'https://growthity.ai', audience: ''} : null,
+    createdAt: Date.now(), createdBy: S.me || null};
+  S.ed = {draft, isNew: true, dirty: true, slide: 0, pv: null, confirm: false};
+  S.view = 'post'; S.param = null;
+  if (location.hash !== '#nouveau') location.hash = 'nouveau'; else render();
+}
 
-// ---------- render ----------
-function render() {
-  $('#c-posts').textContent = S.posts.filter((p) => p.type !== 'ad').length || '';
-  $('#c-ads').textContent = S.posts.filter((p) => p.type === 'ad').length || '';
-  $('#c-media').textContent = S.media.length || '';
+// ---------- shell ----------
+function renderNav() {
+  const counts = {posts: S.posts.filter((p) => p.type !== 'ad').length, ads: S.posts.filter((p) => p.type === 'ad').length, medias: S.media.length};
+  const cur = S.view === 'post' ? (S.ed?.draft.type === 'ad' ? 'ads' : 'posts') : S.view === 'media' ? 'medias' : S.view;
+  $('#nav').innerHTML = VIEWS.map((x) => `<a href="#${x.v}" ${x.v === cur ? 'aria-current="page"' : ''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${x.i}</svg>${x.l}${counts[x.v] ? `<span class="n">${counts[x.v]}</span>` : ''}</a>`).join('');
+  $('#tabbar').innerHTML = VIEWS.map((x) => `<a href="#${x.v}" ${x.v === cur ? 'aria-current="page"' : ''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${x.i}</svg>${x.l}</a>`).join('');
   renderFoot();
-  const main = $('#main');
-  if (S.failed && !S.db) {
-    main.innerHTML = `<div class="head"><h1>Growthity Studio</h1></div><div class="empty"><b>Connectez-vous pour voir vos contenus</b>Les posts, ads et médias sont enregistrés dans une base partagée. Ouvrez cette page connecté à claude.ai pour y accéder.</div>`;
-    return;
-  }
-  const loading = !S.loaded.media || !S.loaded.posts;
-  ({planning: renderPlanning, posts: renderPosts, ads: renderAds, medias: renderMedia})[S.view](main, loading);
 }
 function renderFoot() {
-  const f = $('#rail-foot');
-  if (!f) return;
   const u = S.usage;
-  f.innerHTML = u ? `<div>Stockage : ${(u.bytes / 1048576).toFixed(0)} Mo / ${(u.maxBytes / 1073741824).toFixed(0)} Go</div><div class="meter"><i style="width:${Math.min(100, (u.bytes / u.maxBytes) * 100).toFixed(1)}%"></i></div>` : (S.assets === null && S.db ? '<div>Lecture seule : demandez un accès Éditeur pour ajouter des médias.</div>' : '');
+  $('#foot').innerHTML = (u ? `<div style="display:flex;justify-content:space-between"><span>Stockage</span><span class="mono" style="font-size:11.5px">${(u.bytes / 1048576).toFixed(0)} Mo / ${(u.maxBytes / 1073741824).toFixed(0)} Go</span></div><div class="meter"><i style="width:${Math.max(1, Math.min(100, (u.bytes / u.maxBytes) * 100)).toFixed(1)}%"></i></div>` : '')
+    + (S.db && !S.assets ? '<div>Lecture seule pour les fichiers : un accès Éditeur est nécessaire pour importer.</div>' : '');
 }
+function render() {
+  renderNav();
+  const main = $('#main');
+  if (S.failed && !S.db) {
+    main.innerHTML = `<div class="page"><div class="ph"><div><h1>Growthity Studio</h1></div></div><div class="empty"><b>Connectez-vous pour voir vos contenus</b>Les posts, ads et médias sont dans une base partagée. Ouvrez cette page en étant connecté à claude.ai.</div></div>`;
+    return;
+  }
+  ({planning: vPlanning, posts: vPosts, ads: vAds, medias: vMedias, post: vEditor, media: renderMediaDetail})[S.view](main);
+}
+const loading = () => !S.loaded.media || !S.loaded.posts;
+const skeleton = (n = 8) => `<div class="mgrid">${Array.from({length: n}, () => '<div class="skel" style="aspect-ratio:4/5"></div>').join('')}</div>`;
 
-// Planning
-function renderPlanning(main, loading) {
-  const m = S.month;
-  const first = new Date(m); const offset = (first.getDay() + 6) % 7;
-  const start = new Date(first); start.setDate(1 - offset);
-  const days = [];
-  for (let i = 0; i < 42; i++) { const d = new Date(start); d.setDate(start.getDate() + i); days.push(d); }
-  const lastRowNeeded = days.slice(35).some((d) => d.getMonth() === m.getMonth());
-  const shown = lastRowNeeded ? days : days.slice(0, 35);
+// ---------- planning ----------
+function vPlanning(main) {
   const byDay = {};
-  S.posts.filter((p) => p.date).forEach((p) => { (byDay[p.date.slice(0, 10)] ||= []).push(p); });
+  S.posts.filter((p) => p.date).forEach((p) => (byDay[p.date.slice(0, 10)] ||= []).push(p));
   Object.values(byDay).forEach((l) => l.sort((a, b) => a.date.localeCompare(b.date)));
   const today = ymd(new Date());
-  const unsched = S.posts.filter((p) => !p.date && p.status !== 'live');
-  main.innerHTML = `
-    <div class="head"><h1>Planning</h1><span class="spacer"></span>
-      <button class="btn" data-new="ad">+ Ad</button><button class="btn primary" data-new="post">+ Post</button></div>
-    <div class="cal-bar">
-      <button class="btn ghost" id="prev" aria-label="Mois précédent">‹</button>
-      <h2>${m.toLocaleDateString('fr-FR', {month: 'long', year: 'numeric'})}</h2>
-      <button class="btn ghost" id="next" aria-label="Mois suivant">›</button>
-      <button class="btn ghost" id="today">Aujourd’hui</button>
+  const tray = S.posts.filter((p) => !p.date && !['live', 'done'].includes(p.status)).sort((a, b) => (a.type === 'ad') - (b.type === 'ad') || (b.updatedAt || 0) - (a.updatedAt || 0));
+  let title, body;
+  if (S.calMode === 'month') {
+    const m = S.month; const start = sow(m);
+    const cells = []; for (let i = 0; i < 42; i++) cells.push(addDays(start, i));
+    const shown = cells.slice(35).some((d) => d.getMonth() === m.getMonth()) ? cells : cells.slice(0, 35);
+    title = m.toLocaleDateString('fr-FR', {month: 'long', year: 'numeric'});
+    body = `<div class="cal"><div class="cal-dow">${['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((d) => `<div>${d}</div>`).join('')}</div>
+      <div class="cal-grid">${shown.map((d) => { const k = ymd(d); const l = byDay[k] || [];
+        return `<div class="day ${d.getMonth() !== m.getMonth() ? 'out' : ''} ${k === today ? 'today' : ''} ${k < today ? 'past' : ''}" data-drop-day="${k}">
+          <div class="day-top"><span class="dn">${d.getDate()}</span><button class="plus" data-act="new" data-type="post" data-date="${k}" aria-label="Nouveau post le ${d.toLocaleDateString('fr-FR')}">${IC.plus.replace('<svg', '<svg width="14" height="14"')}</button></div>
+          ${l.map(evHTML).join('')}</div>`; }).join('')}</div></div>`;
+  } else {
+    const ws = S.weekStart; const we = addDays(ws, 6);
+    title = `${ws.toLocaleDateString('fr-FR', {day: 'numeric', month: 'short'})} – ${we.toLocaleDateString('fr-FR', {day: 'numeric', month: 'short', year: 'numeric'})}`;
+    body = `<div class="week">${Array.from({length: 7}, (_, i) => { const d = addDays(ws, i); const k = ymd(d); const l = byDay[k] || [];
+      return `<div class="wcol ${k === today ? 'today' : ''}" data-drop-day="${k}"><h4>${d.toLocaleDateString('fr-FR', {weekday: 'short'})}<b>${d.getDate()}</b></h4>
+        ${l.map((p) => { const m = mediaById(p.mediaId); return `<button class="wcard" draggable="true" data-drag="${p.id}" data-act="open" data-id="${p.id}">${thumb(m)}<div class="wb"><div class="tt">${esc(p.title || 'Sans titre')}</div><div class="tm">${p.date.slice(11, 16)} ${p.type === 'ad' ? '· AD' : ''}</div>${pill(stOf(p))}</div></button>`; }).join('')}
+        <button class="btn quiet sm" data-act="new" data-type="post" data-date="${k}">${IC.plus.replace('<svg', '<svg width="14" height="14"')} Ajouter</button></div>`; }).join('')}</div>`;
+  }
+  main.innerHTML = `<div class="page">
+    <div class="ph"><div><h1>Planning</h1><p>Glissez un post sur un jour pour le programmer, ou sur « À planifier » pour retirer sa date.</p></div><span class="grow"></span>
+      <button class="btn" data-act="new" data-type="ad">${IC.plus} Ad</button><button class="btn primary" data-act="new" data-type="post">${IC.plus} Post</button></div>
+    <div class="cal-head">
+      <button class="btn icon" data-act="cal-prev" aria-label="Précédent">${IC.back}</button>
+      <button class="btn icon" data-act="cal-next" aria-label="Suivant">${IC.next}</button>
+      <h2>${title}</h2>
+      <button class="btn sm" data-act="cal-today">Aujourd’hui</button><span class="grow"></span>
+      <div class="seg" role="group" aria-label="Affichage"><button data-act="cal-mode" data-mode="month" aria-pressed="${S.calMode === 'month'}">Mois</button><button data-act="cal-mode" data-mode="week" aria-pressed="${S.calMode === 'week'}">Semaine</button></div>
     </div>
-    ${loading ? '<div class="notice">Chargement des contenus…</div>' : ''}
-    <div class="cal">
-      ${['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((d) => `<div class="dow">${d}</div>`).join('')}
-      ${shown.map((d) => {
-        const k = ymd(d); const l = byDay[k] || [];
-        return `<div class="day ${d.getMonth() !== m.getMonth() ? 'out' : ''} ${k === today ? 'today' : ''}">
-          <div class="num"><b>${d.getDate()}</b><button class="add" data-day="${k}" aria-label="Ajouter un post le ${d.toLocaleDateString('fr-FR')}">+</button></div>
-          ${l.map((p) => evtHTML(p)).join('')}
-        </div>`;
-      }).join('')}
-    </div>
-    <div class="legend">${Object.values(STATUS).map((s) => `<span class="st"><span class="dot" style="background:${s.c}"></span>${s.l}</span>`).join('')}<span class="st"><span class="chip ad">AD</span> publicité</span></div>
-    <div class="unsched">
-      <h3>À planifier <small>${unsched.length}</small></h3>
-      ${unsched.length ? `<div class="grid">${unsched.map(cardHTML).join('')}</div>` : `<div class="empty">Tout est planifié. Ajoutez une idée avec « + Post » : elle apparaîtra ici tant qu’elle n’a pas de date.</div>`}
-    </div>`;
-  $('#prev').onclick = () => { S.month = new Date(m.getFullYear(), m.getMonth() - 1, 1); render(); };
-  $('#next').onclick = () => { S.month = new Date(m.getFullYear(), m.getMonth() + 1, 1); render(); };
-  $('#today').onclick = () => { S.month = startOfMonth(new Date()); render(); };
-  wire(main);
+    ${loading() ? '<div class="notice">Chargement des contenus…</div>' : ''}
+    <div class="plan"><div>${body}
+      <div class="legend">${Object.values(STATUS).map(pill).join('')}<span class="tag ad">AD</span></div></div>
+      <aside class="tray" data-drop-day="">
+        <h3>À planifier <small>${tray.length}</small></h3><p>Idées et brouillons sans date.</p>
+        <div class="list">${tray.length ? tray.map((p) => { const m = mediaById(p.mediaId); return `<button class="trow" draggable="true" data-drag="${p.id}" data-act="open" data-id="${p.id}">${thumb(m)}<div style="min-width:0"><div class="tt">${esc(p.title || 'Sans titre')}</div><div class="meta">${pill(stOf(p))}${p.type === 'ad' ? '<span class="tag ad">AD</span>' : ''}</div></div></button>`; }).join('') : '<div class="hint" style="font-size:13px;color:var(--muted)">Tout est planifié.</div>'}</div>
+      </aside></div></div>`;
 }
-function evtHTML(p) {
-  const st = (p.type === 'ad' ? AD_STATUS : STATUS)[p.status];
-  return `<button class="evt ${p.type === 'ad' ? 'ad' : ''}" data-open="${p.id}" title="${esc(p.title)}">
-    ${thumbHTML(mediaById(p.mediaId))}<span class="dot" style="background:${st ? st.c : 'var(--st-idea)'}"></span><span class="t">${p.date.slice(11, 16)}</span><span>${esc(p.title)}</span></button>`;
+function evHTML(p) {
+  const m = mediaById(p.mediaId); const st = stOf(p);
+  return `<button class="ev ${p.type === 'ad' ? 'is-ad' : ''}" draggable="true" data-drag="${p.id}" data-act="open" data-id="${p.id}" title="${esc(p.title)}">${thumb(m)}<span class="tx"><span class="tt">${esc(p.title || 'Sans titre')}</span><span class="tm" style="--c:${st.c}"><i></i>${p.date.slice(11, 16)}</span></span></button>`;
+}
+
+// ---------- posts board ----------
+function matchQ(p) { const q = S.q.trim().toLowerCase(); return !q || (p.title + ' ' + (p.caption || '')).toLowerCase().includes(q); }
+function vPosts(main) {
+  const posts = S.posts.filter((p) => p.type !== 'ad' && matchQ(p) && (S.netFilter === 'all' || (p.networks || []).includes(S.netFilter)));
+  main.innerHTML = `<div class="page">
+    <div class="ph"><div><h1>Posts</h1><p>Contenus organiques : feed, carrousels, Reels et Stories. Glissez une carte pour changer son statut.</p></div><span class="grow"></span><button class="btn primary" data-act="new" data-type="post">${IC.plus} Nouveau post</button></div>
+    <div class="toolbar"><label class="search">${IC.search}<span class="sr">Rechercher</span><input id="q" type="search" placeholder="Rechercher un post…" value="${esc(S.q)}"></label>
+      <div class="seg" role="group" aria-label="Réseau">${['all', ...NETS].map((n) => `<button data-act="netf" data-net="${n}" aria-pressed="${S.netFilter === n}">${n === 'all' ? 'Tous réseaux' : n}</button>`).join('')}</div></div>
+    ${loading() ? '<div class="notice">Chargement des contenus…</div>' : ''}
+    <div class="board">${Object.entries(STATUS).map(([k, s]) => {
+      const l = posts.filter((p) => (STATUS[p.status] ? p.status : 'idea') === k).sort((a, b) => (a.date || '9').localeCompare(b.date || '9'));
+      return `<section class="col" data-drop-status="${k}"><div class="col-h" style="--c:${s.c}"><i></i>${s.l}<span class="n">${l.length}</span></div>
+        ${l.map(cardHTML).join('')}<button class="add" data-act="new" data-type="post" data-status="${k}">+ Ajouter</button></section>`;
+    }).join('')}</div></div>`;
+  bindSearch();
 }
 function cardHTML(p) {
   const m = mediaById(p.mediaId);
-  const map = p.type === 'ad' ? AD_STATUS : STATUS;
-  return `<button class="card" data-open="${p.id}">
-    <div class="thumb">${thumbHTML(m)}${p.type === 'ad' ? '<span class="chip ad badge">AD</span>' : ''}</div>
-    <div class="body"><div class="title">${esc(p.title || 'Sans titre')}</div>
-      <div class="meta">${statusDot(p.status, map)}</div>
-      <div class="meta">${m ? `<span class="chip">${KINDS[m.kind] || ''}${m.kind === 'carousel' ? ' · ' + m.items.length : ''}</span>` : ''}<span class="chip fmt">${esc(p.format || m?.format || '')}</span>${(p.networks || []).map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div>
-      <div class="when">${fmtDate(p.date)}</div></div></button>`;
+  return `<button class="card" draggable="true" data-drag="${p.id}" data-act="open" data-id="${p.id}">${thumb(m)}
+    <div class="cb"><div class="tt">${esc(p.title || 'Sans titre')}</div>
+      ${p.caption ? `<div class="cap">${esc(p.caption)}</div>` : ''}
+      <div class="row">${netsHTML(p.networks)}<span class="tag mono">${esc(p.format || m?.format || '')}</span>${m ? `<span class="tag">${KINDS[m.kind] || ''}${m.kind === 'carousel' ? ' · ' + m.items.length : ''}</span>` : '<span class="tag" style="color:var(--st-review)">Sans média</span>'}</div>
+      <div class="when">${fmtWhen(p.date)}</div></div></button>`;
+}
+function bindSearch() { const q = $('#q'); if (!q) return; q.oninput = () => { S.q = q.value; const pos = q.selectionStart; render(); const n = $('#q'); n.focus(); n.setSelectionRange(pos, pos); }; }
+
+// ---------- ads ----------
+function vAds(main) {
+  const all = S.posts.filter((p) => p.type === 'ad');
+  const ads = all.filter((a) => (S.adFilter === 'all' || a.status === S.adFilter) && matchQ(a)).sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+  const counts = {}; all.forEach((a) => (counts[a.status] = (counts[a.status] || 0) + 1));
+  main.innerHTML = `<div class="page">
+    <div class="ph"><div><h1>Ads</h1><p>Publicités Meta : créa, objectif, budget, bouton d’action et lien de destination.</p></div><span class="grow"></span><button class="btn primary" data-act="new" data-type="ad">${IC.plus} Nouvelle ad</button></div>
+    <div class="stats"><button class="stat" data-act="adf" data-st="all" aria-pressed="${S.adFilter === 'all'}">Toutes <b>${all.length}</b></button>
+      ${Object.entries(AD_STATUS).map(([k, s]) => `<button class="stat" data-act="adf" data-st="${k}" aria-pressed="${S.adFilter === k}"><span class="pill" style="--c:${s.c}">${s.l}</span><b>${counts[k] || 0}</b></button>`).join('')}</div>
+    <div class="toolbar"><label class="search">${IC.search}<span class="sr">Rechercher</span><input id="q" type="search" placeholder="Rechercher une ad…" value="${esc(S.q)}"></label></div>
+    ${loading() ? skeleton(4) : ads.length ? `<div class="tbl"><table><thead><tr><th>Publicité</th><th>Statut</th><th>Objectif</th><th>Format</th><th>Budget / jour</th><th>Bouton</th><th>Lancement</th></tr></thead><tbody>
+      ${ads.map((a) => { const m = mediaById(a.mediaId); const ad = a.ad || {}; return `<tr data-act="open" data-id="${a.id}" tabindex="0">
+        <td><div class="adn">${thumb(m)}<div>${esc(a.title || 'Sans titre')}<small>${m ? esc(KINDS[m.kind]) : 'Sans média'}${ad.audience ? ' · ' + esc(ad.audience) : ''}</small></div></div></td>
+        <td>${pill(stOf(a))}</td><td>${esc(ad.objective || '—')}</td><td><span class="tag mono">${esc(a.format || '—')}</span></td>
+        <td class="mono">${ad.budget ? esc(ad.budget) + ' €' : '—'}</td><td>${esc(ad.cta || '—')}</td>
+        <td class="mono">${a.date ? new Date(a.date).toLocaleDateString('fr-FR', {day: 'numeric', month: 'short'}) : '—'}</td></tr>`; }).join('')}
+      </tbody></table></div>` : `<div class="empty"><b>${all.length ? 'Aucune ad pour ce filtre' : 'Aucune publicité'}</b>${all.length ? 'Changez de statut ou de recherche.' : 'Créez une ad à partir d’une vidéo ou d’un visuel de la médiathèque.'}<br><button class="btn primary" data-act="new" data-type="ad">${IC.plus} Nouvelle ad</button></div>`}</div>`;
+  bindSearch();
 }
 
-// Posts board
-function renderPosts(main, loading) {
-  const posts = S.posts.filter((p) => p.type !== 'ad');
-  main.innerHTML = `<div class="head"><h1>Posts</h1><span class="spacer"></span><button class="btn primary" data-new="post">+ Post</button>
-    <div class="sub">Posts organiques du feed, des Reels et des Stories, du brouillon à la publication.</div></div>
-    ${loading ? '<div class="notice">Chargement des contenus…</div>' : ''}
-    <div class="board">${Object.entries(STATUS).map(([k, s]) => {
-      const l = posts.filter((p) => (p.status || 'idea') === k).sort((a, b) => (a.date || '9').localeCompare(b.date || '9'));
-      return `<section class="col"><div class="col-h"><span class="dot" style="background:${s.c}"></span>${s.l}<span class="n">${l.length}</span></div>
-        ${l.map(cardHTML).join('') || '<div class="hint" style="padding:6px">Rien pour l’instant.</div>'}</section>`;
-    }).join('')}</div>`;
-  wire(main);
-}
-
-// Ads
-function renderAds(main, loading) {
-  const ads = S.posts.filter((p) => p.type === 'ad').sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
-  main.innerHTML = `<div class="head"><h1>Ads</h1><span class="spacer"></span><button class="btn primary" data-new="ad">+ Ad</button>
-    <div class="sub">Publicités Meta : créa, objectif, budget, appel à l’action et lien.</div></div>
-    ${loading ? '<div class="notice">Chargement des contenus…</div>' : ''}
-    ${ads.length ? `<div class="tbl-wrap"><table><thead><tr><th>Publicité</th><th>Statut</th><th>Objectif</th><th>Format</th><th>Budget / jour</th><th>CTA</th><th>Lancement</th></tr></thead><tbody>
-      ${ads.map((a) => { const m = mediaById(a.mediaId); const ad = a.ad || {}; return `<tr data-open="${a.id}" tabindex="0">
-        <td><div class="ad-name">${thumbHTML(m)}<span>${esc(a.title || 'Sans titre')}</span></div></td>
-        <td>${statusDot(a.status, AD_STATUS)}</td><td>${esc(ad.objective || '—')}</td>
-        <td><span class="chip fmt">${esc(a.format || m?.format || '—')}</span></td>
-        <td class="num-c">${ad.budget ? esc(ad.budget) + ' €' : '—'}</td><td>${esc(ad.cta || '—')}</td>
-        <td class="num-c">${a.date ? new Date(a.date).toLocaleDateString('fr-FR', {day: 'numeric', month: 'short'}) : '—'}</td></tr>`; }).join('')}
-    </tbody></table></div>` : `<div class="empty"><b>Aucune publicité</b>Créez une ad à partir d’une vidéo ou d’un visuel de la médiathèque avec « + Ad ».</div>`}`;
-  wire(main);
-  main.querySelectorAll('tr[data-open]').forEach((tr) => tr.addEventListener('keydown', (e) => { if (e.key === 'Enter') openPost(tr.dataset.open); }));
-}
-
-// Media library
-function renderMedia(main, loading) {
-  const f = S.mf;
-  const list = S.media.filter((m) => (f.format === 'all' || m.format === f.format) && (f.kind === 'all' || m.kind === f.kind));
-  main.innerHTML = `<div class="head"><h1>Médias</h1>
-    <div class="sub">Vidéos, visuels et carrousels générés par Claude ou ajoutés par l’équipe.</div></div>
+// ---------- medias ----------
+function vMedias(main) {
+  const f = S.mf; const q = S.q.trim().toLowerCase();
+  const list = S.media.filter((m) => (f.format === 'all' || m.format === f.format) && (f.kind === 'all' || m.kind === f.kind) && (!q || (m.title + ' ' + (m.niche || '') + ' ' + (m.note || '')).toLowerCase().includes(q)));
+  const up = S.upload;
+  main.innerHTML = `<div class="page">
+    <div class="ph"><div><h1>Médias</h1><p>Vidéos, visuels et carrousels générés par Claude ou ajoutés par l’équipe.</p></div></div>
     ${S.assets ? `<label class="drop" id="drop"><input type="file" id="file" multiple accept="image/png,image/jpeg,image/webp,video/mp4,video/webm" hidden>
-      <span class="btn primary">Ajouter des fichiers</span><span>ou glissez-les ici. Plusieurs images d’un coup = un carrousel.</span></label>` : ''}
-    <div class="filters">
-      <div class="seg" role="group" aria-label="Format">${['all', ...FORMATS].map((x) => `<button data-ff="${x}" aria-pressed="${f.format === x}">${x === 'all' ? 'Tous formats' : x}</button>`).join('')}</div>
-      <div class="seg" role="group" aria-label="Type">${['all', ...Object.keys(KINDS)].map((x) => `<button data-fk="${x}" aria-pressed="${f.kind === x}">${x === 'all' ? 'Tout' : KINDS[x]}</button>`).join('')}</div>
-    </div>
-    ${loading ? '<div class="notice">Chargement des médias…</div>' : ''}
-    ${list.length ? `<div class="grid">${list.map((m) => `<button class="m" data-media="${m.id}">
-        <div class="frame" style="--ar:${AR[m.format] || '4/5'}">${thumbHTML(m)}
-          ${m.kind === 'video' ? '<span class="play"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></span>' : ''}
-          <span class="stack">${m.kind === 'carousel' ? `<span class="chip">${m.items.length} slides</span>` : ''}</span></div>
-        <div class="cap">${esc(m.title)}</div>
-        <div class="sub"><span class="chip">${KINDS[m.kind]}</span><span class="chip fmt">${esc(m.format)}</span>${m.source === 'claude' ? '<span class="chip">Claude</span>' : ''}${usedCount(m.id) ? `<span class="chip">${usedCount(m.id)} post${usedCount(m.id) > 1 ? 's' : ''}</span>` : ''}</div>
-      </button>`).join('')}</div>` : `<div class="empty"><b>${S.media.length ? 'Aucun média pour ces filtres' : 'La médiathèque est vide'}</b>${S.media.length ? 'Changez de format ou de type.' : 'Ajoutez des fichiers, ou demandez à Claude de générer une vidéo : elle arrivera ici.'}</div>`}`;
-  main.querySelectorAll('[data-ff]').forEach((b) => (b.onclick = () => { S.mf.format = b.dataset.ff; render(); }));
-  main.querySelectorAll('[data-fk]').forEach((b) => (b.onclick = () => { S.mf.kind = b.dataset.fk; render(); }));
-  main.querySelectorAll('[data-media]').forEach((b) => (b.onclick = () => openMedia(b.dataset.media)));
+      <span class="btn primary">${IC.plus} Importer</span><span><b>Glissez vos fichiers ici.</b> Plusieurs images d’un coup forment un carrousel (dans l’ordre des noms).</span>
+      ${up ? `<div class="progress"><i style="width:${(up.done / up.total) * 100}%"></i></div><span style="font-size:13px">Envoi ${up.done}/${up.total}…</span>` : ''}</label>` : ''}
+    <div class="toolbar"><label class="search">${IC.search}<span class="sr">Rechercher</span><input id="q" type="search" placeholder="Rechercher un média…" value="${esc(S.q)}"></label>
+      <div class="seg" role="group" aria-label="Format">${['all', ...FORMATS].map((x) => `<button data-act="mff" data-v="${x}" aria-pressed="${f.format === x}">${x === 'all' ? 'Tous formats' : x}</button>`).join('')}</div>
+      <div class="seg" role="group" aria-label="Type">${['all', ...Object.keys(KINDS)].map((x) => `<button data-act="mfk" data-v="${x}" aria-pressed="${f.kind === x}">${x === 'all' ? 'Tout' : KINDS[x]}</button>`).join('')}</div></div>
+    ${loading() ? skeleton() : list.length ? `<div class="mgrid">${list.map((m) => { const used = S.posts.filter((p) => p.mediaId === m.id).length; return `<button class="mc" data-act="media" data-id="${m.id}">
+        <div class="thumb" style="--ar:${AR[m.format] || '4/5'}">${thumbInner(m)}${m.kind === 'video' ? `<span class="play">${IC.play.replace('<svg', '<svg width="20" height="20"')}</span>` : ''}
+          <span class="badge">${m.kind === 'carousel' ? `<span class="tag">${m.items.length} slides</span>` : ''}</span></div>
+        <div class="tt">${esc(m.title)}</div>
+        <div class="row"><span class="tag mono">${esc(m.format)}</span><span class="tag">${KINDS[m.kind]}</span>${used ? `<span class="tag">${used} utilisation${used > 1 ? 's' : ''}</span>` : ''}</div></button>`; }).join('')}</div>`
+      : `<div class="empty"><b>${S.media.length ? 'Aucun média pour ces filtres' : 'La médiathèque est vide'}</b>${S.media.length ? 'Changez de format, de type ou de recherche.' : 'Importez des fichiers, ou demandez à Claude de générer une vidéo : elle arrivera ici.'}</div>`}</div>`;
+  bindSearch();
   const inp = $('#file'), drop = $('#drop');
   if (inp) {
-    inp.onchange = () => { uploadFiles([...inp.files]); inp.value = ''; };
+    inp.onchange = () => { const fs = [...inp.files]; inp.value = ''; uploadFiles(fs); };
     drop.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.add('over'); });
     drop.addEventListener('dragleave', () => drop.classList.remove('over'));
     drop.addEventListener('drop', (e) => { e.preventDefault(); drop.classList.remove('over'); uploadFiles([...e.dataTransfer.files]); });
   }
 }
-const usedCount = (id) => S.posts.filter((p) => p.mediaId === id).length;
+function thumbInner(m) { const t = thumb(m); return t.replace(/^<div class="thumb" >/, '').replace(/<\/div>$/, ''); }
 
-function guessFormat(w, h) {
-  const r = w / h; const opts = {'9:16': 9 / 16, '4:5': 0.8, '1:1': 1, '16:9': 16 / 9};
-  return Object.entries(opts).sort((a, b) => Math.abs(a[1] - r) - Math.abs(b[1] - r))[0][0];
-}
+function guessFormat(w, h) { const r = w / h; return Object.entries({'9:16': 9 / 16, '4:5': 0.8, '1:1': 1, '16:9': 16 / 9}).sort((a, b) => Math.abs(a[1] - r) - Math.abs(b[1] - r))[0][0]; }
 function dims(file) {
   return new Promise((res) => {
-    const url = URL.createObjectURL(file);
-    if (file.type.startsWith('video')) { const v = document.createElement('video'); v.preload = 'metadata'; v.onloadedmetadata = () => { res([v.videoWidth, v.videoHeight]); URL.revokeObjectURL(url); }; v.onerror = () => res([4, 5]); v.src = url; }
-    else { const i = new Image(); i.onload = () => { res([i.naturalWidth, i.naturalHeight]); URL.revokeObjectURL(url); }; i.onerror = () => res([4, 5]); i.src = url; }
+    const url = URL.createObjectURL(file); const done = (v) => { URL.revokeObjectURL(url); res(v); };
+    if (file.type.startsWith('video')) { const v = document.createElement('video'); v.preload = 'metadata'; v.muted = true; v.onloadedmetadata = () => done([v.videoWidth || 9, v.videoHeight || 16]); v.onerror = () => done([9, 16]); v.src = url; }
+    else { const i = new Image(); i.onload = () => done([i.naturalWidth, i.naturalHeight]); i.onerror = () => done([4, 5]); i.src = url; }
   });
 }
 async function uploadFiles(files) {
+  if (!S.assets) { toast('Import impossible : un accès Éditeur est nécessaire.', true); return; }
   files = files.filter((f) => /^(image\/(png|jpeg|webp)|video\/(mp4|webm))$/.test(f.type));
-  if (!files.length) { toast('Formats acceptés : PNG, JPEG, WebP, MP4, WebM.'); return; }
+  if (!files.length) { toast('Formats acceptés : PNG, JPEG, WebP, MP4, WebM.', true); return; }
   const imgs = files.filter((f) => f.type.startsWith('image')).sort((a, b) => a.name.localeCompare(b.name, 'fr', {numeric: true}));
-  const vids = files.filter((f) => f.type.startsWith('video'));
-  const groups = [...vids.map((v) => [v]), ...(imgs.length ? [imgs] : [])];
-  let done = 0;
+  const groups = [...files.filter((f) => f.type.startsWith('video')).map((v) => [v]), ...(imgs.length ? [imgs] : [])];
+  S.upload = {done: 0, total: files.length}; render();
+  let ok = 0;
   for (const g of groups) {
-    const items = [];
-    let fmt = '4:5';
+    const items = []; let fmt = '4:5';
     for (const f of g) {
-      toast(`Envoi ${++done}/${files.length} : ${f.name}`);
-      try {
-        const [w, h] = await dims(f); if (!items.length) fmt = guessFormat(w, h);
-        const r = await S.assets.upload(f);
-        items.push({asset: r.id, ct: r.contentType, name: f.name});
-      } catch (e) { toast(`${f.name} refusé : ${e.message || e.code}`); }
+      try { const [w, h] = await dims(f); if (!items.length) fmt = guessFormat(w, h); const r = await S.assets.upload(f); items.push({asset: r.id, ct: r.contentType, name: f.name}); }
+      catch (e) { toast(`${f.name} : ${errMsg(e)}`, true); }
+      S.upload.done++; if (S.view === 'medias') render();
     }
     if (!items.length) continue;
-    const kind = isVideo(items[0]) ? 'video' : items.length > 1 ? 'carousel' : 'image';
-    const title = g.length > 1 ? `Carrousel – ${g[0].name.replace(/\.[^.]+$/, '')}` : g[0].name.replace(/\.[^.]+$/, '');
-    try { await S.db.collection('media').doc(uid()).set({title, kind, format: fmt, items, source: 'upload', createdAt: Date.now(), createdBy: S.me || null}); }
-    catch (e) { toast('Enregistrement refusé : ' + (e.message || e.code)); }
+    const kind = isVid(items[0]) ? 'video' : items.length > 1 ? 'carousel' : 'image';
+    const title = (g.length > 1 ? 'Carrousel – ' : '') + g[0].name.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ');
+    try { await S.db.collection('media').doc(uid()).set({title, kind, format: fmt, items, niche: '', note: '', source: 'upload', createdAt: Date.now(), createdBy: S.me || null}); ok++; }
+    catch (e) { toast('Enregistrement : ' + errMsg(e), true); }
   }
-  toast('Médias ajoutés.'); refreshUsage();
+  S.upload = null; render(); refreshUsage();
+  if (ok) toast(ok > 1 ? `${ok} médias ajoutés.` : 'Média ajouté.');
 }
 
-function wire(root) {
-  root.querySelectorAll('[data-open]').forEach((b) => b.addEventListener('click', () => openPost(b.dataset.open)));
-  root.querySelectorAll('[data-new]').forEach((b) => (b.onclick = () => newPost(b.dataset.new)));
-  root.querySelectorAll('[data-day]').forEach((b) => (b.onclick = () => newPost('post', b.dataset.day + 'T18:00')));
-}
-
-// ---------- dialogs ----------
-const dlg = $('#dlg');
-function viewerHTML(m, i = 0) {
-  if (!m) return `<div class="empty" style="width:100%">Aucun média associé.<br>Choisissez-en un dans la liste.</div>`;
-  const it = m.items[i];
-  const el = isVideo(it) ? `<video src="${blob(it.asset)}" controls playsinline preload="metadata"></video>` : `<img src="${blob(it.asset)}" alt="${esc(m.title)} – ${i + 1}">`;
-  const many = m.items.length > 1;
-  return `<div class="viewer">${el}${many ? `<button class="nav-btn prev" data-step="-1" aria-label="Slide précédente">‹</button><button class="nav-btn next" data-step="1" aria-label="Slide suivante">›</button>` : ''}</div>
-    ${many ? `<div class="dots">${m.items.map((_, j) => `<i class="${j === i ? 'on' : ''}"></i>`).join('')}</div><div class="hint">Slide ${i + 1} / ${m.items.length}</div>` : ''}
-    <div class="copyrow"><a class="btn" href="${blob(it.asset)}" target="_blank" rel="noopener">Ouvrir le fichier</a></div>`;
-}
-function bindViewer(box, m, idx) {
-  box.querySelectorAll('[data-step]').forEach((b) => (b.onclick = () => { idx.i = (idx.i + Number(b.dataset.step) + m.items.length) % m.items.length; box.innerHTML = viewerHTML(m, idx.i); bindViewer(box, m, idx); }));
-}
-
-function openMedia(id) {
-  const m = mediaById(id); if (!m) return;
-  const idx = {i: 0};
-  const posts = S.posts.filter((p) => p.mediaId === id);
-  dlg.innerHTML = `<button class="x" aria-label="Fermer" data-close>✕</button><div class="dlg">
-    <div class="dlg-media" id="vbox">${viewerHTML(m, 0)}</div>
-    <form class="dlg-form" id="mform">
-      <h2>${esc(m.title)}</h2>
-      <div class="meta" style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip">${KINDS[m.kind]}${m.kind === 'carousel' ? ' · ' + m.items.length + ' slides' : ''}</span><span class="chip fmt">${esc(m.format)}</span><span class="chip">${m.source === 'claude' ? 'Généré par Claude' : 'Ajouté par l’équipe'}</span>${m.createdAt ? `<span class="chip">${new Date(m.createdAt).toLocaleDateString('fr-FR')}</span>` : ''}</div>
-      <label class="field"><span>Titre</span><input id="m-title" value="${esc(m.title)}"></label>
-      <div class="row2">
-        <label class="field"><span>Format</span><select id="m-format">${FORMATS.map((f) => `<option ${f === m.format ? 'selected' : ''}>${f}</option>`).join('')}</select></label>
-        <label class="field"><span>Thème / niche</span><input id="m-niche" value="${esc(m.niche || '')}" placeholder="ex. bijoux, B2B, restauration"></label>
-      </div>
-      ${m.note ? `<label class="field"><span>Note</span><textarea id="m-note" style="min-height:90px">${esc(m.note)}</textarea></label>` : `<label class="field"><span>Note</span><textarea id="m-note" style="min-height:70px" placeholder="Prompt utilisé, acteur, remarques…"></textarea></label>`}
-      <div class="hint">${posts.length ? 'Utilisé dans : ' + posts.map((p) => esc(p.title)).join(', ') : 'Pas encore utilisé dans un post ou une ad.'}</div>
-      <div class="dlg-actions">
-        <button class="btn primary" type="submit">Enregistrer</button>
-        <button class="btn" type="button" data-mk="post">Créer un post</button>
-        <button class="btn" type="button" data-mk="ad">Créer une ad</button>
-        <span class="spacer"></span>
-        ${S.assets ? `<span id="mdel"><button class="btn ghost danger" type="button" data-del>Supprimer</button></span>` : ''}
-      </div>
-    </form></div>`;
-  dlg.showModal();
-  bindViewer($('#vbox'), m, idx);
+// ---------- media detail ----------
+function renderMediaDetail(main = $('#main')) {
+  const m = mediaById(S.md?.id);
+  if (!m) { main.innerHTML = loading() ? `<div class="page">${skeleton(2)}</div>` : `<div class="page"><div class="empty"><b>Média introuvable</b>Il a peut-être été supprimé.<br><a class="btn" href="#medias">Retour aux médias</a></div></div>`; return; }
+  const i = Math.min(S.md.slide, m.items.length - 1); const it = m.items[i];
+  const uses = S.posts.filter((p) => p.mediaId === m.id);
+  main.innerHTML = `<div class="page">
+    <div class="ed-top"><a class="btn icon" href="#medias" aria-label="Retour aux médias">${IC.back}</a><h1>${esc(m.title)}</h1>
+      <button class="btn" data-act="new" data-type="ad" data-media="${m.id}">${IC.plus} Ad avec ce média</button>
+      <button class="btn primary" data-act="new" data-type="post" data-media="${m.id}">${IC.plus} Post avec ce média</button></div>
+    <div class="md">
+      <div class="viewer"><div class="stage">${isVid(it) ? `<video src="${blob(it.asset)}" controls playsinline preload="metadata" ${it.poster ? `poster="${blob(it.poster)}"` : ''}></video>` : `<img src="${blob(it.asset)}" alt="${esc(m.title)} – ${i + 1}">`}
+        ${m.items.length > 1 ? `<button class="btn icon nav-b l" data-act="md-slide" data-d="-1" aria-label="Précédente">${IC.back}</button><button class="btn icon nav-b r" data-act="md-slide" data-d="1" aria-label="Suivante">${IC.next}</button>` : ''}</div>
+        ${m.items.length > 1 ? `<div class="strip">${m.items.map((x, j) => `<button data-act="md-go" data-i="${j}" aria-pressed="${j === i}" aria-label="Slide ${j + 1}"><img src="${blob(x.asset)}" alt="" loading="lazy"></button>`).join('')}</div><div style="font-size:13px;color:var(--muted)">Slide ${i + 1} sur ${m.items.length}</div>` : ''}
+        <a class="btn sm" href="${blob(it.asset)}" target="_blank" rel="noopener">Ouvrir le fichier en grand</a></div>
+      <div>
+        <form class="panel" id="mform">
+          <h3>Informations</h3>
+          <div class="fld"><label for="m-title">Titre</label><input id="m-title" value="${esc(m.title)}"></div>
+          <div class="r2"><div class="fld"><label for="m-format">Format</label><select id="m-format">${FORMATS.map((f) => `<option value="${f}" ${f === m.format ? 'selected' : ''}>${f} · ${FORMAT_L[f]}</option>`).join('')}</select></div>
+            <div class="fld"><label for="m-niche">Thème</label><input id="m-niche" value="${esc(m.niche || '')}" placeholder="bijoux, B2B, restauration…"></div></div>
+          <div class="fld"><label for="m-note">Notes</label><textarea id="m-note" style="min-height:96px" placeholder="Prompt utilisé, acteur, remarques…">${esc(m.note || '')}</textarea></div>
+          <div class="danger-zone"><button class="btn primary" type="submit">Enregistrer</button><span class="grow"></span>
+            ${S.assets ? (S.md.confirm ? `<span class="confirm">Supprimer pour tout le monde ?</span><button class="btn danger solid sm" type="button" data-act="md-del-yes">Supprimer</button><button class="btn sm" type="button" data-act="md-del-no">Annuler</button>` : `<button class="btn quiet danger sm" type="button" data-act="md-del">Supprimer</button>`) : ''}</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="tag">${KINDS[m.kind]}${m.kind === 'carousel' ? ' · ' + m.items.length + ' slides' : ''}</span><span class="tag">${m.source === 'claude' ? 'Généré par Claude' : 'Importé par l’équipe'}</span>${m.createdAt ? `<span class="tag">Ajouté le ${new Date(m.createdAt).toLocaleDateString('fr-FR')}</span>` : ''}</div>
+        </form>
+        <div class="panel"><h3>Utilisé dans <small>${uses.length}</small></h3>
+          ${uses.length ? `<div class="uses">${uses.map((p) => `<button class="use" data-act="open" data-id="${p.id}">${p.type === 'ad' ? '<span class="tag ad">AD</span>' : ''}<span style="font-weight:700;flex:1;min-width:0">${esc(p.title || 'Sans titre')}</span>${pill(stOf(p))}</button>`).join('')}</div>` : '<div style="color:var(--muted);font-size:13.5px">Pas encore utilisé dans un post ou une ad.</div>'}</div>
+      </div></div></div>`;
   $('#mform').onsubmit = async (e) => {
     e.preventDefault();
-    try { await S.db.collection('media').doc(id).update({title: $('#m-title').value.trim() || m.title, format: $('#m-format').value, niche: $('#m-niche').value.trim(), note: $('#m-note').value.trim()}); toast('Média enregistré.'); dlg.close(); }
-    catch (er) { toast('Enregistrement refusé : ' + (er.message || er.code)); }
-  };
-  dlg.querySelectorAll('[data-mk]').forEach((b) => (b.onclick = () => { dlg.close(); newPost(b.dataset.mk, '', id); }));
-  const del = dlg.querySelector('[data-del]');
-  if (del) del.onclick = () => {
-    $('#mdel').innerHTML = `<span class="confirm">Supprimer ${m.items.length > 1 ? 'les ' + m.items.length + ' fichiers' : 'le fichier'} pour tout le monde ?</span><button class="btn danger" type="button" id="mdel-yes">Oui, supprimer</button><button class="btn ghost" type="button" id="mdel-no">Annuler</button>`;
-    $('#mdel-no').onclick = () => { dlg.close(); openMedia(id); };
-    $('#mdel-yes').onclick = async () => {
-      try {
-        for (const it of m.items) { await S.assets.delete(it.asset); if (it.poster) await S.assets.delete(it.poster); }
-        await S.db.collection('media').doc(id).delete();
-        for (const p of posts) await S.db.collection('posts').doc(p.id).update({mediaId: null});
-        toast('Média supprimé.'); dlg.close(); refreshUsage();
-      } catch (er) { toast('Suppression refusée : ' + (er.message || er.code)); }
-    };
+    try { await S.db.collection('media').doc(m.id).update({title: $('#m-title').value.trim() || m.title, format: $('#m-format').value, niche: $('#m-niche').value.trim(), note: $('#m-note').value.trim()}); toast('Média enregistré.'); }
+    catch (er) { toast('Enregistrement : ' + errMsg(er), true); }
   };
 }
 
-function newPost(type, date = '', mediaId = null) {
-  const m = mediaById(mediaId);
-  openPost(null, {id: uid(), type, title: m ? m.title : '', networks: ['Instagram', 'Facebook'], format: m?.format || (type === 'ad' ? '9:16' : '4:5'), mediaId, caption: '', date, status: type === 'ad' ? 'draft' : 'idea', ad: type === 'ad' ? {objective: 'Ventes', budget: '', cta: 'Commencer', link: 'https://growthity.ai', audience: ''} : null, createdAt: Date.now(), createdBy: S.me || null});
-}
-function openPost(id, draft) {
-  const p = draft || S.posts.find((x) => x.id === id); if (!p) return;
-  const isAd = p.type === 'ad';
-  const map = isAd ? AD_STATUS : STATUS;
-  const st = {mediaId: p.mediaId, i: 0};
-  const ad = p.ad || {};
-  dlg.innerHTML = `<button class="x" aria-label="Fermer" data-close>✕</button><div class="dlg">
-    <div class="dlg-media" id="vbox"></div>
-    <form class="dlg-form" id="pform">
-      <h2>${draft ? (isAd ? 'Nouvelle ad' : 'Nouveau post') : esc(p.title || 'Sans titre')}</h2>
-      <label class="field"><span>Titre interne</span><input id="p-title" value="${esc(p.title)}" placeholder="ex. Carrousel accroches" required></label>
-      <div class="row2">
-        <label class="field"><span>Statut</span><select id="p-status">${Object.entries(map).map(([k, s]) => `<option value="${k}" ${k === p.status ? 'selected' : ''}>${s.l}</option>`).join('')}</select></label>
-        <label class="field"><span>${isAd ? 'Lancement' : 'Publication'}</span><input type="datetime-local" id="p-date" value="${esc(p.date || '')}"></label>
-      </div>
-      <div class="field"><span>Réseaux</span><div class="checks">${NETS.map((n) => `<label><input type="checkbox" value="${n}" ${(p.networks || []).includes(n) ? 'checked' : ''}>${n}</label>`).join('')}</div></div>
-      <div class="field"><span>Format</span><div class="seg" role="group" id="p-format">${FORMATS.map((f) => `<button type="button" data-f="${f}" aria-pressed="${f === p.format}">${f}</button>`).join('')}</div></div>
-      <div class="field"><span>Média</span><div class="picker" id="picker"></div><div class="hint">Ajoutez de nouveaux fichiers dans la rubrique Médias.</div></div>
-      <label class="field"><span>${isAd ? 'Texte principal' : 'Légende'}</span><textarea id="p-caption" placeholder="${isAd ? 'Le texte au-dessus de la pub…' : 'Accroche, corps, appel à l’action, hashtags…'}">${esc(p.caption)}</textarea><span class="hint" id="p-count"></span></label>
-      ${isAd ? `<div class="ad-box">
-        <div class="row2">
-          <label class="field"><span>Objectif</span><select id="a-obj">${OBJ.map((o) => `<option ${o === ad.objective ? 'selected' : ''}>${o}</option>`).join('')}</select></label>
-          <label class="field"><span>Budget / jour (€)</span><input id="a-budget" inputmode="decimal" value="${esc(ad.budget || '')}" placeholder="ex. 20"></label>
+// ---------- editor ----------
+function vEditor(main) {
+  if (!S.ed) { main.innerHTML = loading() ? `<div class="page">${skeleton(2)}</div>` : `<div class="page"><div class="empty"><b>Post introuvable</b>Il a peut-être été supprimé.<br><a class="btn" href="#posts">Retour aux posts</a></div></div>`; return; }
+  const {draft: p, isNew} = S.ed; const isAd = p.type === 'ad'; const map = stMap(p); const ad = p.ad || {};
+  const back = isAd ? 'ads' : 'posts';
+  main.innerHTML = `<div class="page">
+    <div class="ed-top"><a class="btn icon" href="#${back}" aria-label="Retour">${IC.back}</a>
+      <h1>${isNew ? (isAd ? 'Nouvelle ad' : 'Nouveau post') : esc(p.title || 'Sans titre')}</h1>
+      <span class="saved ${S.ed.dirty ? 'dirty' : ''}" id="savedst">${S.ed.dirty ? 'Modifications non enregistrées' : 'Enregistré'}</span>
+      ${isNew ? '' : '<button class="btn" data-act="dup">Dupliquer</button>'}
+      <button class="btn primary" data-act="save">Enregistrer</button></div>
+    <div class="ed">
+      <div>
+        <div class="panel">
+          <div class="fld"><label for="e-title">Titre interne</label><input id="e-title" class="big" data-f="title" value="${esc(p.title)}" placeholder="${isAd ? 'ex. Ad vidéo bijoux – Emma' : 'ex. Carrousel 5 accroches'}" autocomplete="off"></div>
+          <div class="fld"><span class="lb">Statut</span><div class="stsel" role="group" aria-label="Statut">${Object.entries(map).map(([k, s]) => `<button type="button" style="--c:${s.c}" data-act="st" data-v="${k}" aria-pressed="${k === p.status}"><i></i>${s.l}</button>`).join('')}</div></div>
+          <div class="r2">
+            <div class="fld"><label for="e-date">${isAd ? 'Lancement' : 'Date de publication'}</label><input type="datetime-local" id="e-date" data-f="date" value="${esc(p.date || '')}"></div>
+            <div class="fld"><span class="lb">Raccourcis</span><div class="chips"><button type="button" class="btn sm" data-act="when" data-d="1">Demain 18 h 30</button><button type="button" class="btn sm" data-act="when" data-d="0">Effacer</button></div></div>
+          </div>
+          <div class="fld"><span class="lb">Réseaux</span><div class="chips">${NETS.map((n) => `<button type="button" class="chk" data-act="net" data-v="${n}" aria-pressed="${(p.networks || []).includes(n)}"><span class="net ${n}">${NET_L[n]}</span>${n}</button>`).join('')}</div></div>
+          <div class="fld"><span class="lb">Format</span><div class="seg" role="group" aria-label="Format">${FORMATS.map((f) => `<button type="button" data-act="fmt" data-v="${f}" aria-pressed="${f === p.format}">${f} <span style="font-weight:500">${FORMAT_L[f]}</span></button>`).join('')}</div></div>
         </div>
-        <div class="row2">
-          <label class="field"><span>Bouton</span><select id="a-cta">${CTAS.map((o) => `<option ${o === ad.cta ? 'selected' : ''}>${o}</option>`).join('')}</select></label>
-          <label class="field"><span>Lien</span><input id="a-link" value="${esc(ad.link || '')}" placeholder="https://growthity.ai"></label>
-        </div>
-        <label class="field"><span>Audience</span><input id="a-aud" value="${esc(ad.audience || '')}" placeholder="ex. e-commerçants, France, 25-55 ans"></label>
-      </div>` : ''}
-      <div class="dlg-actions">
-        <button class="btn primary" type="submit">Enregistrer</button>
-        <button class="btn" type="button" id="copycap">Copier le texte</button>
-        <span class="spacer"></span>
-        ${draft ? '' : '<span id="pdel"><button class="btn ghost danger" type="button" data-del>Supprimer</button></span>'}
+        <div class="panel"><h3>Média <small>${S.media.length} dans la médiathèque · ceux au format choisi d’abord</small></h3><div class="picker" id="picker"></div>
+          <div style="font-size:12.5px;color:var(--muted)">Besoin d’un nouveau fichier ? <a href="#medias">Importez-le dans Médias</a>.</div></div>
+        <div class="panel"><div class="fld"><label for="e-cap">${isAd ? 'Texte principal de la pub' : 'Légende'}</label>
+          <textarea id="e-cap" data-f="caption" placeholder="${isAd ? 'Le texte affiché au-dessus de la pub…' : 'Accroche, corps du texte, appel à l’action, hashtags…'}">${esc(p.caption)}</textarea>
+          <div class="cnt"><span id="e-cnt"></span><button type="button" class="btn sm" data-act="copy">Copier le texte</button></div></div></div>
+        ${isAd ? `<div class="panel ad-panel"><h3><span class="tag ad">AD</span> Paramètres Meta</h3>
+          <div class="r2"><div class="fld"><label for="a-obj">Objectif</label><select id="a-obj" data-af="objective">${OBJ.map((o) => `<option ${o === ad.objective ? 'selected' : ''}>${o}</option>`).join('')}</select></div>
+            <div class="fld"><label for="a-budget">Budget par jour (€)</label><input id="a-budget" data-af="budget" inputmode="decimal" value="${esc(ad.budget || '')}" placeholder="ex. 20"></div></div>
+          <div class="r2"><div class="fld"><label for="a-cta">Bouton</label><select id="a-cta" data-af="cta">${CTAS.map((o) => `<option ${o === ad.cta ? 'selected' : ''}>${o}</option>`).join('')}</select></div>
+            <div class="fld"><label for="a-link">Lien de destination</label><input id="a-link" data-af="link" value="${esc(ad.link || '')}" placeholder="https://growthity.ai"></div></div>
+          <div class="fld"><label for="a-aud">Audience</label><input id="a-aud" data-af="audience" value="${esc(ad.audience || '')}" placeholder="ex. e-commerçants, France, 25-55 ans"></div></div>` : ''}
+        ${isNew ? '' : `<div class="panel"><div class="danger-zone" id="dz">${S.ed.confirm ? `<span class="confirm">Supprimer définitivement ?</span><button class="btn danger solid sm" data-act="del-yes">Supprimer</button><button class="btn sm" data-act="del-no">Annuler</button>` : `<span style="font-size:13px;color:var(--muted)">Créé le ${new Date(p.createdAt || Date.now()).toLocaleDateString('fr-FR')}</span><span class="grow"></span><button class="btn quiet danger sm" data-act="del">Supprimer ${isAd ? 'l’ad' : 'le post'}</button>`}</div></div>`}
       </div>
-    </form></div>`;
-  dlg.showModal();
-  const drawViewer = () => { const box = $('#vbox'); const m = mediaById(st.mediaId); st.i = 0; box.innerHTML = viewerHTML(m, 0); if (m) bindViewer(box, m, st); };
-  const drawPicker = () => {
-    const fmt = dlg.querySelector('#p-format [aria-pressed="true"]')?.dataset.f;
-    const list = [...S.media].sort((a, b) => (b.format === fmt) - (a.format === fmt));
-    $('#picker').innerHTML = list.length ? list.map((m) => `<button type="button" data-pick="${m.id}" aria-pressed="${m.id === st.mediaId}" title="${esc(m.title)}">${thumbHTML(m)}<span class="lbl">${esc(m.format)}${m.kind === 'carousel' ? ' · ' + m.items.length : ''}${m.kind === 'video' ? ' · vidéo' : ''}</span></button>`).join('') : '<div class="hint">Aucun média pour l’instant.</div>';
-    $('#picker').querySelectorAll('[data-pick]').forEach((b) => (b.onclick = () => {
-      st.mediaId = st.mediaId === b.dataset.pick ? null : b.dataset.pick;
-      const m = mediaById(st.mediaId); if (m) { dlg.querySelectorAll('#p-format button').forEach((x) => x.setAttribute('aria-pressed', x.dataset.f === m.format)); if (!$('#p-title').value) $('#p-title').value = m.title; }
-      drawPicker(); drawViewer();
-    }));
-  };
-  dlg.querySelectorAll('#p-format button').forEach((b) => (b.onclick = () => { dlg.querySelectorAll('#p-format button').forEach((x) => x.setAttribute('aria-pressed', x === b)); drawPicker(); }));
-  const cap = $('#p-caption'), cnt = $('#p-count');
-  const upd = () => (cnt.textContent = `${cap.value.length} / 2 200 caractères` + (isAd && cap.value.length > 125 ? ' · au-delà de 125, Meta coupe avec « Voir plus »' : ''));
-  cap.oninput = upd; upd();
-  drawPicker(); drawViewer();
-  $('#copycap').onclick = () => {
-    const fallback = () => { cap.select(); toast('Texte sélectionné : copiez avec Ctrl/Cmd + C.'); };
-    try { navigator.clipboard.writeText(cap.value).then(() => toast('Texte copié.'), fallback); } catch { fallback(); }
-  };
-  $('#pform').onsubmit = async (e) => {
-    e.preventDefault();
-    const out = {...p,
-      title: $('#p-title').value.trim(), status: $('#p-status').value, date: $('#p-date').value || '',
-      networks: [...dlg.querySelectorAll('.checks input:checked')].map((x) => x.value),
-      format: dlg.querySelector('#p-format [aria-pressed="true"]')?.dataset.f || p.format,
-      mediaId: st.mediaId || null, caption: cap.value,
-    };
-    if (isAd) out.ad = {objective: $('#a-obj').value, budget: $('#a-budget').value.trim(), cta: $('#a-cta').value, link: $('#a-link').value.trim(), audience: $('#a-aud').value.trim()};
-    if (await savePost(out)) { toast(isAd ? 'Ad enregistrée.' : 'Post enregistré.'); dlg.close(); }
-  };
-  const del = dlg.querySelector('[data-del]');
-  if (del) del.onclick = () => {
-    $('#pdel').innerHTML = `<span class="confirm">Supprimer ?</span><button class="btn danger" type="button" id="pdel-yes">Oui</button><button class="btn ghost" type="button" id="pdel-no">Non</button>`;
-    $('#pdel-no').onclick = () => { $('#pdel').innerHTML = ''; };
-    $('#pdel-yes').onclick = async () => { try { await S.db.collection('posts').doc(p.id).delete(); toast('Supprimé.'); dlg.close(); } catch (er) { toast('Suppression refusée : ' + (er.message || er.code)); } };
-  };
+      <div class="pv" id="pv"></div>
+    </div></div>`;
+  refreshPicker(); renderPreview(); updCount();
 }
-dlg.addEventListener('click', (e) => { if (e.target === dlg || e.target.closest('[data-close]')) dlg.close(); });
-dlg.addEventListener('close', () => { dlg.querySelectorAll('video').forEach((v) => v.pause()); dlg.innerHTML = ''; });
+function refreshPicker() {
+  const box = $('#picker'); if (!box || !S.ed) return;
+  const p = S.ed.draft;
+  const list = [...S.media].sort((a, b) => (b.id === p.mediaId) - (a.id === p.mediaId) || (b.format === p.format) - (a.format === p.format));
+  box.innerHTML = list.length ? list.map((m) => `<button type="button" data-act="pick" data-id="${m.id}" aria-pressed="${m.id === p.mediaId}" title="${esc(m.title)}">${thumbInner(m)}<span class="lb">${esc(m.format)}${m.kind === 'carousel' ? ' · ' + m.items.length : m.kind === 'video' ? ' · vidéo' : ''}</span><span class="ok">${IC.check}</span></button>`).join('') : '<div style="color:var(--muted);font-size:13px">Aucun média pour l’instant.</div>';
+}
+function updCount() {
+  const el = $('#e-cnt'); if (!el || !S.ed) return;
+  const t = S.ed.draft.caption || ''; const tags = (t.match(/#[\p{L}\d_]+/gu) || []).length;
+  const isAd = S.ed.draft.type === 'ad';
+  el.innerHTML = `${t.length.toLocaleString('fr-FR')} / 2 200 caractères · ${tags} hashtag${tags > 1 ? 's' : ''}` + (tags > 30 ? ' <span class="warn">· 30 max sur Instagram</span>' : '') + (isAd && t.length > 125 ? ' <span class="warn">· au-delà de 125, Meta coupe avec « Voir plus »</span>' : '');
+}
+function markDirty() { if (!S.ed) return; S.ed.dirty = true; const s = $('#savedst'); if (s) { s.textContent = 'Modifications non enregistrées'; s.classList.add('dirty'); } }
+
+function renderPreview() {
+  const box = $('#pv'); if (!box || !S.ed) return;
+  const p = S.ed.draft; const m = mediaById(p.mediaId); const isAd = p.type === 'ad';
+  const vertical = (S.ed.pv || (p.format === '9:16' ? 'reel' : 'feed')) === 'reel';
+  const items = m?.items || []; const i = Math.min(S.ed.slide, Math.max(0, items.length - 1)); const it = items[i];
+  const mediaEl = it ? (isVid(it) ? `<video src="${blob(it.asset)}" ${it.poster ? `poster="${blob(it.poster)}"` : ''} muted loop playsinline autoplay preload="metadata"></video>` : `<img src="${blob(it.asset)}" alt="">`) : '';
+  const av = `<span class="ig-av"><div>${IC.logo}</div></span>`;
+  const cap = (p.caption || '').trim();
+  let screen;
+  if (vertical) {
+    screen = `<div class="reel">${mediaEl || '<div style="position:absolute;inset:0;display:grid;place-items:center;color:#888;font-size:13px">Choisissez un média</div>'}<div class="shade"></div><div class="lbl">${isAd ? 'Sponsorisé' : 'Reels'}</div>
+      <div class="side">${IC.heart}${IC.comment}${IC.share}</div>
+      <div class="info"><div class="who">${av}growthity.ai</div>${cap ? `<div class="txt">${esc(cap)}</div>` : ''}${isAd ? `<div class="cta">${esc(p.ad?.cta || 'Commencer')}<span>›</span></div>` : ''}</div></div>`;
+  } else {
+    const ar = AR[m?.format && m.format !== '9:16' ? m.format : p.format === '9:16' ? '4:5' : p.format] || '4/5';
+    const short = cap.length > 120 && !S.ed.capOpen;
+    screen = `<div class="ig-top">Instagram</div><div class="ig-feed">
+      <div class="ig-head">${av}<div class="ig-name">growthity.ai${isAd ? '<small>Sponsorisé</small>' : ''}</div></div>
+      <div class="ig-media" style="aspect-ratio:${ar}">${mediaEl || '<div style="position:absolute;inset:0;display:grid;place-items:center;color:#999;font-size:13px">Choisissez un média</div>'}
+        ${items.length > 1 ? `<span class="count">${i + 1}/${items.length}</span>${i > 0 ? `<button class="arr l" data-act="pv-slide" data-d="-1" aria-label="Précédente">‹</button>` : ''}${i < items.length - 1 ? `<button class="arr r" data-act="pv-slide" data-d="1" aria-label="Suivante">›</button>` : ''}` : ''}</div>
+      ${isAd ? `<div class="ig-cta">${esc(p.ad?.cta || 'Commencer')}<span>›</span></div>` : ''}
+      <div class="ig-act">${IC.heart}${IC.comment}${IC.share}${items.length > 1 ? `<div class="ig-dots">${items.map((_, j) => `<i class="${j === i ? 'on' : ''}"></i>`).join('')}</div>` : '<span class="grow"></span>'}${IC.save}</div>
+      <div class="ig-cap">${cap ? `<b>growthity.ai</b> ${esc(short ? cap.slice(0, 120).trimEnd() + '…' : cap)}${short ? ' <button class="more" data-act="cap-more">plus</button>' : ''}` : '<span class="empty-cap">La légende apparaîtra ici.</span>'}</div></div>`;
+  }
+  box.innerHTML = `<div class="pv-tabs"><span>Aperçu</span><div class="seg" role="group" aria-label="Aperçu"><button data-act="pv" data-v="feed" aria-pressed="${!vertical}">Fil</button><button data-act="pv" data-v="reel" aria-pressed="${vertical}">Reel / Story</button></div></div>
+    <div class="phone"><div class="screen">${screen}</div></div>
+    <div class="pv-note">Aperçu indicatif d’Instagram${isAd ? ' pour une publicité' : ''}. ${m ? esc(m.title) : ''}</div>`;
+}
+
+async function saveEditor() {
+  const e = S.ed; if (!e) return;
+  const p = e.draft;
+  if (!p.title.trim()) { const m = mediaById(p.mediaId); p.title = m ? m.title : (p.type === 'ad' ? 'Ad sans titre' : 'Post sans titre'); const t = $('#e-title'); if (t) t.value = p.title; }
+  const btn = $('[data-act="save"]'); if (btn) btn.disabled = true;
+  try {
+    await writePost(p);
+    e.dirty = false; const wasNew = e.isNew; e.isNew = false;
+    toast(p.type === 'ad' ? 'Ad enregistrée.' : 'Post enregistré.');
+    if (wasNew) { S.param = p.id; history.replaceState(null, '', '#post-' + p.id); }
+    render();
+  } catch (er) { toast('Enregistrement impossible : ' + errMsg(er), true); if (btn) btn.disabled = false; }
+}
+
+// ---------- events ----------
+document.addEventListener('click', async (ev) => {
+  const el = ev.target.closest('[data-act]');
+  if (!el) { if (S.menuOpen && !ev.target.closest('.newbtn')) { S.menuOpen = false; $('#newmenu').hidden = true; } return; }
+  const a = el.dataset.act; const d = el.dataset;
+  switch (a) {
+    case 'newmenu': S.menuOpen = !S.menuOpen; $('#newmenu').hidden = !S.menuOpen; el.setAttribute('aria-expanded', S.menuOpen); return;
+    case 'goupload': S.menuOpen = false; $('#newmenu').hidden = true; go('medias'); setTimeout(() => $('#file')?.click(), 60); return;
+    case 'new':
+      ev.preventDefault(); ev.stopPropagation();
+      if (S.ed?.dirty && S.view === 'post' && !S.ed.isNew) { if (!(await leaveOk())) return; }
+      newDraft(d.type, {date: d.date ? d.date + 'T18:30' : '', status: d.status, mediaId: d.media}); return;
+    case 'open': if (S.dragJustEnded) return; go('post-' + d.id); return;
+    case 'media': go('media-' + d.id); return;
+    case 'cal-prev': case 'cal-next': { const k = a === 'cal-prev' ? -1 : 1; if (S.calMode === 'month') S.month = new Date(S.month.getFullYear(), S.month.getMonth() + k, 1); else S.weekStart = addDays(S.weekStart, 7 * k); render(); return; }
+    case 'cal-today': S.month = som(new Date()); S.weekStart = sow(new Date()); render(); return;
+    case 'cal-mode': S.calMode = d.mode; if (d.mode === 'week') S.weekStart = sow(S.month.getMonth() === new Date().getMonth() && S.month.getFullYear() === new Date().getFullYear() ? new Date() : S.month); render(); return;
+    case 'netf': S.netFilter = d.net; render(); return;
+    case 'adf': S.adFilter = d.st; render(); return;
+    case 'mff': S.mf.format = d.v; render(); return;
+    case 'mfk': S.mf.kind = d.v; render(); return;
+    case 'md-slide': { const m = mediaById(S.md.id); S.md.slide = (S.md.slide + Number(d.d) + m.items.length) % m.items.length; renderMediaDetail(); return; }
+    case 'md-go': S.md.slide = Number(d.i); renderMediaDetail(); return;
+    case 'md-del': S.md.confirm = true; renderMediaDetail(); return;
+    case 'md-del-no': S.md.confirm = false; renderMediaDetail(); return;
+    case 'md-del-yes': {
+      const m = mediaById(S.md.id); if (!m) return;
+      try {
+        for (const it of m.items) { await S.assets.delete(it.asset); if (it.poster) await S.assets.delete(it.poster); }
+        for (const p of S.posts.filter((x) => x.mediaId === m.id)) await S.db.collection('posts').doc(p.id).update({mediaId: null});
+        await S.db.collection('media').doc(m.id).delete();
+        toast('Média supprimé.'); refreshUsage(); go('medias');
+      } catch (er) { toast('Suppression impossible : ' + errMsg(er), true); }
+      return;
+    }
+    // editor
+    case 'save': saveEditor(); return;
+    case 'st': S.ed.draft.status = d.v; $$('[data-act="st"]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === d.v)); markDirty(); return;
+    case 'net': { const n = S.ed.draft.networks ||= []; const on = n.includes(d.v); S.ed.draft.networks = on ? n.filter((x) => x !== d.v) : [...n, d.v]; el.setAttribute('aria-pressed', !on); markDirty(); return; }
+    case 'fmt': S.ed.draft.format = d.v; $$('[data-act="fmt"]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === d.v)); S.ed.pv = null; markDirty(); refreshPicker(); renderPreview(); return;
+    case 'pick': { const same = S.ed.draft.mediaId === d.id; S.ed.draft.mediaId = same ? null : d.id; S.ed.slide = 0; const m = mediaById(d.id);
+      if (!same && m) { S.ed.draft.format = m.format; $$('[data-act="fmt"]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === m.format)); S.ed.pv = null; if (!S.ed.draft.title.trim()) { S.ed.draft.title = m.title; $('#e-title').value = m.title; } }
+      markDirty(); refreshPicker(); renderPreview(); return; }
+    case 'when': { if (d.d === '0') S.ed.draft.date = ''; else { const t = addDays(new Date(), 1); S.ed.draft.date = ymd(t) + 'T18:30'; if (S.ed.draft.status === 'idea' || S.ed.draft.status === 'make') { S.ed.draft.status = S.ed.draft.type === 'ad' ? S.ed.draft.status : 'sched'; } }
+      $('#e-date').value = S.ed.draft.date; $$('[data-act="st"]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === S.ed.draft.status)); markDirty(); return; }
+    case 'copy': { const t = S.ed.draft.caption || ''; const fb = () => { const ta = $('#e-cap'); ta.focus(); ta.select(); toast('Texte sélectionné : copiez avec Ctrl/Cmd + C.'); };
+      try { await navigator.clipboard.writeText(t); toast('Texte copié.'); } catch { fb(); } return; }
+    case 'pv': S.ed.pv = d.v; renderPreview(); return;
+    case 'pv-slide': S.ed.slide += Number(d.d); renderPreview(); return;
+    case 'cap-more': S.ed.capOpen = true; renderPreview(); return;
+    case 'dup': { const c = JSON.parse(JSON.stringify(S.ed.draft)); c.id = uid(); c.title = c.title + ' (copie)'; c.date = ''; c.status = c.type === 'ad' ? 'draft' : 'idea'; c.createdAt = Date.now();
+      try { await writePost(c); toast('Copie créée.'); go('post-' + c.id); } catch (er) { toast('Duplication impossible : ' + errMsg(er), true); } return; }
+    case 'del': S.ed.confirm = true; render(); return;
+    case 'del-no': S.ed.confirm = false; render(); return;
+    case 'del-yes': { const p = S.ed.draft; try { await S.db.collection('posts').doc(p.id).delete(); S.ed = null; toast('Supprimé.'); go(p.type === 'ad' ? 'ads' : 'posts'); } catch (er) { toast('Suppression impossible : ' + errMsg(er), true); } return; }
+  }
+});
+async function leaveOk() { return true; }
+document.addEventListener('input', (ev) => {
+  if (!S.ed || S.view !== 'post') return;
+  const t = ev.target;
+  if (t.dataset.f) { S.ed.draft[t.dataset.f] = t.value; markDirty(); if (t.dataset.f === 'caption') { updCount(); renderPreview(); } }
+  if (t.dataset.af) { S.ed.draft.ad ||= {}; S.ed.draft.ad[t.dataset.af] = t.value; markDirty(); if (t.dataset.af === 'cta') renderPreview(); }
+});
+document.addEventListener('change', (ev) => { const t = ev.target; if (S.ed && S.view === 'post' && (t.dataset.f || t.dataset.af)) { if (t.dataset.f) S.ed.draft[t.dataset.f] = t.value; else { S.ed.draft.ad ||= {}; S.ed.draft.ad[t.dataset.af] = t.value; } markDirty(); renderPreview(); } });
+document.addEventListener('keydown', (ev) => {
+  if ((ev.metaKey || ev.ctrlKey) && ev.key.toLowerCase() === 's' && S.view === 'post') { ev.preventDefault(); saveEditor(); }
+  if (ev.key === 'Enter' && ev.target.matches('tr[data-act="open"]')) go('post-' + ev.target.dataset.id);
+  if (ev.key === 'Escape' && S.menuOpen) { S.menuOpen = false; $('#newmenu').hidden = true; }
+});
+
+// drag & drop: planning days / tray, board columns
+document.addEventListener('dragstart', (ev) => { const el = ev.target.closest?.('[data-drag]'); if (!el) return; ev.dataTransfer.setData('text/plain', el.dataset.drag); ev.dataTransfer.effectAllowed = 'move'; el.classList.add('dragging'); S.dragId = el.dataset.drag; });
+document.addEventListener('dragend', (ev) => { ev.target.closest?.('[data-drag]')?.classList.remove('dragging'); S.dragJustEnded = true; setTimeout(() => (S.dragJustEnded = false), 80); $$('.over').forEach((x) => x.classList.remove('over')); });
+document.addEventListener('dragover', (ev) => { const z = ev.target.closest?.('[data-drop-day],[data-drop-status]'); if (!z || !S.dragId) return; ev.preventDefault(); $$('.over').forEach((x) => x !== z && x.classList.remove('over')); z.classList.add('over'); });
+document.addEventListener('drop', async (ev) => {
+  const z = ev.target.closest?.('[data-drop-day],[data-drop-status]'); const id = S.dragId; S.dragId = null; if (!z || !id) return; ev.preventDefault(); z.classList.remove('over');
+  const p = postById(id); if (!p) return;
+  const upd = {...p};
+  if ('dropStatus' in z.dataset) { if (p.status === z.dataset.dropStatus) return; upd.status = z.dataset.dropStatus; }
+  else { const day = z.dataset.dropDay; if (!day) { if (!p.date) return; upd.date = ''; } else { const time = p.date ? p.date.slice(11, 16) : '18:30'; if (p.date && p.date.slice(0, 10) === day) return; upd.date = day + 'T' + time; if (upd.type !== 'ad' && ['idea', 'make'].includes(upd.status)) upd.status = 'sched'; } }
+  try { await writePost(upd); toast(upd.date !== p.date ? (upd.date ? 'Programmé le ' + new Date(upd.date).toLocaleDateString('fr-FR', {day: 'numeric', month: 'long'}) + '.' : 'Date retirée.') : 'Statut : ' + stOf(upd).l + '.'); }
+  catch (er) { toast('Déplacement impossible : ' + errMsg(er), true); }
+});
+addEventListener('beforeunload', (e) => { if (S.ed?.dirty && !S.ed.isNew) { e.preventDefault(); } });
 
 boot();
 })();
