@@ -39,6 +39,8 @@ def add(buf, x, at, gain=1.0):
 
 def build(r, k):
     plan = PLAN[r['kind']]
+    if r['kind'] == 'launch':
+        plan = [('hook', 60)] + [(f'c{i}', 42) for i in range(len(r['clips']))] + [('say', 60), ('end', 90)]
     if r['kind'] == 'coulisses' and r['clip'] == 'ugc-solaire.mp4':
         plan = [(n, 150 if n == 'clip' else d) for n, d in plan]
     total = sum(d for _, d in plan) / FPS

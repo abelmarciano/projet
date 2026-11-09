@@ -1,9 +1,144 @@
 [
-  {"id": "r6", "kind": "launch", "title": "Lancement – Vos pubs Meta, sans tournage", "clips": ["actor-camille.mp4", "actor-anya.mp4", "actor-marta.mp4"], "words": ["Pas de tournage.", "Pas de studio.", "Pas d’agence."], "hook": ["Vos pubs Meta,", "sans tournage."], "tagline": ["Growthity", "est en ligne."], "bpm": 124},
-  {"id": "r7", "kind": "coulisses", "title": "Coulisses – Scierie familiale", "clip": "ugc-scierie.mp4", "niche": "Artisanat · bois", "prompt": "Scierie familiale dans les Vosges. Une employée présente le bois de chauffage livré à domicile.", "hook": ["J’ai tapé", "une phrase."], "tagline": ["Votre métier", "mérite sa pub."], "bpm": 118},
-  {"id": "r8", "kind": "coulisses", "title": "Coulisses – Installateur solaire", "clip": "ugc-solaire.mp4", "niche": "Énergie solaire", "prompt": "Installateur de panneaux solaires en Occitanie. Une cliente explique pourquoi elle a sauté le pas.", "hook": ["Une phrase.", "Une pub."], "tagline": ["Décrivez.", "On tourne."], "bpm": 122},
-  {"id": "r9", "kind": "coulisses", "title": "Coulisses – Cuisiniste", "clip": "ugc-homme.mp4", "niche": "Rénovation · cuisine", "prompt": "Cuisiniste à Bordeaux. Un client raconte comment sa cuisine a été refaite.", "hook": ["Pas de caméra.", "Juste ça :"], "tagline": ["Vos clients,", "en vidéo."], "bpm": 116},
-  {"id": "r10", "kind": "coulisses", "title": "Coulisses – Soin cheveux bouclés", "clip": "ugc-femme.mp4", "niche": "Beauté · cosmétique", "prompt": "Masque hydratant pour cheveux bouclés. Une cliente partage sa routine du matin.", "hook": ["Tapé en", "10 secondes."], "tagline": ["Votre produit,", "raconté."], "bpm": 126},
-  {"id": "r11", "kind": "casting", "title": "Casting – Un acteur pour chaque marque", "clips": ["actor-antoine.mp4", "actor-emiko.mp4", "actor-model-01.mp4", "actor-thomas.mp4"], "hook": ["Choisissez", "votre acteur."], "tagline": ["Un visage", "pour chaque marque."], "bpm": 120},
-  {"id": "r12", "kind": "hooks", "title": "A/B test – 3 accroches, 1 vidéo", "clip": "actor-zoe.mp4", "hooks": ["« Personne n’en parle… »", "« Arrêtez de faire ça. »", "« POV : vous testez enfin. »"], "hook": ["Même vidéo.", "3 accroches."], "tagline": ["Testez.", "Gardez la meilleure."], "bpm": 124}
+  {
+    "id": "r6",
+    "kind": "launch",
+    "title": "Lancement – Vos pubs Meta, sans tournage (acteurs réalistes)",
+    "clips": [
+      "real/lena-serum.mp4",
+      "real/real-42.mp4",
+      "real/real-12.mp4",
+      "real/real-04-hd.mp4",
+      "real/bougie-916.mp4"
+    ],
+    "words": [
+      "Beauté.",
+      "Maquillage.",
+      "Énergie solaire.",
+      "Commerce local.",
+      "Déco."
+    ],
+    "hook": [
+      "Vos pubs Meta,",
+      "sans tournage."
+    ],
+    "tagline": [
+      "Growthity",
+      "est en ligne."
+    ],
+    "bpm": 124
+  },
+  {
+    "id": "r7",
+    "kind": "coulisses",
+    "title": "Coulisses – Scierie familiale",
+    "clip": "ugc-scierie.mp4",
+    "niche": "Artisanat · bois",
+    "prompt": "Scierie familiale dans les Vosges. Une employée présente le bois de chauffage livré à domicile.",
+    "hook": [
+      "J’ai tapé",
+      "une phrase."
+    ],
+    "tagline": [
+      "Votre métier",
+      "mérite sa pub."
+    ],
+    "bpm": 118
+  },
+  {
+    "id": "r8",
+    "kind": "coulisses",
+    "title": "Coulisses – Installateur solaire",
+    "clip": "ugc-solaire.mp4",
+    "niche": "Énergie solaire",
+    "prompt": "Installateur de panneaux solaires en Occitanie. Une cliente explique pourquoi elle a sauté le pas.",
+    "hook": [
+      "Une phrase.",
+      "Une pub."
+    ],
+    "tagline": [
+      "Décrivez.",
+      "On tourne."
+    ],
+    "bpm": 122
+  },
+  {
+    "id": "r9",
+    "kind": "coulisses",
+    "title": "Coulisses – Cuisiniste",
+    "clip": "ugc-homme.mp4",
+    "niche": "Rénovation · cuisine",
+    "prompt": "Cuisiniste à Bordeaux. Un client raconte comment sa cuisine a été refaite.",
+    "hook": [
+      "Pas de caméra.",
+      "Juste ça :"
+    ],
+    "tagline": [
+      "Vos clients,",
+      "en vidéo."
+    ],
+    "bpm": 116
+  },
+  {
+    "id": "r10",
+    "kind": "coulisses",
+    "title": "Coulisses – Soin cheveux bouclés",
+    "clip": "ugc-femme.mp4",
+    "niche": "Beauté · cosmétique",
+    "prompt": "Masque hydratant pour cheveux bouclés. Une cliente partage sa routine du matin.",
+    "hook": [
+      "Tapé en",
+      "10 secondes."
+    ],
+    "tagline": [
+      "Votre produit,",
+      "raconté."
+    ],
+    "bpm": 126
+  },
+  {
+    "id": "r11",
+    "kind": "casting",
+    "title": "Casting – Un acteur pour chaque marque",
+    "clips": [
+      "real/real-19.mp4",
+      "real/real-06.mp4",
+      "real/real-40.mp4",
+      "real/bougie-916.mp4"
+    ],
+    "hook": [
+      "Choisissez",
+      "votre acteur."
+    ],
+    "tagline": [
+      "Un visage",
+      "pour chaque marque."
+    ],
+    "bpm": 120,
+    "labels": [
+      "Papeterie · cadeaux",
+      "Énergie solaire",
+      "Pharmacie · avis Google",
+      "Ou juste votre produit"
+    ]
+  },
+  {
+    "id": "r12",
+    "kind": "hooks",
+    "title": "A/B test – 3 accroches, 1 vidéo",
+    "clip": "real/real-14.mp4",
+    "hooks": [
+      "« Personne n’en parle… »",
+      "« Arrêtez de faire ça. »",
+      "« POV : vous testez enfin. »"
+    ],
+    "hook": [
+      "Même vidéo.",
+      "3 accroches."
+    ],
+    "tagline": [
+      "Testez.",
+      "Gardez la meilleure."
+    ],
+    "bpm": 124
+  }
 ]

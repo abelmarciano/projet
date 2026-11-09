@@ -22,7 +22,7 @@ export const FPS = 30;
 export const plan = (r: Reel): {name: string; dur: number}[] => {
   switch (r.kind) {
     case 'launch':
-      return [{name: 'hook', dur: 66}, {name: 'c0', dur: 42}, {name: 'c1', dur: 42}, {name: 'c2', dur: 42}, {name: 'say', dur: 66}, {name: 'end', dur: 96}];
+      return [{name: 'hook', dur: 60}, ...r.clips.map((_: string, i: number) => ({name: 'c' + i, dur: 42})), {name: 'say', dur: 60}, {name: 'end', dur: 90}];
     case 'coulisses':
       return [{name: 'hook', dur: 54}, {name: 'prompt', dur: 120}, {name: 'clip', dur: r.clip === 'ugc-solaire.mp4' ? 150 : 222}, {name: 'end', dur: 90}];
     case 'casting':
@@ -100,7 +100,7 @@ const Scene: React.FC<{r: Reel; name: string; dur: number}> = ({r, name, dur}) =
   if (r.kind === 'launch') {
     if (name.startsWith('c')) {
       const i = Number(name.slice(1));
-      return <AbsoluteFill><Full src={r.clips[i]} /><Over text={r.words[i]} at={1} y={1130} size={86} /></AbsoluteFill>;
+      return <AbsoluteFill><Full src={r.clips[i]} /><Tag at={2} y={1330}>Pub générée avec Growthity</Tag><Over text={r.words[i]} at={1} y={1130} size={86} /></AbsoluteFill>;
     }
     if (name === 'say') return <LightBg><Statement lines={['Une phrase', 'suffit.']} dark={false} size={130} /></LightBg>;
   }
@@ -139,7 +139,7 @@ const Scene: React.FC<{r: Reel; name: string; dur: number}> = ({r, name, dur}) =
     const W = 410, H = 560, gx = 20, gy = 20;
     const x0 = SAFE_CX - W - gx / 2, y0 = 360;
     const focus = name.startsWith('p') ? Number(name.slice(1)) : -1;
-    if (focus >= 0) return <AbsoluteFill><Full src={r.clips[focus]} /><Tag at={0} y={1330}>{['Garagiste', 'Jouets & cadeaux', 'Mode & lifestyle', 'Immobilier · B2B'][focus]}</Tag></AbsoluteFill>;
+    if (focus >= 0) return <AbsoluteFill><Full src={r.clips[focus]} /><Tag at={0} y={1330}>{(r.labels || ['Garagiste', 'Jouets & cadeaux', 'Mode & lifestyle', 'Immobilier · B2B'])[focus]}</Tag></AbsoluteFill>;
     return (
       <StudioBg>
         {r.clips.map((c: string, i: number) => {
