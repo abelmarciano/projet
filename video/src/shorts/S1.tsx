@@ -1,96 +1,139 @@
 import React from 'react';
-import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
-import {StudioBg, LightBg} from '../components/Backgrounds';
-import {prog, pop, INOUT} from '../components/anim';
+import {interpolate, useCurrentFrame} from 'remotion';
+import {LightBg, StudioBg} from '../components/Backgrounds';
+import {prog, pop, INOUT, mix} from '../components/anim';
 import {C, DISPLAY, FONT, GRAD} from '../theme';
 import {SceneProps, wordAt} from './timeline';
-import {ACTORS, ActorTile, CheckIcon, EndCard, Phone, Pill, PromptBox, R, SAFE_CX, gradText} from './kit';
+import {EndCard, Phone, Pill, R, SAFE_CX, gradText} from './kit';
+import {Card, Glints, Sticker, Tick, Title} from './parts';
 
-// « Aucune de ces personnes n'existe. » — full-bleed wall of AI actors
-const COLS = [ACTORS.slice(0, 5), ACTORS.slice(5, 10), ACTORS.slice(10, 15)];
-const TW = 330;
-const TH = 586;
+// Short 1 — e-commerce bijoux (Jwel): Emma & Sarah, bracelets Trèfle / Cercle
 
-const Wall: React.FC<{tag: number}> = ({tag}) => {
+// « Vous vendez des bijoux en ligne ? Regardez ça. »
+export const S1Hook: React.FC<SceneProps> = ({lines}) => {
   const f = useCurrentFrame();
+  const look = wordAt(lines[0], 'regardez', 40);
+  const zoom = prog(f, look - 2, 16, INOUT);
+  const spin = interpolate(f, [0, 120], [-14, 4], {extrapolateRight: 'clamp'});
+  const W = mix(560, 680, zoom);
   return (
-    <AbsoluteFill style={{transform: `scale(${1.12 - f * 0.0006}) rotate(-4deg)`}}>
-      {COLS.map((col, c) => {
-        const dir = c % 2 ? 1 : -1;
-        const y0 = c % 2 ? -900 : -260;
-        return (
-          <div key={c} style={{position: 'absolute', left: -60 + c * (TW + 24), top: 0, display: 'flex', flexDirection: 'column', gap: 24, transform: `translateY(${y0 + dir * f * 1.6}px)`}}>
-            {col.map((a, i) => {
-              const p = pop(f, tag + (c * 5 + i) * 2.2, 13);
-              return (
-                <ActorTile key={a.name} src={a.src} w={TW} h={TH} loop={150}>
-                  {tag > 0 && (
-                    <div style={{position: 'absolute', top: 16, right: 16, transform: `scale(${p})`}}>
-                      <Pill tone="grad" size={22}>IA</Pill>
-                    </div>
-                  )}
-                </ActorTile>
-              );
-            })}
-          </div>
-        );
-      })}
-    </AbsoluteFill>
+    <StudioBg>
+      <div style={{position: 'absolute', left: R.x, width: R.w, top: R.y + 20, opacity: 1 - zoom * 0.25}}>
+        <Title text="Vous vendez des *bijoux* en ligne ?" start={2} step={4} size={98} />
+      </div>
+      <div style={{position: 'absolute', left: SAFE_CX - W / 2, top: mix(560, 520, zoom), width: W, height: W, transform: `rotate(${spin * (1 - zoom)}deg) scale(${pop(f, 6, 14)})`}}>
+        <Card src="img-bracelet-trefle.jpg" w={W} h={W} radius={36} style={{left: 0, top: 0}} />
+      </div>
+      <Glints x={SAFE_CX} y={mix(840, 860, zoom)} spread={300} start={look - 4} n={8} />
+    </StudioBg>
   );
 };
 
+// « Ces vidéos n'ont jamais été tournées. Ces femmes n'existent pas. »
 export const S1Wall: React.FC<SceneProps> = ({lines}) => {
   const f = useCurrentFrame();
-  const l2 = lines[1].start;
-  const hookOut = prog(f, l2 - 6, 12, INOUT);
-  const countIn = prog(f, l2, 16);
-  const count = Math.round(interpolate(f, [l2, wordAt(lines[1], 'cinq', 40) + 10], [0, 500], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}));
+  const l = lines[0];
+  const a = prog(f, 0, 16);
+  const b = prog(f, 6, 16);
+  const jamais = wordAt(l, 'jamais', 20);
+  const exist = wordAt(l, 'existent', 70);
   return (
-    <StudioBg>
-      <Wall tag={wordAt(lines[1], 'acteurs', 10)} />
-      <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(11,10,12,0.25) 0%, rgba(11,10,12,0.72) 30%, rgba(11,10,12,0.72) 52%, rgba(11,10,12,0.15) 72%, rgba(11,10,12,0.85) 100%)'}} />
-      {/* hook: fully visible on frame 0 for the thumbnail */}
-      <div style={{position: 'absolute', left: R.x, width: R.w, top: 430, textAlign: 'center', opacity: 1 - hookOut, transform: `translateY(${-hookOut * 60}px) scale(${1 + Math.min(f, 40) * 0.0012})`}}>
-        <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 112, lineHeight: 1.02, color: '#fff', textShadow: '0 10px 40px rgba(0,0,0,0.6)'}}>
-          Aucune de ces personnes <span style={gradText()}>n’existe.</span>
-        </div>
+    <StudioBg intensity={0.8}>
+      <div style={{position: 'absolute', left: R.x - 6, top: R.y + 40, transform: `translateX(${(1 - a) * -300}px) rotate(${-4 + (1 - a) * -8}deg)`}}>
+        <Phone src="ugc-emma-bracelet-1.mp4" w={410}>
+          <div style={{position: 'absolute', left: 16, top: 16}}>
+            <Pill tone="dark" size={18}>Emma · bracelet acier</Pill>
+          </div>
+        </Phone>
       </div>
-      <div style={{position: 'absolute', left: R.x, width: R.w, top: 400, textAlign: 'center', opacity: countIn, transform: `translateY(${(1 - countIn) * 40}px)`}}>
-        <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 230, lineHeight: 1, ...gradText('linear-gradient(100deg, #9DB4FF, #C9A8FF 55%, #FF9ED2)'), fontVariantNumeric: 'tabular-nums'}}>{count}+</div>
-        <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 70, color: '#fff', marginTop: 6}}>acteurs IA</div>
+      <div style={{position: 'absolute', left: R.x + 436, top: R.y + 110, transform: `translateX(${(1 - b) * 300}px) rotate(${4 + (1 - b) * 8}deg)`}}>
+        <Phone src="ugc-sarah-bracelet-1.mp4" w={410}>
+          <div style={{position: 'absolute', left: 16, top: 16}}>
+            <Pill tone="dark" size={18}>Sarah · jonc clou</Pill>
+          </div>
+        </Phone>
+      </div>
+      <Sticker at={jamais} rot={-9} size={44} bg="linear-gradient(120deg,#FF5A6E,#E5484D)" style={{left: R.x + 40, top: 560}}>
+        0 tournage
+      </Sticker>
+      <Sticker at={exist} rot={7} size={44} style={{left: R.x + 430, top: 880}}>
+        100 % IA
+      </Sticker>
+    </StudioBg>
+  );
+};
+
+// « Une photo de votre bracelet suffit. L'IA le fait porter, briller, présenter. »
+export const S1Make: React.FC<SceneProps> = ({lines}) => {
+  const f = useCurrentFrame();
+  const l = lines[0];
+  const drop = pop(f, 4, 13);
+  const ia = wordAt(l, "l'ia", 50);
+  const scan = interpolate(f, [ia - 6, ia + 18], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const keys = ['porter', 'briller', 'présenter'].map((k, i) => wordAt(l, k, 70 + i * 12));
+  return (
+    <LightBg>
+      <div style={{position: 'absolute', left: R.x, width: R.w, top: R.y + 6}}>
+        <Title text="1 photo produit →" start={0} step={3} size={70} color={C.ink} align="left" />
+      </div>
+      <div style={{position: 'absolute', left: R.x, top: 380, width: 440, height: 660, borderRadius: 30, border: `3px dashed ${C.primary}`, background: 'rgba(101,82,232,0.06)'}}>
+        <div style={{position: 'absolute', left: 20, top: 20, width: 400, height: 620, transform: `translateY(${(1 - drop) * -260}px) rotate(${(1 - drop) * 10}deg)`, opacity: Math.min(1, drop * 2)}}>
+          <Card src="img-bracelet-cercle.jpg" w={400} h={620} radius={22} style={{left: 0, top: 0}}>
+            <div style={{position: 'absolute', left: 0, right: 0, top: `${scan * 100}%`, height: 6, backgroundImage: GRAD, boxShadow: '0 0 30px 10px rgba(101,82,232,0.6)', opacity: scan > 0 && scan < 1 ? 1 : 0}} />
+          </Card>
+        </div>
+        <div style={{position: 'absolute', left: 0, right: 0, bottom: -64, textAlign: 'center', fontFamily: FONT, fontWeight: 700, fontSize: 24, color: C.slate}}>bracelet-cercle.jpg</div>
+      </div>
+      <div style={{position: 'absolute', left: R.x + 480, top: 430, display: 'flex', flexDirection: 'column', gap: 34}}>
+        <div style={{fontFamily: FONT, fontWeight: 800, fontSize: 24, letterSpacing: '0.14em', color: C.primary, opacity: prog(f, ia - 4, 10)}}>L’IA LE FAIT…</div>
+        {['Porter', 'Briller', 'Présenter'].map((t, i) => (
+          <Tick key={t} at={keys[i]} size={34}>
+            {t}
+          </Tick>
+        ))}
+      </div>
+      <Glints x={R.x + 230} y={700} spread={200} start={keys[1] - 4} n={6} />
+    </LightBg>
+  );
+};
+
+// « Et le visuel promo du Black Friday, prêt à publier. »
+export const S1Promo: React.FC<SceneProps> = ({lines}) => {
+  const f = useCurrentFrame();
+  const l = lines[0];
+  const bf = wordAt(l, 'black', 20);
+  const pub = wordAt(l, 'publier', 60);
+  const a = pop(f, 2, 14);
+  const b = pop(f, 8, 14);
+  return (
+    <StudioBg intensity={1.1}>
+      <div style={{position: 'absolute', left: R.x, top: 400, transform: `rotate(${-5 * a}deg) scale(${a})`}}>
+        <Card src="img-bracelet-trefle.jpg" w={460} h={460} radius={30} style={{left: 0, top: 0}} />
+      </div>
+      <div style={{position: 'absolute', left: R.x + 480, top: 440, transform: `rotate(${4 * b}deg) scale(${b})`}}>
+        <Card src="img-bracelet-cercle.jpg" w={350} h={542} radius={30} style={{left: 0, top: 0}} />
+      </div>
+      <Sticker at={bf} rot={-5} size={58} bg="linear-gradient(120deg,#111,#2A2433)" style={{left: R.x + 60, top: R.y + 20, border: '3px solid #fff'}}>
+        BLACK FRIDAY −30 %
+      </Sticker>
+      <div style={{position: 'absolute', left: R.x, top: 1060, opacity: prog(f, pub, 10), transform: `translateY(${(1 - prog(f, pub, 12)) * 30}px)`}}>
+        <Pill tone="green" size={30}>
+          ✓ Prêt à publier
+        </Pill>
       </div>
     </StudioBg>
   );
 };
 
-// « Vous écrivez une phrase… » → the actress plays it
-export const S1Phone: React.FC<SceneProps> = ({lines}) => {
-  const f = useCurrentFrame();
-  const send = Math.max(30, wordAt(lines[0], 'ils', 30) - 4);
-  const phone = prog(f, send, 22);
-  const ready = pop(f, lines[1].start + 2, 12);
-  const PW = 420;
-  return (
-    <LightBg>
-      <div style={{position: 'absolute', left: R.x, top: 560 - phone * 300, transform: `scale(${1 - phone * 0.22})`, transformOrigin: 'top center', opacity: 1 - phone * 0.15}}>
-        <PromptBox text="Une actrice face caméra pour mes pompes à chaleur, avec sous-titres." start={2} cps={46} send={send} size={38} />
-      </div>
-      <div style={{position: 'absolute', left: SAFE_CX - PW / 2, top: 450, opacity: phone, transform: `translateY(${(1 - phone) * 240}px) scale(${0.9 + phone * 0.1 + ready * 0.04})`}}>
-        <Phone src="ugc-charlotte.mp4" w={PW} from={send}>
-          <div style={{position: 'absolute', top: 14, left: 14}}>
-            <Pill tone="dark" size={17}>
-              <span style={{width: 9, height: 9, borderRadius: 5, background: '#FF4D5E'}} /> Charlotte · IA
-            </Pill>
-          </div>
-        </Phone>
-      </div>
-      <div style={{position: 'absolute', left: R.x, width: R.w, top: 1090, display: 'flex', justifyContent: 'center', transform: `scale(${ready})`}}>
-        <Pill tone="green" size={30}>
-          <CheckIcon size={28} /> Prête en 2 min
-        </Pill>
-      </div>
-    </LightBg>
-  );
-};
-
-export const S1End: React.FC<SceneProps> = ({dur}) => <EndCard dur={dur} />;
+export const S1End: React.FC<SceneProps> = ({dur}) => (
+  <EndCard
+    dur={dur}
+    tagline={
+      <>
+        Votre boutique
+        <br />
+        <span style={gradText()}>mérite mieux.</span>
+      </>
+    }
+  />
+);

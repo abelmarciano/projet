@@ -9,7 +9,7 @@ import base64, json, os, subprocess, sys, urllib.request
 VOICE = 'm5U7XCsc8v988k2RJAqN'  # Manon (ElevenLabs, French)
 URL = f'https://api.elevenlabs.io/v1/text-to-speech/{VOICE}/with-timestamps?output_format=mp3_44100_128'
 SETTINGS = {'stability': 0.38, 'similarity_boost': 0.8, 'style': 0.45, 'use_speaker_boost': True, 'speed': 1.08}
-FFMPEG = 'node_modules/@remotion/compositor-linux-x64-gnu/ffmpeg'
+FFMPEG = 'ffmpeg' if not os.path.exists('node_modules/@remotion/compositor-linux-x64-gnu/ffmpeg') else 'node_modules/@remotion/compositor-linux-x64-gnu/ffmpeg'
 ENV = dict(os.environ, LD_LIBRARY_PATH='node_modules/@remotion/compositor-linux-x64-gnu')
 SCRIPT = json.load(open('scripts/shorts_script.json'))
 

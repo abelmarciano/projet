@@ -1,174 +1,147 @@
 import React from 'react';
-import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
+import {interpolate, useCurrentFrame} from 'remotion';
 import {LightBg, StudioBg} from '../components/Backgrounds';
 import {Clip} from '../components/Media';
-import {MetaLogo} from '../components/UI';
 import {prog, pop, INOUT, mix} from '../components/anim';
 import {C, DISPLAY, FONT, GRAD} from '../theme';
 import {SceneProps, wordAt} from './timeline';
-import {CheckIcon, EndCard, Phone, Pill, PromptBox, R, SAFE_CX, gradText} from './kit';
+import {EndCard, Phone, Pill, R, SAFE_CX, gradText} from './kit';
+import {Tick, Title} from './parts';
 
-// « Vous payez encore trois mille euros pour une pub ? »
-export const S3Hook: React.FC<SceneProps> = () => {
-  const f = useCurrentFrame();
-  const shake = Math.sin(f * 1.7) * Math.max(0, 6 - f * 0.25);
-  return (
-    <StudioBg intensity={0.9}>
-      {/* the invoice behind */}
-      <div style={{position: 'absolute', left: SAFE_CX - 330, top: 640, width: 660, transform: `rotate(-6deg) translateY(${-Math.min(f, 80) * 0.5}px)`, background: '#fff', borderRadius: 24, padding: '30px 34px', fontFamily: FONT, boxShadow: '0 50px 120px -40px rgba(0,0,0,0.9)', opacity: 0.95}}>
-        <div style={{display: 'flex', justifyContent: 'space-between', fontSize: 22, color: C.slate}}>
-          <b style={{color: C.ink}}>Agence Créa+</b> Facture n° 0247
-        </div>
-        {[['Brief & concept', '900 €'], ['Tournage (1 jour)', '1 400 €'], ['Montage · 3 versions', '700 €']].map(([k, v]) => (
-          <div key={k} style={{display: 'flex', justifyContent: 'space-between', fontSize: 24, color: C.ink, padding: '14px 0', borderBottom: `1px solid ${C.hairline}`}}>
-            <span>{k}</span>
-            <span>{v}</span>
-          </div>
-        ))}
-        <div style={{display: 'flex', justifyContent: 'space-between', fontSize: 30, fontWeight: 800, color: C.ink, marginTop: 16}}>
-          <span>Total TTC</span>
-          <span style={{color: '#E5484D'}}>3 000 €</span>
-        </div>
-      </div>
-      <div style={{position: 'absolute', left: R.x, width: R.w, top: 300, textAlign: 'center', transform: `translateX(${shake}px)`}}>
-        <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 200, lineHeight: 1, whiteSpace: 'nowrap', color: '#fff', textShadow: '0 20px 60px rgba(229,72,77,0.55)'}}>3 000 €</div>
-        <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 76, color: '#fff', marginTop: 14}}>
-          pour <span style={gradText('linear-gradient(100deg,#FF8A8A,#FF4D6D)')}>une</span> pub ?
-        </div>
-      </div>
-    </StudioBg>
-  );
-};
+// Short 3 — e-commerce produits (gadgets, maison): Lou, porte-savon, bougie, sneakers
 
-// « Deux semaines d'attente. Des allers-retours sans fin. »
-const MAILS = ['Re: Pub V2 — retours client', 'Re: Re: V3, on change la musique ?', 'Re: Re: Re: V5_final.mp4', 'Re: Re: Re: Re: V7_FINAL_final.mp4'];
-export const S3Pain: React.FC<SceneProps> = ({lines}) => {
+// « Trois secondes. C'est tout ce que vous avez pour arrêter le scroll. »
+const FEED = [
+  {c: 'linear-gradient(160deg,#FF9A8B,#FF6A88)', t: 'Story'},
+  {c: 'linear-gradient(160deg,#5B8CFF,#6552E8)', t: 'Reel'},
+  {c: 'linear-gradient(160deg,#2BD2A0,#1C8D73)', t: 'Post'},
+  {c: 'linear-gradient(160deg,#FFC860,#FF8A3D)', t: 'Reel'},
+];
+export const S3Hook: React.FC<SceneProps> = ({lines, dur}) => {
   const f = useCurrentFrame();
-  const mailsAt = wordAt(lines[0], 'allers', 40) - 6;
-  const day = Math.min(14, Math.floor(interpolate(f, [4, mailsAt], [1, 14], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})));
-  const strike = prog(f, lines[0].frames - 16, 10);
+  const l = lines[0];
+  const stop = wordAt(l, 'arrêter', 60);
+  // countdown ring 3 → 0 over the whole hook
+  const t = interpolate(f, [0, dur - 6], [3, 0], {extrapolateRight: 'clamp'});
+  const n = Math.max(1, Math.ceil(t));
+  // feed scrolls fast, then snaps to a halt on "arrêter"
+  const speed = interpolate(f, [stop - 8, stop + 6], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
+  let y = 0;
+  for (let k = 0; k < f; k++) y += 34 * interpolate(k, [stop - 8, stop + 6], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const T = 560;
+  let yEnd = 0;
+  for (let k = 0; k < stop + 8; k++) yEnd += 34 * interpolate(k, [stop - 8, stop + 6], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const kStop = Math.max(2, Math.round(yEnd / T));
+  y = (y * kStop * T) / yEnd; // land exactly on a post
+  const off = y % T;
+  const halt = prog(f, stop + 4, 14);
   return (
-    <StudioBg intensity={0.7}>
-      <div style={{position: 'absolute', left: SAFE_CX - 190, top: R.y + 10, width: 380, borderRadius: 30, overflow: 'hidden', background: '#fff', boxShadow: '0 40px 100px -40px rgba(0,0,0,0.9)', fontFamily: FONT, textAlign: 'center', transform: `scale(${1 - prog(f, mailsAt, 14) * 0.15})`, transformOrigin: 'top center'}}>
-        <div style={{background: '#E5484D', color: '#fff', fontWeight: 800, fontSize: 30, padding: '14px 0', letterSpacing: '0.1em'}}>JOUR</div>
-        <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 190, color: C.ink, lineHeight: 1.1, fontVariantNumeric: 'tabular-nums'}}>{day}</div>
-        <div style={{fontSize: 26, color: C.slate, paddingBottom: 20}}>en attente de la V1…</div>
-      </div>
-      <div style={{position: 'absolute', left: R.x + 20, width: R.w - 40, top: 720}}>
-        {MAILS.map((m, i) => {
-          const p = pop(f, mailsAt + i * 6, 13);
+    <StudioBg>
+      <div style={{position: 'absolute', left: SAFE_CX - 230, top: 470, width: 460, height: 700, borderRadius: 40, overflow: 'hidden', border: '10px solid #0B0A0C', boxShadow: `0 0 0 ${halt * 8}px rgba(146,120,255,0.5), 0 60px 120px -40px rgba(0,0,0,0.9)`, background: '#16131C'}}>
+        {[0, 1, 2].map((i) => {
+          const k = Math.floor(y / T) + i;
+          const it = FEED[k % FEED.length];
+          // the post the feed stops on is a real product video
+          const real = k === kStop;
           return (
-            <div key={m} style={{display: 'flex', alignItems: 'center', gap: 16, background: '#fff', borderRadius: 20, padding: '18px 22px', marginTop: i ? 16 : 0, transform: `translateY(${(1 - p) * 80}px) rotate(${(i % 2 ? 1.5 : -1.5)}deg)`, opacity: p, boxShadow: '0 24px 50px -24px rgba(0,0,0,0.8)', fontFamily: FONT, position: 'relative', zIndex: i}}>
-              <div style={{width: 46, height: 46, borderRadius: 23, background: '#FDE2E2', color: '#E5484D', fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22}}>@</div>
-              <div style={{fontSize: 25, fontWeight: 700, color: C.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{m}</div>
+            <div key={i} style={{position: 'absolute', left: 10, top: i * T - off + 10, width: 420, height: T - 20, borderRadius: 22, overflow: 'hidden', background: it.c, filter: `blur(${speed * 6}px)`}}>
+              {real ? (
+                <Clip src="vid-sneakers.mp4" width={420} height={T - 20} />
+              ) : (
+                <>
+                  <div style={{position: 'absolute', left: 24, top: 24, width: 54, height: 54, borderRadius: 27, background: 'rgba(255,255,255,0.5)'}} />
+                  <div style={{position: 'absolute', left: 92, top: 34, width: 180, height: 16, borderRadius: 8, background: 'rgba(255,255,255,0.6)'}} />
+                  <div style={{position: 'absolute', left: 24, bottom: 30, fontFamily: FONT, fontWeight: 800, fontSize: 40, color: 'rgba(255,255,255,0.85)'}}>{it.t}</div>
+                </>
+              )}
             </div>
           );
         })}
       </div>
-      <div style={{position: 'absolute', left: R.x - 20, width: R.w + 40, top: 640, height: 16, borderRadius: 8, backgroundImage: 'linear-gradient(90deg,#FF8A8A,#FF4D6D)', transform: `rotate(-12deg) scaleX(${strike})`, transformOrigin: 'left center', boxShadow: '0 0 30px rgba(255,77,109,0.7)'}} />
+      <div style={{position: 'absolute', left: R.x, width: R.w, top: R.y + 6, display: 'flex', alignItems: 'center', gap: 28}}>
+        <svg width="150" height="150" viewBox="0 0 100 100" style={{flexShrink: 0}}>
+          <circle cx="50" cy="50" r="44" stroke="rgba(255,255,255,0.15)" strokeWidth="8" fill="none" />
+          <circle cx="50" cy="50" r="44" stroke="url(#g3)" strokeWidth="8" fill="none" strokeLinecap="round" strokeDasharray={276} strokeDashoffset={276 * (1 - t / 3)} transform="rotate(-90 50 50)" />
+          <defs>
+            <linearGradient id="g3" x1="0" x2="1">
+              <stop offset="0" stopColor={C.blue} />
+              <stop offset="1" stopColor={C.pink} />
+            </linearGradient>
+          </defs>
+          <text x="50" y="58" textAnchor="middle" fontFamily={DISPLAY} fontWeight={700} fontSize="40" fill="#fff">
+            {n}
+          </text>
+          <text x="50" y="76" textAnchor="middle" fontFamily={FONT} fontWeight={800} fontSize="13" fill="rgba(255,255,255,0.7)" letterSpacing="2">
+            SEC
+          </text>
+        </svg>
+        <Title text="pour *arrêter* le scroll." start={4} step={3} size={72} align="left" />
+      </div>
     </StudioBg>
   );
 };
 
-// « Avec Growthity, une phrase suffit. Vidéos UGC, visuels, carrousels. »
-export const S3Make: React.FC<SceneProps> = ({lines}) => {
+// « Un smartphone qui se déplie face caméra… » / « un porte-savon qui règle un vrai problème… une bougie qui crée l'ambiance. »
+const DEMOS = [
+  {src: 'ugc-lou-pliant-1.mp4', tag: 'Démo produit', k: 'smartphone'},
+  {src: 'ugc-porte-savon.mp4', tag: 'Problème → solution', k: 'porte'},
+  {src: 'ugc-bougie.mp4', tag: 'Ambiance', k: 'bougie'},
+];
+export const S3Demos: React.FC<SceneProps> = ({lines}) => {
   const f = useCurrentFrame();
-  const l = lines[0];
-  const send = wordAt(l, 'phrase', 24) + 8;
-  const shrink = prog(f, send + 4, 16, INOUT);
-  const vid = pop(f, wordAt(l, 'vidéos', 50), 13);
-  const vis = pop(f, wordAt(l, 'visuels', 60), 13);
-  const car = pop(f, wordAt(l, 'carrousels', 70), 13);
-  const carPos = interpolate(f, [wordAt(l, 'carrousels', 70) + 10, wordAt(l, 'carrousels', 70) + 26], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
+  const at = [0, wordAt(lines[1], 'porte', 10), wordAt(lines[1], 'bougie', 80)];
+  // carousel: the newest demo is big in the centre, earlier ones slide left, shrink and dim
+  const W = 440;
   return (
     <LightBg>
-      <div style={{position: 'absolute', left: R.x, top: mix(560, R.y + 10, shrink), width: R.w, transform: `scale(${1 - shrink * 0.3})`, transformOrigin: 'top center'}}>
-        <PromptBox text="Pompes à chaleur financées par les aides de l’État." start={0} cps={60} send={send} size={38} />
-      </div>
-      <div style={{position: 'absolute', left: R.x, top: 500, transform: `translateY(${(1 - vid) * 200}px) rotate(${(1 - vid) * -6}deg)`, opacity: vid}}>
-        <Phone src="ugc-femme.mp4" w={390} from={wordAt(l, 'vidéos', 50)}>
-          <div style={{position: 'absolute', bottom: 16, left: 16}}>
-            <Pill size={19}>Vidéo UGC · 9:16</Pill>
+      {DEMOS.map((d, i) => {
+        if (f < at[i] - 2) return null;
+        const p = prog(f, at[i], 18, INOUT);
+        const k = DEMOS.reduce((acc, _, j) => acc + (j > i ? prog(f, at[j] - 4, 18, INOUT) : 0), 0);
+        const cx = SAFE_CX + (1 - p) * 520 - Math.min(k, 1) * 230 - Math.max(0, k - 1) * 140;
+        const sc = 1 - Math.min(k, 1) * 0.28;
+        return (
+          <div key={d.src} style={{position: 'absolute', left: cx - W / 2, top: R.y + 20, transform: `scale(${sc}) rotate(${-7 * Math.min(k, 1) + (1 - p) * 10}deg)`, transformOrigin: 'center center', opacity: p * (1 - Math.max(0, k - 1)) * (1 - Math.min(k, 1) * 0.25), zIndex: 10 + i}}>
+            <Phone src={d.src} w={W} from={at[i]}>
+              <div style={{position: 'absolute', left: 14, bottom: 14}}>
+                <Pill size={22}>{d.tag}</Pill>
+              </div>
+            </Phone>
           </div>
-        </Phone>
-      </div>
-      <div style={{position: 'absolute', left: R.x + 420, top: 500, width: 420, height: 320, borderRadius: 24, overflow: 'hidden', transform: `scale(${vis})`, boxShadow: '0 40px 80px -36px rgba(37,22,120,0.6)'}}>
-        <Clip src="img-pac-fioul.webp" width={420} height={320} />
-        <div style={{position: 'absolute', bottom: 14, left: 14}}>
-          <Pill size={19}>Visuel</Pill>
-        </div>
-      </div>
-      <div style={{position: 'absolute', left: R.x + 420, top: 846, width: 420, height: 320, borderRadius: 24, overflow: 'hidden', transform: `scale(${car})`, boxShadow: '0 40px 80px -36px rgba(37,22,120,0.6)'}}>
-        <div style={{display: 'flex', width: 840, transform: `translateX(${-carPos * 420}px)`}}>
-          <Clip src="img-pac-rge.webp" width={420} height={320} />
-          <Clip src="img-pac-70.webp" width={420} height={320} />
-        </div>
-        <div style={{position: 'absolute', bottom: 14, left: 14}}>
-          <Pill size={19}>Carrousel</Pill>
-        </div>
-      </div>
+        );
+      })}
     </LightBg>
   );
 };
 
-// « Et c'est publié sur Meta, en un clic. »
-export const S3Publish: React.FC<SceneProps> = ({lines}) => {
+// « Chaque produit a sa démo, son actrice, son accroche. »
+export const S3Grid: React.FC<SceneProps> = ({lines}) => {
   const f = useCurrentFrame();
-  const click = wordAt(lines[0], 'clic', 50);
-  const live = f >= click;
-  const burst = prog(f, click, 24);
-  const cx = interpolate(f, [8, click - 4], [980, 520], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
-  const cy = interpolate(f, [8, click - 4], [1500, 790], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
+  const l = lines[0];
+  const keys = [wordAt(l, 'démo', 20), wordAt(l, 'actrice', 40), wordAt(l, 'accroche', 60)];
+  const p = pop(f, 0, 14);
+  const pan = interpolate(f, [0, 150], [1.12, 1], {extrapolateRight: 'clamp'});
   return (
-    <LightBg>
-      <div style={{position: 'absolute', left: R.x, width: R.w, top: R.y + 30, background: '#fff', borderRadius: 32, padding: 34, boxShadow: '0 50px 120px -50px rgba(37,22,120,0.6)', fontFamily: FONT}}>
-        <div style={{display: 'flex', alignItems: 'center', gap: 22}}>
-          <div style={{borderRadius: 18, overflow: 'hidden'}}>
-            <Clip src="ugc-femme.mp4" width={130} height={170} startFrom={40} />
-          </div>
-          <div style={{flex: 1}}>
-            <div style={{fontSize: 19, letterSpacing: '0.14em', color: C.slate, fontWeight: 700}}>CAMPAGNE</div>
-            <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 44, color: C.ink}}>Pompes à chaleur</div>
-            <div style={{fontSize: 22, color: C.slate}}>3 créations · Objectif leads</div>
-          </div>
+    <StudioBg>
+      <div style={{position: 'absolute', left: SAFE_CX - 300, top: R.y + 10, width: 600, height: 540, borderRadius: 30, overflow: 'hidden', transform: `scale(${0.8 + 0.2 * p})`, opacity: Math.min(1, p * 2), boxShadow: '0 50px 100px -40px rgba(0,0,0,0.9)'}}>
+        <div style={{transform: `scale(${pan})`, width: 600, height: 540}}>
+          <Clip src="vid-sneakers.mp4" width={600} height={540} startFrom={90} />
         </div>
-        {[['Ciblage', 'Paris · Lyon · Bordeaux'], ['Budget', '20 € / jour'], ['Placements', 'Feed · Reels · Stories']].map(([k, v]) => (
-          <div key={k} style={{display: 'flex', justifyContent: 'space-between', fontSize: 26, padding: '22px 0', borderTop: `1px solid ${C.hairline}`, marginTop: k === 'Ciblage' ? 24 : 0}}>
-            <span style={{color: C.slate}}>{k}</span>
-            <b style={{color: C.ink}}>{v}</b>
-          </div>
+        <div style={{position: 'absolute', left: 16, top: 16}}>
+          <Pill tone="dark" size={18}>Film produit · sneakers</Pill>
+        </div>
+      </div>
+      <div style={{position: 'absolute', left: R.x, width: R.w, top: 850, display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 16}}>
+        {['Sa démo', 'Son actrice', 'Son accroche'].map((t, i) => (
+          <Tick key={t} at={keys[i]} size={32}>
+            {t}
+          </Tick>
         ))}
-        <div style={{position: 'relative', marginTop: 18}}>
-          <div style={{height: 96, borderRadius: 22, backgroundImage: live ? 'linear-gradient(120deg,#19A866,#22C17A)' : GRAD, color: '#fff', fontWeight: 800, fontSize: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, transform: `scale(${f > click - 3 && f < click + 3 ? 0.95 : 1})`}}>
-            {live ? (
-              <>
-                <CheckIcon size={32} /> En ligne sur Meta
-              </>
-            ) : (
-              <>
-                <MetaLogo size={34} /> Publier sur Meta
-              </>
-            )}
-          </div>
-          {burst > 0 && burst < 1 &&
-            Array.from({length: 18}).map((_, i) => {
-              const a = (i / 18) * Math.PI * 2;
-              const d = 40 + burst * 300;
-              return <div key={i} style={{position: 'absolute', left: '50%', top: '50%', width: 16, height: 16, borderRadius: 8, background: [C.blue, C.indigo, C.purple, C.pink, C.success][i % 5], transform: `translate(${Math.cos(a) * d * 1.3}px, ${Math.sin(a) * d * 0.7}px) scale(${1 - burst})`}} />;
-            })}
-        </div>
       </div>
-      <div style={{position: 'absolute', left: R.x, width: R.w, top: 1010, display: 'flex', justifyContent: 'center', gap: 16, opacity: prog(f, click + 6, 12), transform: `translateY(${(1 - prog(f, click + 6, 12)) * 20}px)`}}>
-        <Pill size={24}>Facebook</Pill>
-        <Pill size={24}>Instagram</Pill>
-        <Pill size={24} tone="green">● Live</Pill>
+      <div style={{position: 'absolute', left: R.x, width: R.w, top: 990, textAlign: 'center', fontFamily: FONT, fontWeight: 700, fontSize: 30, color: 'rgba(255,255,255,0.75)', opacity: prog(f, keys[2] + 8, 12)}}>
+        Générées par <span style={{backgroundImage: GRAD, WebkitBackgroundClip: 'text', color: 'transparent'}}>Growthity</span>
       </div>
-      {f < click + 20 && (
-        <svg width="54" height="54" viewBox="0 0 24 24" style={{position: 'absolute', left: cx, top: cy, filter: 'drop-shadow(0 6px 10px rgba(0,0,0,0.35))', transform: `scale(${f > click - 3 && f < click + 4 ? 0.85 : 1})`}}>
-          <path d="M5 3l14 8-6 1.5L10 19z" fill="#0F172A" stroke="#fff" strokeWidth={1.5} strokeLinejoin="round" />
-        </svg>
-      )}
-    </LightBg>
+    </StudioBg>
   );
 };
 
@@ -177,9 +150,9 @@ export const S3End: React.FC<SceneProps> = ({dur}) => (
     dur={dur}
     tagline={
       <>
-        Une phrase.
+        Vos produits,
         <br />
-        <span style={gradText()}>Pas 3 000 €.</span>
+        <span style={gradText()}>en action.</span>
       </>
     }
   />

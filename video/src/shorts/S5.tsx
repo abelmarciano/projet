@@ -1,219 +1,157 @@
 import React from 'react';
-import {AbsoluteFill, interpolate, Sequence, useCurrentFrame} from 'remotion';
+import {interpolate, Sequence, useCurrentFrame} from 'remotion';
 import {LightBg, StudioBg} from '../components/Backgrounds';
 import {Clip} from '../components/Media';
-import {MetaLogo} from '../components/UI';
 import {prog, pop, INOUT, mix} from '../components/anim';
-import {C, DISPLAY, FONT, GRAD} from '../theme';
-import {Line, SceneProps, wordAt} from './timeline';
-import {ACTORS, ActorTile, CheckIcon, EndCard, Phone, Pill, PromptBox, R, SAFE_CX, gradText} from './kit';
+import {C, DISPLAY, FONT} from '../theme';
+import {SceneProps, wordAt} from './timeline';
+import {CheckIcon, EndCard, Phone, Pill, PromptBox, R, SAFE_CX, gradText} from './kit';
+import {Sticker, Tick, Title} from './parts';
 
-const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+// Short 5 — restauration / food (artisan pâtes fraîches, grossistes): artisane, plans cuisine & entrepôt
 
-// Stopwatch over the whole short: big in the hook, small at the top while we work, big again at the finish
-export const S5Timer: React.FC<{lines: Line[]}> = ({lines}) => {
-  const f = useCurrentFrame();
-  const [a, b, c, d, e] = lines;
-  const stop = e.words.find((w) => w.w.toLowerCase().startsWith('cinquante'))?.f ?? e.start + 30;
-  const secs = interpolate(f, [a.start + a.frames - 6, b.start + b.frames, c.start + c.frames, d.start + d.frames, stop], [0, 22, 96, 114, 118], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const toTop = prog(f, a.start + a.frames - 10, 14, INOUT);
-  const back = prog(f, e.start, 14, INOUT);
-  const k = Math.max(0, toTop - back);
-  const end = e.words.find((w) => w.w.toLowerCase().startsWith('growthity'))?.f ?? e.start + e.frames - 40;
-  const gone = prog(f, end - 6, 8);
-  const done = f >= stop;
-  const tick = done ? pop(f, stop, 10) : 1;
-  return (
-    <div
-      style={{
-        position: 'absolute',
-        left: SAFE_CX,
-        top: mix(640, 262, k),
-        transform: `translateX(-50%) scale(${mix(1, 0.4, k) * (done ? 0.9 + tick * 0.1 : 1)})`,
-        transformOrigin: 'top center',
-        opacity: 1 - gone,
-        zIndex: 40,
-        display: 'flex',
-        alignItems: 'center',
-        gap: 26,
-        padding: '18px 46px',
-        borderRadius: 999,
-        background: done ? C.success : 'rgba(11,10,12,0.86)',
-        boxShadow: '0 30px 80px -30px rgba(0,0,0,0.8)',
-      }}
-    >
-      <svg width="96" height="96" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="13.5" r="8" stroke="#fff" strokeWidth={2} />
-        <path d="M12 13.5V9" stroke="#fff" strokeWidth={2} strokeLinecap="round" transform={`rotate(${secs * 6} 12 13.5)`} />
-        <path d="M9.5 2.5h5M12 2.5v3" stroke="#fff" strokeWidth={2} strokeLinecap="round" />
-      </svg>
-      <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 200, lineHeight: 1, color: '#fff', fontVariantNumeric: 'tabular-nums'}}>{fmt(secs)}</div>
-    </div>
-  );
-};
+const WARM = 'linear-gradient(100deg,#FFB347,#FF6A3D)';
 
-// « Une pub Meta, de zéro à en ligne. Chrono ! »
+// « Vous faites des pâtes fraîches. Pas des vidéos. Et c'est normal. »
 export const S5Hook: React.FC<SceneProps> = ({lines}) => {
   const f = useCurrentFrame();
-  const go = pop(f, wordAt(lines[0], 'chrono', 40), 10);
+  const l = lines[0];
+  const pas = wordAt(l, 'pas', 40);
+  const norm = wordAt(l, 'normal', 80);
+  const cross = prog(f, pas + 8, 10);
   return (
-    <StudioBg>
-      <div style={{position: 'absolute', left: R.x, width: R.w, top: 300, textAlign: 'center', fontFamily: DISPLAY, fontWeight: 700, fontSize: 96, lineHeight: 1.04, color: '#fff'}}>
-        Une pub Meta, de <span style={gradText()}>zéro</span> à <span style={gradText()}>en ligne.</span>
+    <StudioBg intensity={0.8}>
+      <div style={{position: 'absolute', left: R.x, width: R.w, top: R.y + 20}}>
+        <Title text="Vous faites des *pâtes* *fraîches.*" start={2} step={4} size={100} grad={WARM} />
       </div>
-      <div style={{position: 'absolute', left: R.x, width: R.w, top: 940, display: 'flex', justifyContent: 'center', transform: `scale(${go})`}}>
-        <Pill tone="grad" size={44}>Chrono !</Pill>
+      <div style={{position: 'absolute', left: SAFE_CX - 160, top: 640, width: 320, height: 240, opacity: prog(f, pas - 2, 10), transform: `scale(${pop(f, pas - 2, 12)})`}}>
+        <svg width="320" height="240" viewBox="0 0 64 48">
+          <rect x="4" y="12" width="40" height="28" rx="6" fill="none" stroke="#fff" strokeWidth="3" />
+          <path d="M44 22l14-8v20l-14-8z" fill="none" stroke="#fff" strokeWidth="3" strokeLinejoin="round" />
+          <circle cx="24" cy="26" r="7" fill="none" stroke="#fff" strokeWidth="3" />
+        </svg>
+        <div style={{position: 'absolute', left: -20, right: -20, top: '48%', height: 14, borderRadius: 7, backgroundImage: 'linear-gradient(90deg,#FF8A8A,#FF4D6D)', transform: `rotate(-20deg) scaleX(${cross})`, transformOrigin: 'left', boxShadow: '0 0 24px rgba(255,77,109,0.8)'}} />
+      </div>
+      <div style={{position: 'absolute', left: R.x, width: R.w, top: 960, textAlign: 'center', fontFamily: DISPLAY, fontWeight: 700, fontSize: 66, color: '#fff', opacity: prog(f, norm - 6, 10), transform: `translateY(${(1 - prog(f, norm - 6, 12)) * 30}px)`}}>
+        Et c’est <span style={gradText(WARM)}>normal.</span>
       </div>
     </StudioBg>
   );
 };
 
-// « Je décris mon produit. »
-export const S5Describe: React.FC<SceneProps> = ({dur}) => (
-  <LightBg>
-    <div style={{position: 'absolute', left: R.x, top: 470, width: R.w}}>
-      <PromptBox text="Pompes à chaleur financées par les aides. Vidéo UGC, actrice face caméra." start={0} cps={Math.max(45, (74 * 30) / Math.max(20, dur - 14))} send={dur - 6} size={34} />
-    </div>
-  </LightBg>
-);
-
-const SCRIPT = [
-  ['HOOK', 'Si vous vous chauffez encore au gaz ou au fioul, écoutez bien.'],
-  ['PREUVE', 'Jusqu’à 70 % d’économies sur le chauffage.'],
-  ['CTA', 'Vérifiez votre éligibilité en 30 secondes.'],
-];
-
-// « L'IA écrit le script, choisit l'actrice, tourne la vidéo. »
-export const S5Make: React.FC<SceneProps> = ({lines, dur}) => {
+// « Growthity met une artisane face caméra, dans votre atelier. »
+export const S5Artisan: React.FC<SceneProps> = ({lines}) => {
   const f = useCurrentFrame();
   const l = lines[0];
-  const t1 = wordAt(l, 'script', 6) - 8;
-  const t2 = wordAt(l, 'choisit', 30) - 4;
-  const t3 = wordAt(l, 'tourne', 60) - 4;
-  const panel = f < t2 ? 0 : f < t3 ? 1 : 2;
-  const pin = prog(f, [t1, t2, t3][panel], 12);
-  const reel = interpolate(f, [t2, t2 + Math.max(16, t3 - t2 - 8)], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
-  const faces = ACTORS.slice(0, 8);
-  const pick = 6; // lands on Charlotte (inserted below)
-  const list = [...faces.slice(0, pick), {src: 'ugc-charlotte.mp4', name: 'Charlotte'}, ...faces.slice(pick)];
-  const TW = 250;
+  const keys = [wordAt(l, 'artisane', 20), wordAt(l, 'caméra', 40), wordAt(l, 'atelier', 60)];
+  const p = prog(f, 0, 18, INOUT);
   return (
     <LightBg>
-      <div style={{position: 'absolute', left: R.x, width: R.w, top: 420, textAlign: 'center', fontFamily: FONT, fontWeight: 800, fontSize: 30, letterSpacing: '0.14em', color: C.primary}}>
-        {['1 · SCRIPT', '2 · ACTRICE', '3 · TOURNAGE'][panel]}
+      <div style={{position: 'absolute', left: R.x + R.w - 500, top: R.y + 10, transform: `translateX(${(1 - p) * 500}px) rotate(${(1 - p) * 10}deg)`}}>
+        <Phone src="ugc-pates-fraiches.mp4" w={500}>
+          <div style={{position: 'absolute', left: 16, top: 16}}>
+            <Pill tone="dark" size={19}>Artisane IA · atelier</Pill>
+          </div>
+        </Phone>
       </div>
-      <div style={{position: 'absolute', left: R.x, width: R.w, top: 480, opacity: pin, transform: `translateX(${(1 - pin) * 120}px)`}}>
-        {panel === 0 && (
-          <div style={{background: '#fff', borderRadius: 30, padding: 34, boxShadow: '0 40px 90px -40px rgba(37,22,120,0.55)', fontFamily: FONT}}>
-            {SCRIPT.map(([k, v], i) => {
-              const p = prog(f, t1 + 4 + i * 9, 10);
-              return (
-                <div key={k} style={{opacity: p, transform: `translateY(${(1 - p) * 20}px)`, marginTop: i ? 26 : 0}}>
-                  <div style={{fontSize: 20, fontWeight: 800, letterSpacing: '0.12em', ...gradText(GRAD)}}>{k}</div>
-                  <div style={{fontSize: 33, lineHeight: 1.3, color: C.ink, fontWeight: 600, marginTop: 6}}>{v}</div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-        {panel === 1 && (
-          <div style={{position: 'relative', height: 640, overflow: 'hidden', marginLeft: -R.x, width: 1080}}>
-            <div style={{position: 'absolute', top: 40, left: 540 - TW / 2, display: 'flex', gap: 22, transform: `translateX(${-reel * pick * (TW + 22)}px)`}}>
-              {list.map((a, i) => {
-                const on = i === pick && reel > 0.98;
-                return <ActorTile key={a.name} src={a.src} name={a.name} w={TW} h={444} loop={150} style={{transform: `scale(${on ? 1.1 : 0.94})`, boxShadow: on ? `0 0 0 7px ${C.primary}, 0 40px 80px -30px rgba(101,82,232,0.9)` : undefined, opacity: on || reel < 0.98 ? 1 : 0.45}} />;
-              })}
-            </div>
-          </div>
-        )}
-        {panel === 2 && (
-          <div style={{display: 'flex', justifyContent: 'center'}}>
-            <Phone src="ugc-charlotte.mp4" w={390} from={t3}>
-              <div style={{position: 'absolute', inset: 0, background: '#0B0A0C', opacity: interpolate(f, [t3, t3 + 16], [0.85, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}), display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: FONT, fontWeight: 700, fontSize: 30, color: '#fff'}}>
-                Tournage IA…
-              </div>
-            </Phone>
-          </div>
-        )}
+      <div style={{position: 'absolute', left: R.x, top: 500, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 26}}>
+        {['Artisane', 'Face caméra', 'Votre atelier'].map((t, i) => (
+          <Tick key={t} at={keys[i]} size={28}>
+            {t}
+          </Tick>
+        ))}
       </div>
     </LightBg>
   );
 };
 
-// « Je choisis mon ciblage… et je publie. »
+// « Pour vos clients pros : des plans cinéma, de la cuisine à l'entrepôt. »
+export const S5Pro: React.FC<SceneProps> = ({lines}) => {
+  const f = useCurrentFrame();
+  const l = lines[0];
+  const cine = wordAt(l, 'cinéma', 40);
+  const cui = wordAt(l, 'cuisine', 60);
+  const ent = wordAt(l, "l'entrepôt", 80);
+  const W = 410;
+  const H = 730;
+  const a = prog(f, 2, 16, INOUT);
+  const b = prog(f, cine - 4, 16, INOUT);
+  const bars = prog(f, cine - 6, 14);
+  return (
+    <StudioBg intensity={0.6}>
+      {[{src: 'vid-oeufs-cuisine.mp4', t: 'Cuisine', p: a, x: R.x, from: 2, hi: cui}, {src: 'vid-entrepot-vaisselle.mp4', t: 'Entrepôt', p: b, x: R.x + R.w - W, from: cine - 4, hi: ent}].map((c) => (
+        <div key={c.src} style={{position: 'absolute', left: c.x, top: 330, width: W, height: H, borderRadius: 26, overflow: 'hidden', opacity: c.p, transform: `translateY(${(1 - c.p) * 300}px) scale(${mix(1.1, 1, c.p) * (f >= c.hi && f < c.hi + 24 ? 1.03 : 1)})`, boxShadow: '0 50px 100px -40px rgba(0,0,0,0.95)'}}>
+          <Sequence from={c.from} layout="none">
+            <Clip src={c.src} width={W} height={H} />
+          </Sequence>
+          <div style={{position: 'absolute', left: 14, bottom: 14}}>
+            <Pill size={22}>{c.t}</Pill>
+          </div>
+        </div>
+      ))}
+      {/* cinema bars */}
+      <div style={{position: 'absolute', left: 0, right: 0, top: 0, height: 240 * bars, background: '#000'}} />
+      <div style={{position: 'absolute', left: R.x, width: R.w, top: 258, textAlign: 'center', fontFamily: FONT, fontWeight: 800, fontSize: 26, letterSpacing: '0.3em', color: '#FFD08A', opacity: bars}}>
+        PLANS CINÉMA · 9:16
+      </div>
+    </StudioBg>
+  );
+};
+
+// « Une phrase, et votre pub tourne sur Instagram et Facebook. »
+const PROMPT = 'Pâtes fraîches artisanales, livrées aux restaurants de Lyon.';
 export const S5Publish: React.FC<SceneProps> = ({lines}) => {
   const f = useCurrentFrame();
   const l = lines[0];
-  const click = wordAt(l, 'publie', 40);
-  const live = f >= click;
-  const chips = ['Paris (75)', 'Lyon (69)', 'Bordeaux (33)', '25-65 ans', 'Propriétaires'];
-  const cx = interpolate(f, [click - 22, click - 3], [960, 520], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
-  const cy = interpolate(f, [click - 22, click - 3], [1450, 1012], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: INOUT});
+  const send = wordAt(l, 'et', 20) + 2;
+  const insta = wordAt(l, 'instagram', 50);
+  const fb = wordAt(l, 'facebook', 70);
+  const up = prog(f, send, 16, INOUT);
+  const stats = Math.round(interpolate(f, [insta, insta + 60], [0, 12480], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}));
   return (
     <LightBg>
-      <div style={{position: 'absolute', left: R.x, width: R.w, top: 430, background: '#fff', borderRadius: 32, padding: 34, boxShadow: '0 50px 120px -50px rgba(37,22,120,0.6)', fontFamily: FONT}}>
-        <div style={{fontSize: 22, fontWeight: 800, letterSpacing: '0.14em', color: C.slate}}>CIBLAGE</div>
-        <div style={{display: 'flex', flexWrap: 'wrap', gap: 14, marginTop: 20}}>
-          {chips.map((c, i) => {
-            const p = pop(f, 4 + i * 5, 12);
-            return (
-              <div key={c} style={{transform: `scale(${p})`, padding: '14px 22px', borderRadius: 999, background: '#EEEBFF', color: C.primary, fontWeight: 700, fontSize: 27}}>
-                ✓ {c}
+      <div style={{position: 'absolute', left: R.x, top: mix(520, R.y + 10, up), width: R.w, transform: `scale(${1 - up * 0.12})`, transformOrigin: 'top center'}}>
+        <PromptBox text={PROMPT} start={0} cps={Math.max(50, (PROMPT.length * 30) / Math.max(20, send - 4))} send={send} size={36} />
+      </div>
+      <div style={{position: 'absolute', left: R.x, width: R.w, top: 620, display: 'flex', flexDirection: 'column', gap: 24}}>
+        {[
+          {n: 'Instagram', at: insta, c: 'linear-gradient(120deg,#F58529,#DD2A7B,#8134AF)'},
+          {n: 'Facebook', at: fb, c: 'linear-gradient(120deg,#1877F2,#3B5BDB)'},
+        ].map((s) => {
+          const p = pop(f, s.at, 12);
+          return (
+            <div key={s.n} style={{display: 'flex', alignItems: 'center', gap: 22, background: '#fff', borderRadius: 26, padding: '22px 26px', boxShadow: '0 30px 60px -30px rgba(37,22,120,0.5)', opacity: Math.min(1, p * 2), transform: `translateX(${(1 - p) * 200}px)`, fontFamily: FONT}}>
+              <div style={{width: 70, height: 70, borderRadius: 20, backgroundImage: s.c, flexShrink: 0}} />
+              <div style={{flex: 1}}>
+                <div style={{fontSize: 32, fontWeight: 800, color: C.ink}}>{s.n}</div>
+                <div style={{fontSize: 22, color: C.slate}}>Reels · Stories · Fil</div>
               </div>
-            );
-          })}
-        </div>
-        <div style={{display: 'flex', justifyContent: 'space-between', fontSize: 28, marginTop: 30, paddingTop: 24, borderTop: `1px solid ${C.hairline}`}}>
-          <span style={{color: C.slate}}>Budget</span>
-          <b style={{color: C.ink}}>20 € / jour</b>
-        </div>
-        <div style={{marginTop: 30, height: 100, borderRadius: 24, backgroundImage: live ? 'linear-gradient(120deg,#19A866,#22C17A)' : GRAD, color: '#fff', fontWeight: 800, fontSize: 34, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, transform: `scale(${f > click - 3 && f < click + 3 ? 0.95 : 1})`}}>
-          {live ? (
-            <>
-              <CheckIcon size={34} /> Publiée
-            </>
-          ) : (
-            <>
-              <MetaLogo size={36} /> Publier sur Meta
-            </>
-          )}
+              <div style={{display: 'flex', alignItems: 'center', gap: 10, padding: '10px 18px', borderRadius: 999, background: C.success, color: '#fff', fontWeight: 800, fontSize: 22}}>
+                <CheckIcon size={20} /> En ligne
+              </div>
+            </div>
+          );
+        })}
+        <div style={{textAlign: 'center', fontFamily: DISPLAY, fontWeight: 700, fontSize: 54, color: C.ink, marginTop: 10, opacity: prog(f, insta + 6, 10)}}>
+          <span style={{fontVariantNumeric: 'tabular-nums'}}>{stats.toLocaleString('fr-FR')}</span> <span style={{fontSize: 30, color: C.slate}}>personnes touchées</span>
         </div>
       </div>
-      {f < click + 16 && (
-        <svg width="56" height="56" viewBox="0 0 24 24" style={{position: 'absolute', left: cx, top: cy, filter: 'drop-shadow(0 6px 10px rgba(0,0,0,0.35))', transform: `scale(${f > click - 3 && f < click + 4 ? 0.85 : 1})`}}>
-          <path d="M5 3l14 8-6 1.5L10 19z" fill="#0F172A" stroke="#fff" strokeWidth={1.5} strokeLinejoin="round" />
-        </svg>
-      )}
+      <Sticker at={fb + 12} rot={-6} size={34} bg={WARM} style={{left: R.x + 520, top: 560}}>
+        Lyon · 15 km
+      </Sticker>
     </LightBg>
   );
 };
 
-// « En ligne. Une minute cinquante-huit. Growthity ! »
-export const S5Finish: React.FC<SceneProps> = ({lines, dur}) => {
-  const f = useCurrentFrame();
-  const l = lines[0];
-  const end = wordAt(l, 'growthity', dur - 40) - 6;
-  const ok = pop(f, 2, 11);
-  return (
-    <>
-      <StudioBg>
-        <div style={{position: 'absolute', left: R.x, width: R.w, top: 300, textAlign: 'center', transform: `scale(${ok})`}}>
-          <div style={{width: 150, height: 150, borderRadius: 75, background: C.success, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 0 18px rgba(34,193,122,0.2)'}}>
-            <CheckIcon size={92} />
-          </div>
-          <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 110, color: '#fff', marginTop: 30}}>En ligne.</div>
-        </div>
-        <div style={{position: 'absolute', left: R.x, width: R.w, top: 1010, display: 'flex', justifyContent: 'center', gap: 14, opacity: prog(f, 10, 12)}}>
-          <Pill size={26}>
-            <MetaLogo size={28} /> Facebook · Instagram
-          </Pill>
-        </div>
-      </StudioBg>
-      <Sequence from={end} layout="none">
-        <AbsoluteFill>
-          <EndCard dur={dur - end} />
-        </AbsoluteFill>
-      </Sequence>
-    </>
-  );
-};
+export const S5End: React.FC<SceneProps> = ({dur}) => (
+  <EndCard
+    dur={dur}
+    tagline={
+      <>
+        Faites saliver
+        <br />
+        <span style={gradText(WARM)}>votre ville.</span>
+      </>
+    }
+  />
+);

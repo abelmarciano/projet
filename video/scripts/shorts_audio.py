@@ -11,7 +11,7 @@ from scipy.io import wavfile
 SR = 48000
 FPS = 30
 CFG = json.load(open('src/shorts/config.json'))
-FFMPEG = 'node_modules/@remotion/compositor-linux-x64-gnu/ffmpeg'
+FFMPEG = 'ffmpeg' if not os.path.exists('node_modules/@remotion/compositor-linux-x64-gnu/ffmpeg') else 'node_modules/@remotion/compositor-linux-x64-gnu/ffmpeg'
 ENV = dict(os.environ, LD_LIBRARY_PATH='node_modules/@remotion/compositor-linux-x64-gnu')
 
 # one harmonic colour per short so the series doesn't sound copy-pasted
@@ -196,46 +196,57 @@ def build(sid):
 
     ls = lines
     if sid == 's1':
-        s2 = ls[2]
-        typing(s2['start'] + 2, word_f(s2, 'ils', 30) - 6, 46)
-        add(click(0.6), fr(word_f(s2, 'ils', 30) - 4), 0.35)
-        add(chime(79), fr(ls[3]['start'] + 2), 0.12)
-        cinq = word_f(ls[1], 'cinq', 40)
-        for k in range(10):
-            add(pop_sfx(), fr(word_f(ls[1], 'acteurs', 10)) + k * 0.07, 0.06, (k % 3 - 1) * 0.4)
-        add(chime(84), fr(cinq + 14), 0.08)
+        add(chime(84), fr(word_f(ls[0], 'regardez', 40)), 0.1)
+        add(boom(), fr(word_f(ls[1], 'jamais', 20)), 0.3)
+        add(pop_sfx(), fr(word_f(ls[1], 'existent', 70)), 0.14)
+        add(whoosh(0.4), fr(ls[2]['start'] + 2), 0.25)
+        for p in ['porter', 'briller', 'présenter']:
+            add(chime(86), fr(word_f(ls[2], p, 60)), 0.06)
+        add(boom(), fr(word_f(ls[3], 'black', 20)), 0.35)
+        add(chime(79), fr(word_f(ls[3], 'publier', 60)), 0.12)
     if sid == 's2':
-        typing(scenes[1] + 2, ls[2]['start'] - 4)
-        add(click(0.6), fr(ls[2]['start'] - 2), 0.35)
-        for p in ['script', 'choisi', 'tourné']:
-            add(chime(84), fr(word_f(ls[2], p, 20)), 0.05)
+        for p in ['studio', 'cuisine', 'piscine']:
+            add(pop_sfx(), fr(word_f(ls[0], p, 50)), 0.12)
+        add(pop_sfx(), fr(word_f(ls[1], 'existe', 30)), 0.14)
+        for p in ['terrain', 'baie', 'visite']:
+            add(chime(86), fr(word_f(ls[2], p, 30)), 0.06)
+        add(boom(), fr(word_f(ls[2], 'tournage', 100)), 0.3)
+        for k in range(3):
+            add(pop_sfx(), fr(ls[3]['start'] + 4 + k * 6), 0.1)
+        add(click(0.6), fr(word_f(ls[3], 'clic', 90)), 0.4)
+        add(chime(81), fr(word_f(ls[3], 'clic', 90) + 3), 0.12)
     if sid == 's3':
-        add(boom(), 0.02, 0.35)
-        for k in range(4):
-            add(pop_sfx(), fr(word_f(ls[1], 'allers', 40) - 6 + k * 6), 0.1)
-        add(whoosh(0.3), fr(ls[1]['start'] + ls[1]['frames'] - 16), 0.3)
-        typing(scenes[2] + 2, word_f(ls[2], 'phrase', 24) + 6, 60)
-        for p in ['vidéos', 'visuels', 'carrousels']:
-            add(pop_sfx(), fr(word_f(ls[2], p, 50)), 0.12)
-        add(click(0.6), fr(word_f(ls[3], 'clic', 50)), 0.4)
-        add(chime(81), fr(word_f(ls[3], 'clic', 50) + 3), 0.14)
+        for k in range(3):
+            add(click(2.0), k * 0.9 + 0.1, 0.12, 0.3)
+        stop = word_f(ls[0], 'arrêter', 60)
+        add(whoosh(0.5), fr(stop) - 0.5, 0.25)
+        add(boom(), fr(stop + 4), 0.35)
+        add(whoosh(0.4), fr(word_f(ls[2], 'porte', 10)) - 0.2, 0.25)
+        add(whoosh(0.4), fr(word_f(ls[2], 'bougie', 80)) - 0.2, 0.25, 0.4)
+        for p in ['démo', 'actrice', 'accroche']:
+            add(chime(86), fr(word_f(ls[3], p, 30)), 0.06)
     if sid == 's4':
-        typing(scenes[1] + 4, scenes[1] + 30, 20)
-        for p in ['gagnent', 'tournent', 'semaines']:
-            add(chime(86), fr(word_f(ls[2], p, 20)), 0.06)
-        add(click(0.6), fr(word_f(ls[3], 'inspire', 12)), 0.35)
-        add(chime(79), fr(word_f(ls[3], 'inspire', 12) + 20), 0.1)
+        add(boom(), fr(word_f(ls[0], 'ressembler', 60)), 0.35)
+        add(whoosh(0.3), fr(word_f(ls[0], 'ressembler', 60)), 0.25)
+        for p in ['face', 'blazer', 'bureau']:
+            add(chime(86), fr(word_f(ls[1], p, 30)), 0.06)
+        cons = word_f(ls[2], 'conseillère', 30)
+        t = fr(ls[2]['start'] + 2)
+        while t < fr(cons - 8):
+            add(click(1.0), t, 0.12)
+            t += 0.12
+        add(pop_sfx(), fr(word_f(ls[2], 'offre', 70)), 0.14)
+        add(pop_sfx(), fr(word_f(ls[2], 'prix', 90)), 0.14)
+        add(chime(79), fr(word_f(ls[3], 'prêt', 60)), 0.12)
     if sid == 's5':
-        # stopwatch ticks under the whole run
-        for k in range(int(fr(ls[4]['start']) / beat)):
-            add(click(2.0), k * beat + beat / 4, 0.05, 0.5)
-        typing(ls[1]['start'] + 2, ls[1]['start'] + ls[1]['frames'] - 8, 50)
-        for p in ['script', 'choisit', 'tourne']:
-            add(pop_sfx(), fr(word_f(ls[2], p, 20)), 0.1)
-        add(click(0.6), fr(word_f(ls[3], 'publie', 40)), 0.4)
-        stop = word_f(ls[4], 'cinquante', 30)
-        add(chime(84), fr(stop), 0.16)
-        add(boom(), fr(stop), 0.4)
+        add(whoosh(0.3), fr(word_f(ls[0], 'pas', 40) + 8), 0.3)
+        for p in ['artisane', 'caméra', 'atelier']:
+            add(chime(86), fr(word_f(ls[1], p, 30)), 0.06)
+        add(boom(), fr(word_f(ls[2], 'cinéma', 40) - 6), 0.3)
+        typing(ls[3]['start'] + 2, word_f(ls[3], 'et', 20), 50)
+        add(click(0.6), fr(word_f(ls[3], 'et', 20) + 2), 0.4)
+        add(chime(81), fr(word_f(ls[3], 'instagram', 50)), 0.12)
+        add(chime(84), fr(word_f(ls[3], 'facebook', 70)), 0.12)
 
     mix = np.stack([L, R])
     ir_n = int(1.5 * SR)
@@ -246,7 +257,7 @@ def build(sid):
         mix[c] = mix[c] + 0.25 * fftconvolve(mix[c], ir)[: mix.shape[1]]
     mix = hp(mix, 30)
 
-    # voice + (short 2) Charlotte's own take
+    # Manon's voice-over
     voice = np.zeros(N)
     spans = []
     for ln in lines:
@@ -263,22 +274,6 @@ def build(sid):
         spans.append((at / SR, (at + len(v)) / SR))
     if voice.any():
         voice *= 0.92 / np.max(np.abs(voice))
-    if sid == 's2':
-        tmp = '/tmp/claude-0/charlotte.wav'
-        has_audio = subprocess.run([FFMPEG, '-v', 'error', '-y', '-i', 'public/media/ugc-charlotte.mp4', '-vn', '-ac', '1', '-ar', str(SR), tmp], env=ENV).returncode == 0
-    if sid == 's2' and has_audio:
-        _, c = wavfile.read(tmp)
-        c = c.astype(float) / 32768
-        play = fr(scenes[2] + 30)
-        until = fr(scenes[3]) - play
-        c = c[: int(until * SR)]
-        fade = int(0.4 * SR)
-        c[-fade:] *= np.linspace(1, 0, fade)
-        c *= 0.85 / max(1e-6, np.max(np.abs(c)))
-        at = int(play * SR)
-        voice[at : at + len(c)] += c
-        spans.append((play, play + len(c) / SR))
-
     tt = np.arange(N) / SR
     duck = np.ones(N)
     for a0, a1 in spans:

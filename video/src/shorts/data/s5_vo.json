@@ -2,222 +2,297 @@
  "id": "s5",
  "beats": [
   {
-   "text": "Une pub Meta, de zéro à en ligne. Chrono !",
+   "text": "Vous faites des pâtes fraîches. Pas des vidéos. Et c'est normal.",
    "audio": "shorts/vo/s5_1.wav",
-   "dur": 2.926,
+   "dur": 3.808,
    "words": [
     {
-     "w": "Une",
+     "w": "Vous",
      "s": 0.0,
-     "e": 0.186
+     "e": 0.197
     },
     {
-     "w": "pub",
+     "w": "faites",
      "s": 0.221,
-     "e": 0.43
+     "e": 0.383
     },
     {
-     "w": "Meta,",
-     "s": 0.499,
-     "e": 0.94
-    },
-    {
-     "w": "de",
-     "s": 1.057,
-     "e": 1.196
-    },
-    {
-     "w": "zéro",
-     "s": 1.265,
-     "e": 1.591
-    },
-    {
-     "w": "à",
-     "s": 1.672,
-     "e": 1.753
-    },
-    {
-     "w": "en",
-     "s": 1.811,
-     "e": 1.927
-    },
-    {
-     "w": "ligne.",
-     "s": 1.974,
-     "e": 2.264
-    },
-    {
-     "w": "Chrono",
-     "s": 2.38,
-     "e": 2.752
-    },
-    {
-     "w": "!",
-     "s": 2.786,
-     "e": 2.926
-    }
-   ]
-  },
-  {
-   "text": "Je décris mon produit.",
-   "audio": "shorts/vo/s5_2.wav",
-   "dur": 1.254,
-   "words": [
-    {
-     "w": "Je",
-     "s": 0.0,
-     "e": 0.151
-    },
-    {
-     "w": "décris",
-     "s": 0.197,
+     "w": "des",
+     "s": 0.406,
      "e": 0.488
     },
     {
-     "w": "mon",
-     "s": 0.511,
-     "e": 0.615
+     "w": "pâtes",
+     "s": 0.522,
+     "e": 0.708
     },
     {
-     "w": "produit.",
-     "s": 0.662,
-     "e": 1.254
-    }
-   ]
-  },
-  {
-   "text": "L'IA écrit le script, choisit l'actrice, tourne la vidéo.",
-   "audio": "shorts/vo/s5_3.wav",
-   "dur": 4.876,
-   "words": [
-    {
-     "w": "L'IA",
-     "s": 0.0,
-     "e": 0.348
+     "w": "fraîches.",
+     "s": 0.731,
+     "e": 1.173
     },
     {
-     "w": "écrit",
-     "s": 0.453,
-     "e": 0.755
-    },
-    {
-     "w": "le",
-     "s": 0.778,
-     "e": 0.848
-    },
-    {
-     "w": "script,",
-     "s": 0.882,
-     "e": 1.463
-    },
-    {
-     "w": "choisit",
-     "s": 1.602,
-     "e": 1.997
-    },
-    {
-     "w": "l'actrice,",
-     "s": 2.02,
-     "e": 2.705
-    },
-    {
-     "w": "tourne",
-     "s": 2.81,
-     "e": 3.111
-    },
-    {
-     "w": "la",
-     "s": 3.158,
-     "e": 3.228
-    },
-    {
-     "w": "vidéo.",
-     "s": 3.286,
-     "e": 4.876
-    }
-   ]
-  },
-  {
-   "text": "Je choisis mon ciblage… et je publie.",
-   "audio": "shorts/vo/s5_4.wav",
-   "dur": 2.276,
-   "words": [
-    {
-     "w": "Je",
-     "s": 0.0,
-     "e": 0.139
-    },
-    {
-     "w": "choisis",
-     "s": 0.186,
-     "e": 0.453
-    },
-    {
-     "w": "mon",
-     "s": 0.488,
-     "e": 0.592
-    },
-    {
-     "w": "ciblage…",
-     "s": 0.627,
-     "e": 1.161
-    },
-    {
-     "w": "et",
-     "s": 1.521,
+     "w": "Pas",
+     "s": 1.474,
      "e": 1.637
     },
     {
-     "w": "je",
-     "s": 1.695,
-     "e": 1.776
+     "w": "des",
+     "s": 1.66,
+     "e": 1.765
     },
     {
-     "w": "publie.",
-     "s": 1.823,
-     "e": 2.276
+     "w": "vidéos.",
+     "s": 1.788,
+     "e": 2.229
+    },
+    {
+     "w": "Et",
+     "s": 2.705,
+     "e": 2.833
+    },
+    {
+     "w": "c'est",
+     "s": 2.856,
+     "e": 2.984
+    },
+    {
+     "w": "normal.",
+     "s": 3.007,
+     "e": 3.808
     }
    ]
   },
   {
-   "text": "En ligne. Une minute cinquante-huit. Growthity !",
-   "audio": "shorts/vo/s5_5.wav",
-   "dur": 2.694,
+   "text": "Growthity met une artisane face caméra, dans votre atelier.",
+   "audio": "shorts/vo/s5_2.wav",
+   "dur": 3.994,
    "words": [
     {
-     "w": "En",
+     "w": "Growthity",
+     "s": 0.0,
+     "e": 0.766
+    },
+    {
+     "w": "met",
+     "s": 0.882,
+     "e": 1.057
+    },
+    {
+     "w": "une",
+     "s": 1.08,
+     "e": 1.184
+    },
+    {
+     "w": "artisane",
+     "s": 1.207,
+     "e": 1.66
+    },
+    {
+     "w": "face",
+     "s": 1.695,
+     "e": 1.881
+    },
+    {
+     "w": "caméra,",
+     "s": 1.904,
+     "e": 2.508
+    },
+    {
+     "w": "dans",
+     "s": 2.67,
+     "e": 2.856
+    },
+    {
+     "w": "votre",
+     "s": 2.879,
+     "e": 3.111
+    },
+    {
+     "w": "atelier.",
+     "s": 3.135,
+     "e": 3.994
+    }
+   ]
+  },
+  {
+   "text": "Pour vos clients pros : des plans cinéma, de la cuisine à l'entrepôt.",
+   "audio": "shorts/vo/s5_3.wav",
+   "dur": 3.808,
+   "words": [
+    {
+     "w": "Pour",
      "s": 0.0,
      "e": 0.209
     },
     {
-     "w": "ligne.",
-     "s": 0.244,
-     "e": 0.546
+     "w": "vos",
+     "s": 0.255,
+     "e": 0.372
     },
+    {
+     "w": "clients",
+     "s": 0.395,
+     "e": 0.708
+    },
+    {
+     "w": "pros",
+     "s": 0.731,
+     "e": 0.998
+    },
+    {
+     "w": ":",
+     "s": 1.033,
+     "e": 1.08
+    },
+    {
+     "w": "des",
+     "s": 1.219,
+     "e": 1.37
+    },
+    {
+     "w": "plans",
+     "s": 1.393,
+     "e": 1.591
+    },
+    {
+     "w": "cinéma,",
+     "s": 1.614,
+     "e": 2.183
+    },
+    {
+     "w": "de",
+     "s": 2.322,
+     "e": 2.426
+    },
+    {
+     "w": "la",
+     "s": 2.485,
+     "e": 2.554
+    },
+    {
+     "w": "cuisine",
+     "s": 2.612,
+     "e": 2.972
+    },
+    {
+     "w": "à",
+     "s": 3.03,
+     "e": 3.077
+    },
+    {
+     "w": "l'entrepôt.",
+     "s": 3.146,
+     "e": 3.808
+    }
+   ]
+  },
+  {
+   "text": "Une phrase, et votre pub tourne sur Instagram et Facebook.",
+   "audio": "shorts/vo/s5_4.wav",
+   "dur": 3.715,
+   "words": [
     {
      "w": "Une",
-     "s": 0.627,
-     "e": 0.755
+     "s": 0.0,
+     "e": 0.232
     },
     {
-     "w": "minute",
-     "s": 0.778,
-     "e": 1.033
+     "w": "phrase,",
+     "s": 0.255,
+     "e": 0.673
     },
     {
-     "w": "cinquante-huit.",
-     "s": 1.057,
-     "e": 1.649
+     "w": "et",
+     "s": 0.72,
+     "e": 0.836
     },
     {
-     "w": "Growthity",
-     "s": 1.811,
-     "e": 2.357
+     "w": "votre",
+     "s": 0.871,
+     "e": 1.126
+    },
+    {
+     "w": "pub",
+     "s": 1.184,
+     "e": 1.358
+    },
+    {
+     "w": "tourne",
+     "s": 1.44,
+     "e": 1.718
+    },
+    {
+     "w": "sur",
+     "s": 1.753,
+     "e": 1.881
+    },
+    {
+     "w": "Instagram",
+     "s": 1.916,
+     "e": 2.426
+    },
+    {
+     "w": "et",
+     "s": 2.531,
+     "e": 2.67
+    },
+    {
+     "w": "Facebook.",
+     "s": 2.717,
+     "e": 3.715
+    }
+   ]
+  },
+  {
+   "text": "Faites saliver votre ville. Growthity, lien en bio !",
+   "audio": "shorts/vo/s5_5.wav",
+   "dur": 3.483,
+   "words": [
+    {
+     "w": "Faites",
+     "s": 0.0,
+     "e": 0.267
+    },
+    {
+     "w": "saliver",
+     "s": 0.29,
+     "e": 0.673
+    },
+    {
+     "w": "votre",
+     "s": 0.708,
+     "e": 0.952
+    },
+    {
+     "w": "ville.",
+     "s": 0.998,
+     "e": 1.312
+    },
+    {
+     "w": "Growthity,",
+     "s": 1.614,
+     "e": 2.322
+    },
+    {
+     "w": "lien",
+     "s": 2.519,
+     "e": 2.74
+    },
+    {
+     "w": "en",
+     "s": 2.775,
+     "e": 2.833
+    },
+    {
+     "w": "bio",
+     "s": 2.902,
+     "e": 3.135
     },
     {
      "w": "!",
-     "s": 2.426,
-     "e": 2.694
+     "s": 3.239,
+     "e": 3.483
     }
    ]
   }
