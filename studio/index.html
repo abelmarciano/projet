@@ -374,6 +374,16 @@ tbody tr:hover td { background: #FAFAFC }
 .reel .cta { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,.95); color: #111; border-radius: 9px; padding: 9px 12px; font-weight: 700; font-size: 13px }
 .reel .side { position: absolute; right: 10px; bottom: 30px; display: grid; gap: 18px; justify-items: center; color: #fff }
 .reel .side svg { width: 25px; height: 25px }
+.cvw { position: relative; display: block; min-width: 0 }
+.pbtn { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: rgba(11,11,16,.62); backdrop-filter: blur(6px); color: #fff; display: grid; place-items: center; box-shadow: 0 6px 18px -6px rgba(0,0,0,.6); transition: transform .15s, background .15s; z-index: 2; cursor: pointer }
+.pbtn:hover { transform: scale(1.08); background: var(--accent) }
+.pbtn svg { width: 20px; height: 20px; margin-left: 2px }
+.li .pbtn { width: 28px; height: 28px; margin: -14px 0 0 -14px } .li .pbtn svg { width: 13px; height: 13px }
+.player { position: fixed; inset: 0; z-index: 85; background: rgba(8,8,12,.86); backdrop-filter: blur(6px); display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) 16px 16px; animation: fade .15s ease both }
+.player-in { display: grid; gap: 12px; justify-items: center; max-width: 100% }
+.player video { max-height: 78vh; max-width: min(92vw, 520px); border-radius: 16px; background: #000; box-shadow: 0 30px 80px -20px rgba(0,0,0,.8) }
+.player .pt { color: #fff; font-weight: 600; font-size: 15px; text-align: center }
+.player .pa { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center }
 .snd { position: absolute; left: 10px; bottom: 10px; z-index: 4; border: 0; border-radius: 99px; background: rgba(11,11,16,.72); color: #fff; font: 600 12px var(--f-ui); padding: 7px 12px; backdrop-filter: blur(6px) }
 .reel .snd { top: 74px; bottom: auto; left: auto; right: 12px }
 .pv-note { font-size: 11.5px; color: var(--muted); text-align: center; max-width: 330px }
@@ -595,6 +605,7 @@ function toast(t, err) { const el = $('#toast'); el.innerHTML = `<i>${err ? '!' 
 const errMsg = (e) => ({not_granted: 'accès refusé (il faut être Éditeur de la page)', unavailable: 'service momentanément indisponible, réessayez', quota_exceeded: 'quota atteint', too_large: 'fichier trop lourd (20 Mo max)', unsupported_type: 'format non accepté'}[e?.code] || e?.message || 'erreur inconnue');
 const srcOf = (m) => { const it = m?.items?.[0]; if (!it) return null; return isVid(it) ? (it.poster ? blob(it.poster) : null) : blob(it.asset); };
 
+const playBadge = (m) => (m && (m.items || []).length && isVid(m.items[0]) ? `<span class="pbtn" role="button" tabindex="0" data-act="play" data-media="${m.id}" aria-label="Lire la vidéo avec le son"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>` : '');
 // the whole creative on a blurred bed of itself
 function cover(m, cls = '') {
   const it = m?.items?.[0];
@@ -732,7 +743,7 @@ function vHome(main) {
     <div class="box-h"><h3>Cette semaine</h3><small>${ws.toLocaleDateString('fr-FR', {day: 'numeric', month: 'short'})} – ${addDays(ws, 6).toLocaleDateString('fr-FR', {day: 'numeric', month: 'short'})}</small><a href="#planning">Ouvrir le planning →</a></div>
     <div class="ribbon">${Array.from({length: 7}, (_, i) => { const d = addDays(ws, i); const k = ymd(d); const l = byDay[k] || [];
       return `<div class="rday ${k === today ? 'today' : ''}" data-drop-day="${k}"><h5>${d.toLocaleDateString('fr-FR', {weekday: 'short'})}<b>${d.getDate()}</b></h5>
-        ${l.map((p) => `<button class="rtile" draggable="true" data-drag="${p.id}" data-act="open" data-id="${p.id}">${cover(mediaById(p.mediaId))}<span class="tt">${esc(p.title || 'Sans titre')}</span><span class="tm" style="--c:${stOf(p).c}"><i></i>${p.date.slice(11, 16)}${p.type === 'ad' ? ' · AD' : ''}</span></button>`).join('')}
+        ${l.map((p) => `<button class="rtile" draggable="true" data-drag="${p.id}" data-act="open" data-id="${p.id}"><span class="cvw">${cover(mediaById(p.mediaId))}${playBadge(mediaById(p.mediaId))}</span><span class="tt">${esc(p.title || 'Sans titre')}</span><span class="tm" style="--c:${stOf(p).c}"><i></i>${p.date.slice(11, 16)}${p.type === 'ad' ? ' · AD' : ''}</span></button>`).join('')}
         <button class="radd" data-act="new" data-type="post" data-date="${k}">+ Ajouter</button></div>`; }).join('')}</div>
     <div class="split">
       <section class="box"><div class="box-h"><h3>Prochaines publications</h3><small>${upcoming.length}</small><a href="#planning">Tout voir →</a></div>
@@ -747,7 +758,7 @@ function vHome(main) {
       </div></div></div>`;
 }
 function liHTML(p) {
-  return `<button class="li" data-act="open" data-id="${p.id}">${cover(mediaById(p.mediaId))}<div style="min-width:0"><div class="tt">${p.type === 'ad' ? '<span class="tag ad" style="margin-right:6px">AD</span>' : ''}${esc(p.title || 'Sans titre')}</div><div class="sub">${pill(stOf(p))}${netsHTML(p.networks)}<span class="tag mono">${esc(p.format || '')}</span></div></div>
+  return `<button class="li" data-act="open" data-id="${p.id}"><span class="cvw">${cover(mediaById(p.mediaId))}${playBadge(mediaById(p.mediaId))}</span><div style="min-width:0"><div class="tt">${p.type === 'ad' ? '<span class="tag ad" style="margin-right:6px">AD</span>' : ''}${esc(p.title || 'Sans titre')}</div><div class="sub">${pill(stOf(p))}${netsHTML(p.networks)}<span class="tag mono">${esc(p.format || '')}</span></div></div>
     <div class="when">${p.date ? relDay(p.date) + `<small>${p.date.slice(11, 16)}</small>` : '<small>Sans date</small>'}</div></button>`;
 }
 
@@ -774,7 +785,7 @@ function vPlanning(main) {
     title = `${ws.toLocaleDateString('fr-FR', {day: 'numeric', month: 'short'})} – ${addDays(ws, 6).toLocaleDateString('fr-FR', {day: 'numeric', month: 'short', year: 'numeric'})}`;
     body = `<div class="week">${Array.from({length: 7}, (_, i) => { const d = addDays(ws, i); const k = ymd(d); const l = byDay[k] || [];
       return `<div class="rday ${k === today ? 'today' : ''}" data-drop-day="${k}" style="min-height:460px"><h5>${d.toLocaleDateString('fr-FR', {weekday: 'short'})}<b>${d.getDate()}</b></h5>
-        ${l.map((p) => `<button class="rtile" draggable="true" data-drag="${p.id}" data-act="open" data-id="${p.id}">${cover(mediaById(p.mediaId))}<span class="tt">${esc(p.title || 'Sans titre')}</span><span class="tm" style="--c:${stOf(p).c}"><i></i>${p.date.slice(11, 16)}${p.type === 'ad' ? ' · AD' : ''}</span></button>`).join('')}
+        ${l.map((p) => `<button class="rtile" draggable="true" data-drag="${p.id}" data-act="open" data-id="${p.id}"><span class="cvw">${cover(mediaById(p.mediaId))}${playBadge(mediaById(p.mediaId))}</span><span class="tt">${esc(p.title || 'Sans titre')}</span><span class="tm" style="--c:${stOf(p).c}"><i></i>${p.date.slice(11, 16)}${p.type === 'ad' ? ' · AD' : ''}</span></button>`).join('')}
         <button class="radd" data-act="new" data-type="post" data-date="${k}">+ Ajouter</button></div>`; }).join('')}</div>`;
   }
   main.innerHTML = `<div class="page">
@@ -814,7 +825,7 @@ function vPosts(main) {
 }
 function cardHTML(p) {
   const m = mediaById(p.mediaId);
-  return `<button class="card" draggable="true" data-drag="${p.id}" data-act="open" data-id="${p.id}">${cover(m)}
+  return `<button class="card" draggable="true" data-drag="${p.id}" data-act="open" data-id="${p.id}"><span class="cvw">${cover(m)}${playBadge(m)}</span>
     <div class="cb"><div class="tt">${esc(p.title || 'Sans titre')}</div>
       ${p.caption ? `<div class="cap">${esc(p.caption)}</div>` : ''}
       <div class="row">${netsHTML(p.networks)}<span class="tag mono">${esc(p.format || m?.format || '')}</span>${redoTag(p)}${redoTag(m)}</div>
@@ -1006,7 +1017,7 @@ function vLaunch(main) {
     <div class="weeks">${(cfg.weeks || []).map((w) => { const l = posts.filter((p) => p.launch.week === w.n);
       return `<section class="week-c"><header><b>Semaine ${w.n}</b><h3>${esc(w.title)}</h3><p>${esc(w.goal)}</p></header>
         <div class="slots">${l.map((p) => { const m = mediaById(p.mediaId); const dt = new Date(p.date);
-          return `<button class="slot" data-act="open" data-id="${p.id}">${cover(m)}<span class="d"><span>${cap1(dt.toLocaleDateString('fr-FR', {weekday: 'short', day: 'numeric'}))}</span><span>${p.date.slice(11, 16)}</span></span><span class="tt">${esc(p.title)}</span><span class="row">${pill(stOf(p))}${redoTag(p)}</span></button>`; }).join('')}</div></section>`; }).join('')}</div>
+          return `<button class="slot" data-act="open" data-id="${p.id}"><span class="cvw">${cover(m)}${playBadge(m)}</span><span class="d"><span>${cap1(dt.toLocaleDateString('fr-FR', {weekday: 'short', day: 'numeric'}))}</span><span>${p.date.slice(11, 16)}</span></span><span class="tt">${esc(p.title)}</span><span class="row">${pill(stOf(p))}${redoTag(p)}</span></button>`; }).join('')}</div></section>`; }).join('')}</div>
     ${cfg.ads ? `<section class="box" style="margin-top:18px"><div class="box-h"><h3>Publicités Meta en parallèle</h3><a href="#ads">Voir les ads →</a></div><p style="margin:0;font-size:14px;line-height:1.6;color:var(--ink-2);white-space:pre-wrap">${esc(cfg.ads)}</p></section>` : ''}
   </div>`;
 }
@@ -1070,7 +1081,7 @@ function renderPreview() {
   const vertical = (S.ed.pv || (p.format === '9:16' ? 'reel' : 'feed')) === 'reel';
   const items = m?.items || []; const i = Math.min(S.ed.slide, Math.max(0, items.length - 1)); const it = items[i];
   const snd = `<button class="snd" data-act="pv-sound" aria-label="${S.ed.sound ? 'Couper le son' : 'Activer le son'}">${S.ed.sound ? '🔊 Son' : '🔇 Activer le son'}</button>`;
-  const mediaEl = it ? (isVid(it) ? `<video id="pv-video" src="${blob(it.asset)}" ${it.poster ? `poster="${blob(it.poster)}"` : ''} ${S.ed.sound ? '' : 'muted'} loop playsinline autoplay preload="metadata"></video>${snd}` : `<img src="${blob(it.asset)}" alt="">`) : '';
+  const mediaEl = it ? (isVid(it) ? `<video id="pv-video" data-act="pv-vid" src="${blob(it.asset)}" ${it.poster ? `poster="${blob(it.poster)}"` : ''} ${S.ed.sound ? '' : 'muted'} loop playsinline autoplay preload="metadata"></video>${snd}` : `<img src="${blob(it.asset)}" alt="">`) : '';
   const av = `<span class="ig-av"><div>${IC.logo}</div></span>`;
   const cap = (p.caption || '').trim();
   let screen;
@@ -1113,6 +1124,15 @@ async function saveEditor() {
   } catch (er) { toast('Enregistrement impossible : ' + errMsg(er), true); if (btn) btn.disabled = false; }
 }
 
+// ---------- player ----------
+function openPlayer(mid, postId) {
+  const m = mediaById(mid); const it = m?.items?.[0]; if (!it) return;
+  $('#cmdk').innerHTML = `<div class="player" data-act="player-bg"><div class="player-in"><video id="pl-video" src="${blob(it.asset)}" ${it.poster ? `poster="${blob(it.poster)}"` : ''} controls autoplay playsinline></video>
+    <div class="pt">${esc(m.title)}</div><div class="pa">${postId ? `<button class="btn sm" data-act="player-open" data-id="${postId}">Ouvrir le post</button>` : ''}<button class="btn sm" data-act="media" data-id="${m.id}">Fiche média</button><button class="btn sm" data-act="player-close">Fermer</button></div></div></div>`;
+  S.playing = true; const v = $('#pl-video'); v.muted = false; v.play().catch(() => {});
+}
+function closePlayer() { if (!S.playing) return; S.playing = false; $('#pl-video')?.pause(); $('#cmdk').innerHTML = ''; }
+
 // ---------- command palette ----------
 function openCmdk() { S.cmdk = {q: '', sel: 0}; renderCmdk(); $('#cmdk-q')?.focus(); }
 function closeCmdk() { S.cmdk = null; $('#cmdk').innerHTML = ''; }
@@ -1152,9 +1172,13 @@ document.addEventListener('click', async (ev) => {
     case 'goupload': closeMenu(); go('medias'); setTimeout(() => $('#file')?.click(), 80); return;
     case 'new': ev.preventDefault(); ev.stopPropagation(); closeMenu(); newDraft(d.type, {date: d.date ? d.date + 'T18:30' : '', status: d.status, mediaId: d.media}); return;
     case 'open': if (S.dragJustEnded) return; go('post-' + d.id); return;
-    case 'media': go('media-' + d.id); return;
+    case 'media': closePlayer(); go('media-' + d.id); return;
     case 'cmdk': openCmdk(); return;
     case 'cmdk-bg': if (ev.target === el) closeCmdk(); return;
+    case 'play': ev.preventDefault(); ev.stopPropagation(); openPlayer(d.media, el.closest('[data-id]')?.dataset.id); return;
+    case 'player-bg': if (ev.target === el) closePlayer(); return;
+    case 'player-close': closePlayer(); return;
+    case 'player-open': closePlayer(); go('post-' + d.id); return;
     case 'cmdk-run': S.cmdk.items[Number(d.i)]?.run(); return;
     case 'cal-prev': case 'cal-next': { const k = a === 'cal-prev' ? -1 : 1; if (S.calMode === 'month') S.month = new Date(S.month.getFullYear(), S.month.getMonth() + k, 1); else S.weekStart = addDays(S.weekStart, 7 * k); render(); return; }
     case 'cal-today': S.month = som(new Date()); S.weekStart = sow(new Date()); render(); return;
@@ -1214,7 +1238,8 @@ document.addEventListener('click', async (ev) => {
     case 'copy': { const t = S.ed.draft.caption || ''; try { await navigator.clipboard.writeText(t); toast('Texte copié.'); } catch { const ta = $('#e-cap'); ta.focus(); ta.select(); toast('Texte sélectionné : copiez avec Ctrl/Cmd + C.'); } return; }
     case 'pv': S.ed.pv = d.v; renderPreview(); return;
     case 'pv-slide': S.ed.slide += Number(d.d); renderPreview(); return;
-    case 'pv-sound': { S.ed.sound = !S.ed.sound; const v = $('#pv-video'); if (v) { v.muted = !S.ed.sound; if (S.ed.sound) { v.currentTime = 0; v.play().catch(() => {}); } } el.textContent = S.ed.sound ? '🔊 Son' : '🔇 Activer le son'; return; }
+    case 'pv-vid':
+    case 'pv-sound': { S.ed.sound = !S.ed.sound; const v = $('#pv-video'); if (v) { v.muted = !S.ed.sound; if (S.ed.sound) { v.currentTime = 0; v.play().catch(() => {}); } } const sb = $('#pv [data-act="pv-sound"]'); if (sb) sb.textContent = S.ed.sound ? '🔊 Son' : '🔇 Activer le son'; return; }
     case 'cap-more': S.ed.capOpen = true; renderPreview(); return;
     case 'dup': { const c = JSON.parse(JSON.stringify(S.ed.draft)); c.id = uid(); c.title = c.title + ' (copie)'; c.date = ''; c.status = c.type === 'ad' ? 'draft' : 'idea'; c.createdAt = Date.now();
       try { await writePost(c); toast('Copie créée.'); go('post-' + c.id); } catch (er) { toast('Duplication impossible : ' + errMsg(er), true); } return; }
@@ -1241,6 +1266,8 @@ document.addEventListener('keydown', (ev) => {
   if ((ev.metaKey || ev.ctrlKey) && k === 's' && S.view === 'post') { ev.preventDefault(); saveEditor(); }
   if (k === 'enter' && ev.target.matches('tr[data-act="open"]')) go('post-' + ev.target.dataset.id);
   if (k === 'escape' && S.menuOpen) closeMenu();
+  if (k === 'escape' && S.playing) closePlayer();
+  if ((k === 'enter' || k === ' ') && ev.target.matches('.pbtn')) { ev.preventDefault(); ev.target.click(); }
 });
 
 // drag & drop

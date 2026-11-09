@@ -1,0 +1,16 @@
+import {createRequire} from 'node:module'; const require = createRequire(import.meta.url); const {chromium} = require('playwright');
+import fs from 'node:fs';
+const T = process.argv[2];
+const seed = fs.readFileSync(T + '/seed3.json', 'utf8'); const mock = fs.readFileSync(T + '/mock.js', 'utf8');
+const b = await chromium.launch(); const p = await b.newPage({viewport: {width: 1440, height: 960}});
+const errs = []; p.on('pageerror', (e) => errs.push(e.message));
+await p.addInitScript(`window.__SEED=${seed};` + mock);
+await p.goto('http://localhost:8765/index.html#lancement'); await p.waitForTimeout(900);
+console.log('badges', await p.locator('.slot .pbtn').count());
+await p.click('.slot .pbtn'); await p.waitForTimeout(500);
+console.log('player open', await p.locator('#pl-video').count(), 'muted', await p.evaluate(() => document.querySelector('#pl-video')?.muted), 'hash', await p.evaluate(() => location.hash));
+await p.screenshot({path: T + '/40-player.png'});
+await p.keyboard.press('Escape'); await p.waitForTimeout(200);
+console.log('closed', await p.locator('#pl-video').count());
+await p.click('.slot >> nth=1'); await p.waitForTimeout(400); console.log('open post', await p.evaluate(() => location.hash));
+console.log('errors', JSON.stringify(errs)); await b.close();
