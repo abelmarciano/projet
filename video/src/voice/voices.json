@@ -274,5 +274,45 @@
   "style": 0.8,
   "speed": 1.15,
   "text": "[curious] Bon… je teste enfin le truc que je vois PARTOUT. [warmly] Le masque collagène Skin Gen, de chez Lili Margo. [intrigued] Des nanofibres de collagène… qui se dissolvent sur la peau. [playful] La texture est hyper bizarre… j'adore. [confident] Vingt-trois euros quatre-vingt-dix. [friendly] Le lien est juste en dessous."
+ },
+ "p3d-1": {
+  "voice": "WUAdt1wuIPYQ1XruI5dW",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.08,
+  "text": "[storytelling] Il était une fois un boulanger… qui n'avait PAS le temps de faire ses pubs."
+ },
+ "p3d-2": {
+  "voice": "WUAdt1wuIPYQ1XruI5dW",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.08,
+  "text": "[excited] Alors il a tapé une seule phrase dans Grossiti…"
+ },
+ "p3d-3": {
+  "voice": "WUAdt1wuIPYQ1XruI5dW",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.08,
+  "text": "[amazed] et ses acteurs sont sortis de l'écran ! Script, voix, montage…"
+ },
+ "p3d-4": {
+  "voice": "WUAdt1wuIPYQ1XruI5dW",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.08,
+  "text": "[playful] La pub est en ligne sur Meta. Lui ? Il retourne à son pain."
+ },
+ "p3d-5": {
+  "voice": "WUAdt1wuIPYQ1XruI5dW",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.08,
+  "text": "[confident] Grossiti. Vos pubs vidéo, sans tournage."
  }
 }

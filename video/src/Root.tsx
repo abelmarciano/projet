@@ -13,6 +13,7 @@ import cp2 from './chatpub/cp2.json';
 import {MotionChatPub, motionTimeline} from './chatpub/MotionChatPub';
 import {AdEdit, AdCfg} from './chatpub/AdEdit';
 import {LaunchReel, LR} from './chatpub/LaunchReel';
+import {Pub3D, P3D_TOTAL} from './chatpub/Pub3D';
 import adTest from './chatpub/ad-test.json';
 import adAlice from './chatpub/ad-alice.json';
 import adUgc2 from './chatpub/ad-ugc2.json';
@@ -53,6 +54,7 @@ export const Root: React.FC = () => (
     <Composition id="AdEdit-studio" component={AdEdit} durationInFrames={adStudio.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adStudio as unknown as AdCfg}} />
     <Composition id="AdEdit-velo" component={AdEdit} durationInFrames={adVelo.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adVelo as unknown as AdCfg}} />
     <Composition id="AdEdit-ugc3" component={AdEdit} durationInFrames={adUgc3.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adUgc3 as unknown as AdCfg}} />
+    <Composition id="Pub3D-boulanger" component={Pub3D} durationInFrames={P3D_TOTAL} fps={30} width={1080} height={1920} />
     <Composition id="LaunchReel-v2" component={LaunchReel} durationInFrames={LR.total} fps={30} width={1080} height={1920} />
     <Composition id="ShowIntro" component={ShowIntro} durationInFrames={SHOW_INTRO} fps={30} width={1080} height={1920} defaultProps={{prompt: '', label: '', n: ''}} />
     <Composition id="ShowEnd" component={ShowEnd} durationInFrames={SHOW_END} fps={30} width={1080} height={1920} />
