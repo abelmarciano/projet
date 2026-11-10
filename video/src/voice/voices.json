@@ -266,5 +266,13 @@
   "style": 0.8,
   "speed": 1.15,
   "text": "[amused] On m'a demandé en commentaire pourquoi, chez moi, ça sent TOUJOURS aussi bon… [laughs] [warmly] C'est le parfum de sol Éclat de Nuit, de chez Bajoa. [softly] Une fraîcheur qui dure, des notes super délicates… [playful] mes invités me posent la question à chaque fois. [confident] Trente-quatre euros quatre-vingt-dix. [friendly] Le lien est juste en dessous."
+ },
+ "skingen-freja": {
+  "voice": "zPy2sgLU4pZ7Xrjh87uz",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.8,
+  "speed": 1.15,
+  "text": "[curious] Bon… je teste enfin le truc que je vois PARTOUT. [warmly] Le masque collagène Skin Gen, de chez Lili Margo. [intrigued] Des nanofibres de collagène… qui se dissolvent sur la peau. [playful] La texture est hyper bizarre… j'adore. [confident] Vingt-trois euros quatre-vingt-dix. [friendly] Le lien est juste en dessous."
  }
 }
