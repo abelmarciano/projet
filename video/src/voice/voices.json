@@ -210,5 +210,13 @@
   "stability": 0.2,
   "style": 0.8,
   "speed": 1.08
+ },
+ "ugc-bajoah-emma": {
+  "text": "[excited] Bon, attendez… [laughs] tout le monde me demande pourquoi mon linge sent AUSSI bon. [enthusiastic] C'est le parfum de lessive Fleur de Coton de Bajoa. [warmly] J'en mets dans la machine, et tout sent le propre… [playful] je peux plus m'en passer. [confident, persuasive] Trente-neuf euros quatre-vingt-dix. [excited] Le lien est juste en dessous, foncez !",
+  "voice": "i5Fydub7F0HPXhynAgDo",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.8,
+  "speed": 1.12
  }
 }
