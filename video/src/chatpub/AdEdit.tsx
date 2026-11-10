@@ -8,7 +8,7 @@ import {EXPO} from '../components/anim';
 // long takes, quick transitions, word-by-word animated subtitles. Output is used as the ad in MotionChatPub.
 
 type Word = {w: string; s: number; e: number};
-export type AdCfg = {id: string; src: string; fps: number; segments: {from: number; to: number; zoom?: number; cy?: number; vsrc?: string}[]; stickers?: {text: string; from: number; to: number; y?: number}[]; words: Word[]; frames: number; subtitles?: boolean; subY?: number};
+export type AdCfg = {id: string; src: string; fps: number; segments: {from: number; to: number; zoom?: number; cy?: number; vsrc?: string}[]; stickers?: {text: string; from: number; to: number; y?: number}[]; comment?: {user: string; text: string; from: number; to: number}; words: Word[]; frames: number; subtitles?: boolean; subY?: number};
 
 const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 const GRAD = 'linear-gradient(120deg, #2563EB 0%, #5B3FE4 52%, #9333EA 100%)';
@@ -109,6 +109,25 @@ export const AdEdit: React.FC<{cfg: AdCfg}> = ({cfg}) => {
           </div>
         );
       })}
+      {cfg.comment && (() => {
+        const c = cfg.comment;
+        const a = c.from * 30, b = c.to * 30;
+        if (f < a || f > b) return null;
+        const p = interpolate(f, [a, a + 10], [0, 1], {...clamp, easing: EXPO});
+        const o = interpolate(f, [b - 8, b], [1, 0], clamp);
+        return (
+          <div style={{position: 'absolute', left: 70, top: 300, maxWidth: 760, opacity: o, transform: `scale(${0.7 + p * 0.3}) translateY(${(1 - p) * -30}px)`, transformOrigin: 'left top'}}>
+            <div style={{background: '#fff', borderRadius: 26, padding: '20px 28px 24px', boxShadow: '0 20px 50px -18px rgba(0,0,0,0.55)', fontFamily: 'Inter, sans-serif'}}>
+              <div style={{display: 'flex', alignItems: 'center', gap: 12, fontSize: 26, color: '#64748B', fontWeight: 600}}>
+                <div style={{width: 40, height: 40, borderRadius: 99, background: 'linear-gradient(135deg,#F9A8D4,#A78BFA)'}} />
+                Réponse au commentaire de {c.user}
+              </div>
+              <div style={{fontSize: 40, fontWeight: 800, color: '#0F172A', marginTop: 10, lineHeight: 1.2}}>{c.text}</div>
+            </div>
+            <div style={{width: 0, height: 0, marginLeft: 48, borderLeft: '18px solid transparent', borderRight: '18px solid transparent', borderTop: '20px solid #fff'}} />
+          </div>
+        );
+      })()}
       {cfg.subtitles !== false && <Subs words={cfg.words} y={cfg.subY ?? 1280} />}
     </AbsoluteFill>
   );
