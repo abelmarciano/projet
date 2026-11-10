@@ -15,6 +15,7 @@ import {AdEdit, AdCfg} from './chatpub/AdEdit';
 import adTest from './chatpub/ad-test.json';
 import adAlice from './chatpub/ad-alice.json';
 import adUgc2 from './chatpub/ad-ugc2.json';
+import adUgc3 from './chatpub/ad-ugc3.json';
 import {ShowIntro, ShowEnd, SHOW_INTRO, SHOW_END} from './reels/Showcase';
 
 export const Root: React.FC = () => (
@@ -36,6 +37,7 @@ export const Root: React.FC = () => (
     <Composition id="AdEdit-alice" component={AdEdit} durationInFrames={adAlice.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAlice as unknown as AdCfg}} />
     <Composition id="ChatPubMotion-cp2" component={MotionChatPub} durationInFrames={motionTimeline(cp2 as unknown as ChatPubCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: cp2 as unknown as ChatPubCfg}} />
     <Composition id="AdEdit-ugc2" component={AdEdit} durationInFrames={adUgc2.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adUgc2 as unknown as AdCfg}} />
+    <Composition id="AdEdit-ugc3" component={AdEdit} durationInFrames={adUgc3.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adUgc3 as unknown as AdCfg}} />
     <Composition id="ShowIntro" component={ShowIntro} durationInFrames={SHOW_INTRO} fps={30} width={1080} height={1920} defaultProps={{prompt: '', label: '', n: ''}} />
     <Composition id="ShowEnd" component={ShowEnd} durationInFrames={SHOW_END} fps={30} width={1080} height={1920} />
     {ORGANIC.map((c) => (

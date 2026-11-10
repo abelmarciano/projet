@@ -1,0 +1,309 @@
+{
+ "id": "ugc3",
+ "src": "media/ugc/ugc3-lipsync.mp4",
+ "fps": 30,
+ "text": "On me demande tout le temps si mon parfum tient vraiment. Alors regardez, je l'ai mis ce matin avant d'aller bosser. Là, c'est le soir et il est toujours là. Boisé, un peu ambré, jamais écœurant. Et franchement, on me demande souvent ce que je porte. Testez-le, vous verrez.",
+ "segments": [
+  {
+   "from": 0.02,
+   "to": 2.47
+  },
+  {
+   "from": 2.47,
+   "to": 5.32
+  },
+  {
+   "from": 5.32,
+   "to": 6.0
+  },
+  {
+   "from": 6.0,
+   "to": 7.52,
+   "vsrc": "media/ugc/ugc3-kling.mp4",
+   "zoom": 1.0
+  },
+  {
+   "from": 7.52,
+   "to": 9.97,
+   "vsrc": "media/ugc/ugc3-kling.mp4",
+   "zoom": 1.0
+  },
+  {
+   "from": 9.97,
+   "to": 12.22
+  },
+  {
+   "from": 12.22,
+   "to": 13.5
+  }
+ ],
+ "words": [
+  {
+   "w": "On",
+   "s": 0.06,
+   "e": 0.14
+  },
+  {
+   "w": "me",
+   "s": 0.16,
+   "e": 0.24
+  },
+  {
+   "w": "demande",
+   "s": 0.3,
+   "e": 0.6
+  },
+  {
+   "w": "tout",
+   "s": 0.64,
+   "e": 0.74
+  },
+  {
+   "w": "le",
+   "s": 0.78,
+   "e": 0.84
+  },
+  {
+   "w": "temps",
+   "s": 0.92,
+   "e": 1.08
+  },
+  {
+   "w": "si",
+   "s": 1.14,
+   "e": 1.22
+  },
+  {
+   "w": "mon",
+   "s": 1.28,
+   "e": 1.44
+  },
+  {
+   "w": "parfum",
+   "s": 1.48,
+   "e": 1.76
+  },
+  {
+   "w": "tient",
+   "s": 1.84,
+   "e": 2.04
+  },
+  {
+   "w": "vraiment.",
+   "s": 2.08,
+   "e": 2.48
+  },
+  {
+   "w": "Alors",
+   "s": 2.52,
+   "e": 2.72
+  },
+  {
+   "w": "regardez,",
+   "s": 2.78,
+   "e": 3.2
+  },
+  {
+   "w": "je",
+   "s": 3.38,
+   "e": 3.46
+  },
+  {
+   "w": "l'ai",
+   "s": 3.48,
+   "e": 3.58
+  },
+  {
+   "w": "mis",
+   "s": 3.64,
+   "e": 3.78
+  },
+  {
+   "w": "ce",
+   "s": 3.84,
+   "e": 3.94
+  },
+  {
+   "w": "matin",
+   "s": 3.98,
+   "e": 4.36
+  },
+  {
+   "w": "avant",
+   "s": 4.42,
+   "e": 4.6
+  },
+  {
+   "w": "d'aller",
+   "s": 4.62,
+   "e": 4.84
+  },
+  {
+   "w": "bosser.",
+   "s": 4.92,
+   "e": 5.24
+  },
+  {
+   "w": "Là,",
+   "s": 5.42,
+   "e": 5.52
+  },
+  {
+   "w": "c'est",
+   "s": 5.68,
+   "e": 5.78
+  },
+  {
+   "w": "le",
+   "s": 5.82,
+   "e": 5.88
+  },
+  {
+   "w": "soir",
+   "s": 5.96,
+   "e": 6.24
+  },
+  {
+   "w": "et",
+   "s": 6.44,
+   "e": 6.5
+  },
+  {
+   "w": "il",
+   "s": 6.52,
+   "e": 6.6
+  },
+  {
+   "w": "est",
+   "s": 6.62,
+   "e": 6.82
+  },
+  {
+   "w": "toujours",
+   "s": 6.86,
+   "e": 7.26
+  },
+  {
+   "w": "là.",
+   "s": 7.3,
+   "e": 7.42
+  },
+  {
+   "w": "Boisé,",
+   "s": 7.62,
+   "e": 8.04
+  },
+  {
+   "w": "un",
+   "s": 8.28,
+   "e": 8.32
+  },
+  {
+   "w": "peu",
+   "s": 8.4,
+   "e": 8.52
+  },
+  {
+   "w": "ambré,",
+   "s": 8.58,
+   "e": 8.9
+  },
+  {
+   "w": "jamais",
+   "s": 9.1,
+   "e": 9.4
+  },
+  {
+   "w": "écœurant.",
+   "s": 9.48,
+   "e": 10.02
+  },
+  {
+   "w": "Et",
+   "s": 10.06,
+   "e": 10.14
+  },
+  {
+   "w": "franchement,",
+   "s": 10.18,
+   "e": 10.64
+  },
+  {
+   "w": "on",
+   "s": 10.78,
+   "e": 10.84
+  },
+  {
+   "w": "me",
+   "s": 10.88,
+   "e": 10.94
+  },
+  {
+   "w": "demande",
+   "s": 11.0,
+   "e": 11.28
+  },
+  {
+   "w": "souvent",
+   "s": 11.34,
+   "e": 11.56
+  },
+  {
+   "w": "ce",
+   "s": 11.62,
+   "e": 11.66
+  },
+  {
+   "w": "que",
+   "s": 11.68,
+   "e": 11.76
+  },
+  {
+   "w": "je",
+   "s": 11.78,
+   "e": 11.88
+  },
+  {
+   "w": "porte.",
+   "s": 11.92,
+   "e": 12.2
+  },
+  {
+   "w": "Testez-le,",
+   "s": 12.32,
+   "e": 12.76
+  },
+  {
+   "w": "vous",
+   "s": 12.98,
+   "e": 13.1
+  },
+  {
+   "w": "verrez.",
+   "s": 13.14,
+   "e": 13.42
+  }
+ ],
+ "frames": 406,
+ "comment": {
+  "user": "@lea.mrt",
+  "text": "Ton parfum, il tient vraiment ou c'est du marketing ?",
+  "from": 0,
+  "to": 2.45
+ },
+ "stickers": [
+  {
+   "text": "LE TEST : DU MATIN AU SOIR",
+   "from": 3.3,
+   "to": 7.4,
+   "y": 230
+  },
+  {
+   "text": "BOISÉ · AMBRÉ",
+   "from": 7.6,
+   "to": 9.9,
+   "y": 230
+  }
+ ],
+ "subY": 1320
+}
