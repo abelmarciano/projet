@@ -242,5 +242,13 @@
   "speed": 1.15,
   "voice": "txtf1EDouKke753vN8SL",
   "text": "[conversational] POV : vous gérez une PME, et vos devis traînent entre un carnet, Excel et vos SMS. [sighs] [confident] Formuléo, c'est un logiciel configuré pour VOTRE métier. Clients, devis, relances… tout au même endroit. [matter-of-fact] Vingt euros par utilisateur et par mois, tout compris. [warmly] Laissez vos coordonnées, on vous le montre."
+ },
+ "velo-guillaume": {
+  "voice": "Ayvd8fDj52DfUWXZeAFe",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.8,
+  "speed": 1.12,
+  "text": "[laughs] J'ai longtemps cru que le vélo pour aller bosser, c'était réservé aux courageux… [playful] spoiler : je suis pas courageux. [enthusiastic] Le secret, c'est d'avoir le BON vélo. [warmly] Ici, on vous conseille, vous l'essayez, et vous repartez avec celui qui vous va vraiment. [confident] Passez au magasin… on vous trouve le vôtre."
  }
 }
