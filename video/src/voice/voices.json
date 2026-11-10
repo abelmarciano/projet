@@ -108,5 +108,12 @@
   "stability": 0.38,
   "style": 0.45,
   "speed": 0.95
+ },
+ "ugc3": {
+  "text": "On me demande tout le temps si mon parfum tient vraiment. Alors regardez : je l'ai mis ce matin, avant d'aller bosser. Là, c'est le soir… et il est toujours là. Boisé, un peu ambré, jamais écœurant. Et franchement, on me demande souvent ce que je porte. Testez-le, vous verrez.",
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "stability": 0.4,
+  "style": 0.4,
+  "speed": 0.96
  }
 }
