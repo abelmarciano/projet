@@ -8,7 +8,7 @@ import {EXPO} from '../components/anim';
 // long takes, quick transitions, word-by-word animated subtitles. Output is used as the ad in MotionChatPub.
 
 type Word = {w: string; s: number; e: number};
-export type AdCfg = {id: string; src: string; fps: number; segments: {from: number; to: number}[]; words: Word[]; frames: number; subtitles?: boolean; subY?: number};
+export type AdCfg = {id: string; src: string; fps: number; segments: {from: number; to: number; zoom?: number; cy?: number}[]; words: Word[]; frames: number; subtitles?: boolean; subY?: number};
 
 const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 const GRAD = 'linear-gradient(120deg, #2563EB 0%, #5B3FE4 52%, #9333EA 100%)';
@@ -21,9 +21,9 @@ const useFonts = () => {
 };
 
 // one segment with its own zoom rhythm
-const Seg: React.FC<{src: string; startFrom: number; len: number; i: number}> = ({src, startFrom, len, i}) => {
+const Seg: React.FC<{src: string; startFrom: number; len: number; i: number; zoom?: number; cy?: number}> = ({src, startFrom, len, i, zoom, cy}) => {
   const f = useCurrentFrame();
-  const base = i % 2 ? 1.12 : 1.0; // jump-cut alternation
+  const base = zoom ?? (i % 2 ? 1.12 : 1.0); // jump-cut alternation (or forced crop)
   const punchIn = interpolate(f, [0, 7], [base + 0.08, base], {...clamp, easing: EXPO});
   // extra punch every ~2.6 s inside long takes
   const beat = 78;
@@ -34,7 +34,7 @@ const Seg: React.FC<{src: string; startFrom: number; len: number; i: number}> = 
   const x = i % 3 === 1 ? -14 : i % 3 === 2 ? 14 : 0;
   return (
     <AbsoluteFill style={{overflow: 'hidden', background: '#000'}}>
-      <AbsoluteFill style={{transform: `translateX(${x}px) scale(${punchIn + inner + drift})`}}>
+      <AbsoluteFill style={{transform: `translateX(${zoom ? 0 : x}px) scale(${punchIn + inner + drift})`, transformOrigin: `50% ${(cy ?? 0.42) * 100}%`}}>
         <OffthreadVideo src={src} startFrom={startFrom} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
       </AbsoluteFill>
     </AbsoluteFill>
@@ -88,7 +88,7 @@ export const AdEdit: React.FC<{cfg: AdCfg}> = ({cfg}) => {
     if (i > 0) cuts.push(from);
     return (
       <Sequence key={i} from={from} durationInFrames={len}>
-        <Seg src={src} startFrom={Math.round(s.from * cfg.fps)} len={len} i={i} />
+        <Seg src={src} startFrom={Math.round(s.from * cfg.fps)} len={len} i={i} zoom={s.zoom} cy={s.cy} />
       </Sequence>
     );
   });

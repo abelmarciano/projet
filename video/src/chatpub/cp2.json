@@ -1,0 +1,284 @@
+{
+ "id": "cp2",
+ "title": "Chauffage : toute la maison au chaud – Vidéo 9:16",
+ "video": "chat/alice-edit.mp4",
+ "videoFrames": 321,
+ "prompt": "Vidéo face caméra 9:16 : une femme raconte qu'elle avait froid malgré le chauffage à fond, puis que toute sa maison reste au chaud. Ton sincère, CTA devis.",
+ "actor": {
+  "name": "Alice A.",
+  "style": "Lifestyle",
+  "img": "chat/actors/a005.jpg",
+  "desc": "Femme · face caméra"
+ },
+ "product": null,
+ "gallery": [
+  {
+   "name": "Freja",
+   "style": "E-commerce / Maison",
+   "img": "chat/actors/a059.jpg"
+  },
+  {
+   "name": "Sabrina",
+   "style": "Casual",
+   "img": "chat/actors/a150.jpg"
+  },
+  {
+   "name": "Justine",
+   "style": "Lifestyle",
+   "img": "chat/actors/a176.jpg"
+  },
+  {
+   "name": "Sandra",
+   "style": "Créatif",
+   "img": "chat/actors/a184.jpg"
+  },
+  {
+   "name": "Alice A.",
+   "style": "Lifestyle",
+   "img": "chat/actors/a005.jpg"
+  },
+  {
+   "name": "Hana",
+   "style": "E-commerce / Café",
+   "img": "chat/actors/a058.jpg"
+  },
+  {
+   "name": "Camille B.",
+   "style": "Casual",
+   "img": "chat/actors/a189.jpg"
+  },
+  {
+   "name": "Beatriz",
+   "style": "E-commerce / Mode",
+   "img": "chat/actors/a061.jpg"
+  }
+ ],
+ "voice": {
+  "a": "cp1-a-n",
+  "b1": "cp1-b1-n",
+  "b2": "cp1-b2-n",
+  "b3": "cp1-b3-n",
+  "d1": "cp1-d1-n",
+  "d2": "cp1-d2-n"
+ },
+ "brand": {
+  "name": "Maison Énergie",
+  "icon": "house"
+ },
+ "words": {
+  "cp1-a-n": [
+   {
+    "w": "Cette",
+    "s": 0.0,
+    "e": 0.232
+   },
+   {
+    "w": "pub",
+    "s": 0.267,
+    "e": 0.476
+   },
+   {
+    "w": "?",
+    "s": 0.58,
+    "e": 0.627
+   },
+   {
+    "w": "Personne",
+    "s": 0.813,
+    "e": 1.242
+   },
+   {
+    "w": "ne",
+    "s": 1.265,
+    "e": 1.324
+   },
+   {
+    "w": "l'a",
+    "s": 1.37,
+    "e": 1.451
+   },
+   {
+    "w": "tournée.",
+    "s": 1.498,
+    "e": 1.997
+   }
+  ],
+  "cp1-b1-n": [
+   {
+    "w": "Je",
+    "s": 0.0,
+    "e": 0.151
+   },
+   {
+    "w": "choisis",
+    "s": 0.174,
+    "e": 0.488
+   },
+   {
+    "w": "mon",
+    "s": 0.511,
+    "e": 0.615
+   },
+   {
+    "w": "actrice…",
+    "s": 0.662,
+    "e": 1.3
+   }
+  ],
+  "cp1-b2-n": [
+   {
+    "w": "J'écris",
+    "s": 0.0,
+    "e": 0.348
+   },
+   {
+    "w": "ma",
+    "s": 0.372,
+    "e": 0.453
+   },
+   {
+    "w": "pub",
+    "s": 0.499,
+    "e": 0.697
+   },
+   {
+    "w": "en",
+    "s": 0.743,
+    "e": 0.789
+   },
+   {
+    "w": "une",
+    "s": 0.848,
+    "e": 0.964
+   },
+   {
+    "w": "phrase…",
+    "s": 0.987,
+    "e": 1.625
+   }
+  ],
+  "cp1-b3-n": [
+   {
+    "w": "Et",
+    "s": 0.0,
+    "e": 0.116
+   },
+   {
+    "w": "voilà,",
+    "s": 0.151,
+    "e": 0.534
+   },
+   {
+    "w": "la",
+    "s": 0.673,
+    "e": 0.743
+   },
+   {
+    "w": "vidéo",
+    "s": 0.789,
+    "e": 1.033
+   },
+   {
+    "w": "est",
+    "s": 1.08,
+    "e": 1.149
+   },
+   {
+    "w": "prête.",
+    "s": 1.173,
+    "e": 1.509
+   },
+   {
+    "w": "Regardez",
+    "s": 1.66,
+    "e": 2.032
+   },
+   {
+    "w": "!",
+    "s": 2.078,
+    "e": 2.276
+   }
+  ],
+  "cp1-d1-n": [
+   {
+    "w": "Et",
+    "s": 0.0,
+    "e": 0.128
+   },
+   {
+    "w": "pour",
+    "s": 0.163,
+    "e": 0.279
+   },
+   {
+    "w": "la",
+    "s": 0.313,
+    "e": 0.372
+   },
+   {
+    "w": "publier",
+    "s": 0.418,
+    "e": 0.813
+   },
+   {
+    "w": "?",
+    "s": 0.871,
+    "e": 0.952
+   },
+   {
+    "w": "Un",
+    "s": 1.173,
+    "e": 1.289
+   },
+   {
+    "w": "clic.",
+    "s": 1.324,
+    "e": 1.811
+   }
+  ],
+  "cp1-d2-n": [
+   {
+    "w": "C'est",
+    "s": 0.0,
+    "e": 0.221
+   },
+   {
+    "w": "en",
+    "s": 0.279,
+    "e": 0.337
+   },
+   {
+    "w": "ligne",
+    "s": 0.372,
+    "e": 0.604
+   },
+   {
+    "w": "!",
+    "s": 0.627,
+    "e": 0.697
+   },
+   {
+    "w": "Growthity,",
+    "s": 0.987,
+    "e": 1.602
+   },
+   {
+    "w": "lien",
+    "s": 1.649,
+    "e": 1.904
+   },
+   {
+    "w": "en",
+    "s": 1.95,
+    "e": 2.02
+   },
+   {
+    "w": "bio.",
+    "s": 2.067,
+    "e": 2.508
+   }
+  ]
+ },
+ "promptShort": "Pub face caméra : elle avait froid malgré le chauffage à fond… maintenant toute la maison reste au chaud.",
+ "caption": "Le salon tiède, les chambres glacées ? Demandez votre devis."
+}
