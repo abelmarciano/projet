@@ -9,6 +9,7 @@ import {ORGANIC} from './organic/Organic';
 import {ReelComp, REEL_LIST} from './reels/Reels';
 import {ChatToAd, timeline as cpTimeline, ChatPubCfg} from './chatpub/ChatToAd';
 import cp1 from './chatpub/cp1.json';
+import {MotionChatPub, motionTimeline} from './chatpub/MotionChatPub';
 import {ShowIntro, ShowEnd, SHOW_INTRO, SHOW_END} from './reels/Showcase';
 
 export const Root: React.FC = () => (
@@ -25,6 +26,7 @@ export const Root: React.FC = () => (
       <Composition key={r.id} id={`Reel${r.id.slice(1)}`} component={ReelComp} durationInFrames={r.frames} fps={30} width={1080} height={1920} defaultProps={{id: r.id, withAudio: true}} />
     ))}
     <Composition id="ChatPub-cp1" component={ChatToAd} durationInFrames={cpTimeline(cp1 as unknown as ChatPubCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: cp1 as unknown as ChatPubCfg}} />
+    <Composition id="ChatPubMotion-cp1" component={MotionChatPub} durationInFrames={motionTimeline(cp1 as unknown as ChatPubCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: cp1 as unknown as ChatPubCfg}} />
     <Composition id="ShowIntro" component={ShowIntro} durationInFrames={SHOW_INTRO} fps={30} width={1080} height={1920} defaultProps={{prompt: '', label: '', n: ''}} />
     <Composition id="ShowEnd" component={ShowEnd} durationInFrames={SHOW_END} fps={30} width={1080} height={1920} />
     {ORGANIC.map((c) => (

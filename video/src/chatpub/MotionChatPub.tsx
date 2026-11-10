@@ -1,0 +1,476 @@
+import React, {useEffect, useState} from 'react';
+import {AbsoluteFill, Audio, Img, OffthreadVideo, Sequence, continueRender, delayRender, interpolate, random, staticFile, useCurrentFrame} from 'remotion';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/inter/800.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import {LogoMark, Wordmark} from '../components/UI';
+import {prog, pop, EXPO, INOUT} from '../components/anim';
+import TL from './motion_timeline.json';
+import type {ChatPubCfg} from './ChatToAd';
+
+// « Du chat à la pub » — motion-design version (agency look).
+// Dark « studio » art direction from the Growthity codebase (src/styles.css: --studio, --gradient-hero,
+// .premium-editorial-band, .premium-phone). The product UI is used as hero objects, not as screenshots.
+
+const STUDIO = '#0B0A0C';
+const GRAD = 'linear-gradient(120deg, #2563EB 0%, #5B3FE4 52%, #9333EA 100%)';
+const GRAD_TXT = 'linear-gradient(100deg, #8FA6FF 0%, #A78BFF 45%, #E39BFF 100%)';
+const PRIMARY = '#6552E8';
+const META = '#0866FF';
+const DISPLAY = '"Space Grotesk", Inter, sans-serif';
+const FONT = 'Inter, system-ui, sans-serif';
+
+type Word = {w: string; s: number; e: number};
+type Cfg = ChatPubCfg & {promptShort?: string};
+
+export const motionTimeline = (c: Cfg) => {
+  const T: Record<string, number> = {...(TL as unknown as Record<string, number>)};
+  T.videoEnd = T.videoStart + c.videoFrames;
+  T.pub = T.videoEnd;
+  T.end = T.pub + T.pubEnd;
+  T.total = T.end + T.endDur;
+  return T;
+};
+
+const useFonts = () => {
+  const [h] = useState(() => delayRender('fonts'));
+  useEffect(() => {
+    Promise.all(['500 20px Inter', '600 20px Inter', '700 20px Inter', '800 20px Inter', '700 20px "Space Grotesk"', '600 20px "Space Grotesk"'].map((s) => document.fonts.load(s))).then(() => continueRender(h));
+  }, [h]);
+};
+
+const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
+
+// ---------- background: studio band with drifting glows + grain ----------
+const StudioBg: React.FC<{intensity?: number}> = ({intensity = 1}) => {
+  const f = useCurrentFrame();
+  const a = Math.sin(f / 70) * 60;
+  const b = Math.cos(f / 90) * 80;
+  return (
+    <AbsoluteFill style={{background: STUDIO}}>
+      <AbsoluteFill style={{background: `radial-gradient(900px 900px at ${18 + a / 30}% ${12 + b / 40}%, rgba(101,82,232,${0.42 * intensity}), transparent 62%)`}} />
+      <AbsoluteFill style={{background: `radial-gradient(800px 800px at ${86 - a / 40}% ${88 - b / 50}%, rgba(214,72,200,${0.22 * intensity}), transparent 60%)`}} />
+      <AbsoluteFill style={{background: `radial-gradient(700px 500px at 50% 50%, rgba(37,99,235,${0.12 * intensity}), transparent 70%)`}} />
+      <Grain />
+      <AbsoluteFill style={{background: 'radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.55) 100%)'}} />
+    </AbsoluteFill>
+  );
+};
+
+const Grain: React.FC = () => {
+  const f = useCurrentFrame();
+  const seed = Math.floor(f / 2) % 6;
+  return (
+    <svg width="1080" height="1920" style={{position: 'absolute', inset: 0, opacity: 0.07, mixBlendMode: 'overlay'}}>
+      <filter id={`gr${seed}`}>
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed={seed} />
+      </filter>
+      <rect width="100%" height="100%" filter={`url(#gr${seed})`} />
+    </svg>
+  );
+};
+
+// floating light particles
+const Dust: React.FC<{n?: number; o?: number}> = ({n = 26, o = 1}) => {
+  const f = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{opacity: o}}>
+      {new Array(n).fill(0).map((_, i) => {
+        const x = random(`x${i}`) * 1080;
+        const y = (random(`y${i}`) * 1920 - f * (0.6 + random(`s${i}`) * 1.4)) % 1920;
+        const s = 3 + random(`r${i}`) * 6;
+        return <div key={i} style={{position: 'absolute', left: x, top: y < 0 ? y + 1920 : y, width: s, height: s, borderRadius: 99, background: i % 3 ? 'rgba(167,139,255,0.55)' : 'rgba(255,255,255,0.6)', filter: 'blur(1px)', boxShadow: '0 0 12px rgba(167,139,255,0.8)'}} />;
+      })}
+    </AbsoluteFill>
+  );
+};
+
+// ---------- premium phone ----------
+const Phone: React.FC<{w: number; children: React.ReactNode; glow?: number; style?: React.CSSProperties}> = ({w, children, glow = 1, style}) => {
+  const f = useCurrentFrame();
+  const h = w * 2.05;
+  const sweep = ((f * 9) % 2400) - 600;
+  return (
+    <div style={{position: 'relative', width: w, height: h, borderRadius: w * 0.14, padding: w * 0.028, background: 'linear-gradient(145deg, #2B2540 0%, #0B0A0C 45%, #141217 100%)', boxShadow: `0 0 0 2px rgba(255,255,255,0.12) inset, 0 60px 140px -40px rgba(0,0,0,0.9), 0 30px 90px -30px rgba(101,82,232,${0.75 * glow})`, ...style}}>
+      <div style={{position: 'relative', width: '100%', height: '100%', borderRadius: w * 0.115, overflow: 'hidden', background: '#000'}}>
+        {children}
+        <div style={{position: 'absolute', left: '50%', top: w * 0.03, width: w * 0.3, height: w * 0.075, marginLeft: -w * 0.15, borderRadius: 99, background: '#000'}} />
+        <div style={{position: 'absolute', inset: 0, background: `linear-gradient(115deg, transparent ${sweep / 24}%, rgba(255,255,255,0.10) ${sweep / 24 + 6}%, transparent ${sweep / 24 + 14}%)`, pointerEvents: 'none'}} />
+      </div>
+    </div>
+  );
+};
+
+// ---------- kinetic captions ----------
+const Kinetic: React.FC<{words: Word[]; at: number; y?: number; size?: number}> = ({words, at, y = 1560, size = 72}) => {
+  const f = useCurrentFrame();
+  const t = (f - at) / 30;
+  if (!words.length || t < -0.05 || t > words[words.length - 1].e + 0.3) return null;
+  const chunks: Word[][] = [];
+  let cur: Word[] = [];
+  words.forEach((w) => {
+    cur.push(w);
+    if (cur.length >= 3 || /[.,?!…:]$/.test(w.w)) {
+      chunks.push(cur);
+      cur = [];
+    }
+  });
+  if (cur.length) chunks.push(cur);
+  const chunk = chunks.find((ch) => t <= ch[ch.length - 1].e + 0.04) ?? chunks[chunks.length - 1];
+  return (
+    <div style={{position: 'absolute', left: 60, right: 60, top: y, display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '0 18px'}}>
+      {chunk.map((w, i) => {
+        const p = interpolate(t, [w.s - 0.06, w.s + 0.1], [0, 1], clamp);
+        const hot = t >= w.s && t <= w.e + 0.12;
+        return (
+          <span key={i} style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: size, lineHeight: 1.08, color: '#fff', opacity: 0.25 + p * 0.75, transform: `translateY(${(1 - p) * 26}px) scale(${0.92 + p * 0.08})`, display: 'inline-block', textShadow: '0 8px 40px rgba(0,0,0,0.6)', ...(hot ? {backgroundImage: GRAD_TXT, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'} : {})}}>
+            {w.w}
+          </span>
+        );
+      })}
+    </div>
+  );
+};
+
+// ---------- 1. hook ----------
+const Hook: React.FC<{c: Cfg; words: Word[]}> = ({c, words}) => {
+  const f = useCurrentFrame();
+  const inP = prog(f, 0, 22);
+  const rotY = interpolate(f, [0, 66], [-24, -10], clamp);
+  const rotX = interpolate(f, [0, 66], [10, 4], clamp);
+  return (
+    <AbsoluteFill>
+      <StudioBg />
+      <div style={{position: 'absolute', left: 0, right: 0, top: 210, textAlign: 'center', fontFamily: DISPLAY, fontWeight: 700, fontSize: 210, lineHeight: 0.9, color: 'rgba(255,255,255,0.07)', letterSpacing: '-0.03em', transform: `translateX(${-f * 2}px)`}}>
+        ZÉRO<br />TOURNAGE
+      </div>
+      <AbsoluteFill style={{perspective: 2000, alignItems: 'center', justifyContent: 'center'}}>
+        <div style={{transform: `translate(70px, ${(1 - inP) * 300 - 120}px) rotateY(${rotY}deg) rotateX(${rotX}deg) scale(${0.85 + inP * 0.15})`, opacity: inP}}>
+          <Phone w={520}>
+            <OffthreadVideo src={staticFile(`media/${c.video}`)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+          </Phone>
+        </div>
+      </AbsoluteFill>
+      <Dust />
+      <Kinetic words={words} at={TL.vo.a} y={1520} size={86} />
+    </AbsoluteFill>
+  );
+};
+
+// ---------- 2. actor carousel ----------
+const Carousel: React.FC<{c: Cfg; words: Word[]}> = ({c, words}) => {
+  const f = useCurrentFrame(); // local, starts at hookEnd
+  const g = c.gallery;
+  const n = g.length;
+  const k = Math.max(0, g.findIndex((x) => x.name === c.actor?.name));
+  const step = 360 / n;
+  const lock = TL.carouselLock - TL.hookEnd;
+  const base = interpolate(f, [0, lock], [-k * step - 300, -k * step], {...clamp, easing: EXPO});
+  const R = 620;
+  const chosen = prog(f, lock - 2, 12);
+  const out = prog(f, TL.actorEnd - TL.hookEnd - 4, 14, INOUT);
+  return (
+    <AbsoluteFill>
+      <StudioBg />
+      <div style={{position: 'absolute', left: 0, right: 0, top: 230, textAlign: 'center', fontFamily: FONT, fontWeight: 600, fontSize: 30, letterSpacing: '0.22em', color: 'rgba(255,255,255,0.55)', opacity: prog(f, 4, 12) * (1 - out)}}>
+          GALERIE D’ACTEURS · 200 VISAGES RÉALISTES
+      </div>
+      <AbsoluteFill style={{perspective: 1700, alignItems: 'center', justifyContent: 'center'}}>
+        <div style={{position: 'relative', width: 380, height: 520, transformStyle: 'preserve-3d', transform: `translateY(-60px) translateZ(${-R + out * 260}px) rotateX(-6deg) rotateY(${base}deg)`}}>
+          {g.map((a, i) => {
+            const ang = i * step;
+            const isK = i === k;
+            const face = Math.cos(((ang + base) * Math.PI) / 180);
+            const sc = isK ? 1 + chosen * 0.18 : 1;
+            return (
+              <div key={i} style={{position: 'absolute', inset: 0, borderRadius: 34, overflow: 'hidden', transform: `rotateY(${ang}deg) translateZ(${R}px) scale(${sc})`, backfaceVisibility: 'hidden', opacity: isK ? 1 : (0.25 + Math.max(0, face) * 0.75) * (1 - chosen * 0.6) * (1 - out), filter: isK ? 'none' : `blur(${chosen * 6}px)`, boxShadow: isK && chosen > 0 ? `0 0 0 ${6 * chosen}px #8B6DFF, 0 40px 120px -20px rgba(139,109,255,${0.9 * chosen})` : '0 30px 80px -30px rgba(0,0,0,0.8)'}}>
+                <Img src={staticFile(`media/${a.img}`)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+                <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, padding: '90px 26px 24px', background: 'linear-gradient(transparent, rgba(0,0,0,0.75))', color: '#fff', fontFamily: FONT}}>
+                  <div style={{fontSize: 34, fontWeight: 700}}>{a.name}</div>
+                  <div style={{fontSize: 24, opacity: 0.8}}>{a.style}</div>
+                </div>
+                {isK && chosen > 0 && (
+                  <div style={{position: 'absolute', right: 20, top: 20, width: 66, height: 66, borderRadius: 99, backgroundImage: GRAD, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: `scale(${pop(f, lock, 10)})`, boxShadow: '0 10px 30px rgba(91,63,228,0.7)'}}>
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </AbsoluteFill>
+      <Dust o={0.6} />
+      <Kinetic words={words} at={TL.vo.b1 - TL.hookEnd} y={1500} size={80} />
+    </AbsoluteFill>
+  );
+};
+
+// ---------- 3. prompt bar (Growthity composer as a hero object) ----------
+const PromptScene: React.FC<{c: Cfg; words: Word[]}> = ({c, words}) => {
+  const f = useCurrentFrame(); // local from actorEnd
+  const L = (k: keyof typeof TL) => (TL[k] as number) - TL.actorEnd;
+  const inP = prog(f, 0, 16);
+  const text = c.promptShort ?? c.prompt;
+  const n = Math.floor(interpolate(f, [L('typeStart'), L('typeEnd')], [0, text.length], clamp));
+  const shown = text.slice(0, n);
+  const sendP = f >= L('send') - 3 && f < L('send') + 3;
+  const out = prog(f, L('send') + 2, 12, INOUT);
+  const chipP = prog(f, 2, 14);
+  const rotX = interpolate(f, [0, 30], [18, 8], {...clamp, easing: EXPO});
+  const rotY = interpolate(f, [0, 60], [-14, -4], {...clamp, easing: EXPO});
+  return (
+    <AbsoluteFill>
+      <StudioBg />
+      <AbsoluteFill style={{perspective: 1800, alignItems: 'center', justifyContent: 'center'}}>
+        <div style={{width: 960, transform: `translateY(${-80 + (1 - inP) * 200}px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(${(0.9 + inP * 0.1) * (1 - out * 0.25)})`, opacity: inP * (1 - out), filter: `blur(${out * 10}px)`}}>
+          <div style={{borderRadius: 44, background: '#fff', padding: '30px 30px 26px', boxShadow: '0 0 0 2px rgba(255,255,255,0.6) inset, 0 50px 140px -30px rgba(101,82,232,0.85), 0 20px 60px -20px rgba(0,0,0,0.6)', fontFamily: FONT}}>
+            <div style={{display: 'flex', gap: 12, alignItems: 'center'}}>
+              {c.brand && (
+                <div style={{display: 'flex', alignItems: 'center', gap: 10, height: 76, padding: '0 22px', borderRadius: 999, background: '#F1F3F9', border: '2px solid #E7E9EF', fontSize: 28, fontWeight: 500, color: '#0F172A', whiteSpace: 'nowrap'}}>
+                  <svg width="30" height="30" viewBox="0 0 24 24"><path d="M3 11.5L12 4l9 7.5" fill="none" stroke="#EA580C" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /><path d="M5.5 10v9.5h13V10" fill="#FFEDD5" stroke="#EA580C" strokeWidth="2" strokeLinejoin="round" /></svg>
+                  {c.brand.name}
+                </div>
+              )}
+              {c.actor && (
+                <div style={{display: 'flex', alignItems: 'center', gap: 10, height: 76, padding: '0 22px 0 8px', borderRadius: 999, background: '#EEEBFF', border: '2px solid #D6CFFB', fontSize: 28, fontWeight: 600, color: '#0F172A', whiteSpace: 'nowrap', transform: `scale(${0.6 + chipP * 0.4})`, opacity: chipP}}>
+                  <Img src={staticFile(`media/${c.actor.img}`)} style={{width: 60, height: 60, borderRadius: 99, objectFit: 'cover'}} />
+                  {c.actor.name}
+                </div>
+              )}
+              {c.product ? (
+                <div style={{display: 'flex', alignItems: 'center', gap: 10, height: 76, padding: '0 22px 0 8px', borderRadius: 999, background: '#EEEBFF', border: '2px solid #D6CFFB', fontSize: 28, fontWeight: 600, color: '#0F172A', whiteSpace: 'nowrap'}}>
+                  <Img src={staticFile(`media/${c.product.img}`)} style={{width: 60, height: 60, borderRadius: 14, objectFit: 'cover'}} />
+                  {c.product.name}
+                </div>
+              ) : null}
+            </div>
+            <div style={{display: 'flex', alignItems: 'flex-end', gap: 18, marginTop: 24}}>
+              <div style={{flex: 1, minHeight: 150, fontSize: 40, lineHeight: 1.32, color: shown ? '#0F172A' : '#94A3B8', fontWeight: 500}}>
+                {shown || 'Décris la pub que tu veux créer…'}
+                <span style={{display: 'inline-block', width: 4, height: 44, marginLeft: 4, verticalAlign: '-6px', backgroundImage: GRAD, opacity: Math.floor(f / 7) % 2 ? 1 : 0.15}} />
+              </div>
+              <div style={{width: 104, height: 104, borderRadius: 30, background: n > 0 ? GRAD : '#F1F3F9', display: 'flex', alignItems: 'center', justifyContent: 'center', transform: `scale(${sendP ? 0.86 : 1})`, boxShadow: n > 0 ? '0 18px 40px -12px rgba(91,63,228,0.9)' : 'none', flexShrink: 0}}>
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke={n > 0 ? '#fff' : '#94A3B8'} strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 19V5M6 11l6-6 6 6" /></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </AbsoluteFill>
+      {/* the chosen actor card flies into the chip */}
+      {c.actor && f < 18 && (
+        <div style={{position: 'absolute', left: 540 - 225 + (1 - prog(f, 0, 16)) * 0 , top: 640, width: 450, height: 615, borderRadius: 34, overflow: 'hidden', opacity: 1 - prog(f, 4, 12), transform: `translate(${-prog(f, 0, 16) * 40}px, ${-prog(f, 0, 16) * 380}px) scale(${1 - prog(f, 0, 16) * 0.85})`, boxShadow: '0 0 0 6px #8B6DFF'}}>
+          <Img src={staticFile(`media/${c.actor.img}`)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+        </div>
+      )}
+      <Dust o={0.5} />
+      <Kinetic words={words} at={TL.vo.b2 - TL.actorEnd} y={1500} size={80} />
+    </AbsoluteFill>
+  );
+};
+
+// ---------- 4. generation: scan reveal, then full screen ----------
+const GenScene: React.FC<{c: Cfg; words: Word[]}> = ({c, words}) => {
+  const f = useCurrentFrame(); // local from send
+  const L = (k: keyof typeof TL) => (TL[k] as number) - TL.send;
+  const burst = prog(f, L('burst') - 2, 16);
+  const appear = prog(f, L('burst'), 16);
+  const scan = interpolate(f, [L('scanStart'), L('scanEnd')], [0, 1], {...clamp, easing: INOUT});
+  const ready = f >= L('ready');
+  const ex = prog(f, L('expand'), L('videoStart') - L('expand'), INOUT);
+  const W = interpolate(ex, [0, 1], [600, 1080]);
+  const H = interpolate(ex, [0, 1], [1066, 1920]);
+  const rad = interpolate(ex, [0, 1], [44, 0]);
+  const spin = f * 6;
+  return (
+    <AbsoluteFill>
+      <StudioBg intensity={1.2} />
+      {/* burst rings */}
+      {[0, 1, 2].map((i) => {
+        const p = prog(f, L('burst') - 4 + i * 4, 26);
+        return <div key={i} style={{position: 'absolute', left: 540 - 400, top: 900 - 400, width: 800, height: 800, borderRadius: 999, border: '3px solid rgba(167,139,255,0.7)', transform: `scale(${0.2 + p * 1.6})`, opacity: (1 - p) * (p > 0 ? 1 : 0)}} />;
+      })}
+      <AbsoluteFill style={{background: `radial-gradient(circle at 50% 47%, rgba(255,255,255,${0.5 * burst * (1 - prog(f, L('burst') + 8, 10))}), transparent 40%)`}} />
+      <AbsoluteFill style={{alignItems: 'center', justifyContent: 'center'}}>
+        <div style={{position: 'relative', width: W, height: H, borderRadius: rad, padding: 5 * (1 - ex), background: `conic-gradient(from ${spin}deg, #2563EB, #5B3FE4, #9333EA, #E39BFF, #2563EB)`, transform: `scale(${0.85 + appear * 0.15})`, opacity: appear, boxShadow: `0 0 ${120 * (1 - ex)}px rgba(139,109,255,0.7)`}}>
+          <div style={{position: 'relative', width: '100%', height: '100%', borderRadius: Math.max(0, rad - 5), overflow: 'hidden', background: '#000'}}>
+            {/* blurred base */}
+            {c.actor && <Img src={staticFile(`media/${c.actor.img}`)} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(26px) saturate(0.6) brightness(0.6)', transform: 'scale(1.15)'}} />}
+            {/* sharp video revealed by the scan line */}
+            <div style={{position: 'absolute', inset: 0, clipPath: `inset(0 0 ${(1 - scan) * 100}% 0)`}}>
+              <OffthreadVideo src={staticFile(`media/${c.video}`)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+            </div>
+            {scan > 0 && scan < 1 && (
+              <div style={{position: 'absolute', left: 0, right: 0, top: `${scan * 100}%`, height: 6, marginTop: -3, background: 'linear-gradient(90deg, transparent, #fff, transparent)', boxShadow: '0 0 40px 14px rgba(167,139,255,0.9)'}} />
+            )}
+            {!ready && (
+              <div style={{position: 'absolute', left: 30, bottom: 30, fontFamily: '"Geist Mono", ui-monospace, monospace', fontSize: 30, color: '#fff', opacity: 0.9}}>
+                GÉNÉRATION {String(Math.round(scan * 100)).padStart(2, '0')} %
+              </div>
+            )}
+          </div>
+          {ready && (
+            <div style={{position: 'absolute', left: '50%', top: -36, transform: `translateX(-50%) scale(${pop(f, L('ready'), 10) * (1 - ex)})`, display: 'flex', alignItems: 'center', gap: 12, padding: '16px 30px', borderRadius: 999, background: '#fff', fontFamily: FONT, fontWeight: 700, fontSize: 32, color: '#15803D', boxShadow: '0 20px 50px -20px rgba(0,0,0,0.6)'}}>
+              <div style={{width: 18, height: 18, borderRadius: 99, background: '#22C55E', boxShadow: '0 0 12px #22C55E'}} />
+              Prête
+            </div>
+          )}
+        </div>
+      </AbsoluteFill>
+      <Dust o={1 - ex} />
+      <div style={{opacity: 1 - ex}}>
+        <Kinetic words={words} at={TL.vo.b3 - TL.send} y={1640} size={76} />
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+// ---------- 6. publish: sponsored post in a phone + « Publier sur Meta » ----------
+const MetaMark: React.FC<{s: number; c?: string}> = ({s, c = '#fff'}) => (
+  <svg width={s} height={s * 0.62} viewBox="0 0 40 25" fill="none"><path d="M3 17c0-7 3.5-13 8-13 6.5 0 9.5 17 17 17 3.5 0 6-3 6-8 0-6-3-10-7-10-6 0-9.5 17-17 17-4 0-7-1.5-7-3z" stroke={c} strokeWidth="3.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+);
+
+const PublishScene: React.FC<{c: Cfg; words: Word[]}> = ({c, words}) => {
+  const f = useCurrentFrame();
+  const inP = prog(f, 0, 18);
+  const press = TL.press;
+  const done = f >= press + 4;
+  const btnIn = pop(f, 14, 13);
+  const pressing = f >= press - 3 && f < press + 3;
+  const rotY = interpolate(f, [0, 90], [16, 8], clamp);
+  const fb = pop(f, press + 8, 11);
+  const ig = pop(f, press + 14, 11);
+  return (
+    <AbsoluteFill>
+      <StudioBg />
+      <AbsoluteFill style={{perspective: 2000, alignItems: 'center'}}>
+        <div style={{marginTop: 150, transform: `translateY(${(1 - inP) * -200}px) rotateY(${rotY}deg) rotateX(4deg) scale(${1.25 - inP * 0.25})`, opacity: inP}}>
+          <Phone w={500} glow={0.8}>
+            <div style={{position: 'absolute', inset: 0, background: '#fff', fontFamily: FONT}}>
+              <div style={{display: 'flex', alignItems: 'center', gap: 14, padding: '74px 22px 14px'}}>
+                <div style={{width: 54, height: 54, borderRadius: 99, background: '#FFEDD5', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid #FDBA74'}}>
+                  <svg width="30" height="30" viewBox="0 0 24 24"><path d="M3 11.5L12 4l9 7.5" fill="none" stroke="#EA580C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /><path d="M5.5 10v9.5h13V10" fill="#FFEDD5" stroke="#EA580C" strokeWidth="2" strokeLinejoin="round" /></svg>
+                </div>
+                <div>
+                  <div style={{fontSize: 24, fontWeight: 700, color: '#0F172A'}}>{c.brand?.name ?? 'Votre marque'}</div>
+                  <div style={{fontSize: 19, color: '#64748B'}}>Sponsorisé</div>
+                </div>
+              </div>
+              <div style={{position: 'relative', height: 620, overflow: 'hidden'}}>
+                <OffthreadVideo src={staticFile(`media/${c.video}`)} startFrom={60} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+              </div>
+              <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 22px', background: '#F1F5F9', fontSize: 22, fontWeight: 600, color: '#0F172A'}}>
+                En savoir plus
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F172A" strokeWidth="2.4" strokeLinecap="round"><path d="M9 6l6 6-6 6" /></svg>
+              </div>
+              <div style={{display: 'flex', gap: 22, padding: '16px 22px'}}>
+                {[0, 1, 2].map((i) => <div key={i} style={{width: 34, height: 34, borderRadius: 10, border: '3px solid #0F172A', opacity: 0.85}} />)}
+              </div>
+            </div>
+          </Phone>
+        </div>
+      </AbsoluteFill>
+      {/* hero button */}
+      <div style={{position: 'absolute', left: 0, right: 0, top: 1350, display: 'flex', justifyContent: 'center'}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: 22, padding: '34px 58px', borderRadius: 30, background: done ? '#16A34A' : META, color: '#fff', fontFamily: FONT, fontWeight: 700, fontSize: 48, transform: `scale(${btnIn * (pressing ? 0.92 : 1)})`, boxShadow: `0 30px 70px -20px ${done ? 'rgba(22,163,74,0.8)' : 'rgba(8,102,255,0.85)'}`}}>
+          {done ? (
+            <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+          ) : (
+            <MetaMark s={64} />
+          )}
+          {done ? 'En ligne sur Meta' : 'Publier sur Meta'}
+        </div>
+      </div>
+      {/* press ring */}
+      {f >= press - 2 && f < press + 20 && <div style={{position: 'absolute', left: 540 - 220, top: 1405 - 220, width: 440, height: 440, borderRadius: 999, border: '4px solid rgba(255,255,255,0.7)', transform: `scale(${0.3 + prog(f, press - 2, 20) * 1.2})`, opacity: 1 - prog(f, press - 2, 20)}} />}
+      {/* platforms */}
+      <div style={{position: 'absolute', left: 0, right: 0, top: 1560, display: 'flex', justifyContent: 'center', gap: 40}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: 14, padding: '18px 30px', borderRadius: 999, background: 'rgba(255,255,255,0.08)', border: '2px solid rgba(255,255,255,0.14)', color: '#fff', fontFamily: FONT, fontWeight: 600, fontSize: 32, transform: `scale(${fb})`}}>
+          <div style={{width: 48, height: 48, borderRadius: 99, background: '#1877F2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 34}}>f</div>
+          Facebook
+        </div>
+        <div style={{display: 'flex', alignItems: 'center', gap: 14, padding: '18px 30px', borderRadius: 999, background: 'rgba(255,255,255,0.08)', border: '2px solid rgba(255,255,255,0.14)', color: '#fff', fontFamily: FONT, fontWeight: 600, fontSize: 32, transform: `scale(${ig})`}}>
+          <div style={{width: 48, height: 48, borderRadius: 14, background: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <div style={{width: 22, height: 22, borderRadius: 99, border: '3.5px solid #fff'}} />
+          </div>
+          Instagram
+        </div>
+      </div>
+      <Kinetic words={words} at={TL.vo.d1} y={1690} size={74} />
+    </AbsoluteFill>
+  );
+};
+
+// ---------- 7. end ----------
+const EndScene: React.FC<{words: Word[]}> = ({words}) => {
+  const f = useCurrentFrame();
+  return (
+    <AbsoluteFill>
+      <StudioBg intensity={1.3} />
+      <AbsoluteFill style={{alignItems: 'center', justifyContent: 'center', fontFamily: FONT}}>
+        <div style={{width: 180, height: 180, borderRadius: 50, background: 'rgba(255,255,255,0.06)', border: '2px solid rgba(255,255,255,0.14)', display: 'flex', alignItems: 'center', justifyContent: 'center', transform: `scale(${pop(f, 2, 12)})`, boxShadow: '0 40px 120px -30px rgba(101,82,232,0.9)'}}>
+          <LogoMark size={100} draw={prog(f, 2, 18)} />
+        </div>
+        <div style={{marginTop: 44}}><Wordmark size={92} dark reveal={prog(f, 8, 16)} /></div>
+        <div style={{marginTop: 60, fontFamily: DISPLAY, fontWeight: 700, fontSize: 92, lineHeight: 1.0, color: '#fff', textAlign: 'center', letterSpacing: '-0.02em', opacity: prog(f, 14, 12), transform: `translateY(${(1 - prog(f, 14, 16)) * 30}px)`}}>
+          Une phrase.
+          <br />
+          <span style={{backgroundImage: GRAD_TXT, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>Votre pub en ligne.</span>
+        </div>
+        <div style={{marginTop: 70, display: 'flex', alignItems: 'center', gap: 16, padding: '28px 52px', borderRadius: 999, backgroundImage: GRAD, color: '#fff', fontSize: 44, fontWeight: 700, transform: `scale(${pop(f, 24, 12)})`, boxShadow: '0 24px 60px -16px rgba(91,63,228,0.9)'}}>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinecap="round"><path d="M12 19V5M6 11l6-6 6 6" /></svg>
+          Lien en bio
+        </div>
+      </AbsoluteFill>
+      <Dust />
+      <AbsoluteFill style={{background: '#000', opacity: interpolate(f, [TL.endDur - 10, TL.endDur], [0, 1], clamp)}} />
+    </AbsoluteFill>
+  );
+};
+
+// ---------- composition ----------
+export const MotionChatPub: React.FC<{cfg: Cfg}> = ({cfg: c}) => {
+  useFonts();
+  const f = useCurrentFrame();
+  const T = motionTimeline(c);
+  const W = (k: string) => (c.words ?? {})[c.voice[k as 'a']] ?? [];
+  const flash = (at: number, d = 8) => Math.max(0, 1 - Math.abs(f - at) / d);
+  return (
+    <AbsoluteFill style={{background: STUDIO}}>
+      <Sequence durationInFrames={T.hookEnd}>
+        <Hook c={c} words={W('a')} />
+      </Sequence>
+      <Sequence from={T.hookEnd} durationInFrames={T.actorEnd - T.hookEnd}>
+        <Carousel c={c} words={W('b1')} />
+      </Sequence>
+      <Sequence from={T.actorEnd} durationInFrames={T.send + 14 - T.actorEnd}>
+        <PromptScene c={c} words={W('b2')} />
+      </Sequence>
+      <Sequence from={T.send} durationInFrames={T.videoStart - T.send}>
+        <GenScene c={c} words={W('b3')} />
+      </Sequence>
+      <Sequence from={T.videoStart} durationInFrames={c.videoFrames}>
+        <OffthreadVideo src={staticFile(`media/${c.video}`)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+      </Sequence>
+      <Sequence from={T.pub} durationInFrames={T.pubEnd}>
+        <PublishScene c={c} words={W('d1')} />
+      </Sequence>
+      <Sequence from={T.end} durationInFrames={T.endDur}>
+        <EndScene words={W('d2')} />
+      </Sequence>
+      {/* cut flashes */}
+      <AbsoluteFill style={{background: '#fff', opacity: 0.55 * Math.max(flash(T.hookEnd, 5), flash(T.actorEnd, 4), flash(T.pub, 6), flash(T.end, 5)), pointerEvents: 'none'}} />
+      {/* audio */}
+      <Sequence from={TL.vo.a}><Audio src={staticFile(`voice/${c.voice.a}.mp3`)} /></Sequence>
+      <Sequence from={TL.vo.b1}><Audio src={staticFile(`voice/${c.voice.b1}.mp3`)} /></Sequence>
+      <Sequence from={TL.vo.b2}><Audio src={staticFile(`voice/${c.voice.b2}.mp3`)} /></Sequence>
+      <Sequence from={TL.vo.b3}><Audio src={staticFile(`voice/${c.voice.b3}.mp3`)} /></Sequence>
+      <Sequence from={T.pub + TL.vo.d1}><Audio src={staticFile(`voice/${c.voice.d1}.mp3`)} /></Sequence>
+      <Sequence from={T.pub + TL.vo.d2}><Audio src={staticFile(`voice/${c.voice.d2}.mp3`)} /></Sequence>
+      <Audio src={staticFile(`chatpub/${c.id}-motion-bed.wav`)} />
+    </AbsoluteFill>
+  );
+};
