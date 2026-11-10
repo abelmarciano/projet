@@ -31,7 +31,8 @@ export const motionTimeline = (c: Cfg) => {
   const T: Record<string, number> = {...(TL as unknown as Record<string, number>)};
   T.videoEnd = T.videoStart + c.videoFrames;
   T.pub = T.videoEnd;
-  T.end = T.pub + T.pubEnd;
+  T.leads = T.pub + T.pubEnd;
+  T.end = T.leads + (T.leadsDur ?? 0);
   T.total = T.end + T.endDur;
   return T;
 };
@@ -483,6 +484,92 @@ const PublishScene: React.FC<{c: Cfg; words: Word[]}> = ({c, words}) => {
   );
 };
 
+// ---------- 6b. leads coming in ----------
+type Lead = {name: string; city: string; ini: string; col: string};
+const DEFAULT_LEADS: Lead[] = [
+  {name: 'Sophie M.', city: 'Lyon', ini: 'SM', col: '#F59E0B'},
+  {name: 'Karim B.', city: 'Toulouse', ini: 'KB', col: '#10B981'},
+  {name: 'Julie R.', city: 'Nantes', ini: 'JR', col: '#EC4899'},
+  {name: 'Marc D.', city: 'Lille', ini: 'MD', col: '#3B82F6'},
+  {name: 'Nadia L.', city: 'Bordeaux', ini: 'NL', col: '#8B5CF6'},
+];
+const LeadsScene: React.FC<{c: Cfg & {leadTopic?: string}; words: Word[]}> = ({c, words}) => {
+  const f = useCurrentFrame();
+  const leads = DEFAULT_LEADS;
+  const topic = c.leadTopic ?? 'Demande de devis';
+  const panelIn = prog(f, 4, 18);
+  const rotX = interpolate(f, [0, 90], [16, 8], clamp);
+  const rotY = interpolate(f, [0, 90], [-10, -4], clamp);
+  return (
+    <AbsoluteFill>
+      <StudioBg intensity={1.15} />
+      <div style={{position: 'absolute', left: 0, right: 0, top: 150, textAlign: 'center', fontFamily: DISPLAY, fontWeight: 700, fontSize: 96, lineHeight: 1.0, color: '#fff', letterSpacing: '-0.02em', opacity: prog(f, 0, 12), transform: `translateY(${(1 - prog(f, 0, 14)) * 30}px)`}}>
+        Recevez
+        <br />
+        <span style={{backgroundImage: GRAD_TXT, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>vos leads.</span>
+      </div>
+      {/* notifications dropping in */}
+      {leads.slice(0, 3).map((l, i) => {
+        const at = 10 + i * 14;
+        const p = prog(f, at, 14);
+        const out = 0;
+        const shift = [0, 1, 2].filter((j) => j > i).reduce((acc, j) => acc + prog(f, 10 + j * 14, 14) * 148, 0);
+        if (f < at) return null;
+        return (
+          <div key={i} style={{position: 'absolute', left: 70, right: 70, top: 370 + shift, display: 'flex', alignItems: 'center', gap: 22, padding: '22px 26px', borderRadius: 36, background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(20px)', boxShadow: '0 30px 60px -20px rgba(0,0,0,0.6)', fontFamily: FONT, transform: `translateY(${(1 - p) * -160 - out * 40}px) scale(${1 - out * 0.06})`, opacity: p * (1 - out), zIndex: 10 + i}}>
+            <div style={{width: 72, height: 72, borderRadius: 18, background: '#fff', border: '2px solid #E7E9EF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0}}>
+              <LogoMark size={44} />
+            </div>
+            <div style={{flex: 1}}>
+              <div style={{display: 'flex', justifyContent: 'space-between', fontSize: 24, color: '#64748B', fontWeight: 600}}>
+                <span>GROWTHITY</span>
+                <span>à l’instant</span>
+              </div>
+              <div style={{fontSize: 31, fontWeight: 700, color: '#0F172A', marginTop: 4}}>Nouveau lead · {l.name}</div>
+              <div style={{fontSize: 26, color: '#334155', marginTop: 2}}>{topic} · {l.city}</div>
+            </div>
+          </div>
+        );
+      })}
+      {/* leads table */}
+      <AbsoluteFill style={{perspective: 1800, alignItems: 'center'}}>
+        <div style={{marginTop: 860, width: 940, borderRadius: 40, background: '#fff', boxShadow: '0 0 0 2px rgba(255,255,255,0.5) inset, 0 50px 140px -30px rgba(101,82,232,0.85)', fontFamily: FONT, overflow: 'hidden', transform: `translateY(${(1 - panelIn) * 260}px) rotateX(${rotX}deg) rotateY(${rotY}deg)`, opacity: panelIn}}>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '30px 34px 22px', borderBottom: '2px solid #F1F3F9'}}>
+            <div>
+              <div style={{fontSize: 22, fontWeight: 600, color: '#64748B', letterSpacing: '0.12em'}}>RÉSULTATS</div>
+              <div style={{fontSize: 40, fontWeight: 700, color: '#0F172A'}}>Leads</div>
+            </div>
+            <div style={{display: 'flex', alignItems: 'center', gap: 10, padding: '12px 20px', borderRadius: 999, background: '#ECFDF3', color: '#15803D', fontSize: 24, fontWeight: 700}}>
+              <div style={{width: 14, height: 14, borderRadius: 99, background: '#22C55E', boxShadow: `0 0 ${8 + Math.sin(f / 4) * 6}px #22C55E`}} />
+              En direct
+            </div>
+          </div>
+          {leads.map((l, i) => {
+            const at = 22 + i * 10;
+            const p = prog(f, at, 14);
+            const fresh = f < at + 22;
+            return (
+              <div key={i} style={{display: 'flex', alignItems: 'center', gap: 22, padding: '20px 34px', borderBottom: i < leads.length - 1 ? '2px solid #F1F3F9' : 'none', background: fresh && f >= at ? `rgba(101,82,232,${0.08 * (1 - prog(f, at + 6, 16))})` : 'transparent', opacity: p, transform: `translateX(${(1 - p) * 60}px)`}}>
+                <div style={{width: 64, height: 64, borderRadius: 99, background: l.col, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 24}}>{l.ini}</div>
+                <div style={{flex: 1}}>
+                  <div style={{fontSize: 30, fontWeight: 700, color: '#0F172A'}}>{l.name}</div>
+                  <div style={{fontSize: 24, color: '#64748B'}}>{topic} · {l.city}</div>
+                </div>
+                <div style={{display: 'flex', alignItems: 'center', gap: 10}}>
+                  <MetaMark s={34} />
+                  <div style={{padding: '8px 16px', borderRadius: 10, background: '#EEEBFF', color: '#5B3FE4', fontSize: 22, fontWeight: 700}}>Nouveau</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </AbsoluteFill>
+      <Dust o={0.6} />
+      <Kinetic words={words} at={4} y={1740} size={60} />
+    </AbsoluteFill>
+  );
+};
+
 // ---------- 7. end ----------
 const EndScene: React.FC<{words: Word[]}> = ({words}) => {
   const f = useCurrentFrame();
@@ -499,10 +586,7 @@ const EndScene: React.FC<{words: Word[]}> = ({words}) => {
           <br />
           <span style={{backgroundImage: GRAD_TXT, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>Votre pub en ligne.</span>
         </div>
-        <div style={{marginTop: 70, display: 'flex', alignItems: 'center', gap: 16, padding: '28px 52px', borderRadius: 999, backgroundImage: GRAD, color: '#fff', fontSize: 44, fontWeight: 700, transform: `scale(${pop(f, 24, 12)})`, boxShadow: '0 24px 60px -16px rgba(91,63,228,0.9)'}}>
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinecap="round"><path d="M12 19V5M6 11l6-6 6 6" /></svg>
-          Lien en bio
-        </div>
+        
       </AbsoluteFill>
       <Dust />
       <AbsoluteFill style={{background: '#000', opacity: interpolate(f, [TL.endDur - 10, TL.endDur], [0, 1], clamp)}} />
@@ -537,18 +621,24 @@ export const MotionChatPub: React.FC<{cfg: Cfg}> = ({cfg: c}) => {
       <Sequence from={T.pub} durationInFrames={T.pubEnd}>
         <PublishScene c={c} words={W('d1')} />
       </Sequence>
+      {T.leadsDur ? (
+        <Sequence from={T.leads} durationInFrames={T.leadsDur}>
+          <LeadsScene c={c} words={(c.words ?? {})['cp-leads-n'] ?? []} />
+        </Sequence>
+      ) : null}
       <Sequence from={T.end} durationInFrames={T.endDur}>
         <EndScene words={W('d2')} />
       </Sequence>
       {/* cut flashes */}
-      <AbsoluteFill style={{background: '#fff', opacity: 0.55 * Math.max(flash(T.hookEnd, 5), flash(T.actorEnd, 4), flash(T.pub, 6), flash(T.end, 5)), pointerEvents: 'none'}} />
+      <AbsoluteFill style={{background: '#fff', opacity: 0.55 * Math.max(flash(T.hookEnd, 5), flash(T.actorEnd, 4), flash(T.pub, 6), flash(T.end, 5), T.leadsDur ? flash(T.leads, 5) : 0), pointerEvents: 'none'}} />
       {/* audio */}
       <Sequence from={TL.vo.a}><Audio src={staticFile(`voice/${c.voice.a}.mp3`)} /></Sequence>
       <Sequence from={TL.vo.b1}><Audio src={staticFile(`voice/${c.voice.b1}.mp3`)} /></Sequence>
       <Sequence from={TL.vo.b2}><Audio src={staticFile(`voice/${c.voice.b2}.mp3`)} /></Sequence>
       <Sequence from={TL.vo.b3}><Audio src={staticFile(`voice/${c.voice.b3}.mp3`)} /></Sequence>
       <Sequence from={T.pub + TL.vo.d1}><Audio src={staticFile(`voice/${c.voice.d1}.mp3`)} /></Sequence>
-      <Sequence from={T.pub + TL.vo.d2}><Audio src={staticFile(`voice/${c.voice.d2}.mp3`)} /></Sequence>
+      <Sequence from={T.leadsDur ? T.end + 4 : T.pub + TL.vo.d2}><Audio src={staticFile(`voice/${c.voice.d2}.mp3`)} /></Sequence>
+      {T.leadsDur ? <Sequence from={T.leads + 4}><Audio src={staticFile('voice/cp-leads-n.mp3')} /></Sequence> : null}
       <Audio src={staticFile(`chatpub/${c.id}-motion-bed.wav`)} />
     </AbsoluteFill>
   );

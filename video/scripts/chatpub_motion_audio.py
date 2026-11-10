@@ -10,7 +10,7 @@ SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k i
 cid = sys.argv[1]
 c = json.load(open(f'src/chatpub/{cid}.json'))
 T = json.load(open('src/chatpub/motion_timeline.json'))
-T['videoEnd'] = T['videoStart'] + c['videoFrames']; T['pub'] = T['videoEnd']; T['end'] = T['pub'] + T['pubEnd']; T['total'] = T['end'] + T['endDur']
+T['videoEnd'] = T['videoStart'] + c['videoFrames']; T['pub'] = T['videoEnd']; T['leads'] = T['pub'] + T['pubEnd']; T['end'] = T['leads'] + T.get('leadsDur', 0); T['total'] = T['end'] + T['endDur']
 s = lambda k: T[k] / 30
 n = int(s('total') * SR) + SR
 mus = np.zeros(n); sfx = np.zeros(n)
@@ -72,6 +72,10 @@ add(sfx, whoosh(0.6), s('expand'), 0.35)
 add(sfx, whoosh(0.5), s('pub') - 0.2, 0.3); add(sfx, sub(0.6), s('pub'), 0.3)
 add(sfx, pop_sfx(), s('pub') + T['press'] / 30, 0.5); add(sfx, chime(84), s('pub') + (T['press'] + 4) / 30, 0.32); add(sfx, chime(91), s('pub') + (T['press'] + 8) / 30, 0.22)
 add(sfx, pop_sfx(), s('pub') + (T['press'] + 8) / 30, 0.25); add(sfx, pop_sfx(), s('pub') + (T['press'] + 14) / 30, 0.25)
+if T.get('leadsDur'):
+    add(sfx, whoosh(0.5), s('leads') - 0.2, 0.3); add(sfx, sub(0.6), s('leads'), 0.3)
+    for i in range(3): add(sfx, chime(88 - i * 2), s('leads') + (10 + i * 14) / 30, 0.22)
+    for i in range(5): add(sfx, pop_sfx(), s('leads') + (22 + i * 10) / 30, 0.2)
 add(sfx, boom(), s('end'), 0.35); add(sfx, chime(76), s('end') + 0.1, 0.2)
 mix = (mus + sfx)[: int(s('total') * SR)]
 mix = mix / (np.max(np.abs(mix)) + 1e-9) * 0.45

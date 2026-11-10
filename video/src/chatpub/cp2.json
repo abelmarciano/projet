@@ -59,7 +59,7 @@
   "b2": "cp1-b2-n",
   "b3": "cp1-b3-n",
   "d1": "cp1-d1-n",
-  "d2": "cp1-d2-n"
+  "d2": "cp-end-n"
  },
  "brand": {
   "name": "Maison Énergie",
@@ -277,8 +277,98 @@
     "s": 2.067,
     "e": 2.508
    }
+  ],
+  "cp-leads-n": [
+   {
+    "w": "Et",
+    "s": 0.0,
+    "e": 0.139
+   },
+   {
+    "w": "vos",
+    "s": 0.174,
+    "e": 0.302
+   },
+   {
+    "w": "leads",
+    "s": 0.337,
+    "e": 0.569
+   },
+   {
+    "w": "arrivent",
+    "s": 0.639,
+    "e": 0.964
+   },
+   {
+    "w": "directement",
+    "s": 0.998,
+    "e": 1.579
+   },
+   {
+    "w": "dans",
+    "s": 1.602,
+    "e": 1.718
+   },
+   {
+    "w": "Growthity",
+    "s": 1.753,
+    "e": 2.299
+   },
+   {
+    "w": "!",
+    "s": 2.345,
+    "e": 2.554
+   }
+  ],
+  "cp-end-n": [
+   {
+    "w": "Growthity.",
+    "s": 0.0,
+    "e": 0.801
+   },
+   {
+    "w": "Une",
+    "s": 1.022,
+    "e": 1.196
+   },
+   {
+    "w": "phrase,",
+    "s": 1.219,
+    "e": 1.625
+   },
+   {
+    "w": "et",
+    "s": 1.683,
+    "e": 1.788
+   },
+   {
+    "w": "votre",
+    "s": 1.823,
+    "e": 2.078
+   },
+   {
+    "w": "pub",
+    "s": 2.136,
+    "e": 2.322
+   },
+   {
+    "w": "est",
+    "s": 2.368,
+    "e": 2.438
+   },
+   {
+    "w": "en",
+    "s": 2.496,
+    "e": 2.566
+   },
+   {
+    "w": "ligne.",
+    "s": 2.589,
+    "e": 3.065
+   }
   ]
  },
  "promptShort": "Je vends des pompes à chaleur, je veux une pub vidéo pour générer des leads.",
- "caption": "Le salon tiède, les chambres glacées ? Demandez votre devis."
+ "caption": "Le salon tiède, les chambres glacées ? Demandez votre devis.",
+ "leadTopic": "Demande de devis"
 }
