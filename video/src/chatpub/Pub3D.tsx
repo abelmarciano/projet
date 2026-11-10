@@ -26,14 +26,14 @@ const useFonts = () => {
   }, [h]);
 };
 
-const Sticker: React.FC<{text: string; from: number; to: number; y: number; rot?: number}> = ({text, from, to, y, rot = -3}) => {
+const Sticker: React.FC<{text: string; from: number; to: number; y: number; rot?: number; big?: boolean}> = ({text, from, to, y, rot = -3, big}) => {
   const f = useCurrentFrame();
   if (f < from || f > to) return null;
   const p = pop(f, from, 10);
   const o = interpolate(f, [to - 6, to], [1, 0], clamp);
   return (
     <div style={{position: 'absolute', left: 0, right: 0, top: y, display: 'flex', justifyContent: 'center', opacity: o}}>
-      <div style={{display: 'flex', alignItems: 'center', gap: 14, padding: '18px 32px', borderRadius: 999, backgroundImage: GRAD, color: '#fff', fontFamily: FONT, fontWeight: 900, fontSize: 50, transform: `scale(${p}) rotate(${rot * (2 - p)}deg)`, boxShadow: '0 20px 50px -14px rgba(91,63,228,0.9)'}}>
+      <div style={{display: 'flex', alignItems: 'center', gap: 14, padding: big ? '34px 48px' : '18px 32px', borderRadius: 999, backgroundImage: GRAD, color: '#fff', fontFamily: FONT, fontWeight: 900, fontSize: big ? 60 : 50, transform: `scale(${p}) rotate(${rot * (2 - p)}deg)`, boxShadow: '0 20px 50px -14px rgba(91,63,228,0.9)'}}>
         {text}
       </div>
     </div>
@@ -49,9 +49,10 @@ const Film: React.FC = () => {
         <OffthreadVideo src={staticFile('media/fal/pub3d/raw.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
       </AbsoluteFill>
       <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 20%, transparent 60%, rgba(0,0,0,0.55) 100%)'}} />
+      {f >= 380 && <div style={{position: 'absolute', left: 0, right: 0, top: 250, height: 210, backdropFilter: 'blur(22px)', WebkitBackdropFilter: 'blur(22px)', background: 'rgba(60,35,20,0.25)', maskImage: 'linear-gradient(180deg, transparent, #000 25%, #000 75%, transparent)', WebkitMaskImage: 'linear-gradient(180deg, transparent, #000 25%, #000 75%, transparent)', opacity: interpolate(f, [380, 392], [0, 1], clamp)}} />}
       <Sticker text="1 phrase dans Growthity ✨" from={146} to={222} y={170} />
       <Sticker text="Acteurs · voix · montage" from={300} to={356} y={170} rot={3} />
-      <Sticker text="En ligne sur Meta ✅" from={366} to={420} y={170} />
+      <Sticker text="En ligne sur Meta ✅" from={366} to={452} y={258} big />
     </AbsoluteFill>
   );
 };
