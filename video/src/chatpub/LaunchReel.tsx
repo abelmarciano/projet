@@ -18,6 +18,7 @@ type Word = {w: string; s: number; e: number};
 type Clip = {src: string; from: number; to: number; label: string | null; words: Word[]};
 const clips = L.clips as Clip[];
 const VO = L.vo as Record<string, Word[]>;
+const D = L.dur as {grid: number; make: number; pub: number; end: number; voC: number; stick: number[]; send: number; press: number; leads: number};
 const GRAD = 'linear-gradient(120deg, #2563EB 0%, #5B3FE4 52%, #9333EA 100%)';
 const GRAD_TXT = 'linear-gradient(100deg, #8FA6FF 0%, #A78BFF 45%, #E39BFF 100%)';
 const DISPLAY = '"Space Grotesk", Inter, sans-serif';
@@ -32,14 +33,14 @@ const montage = clips.slice(1);
 export const LR = (() => {
   const T: Record<string, number> = {};
   T.hookEnd = fr(hook.to - hook.from);
-  T.aEnd = T.hookEnd + 62;
+  T.aEnd = T.hookEnd + D.grid;
   let t = T.aEnd;
   T.mStart = t;
   montage.forEach((c) => (t += fr(c.to - c.from)));
   T.mEnd = t;
-  T.bEnd = T.mEnd + 186;
-  T.cEnd = T.bEnd + 118;
-  T.total = T.cEnd + 96;
+  T.bEnd = T.mEnd + D.make;
+  T.cEnd = T.bEnd + D.pub;
+  T.total = T.cEnd + D.end;
   return T;
 })();
 
@@ -53,10 +54,14 @@ const useFonts = () => {
 // a UGC clip, full screen, with its own sound, punch-in and subtitles
 const ClipShot: React.FC<{c: Clip; i: number; subs?: boolean}> = ({c, i, subs = true}) => {
   const f = useCurrentFrame();
-  const z = interpolate(f, [0, 7], [1.14, i % 2 ? 1.08 : 1.0], {...clamp, easing: EXPO}) + f * 0.0007;
+  const z = interpolate(f, [0, 7], [1.22, i % 2 ? 1.08 : 1.0], {...clamp, easing: EXPO}) + f * 0.0009;
+  const dir = i % 2 ? -1 : 1;
+  const wx = i ? interpolate(f, [0, 6], [dir * 260, 0], {...clamp, easing: EXPO}) : 0;
+  const blur = i ? interpolate(f, [0, 6], [22, 0], clamp) : 0;
+  const shake = f < 10 ? Math.sin(f * 2.3) * (10 - f) * 1.4 : 0;
   return (
     <AbsoluteFill style={{background: '#000', overflow: 'hidden'}}>
-      <AbsoluteFill style={{transform: `scale(${z})`, transformOrigin: '50% 40%'}}>
+      <AbsoluteFill style={{transform: `translate(${wx + shake}px, ${shake * 0.6}px) scale(${z})`, transformOrigin: '50% 40%', filter: blur ? `blur(${blur}px)` : undefined}}>
         <OffthreadVideo src={staticFile(c.src)} startFrom={fr(c.from)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
       </AbsoluteFill>
       <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 22%, transparent 62%, rgba(0,0,0,0.45) 100%)'}} />
@@ -88,7 +93,7 @@ const GridScene: React.FC = () => {
   return (
     <AbsoluteFill>
       <StudioBg intensity={1.2} />
-      <div style={{position: 'absolute', left: 40, right: 40, top: 230, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20}}>
+      <div style={{position: 'absolute', left: 40, right: 40, top: 230, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, transform: `scale(${1 + f * 0.0012 + pop(f, D.stick[0], 8) * 0.03 - 0.03})`, transformOrigin: '50% 45%'}}>
         {GRID.map((src, i) => {
           const p = pop(f, 2 + i * 3, 13);
           return (
@@ -99,7 +104,14 @@ const GridScene: React.FC = () => {
         })}
       </div>
       <Dust />
-      <Kinetic words={VO['lr-a-n']} at={4} y={1500} size={84} />
+      {f >= D.stick[0] && (
+        <div style={{position: 'absolute', left: 0, right: 0, top: 1240, display: 'flex', justifyContent: 'center', gap: 18}}>
+          {['0 caméra', '0 studio'].map((t, k) => (
+            <div key={k} style={{padding: '18px 34px', borderRadius: 999, backgroundImage: GRAD, color: '#fff', fontFamily: FONT, fontWeight: 900, fontSize: 52, transform: `scale(${pop(f, D.stick[k], 10)}) rotate(${k ? 3 : -3}deg)`, boxShadow: '0 20px 50px -14px rgba(91,63,228,0.9)'}}>{t}</div>
+          ))}
+        </div>
+      )}
+      <Kinetic words={VO['lr3-a-n']} at={4} y={1520} size={84} />
     </AbsoluteFill>
   );
 };
@@ -108,12 +120,12 @@ const GridScene: React.FC = () => {
 const MakeScene: React.FC = () => {
   const f = useCurrentFrame();
   const text = 'Témoignage face caméra pour mes panneaux solaires : un client au bord du lac. Ton naturel.';
-  const n = Math.floor(interpolate(f, [8, 52], [0, text.length], clamp));
-  const send = 58;
+  const n = Math.floor(interpolate(f, [4, D.send - 12], [0, text.length], clamp));
+  const send = D.send; // on « boum »
   const barOut = prog(f, send + 2, 12, INOUT);
   const appear = prog(f, send + 6, 16);
-  const scan = interpolate(f, [send + 14, send + 78], [0, 1], {...clamp, easing: INOUT});
-  const ready = f >= send + 80;
+  const scan = interpolate(f, [send + 8, send + 48], [0, 1], {...clamp, easing: INOUT});
+  const ready = f >= send + 50;
   const spin = f * 6;
   return (
     <AbsoluteFill>
@@ -151,7 +163,7 @@ const MakeScene: React.FC = () => {
               {!ready && <div style={{position: 'absolute', left: 28, bottom: 28, fontFamily: '"Geist Mono", ui-monospace, monospace', fontSize: 28, color: '#fff'}}>GÉNÉRATION {String(Math.round(scan * 100)).padStart(2, '0')} %</div>}
             </div>
             {ready && (
-              <div style={{position: 'absolute', left: '50%', top: -34, transform: `translateX(-50%) scale(${pop(f, send + 80, 10)})`, display: 'flex', alignItems: 'center', gap: 12, padding: '14px 28px', borderRadius: 999, background: '#fff', fontFamily: FONT, fontWeight: 700, fontSize: 30, color: '#15803D'}}>
+              <div style={{position: 'absolute', left: '50%', top: -34, transform: `translateX(-50%) scale(${pop(f, send + 50, 10)})`, display: 'flex', alignItems: 'center', gap: 12, padding: '14px 28px', borderRadius: 999, background: '#fff', fontFamily: FONT, fontWeight: 700, fontSize: 30, color: '#15803D'}}>
                 <div style={{width: 16, height: 16, borderRadius: 99, background: '#22C55E', boxShadow: '0 0 12px #22C55E'}} /> Prête
               </div>
             )}
@@ -159,7 +171,7 @@ const MakeScene: React.FC = () => {
         </AbsoluteFill>
       )}
       <Dust o={0.6} />
-      <Kinetic words={VO['lr-b-n']} at={4} y={1640} size={64} />
+      <Kinetic words={VO['lr3-b-n']} at={4} y={1640} size={66} />
     </AbsoluteFill>
   );
 };
@@ -167,7 +179,7 @@ const MakeScene: React.FC = () => {
 // publish on Meta + leads coming in
 const PubScene: React.FC = () => {
   const f = useCurrentFrame();
-  const press = 34;
+  const press = D.voC + D.press; // on « clic »
   const done = f >= press + 4;
   const fake = {video: 'gw/gw-27.mp4', brand: {name: 'Atelier Coton'}, caption: 'Le t-shirt qu’on ne quitte plus. Coton bio, coupe droite.'};
   const leads = [
@@ -203,10 +215,10 @@ const PubScene: React.FC = () => {
         </div>
       </div>
       {leads.map((l, i) => {
-        const at = 58 + i * 12;
+        const at = D.voC + D.leads + i * 11; // « Et là… les leads tombent »
         if (f < at) return null;
         const p = prog(f, at, 14);
-        const shift = [0, 1, 2].filter((j) => j > i).reduce((a, j) => a + prog(f, 58 + j * 12, 14) * 132, 0);
+        const shift = [0, 1, 2].filter((j) => j > i).reduce((a, j) => a + prog(f, D.voC + D.leads + j * 11, 14) * 132, 0);
         return (
           <div key={i} style={{position: 'absolute', left: 70, right: 70, top: 120 + shift, display: 'flex', alignItems: 'center', gap: 20, padding: '20px 24px', borderRadius: 32, background: 'rgba(255,255,255,0.94)', boxShadow: '0 30px 60px -20px rgba(0,0,0,0.6)', fontFamily: FONT, transform: `translateY(${(1 - p) * -140}px)`, opacity: p, zIndex: 10 + i}}>
             <div style={{width: 64, height: 64, borderRadius: 16, background: '#fff', border: '2px solid #E7E9EF', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><LogoMark size={40} /></div>
@@ -218,7 +230,7 @@ const PubScene: React.FC = () => {
           </div>
         );
       })}
-      <Kinetic words={VO['lr-c-n']} at={4} y={1690} size={66} />
+      <Kinetic words={VO['lr3-c-n']} at={D.voC} y={1690} size={68} />
     </AbsoluteFill>
   );
 };
@@ -242,7 +254,7 @@ const EndScene: React.FC = () => {
         </div>
       </AbsoluteFill>
       <Dust />
-      <AbsoluteFill style={{background: '#000', opacity: interpolate(f, [86, 96], [0, 1], clamp)}} />
+      <AbsoluteFill style={{background: '#000', opacity: interpolate(f, [D.end - 10, D.end], [0, 1], clamp)}} />
     </AbsoluteFill>
   );
 };
@@ -286,10 +298,10 @@ export const LaunchReel: React.FC = () => {
         <EndScene />
       </Sequence>
       <AbsoluteFill style={{background: '#fff', opacity: flash * 0.4, pointerEvents: 'none'}} />
-      <Sequence from={T.hookEnd + 4}><Audio src={staticFile('voice/lr-a-n.mp3')} /></Sequence>
-      <Sequence from={T.mEnd + 4}><Audio src={staticFile('voice/lr-b-n.mp3')} /></Sequence>
-      <Sequence from={T.bEnd + 4}><Audio src={staticFile('voice/lr-c-n.mp3')} /></Sequence>
-      <Sequence from={T.cEnd + 4}><Audio src={staticFile('voice/lr-d-n.mp3')} /></Sequence>
+      <Sequence from={T.hookEnd + 4}><Audio src={staticFile('voice/lr3-a-n.mp3')} /></Sequence>
+      <Sequence from={T.mEnd + 4}><Audio src={staticFile('voice/lr3-b-n.mp3')} /></Sequence>
+      <Sequence from={T.bEnd + D.voC}><Audio src={staticFile('voice/lr3-c-n.mp3')} /></Sequence>
+      <Sequence from={T.cEnd + 4}><Audio src={staticFile('voice/lr3-d-n.mp3')} /></Sequence>
       <Audio src={staticFile('chatpub/launch-bed.wav')} />
     </AbsoluteFill>
   );

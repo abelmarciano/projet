@@ -10,10 +10,11 @@ L = json.load(open('src/chatpub/launch.json'))
 fr = lambda s: round(s * 30)
 clips = L['clips']; hook, montage = clips[0], clips[1:]
 T = {'hookEnd': fr(hook['to'] - hook['from'])}
-T['aEnd'] = T['hookEnd'] + 62; T['mStart'] = T['aEnd']
+D = L['dur']
+T['aEnd'] = T['hookEnd'] + D['grid']; T['mStart'] = T['aEnd']
 cuts = []; t = T['mStart']
 for c in montage: cuts.append(t); t += fr(c['to'] - c['from'])
-T['mEnd'] = t; T['bEnd'] = t + 186; T['cEnd'] = T['bEnd'] + 118; T['total'] = T['cEnd'] + 96
+T['mEnd'] = t; T['bEnd'] = t + D['make']; T['cEnd'] = T['bEnd'] + D['pub']; T['total'] = T['cEnd'] + D['end']
 s = lambda k: T[k] / 30
 n = int(s('total') * SR) + SR
 mus = np.zeros(n); sfx = np.zeros(n)
@@ -52,14 +53,19 @@ fo = int(1.0 * SR); e_i = int(s('total') * SR); env[e_i - fo:e_i] *= np.linspace
 mus *= env
 add(sfx, whoosh(0.5), s('hookEnd') - 0.3, 0.3); add(sfx, sub(), s('hookEnd'), 0.4)
 for k in range(6): add(sfx, pop_sfx(), s('hookEnd') + (2 + k * 3) / 30, 0.18)
+for k in range(2): add(sfx, pop_sfx(), s('hookEnd') + D['stick'][k] / 30, 0.4); add(sfx, kick(), s('hookEnd') + D['stick'][k] / 30, 0.3)
+# snare roll into the drop at the end of the hook
+for j in range(16):
+    tt = s('hookEnd') - 1.0 + j * (1.0 / 16)
+    add(sfx, hp(rng.standard_normal(int(0.06 * SR)), 1200) * np.exp(-np.arange(int(0.06 * SR)) / SR * 50), tt, 0.04 + 0.12 * j / 15)
 for c in cuts: add(sfx, whoosh(0.3), c / 30 - 0.15, 0.16)
 add(sfx, riser(0.8), s('mEnd') - 0.7, 0.2); add(sfx, sub(), s('mEnd'), 0.35)
-for j in range(T['mEnd'] + 8, T['mEnd'] + 52, 2): add(sfx, click(1.0 + 0.4 * rng.random()), j / 30, 0.13)
-add(sfx, pop_sfx(), s('mEnd') + 58 / 30, 0.4); add(sfx, boom(), s('mEnd') + 62 / 30, 0.35)
-add(sfx, chime(79), s('mEnd') + 138 / 30, 0.25)
+for j in range(T['mEnd'] + 4, T['mEnd'] + D['send'] - 12, 2): add(sfx, click(1.0 + 0.4 * rng.random()), j / 30, 0.13)
+add(sfx, riser(0.6), s('mEnd') + (D['send'] - 18) / 30, 0.18); add(sfx, pop_sfx(), s('mEnd') + D['send'] / 30, 0.45); add(sfx, boom(), s('mEnd') + (D['send'] + 2) / 30, 0.45)
+add(sfx, chime(79), s('mEnd') + (D['send'] + 50) / 30, 0.25)
 add(sfx, whoosh(0.5), s('bEnd') - 0.2, 0.25)
-add(sfx, pop_sfx(), s('bEnd') + 34 / 30, 0.45); add(sfx, chime(84), s('bEnd') + 38 / 30, 0.3)
-for k in range(3): add(sfx, chime(88 - 2 * k), s('bEnd') + (58 + 12 * k) / 30, 0.2)
+add(sfx, pop_sfx(), s('bEnd') + (D['voC'] + D['press']) / 30, 0.45); add(sfx, chime(84), s('bEnd') + (D['voC'] + D['press'] + 4) / 30, 0.3)
+for k in range(3): add(sfx, chime(88 - 2 * k), s('bEnd') + (D['voC'] + D['leads'] + 11 * k) / 30, 0.25)
 add(sfx, boom(), s('cEnd'), 0.35); add(sfx, chime(76), s('cEnd') + 0.1, 0.2)
 mix = (mus + sfx)[: int(s('total') * SR)]
 mix = mix / (np.max(np.abs(mix)) + 1e-9) * 0.45

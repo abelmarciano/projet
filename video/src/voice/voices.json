@@ -150,5 +150,33 @@
   "stability": 0.38,
   "style": 0.45,
   "speed": 1.05
+ },
+ "lr3-a": {
+  "text": "Aucune de ces pubs n'a été tournée. Zéro caméra, zéro studio !",
+  "voice": "rbFGGoDXFHtVghjHuS3E",
+  "stability": 0.28,
+  "style": 0.7,
+  "speed": 1.18
+ },
+ "lr3-b": {
+  "text": "Une phrase dans Grossiti… et boum ! Acteur, voix, montage : tout est généré.",
+  "voice": "rbFGGoDXFHtVghjHuS3E",
+  "stability": 0.28,
+  "style": 0.7,
+  "speed": 1.18
+ },
+ "lr3-c": {
+  "text": "Un clic, et c'est en ligne sur Meta. Et là… les leads tombent !",
+  "voice": "rbFGGoDXFHtVghjHuS3E",
+  "stability": 0.28,
+  "style": 0.7,
+  "speed": 1.18
+ },
+ "lr3-d": {
+  "text": "Grossiti est en ligne. Foncez, le lien est dans la bio !",
+  "voice": "rbFGGoDXFHtVghjHuS3E",
+  "stability": 0.28,
+  "style": 0.7,
+  "speed": 1.18
  }
 }
