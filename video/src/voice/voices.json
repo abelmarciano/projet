@@ -258,5 +258,13 @@
   "style": 0.8,
   "speed": 1.1,
   "text": "[whispers] Il faut que je vous montre un truc… [excited] Vous voyez ça, au fond de mon jardin ? C'est un studio. [warmly] Vingt mètres carrés, une terrasse en bois, une kitchenette et une salle de bain… [impressed] et il a été livré clé en main. [playful] Bureau, chambre d'amis… je vous laisse imaginer. [confident] Demandez votre devis, le lien est juste en dessous."
+ },
+ "sol-freja": {
+  "voice": "zPy2sgLU4pZ7Xrjh87uz",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.8,
+  "speed": 1.15,
+  "text": "[amused] On m'a demandé en commentaire pourquoi, chez moi, ça sent TOUJOURS aussi bon… [laughs] [warmly] C'est le parfum de sol Éclat de Nuit, de chez Bajoa. [softly] Une fraîcheur qui dure, des notes super délicates… [playful] mes invités me posent la question à chaque fois. [confident] Trente-quatre euros quatre-vingt-dix. [friendly] Le lien est juste en dessous."
  }
 }
