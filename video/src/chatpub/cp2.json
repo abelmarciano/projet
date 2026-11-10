@@ -3,7 +3,7 @@
  "title": "Chauffage : toute la maison au chaud – Vidéo 9:16",
  "video": "chat/alice-edit.mp4",
  "videoFrames": 321,
- "prompt": "Vidéo face caméra 9:16 : une femme raconte qu'elle avait froid malgré le chauffage à fond, puis que toute sa maison reste au chaud. Ton sincère, CTA devis.",
+ "prompt": "Je vends des pompes à chaleur, je veux une pub vidéo pour générer des leads.",
  "actor": {
   "name": "Alice A.",
   "style": "Lifestyle",
@@ -279,6 +279,6 @@
    }
   ]
  },
- "promptShort": "Pub face caméra : elle avait froid malgré le chauffage à fond… maintenant toute la maison reste au chaud.",
+ "promptShort": "Je vends des pompes à chaleur, je veux une pub vidéo pour générer des leads.",
  "caption": "Le salon tiède, les chambres glacées ? Demandez votre devis."
 }
