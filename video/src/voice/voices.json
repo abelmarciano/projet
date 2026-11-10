@@ -94,5 +94,12 @@
   "stability": 0.3,
   "style": 0.6,
   "speed": 1.1
+ },
+ "ugc1": {
+  "text": "Attendez… vous payez encore quelqu'un pour faire vos pubs Facebook ? Moi, j'écris juste ce que je vends dans Grossiti, et quelques minutes après, j'ai ma vidéo : l'actrice, les sous-titres, tout. Je la publie sur Meta sans quitter l'appli. Franchement, testez.",
+  "voice": "Hy28BjVfgieDVMiyQpQe",
+  "stability": 0.38,
+  "style": 0.45,
+  "speed": 1.05
  }
 }
