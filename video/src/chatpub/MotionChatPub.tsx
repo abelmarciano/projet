@@ -25,7 +25,7 @@ const DISPLAY = '"Space Grotesk", Inter, sans-serif';
 const FONT = 'Inter, system-ui, sans-serif';
 
 type Word = {w: string; s: number; e: number};
-type Cfg = ChatPubCfg & {promptShort?: string};
+type Cfg = ChatPubCfg & {promptShort?: string; caption?: string};
 
 export const motionTimeline = (c: Cfg) => {
   const T: Record<string, number> = {...(TL as unknown as Record<string, number>)};
@@ -329,8 +329,104 @@ const GenScene: React.FC<{c: Cfg; words: Word[]}> = ({c, words}) => {
 };
 
 // ---------- 6. publish: sponsored post in a phone + « Publier sur Meta » ----------
-const MetaMark: React.FC<{s: number; c?: string}> = ({s, c = '#fff'}) => (
-  <svg width={s} height={s * 0.62} viewBox="0 0 40 25" fill="none"><path d="M3 17c0-7 3.5-13 8-13 6.5 0 9.5 17 17 17 3.5 0 6-3 6-8 0-6-3-10-7-10-6 0-9.5 17-17 17-4 0-7-1.5-7-3z" stroke={c} strokeWidth="3.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+const META_PATH = 'M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z';
+// official Meta symbol (infinity); `mono` = single colour, otherwise the blue gradient
+const MetaMark: React.FC<{s: number; mono?: string}> = ({s, mono}) => {
+  const id = React.useId().replace(/:/g, '');
+  return (
+    <svg width={s} height={s} viewBox="0 0 24 24">
+      <defs>
+        <linearGradient id={id} x1="0" y1="0.6" x2="1" y2="0.4">
+          <stop offset="0" stopColor="#0064E1" />
+          <stop offset="0.5" stopColor="#0073EE" />
+          <stop offset="1" stopColor="#0082FB" />
+        </linearGradient>
+      </defs>
+      <path d={META_PATH} fill={mono ?? `url(#${id})`} />
+    </svg>
+  );
+};
+const IgGlyph: React.FC<{s: number}> = ({s}) => (
+  <div style={{width: s, height: s, borderRadius: s * 0.28, background: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative'}}>
+    <div style={{width: s * 0.62, height: s * 0.62, borderRadius: s * 0.19, border: `${s * 0.075}px solid #fff`, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <div style={{width: s * 0.26, height: s * 0.26, borderRadius: 99, border: `${s * 0.075}px solid #fff`}} />
+    </div>
+    <div style={{position: 'absolute', right: s * 0.26, top: s * 0.26, width: s * 0.08, height: s * 0.08, borderRadius: 99, background: '#fff'}} />
+  </div>
+);
+const FbGlyph: React.FC<{s: number}> = ({s}) => (
+  <svg width={s} height={s} viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#0866FF" /><path d="M13.4 24v-8.4h2.8l.4-3.3h-3.2v-2.1c0-.9.3-1.6 1.6-1.6h1.7V5.7c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.4H7.2v3.3H10V24z" fill="#fff" /></svg>
+);
+const Ico: React.FC<{d: string; s?: number; fill?: string}> = ({d, s = 46, fill = 'none'}) => (
+  <svg width={s} height={s} viewBox="0 0 24 24" fill={fill} stroke="#0F0F0F" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>
+);
+const IC = {
+  heart: 'M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.3 1.1 5 3 1.7-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z',
+  comment: 'M20.7 16.9A9 9 0 1 0 17 20.6L21.5 22z',
+  share: 'M22 3L9.2 10.1M22 3l-7 18-3.8-8.9L2 8.5z',
+  save: 'M19 21l-7-5.5L5 21V3h14z',
+  home: 'M3 10.5L12 3l9 7.5V21h-6v-6H9v6H3z',
+  search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-5-5',
+  reels: 'M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3zM3 8h18M8 3l3 5M13 3l3 5M10 12v6l5-3z',
+  shop: 'M4 8h16l-1 13H5zM9 8V6a3 3 0 0 1 6 0v2',
+  plus: 'M4 4h16v16H4zM12 8v8M8 12h8',
+};
+
+// real-looking Instagram feed with the sponsored post
+const IgFeed: React.FC<{c: Cfg; ctaHot: number}> = ({c, ctaHot}) => (
+  <div style={{position: 'absolute', inset: 0, background: '#fff', fontFamily: '-apple-system, "SF Pro Text", Inter, sans-serif', color: '#0F0F0F'}}>
+    <div style={{height: 70, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '0 34px 6px', fontSize: 22, fontWeight: 600}}>
+      <span>9:41</span>
+      <span style={{display: 'flex', gap: 8, alignItems: 'center'}}>
+        <svg width="26" height="18" viewBox="0 0 26 18"><rect x="0" y="12" width="4" height="6" rx="1" fill="#000" /><rect x="7" y="8" width="4" height="10" rx="1" fill="#000" /><rect x="14" y="4" width="4" height="14" rx="1" fill="#000" /><rect x="21" y="0" width="4" height="18" rx="1" fill="#000" /></svg>
+        <svg width="36" height="18" viewBox="0 0 36 18"><rect x="1" y="1" width="30" height="16" rx="4" fill="none" stroke="#000" strokeWidth="2" /><rect x="4" y="4" width="22" height="10" rx="2" fill="#000" /><rect x="32.5" y="6" width="2.5" height="6" rx="1" fill="#000" /></svg>
+      </span>
+    </div>
+    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 22px 12px'}}>
+      <div style={{fontFamily: '"Billabong", "Grand Hotel", cursive', fontSize: 44, fontWeight: 600, letterSpacing: '-0.01em'}}><IgGlyph s={40} /></div>
+      <div style={{display: 'flex', gap: 22}}>
+        <Ico d={IC.plus} s={40} />
+        <Ico d={IC.heart} s={40} />
+        <Ico d={IC.share} s={40} />
+      </div>
+    </div>
+    <div style={{display: 'flex', alignItems: 'center', gap: 14, padding: '8px 18px 12px'}}>
+      <div style={{width: 58, height: 58, borderRadius: 99, padding: 3, background: 'linear-gradient(45deg, #FEDA75, #FA7E1E, #D62976, #962FBF, #4F5BD5)'}}>
+        <div style={{width: '100%', height: '100%', borderRadius: 99, background: '#FFF7ED', border: '3px solid #fff', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <svg width="26" height="26" viewBox="0 0 24 24"><path d="M3 11.5L12 4l9 7.5" fill="none" stroke="#EA580C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /><path d="M5.5 10v9.5h13V10" fill="#FFEDD5" stroke="#EA580C" strokeWidth="2" strokeLinejoin="round" /></svg>
+        </div>
+      </div>
+      <div style={{flex: 1, lineHeight: 1.2}}>
+        <div style={{fontSize: 23, fontWeight: 600}}>{(c.brand?.name ?? 'votremarque').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '')}</div>
+        <div style={{fontSize: 19, color: '#262626'}}>Sponsorisé</div>
+      </div>
+      <div style={{fontSize: 30, fontWeight: 700, letterSpacing: 2}}>···</div>
+    </div>
+    <div style={{position: 'relative', height: 590, overflow: 'hidden', background: '#000'}}>
+      <OffthreadVideo src={staticFile(`media/${c.video}`)} startFrom={60} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+    </div>
+    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 20px', background: ctaHot ? '#0095F6' : '#EFEFEF', color: ctaHot ? '#fff' : '#0F0F0F', fontSize: 23, fontWeight: 600}}>
+      En savoir plus
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={ctaHot ? '#fff' : '#0F0F0F'} strokeWidth="2.4" strokeLinecap="round"><path d="M9 6l6 6-6 6" /></svg>
+    </div>
+    <div style={{display: 'flex', alignItems: 'center', padding: '14px 16px 6px', gap: 18}}>
+      <Ico d={IC.heart} />
+      <Ico d={IC.comment} />
+      <Ico d={IC.share} />
+      <div style={{flex: 1}} />
+      <Ico d={IC.save} />
+    </div>
+    <div style={{padding: '4px 20px', fontSize: 21, lineHeight: 1.35}}>
+      <b>{(c.brand?.name ?? 'votremarque').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '')}</b> {c.caption ?? 'Votre pub, en ligne.'}
+    </div>
+    <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, height: 92, borderTop: '1px solid #DBDBDB', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'space-around', paddingBottom: 14}}>
+      <Ico d={IC.home} s={42} fill="#0F0F0F" />
+      <Ico d={IC.search} s={42} />
+      <Ico d={IC.reels} s={42} />
+      <Ico d={IC.shop} s={42} />
+      <div style={{width: 40, height: 40, borderRadius: 99, background: 'linear-gradient(135deg,#C4B5FD,#5B3FE4)'}} />
+    </div>
+  </div>
 );
 
 const PublishScene: React.FC<{c: Cfg; words: Word[]}> = ({c, words}) => {
@@ -338,65 +434,48 @@ const PublishScene: React.FC<{c: Cfg; words: Word[]}> = ({c, words}) => {
   const inP = prog(f, 0, 18);
   const press = TL.press;
   const done = f >= press + 4;
-  const btnIn = pop(f, 14, 13);
+  const btnIn = pop(f, 12, 13);
   const pressing = f >= press - 3 && f < press + 3;
-  const rotY = interpolate(f, [0, 90], [16, 8], clamp);
+  const rotY = interpolate(f, [0, 90], [14, 6], clamp);
   const fb = pop(f, press + 8, 11);
   const ig = pop(f, press + 14, 11);
+  const ctaHot = done && Math.floor((f - press) / 10) % 2 === 1 ? 1 : 0;
   return (
     <AbsoluteFill>
       <StudioBg />
       <AbsoluteFill style={{perspective: 2000, alignItems: 'center'}}>
-        <div style={{marginTop: 150, transform: `translateY(${(1 - inP) * -200}px) rotateY(${rotY}deg) rotateX(4deg) scale(${1.25 - inP * 0.25})`, opacity: inP}}>
-          <Phone w={500} glow={0.8}>
-            <div style={{position: 'absolute', inset: 0, background: '#fff', fontFamily: FONT}}>
-              <div style={{display: 'flex', alignItems: 'center', gap: 14, padding: '74px 22px 14px'}}>
-                <div style={{width: 54, height: 54, borderRadius: 99, background: '#FFEDD5', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid #FDBA74'}}>
-                  <svg width="30" height="30" viewBox="0 0 24 24"><path d="M3 11.5L12 4l9 7.5" fill="none" stroke="#EA580C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /><path d="M5.5 10v9.5h13V10" fill="#FFEDD5" stroke="#EA580C" strokeWidth="2" strokeLinejoin="round" /></svg>
-                </div>
-                <div>
-                  <div style={{fontSize: 24, fontWeight: 700, color: '#0F172A'}}>{c.brand?.name ?? 'Votre marque'}</div>
-                  <div style={{fontSize: 19, color: '#64748B'}}>Sponsorisé</div>
-                </div>
-              </div>
-              <div style={{position: 'relative', height: 620, overflow: 'hidden'}}>
-                <OffthreadVideo src={staticFile(`media/${c.video}`)} startFrom={60} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-              </div>
-              <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 22px', background: '#F1F5F9', fontSize: 22, fontWeight: 600, color: '#0F172A'}}>
-                En savoir plus
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F172A" strokeWidth="2.4" strokeLinecap="round"><path d="M9 6l6 6-6 6" /></svg>
-              </div>
-              <div style={{display: 'flex', gap: 22, padding: '16px 22px'}}>
-                {[0, 1, 2].map((i) => <div key={i} style={{width: 34, height: 34, borderRadius: 10, border: '3px solid #0F172A', opacity: 0.85}} />)}
-              </div>
-            </div>
+        <div style={{marginTop: 110, transform: `translateY(${(1 - inP) * -200}px) rotateY(${rotY}deg) rotateX(3deg) scale(${1.2 - inP * 0.2})`, opacity: inP}}>
+          <Phone w={560} glow={0.8}>
+            <IgFeed c={c} ctaHot={ctaHot} />
           </Phone>
         </div>
       </AbsoluteFill>
-      {/* hero button */}
-      <div style={{position: 'absolute', left: 0, right: 0, top: 1350, display: 'flex', justifyContent: 'center'}}>
-        <div style={{display: 'flex', alignItems: 'center', gap: 22, padding: '34px 58px', borderRadius: 30, background: done ? '#16A34A' : META, color: '#fff', fontFamily: FONT, fontWeight: 700, fontSize: 48, transform: `scale(${btnIn * (pressing ? 0.92 : 1)})`, boxShadow: `0 30px 70px -20px ${done ? 'rgba(22,163,74,0.8)' : 'rgba(8,102,255,0.85)'}`}}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 1360, display: 'flex', justifyContent: 'center'}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: 22, padding: '30px 54px', borderRadius: 999, background: done ? '#fff' : '#0866FF', color: done ? '#0F172A' : '#fff', fontFamily: FONT, fontWeight: 700, fontSize: 46, transform: `scale(${btnIn * (pressing ? 0.92 : 1)})`, boxShadow: `0 30px 70px -20px ${done ? 'rgba(255,255,255,0.35)' : 'rgba(8,102,255,0.9)'}`}}>
           {done ? (
-            <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+            <>
+              <div style={{width: 58, height: 58, borderRadius: 99, background: '#16A34A', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+              </div>
+              Publiée sur
+              <MetaMark s={60} />
+              Meta
+            </>
           ) : (
-            <MetaMark s={64} />
+            <>
+              <MetaMark s={64} mono="#fff" />
+              Publier sur Meta
+            </>
           )}
-          {done ? 'En ligne sur Meta' : 'Publier sur Meta'}
         </div>
       </div>
-      {/* press ring */}
-      {f >= press - 2 && f < press + 20 && <div style={{position: 'absolute', left: 540 - 220, top: 1405 - 220, width: 440, height: 440, borderRadius: 999, border: '4px solid rgba(255,255,255,0.7)', transform: `scale(${0.3 + prog(f, press - 2, 20) * 1.2})`, opacity: 1 - prog(f, press - 2, 20)}} />}
-      {/* platforms */}
-      <div style={{position: 'absolute', left: 0, right: 0, top: 1560, display: 'flex', justifyContent: 'center', gap: 40}}>
-        <div style={{display: 'flex', alignItems: 'center', gap: 14, padding: '18px 30px', borderRadius: 999, background: 'rgba(255,255,255,0.08)', border: '2px solid rgba(255,255,255,0.14)', color: '#fff', fontFamily: FONT, fontWeight: 600, fontSize: 32, transform: `scale(${fb})`}}>
-          <div style={{width: 48, height: 48, borderRadius: 99, background: '#1877F2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 34}}>f</div>
-          Facebook
+      {f >= press - 2 && f < press + 20 && <div style={{position: 'absolute', left: 540 - 220, top: 1420 - 220, width: 440, height: 440, borderRadius: 999, border: '4px solid rgba(255,255,255,0.7)', transform: `scale(${0.3 + prog(f, press - 2, 20) * 1.2})`, opacity: 1 - prog(f, press - 2, 20)}} />}
+      <div style={{position: 'absolute', left: 0, right: 0, top: 1545, display: 'flex', justifyContent: 'center', gap: 34}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: 14, padding: '16px 28px', borderRadius: 999, background: 'rgba(255,255,255,0.08)', border: '2px solid rgba(255,255,255,0.14)', color: '#fff', fontFamily: FONT, fontWeight: 600, fontSize: 32, transform: `scale(${fb})`}}>
+          <FbGlyph s={48} /> Facebook
         </div>
-        <div style={{display: 'flex', alignItems: 'center', gap: 14, padding: '18px 30px', borderRadius: 999, background: 'rgba(255,255,255,0.08)', border: '2px solid rgba(255,255,255,0.14)', color: '#fff', fontFamily: FONT, fontWeight: 600, fontSize: 32, transform: `scale(${ig})`}}>
-          <div style={{width: 48, height: 48, borderRadius: 14, background: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            <div style={{width: 22, height: 22, borderRadius: 99, border: '3.5px solid #fff'}} />
-          </div>
-          Instagram
+        <div style={{display: 'flex', alignItems: 'center', gap: 14, padding: '16px 28px', borderRadius: 999, background: 'rgba(255,255,255,0.08)', border: '2px solid rgba(255,255,255,0.14)', color: '#fff', fontFamily: FONT, fontWeight: 600, fontSize: 32, transform: `scale(${ig})`}}>
+          <IgGlyph s={48} /> Instagram
         </div>
       </div>
       <Kinetic words={words} at={TL.vo.d1} y={1690} size={74} />

@@ -279,5 +279,6 @@
    }
   ]
  },
- "promptShort": "Pub face caméra : alerte chauffage pour les propriétaires au gaz ou au fioul. Ton direct."
+ "promptShort": "Pub face caméra : alerte chauffage pour les propriétaires au gaz ou au fioul. Ton direct.",
+ "caption": "Vous vous chauffez au gaz ou au fioul ? Découvrez les aides disponibles."
 }
