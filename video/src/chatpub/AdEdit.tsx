@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {AbsoluteFill, OffthreadVideo, Sequence, continueRender, delayRender, interpolate, staticFile, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Audio, OffthreadVideo, Sequence, continueRender, delayRender, interpolate, staticFile, useCurrentFrame} from 'remotion';
 import '@fontsource/inter/800.css';
 import '@fontsource/inter/900.css';
 import {EXPO} from '../components/anim';
@@ -8,7 +8,7 @@ import {EXPO} from '../components/anim';
 // long takes, quick transitions, word-by-word animated subtitles. Output is used as the ad in MotionChatPub.
 
 type Word = {w: string; s: number; e: number};
-export type AdCfg = {id: string; src: string; fps: number; segments: {from: number; to: number; zoom?: number; cy?: number}[]; words: Word[]; frames: number; subtitles?: boolean; subY?: number};
+export type AdCfg = {id: string; src: string; fps: number; segments: {from: number; to: number; zoom?: number; cy?: number; vsrc?: string}[]; stickers?: {text: string; from: number; to: number; y?: number}[]; words: Word[]; frames: number; subtitles?: boolean; subY?: number};
 
 const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 const GRAD = 'linear-gradient(120deg, #2563EB 0%, #5B3FE4 52%, #9333EA 100%)';
@@ -21,7 +21,7 @@ const useFonts = () => {
 };
 
 // one segment with its own zoom rhythm
-const Seg: React.FC<{src: string; startFrom: number; len: number; i: number; zoom?: number; cy?: number}> = ({src, startFrom, len, i, zoom, cy}) => {
+const Seg: React.FC<{src: string; startFrom: number; len: number; i: number; zoom?: number; cy?: number; vsrc?: string}> = ({src, startFrom, len, i, zoom, cy, vsrc}) => {
   const f = useCurrentFrame();
   const base = zoom ?? (i % 2 ? 1.12 : 1.0); // jump-cut alternation (or forced crop)
   const punchIn = interpolate(f, [0, 7], [base + 0.08, base], {...clamp, easing: EXPO});
@@ -35,8 +35,9 @@ const Seg: React.FC<{src: string; startFrom: number; len: number; i: number; zoo
   return (
     <AbsoluteFill style={{overflow: 'hidden', background: '#000'}}>
       <AbsoluteFill style={{transform: `translateX(${zoom ? 0 : x}px) scale(${punchIn + inner + drift})`, transformOrigin: `50% ${(cy ?? 0.42) * 100}%`}}>
-        <OffthreadVideo src={src} startFrom={startFrom} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+        <OffthreadVideo src={vsrc ?? src} muted={!!vsrc} startFrom={startFrom} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
       </AbsoluteFill>
+      {vsrc && <Audio src={src} startFrom={startFrom} />}
     </AbsoluteFill>
   );
 };
@@ -88,7 +89,7 @@ export const AdEdit: React.FC<{cfg: AdCfg}> = ({cfg}) => {
     if (i > 0) cuts.push(from);
     return (
       <Sequence key={i} from={from} durationInFrames={len}>
-        <Seg src={src} startFrom={Math.round(s.from * cfg.fps)} len={len} i={i} zoom={s.zoom} cy={s.cy} />
+        <Seg src={src} startFrom={Math.round(s.from * cfg.fps)} len={len} i={i} zoom={s.zoom} cy={s.cy} vsrc={s.vsrc ? staticFile(s.vsrc) : undefined} />
       </Sequence>
     );
   });
@@ -97,6 +98,17 @@ export const AdEdit: React.FC<{cfg: AdCfg}> = ({cfg}) => {
     <AbsoluteFill style={{background: '#000'}}>
       {seqs}
       <AbsoluteFill style={{background: '#fff', opacity: flash * 0.35, pointerEvents: 'none'}} />
+      {(cfg.stickers ?? []).map((st, k) => {
+        const a = st.from * 30, b = st.to * 30;
+        if (f < a || f > b) return null;
+        const p = interpolate(f, [a, a + 8], [0, 1], {...clamp, easing: EXPO});
+        const o = interpolate(f, [b - 6, b], [1, 0], clamp);
+        return (
+          <div key={k} style={{position: 'absolute', left: 0, right: 0, top: st.y ?? 240, display: 'flex', justifyContent: 'center', opacity: o}}>
+            <div style={{padding: '18px 34px', borderRadius: 999, backgroundImage: GRAD, color: '#fff', fontFamily: 'Inter, sans-serif', fontWeight: 900, fontSize: 56, letterSpacing: '0.02em', transform: `scale(${0.6 + p * 0.4}) rotate(${(1 - p) * -6}deg)`, boxShadow: '0 20px 50px -14px rgba(91,63,228,0.9)'}}>{st.text}</div>
+          </div>
+        );
+      })}
       {cfg.subtitles !== false && <Subs words={cfg.words} y={cfg.subY ?? 1280} />}
     </AbsoluteFill>
   );
