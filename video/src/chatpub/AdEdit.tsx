@@ -42,7 +42,7 @@ const Seg: React.FC<{src: string; startFrom: number; len: number; i: number; zoo
   );
 };
 
-const Subs: React.FC<{words: Word[]; y: number}> = ({words, y}) => {
+export const Subs: React.FC<{words: Word[]; y: number}> = ({words, y}) => {
   const f = useCurrentFrame();
   const t = f / 30;
   const chunks: Word[][] = [];

@@ -115,5 +115,33 @@
   "stability": 0.4,
   "style": 0.4,
   "speed": 0.96
+ },
+ "lr-a": {
+  "text": "Aucune de ces pubs n'a été tournée.",
+  "voice": "SptHT9PQ49isQvxFm28t",
+  "stability": 0.32,
+  "style": 0.55,
+  "speed": 1.08
+ },
+ "lr-b": {
+  "text": "Une phrase dans Grossiti… l'acteur, la voix, le montage : tout est généré.",
+  "voice": "SptHT9PQ49isQvxFm28t",
+  "stability": 0.32,
+  "style": 0.55,
+  "speed": 1.08
+ },
+ "lr-c": {
+  "text": "Publiée sur Meta en un clic. Et les leads arrivent.",
+  "voice": "SptHT9PQ49isQvxFm28t",
+  "stability": 0.32,
+  "style": 0.55,
+  "speed": 1.08
+ },
+ "lr-d": {
+  "text": "Grossiti est en ligne. Le lien est dans la bio.",
+  "voice": "SptHT9PQ49isQvxFm28t",
+  "stability": 0.32,
+  "style": 0.55,
+  "speed": 1.08
  }
 }
