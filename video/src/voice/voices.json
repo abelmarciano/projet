@@ -218,5 +218,29 @@
   "stability": 0.2,
   "style": 0.8,
   "speed": 1.12
+ },
+ "var-masque": {
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.8,
+  "speed": 1.12,
+  "voice": "i5Fydub7F0HPXhynAgDo",
+  "text": "[curious] Vous aussi, vos pointes sont sèches et cassantes ? [sighs] Moi, c'était TOUS les jours. [warmly] Et puis j'ai testé Le Masque de Pin-Up Secret. [impressed] Il nourrit en profondeur, et il convient à tous les cheveux, même bouclés ou décolorés. [confident] Quarante-neuf euros. [friendly] Je vous mets le lien, commandez le vôtre !"
+ },
+ "var-pull": {
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.8,
+  "speed": 1.05,
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "text": "[serious] Oui… quatre cent trente euros pour un pull. [pause] [confident] Mais regardez la maille. [warmly] C'est le Mars, le modèle iconique de Calèbe Paris, réinterprété cette saison en maille torsadée asymétrique. [softly] Le genre de pièce qu'on ne croise pas à chaque coin de rue. [calm] Il est sur le site… allez le voir de plus près."
+ },
+ "var-crm": {
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.8,
+  "speed": 1.15,
+  "voice": "txtf1EDouKke753vN8SL",
+  "text": "[conversational] POV : vous gérez une PME, et vos devis traînent entre un carnet, Excel et vos SMS. [sighs] [confident] Formuléo, c'est un logiciel configuré pour VOTRE métier. Clients, devis, relances… tout au même endroit. [matter-of-fact] Vingt euros par utilisateur et par mois, tout compris. [warmly] Laissez vos coordonnées, on vous le montre."
  }
 }
