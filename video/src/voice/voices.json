@@ -354,5 +354,45 @@
   "style": 0.75,
   "speed": 1.08,
   "text": "[warmly] Grossiti. Vos pubs vidéo, sans tournage."
+ },
+ "g3d-1": {
+  "voice": "AfbuxQ9DVtS4azaxN1W7",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[storytelling] Au garage de Momo, les outils brillaient… mais personne ne passait."
+ },
+ "g3d-2": {
+  "voice": "AfbuxQ9DVtS4azaxN1W7",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[curious] Alors il a tapé une phrase dans Grossiti… et sa caisse à outils s'est mise à tourner !"
+ },
+ "g3d-3": {
+  "voice": "AfbuxQ9DVtS4azaxN1W7",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[excited] Sa pub a pris la route… direction les téléphones du coin !"
+ },
+ "g3d-4": {
+  "voice": "AfbuxQ9DVtS4azaxN1W7",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[playful] Maintenant ? Faut prendre rendez-vous."
+ },
+ "g3d-5": {
+  "voice": "AfbuxQ9DVtS4azaxN1W7",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[confident] Grossiti. Vos pubs vidéo, sans tournage."
  }
 }
