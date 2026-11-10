@@ -47,3 +47,5 @@ timing `src/chatpub/motion_timeline.json`). Quand Abel envoie une pub brute à m
 1. `python3 video/scripts/ad_prepare.py <video> <id>` (transcription ElevenLabs, coupe des blancs, mots recalés) → `src/chatpub/ad-<id>.json`.
 2. Composition `AdEdit-<id>` (`src/chatpub/AdEdit.tsx` : coupes, zooms, flashs, sous-titres animés mot par mot) → rendre en
    `public/media/chat/<id>-edit.mp4`, puis mettre ce fichier comme `video` (+ `videoFrames`) et adapter `prompt`/`promptShort` dans `cpN.json`.
+
+Voix off : écrire « Grossiti » dans le texte envoyé à ElevenLabs pour une prononciation française de « Growthity », puis remettre « Growthity » dans les mots (sous-titres). Voix retenue : « Hugo – Punchy French Creator » (3Tp5mYhT9wrfnry9pzvV). Pas de « Lien en bio » à la fin des « Du chat à la pub ».
