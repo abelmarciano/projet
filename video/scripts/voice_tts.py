@@ -6,7 +6,7 @@ V = json.load(open('src/voice/voices.json'))
 os.makedirs('public/voice', exist_ok=True)
 for vid in sys.argv[1:]:
     v = V[vid]
-    body = json.dumps({'text': v['text'], 'model_id': 'eleven_multilingual_v2', 'language_code': 'fr',
+    body = json.dumps({'text': v['text'], 'model_id': v.get('model', 'eleven_multilingual_v2'), 'language_code': 'fr',
                        'voice_settings': {'stability': v.get('stability', 0.42), 'similarity_boost': 0.8, 'style': v.get('style', 0.25), 'use_speaker_boost': True, 'speed': v.get('speed', 1.0)}}).encode()
     req = urllib.request.Request(f"https://api.elevenlabs.io/v1/text-to-speech/{v['voice']}/with-timestamps?output_format=mp3_44100_128", data=body, headers={'Content-Type': 'application/json'})
     d = json.load(urllib.request.urlopen(req, timeout=180))

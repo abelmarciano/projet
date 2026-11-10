@@ -178,5 +178,13 @@
   "stability": 0.28,
   "style": 0.7,
   "speed": 1.18
+ },
+ "jwel2": {
+  "text": "Je le porte tous les jours, et franchement, on me demande tout le temps d'où il vient. C'est le bracelet Trèfle de Jwel : acier inoxydable, finition dorée, avec ces petits trèfles noirs… il va avec tout. Dix-neuf euros quatre-vingt-dix-neuf, le lien est juste en dessous.",
+  "voice": "txtf1EDouKke753vN8SL",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.45,
+  "speed": 1.05
  }
 }
