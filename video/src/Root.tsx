@@ -20,6 +20,7 @@ import adUgc3 from './chatpub/ad-ugc3.json';
 import adVelo from './chatpub/ad-velo.json';
 import adStudio from './chatpub/ad-studio.json';
 import adSkingen from './chatpub/ad-skingen.json';
+import adSkingenK from './chatpub/ad-skingen-k.json';
 import adStudioL2 from './chatpub/ad-studio-l2.json';
 import adStudioS3 from './chatpub/ad-studio-s3.json';
 import {ShowIntro, ShowEnd, SHOW_INTRO, SHOW_END} from './reels/Showcase';
@@ -45,6 +46,7 @@ export const Root: React.FC = () => (
     <Composition id="AdEdit-ugc2" component={AdEdit} durationInFrames={adUgc2.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adUgc2 as unknown as AdCfg}} />
     <Composition id="AdEdit-studio-s3" component={AdEdit} durationInFrames={adStudioS3.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adStudioS3 as unknown as AdCfg}} />
     <Composition id="AdEdit-studio-l2" component={AdEdit} durationInFrames={adStudioL2.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adStudioL2 as unknown as AdCfg}} />
+    <Composition id="AdEdit-skingen-k" component={AdEdit} durationInFrames={adSkingenK.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adSkingenK as unknown as AdCfg}} />
     <Composition id="AdEdit-skingen" component={AdEdit} durationInFrames={adSkingen.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adSkingen as unknown as AdCfg}} />
     <Composition id="AdEdit-studio" component={AdEdit} durationInFrames={adStudio.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adStudio as unknown as AdCfg}} />
     <Composition id="AdEdit-velo" component={AdEdit} durationInFrames={adVelo.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adVelo as unknown as AdCfg}} />
