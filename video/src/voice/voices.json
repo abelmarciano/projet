@@ -250,5 +250,13 @@
   "style": 0.8,
   "speed": 1.12,
   "text": "[laughs] J'ai longtemps cru que le vélo pour aller bosser, c'était réservé aux courageux… [playful] spoiler : je suis pas courageux. [enthusiastic] Le secret, c'est d'avoir le BON vélo. [warmly] Ici, on vous conseille, vous l'essayez, et vous repartez avec celui qui vous va vraiment. [confident] Passez au magasin… on vous trouve le vôtre."
+ },
+ "studio-camille": {
+  "voice": "O31r762Gb3WFygrEOGh0",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.8,
+  "speed": 1.1,
+  "text": "[whispers] Il faut que je vous montre un truc… [excited] Vous voyez ça, au fond de mon jardin ? C'est un studio. [warmly] Vingt mètres carrés, une terrasse en bois, une kitchenette et une salle de bain… [impressed] et il a été livré clé en main. [playful] Bureau, chambre d'amis… je vous laisse imaginer. [confident] Demandez votre devis, le lien est juste en dessous."
  }
 }
