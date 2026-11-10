@@ -186,5 +186,29 @@
   "stability": 0.4,
   "style": 0.45,
   "speed": 1.05
+ },
+ "jwel3-jeanne": {
+  "text": "[respire] Bon… on me demande tout le temps d'où il vient, alors je vous dis. [petit rire] C'est le bracelet Trèfle de Djouelle. Franchement, il va avec tout… je l'enlève même plus. Et en vrai, il est à dix-neuf euros quatre-vingt-dix-neuf. Le lien est juste en dessous !",
+  "voice": "txtf1EDouKke753vN8SL",
+  "model": "eleven_v4",
+  "stability": 0.3,
+  "style": 0.6,
+  "speed": 1.05
+ },
+ "jwel3-victoria": {
+  "text": "[respire] Bon… on me demande tout le temps d'où il vient, alors je vous dis. [petit rire] C'est le bracelet Trèfle de Djouelle. Franchement, il va avec tout… je l'enlève même plus. Et en vrai, il est à dix-neuf euros quatre-vingt-dix-neuf. Le lien est juste en dessous !",
+  "voice": "O31r762Gb3WFygrEOGh0",
+  "model": "eleven_v4",
+  "stability": 0.3,
+  "style": 0.6,
+  "speed": 1.05
+ },
+ "jwel3-emma": {
+  "text": "[respire] Bon… on me demande tout le temps d'où il vient, alors je vous dis. [petit rire] C'est le bracelet Trèfle de Djouelle. Franchement, il va avec tout… je l'enlève même plus. Et en vrai, il est à dix-neuf euros quatre-vingt-dix-neuf. Le lien est juste en dessous !",
+  "voice": "i5Fydub7F0HPXhynAgDo",
+  "model": "eleven_v4",
+  "stability": 0.3,
+  "style": 0.6,
+  "speed": 1.05
  }
 }
