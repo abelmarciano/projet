@@ -10,6 +10,8 @@ import {ReelComp, REEL_LIST} from './reels/Reels';
 import {ChatToAd, timeline as cpTimeline, ChatPubCfg} from './chatpub/ChatToAd';
 import cp1 from './chatpub/cp1.json';
 import {MotionChatPub, motionTimeline} from './chatpub/MotionChatPub';
+import {AdEdit, AdCfg} from './chatpub/AdEdit';
+import adTest from './chatpub/ad-test.json';
 import {ShowIntro, ShowEnd, SHOW_INTRO, SHOW_END} from './reels/Showcase';
 
 export const Root: React.FC = () => (
@@ -27,6 +29,7 @@ export const Root: React.FC = () => (
     ))}
     <Composition id="ChatPub-cp1" component={ChatToAd} durationInFrames={cpTimeline(cp1 as unknown as ChatPubCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: cp1 as unknown as ChatPubCfg}} />
     <Composition id="ChatPubMotion-cp1" component={MotionChatPub} durationInFrames={motionTimeline(cp1 as unknown as ChatPubCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: cp1 as unknown as ChatPubCfg}} />
+    <Composition id="AdEdit-test" component={AdEdit} durationInFrames={adTest.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adTest as unknown as AdCfg}} />
     <Composition id="ShowIntro" component={ShowIntro} durationInFrames={SHOW_INTRO} fps={30} width={1080} height={1920} defaultProps={{prompt: '', label: '', n: ''}} />
     <Composition id="ShowEnd" component={ShowEnd} durationInFrames={SHOW_END} fps={30} width={1080} height={1920} />
     {ORGANIC.map((c) => (

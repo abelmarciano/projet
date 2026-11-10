@@ -41,3 +41,9 @@ Dossiers créés : CREA-POST › IMAGES › « Carrousel 1…4 », « Posts simp
 UI du chat reproduite : écran « Que veux-tu créer aujourd'hui ? », puces marque / « Ajouter un acteur » / « Catalogue »,
 fenêtre « Choisir un acteur », cartes ACTEUR/PRODUIT au-dessus du message, carte résultat « Prête » + « Publier sur Meta ».
 Acteurs : seulement les réalistes (`studio/data/actors_growthity.json`, `realiste: true`).
+
+Version retenue : motion design (`video/src/chatpub/MotionChatPub.tsx`, composition `ChatPubMotion-cpN`, son `scripts/chatpub_motion_audio.py cpN`,
+timing `src/chatpub/motion_timeline.json`). Quand Abel envoie une pub brute à monter puis à intégrer :
+1. `python3 video/scripts/ad_prepare.py <video> <id>` (transcription ElevenLabs, coupe des blancs, mots recalés) → `src/chatpub/ad-<id>.json`.
+2. Composition `AdEdit-<id>` (`src/chatpub/AdEdit.tsx` : coupes, zooms, flashs, sous-titres animés mot par mot) → rendre en
+   `public/media/chat/<id>-edit.mp4`, puis mettre ce fichier comme `video` (+ `videoFrames`) et adapter `prompt`/`promptShort` dans `cpN.json`.

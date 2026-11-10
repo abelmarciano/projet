@@ -1,0 +1,205 @@
+{
+ "id": "test",
+ "src": "public/media/chat/charlotte-virale.mp4",
+ "fps": 30,
+ "text": "Si vous vous chauffez encore au gaz ou au fioul, écoutez bien. Une aide permet de financer votre pompe à chaleur sous conditions. C'est le moment d'en profiter pour réduire vos factures. Testez vite votre éligibilité, c'est gratuit",
+ "segments": [
+  {
+   "from": 0.03,
+   "to": 12.202
+  }
+ ],
+ "words": [
+  {
+   "w": "Si",
+   "s": 0.07,
+   "e": 0.13
+  },
+  {
+   "w": "vous",
+   "s": 0.19,
+   "e": 0.31
+  },
+  {
+   "w": "vous",
+   "s": 0.33,
+   "e": 0.43
+  },
+  {
+   "w": "chauffez",
+   "s": 0.47,
+   "e": 0.77
+  },
+  {
+   "w": "encore",
+   "s": 0.81,
+   "e": 1.09
+  },
+  {
+   "w": "au",
+   "s": 1.11,
+   "e": 1.21
+  },
+  {
+   "w": "gaz",
+   "s": 1.27,
+   "e": 1.59
+  },
+  {
+   "w": "ou",
+   "s": 1.75,
+   "e": 1.83
+  },
+  {
+   "w": "au",
+   "s": 1.87,
+   "e": 1.93
+  },
+  {
+   "w": "fioul,",
+   "s": 2.05,
+   "e": 2.33
+  },
+  {
+   "w": "écoutez",
+   "s": 2.59,
+   "e": 2.93
+  },
+  {
+   "w": "bien.",
+   "s": 2.99,
+   "e": 3.15
+  },
+  {
+   "w": "Une",
+   "s": 3.43,
+   "e": 3.53
+  },
+  {
+   "w": "aide",
+   "s": 3.59,
+   "e": 3.79
+  },
+  {
+   "w": "permet",
+   "s": 3.83,
+   "e": 4.09
+  },
+  {
+   "w": "de",
+   "s": 4.15,
+   "e": 4.21
+  },
+  {
+   "w": "financer",
+   "s": 4.33,
+   "e": 4.75
+  },
+  {
+   "w": "votre",
+   "s": 4.79,
+   "e": 5.07
+  },
+  {
+   "w": "pompe",
+   "s": 5.13,
+   "e": 5.27
+  },
+  {
+   "w": "à",
+   "s": 5.33,
+   "e": 5.39
+  },
+  {
+   "w": "chaleur",
+   "s": 5.41,
+   "e": 5.83
+  },
+  {
+   "w": "sous",
+   "s": 6.05,
+   "e": 6.17
+  },
+  {
+   "w": "conditions.",
+   "s": 6.21,
+   "e": 6.69
+  },
+  {
+   "w": "C'est",
+   "s": 6.75,
+   "e": 6.85
+  },
+  {
+   "w": "le",
+   "s": 6.87,
+   "e": 6.95
+  },
+  {
+   "w": "moment",
+   "s": 7.01,
+   "e": 7.21
+  },
+  {
+   "w": "d'en",
+   "s": 7.25,
+   "e": 7.39
+  },
+  {
+   "w": "profiter",
+   "s": 7.43,
+   "e": 7.93
+  },
+  {
+   "w": "pour",
+   "s": 8.11,
+   "e": 8.29
+  },
+  {
+   "w": "réduire",
+   "s": 8.41,
+   "e": 8.79
+  },
+  {
+   "w": "vos",
+   "s": 8.83,
+   "e": 8.95
+  },
+  {
+   "w": "factures.",
+   "s": 9.01,
+   "e": 9.55
+  },
+  {
+   "w": "Testez",
+   "s": 9.79,
+   "e": 10.17
+  },
+  {
+   "w": "vite",
+   "s": 10.25,
+   "e": 10.43
+  },
+  {
+   "w": "votre",
+   "s": 10.47,
+   "e": 10.67
+  },
+  {
+   "w": "éligibilité,",
+   "s": 10.73,
+   "e": 11.39
+  },
+  {
+   "w": "c'est",
+   "s": 11.67,
+   "e": 11.77
+  },
+  {
+   "w": "gratuit",
+   "s": 11.81,
+   "e": 12.11
+  }
+ ],
+ "frames": 365
+}
