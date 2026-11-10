@@ -49,3 +49,9 @@ timing `src/chatpub/motion_timeline.json`). Quand Abel envoie une pub brute à m
    `public/media/chat/<id>-edit.mp4`, puis mettre ce fichier comme `video` (+ `videoFrames`) et adapter `prompt`/`promptShort` dans `cpN.json`.
 
 Voix off : écrire « Grossiti » dans le texte envoyé à ElevenLabs pour une prononciation française de « Growthity », puis remettre « Growthity » dans les mots (sous-titres). Voix retenue : « Hugo – Punchy French Creator » (3Tp5mYhT9wrfnry9pzvV). Pas de « Lien en bio » à la fin des « Du chat à la pub ».
+
+### Publication réseaux (Zernio)
+Connecteur claude.ai « Zernio » (comptes : Instagram growthity.ai, Facebook Growthity AI). Dans Studio, éditeur d'un post enregistré →
+bloc « Publier avec Zernio » : média envoyé via `media_get_media_presigned_url` (PUT direct, CORS ouvert), puis `posts_create`
+par compte (publish_now ou schedule_minutes jusqu'à la date du post). Résultat stocké dans `posts/{id}.zernio = {at, by, mode, when, results[]}`
+et statut passé à « live » ou « sched ». Capability page : `mcp: {servers: [{server: 'Zernio', tools: [accounts_list, posts_create, call_tool]}]}`.

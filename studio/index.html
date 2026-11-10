@@ -516,6 +516,7 @@ tbody tr:hover td { background: #FAFAFC }
   .toast { bottom: calc(84px + env(safe-area-inset-bottom, 0px)) }
   .menu.mob { position: fixed; left: 16px; right: 16px; top: auto; bottom: calc(76px + env(safe-area-inset-bottom, 0px)) }
 }
+.zhist{font-size:13px;line-height:1.5;padding:10px 12px;border-radius:12px;background:var(--bg-2,rgba(127,127,127,.08));margin-bottom:12px}.zhist ul{margin:6px 0 0;padding-left:16px}.zhist .ok{color:var(--st-live)}.zhist .ko,.zmsg.ko{color:#d33}.zmsg{font-size:13px;margin:8px 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}.zmsg.warn{padding:10px 12px;border-radius:12px;background:rgba(245,158,11,.12)}
 </style>
 
 <div class="app">
@@ -585,7 +586,7 @@ const S = {
   view: 'accueil', param: null,
   month: som(new Date()), calMode: 'month', weekStart: sow(new Date()),
   q: '', netFilter: 'all', adFilter: 'all', mf: {format: 'all', kind: 'all'},
-  ed: null, md: null, usage: null, upload: null, menuOpen: false, cmdk: null,
+  ed: null, md: null, usage: null, mcp: null, zAcc: null, zs: {}, upload: null, menuOpen: false, cmdk: null,
 };
 
 // ---------- helpers ----------
@@ -638,6 +639,7 @@ async function boot() {
   clearTimeout(timer);
   if (user) { try { S.me = await user.id(); } catch {} }
   c.use('downloads').then((dl) => { S.dl = dl; if (S.view === 'media') renderMediaDetail(); }).catch(() => {});
+  c.use('mcp').then((m) => { S.mcp = m; if (S.view === 'post') renderZernio(); }).catch(() => {});
   db.collection('media').onSnapshot((snap) => {
     S.media = snap.docs.map((d) => ({id: d.id, ...d.data()})).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
     S.loaded.media = true; onData();
@@ -678,7 +680,7 @@ function route() {
 }
 addEventListener('hashchange', route);
 function openEditorFromRoute() {
-  if (S.param) { const p = postById(S.param); if (!p) { render(); return; } S.ed = {draft: JSON.parse(JSON.stringify(p)), isNew: false, dirty: false, slide: 0, pv: null, confirm: false}; }
+  if (S.param) { const p = postById(S.param); if (!p) { render(); return; } S.ed = {draft: JSON.parse(JSON.stringify(p)), isNew: false, dirty: false, slide: 0, pv: null, confirm: false}; S.zs = {}; }
   else if (!S.ed) { go('planning'); return; }
   render();
 }
@@ -1068,12 +1070,106 @@ function vEditor(main) {
           <div class="r2"><div class="fld"><label for="a-cta">Bouton</label><select id="a-cta" data-af="cta">${CTAS.map((o) => `<option ${o === ad.cta ? 'selected' : ''}>${o}</option>`).join('')}</select></div>
             <div class="fld"><label for="a-link">Lien de destination</label><input id="a-link" data-af="link" value="${esc(ad.link || '')}" placeholder="https://growthity.ai"></div></div>
           <div class="fld"><label for="a-aud">Audience</label><input id="a-aud" data-af="audience" value="${esc(ad.audience || '')}" placeholder="ex. e-commerçants, France, 25-55 ans"></div></div>` : ''}
+        ${isAd || isNew ? '' : '<div class="panel" id="zernio"></div>'}
         <div style="margin-top:16px">${redoBlock(p, 'post')}</div>
         ${isNew ? '' : `<div class="panel"><div class="danger-zone" id="dz">${S.ed.confirm ? `<span class="confirm">Supprimer définitivement ?</span><button class="btn danger solid sm" data-act="del-yes">Supprimer</button><button class="btn sm" data-act="del-no">Annuler</button>` : `<span style="font-size:12.5px;color:var(--muted)">Créé le ${new Date(p.createdAt || Date.now()).toLocaleDateString('fr-FR')}</span><span class="grow"></span><button class="btn quiet danger sm" data-act="del">Supprimer ${isAd ? 'l’ad' : 'le post'}</button>`}</div></div>`}
       </div>
       <div class="pv" id="pv"></div>
     </div></div>`;
-  refreshPicker(); renderPreview(); updCount();
+  refreshPicker(); renderPreview(); updCount(); renderZernio();
+}
+
+// ---------- Zernio : publication sur les réseaux ----------
+const ZN = 'Zernio';
+const Z_PLAT = {Instagram: 'instagram', Facebook: 'facebook', TikTok: 'tiktok', LinkedIn: 'linkedin'};
+const zText = (r) => { const v = r?.payload; if (v == null) return ''; if (typeof v === 'string') return v; if (typeof v.result === 'string') return v.result; return JSON.stringify(v); };
+function zErr(e) {
+  switch (e?.code) {
+    case 'server_not_connected': return 'Ajoutez le connecteur Zernio dans claude.ai › Réglages › Connecteurs.';
+    case 'needs_reauth': return 'Reconnectez Zernio dans claude.ai › Réglages › Connecteurs.';
+    case 'not_in_manifest': return 'Zernio n’est pas autorisé pour cette page (permissions de l’artifact).';
+    case 'blocked_by_policy': return 'Votre organisation bloque cet outil Zernio.';
+    case 'selection_required': return 'Choisissez quel connecteur Zernio utiliser (invite claude.ai).';
+    case 'server_unavailable': return 'Zernio ne répond pas pour l’instant. Vérifiez dans Zernio avant de réessayer.';
+    case 'tool_error': return 'Zernio a refusé : ' + (zText(e.result) || e.message || 'erreur');
+    default: return e?.message || e?.code || String(e);
+  }
+}
+async function zAccounts(force) {
+  if (!S.mcp) return null;
+  if (S.zAcc && !force) return S.zAcc;
+  const r = await S.mcp.callTool(ZN, 'accounts_list', {}, {cache: {staleTime: 300000, gcTime: 600000, refresh: !!force}});
+  const t = zText(r); const out = [];
+  for (const m of t.matchAll(/-\s*([a-z]+):\s*(.+?)\s*\(ID:\s*([A-Za-z0-9_-]+)\)/g)) out.push({platform: m[1], name: m[2], id: m[3]});
+  S.zAcc = out; return out;
+}
+function renderZernio() {
+  const box = $('#zernio'); if (!box || !S.ed) return;
+  const p = S.ed.draft; const z = p.zernio || null; const zs = S.zs || {};
+  if (!S.mcp) { box.innerHTML = `<h3>Publier avec Zernio</h3><div style="font-size:13px;color:var(--muted)">La publication directe n’est pas disponible dans cette vue (connecteurs indisponibles).</div>`; return; }
+  const acc = S.zAcc;
+  if (!acc && !zs.loading && !zs.err) { S.zs = {...zs, loading: true}; zAccounts().then(() => { S.zs = {}; renderZernio(); }).catch((e) => { S.zs = {err: zErr(e)}; renderZernio(); }); }
+  const sel = zs.sel || Object.fromEntries((acc || []).map((a) => [a.id, (p.networks || []).some((n) => Z_PLAT[n] === a.platform)]));
+  S.zs = {...S.zs, sel};
+  const hist = z ? `<div class="zhist"><b>${z.mode === 'now' ? 'Publié' : 'Programmé'} via Zernio</b> le ${new Date(z.at).toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'})}${z.when ? ` · pour le ${new Date(z.when).toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'})}` : ''}
+      <ul>${(z.results || []).map((r) => `<li class="${r.ok ? 'ok' : 'ko'}">${r.ok ? '✓' : '✕'} ${esc(r.platform)} — ${esc(r.msg || '')}</li>`).join('')}</ul></div>` : '';
+  const m = mediaById(p.mediaId); const when = p.date ? new Date(p.date) : null; const future = when && when.getTime() > Date.now() + 5 * 60000;
+  box.innerHTML = `<h3>Publier avec Zernio <small>Instagram, Facebook… depuis le CRM</small></h3>${hist}
+    ${zs.err ? `<div class="zmsg ko">${esc(zs.err)} <button class="btn sm" data-act="z-reload">Réessayer</button></div>` : ''}
+    ${!acc ? (zs.err ? '' : '<div style="font-size:13px;color:var(--muted)">Chargement des comptes Zernio…</div>') : `
+      <div class="fld"><span class="lb">Comptes</span><div class="chips">${acc.length ? acc.map((a) => `<button type="button" class="chk" data-act="z-acc" data-id="${a.id}" aria-pressed="${!!sel[a.id]}">${esc(a.platform)} · ${esc(a.name)}</button>`).join('') : '<span style="font-size:13px;color:var(--muted)">Aucun compte relié dans Zernio.</span>'}</div></div>
+      ${!m ? '<div class="zmsg ko">Choisissez d’abord un média.</div>' : ''}
+      ${zs.busy ? `<div class="zmsg">${esc(zs.busy)}</div>` : ''}
+      <div class="chips" style="margin-top:6px">
+        <button class="btn accent" data-act="z-pub" data-mode="now" ${zs.busy || !m ? 'disabled' : ''}>Publier maintenant</button>
+        <button class="btn" data-act="z-pub" data-mode="sched" ${zs.busy || !m || !future ? 'disabled' : ''} title="${future ? '' : 'Choisissez une date de publication dans le futur'}">Programmer ${future ? 'le ' + when.toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'}) : '(date requise)'}</button>
+      </div>
+      ${zs.confirm ? `<div class="zmsg warn">${zs.confirm === 'now' ? 'Publier tout de suite' : 'Programmer'} sur ${Object.values(sel).filter(Boolean).length} compte(s) avec la légende et le média de ce post ? <button class="btn accent sm" data-act="z-go">Confirmer</button><button class="btn sm" data-act="z-cancel">Annuler</button></div>` : ''}`}`;
+}
+async function zUpload(m) {
+  const urls = [];
+  for (const [i, it] of (m.items || []).entries()) {
+    S.zs.busy = `Envoi du média vers Zernio${m.items.length > 1 ? ` (${i + 1}/${m.items.length})` : ''}…`; renderZernio();
+    const res = await fetch(blob(it.asset)); if (!res.ok) throw new Error('lecture du média impossible (HTTP ' + res.status + ')');
+    const data = await res.blob();
+    const ct = it.ct || data.type || 'video/mp4';
+    const ext = ({'video/mp4': 'mp4', 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp'})[ct] || 'bin';
+    const r = await S.mcp.callTool(ZN, 'call_tool', {name: 'media_get_media_presigned_url', arguments: {filename: `growthity-${m.id}-${i + 1}.${ext}`, content_type: ct, size: data.size}}, {cache: false});
+    const t = zText(r);
+    const up = (t.match(/uploadUrl['"]?\s*:\s*['"]([^'"]+)['"]/) || [])[1]; const pub = (t.match(/publicUrl['"]?\s*:\s*['"]([^'"]+)['"]/) || [])[1];
+    if (!up || !pub) throw new Error('Zernio n’a pas fourni d’adresse d’envoi');
+    const put = await fetch(up, {method: 'PUT', headers: {'Content-Type': ct}, body: data});
+    if (!put.ok) throw new Error('envoi du fichier refusé (HTTP ' + put.status + ')');
+    urls.push(pub);
+  }
+  return urls;
+}
+async function zPublish(mode) {
+  const p = S.ed.draft; const m = mediaById(p.mediaId); const acc = (S.zAcc || []).filter((a) => S.zs.sel?.[a.id]);
+  if (!acc.length) { toast('Sélectionnez au moins un compte.', true); return; }
+  if (S.ed.dirty) { toast('Enregistrez le post avant de le publier.', true); return; }
+  const when = p.date ? new Date(p.date).getTime() : 0;
+  const results = [];
+  try {
+    const urls = await zUpload(m);
+    for (const a of acc) {
+      S.zs.busy = `${mode === 'now' ? 'Publication' : 'Programmation'} sur ${a.platform}…`; renderZernio();
+      const input = {platform: a.platform, account_id: a.id, content: p.caption || '', media_urls: urls.join(',')};
+      if (mode === 'now') input.publish_now = true; else input.schedule_minutes = Math.max(1, Math.round((when - Date.now()) / 60000));
+      try {
+        const r = await S.mcp.callTool(ZN, 'posts_create', input, {cache: false});
+        const t = zText(r); const id = (t.match(/(?:post[_ ]?id|_id|ID)['"]?\s*[:=]?\s*['"]?([a-f0-9]{16,})/i) || [])[1] || null;
+        results.push({platform: a.platform, account: a.name, ok: true, id, msg: id ? `ok (post ${id})` : 'ok'});
+      } catch (e) { results.push({platform: a.platform, account: a.name, ok: false, msg: zErr(e)}); }
+    }
+  } catch (e) { S.zs = {...S.zs, busy: null, err: 'Média : ' + (e?.code ? zErr(e) : e.message || e)}; renderZernio(); return; }
+  const ok = results.some((r) => r.ok);
+  const z = {at: Date.now(), by: S.me || null, mode, when: mode === 'sched' ? when : null, results};
+  const patch = {zernio: z, updatedAt: Date.now()}; if (ok) patch.status = mode === 'now' ? 'live' : 'sched';
+  try { await S.db.collection('posts').doc(p.id).update(patch); Object.assign(S.ed.draft, patch); } catch (e) { toast('Publié, mais le CRM n’a pas pu être mis à jour : ' + errMsg(e), true); }
+  S.zs = {...S.zs, busy: null, confirm: null};
+  toast(ok ? (mode === 'now' ? 'Publié via Zernio.' : 'Programmé via Zernio.') : 'Zernio n’a rien publié.', !ok);
+  render();
 }
 function refreshPicker() {
   const box = $('#picker'); if (!box || !S.ed) return;
@@ -1267,6 +1363,11 @@ document.addEventListener('click', async (ev) => {
     }
     case 'save': saveEditor(); return;
     case 'st': S.ed.draft.status = d.v; $$('[data-act="st"]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === d.v)); markDirty(); return;
+    case 'z-acc': { const sel = S.zs.sel || {}; sel[d.id] = !sel[d.id]; S.zs.sel = sel; renderZernio(); return; }
+    case 'z-reload': S.zs = {}; S.zAcc = null; zAccounts(true).then(() => renderZernio()).catch((er) => { S.zs = {err: zErr(er)}; renderZernio(); }); S.zs = {loading: true}; renderZernio(); return;
+    case 'z-pub': S.zs.confirm = d.mode; S.zs.err = null; renderZernio(); return;
+    case 'z-cancel': S.zs.confirm = null; renderZernio(); return;
+    case 'z-go': { const mode = S.zs.confirm; S.zs.confirm = null; S.zs.busy = 'Préparation…'; renderZernio(); zPublish(mode); return; }
     case 'net': { const n = S.ed.draft.networks ||= []; const on = n.includes(d.v); S.ed.draft.networks = on ? n.filter((x) => x !== d.v) : [...n, d.v]; el.setAttribute('aria-pressed', !on); markDirty(); return; }
     case 'fmt': S.ed.draft.format = d.v; $$('[data-act="fmt"]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === d.v)); S.ed.pv = null; markDirty(); refreshPicker(); renderPreview(); return;
     case 'pick': { const same = S.ed.draft.mediaId === d.id; S.ed.draft.mediaId = same ? null : d.id; S.ed.slide = 0; const m = mediaById(d.id);
