@@ -7,17 +7,17 @@ import '@fontsource/space-grotesk/700.css';
 import {LogoMark, Wordmark} from '../components/UI';
 import {prog, pop, EXPO} from '../components/anim';
 import {StudioBg, Dust, Kinetic} from './MotionChatPub';
-import P from './p3d.json';
+import P0 from './p3d.json';
 
 // Growthity ad « le boulanger » : 3D animated short (Kling 4 multi-shot) + storyteller VO + end card.
 type Word = {w: string; s: number; e: number};
-const VO = P.vo as unknown as Record<string, {at: number; words: Word[]}>;
+export type P3DCfg = {vo: Record<string, {at: number; words: Word[]}>; videoFrames: number; total: number; video: string; voPrefix: string; bed: string;
+  stickers: {text: string; from: number; to: number; y: number; rot?: number; big?: boolean}[]; blur: {from: number; top: number; height: number} | null};
+export const P3D_DEFAULT = P0 as unknown as P3DCfg;
 const GRAD = 'linear-gradient(120deg, #2563EB 0%, #5B3FE4 52%, #9333EA 100%)';
 const GRAD_TXT = 'linear-gradient(100deg, #8FA6FF 0%, #A78BFF 45%, #E39BFF 100%)';
 const FONT = 'Inter, system-ui, sans-serif';
 const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
-const VF = P.videoFrames;
-export const P3D_TOTAL = P.total;
 
 const useFonts = () => {
   const [h] = useState(() => delayRender('fonts'));
@@ -40,24 +40,22 @@ const Sticker: React.FC<{text: string; from: number; to: number; y: number; rot?
   );
 };
 
-const Film: React.FC = () => {
+const Film: React.FC<{cfg: P3DCfg}> = ({cfg}) => {
   const f = useCurrentFrame();
   const z = 1.04 + f * 0.00012;
   return (
     <AbsoluteFill style={{background: '#000', overflow: 'hidden'}}>
       <AbsoluteFill style={{transform: `scale(${z})`}}>
-        <OffthreadVideo src={staticFile('media/fal/pub3d/raw.mp4')} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+        <OffthreadVideo src={staticFile(cfg.video)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
       </AbsoluteFill>
       <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 20%, transparent 60%, rgba(0,0,0,0.55) 100%)'}} />
-      {f >= 380 && <div style={{position: 'absolute', left: 0, right: 0, top: 250, height: 210, backdropFilter: 'blur(22px)', WebkitBackdropFilter: 'blur(22px)', background: 'rgba(60,35,20,0.25)', maskImage: 'linear-gradient(180deg, transparent, #000 25%, #000 75%, transparent)', WebkitMaskImage: 'linear-gradient(180deg, transparent, #000 25%, #000 75%, transparent)', opacity: interpolate(f, [380, 392], [0, 1], clamp)}} />}
-      <Sticker text="1 phrase dans Growthity ✨" from={146} to={222} y={170} />
-      <Sticker text="Acteurs · voix · montage" from={300} to={356} y={170} rot={3} />
-      <Sticker text="En ligne sur Meta ✅" from={366} to={452} y={258} big />
+      {cfg.blur && f >= cfg.blur.from && <div style={{position: 'absolute', left: 0, right: 0, top: cfg.blur.top, height: cfg.blur.height, backdropFilter: 'blur(22px)', WebkitBackdropFilter: 'blur(22px)', background: 'rgba(60,35,20,0.25)', maskImage: 'linear-gradient(180deg, transparent, #000 25%, #000 75%, transparent)', WebkitMaskImage: 'linear-gradient(180deg, transparent, #000 25%, #000 75%, transparent)', opacity: interpolate(f, [cfg.blur.from, cfg.blur.from + 12], [0, 1], clamp)}} />}
+      {cfg.stickers.map((st, i) => <Sticker key={i} {...st} />)}
     </AbsoluteFill>
   );
 };
 
-const EndCard: React.FC = () => {
+const EndCard: React.FC<{d: number}> = ({d}) => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill>
@@ -76,27 +74,29 @@ const EndCard: React.FC = () => {
         </div>
       </AbsoluteFill>
       <Dust />
-      <AbsoluteFill style={{background: '#000', opacity: interpolate(f, [125, 135], [0, 1], clamp)}} />
+      <AbsoluteFill style={{background: '#000', opacity: interpolate(f, [d - 10, d], [0, 1], clamp)}} />
     </AbsoluteFill>
   );
 };
 
-export const Pub3D: React.FC = () => {
+export const Pub3D: React.FC<{cfg: P3DCfg}> = ({cfg}) => {
   useFonts();
   const f = useCurrentFrame();
+  const VF = cfg.videoFrames;
+  const VO = cfg.vo;
   const flash = Math.max(0, 1 - Math.abs(f - VF) / 4);
   return (
     <AbsoluteFill style={{background: '#0B0A0C'}}>
-      <Sequence durationInFrames={VF}><Film /></Sequence>
-      <Sequence from={VF}><EndCard /></Sequence>
+      <Sequence durationInFrames={VF}><Film cfg={cfg} /></Sequence>
+      <Sequence from={VF}><EndCard d={cfg.total - VF} /></Sequence>
       {['1', '2', '3', '4'].map((k) => (
         <Kinetic key={k} words={VO[k].words} at={VO[k].at} y={1540} size={70} />
       ))}
       <AbsoluteFill style={{background: '#fff', opacity: flash * 0.5, pointerEvents: 'none'}} />
       {Object.values(VO).map((v, i) => (
-        <Sequence key={i} from={v.at}><Audio src={staticFile(`voice/p3d-${i + 1}-n.mp3`)} /></Sequence>
+        <Sequence key={i} from={v.at}><Audio src={staticFile(`voice/${cfg.voPrefix}-${i + 1}-n.mp3`)} /></Sequence>
       ))}
-      <Audio src={staticFile('chatpub/p3d-bed.wav')} volume={0.9} />
+      <Audio src={staticFile(cfg.bed)} volume={0.9} />
     </AbsoluteFill>
   );
 };
