@@ -34,9 +34,15 @@ def typing(a, b):
     t = a + 0.05
     while t < b - 0.3:
         add(sfx, key(), t, 0.22); t += 0.07 + rng.random() * 0.06
-if 'ask1' in Q:  # split « stats » : deux questions, tuiles, leads
+if 'ask1' in Q:
     for a, b in [('ask1', 'send1'), ('ask2', 'send2')]:
         typing(Q[a], Q[b]); add(sfx, click(1.2), Q[b], 0.5); add(sfx, whoosh(0.4), Q[b] + 0.05, 0.22)
+if 'list' in Q:  # split « concurrents »
+    for i in range(3): add(sfx, pop_sfx(), Q['list'] + i * 4 / 30, 0.28)
+    for k in ['hook', 'angle']: add(sfx, pop_sfx(), Q[k], 0.22)
+    add(sfx, click(1.2), Q['pick'], 0.5)
+    add(sfx, whoosh(0.5), Q['ready'] - 0.25, 0.3); add(sfx, chime(88), Q['ready'], 0.18); add(sfx, boom(), Q['ready'], 0.14)
+elif 'ask1' in Q:  # split « stats » : tuiles, leads
     add(sfx, chime(84), Q['sum'], 0.14)
     for k in ['spent', 'cpc', 'cpl']: add(sfx, pop_sfx(), Q[k], 0.32)
     for i in range(5): add(sfx, pop_sfx(), Q['leads'] + i * 5 / 30, 0.2)

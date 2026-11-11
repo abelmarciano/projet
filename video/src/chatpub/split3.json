@@ -1,0 +1,340 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "actor": {
+  "name": "Guillaume B.",
+  "img": "chat/actors/a180.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "words": [
+  {
+   "w": "Le",
+   "s": 0.4,
+   "e": 0.52
+  },
+  {
+   "w": "secret",
+   "s": 0.58,
+   "e": 0.84
+  },
+  {
+   "w": "des",
+   "s": 0.88,
+   "e": 1.0
+  },
+  {
+   "w": "pubs",
+   "s": 1.02,
+   "e": 1.18
+  },
+  {
+   "w": "qui",
+   "s": 1.22,
+   "e": 1.28
+  },
+  {
+   "w": "marchent:",
+   "s": 1.36,
+   "e": 1.64
+  },
+  {
+   "w": "regarder",
+   "s": 2.22,
+   "e": 2.6
+  },
+  {
+   "w": "ce",
+   "s": 2.66,
+   "e": 2.7
+  },
+  {
+   "w": "que",
+   "s": 2.74,
+   "e": 2.84
+  },
+  {
+   "w": "font",
+   "s": 2.88,
+   "e": 2.96
+  },
+  {
+   "w": "tes",
+   "s": 3.02,
+   "e": 3.1
+  },
+  {
+   "w": "concurrents.",
+   "s": 3.14,
+   "e": 3.56
+  },
+  {
+   "w": "Je",
+   "s": 4.38,
+   "e": 4.42
+  },
+  {
+   "w": "demande",
+   "s": 4.5,
+   "e": 4.76
+  },
+  {
+   "w": "au",
+   "s": 4.78,
+   "e": 4.82
+  },
+  {
+   "w": "chat",
+   "s": 4.88,
+   "e": 5.04
+  },
+  {
+   "w": "Growthity:",
+   "s": 5.1,
+   "e": 5.58
+  },
+  {
+   "w": "montre-moi",
+   "s": 6.0,
+   "e": 6.44
+  },
+  {
+   "w": "les",
+   "s": 6.48,
+   "e": 6.6
+  },
+  {
+   "w": "pubs",
+   "s": 6.62,
+   "e": 6.78
+  },
+  {
+   "w": "de",
+   "s": 6.8,
+   "e": 6.86
+  },
+  {
+   "w": "mes",
+   "s": 6.9,
+   "e": 6.98
+  },
+  {
+   "w": "concurrents.",
+   "s": 7.02,
+   "e": 7.46
+  },
+  {
+   "w": "Il",
+   "s": 7.9,
+   "e": 8.0
+  },
+  {
+   "w": "me",
+   "s": 8.04,
+   "e": 8.16
+  },
+  {
+   "w": "sort",
+   "s": 8.22,
+   "e": 8.42
+  },
+  {
+   "w": "celles",
+   "s": 8.48,
+   "e": 8.64
+  },
+  {
+   "w": "qui",
+   "s": 8.68,
+   "e": 8.74
+  },
+  {
+   "w": "tournent",
+   "s": 8.84,
+   "e": 9.06
+  },
+  {
+   "w": "depuis",
+   "s": 9.1,
+   "e": 9.34
+  },
+  {
+   "w": "des",
+   "s": 9.36,
+   "e": 9.46
+  },
+  {
+   "w": "semaines",
+   "s": 9.52,
+   "e": 10.04
+  },
+  {
+   "w": "avec",
+   "s": 10.1,
+   "e": 10.28
+  },
+  {
+   "w": "leur",
+   "s": 10.32,
+   "e": 10.42
+  },
+  {
+   "w": "accroche",
+   "s": 10.48,
+   "e": 10.92
+  },
+  {
+   "w": "et",
+   "s": 10.96,
+   "e": 11.02
+  },
+  {
+   "w": "leur",
+   "s": 11.06,
+   "e": 11.18
+  },
+  {
+   "w": "angle.",
+   "s": 11.24,
+   "e": 11.44
+  },
+  {
+   "w": "Et",
+   "s": 12.02,
+   "e": 12.08
+  },
+  {
+   "w": "là,",
+   "s": 12.14,
+   "e": 12.26
+  },
+  {
+   "w": "refais-la",
+   "s": 13.0,
+   "e": 13.34
+  },
+  {
+   "w": "pour",
+   "s": 13.42,
+   "e": 13.52
+  },
+  {
+   "w": "ma",
+   "s": 13.56,
+   "e": 13.64
+  },
+  {
+   "w": "marque",
+   "s": 13.68,
+   "e": 13.92
+  },
+  {
+   "w": "et",
+   "s": 14.34,
+   "e": 14.4
+  },
+  {
+   "w": "c'est",
+   "s": 14.44,
+   "e": 14.54
+  },
+  {
+   "w": "prêt",
+   "s": 14.58,
+   "e": 14.7
+  }
+ ],
+ "video": "fal/split/adrien3-ext.mp4",
+ "total": 484,
+ "audio": "chatpub/split3-voice.wav",
+ "bed": "chatpub/split3-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "cues": {
+  "look": 2.16,
+  "ask1": 4.4,
+  "send1": 7.3,
+  "list": 7.9,
+  "hook": 10.48,
+  "angle": 11.24,
+  "pick": 12.0,
+  "ask2": 12.4,
+  "send2": 13.5,
+  "ready": 14.5,
+  "cropTop": 320
+ },
+ "steps": [
+  [
+   "Tu demandes",
+   "ask1"
+  ],
+  [
+   "Leurs pubs",
+   "list"
+  ],
+  [
+   "Accroche",
+   "hook"
+  ],
+  [
+   "Angle",
+   "angle"
+  ],
+  [
+   "Ta version",
+   "ask2"
+  ],
+  [
+   "Prête",
+   "ready"
+  ]
+ ],
+ "punches": [
+  "list",
+  "ready"
+ ],
+ "ask1": "Montre-moi les pubs de mes concurrents",
+ "ask2": "Refais-la pour ma marque",
+ "comps": [
+  {
+   "brand": "Nacre Paris",
+   "img": "chat/compet/c156.jpg",
+   "days": 63,
+   "hook": "Routine du soir",
+   "angle": "Avant / après",
+   "caption": "Ma peau avant / après 3 semaines…",
+   "color": "#DB2777"
+  },
+  {
+   "brand": "Pharma Lumière",
+   "img": "chat/compet/c195.jpg",
+   "days": 41,
+   "hook": "Avis d’experte",
+   "angle": "Autorité",
+   "caption": "Ce que je conseille au comptoir",
+   "color": "#0EA5A4"
+  },
+  {
+   "brand": "Belle Saison",
+   "img": "chat/compet/c158.jpg",
+   "days": 28,
+   "hook": "Question",
+   "angle": "Anti-âge",
+   "caption": "Vous aussi, la peau qui tiraille ?",
+   "color": "#D97706"
+  }
+ ],
+ "result": {
+  "video": "chat/skingen-k-edit.mp4",
+  "brand": "SK•IN GEN"
+ },
+ "hot": [
+  "concurrents",
+  "Growthity",
+  "semaines",
+  "accroche",
+  "angle",
+  "marque",
+  "prêt"
+ ]
+}
