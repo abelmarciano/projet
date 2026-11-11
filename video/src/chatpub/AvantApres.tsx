@@ -29,7 +29,9 @@ const Before: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill style={{background: '#000'}}>
-      <OffthreadVideo src={staticFile(C.before.src)} startFrom={Math.round(C.before.from * 30)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+      <AbsoluteFill style={{transform: `translate(${Math.sin(f * 0.9) * 9 + Math.sin(f * 2.3) * 5}px, ${Math.cos(f * 1.1) * 8 + Math.sin(f * 3.1) * 4}px) rotate(${Math.sin(f * 0.6) * 0.9}deg) scale(1.08)`, filter: 'saturate(.65) contrast(.88) brightness(1.1) blur(1.1px)'}}>
+        <OffthreadVideo src={staticFile(C.before.src)} startFrom={Math.round(C.before.from * 30)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+      </AbsoluteFill>
       <AbsoluteFill style={{boxShadow: 'inset 0 0 220px rgba(0,0,0,.55)'}} />
       <Label text="AVANT · la pub faite seul 😬" bg="#E5432F" />
       {C.before.stickers.map((s, i) => {
