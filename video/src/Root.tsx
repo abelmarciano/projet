@@ -45,6 +45,8 @@ import {SplitBrand, BrandCfg} from './chatpub/SplitBrand';
 import split4Cfg from './chatpub/split4.json';
 import {SplitBuyer, BuyerCfg} from './chatpub/SplitBuyer';
 import split5Cfg from './chatpub/split5.json';
+import {SplitBatch, BatchCfg} from './chatpub/SplitBatch';
+import split6Cfg from './chatpub/split6.json';
 import {ShowIntro, ShowEnd, SHOW_INTRO, SHOW_END} from './reels/Showcase';
 
 export const Root: React.FC = () => (
@@ -80,6 +82,7 @@ export const Root: React.FC = () => (
     <Composition id="SplitSpy-adrien" component={SplitSpy} durationInFrames={split3Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: split3Cfg as unknown as SpyCfg}} />
     <Composition id="SplitBrand-adrien" component={SplitBrand} durationInFrames={split4Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: split4Cfg as unknown as BrandCfg}} />
     <Composition id="SplitBuyer-adrien" component={SplitBuyer} durationInFrames={split5Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: split5Cfg as unknown as BuyerCfg}} />
+    <Composition id="SplitBatch-adrien" component={SplitBatch} durationInFrames={split6Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: split6Cfg as unknown as BatchCfg}} />
     <Composition id="AvantApres3-gel" component={AvantApres3} durationInFrames={AV3_TOTAL} fps={30} width={1080} height={1920} />
     <Composition id="AdEdit-avap-mei" component={AdEdit} durationInFrames={adAvapMei.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvapMei as unknown as AdCfg}} />
     <Composition id="AdEdit-avap2-after" component={AdEdit} durationInFrames={adAvap2After.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvap2After as unknown as AdCfg}} />

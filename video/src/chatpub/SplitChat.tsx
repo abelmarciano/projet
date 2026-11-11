@@ -250,8 +250,10 @@ export const SplitChat: React.FC<{cfg: SplitCfg; Window?: React.FC<{cfg: SplitCf
       <div style={{position: 'absolute', left: 0, top: seam - 4, width: 1080, height: 8, background: '#fff', boxShadow: '0 0 20px rgba(0,0,0,0.25)', zIndex: 5}} />
       {/* bottom: actor */}
       <div style={{position: 'absolute', left: 0, top: seam, width: 1080, height: 1920 - seam, overflow: 'hidden', background: '#000'}}>
+       <div style={{position: 'absolute', inset: 0, transform: `scale(${cfg.cues.jump != null && f >= Math.round(cfg.cues.jump * 30) ? 1.08 : 1})`, transformOrigin: '50% 20%'}}>
         {(cfg.cues.scale ?? 1) < 1 && <OffthreadVideo src={staticFile(`media/${cfg.video}`)} startFrom={Math.round((cfg.videoStart ?? 0) * 30)} muted style={{position: 'absolute', left: -60, top: -(cfg.cues.cropTop ?? 380) - 60, width: 1200, height: 2133, objectFit: 'cover', filter: 'blur(28px) brightness(0.7)'}} />}
         <OffthreadVideo src={staticFile(`media/${cfg.video}`)} startFrom={Math.round((cfg.videoStart ?? 0) * 30)} muted style={{position: 'absolute', left: (1080 - 1080 * (cfg.cues.scale ?? 1)) / 2, top: -(cfg.cues.cropTop ?? 380), width: 1080 * (cfg.cues.scale ?? 1), height: 1920 * (cfg.cues.scale ?? 1), objectFit: 'cover', boxShadow: (cfg.cues.scale ?? 1) < 1 ? '0 0 60px rgba(0,0,0,0.5)' : 'none'}} />
+       </div>
       </div>
       <SeamSubs cfg={cfg} />
       <Audio src={staticFile(cfg.audio)} />

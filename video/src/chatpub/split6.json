@@ -1,0 +1,350 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "actor": {
+  "name": "Guillaume B.",
+  "img": "chat/actors/a180.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "words": [
+  {
+   "w": "Pour",
+   "s": 0.36,
+   "e": 0.44
+  },
+  {
+   "w": "trouver",
+   "s": 0.5,
+   "e": 0.76
+  },
+  {
+   "w": "une",
+   "s": 0.78,
+   "e": 0.9
+  },
+  {
+   "w": "pub",
+   "s": 0.92,
+   "e": 1.1
+  },
+  {
+   "w": "qui",
+   "s": 1.12,
+   "e": 1.24
+  },
+  {
+   "w": "marche,",
+   "s": 1.28,
+   "e": 1.56
+  },
+  {
+   "w": "faut",
+   "s": 1.84,
+   "e": 1.92
+  },
+  {
+   "w": "en",
+   "s": 1.94,
+   "e": 1.98
+  },
+  {
+   "w": "tester",
+   "s": 2.04,
+   "e": 2.34
+  },
+  {
+   "w": "plein.",
+   "s": 2.36,
+   "e": 2.58
+  },
+  {
+   "w": "Regarde,",
+   "s": 3.08,
+   "e": 3.42
+  },
+  {
+   "w": "je",
+   "s": 3.94,
+   "e": 4.02
+  },
+  {
+   "w": "demande",
+   "s": 4.04,
+   "e": 4.32
+  },
+  {
+   "w": "au",
+   "s": 4.34,
+   "e": 4.4
+  },
+  {
+   "w": "chat",
+   "s": 4.46,
+   "e": 4.66
+  },
+  {
+   "w": "de",
+   "s": 4.68,
+   "e": 4.76
+  },
+  {
+   "w": "Growthity:",
+   "s": 4.8,
+   "e": 5.24
+  },
+  {
+   "w": "fais-moi",
+   "s": 5.64,
+   "e": 5.86
+  },
+  {
+   "w": "une",
+   "s": 5.9,
+   "e": 6.0
+  },
+  {
+   "w": "série",
+   "s": 6.06,
+   "e": 6.24
+  },
+  {
+   "w": "de",
+   "s": 6.28,
+   "e": 6.36
+  },
+  {
+   "w": "pubs",
+   "s": 6.4,
+   "e": 6.72
+  },
+  {
+   "w": "pour",
+   "s": 6.76,
+   "e": 6.86
+  },
+  {
+   "w": "mon",
+   "s": 6.9,
+   "e": 7.0
+  },
+  {
+   "w": "gel.",
+   "s": 7.04,
+   "e": 7.24
+  },
+  {
+   "w": "Il",
+   "s": 7.88,
+   "e": 7.92
+  },
+  {
+   "w": "me",
+   "s": 7.96,
+   "e": 8.04
+  },
+  {
+   "w": "sort",
+   "s": 8.08,
+   "e": 8.28
+  },
+  {
+   "w": "plein",
+   "s": 8.32,
+   "e": 8.44
+  },
+  {
+   "w": "de",
+   "s": 8.48,
+   "e": 8.52
+  },
+  {
+   "w": "visuels",
+   "s": 8.56,
+   "e": 9.06
+  },
+  {
+   "w": "avec",
+   "s": 9.12,
+   "e": 9.28
+  },
+  {
+   "w": "des",
+   "s": 9.32,
+   "e": 9.46
+  },
+  {
+   "w": "angles",
+   "s": 9.52,
+   "e": 9.76
+  },
+  {
+   "w": "différents:",
+   "s": 9.8,
+   "e": 10.22
+  },
+  {
+   "w": "problème,",
+   "s": 10.56,
+   "e": 10.86
+  },
+  {
+   "w": "solution,",
+   "s": 10.94,
+   "e": 11.4
+  },
+  {
+   "w": "avant-après,",
+   "s": 11.6,
+   "e": 12.16
+  },
+  {
+   "w": "bénéfice.",
+   "s": 12.54,
+   "e": 13.08
+  },
+  {
+   "w": "J'ai",
+   "s": 13.48,
+   "e": 13.62
+  },
+  {
+   "w": "plus",
+   "s": 13.64,
+   "e": 13.74
+  },
+  {
+   "w": "qu'à",
+   "s": 13.76,
+   "e": 13.86
+  },
+  {
+   "w": "lancer",
+   "s": 13.88,
+   "e": 14.1
+  },
+  {
+   "w": "le",
+   "s": 14.12,
+   "e": 14.18
+  },
+  {
+   "w": "test",
+   "s": 14.2,
+   "e": 14.44
+  }
+ ],
+ "video": "fal/split/adrien6-cut.mp4",
+ "total": 442,
+ "audio": "chatpub/split6-voice.wav",
+ "bed": "chatpub/split6-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "cues": {
+  "look": 3.08,
+  "ask1": 3.94,
+  "send1": 7.2,
+  "list": 7.9,
+  "a1": 10.56,
+  "a2": 11.6,
+  "a3": 12.54,
+  "test": 13.55,
+  "scale": 0.86,
+  "cropTop": 400,
+  "jump": 10.89
+ },
+ "steps": [
+  [
+   "Ton produit",
+   "ask1"
+  ],
+  [
+   "La série",
+   "list"
+  ],
+  [
+   "Problème → solution",
+   "a1"
+  ],
+  [
+   "Avant / après",
+   "a2"
+  ],
+  [
+   "Bénéfices",
+   "a3"
+  ],
+  [
+   "Le test",
+   "test"
+  ]
+ ],
+ "punches": [
+  "list",
+  "test"
+ ],
+ "ask1": "Fais-moi une série de pubs pour mon gel",
+ "product": {
+  "name": "Gel Corps Lili Margo",
+  "img": "chat/products/gel-lilimargo-gris.png",
+  "brand": "Lili Margo"
+ },
+ "cards": [
+  {
+   "img": "chat/batch/g2.png",
+   "angle": "Problème → solution",
+   "layout": "hook",
+   "title": "Peau qui tiraille après la douche ?",
+   "cue": "a1"
+  },
+  {
+   "img": "chat/batch/g1.png",
+   "angle": "Bénéfices",
+   "layout": "benefits",
+   "title": "Gel corps sculptant",
+   "lines": [
+    "Texture fraîche",
+    "Sculpte & raffermit",
+    "Parfum délicat"
+   ],
+   "cue": "a3"
+  },
+  {
+   "img": "chat/batch/g3.png",
+   "angle": "Moment de vie",
+   "layout": "moment",
+   "title": "Ton rituel du dimanche matin"
+  },
+  {
+   "img": "chat/batch/g5.png",
+   "angle": "Avant / après",
+   "layout": "beforeafter",
+   "title": "Ta routine",
+   "lines": [
+    "Peau sèche",
+    "Peau douce"
+   ],
+   "cue": "a2"
+  },
+  {
+   "img": "chat/batch/g4.png",
+   "angle": "Usage",
+   "layout": "demo",
+   "title": "Après la douche 🚿"
+  },
+  {
+   "img": "chat/batch/g6.png",
+   "angle": "Nouveauté",
+   "layout": "new",
+   "title": "Le gel corps Lili Margo"
+  }
+ ],
+ "hot": [
+  "tester",
+  "Growthity",
+  "série",
+  "visuels",
+  "angles",
+  "test"
+ ]
+}

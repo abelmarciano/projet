@@ -37,7 +37,13 @@ def typing(a, b):
 if 'ask1' in Q and 'ask2' in Q:
     for a, b in [('ask1', 'send1'), ('ask2', 'send2')]:
         typing(Q[a], Q[b]); add(sfx, click(1.2), Q[b], 0.5); add(sfx, whoosh(0.4), Q[b] + 0.05, 0.22)
-if 'perf' in Q:  # split « média buyer »
+if 'a1' in Q:  # split « série de pubs »
+    typing(Q['ask1'], Q['send1']); add(sfx, click(1.2), Q['send1'], 0.5); add(sfx, whoosh(0.4), Q['send1'] + 0.05, 0.22)
+    for i in range(6): add(sfx, pop_sfx(), Q['list'] + (10 + i * 9) / 30, 0.24)
+    add(sfx, chime(86), Q['list'] + 60 / 30, 0.12)
+    for k in ['a1', 'a2', 'a3']: add(sfx, pop_sfx(), Q[k], 0.3)
+    add(sfx, click(1.2), Q['test'], 0.55); add(sfx, chime(91), Q['test'] + 0.1, 0.18); add(sfx, boom(), Q['test'] + 0.1, 0.14)
+elif 'perf' in Q:  # split « média buyer »
     typing(Q['ask1'], Q['send1']); add(sfx, click(1.2), Q['send1'], 0.5); add(sfx, whoosh(0.4), Q['send1'] + 0.05, 0.22)
     add(sfx, chime(80), Q['perf'], 0.12)
     add(sfx, boom(), Q['cut'], 0.12); add(sfx, pop_sfx(), Q['cut'], 0.3)
