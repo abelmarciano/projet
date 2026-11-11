@@ -394,5 +394,45 @@
   "style": 0.75,
   "speed": 1.1,
   "text": "[confident] Grossiti. Vos pubs vidéo, sans tournage."
+ },
+ "c3d-1": {
+  "voice": "b6nVfb3l2zshrLZTvqbs",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[storytelling] Chez Nadia, les tapis étaient prêts… mais la salle restait vide."
+ },
+ "c3d-2": {
+  "voice": "b6nVfb3l2zshrLZTvqbs",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[curious] Alors elle a tapé une phrase dans Grossiti… et sa pub s'est tournée toute seule !"
+ },
+ "c3d-3": {
+  "voice": "b6nVfb3l2zshrLZTvqbs",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[excited] Un coup de sifflet… et tout le quartier l'a vue passer !"
+ },
+ "c3d-4": {
+  "voice": "b6nVfb3l2zshrLZTvqbs",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[joyful] Maintenant ? Ça bouge !"
+ },
+ "c3d-5": {
+  "voice": "b6nVfb3l2zshrLZTvqbs",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[confident] Grossiti. Vos pubs vidéo, sans tournage."
  }
 }

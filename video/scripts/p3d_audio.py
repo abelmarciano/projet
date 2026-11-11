@@ -45,6 +45,15 @@ if NAME == 'p3d':
     add(sfx, boom(), 4.6, 0.25)                       # phone glow
     for k in range(3): add(sfx, pop_sfx(), 8.6 + k * 0.9, 0.35); add(sfx, chime(84 + 3 * k), 8.65 + k * 0.9, 0.18)
     add(sfx, chime(79), 12.4, 0.2)
+elif NAME == 'c3d':
+    for c in (3.0, 7.0, 11.0): add(sfx, whoosh(0.5), c - 0.3, 0.22)
+    add(sfx, boom(), 3.5, 0.22)                       # phone glow
+    tt = np.arange(int(0.7 * SR)) / SR                # referee whistle (trill)
+    wh = np.sin(2 * np.pi * (2900 + 120 * np.sin(2 * np.pi * 28 * tt)) * tt) * np.minimum(1, tt / 0.02) * np.minimum(1, (0.7 - tt) / 0.08)
+    add(sfx, wh, 7.2, 0.18)
+    for k in range(3): add(sfx, boom(), 7.6 + k * 0.9, 0.22)   # pulse waves
+    for k in range(8): add(sfx, hp(rng.standard_normal(int(0.05 * SR)), 1500) * np.exp(-np.arange(int(0.05 * SR)) / SR * 60), 11.3 + k * 0.42, 0.18)  # claps / jumps
+    add(sfx, chime(79), 11.1, 0.22)
 elif NAME == 'g3d':
     for c in (3.0, 7.0, 11.0): add(sfx, whoosh(0.5), c - 0.3, 0.22)
     add(sfx, boom(), 3.6, 0.25)                       # toolbox opens
