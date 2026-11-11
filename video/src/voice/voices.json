@@ -578,5 +578,85 @@
   "style": 0.75,
   "speed": 1.12,
   "text": "[confident] Grossiti. Vos pubs vidéo, sans tournage."
+ },
+ "av3-a1": {
+  "voice": "McVZB9hVxVSk3Equu8EH",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.85,
+  "speed": 1.15,
+  "text": "[sighs] Faire sa pub toute seule ? D'abord, tourner… et recommencer."
+ },
+ "av3-a2": {
+  "voice": "McVZB9hVxVSk3Equu8EH",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.85,
+  "speed": 1.15,
+  "text": "[tired] Puis monter la vidéo… jusqu'à minuit."
+ },
+ "av3-a3": {
+  "voice": "McVZB9hVxVSk3Equu8EH",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.85,
+  "speed": 1.15,
+  "text": "[frustrated] Puis se battre avec le gestionnaire de pubs…"
+ },
+ "av3-a4": {
+  "voice": "McVZB9hVxVSk3Equu8EH",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.85,
+  "speed": 1.15,
+  "text": "[sighs] Et fixer des statistiques… qui ne bougent pas."
+ },
+ "av3-tr": {
+  "voice": "McVZB9hVxVSk3Equu8EH",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.85,
+  "speed": 1.15,
+  "text": "[excited] Et avec Grossiti ?"
+ },
+ "av3-b1": {
+  "voice": "McVZB9hVxVSk3Equu8EH",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.85,
+  "speed": 1.15,
+  "text": "[excited] On choisit son actrice…"
+ },
+ "av3-b2": {
+  "voice": "McVZB9hVxVSk3Equu8EH",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.85,
+  "speed": 1.15,
+  "text": "[excited] On tape une seule phrase…"
+ },
+ "av3-b3": {
+  "voice": "McVZB9hVxVSk3Equu8EH",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.85,
+  "speed": 1.15,
+  "text": "[amazed] et Grossiti fait tout !"
+ },
+ "av3-d1": {
+  "voice": "McVZB9hVxVSk3Equu8EH",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.85,
+  "speed": 1.15,
+  "text": "[excited] Un clic : publiée sur Meta !"
+ },
+ "av3-d2": {
+  "voice": "McVZB9hVxVSk3Equu8EH",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.85,
+  "speed": 1.15,
+  "text": "[confident] Grossiti. Vos pubs vidéo, sans tournage."
  }
 }

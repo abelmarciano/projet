@@ -10,6 +10,7 @@ SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k i
 cid = sys.argv[1]
 c = json.load(open(f'src/chatpub/{cid}.json'))
 T = json.load(open('src/chatpub/motion_timeline.json'))
+if c.get('noLeads'): T['leadsDur'] = 0
 T['videoEnd'] = T['videoStart'] + c['videoFrames']; T['pub'] = T['videoEnd']; T['leads'] = T['pub'] + T['pubEnd']; T['end'] = T['leads'] + T.get('leadsDur', 0); T['total'] = T['end'] + T['endDur']
 s = lambda k: T[k] / 30
 n = int(s('total') * SR) + SR

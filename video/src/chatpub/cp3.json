@@ -1,0 +1,220 @@
+{
+ "id": "cp3",
+ "title": "Gel corps – Lili Margo – Vidéo 9:16",
+ "video": "chat/gel-edit.mp4",
+ "videoFrames": 265,
+ "prompt": "Une pub UGC pour mon gel corps, actrice naturelle, ton enthousiaste.",
+ "promptShort": "Une pub UGC pour mon gel corps, actrice naturelle, ton enthousiaste.",
+ "actor": {
+  "name": "Charlotte B.",
+  "style": "Lifestyle",
+  "img": "chat/actors/a169.jpg",
+  "desc": "Femme · face caméra"
+ },
+ "product": {
+  "name": "Gel Corps Lili Margo",
+  "img": "chat/products/gel-lilimargo.jpg"
+ },
+ "gallery": [
+  {
+   "name": "Freja",
+   "style": "E-commerce / Maison",
+   "img": "chat/actors/a059.jpg"
+  },
+  {
+   "name": "Sabrina",
+   "style": "Casual",
+   "img": "chat/actors/a150.jpg"
+  },
+  {
+   "name": "Justine",
+   "style": "Lifestyle",
+   "img": "chat/actors/a176.jpg"
+  },
+  {
+   "name": "Charlotte B.",
+   "style": "Lifestyle",
+   "img": "chat/actors/a169.jpg"
+  },
+  {
+   "name": "Sandra",
+   "style": "Créatif",
+   "img": "chat/actors/a184.jpg"
+  },
+  {
+   "name": "Hana",
+   "style": "E-commerce / Café",
+   "img": "chat/actors/a058.jpg"
+  },
+  {
+   "name": "Camille B.",
+   "style": "Casual",
+   "img": "chat/actors/a189.jpg"
+  },
+  {
+   "name": "Beatriz",
+   "style": "E-commerce / Mode",
+   "img": "chat/actors/a061.jpg"
+  }
+ ],
+ "voice": {
+  "a": "",
+  "b1": "av3-b1-n",
+  "b2": "av3-b2-n",
+  "b3": "av3-b3-n",
+  "d1": "av3-d1-n",
+  "d2": "av3-d2-n"
+ },
+ "brand": {
+  "name": "Lili Margo"
+ },
+ "words": {
+  "av3-b1-n": [
+   {
+    "w": "On",
+    "s": 0.137,
+    "e": 0.16
+   },
+   {
+    "w": "choisit",
+    "s": 0.24,
+    "e": 0.56
+   },
+   {
+    "w": "son",
+    "s": 0.64,
+    "e": 0.72
+   },
+   {
+    "w": "actrice…",
+    "s": 0.84,
+    "e": 1.76
+   }
+  ],
+  "av3-b2-n": [
+   {
+    "w": "On",
+    "s": 0.08,
+    "e": 0.24
+   },
+   {
+    "w": "tape",
+    "s": 0.4,
+    "e": 0.56
+   },
+   {
+    "w": "une",
+    "s": 0.68,
+    "e": 0.8
+   },
+   {
+    "w": "seule",
+    "s": 0.84,
+    "e": 1.04
+   },
+   {
+    "w": "phrase…",
+    "s": 1.24,
+    "e": 1.84
+   }
+  ],
+  "av3-b3-n": [
+   {
+    "w": "et",
+    "s": 0.206,
+    "e": 0.24
+   },
+   {
+    "w": "Growthity",
+    "s": 0.28,
+    "e": 0.96
+   },
+   {
+    "w": "fait",
+    "s": 1.04,
+    "e": 1.36
+   },
+   {
+    "w": "tout",
+    "s": 1.56,
+    "e": 1.76
+   },
+   {
+    "w": "!",
+    "s": 1.84,
+    "e": 2.0
+   }
+  ],
+  "av3-d1-n": [
+   {
+    "w": "Un",
+    "s": 0.08,
+    "e": 0.16
+   },
+   {
+    "w": "clic",
+    "s": 0.2,
+    "e": 0.56
+   },
+   {
+    "w": ":",
+    "s": 0.8,
+    "e": 0.88
+   },
+   {
+    "w": "publiée",
+    "s": 0.96,
+    "e": 1.28
+   },
+   {
+    "w": "sur",
+    "s": 1.36,
+    "e": 1.44
+   },
+   {
+    "w": "Meta",
+    "s": 1.64,
+    "e": 1.84
+   },
+   {
+    "w": "!",
+    "s": 1.92,
+    "e": 2.0
+   }
+  ],
+  "av3-d2-n": [
+   {
+    "w": "Growthity.",
+    "s": 0.16,
+    "e": 1.0
+   },
+   {
+    "w": "Vos",
+    "s": 1.2,
+    "e": 1.36
+   },
+   {
+    "w": "pubs",
+    "s": 1.44,
+    "e": 1.68
+   },
+   {
+    "w": "vidéo,",
+    "s": 1.76,
+    "e": 2.2
+   },
+   {
+    "w": "sans",
+    "s": 2.4,
+    "e": 2.56
+   },
+   {
+    "w": "tournage.",
+    "s": 2.64,
+    "e": 3.28
+   }
+  ]
+ },
+ "caption": "La texture est hyper fraîche, et l’odeur, j’adore.",
+ "noLeads": true
+}

@@ -25,10 +25,11 @@ const DISPLAY = '"Space Grotesk", Inter, sans-serif';
 const FONT = 'Inter, system-ui, sans-serif';
 
 type Word = {w: string; s: number; e: number};
-type Cfg = ChatPubCfg & {promptShort?: string; caption?: string};
+type Cfg = ChatPubCfg & {promptShort?: string; caption?: string; noLeads?: boolean};
 
 export const motionTimeline = (c: Cfg) => {
   const T: Record<string, number> = {...(TL as unknown as Record<string, number>)};
+  if (c.noLeads) T.leadsDur = 0;
   T.videoEnd = T.videoStart + c.videoFrames;
   T.pub = T.videoEnd;
   T.leads = T.pub + T.pubEnd;
@@ -632,7 +633,7 @@ export const MotionChatPub: React.FC<{cfg: Cfg}> = ({cfg: c}) => {
       {/* cut flashes */}
       <AbsoluteFill style={{background: '#fff', opacity: 0.55 * Math.max(flash(T.hookEnd, 5), flash(T.actorEnd, 4), flash(T.pub, 6), flash(T.end, 5), T.leadsDur ? flash(T.leads, 5) : 0), pointerEvents: 'none'}} />
       {/* audio */}
-      <Sequence from={TL.vo.a}><Audio src={staticFile(`voice/${c.voice.a}.mp3`)} /></Sequence>
+      {c.voice.a ? <Sequence from={TL.vo.a}><Audio src={staticFile(`voice/${c.voice.a}.mp3`)} /></Sequence> : null}
       <Sequence from={TL.vo.b1}><Audio src={staticFile(`voice/${c.voice.b1}.mp3`)} /></Sequence>
       <Sequence from={TL.vo.b2}><Audio src={staticFile(`voice/${c.voice.b2}.mp3`)} /></Sequence>
       <Sequence from={TL.vo.b3}><Audio src={staticFile(`voice/${c.voice.b3}.mp3`)} /></Sequence>

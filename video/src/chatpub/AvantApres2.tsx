@@ -23,7 +23,7 @@ export const AV2 = (() => {
   T.before = 468; T.tr = T.before; T.prompt = T.tr + 34; T.ad = T.prompt + 196; T.pub = T.ad + AFTER.frames; T.end = T.pub + 104; T.total = T.end + 105;
   return T;
 })();
-const STAGES = [{t: 'Tournage', at: 0}, {t: 'Montage', at: 125}, {t: 'Publicité Meta', at: 250}, {t: 'Statistiques', at: 375}];
+const STAGE_T = ['Tournage', 'Montage', 'Publicité Meta', 'Statistiques'];
 
 const Clock: React.FC<{s: number}> = ({s}) => {
   const f = useCurrentFrame();
@@ -34,15 +34,16 @@ const Clock: React.FC<{s: number}> = ({s}) => {
   );
 };
 
-const Before: React.FC = () => {
+export const Before: React.FC<{len?: number}> = ({len = 468}) => {
   const f = useCurrentFrame();
+  const STAGES = STAGE_T.map((t, i) => ({t, at: Math.round((i * 4 * 30 * len) / 450)}));
   const st = [...STAGES].reverse().find((x) => f >= x.at)!;
   const idx = STAGES.indexOf(st);
-  const timeBar = interpolate(f, [0, AV2.before], [0.04, 1], clamp);
+  const timeBar = interpolate(f, [0, len], [0.04, 1], clamp);
   return (
     <AbsoluteFill style={{background: '#000'}}>
       <AbsoluteFill style={{filter: 'saturate(.8) contrast(.95)'}}>
-        <OffthreadVideo src={staticFile('media/fal/avap/galere-raw.mp4')} playbackRate={RATE} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+        <OffthreadVideo src={staticFile('media/fal/avap/galere-raw.mp4')} playbackRate={450 / len} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
       </AbsoluteFill>
       <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,.45), transparent 26%, transparent 70%, rgba(0,0,0,.55))'}} />
       <div style={{position: 'absolute', left: 0, right: 0, top: 210, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 18}}>
