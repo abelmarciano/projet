@@ -1,0 +1,286 @@
+{
+ "video": "fal/split/adrien-raw.mp4",
+ "total": 451,
+ "words": [
+  {
+   "w": "Arrête",
+   "s": 0.36,
+   "e": 0.58
+  },
+  {
+   "w": "de",
+   "s": 0.6,
+   "e": 0.66
+  },
+  {
+   "w": "galérer",
+   "s": 0.72,
+   "e": 1.06
+  },
+  {
+   "w": "des",
+   "s": 1.1,
+   "e": 1.24
+  },
+  {
+   "w": "heures",
+   "s": 1.26,
+   "e": 1.4
+  },
+  {
+   "w": "sur",
+   "s": 1.44,
+   "e": 1.56
+  },
+  {
+   "w": "tes",
+   "s": 1.58,
+   "e": 1.7
+  },
+  {
+   "w": "pubs.",
+   "s": 1.74,
+   "e": 1.96
+  },
+  {
+   "w": "Regarde,",
+   "s": 2.32,
+   "e": 2.66
+  },
+  {
+   "w": "tu",
+   "s": 2.82,
+   "e": 2.9
+  },
+  {
+   "w": "écris",
+   "s": 2.94,
+   "e": 3.2
+  },
+  {
+   "w": "juste",
+   "s": 3.28,
+   "e": 3.48
+  },
+  {
+   "w": "ce",
+   "s": 3.48,
+   "e": 3.52
+  },
+  {
+   "w": "que",
+   "s": 3.56,
+   "e": 3.66
+  },
+  {
+   "w": "tu",
+   "s": 3.7,
+   "e": 3.78
+  },
+  {
+   "w": "veux",
+   "s": 3.86,
+   "e": 4.02
+  },
+  {
+   "w": "dans",
+   "s": 4.12,
+   "e": 4.2
+  },
+  {
+   "w": "le",
+   "s": 4.22,
+   "e": 4.28
+  },
+  {
+   "w": "chat",
+   "s": 4.3,
+   "e": 4.48
+  },
+  {
+   "w": "de",
+   "s": 4.5,
+   "e": 4.58
+  },
+  {
+   "w": "Growthity.",
+   "s": 4.6,
+   "e": 5.1
+  },
+  {
+   "w": "Il",
+   "s": 5.62,
+   "e": 5.7
+  },
+  {
+   "w": "choisit",
+   "s": 5.74,
+   "e": 6.04
+  },
+  {
+   "w": "l'acteur,",
+   "s": 6.06,
+   "e": 6.54
+  },
+  {
+   "w": "écrit",
+   "s": 6.78,
+   "e": 7.0
+  },
+  {
+   "w": "le",
+   "s": 7.02,
+   "e": 7.1
+  },
+  {
+   "w": "script,",
+   "s": 7.16,
+   "e": 7.52
+  },
+  {
+   "w": "ajoute",
+   "s": 7.8,
+   "e": 8.06
+  },
+  {
+   "w": "la",
+   "s": 8.12,
+   "e": 8.18
+  },
+  {
+   "w": "voix",
+   "s": 8.26,
+   "e": 8.46
+  },
+  {
+   "w": "et",
+   "s": 8.76,
+   "e": 8.8
+  },
+  {
+   "w": "les",
+   "s": 8.84,
+   "e": 8.94
+  },
+  {
+   "w": "sous-titres",
+   "s": 8.98,
+   "e": 9.42
+  },
+  {
+   "w": "et",
+   "s": 9.86,
+   "e": 9.92
+  },
+  {
+   "w": "ta",
+   "s": 9.96,
+   "e": 10.04
+  },
+  {
+   "w": "pub",
+   "s": 10.12,
+   "e": 10.26
+  },
+  {
+   "w": "est",
+   "s": 10.28,
+   "e": 10.36
+  },
+  {
+   "w": "prête.",
+   "s": 10.4,
+   "e": 10.68
+  },
+  {
+   "w": "Un",
+   "s": 11.28,
+   "e": 11.38
+  },
+  {
+   "w": "clic,",
+   "s": 11.42,
+   "e": 11.68
+  },
+  {
+   "w": "elle",
+   "s": 11.96,
+   "e": 12.1
+  },
+  {
+   "w": "part",
+   "s": 12.14,
+   "e": 12.26
+  },
+  {
+   "w": "sur",
+   "s": 12.3,
+   "e": 12.42
+  },
+  {
+   "w": "Meta.",
+   "s": 12.46,
+   "e": 12.7
+  },
+  {
+   "w": "Franchement,",
+   "s": 13.4,
+   "e": 13.82
+  },
+  {
+   "w": "je",
+   "s": 14.14,
+   "e": 14.2
+  },
+  {
+   "w": "fais",
+   "s": 14.24,
+   "e": 14.34
+  },
+  {
+   "w": "plus",
+   "s": 14.38,
+   "e": 14.48
+  },
+  {
+   "w": "autrement",
+   "s": 14.5,
+   "e": 14.84
+  }
+ ],
+ "audio": "chatpub/split-voice.wav",
+ "bed": "chatpub/split-bed.wav",
+ "cues": {
+  "look": 2.32,
+  "write": 2.82,
+  "send": 4.8,
+  "actor": 6.06,
+  "script": 7.16,
+  "voice": 8.26,
+  "subs": 8.98,
+  "ready": 10.4,
+  "click": 11.42,
+  "meta": 12.46,
+  "cropTop": 100
+ },
+ "prompt": "Une pub pour mon magasin de vélos, acteur naturel, ton fun et sincère.",
+ "adVideo": "chat/velo-edit.mp4",
+ "actor": {
+  "name": "Guillaume B.",
+  "img": "chat/actors/a180.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "brand": "Growthity",
+ "script": [
+  "J'ai longtemps cru que le vélo pour aller bosser…",
+  "Le secret, c'est d'avoir le bon vélo.",
+  "Passez au magasin, on vous trouve le vôtre."
+ ],
+ "hot": [
+  "Growthity",
+  "prête",
+  "Meta",
+  "clic"
+ ],
+ "seam": 1000
+}
