@@ -9,6 +9,7 @@ export type SplitCfg = {
   cues: Record<string, number>; prompt: string; adVideo: string;
   actor: {name: string; img: string; style: string}; brand: string; script: string[]; hot?: string[];
   seam: number; steps?: [string, string][]; punches?: string[];
+  comment?: {user: string; text: string; color?: string; until?: number};
 };
 
 export const FONT = 'Inter, system-ui, sans-serif';
@@ -232,6 +233,31 @@ const SeamSubs: React.FC<{cfg: SplitCfg}> = ({cfg}) => {
   );
 };
 
+// Bulle « Répondre au commentaire » (format réponse) : grande au début, puis rangée en haut à gauche de la vidéo.
+const CommentSticker: React.FC<{cfg: SplitCfg}> = ({cfg}) => {
+  const f = useCurrentFrame();
+  const c = cfg.comment!;
+  const dock = Math.round((c.until ?? 3) * 30);
+  const pIn = spring({frame: f - 2, fps: 30, config: {damping: 13}});
+  const d = interpolate(f, [dock, dock + 14], [0, 1], {...clamp, easing: Easing.inOut(Easing.cubic)});
+  const sc = (0.6 + pIn * 0.4) * (1 - d * 0.42);
+  const x = interpolate(d, [0, 1], [90, 28]);
+  const y = interpolate(d, [0, 1], [cfg.seam - 330, cfg.seam + 66]);
+  return (
+    <div style={{position: 'absolute', left: x, top: y, width: 900, transform: `scale(${sc})`, transformOrigin: 'top left', zIndex: 45, opacity: Math.min(1, pIn * 1.4), fontFamily: FONT}}>
+      <div style={{display: 'inline-flex', gap: 22, alignItems: 'flex-start', padding: '26px 34px 28px 26px', borderRadius: 34, background: '#fff', boxShadow: '0 30px 70px -20px rgba(0,0,0,0.55), 0 0 0 2px rgba(15,23,42,0.06)'}}>
+        <div style={{width: 84, height: 84, borderRadius: 99, padding: 4, background: 'linear-gradient(45deg,#FEDA75,#FA7E1E,#D62976,#962FBF,#4F5BD5)', flexShrink: 0}}>
+          <div style={{width: '100%', height: '100%', borderRadius: 99, background: c.color ?? '#F59E0B', border: '4px solid #fff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, fontSize: 34}}>{c.user.replace('@', '')[0].toUpperCase()}</div>
+        </div>
+        <div>
+          <div style={{fontSize: 28, color: '#737373', fontWeight: 600}}>Réponse au commentaire de <b style={{color: '#262626'}}>{c.user}</b></div>
+          <div style={{fontSize: 46, fontWeight: 700, color: '#0F0F0F', marginTop: 8, lineHeight: 1.15, maxWidth: 720}}>{c.text}</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const SplitChat: React.FC<{cfg: SplitCfg; Window?: React.FC<{cfg: SplitCfg}>}> = ({cfg, Window = AppWindow}) => {
   useFonts();
   const f = useCurrentFrame();
@@ -256,6 +282,7 @@ export const SplitChat: React.FC<{cfg: SplitCfg; Window?: React.FC<{cfg: SplitCf
        </div>
       </div>
       <SeamSubs cfg={cfg} />
+      {cfg.comment && <CommentSticker cfg={cfg} />}
       <Audio src={staticFile(cfg.audio)} />
       {cfg.bed && <Audio src={staticFile(cfg.bed)} />}
     </AbsoluteFill>

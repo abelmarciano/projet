@@ -1,0 +1,297 @@
+{
+ "video": "fal/reply/aicha-raw.mp4",
+ "total": 451,
+ "words": [
+  {
+   "w": "Ça",
+   "s": 0.4,
+   "e": 0.48
+  },
+  {
+   "w": "marche",
+   "s": 0.52,
+   "e": 0.68
+  },
+  {
+   "w": "vraiment",
+   "s": 0.72,
+   "e": 1.02
+  },
+  {
+   "w": "ou",
+   "s": 1.16,
+   "e": 1.2
+  },
+  {
+   "w": "c'est",
+   "s": 1.26,
+   "e": 1.36
+  },
+  {
+   "w": "du",
+   "s": 1.4,
+   "e": 1.52
+  },
+  {
+   "w": "flan?",
+   "s": 1.56,
+   "e": 1.72
+  },
+  {
+   "w": "Bonne",
+   "s": 2.34,
+   "e": 2.52
+  },
+  {
+   "w": "question.",
+   "s": 2.56,
+   "e": 2.94
+  },
+  {
+   "w": "Regarde,",
+   "s": 3.3,
+   "e": 3.64
+  },
+  {
+   "w": "je",
+   "s": 3.76,
+   "e": 3.8
+  },
+  {
+   "w": "te",
+   "s": 3.82,
+   "e": 3.9
+  },
+  {
+   "w": "montre",
+   "s": 3.94,
+   "e": 4.1
+  },
+  {
+   "w": "en",
+   "s": 4.14,
+   "e": 4.2
+  },
+  {
+   "w": "vrai.",
+   "s": 4.24,
+   "e": 4.38
+  },
+  {
+   "w": "J'écris",
+   "s": 5.0,
+   "e": 5.4
+  },
+  {
+   "w": "juste",
+   "s": 5.48,
+   "e": 5.68
+  },
+  {
+   "w": "ce",
+   "s": 5.72,
+   "e": 5.82
+  },
+  {
+   "w": "que",
+   "s": 5.84,
+   "e": 5.94
+  },
+  {
+   "w": "je",
+   "s": 5.98,
+   "e": 6.04
+  },
+  {
+   "w": "veux",
+   "s": 6.06,
+   "e": 6.18
+  },
+  {
+   "w": "dans",
+   "s": 6.22,
+   "e": 6.32
+  },
+  {
+   "w": "le",
+   "s": 6.36,
+   "e": 6.48
+  },
+  {
+   "w": "chat",
+   "s": 6.54,
+   "e": 6.7
+  },
+  {
+   "w": "de",
+   "s": 6.74,
+   "e": 6.82
+  },
+  {
+   "w": "Growthity.",
+   "s": 6.86,
+   "e": 7.4
+  },
+  {
+   "w": "Il",
+   "s": 7.84,
+   "e": 7.94
+  },
+  {
+   "w": "choisit",
+   "s": 7.98,
+   "e": 8.26
+  },
+  {
+   "w": "l'actrice,",
+   "s": 8.28,
+   "e": 8.82
+  },
+  {
+   "w": "écrit",
+   "s": 9.14,
+   "e": 9.34
+  },
+  {
+   "w": "le",
+   "s": 9.38,
+   "e": 9.44
+  },
+  {
+   "w": "script,",
+   "s": 9.5,
+   "e": 9.82
+  },
+  {
+   "w": "ajoute",
+   "s": 10.18,
+   "e": 10.4
+  },
+  {
+   "w": "la",
+   "s": 10.44,
+   "e": 10.52
+  },
+  {
+   "w": "voix",
+   "s": 10.6,
+   "e": 10.78
+  },
+  {
+   "w": "et",
+   "s": 11.12,
+   "e": 11.18
+  },
+  {
+   "w": "la",
+   "s": 11.22,
+   "e": 11.28
+  },
+  {
+   "w": "pub",
+   "s": 11.36,
+   "e": 11.5
+  },
+  {
+   "w": "est",
+   "s": 11.52,
+   "e": 11.62
+  },
+  {
+   "w": "prête.",
+   "s": 11.64,
+   "e": 11.9
+  },
+  {
+   "w": "Un",
+   "s": 12.28,
+   "e": 12.4
+  },
+  {
+   "w": "clic,",
+   "s": 12.44,
+   "e": 12.66
+  },
+  {
+   "w": "elle",
+   "s": 12.86,
+   "e": 13.0
+  },
+  {
+   "w": "part",
+   "s": 13.04,
+   "e": 13.14
+  },
+  {
+   "w": "sur",
+   "s": 13.18,
+   "e": 13.3
+  },
+  {
+   "w": "Meta.",
+   "s": 13.34,
+   "e": 13.6
+  },
+  {
+   "w": "Teste,",
+   "s": 14.0,
+   "e": 14.3
+  },
+  {
+   "w": "tu",
+   "s": 14.5,
+   "e": 14.6
+  },
+  {
+   "w": "verras",
+   "s": 14.64,
+   "e": 14.86
+  }
+ ],
+ "audio": "chatpub/reply-voice.wav",
+ "bed": "chatpub/reply-bed.wav",
+ "cues": {
+  "look": 3.3,
+  "write": 5.0,
+  "send": 7.1,
+  "actor": 8.28,
+  "script": 9.5,
+  "voice": 10.6,
+  "subs": 11.0,
+  "ready": 11.64,
+  "click": 12.44,
+  "meta": 13.34,
+  "scale": 0.86,
+  "cropTop": 242
+ },
+ "prompt": "Une pub pour mon studio de jardin, actrice naturelle, ton chaleureux.",
+ "adVideo": "chat/reply/studio-edit.mp4",
+ "actor": {
+  "name": "Camille C.",
+  "img": "chat/reply/actrice.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "brand": "Growthity",
+ "script": [
+  "Il faut que je vous montre un truc…",
+  "C'est un studio, au fond de mon jardin.",
+  "Demandez votre devis, le lien est en dessous."
+ ],
+ "hot": [
+  "flan",
+  "vrai",
+  "Growthity",
+  "prête",
+  "Meta",
+  "clic",
+  "actrice",
+  "teste"
+ ],
+ "seam": 1000,
+ "comment": {
+  "user": "@julie.entreprend",
+  "text": "Ça marche vraiment ou c’est du flan ? 🤔",
+  "color": "#EC4899",
+  "until": 2.4
+ }
+}
