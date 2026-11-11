@@ -1,0 +1,381 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "actor": {
+  "name": "Guillaume B.",
+  "img": "chat/actors/a180.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "words": [
+  {
+   "w": "T'as",
+   "s": 0.32,
+   "e": 0.44
+  },
+  {
+   "w": "pas",
+   "s": 0.46,
+   "e": 0.56
+  },
+  {
+   "w": "besoin",
+   "s": 0.6,
+   "e": 0.8
+  },
+  {
+   "w": "d'un",
+   "s": 0.82,
+   "e": 0.9
+  },
+  {
+   "w": "média",
+   "s": 0.94,
+   "e": 1.14
+  },
+  {
+   "w": "buyer.",
+   "s": 1.18,
+   "e": 1.52
+  },
+  {
+   "w": "Regarde,",
+   "s": 2.56,
+   "e": 2.92
+  },
+  {
+   "w": "je",
+   "s": 3.46,
+   "e": 3.52
+  },
+  {
+   "w": "demande",
+   "s": 3.56,
+   "e": 3.78
+  },
+  {
+   "w": "au",
+   "s": 3.8,
+   "e": 3.86
+  },
+  {
+   "w": "chat",
+   "s": 3.92,
+   "e": 4.08
+  },
+  {
+   "w": "de",
+   "s": 4.1,
+   "e": 4.18
+  },
+  {
+   "w": "Growthity:",
+   "s": 4.2,
+   "e": 4.66
+  },
+  {
+   "w": "qu'est-ce",
+   "s": 5.22,
+   "e": 5.42
+  },
+  {
+   "w": "que",
+   "s": 5.44,
+   "e": 5.52
+  },
+  {
+   "w": "je",
+   "s": 5.54,
+   "e": 5.6
+  },
+  {
+   "w": "dois",
+   "s": 5.62,
+   "e": 5.76
+  },
+  {
+   "w": "faire",
+   "s": 5.8,
+   "e": 5.92
+  },
+  {
+   "w": "sur",
+   "s": 5.96,
+   "e": 6.04
+  },
+  {
+   "w": "mes",
+   "s": 6.06,
+   "e": 6.16
+  },
+  {
+   "w": "campagnes?",
+   "s": 6.18,
+   "e": 6.54
+  },
+  {
+   "w": "Il",
+   "s": 7.12,
+   "e": 7.18
+  },
+  {
+   "w": "analyse",
+   "s": 7.26,
+   "e": 7.56
+  },
+  {
+   "w": "mes",
+   "s": 7.6,
+   "e": 7.72
+  },
+  {
+   "w": "perfs",
+   "s": 7.76,
+   "e": 8.02
+  },
+  {
+   "w": "et",
+   "s": 8.42,
+   "e": 8.46
+  },
+  {
+   "w": "me",
+   "s": 8.5,
+   "e": 8.56
+  },
+  {
+   "w": "dit",
+   "s": 8.62,
+   "e": 8.74
+  },
+  {
+   "w": "lesquelles",
+   "s": 9.1,
+   "e": 9.38
+  },
+  {
+   "w": "couper,",
+   "s": 9.42,
+   "e": 9.7
+  },
+  {
+   "w": "où",
+   "s": 10.0,
+   "e": 10.08
+  },
+  {
+   "w": "monter",
+   "s": 10.12,
+   "e": 10.34
+  },
+  {
+   "w": "le",
+   "s": 10.36,
+   "e": 10.42
+  },
+  {
+   "w": "budget",
+   "s": 10.44,
+   "e": 10.74
+  },
+  {
+   "w": "et",
+   "s": 11.08,
+   "e": 11.14
+  },
+  {
+   "w": "même",
+   "s": 11.2,
+   "e": 11.44
+  },
+  {
+   "w": "à",
+   "s": 11.5,
+   "e": 11.6
+  },
+  {
+   "w": "quelle",
+   "s": 11.66,
+   "e": 11.82
+  },
+  {
+   "w": "heure",
+   "s": 11.82,
+   "e": 11.96
+  },
+  {
+   "w": "lancer.",
+   "s": 12.0,
+   "e": 12.28
+  },
+  {
+   "w": "Un",
+   "s": 13.04,
+   "e": 13.12
+  },
+  {
+   "w": "vrai",
+   "s": 13.16,
+   "e": 13.3
+  },
+  {
+   "w": "média",
+   "s": 13.34,
+   "e": 13.56
+  },
+  {
+   "w": "buyer",
+   "s": 13.58,
+   "e": 13.92
+  },
+  {
+   "w": "dispo",
+   "s": 14.2,
+   "e": 14.5
+  },
+  {
+   "w": "tout",
+   "s": 14.52,
+   "e": 14.6
+  },
+  {
+   "w": "le",
+   "s": 14.64,
+   "e": 14.68
+  },
+  {
+   "w": "temps",
+   "s": 14.72,
+   "e": 14.82
+  }
+ ],
+ "video": "fal/split/adrien5-raw.mp4",
+ "total": 451,
+ "audio": "chatpub/split5-voice.wav",
+ "bed": "chatpub/split5-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "cues": {
+  "look": 2.56,
+  "ask1": 3.5,
+  "send1": 6.6,
+  "perf": 7.2,
+  "cut": 9.42,
+  "up": 10.12,
+  "keep": 10.6,
+  "fix": 10.9,
+  "time": 11.66,
+  "end": 13.04,
+  "cropTop": 300
+ },
+ "steps": [
+  [
+   "Tu demandes",
+   "ask1"
+  ],
+  [
+   "Analyse",
+   "perf"
+  ],
+  [
+   "Couper",
+   "cut"
+  ],
+  [
+   "Budget",
+   "up"
+  ],
+  [
+   "Horaire",
+   "time"
+  ],
+  [
+   "24h/24",
+   "end"
+  ]
+ ],
+ "punches": [
+  "perf",
+  "time"
+ ],
+ "ask1": "Qu'est-ce que je dois faire sur mes campagnes ?",
+ "rows": [
+  {
+   "name": "UGC Vidéo – Julie",
+   "spend": "412 €",
+   "cpl": "9,80 €",
+   "trend": "down",
+   "verdict": "up",
+   "action": "Budget +30 %",
+   "cue": "up"
+  },
+  {
+   "name": "Retargeting 7 j",
+   "spend": "186 €",
+   "cpl": "12,40 €",
+   "trend": "flat",
+   "verdict": "keep",
+   "action": "Garder",
+   "cue": "keep"
+  },
+  {
+   "name": "Visuel promo Novembre",
+   "spend": "298 €",
+   "cpl": "31,20 €",
+   "trend": "up",
+   "verdict": "cut",
+   "action": "Couper",
+   "cue": "cut"
+  },
+  {
+   "name": "Carrousel catalogue",
+   "spend": "352 €",
+   "cpl": "24,90 €",
+   "trend": "flat",
+   "verdict": "fix",
+   "action": "Changer l'accroche",
+   "cue": "fix"
+  }
+ ],
+ "hours": [
+  2,
+  1,
+  1,
+  1,
+  1,
+  2,
+  4,
+  7,
+  9,
+  8,
+  8,
+  10,
+  12,
+  11,
+  9,
+  9,
+  10,
+  13,
+  19,
+  23,
+  24,
+  20,
+  12,
+  6
+ ],
+ "best": [
+  18,
+  21
+ ],
+ "slot": "Mardi · 18 h – 21 h",
+ "tip": "Lance ta prochaine pub mardi à 18 h : ton audience est la plus active.",
+ "hot": [
+  "média",
+  "buyer",
+  "Growthity",
+  "couper",
+  "budget",
+  "heure",
+  "perfs"
+ ]
+}

@@ -34,10 +34,18 @@ def typing(a, b):
     t = a + 0.05
     while t < b - 0.3:
         add(sfx, key(), t, 0.22); t += 0.07 + rng.random() * 0.06
-if 'ask1' in Q:
+if 'ask1' in Q and 'ask2' in Q:
     for a, b in [('ask1', 'send1'), ('ask2', 'send2')]:
         typing(Q[a], Q[b]); add(sfx, click(1.2), Q[b], 0.5); add(sfx, whoosh(0.4), Q[b] + 0.05, 0.22)
-if 'scan' in Q:  # split « marque »
+if 'perf' in Q:  # split « média buyer »
+    typing(Q['ask1'], Q['send1']); add(sfx, click(1.2), Q['send1'], 0.5); add(sfx, whoosh(0.4), Q['send1'] + 0.05, 0.22)
+    add(sfx, chime(80), Q['perf'], 0.12)
+    add(sfx, boom(), Q['cut'], 0.12); add(sfx, pop_sfx(), Q['cut'], 0.3)
+    add(sfx, chime(91), Q['up'], 0.14); add(sfx, pop_sfx(), Q['up'], 0.3)
+    for k in ['keep', 'fix']: add(sfx, pop_sfx(), Q[k], 0.18)
+    add(sfx, whoosh(0.4), Q['time'] - 0.2, 0.22); add(sfx, chime(86), Q['time'] + 0.5, 0.14)
+    add(sfx, chime(93), Q['end'], 0.16)
+elif 'scan' in Q:  # split « marque »
     add(sfx, chime(80), Q['scan'], 0.12)
     for k in ['colors', 'font', 'tone', 'products']: add(sfx, pop_sfx(), Q[k], 0.3)
     for i in range(3): add(sfx, pop_sfx(), Q['ads'] + i * 6 / 30, 0.24)
