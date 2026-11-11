@@ -45,6 +45,12 @@ if NAME == 'p3d':
     add(sfx, boom(), 4.6, 0.25)                       # phone glow
     for k in range(3): add(sfx, pop_sfx(), 8.6 + k * 0.9, 0.35); add(sfx, chime(84 + 3 * k), 8.65 + k * 0.9, 0.18)
     add(sfx, chime(79), 12.4, 0.2)
+elif NAME == 'r3d':
+    for c in (3.0, 7.0, 11.0): add(sfx, whoosh(0.5), c - 0.3, 0.22)
+    add(sfx, boom(), 3.5, 0.22); add(sfx, chime(84), 3.7, 0.18)            # steam set
+    for k in range(6): add(sfx, whoosh(0.6), 7.2 + k * 0.6, 0.12)           # aroma ribbons
+    add(sfx, boom(), 11.0, 0.3); add(sfx, chime(79), 11.1, 0.22)
+    for k in range(3): add(sfx, hp(rng.standard_normal(int(0.03 * SR)), 6000) * np.exp(-np.arange(int(0.03 * SR)) / SR * 120), 12.2 + k * 0.5, 0.12)  # clinks
 elif NAME == 'i3d':
     for c in (3.0, 7.0, 11.0): add(sfx, whoosh(0.5), c - 0.3, 0.22)
     add(sfx, boom(), 3.5, 0.22); add(sfx, pop_sfx(), 3.7, 0.3)   # pop-up house

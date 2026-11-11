@@ -474,5 +474,45 @@
   "style": 0.75,
   "speed": 1.1,
   "text": "[confident] Grossiti. Vos pubs vidéo, sans tournage."
+ },
+ "r3d-1": {
+  "voice": "sANWqF1bCMzR6eyZbCGw",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[storytelling] Chez Marco, les bougies étaient allumées… mais les tables restaient vides."
+ },
+ "r3d-2": {
+  "voice": "sANWqF1bCMzR6eyZbCGw",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[curious] Alors il a tapé une phrase dans Grossiti… et sa cuisine s'est mise en scène toute seule !"
+ },
+ "r3d-3": {
+  "voice": "sANWqF1bCMzR6eyZbCGw",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[amused] Le parfum de sa pub a filé dans tout le quartier…"
+ },
+ "r3d-4": {
+  "voice": "sANWqF1bCMzR6eyZbCGw",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[joyful] Ce soir ? Il faut réserver."
+ },
+ "r3d-5": {
+  "voice": "sANWqF1bCMzR6eyZbCGw",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[confident] Grossiti. Vos pubs vidéo, sans tournage."
  }
 }
