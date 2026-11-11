@@ -8,38 +8,38 @@ export type SplitCfg = {
   video: string; videoStart?: number; total: number; words: Word[]; audio: string; bed?: string;
   cues: Record<string, number>; prompt: string; adVideo: string;
   actor: {name: string; img: string; style: string}; brand: string; script: string[]; hot?: string[];
-  seam: number;
+  seam: number; steps?: [string, string][]; punches?: string[];
 };
 
-const FONT = 'Inter, system-ui, sans-serif';
-const DISPLAY = '"Space Grotesk", Inter, sans-serif';
-const GRAD = 'linear-gradient(120deg, #2563EB 0%, #5B3FE4 52%, #9333EA 100%)';
-const INK = '#0F172A';
-const MUTED = '#64748B';
-const LINE = '#E6E8EF';
-const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
-const prog = (f: number, a: number, d: number) => interpolate(f, [a, a + d], [0, 1], {...clamp, easing: Easing.bezier(0.22, 1, 0.36, 1)});
+export const FONT = 'Inter, system-ui, sans-serif';
+export const DISPLAY = '"Space Grotesk", Inter, sans-serif';
+export const GRAD = 'linear-gradient(120deg, #2563EB 0%, #5B3FE4 52%, #9333EA 100%)';
+export const INK = '#0F172A';
+export const MUTED = '#64748B';
+export const LINE = '#E6E8EF';
+export const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
+export const prog = (f: number, a: number, d: number) => interpolate(f, [a, a + d], [0, 1], {...clamp, easing: Easing.bezier(0.22, 1, 0.36, 1)});
 
-const useFonts = () => {
+export const useFonts = () => {
   const [h] = useState(() => delayRender('fonts'));
   useEffect(() => {
     Promise.all(['500 20px Inter', '600 20px Inter', '700 20px Inter', '800 20px Inter', '700 20px "Space Grotesk"'].map((s) => document.fonts.load(s))).then(() => continueRender(h));
   }, [h]);
 };
 
-const Check: React.FC<{s?: number; c?: string}> = ({s = 26, c = '#16A34A'}) => (
+export const Check: React.FC<{s?: number; c?: string}> = ({s = 26, c = '#16A34A'}) => (
   <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
 );
-const Spinner: React.FC<{f: number; s?: number}> = ({f, s = 24}) => (
+export const Spinner: React.FC<{f: number; s?: number}> = ({f, s = 24}) => (
   <div style={{width: s, height: s, borderRadius: 99, border: '3px solid #DDD6FE', borderTopColor: '#6552E8', transform: `rotate(${f * 14}deg)`}} />
 );
-const Logo: React.FC<{s: number}> = ({s}) => (
+export const Logo: React.FC<{s: number}> = ({s}) => (
   <div style={{width: s, height: s, borderRadius: s * 0.28, background: GRAD, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontFamily: DISPLAY, fontWeight: 700, fontSize: s * 0.56}}>G</div>
 );
-const MetaMark: React.FC<{s: number}> = ({s}) => (
+export const MetaMark: React.FC<{s: number}> = ({s}) => (
   <svg width={s * 1.6} height={s} viewBox="0 0 64 40"><path d="M8 30c0-12 6-22 13-22 6 0 10 7 13 12 3-5 7-12 13-12 7 0 11 10 11 18 0 6-2 10-7 10-6 0-10-8-17-19C27 26 23 38 15 38 10 38 8 35 8 30z" fill="none" stroke="#0866FF" strokeWidth="5.5" strokeLinejoin="round" /></svg>
 );
-const Cursor: React.FC<{x: number; y: number; down: number}> = ({x, y, down}) => (
+export const Cursor: React.FC<{x: number; y: number; down: number}> = ({x, y, down}) => (
   <div style={{position: 'absolute', left: x, top: y, transform: `scale(${1 - down * 0.18})`, transformOrigin: '6px 4px', filter: 'drop-shadow(0 6px 10px rgba(0,0,0,0.35))', zIndex: 50}}>
     <svg width="52" height="60" viewBox="0 0 26 30"><path d="M3 2l19 14-8.5 1.4L18 27l-4 1.8-4.6-9.8L3 25z" fill="#111" stroke="#fff" strokeWidth="2" strokeLinejoin="round" /></svg>
     {down > 0.01 && <div style={{position: 'absolute', left: -22, top: -24, width: 54, height: 54, borderRadius: 99, border: '4px solid rgba(101,82,232,0.8)', opacity: 1 - down, transform: `scale(${0.5 + down})`}} />}
@@ -191,7 +191,8 @@ const AppWindow: React.FC<{cfg: SplitCfg}> = ({cfg}) => {
 const StepChip: React.FC<{cfg: SplitCfg}> = ({cfg}) => {
   const f = useCurrentFrame();
   const C = (k: string) => Math.round((cfg.cues[k] ?? 99) * 30);
-  const steps: [string, number][] = [['Tu écris', C('write')], ['Acteur', C('actor')], ['Script', C('script')], ['Voix', C('voice')], ['Sous-titres', C('subs')], ['Publier', C('click')]];
+  const def: [string, string][] = [['Tu écris', 'write'], ['Acteur', 'actor'], ['Script', 'script'], ['Voix', 'voice'], ['Sous-titres', 'subs'], ['Publier', 'click']];
+  const steps: [string, number][] = (cfg.steps ?? def).map(([l, k]) => [l, C(k)]);
   let st = 0; let at = 0; steps.forEach((s, i) => { if (f >= s[1]) { st = i + 1; at = s[1]; } });
   if (st === 0) return null;
   const p = prog(f, at, 8);
@@ -231,18 +232,18 @@ const SeamSubs: React.FC<{cfg: SplitCfg}> = ({cfg}) => {
   );
 };
 
-export const SplitChat: React.FC<{cfg: SplitCfg}> = ({cfg}) => {
+export const SplitChat: React.FC<{cfg: SplitCfg; Window?: React.FC<{cfg: SplitCfg}>}> = ({cfg, Window = AppWindow}) => {
   useFonts();
   const f = useCurrentFrame();
   const seam = cfg.seam;
   const punch = (k: string) => { const a = Math.round((cfg.cues[k] ?? 99) * 30); return interpolate(f, [a, a + 4, a + 14], [0, 1, 0], clamp); };
-  const zoom = 1 + punch('look') * 0.035 + punch('ready') * 0.03;
+  const zoom = 1 + punch('look') * 0.035 + (cfg.punches ?? ['ready']).reduce((a, k) => a + punch(k) * 0.03, 0);
   return (
     <AbsoluteFill style={{background: '#F4F1EA'}}>
       {/* top: grid paper + window */}
       <div style={{position: 'absolute', left: 0, top: 0, width: 1080, height: seam, overflow: 'hidden', backgroundColor: '#F4F1EA', backgroundImage: 'linear-gradient(rgba(15,23,42,0.06) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(15,23,42,0.06) 1.5px, transparent 1.5px)', backgroundSize: '54px 54px'}}>
         <div style={{position: 'absolute', inset: 0, transform: `translateY(${(1 - spring({frame: f, fps: 30, config: {damping: 14}})) * 700}px) scale(${zoom})`, transformOrigin: '50% 60%'}}>
-          <AppWindow cfg={cfg} />
+          <Window cfg={cfg} />
         </div>
         <StepChip cfg={cfg} />
       </div>

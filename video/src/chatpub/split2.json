@@ -1,0 +1,412 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "video": "fal/split/adrien2-raw.mp4",
+ "total": 451,
+ "words": [
+  {
+   "w": "Tu",
+   "s": 0.38,
+   "e": 0.44
+  },
+  {
+   "w": "sais",
+   "s": 0.52,
+   "e": 0.64
+  },
+  {
+   "w": "vraiment",
+   "s": 0.66,
+   "e": 0.96
+  },
+  {
+   "w": "si",
+   "s": 1.0,
+   "e": 1.1
+  },
+  {
+   "w": "tes",
+   "s": 1.14,
+   "e": 1.3
+  },
+  {
+   "w": "pubs",
+   "s": 1.32,
+   "e": 1.54
+  },
+  {
+   "w": "Meta",
+   "s": 1.62,
+   "e": 1.9
+  },
+  {
+   "w": "rapportent?",
+   "s": 1.94,
+   "e": 2.34
+  },
+  {
+   "w": "Regarde,",
+   "s": 3.32,
+   "e": 3.64
+  },
+  {
+   "w": "je",
+   "s": 3.86,
+   "e": 3.92
+  },
+  {
+   "w": "demande",
+   "s": 3.96,
+   "e": 4.2
+  },
+  {
+   "w": "au",
+   "s": 4.24,
+   "e": 4.28
+  },
+  {
+   "w": "chat",
+   "s": 4.34,
+   "e": 4.48
+  },
+  {
+   "w": "de",
+   "s": 4.5,
+   "e": 4.56
+  },
+  {
+   "w": "Growthity:",
+   "s": 4.6,
+   "e": 5.04
+  },
+  {
+   "w": "Fais-moi",
+   "s": 5.56,
+   "e": 5.86
+  },
+  {
+   "w": "le",
+   "s": 5.9,
+   "e": 5.98
+  },
+  {
+   "w": "résumé",
+   "s": 6.04,
+   "e": 6.34
+  },
+  {
+   "w": "de",
+   "s": 6.38,
+   "e": 6.4
+  },
+  {
+   "w": "mes",
+   "s": 6.42,
+   "e": 6.52
+  },
+  {
+   "w": "campagnes.",
+   "s": 6.54,
+   "e": 6.94
+  },
+  {
+   "w": "Il",
+   "s": 7.36,
+   "e": 7.42
+  },
+  {
+   "w": "me",
+   "s": 7.46,
+   "e": 7.56
+  },
+  {
+   "w": "sort",
+   "s": 7.6,
+   "e": 7.76
+  },
+  {
+   "w": "tout:",
+   "s": 7.8,
+   "e": 7.9
+  },
+  {
+   "w": "le",
+   "s": 8.3,
+   "e": 8.36
+  },
+  {
+   "w": "total",
+   "s": 8.46,
+   "e": 8.78
+  },
+  {
+   "w": "dépensé,",
+   "s": 8.82,
+   "e": 9.28
+  },
+  {
+   "w": "le",
+   "s": 9.56,
+   "e": 9.62
+  },
+  {
+   "w": "coût",
+   "s": 9.7,
+   "e": 9.82
+  },
+  {
+   "w": "par",
+   "s": 9.86,
+   "e": 9.96
+  },
+  {
+   "w": "clic,",
+   "s": 10.02,
+   "e": 10.26
+  },
+  {
+   "w": "le",
+   "s": 10.46,
+   "e": 10.52
+  },
+  {
+   "w": "coût",
+   "s": 10.6,
+   "e": 10.72
+  },
+  {
+   "w": "par",
+   "s": 10.74,
+   "e": 10.86
+  },
+  {
+   "w": "lead.",
+   "s": 10.9,
+   "e": 11.12
+  },
+  {
+   "w": "Et",
+   "s": 11.56,
+   "e": 11.62
+  },
+  {
+   "w": "là,",
+   "s": 11.68,
+   "e": 11.8
+  },
+  {
+   "w": "montre-moi",
+   "s": 12.24,
+   "e": 12.62
+  },
+  {
+   "w": "mes",
+   "s": 12.66,
+   "e": 12.74
+  },
+  {
+   "w": "leads.",
+   "s": 12.78,
+   "e": 13.02
+  },
+  {
+   "w": "Ils",
+   "s": 13.56,
+   "e": 13.64
+  },
+  {
+   "w": "sont",
+   "s": 13.68,
+   "e": 13.82
+  },
+  {
+   "w": "tous",
+   "s": 13.84,
+   "e": 14.0
+  },
+  {
+   "w": "là,",
+   "s": 14.06,
+   "e": 14.14
+  },
+  {
+   "w": "dans",
+   "s": 14.44,
+   "e": 14.52
+  },
+  {
+   "w": "le",
+   "s": 14.56,
+   "e": 14.6
+  },
+  {
+   "w": "chat",
+   "s": 14.62,
+   "e": 14.86
+  }
+ ],
+ "audio": "chatpub/split2-voice.wav",
+ "bed": "chatpub/split2-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "actor": {
+  "name": "Guillaume B.",
+  "img": "chat/actors/a180.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "script": [],
+ "cues": {
+  "look": 3.32,
+  "ask1": 3.9,
+  "send1": 7.1,
+  "sum": 7.6,
+  "spent": 8.6,
+  "cpc": 9.8,
+  "cpl": 10.7,
+  "ask2": 11.6,
+  "send2": 12.6,
+  "leads": 13.2,
+  "cropTop": 240
+ },
+ "steps": [
+  [
+   "Tu demandes",
+   "ask1"
+  ],
+  [
+   "Dépensé",
+   "spent"
+  ],
+  [
+   "Coût par clic",
+   "cpc"
+  ],
+  [
+   "Coût par lead",
+   "cpl"
+  ],
+  [
+   "Tes leads",
+   "leads"
+  ]
+ ],
+ "punches": [
+  "sum",
+  "leads"
+ ],
+ "ask1": "Fais-moi le résumé de mes campagnes Meta",
+ "ask2": "Montre-moi mes leads",
+ "period": "30 derniers jours",
+ "kpis": [
+  {
+   "label": "Dépensé",
+   "value": 1248,
+   "dec": 0,
+   "unit": " €",
+   "cue": "spent",
+   "hint": "4 campagnes actives"
+  },
+  {
+   "label": "Coût / clic",
+   "value": 0.42,
+   "dec": 2,
+   "unit": " €",
+   "cue": "cpc",
+   "hint": "2 971 clics"
+  },
+  {
+   "label": "Leads",
+   "value": 87,
+   "dec": 0,
+   "unit": "",
+   "cue": "cpl",
+   "hint": "+23 cette semaine"
+  },
+  {
+   "label": "Coût / lead",
+   "value": 14.34,
+   "dec": 2,
+   "unit": " €",
+   "cue": "cpl",
+   "hint": "↓ 18 % vs mois dernier"
+  }
+ ],
+ "leadTotal": 87,
+ "leads": [
+  {
+   "name": "Julie Martin",
+   "phone": "06 12 •• •• 48",
+   "campaign": "UGC Vidéo – Julie",
+   "when": "il y a 4 min",
+   "color": "#F472B6"
+  },
+  {
+   "name": "Karim Benali",
+   "phone": "07 81 •• •• 03",
+   "campaign": "Retargeting",
+   "when": "il y a 22 min",
+   "color": "#60A5FA"
+  },
+  {
+   "name": "Sophie Laurent",
+   "phone": "06 54 •• •• 91",
+   "campaign": "UGC Vidéo – Julie",
+   "when": "il y a 1 h",
+   "color": "#A78BFA"
+  },
+  {
+   "name": "Thomas Girard",
+   "phone": "06 33 •• •• 70",
+   "campaign": "Offre Novembre",
+   "when": "il y a 2 h",
+   "color": "#34D399"
+  },
+  {
+   "name": "Inès Moreau",
+   "phone": "07 49 •• •• 15",
+   "campaign": "Offre Novembre",
+   "when": "hier",
+   "color": "#FBBF24"
+  }
+ ],
+ "series": [
+  22,
+  30,
+  28,
+  35,
+  31,
+  40,
+  38,
+  36,
+  44,
+  41,
+  47,
+  39,
+  45,
+  52,
+  48,
+  50,
+  46,
+  55,
+  58,
+  53,
+  60,
+  57,
+  62,
+  59,
+  66,
+  61,
+  68,
+  64,
+  70,
+  72
+ ],
+ "hot": [
+  "Meta",
+  "Growthity",
+  "leads",
+  "lead",
+  "clic",
+  "dépensé"
+ ]
+}

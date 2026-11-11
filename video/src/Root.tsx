@@ -37,6 +37,8 @@ import adStudioL2 from './chatpub/ad-studio-l2.json';
 import adStudioS3 from './chatpub/ad-studio-s3.json';
 import {SplitChat, SplitCfg} from './chatpub/SplitChat';
 import splitCfg from './chatpub/split.json';
+import {SplitStats, StatsCfg} from './chatpub/SplitStats';
+import split2Cfg from './chatpub/split2.json';
 import {ShowIntro, ShowEnd, SHOW_INTRO, SHOW_END} from './reels/Showcase';
 
 export const Root: React.FC = () => (
@@ -68,6 +70,7 @@ export const Root: React.FC = () => (
     <Composition id="AdEdit-ugc3" component={AdEdit} durationInFrames={adUgc3.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adUgc3 as unknown as AdCfg}} />
     <Composition id="Pub3D-boulanger" component={Pub3D} durationInFrames={P3D_DEFAULT.total} fps={30} width={1080} height={1920} defaultProps={{cfg: P3D_DEFAULT}} />
     <Composition id="SplitChat-adrien" component={SplitChat} durationInFrames={splitCfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: splitCfg as unknown as SplitCfg}} />
+    <Composition id="SplitStats-adrien" component={SplitStats} durationInFrames={split2Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: split2Cfg as unknown as StatsCfg}} />
     <Composition id="AvantApres3-gel" component={AvantApres3} durationInFrames={AV3_TOTAL} fps={30} width={1080} height={1920} />
     <Composition id="AdEdit-avap-mei" component={AdEdit} durationInFrames={adAvapMei.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvapMei as unknown as AdCfg}} />
     <Composition id="AdEdit-avap2-after" component={AdEdit} durationInFrames={adAvap2After.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvap2After as unknown as AdCfg}} />
