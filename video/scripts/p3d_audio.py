@@ -45,6 +45,12 @@ if NAME == 'p3d':
     add(sfx, boom(), 4.6, 0.25)                       # phone glow
     for k in range(3): add(sfx, pop_sfx(), 8.6 + k * 0.9, 0.35); add(sfx, chime(84 + 3 * k), 8.65 + k * 0.9, 0.18)
     add(sfx, chime(79), 12.4, 0.2)
+elif NAME == 'i3d':
+    for c in (3.0, 7.0, 11.0): add(sfx, whoosh(0.5), c - 0.3, 0.22)
+    add(sfx, boom(), 3.5, 0.22); add(sfx, pop_sfx(), 3.7, 0.3)   # pop-up house
+    for k in range(10): add(sfx, chime(80 + (k * 7) % 12), 7.3 + k * 0.33, 0.1)   # flying houses
+    add(sfx, boom(), 11.0, 0.3); add(sfx, chime(79), 11.1, 0.22)
+    for k in range(5): add(sfx, hp(rng.standard_normal(int(0.04 * SR)), 5000) * np.exp(-np.arange(int(0.04 * SR)) / SR * 80), 12.0 + k * 0.07, 0.12)  # keys
 elif NAME == 'c3d':
     for c in (3.0, 7.0, 11.0): add(sfx, whoosh(0.5), c - 0.3, 0.22)
     add(sfx, boom(), 3.5, 0.22)                       # phone glow

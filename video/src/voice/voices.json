@@ -434,5 +434,45 @@
   "style": 0.75,
   "speed": 1.1,
   "text": "[confident] Grossiti. Vos pubs vidéo, sans tournage."
+ },
+ "i3d-1": {
+  "voice": "6kimG24ccauj1GNOEFjF",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[storytelling] À l'agence de Karim, les clés attendaient… mais le téléphone ne sonnait plus."
+ },
+ "i3d-2": {
+  "voice": "6kimG24ccauj1GNOEFjF",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[curious] Alors il a tapé une phrase dans Grossiti… et la visite s'est tournée toute seule !"
+ },
+ "i3d-3": {
+  "voice": "6kimG24ccauj1GNOEFjF",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[excited] Sa pub a fait le tour de la ville… en un clin d'œil !"
+ },
+ "i3d-4": {
+  "voice": "6kimG24ccauj1GNOEFjF",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[warmly] Aujourd'hui ? Il remet les clés."
+ },
+ "i3d-5": {
+  "voice": "6kimG24ccauj1GNOEFjF",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[confident] Grossiti. Vos pubs vidéo, sans tournage."
  }
 }

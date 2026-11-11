@@ -17,6 +17,7 @@ import {Pub3D, P3D_DEFAULT, P3DCfg} from './chatpub/Pub3D';
 import f3dCfg from './chatpub/f3d.json';
 import g3dCfg from './chatpub/g3d.json';
 import c3dCfg from './chatpub/c3d.json';
+import i3dCfg from './chatpub/i3d.json';
 import adTest from './chatpub/ad-test.json';
 import adAlice from './chatpub/ad-alice.json';
 import adUgc2 from './chatpub/ad-ugc2.json';
@@ -58,6 +59,7 @@ export const Root: React.FC = () => (
     <Composition id="AdEdit-velo" component={AdEdit} durationInFrames={adVelo.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adVelo as unknown as AdCfg}} />
     <Composition id="AdEdit-ugc3" component={AdEdit} durationInFrames={adUgc3.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adUgc3 as unknown as AdCfg}} />
     <Composition id="Pub3D-boulanger" component={Pub3D} durationInFrames={P3D_DEFAULT.total} fps={30} width={1080} height={1920} defaultProps={{cfg: P3D_DEFAULT}} />
+    <Composition id="Pub3D-immo" component={Pub3D} durationInFrames={(i3dCfg as unknown as P3DCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: i3dCfg as unknown as P3DCfg}} />
     <Composition id="Pub3D-coach" component={Pub3D} durationInFrames={(c3dCfg as unknown as P3DCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: c3dCfg as unknown as P3DCfg}} />
     <Composition id="Pub3D-garagiste" component={Pub3D} durationInFrames={(g3dCfg as unknown as P3DCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: g3dCfg as unknown as P3DCfg}} />
     <Composition id="Pub3D-fleuriste" component={Pub3D} durationInFrames={(f3dCfg as unknown as P3DCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: f3dCfg as unknown as P3DCfg}} />
