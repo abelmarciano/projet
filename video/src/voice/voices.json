@@ -658,5 +658,13 @@
   "style": 0.85,
   "speed": 1.15,
   "text": "[confident] Grossiti. Vos pubs vidéo, sans tournage."
+ },
+ "av3-b1p": {
+  "voice": "McVZB9hVxVSk3Equu8EH",
+  "model": "eleven_v4",
+  "stability": 0.2,
+  "style": 0.85,
+  "speed": 1.15,
+  "text": "[excited] Tu choisis ton produit…"
  }
 }
