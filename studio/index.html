@@ -1120,29 +1120,61 @@ function renderZernio() {
       <div class="fld"><span class="lb">Comptes</span><div class="chips">${acc.length ? acc.map((a) => `<button type="button" class="chk" data-act="z-acc" data-id="${a.id}" aria-pressed="${!!sel[a.id]}">${esc(a.platform)} · ${esc(a.name)}</button>`).join('') : '<span style="font-size:13px;color:var(--muted)">Aucun compte relié dans Zernio.</span>'}</div></div>
       ${!m ? '<div class="zmsg ko">Choisissez d’abord un média.</div>' : ''}
       ${zs.busy ? `<div class="zmsg">${esc(zs.busy)}</div>` : ''}
+      ${zs.manual ? `<div class="zmsg warn" style="display:block;line-height:1.6"><b>Le navigateur bloque l’envoi direct du fichier.</b> Faites-le en 3 clics :<br>
+        1. ${S.dl ? `<button class="btn sm" data-act="dl" data-id="${m?.id}" data-i="0">Télécharger le média</button>` : 'Téléchargez le média depuis la médiathèque'}${zs.manual.n > 1 ? ` (${zs.manual.n} fichiers)` : ''}<br>
+        2. <a class="btn sm" href="${esc(zs.manual.link)}" target="_blank" rel="noopener">Ouvrir la page d’envoi Zernio</a> et déposez-y le fichier<br>
+        3. <button class="btn accent sm" data-act="z-check" ${zs.manual.checking ? 'disabled' : ''}>${zs.manual.checking ? 'Vérification…' : 'C’est envoyé, publier'}</button>
+        <button class="btn sm" data-act="z-abort">Annuler</button>
+        ${zs.manual.note ? `<div style="margin-top:6px">${esc(zs.manual.note)}</div>` : ''}</div>` : ''}
       <div class="chips" style="margin-top:6px">
-        <button class="btn accent" data-act="z-pub" data-mode="now" ${zs.busy || !m ? 'disabled' : ''}>Publier maintenant</button>
-        <button class="btn" data-act="z-pub" data-mode="sched" ${zs.busy || !m || !future ? 'disabled' : ''} title="${future ? '' : 'Choisissez une date de publication dans le futur'}">Programmer ${future ? 'le ' + when.toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'}) : '(date requise)'}</button>
+        <button class="btn accent" data-act="z-pub" data-mode="now" ${zs.busy || zs.manual || !m ? 'disabled' : ''}>Publier maintenant</button>
+        <button class="btn" data-act="z-pub" data-mode="sched" ${zs.busy || zs.manual || !m || !future ? 'disabled' : ''} title="${future ? '' : 'Choisissez une date de publication dans le futur'}">Programmer ${future ? 'le ' + when.toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'}) : '(date requise)'}</button>
       </div>
       ${zs.confirm ? `<div class="zmsg warn">${zs.confirm === 'now' ? 'Publier tout de suite' : 'Programmer'} sur ${Object.values(sel).filter(Boolean).length} compte(s) avec la légende et le média de ce post ? <button class="btn accent sm" data-act="z-go">Confirmer</button><button class="btn sm" data-act="z-cancel">Annuler</button></div>` : ''}`}`;
 }
 async function zUpload(m) {
+  // 1) public URL already known for every item → Zernio fetches it itself
+  if ((m.items || []).length && m.items.every((it) => it.url)) return m.items.map((it) => it.url);
+  // 2) direct upload to Zernio storage (may be blocked by the page sandbox)
   const urls = [];
-  for (const [i, it] of (m.items || []).entries()) {
-    S.zs.busy = `Envoi du média vers Zernio${m.items.length > 1 ? ` (${i + 1}/${m.items.length})` : ''}…`; renderZernio();
-    const res = await fetch(blob(it.asset)); if (!res.ok) throw new Error('lecture du média impossible (HTTP ' + res.status + ')');
-    const data = await res.blob();
-    const ct = it.ct || data.type || 'video/mp4';
-    const ext = ({'video/mp4': 'mp4', 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp'})[ct] || 'bin';
-    const r = await S.mcp.callTool(ZN, 'call_tool', {name: 'media_get_media_presigned_url', arguments: {filename: `growthity-${m.id}-${i + 1}.${ext}`, content_type: ct, size: data.size}}, {cache: false});
-    const t = zText(r);
-    const up = (t.match(/uploadUrl['"]?\s*:\s*['"]([^'"]+)['"]/) || [])[1]; const pub = (t.match(/publicUrl['"]?\s*:\s*['"]([^'"]+)['"]/) || [])[1];
-    if (!up || !pub) throw new Error('Zernio n’a pas fourni d’adresse d’envoi');
-    const put = await fetch(up, {method: 'PUT', headers: {'Content-Type': ct}, body: data});
-    if (!put.ok) throw new Error('envoi du fichier refusé (HTTP ' + put.status + ')');
-    urls.push(pub);
+  try {
+    for (const [i, it] of (m.items || []).entries()) {
+      S.zs.busy = `Envoi du média vers Zernio${m.items.length > 1 ? ` (${i + 1}/${m.items.length})` : ''}…`; renderZernio();
+      const res = await fetch(blob(it.asset)); if (!res.ok) throw new Error('lecture du média impossible (HTTP ' + res.status + ')');
+      const data = await res.blob();
+      const ct = it.ct || data.type || 'video/mp4';
+      const ext = ({'video/mp4': 'mp4', 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp'})[ct] || 'bin';
+      const r = await S.mcp.callTool(ZN, 'call_tool', {name: 'media_get_media_presigned_url', arguments: {filename: `growthity-${m.id}-${i + 1}.${ext}`, content_type: ct, size: data.size}}, {cache: false});
+      const t = zText(r);
+      const up = (t.match(/uploadUrl['"]?\s*:\s*['"]([^'"]+)['"]/) || [])[1]; const pub = (t.match(/publicUrl['"]?\s*:\s*['"]([^'"]+)['"]/) || [])[1];
+      if (!up || !pub) throw new Error('Zernio n’a pas fourni d’adresse d’envoi');
+      const put = await fetch(up, {method: 'PUT', headers: {'Content-Type': ct}, body: data});
+      if (!put.ok) throw new Error('envoi du fichier refusé (HTTP ' + put.status + ')');
+      urls.push(pub);
+    }
+    return urls;
+  } catch (e) {
+    if (!(e instanceof TypeError)) throw e;   // network/sandbox block → manual upload page
   }
-  return urls;
+  // 3) Zernio upload page: the viewer drops the file(s) there, we read back the URLs
+  const r = await S.mcp.callTool(ZN, 'media_generate_upload_link', {}, {cache: false});
+  const t = zText(r);
+  const link = (t.match(/https:\/\/\S*zernio\.com\/upload\/[A-Za-z0-9]+/) || [])[0]; const token = (t.match(/Token:\s*([A-Za-z0-9]+)/) || [])[1];
+  if (!link || !token) throw new Error('Zernio n’a pas fourni de page d’envoi');
+  return await new Promise((resolve, reject) => { S.zs.manual = {link, token, n: (m.items || []).length, resolve, reject}; S.zs.busy = null; renderZernio(); });
+}
+async function zCheckManual() {
+  const mu = S.zs.manual; if (!mu) return;
+  S.zs.manual.checking = true; renderZernio();
+  try {
+    const r = await S.mcp.callTool(ZN, 'media_check_upload_status', {token: mu.token}, {cache: false});
+    const t = zText(r);
+    if (/pending|⏳/i.test(t)) { mu.checking = false; mu.note = 'Zernio n’a pas encore reçu le fichier. Déposez-le sur la page d’envoi puis réessayez.'; renderZernio(); return; }
+    if (/expired/i.test(t)) { S.zs.manual = null; mu.reject(new Error('le lien d’envoi a expiré, relancez la publication')); return; }
+    const urls = [...new Set((t.match(/https:\/\/[^\s'",)\]]+/g) || []).filter((u) => !/zernio\.com\/upload\//.test(u)))];
+    if (!urls.length) { mu.checking = false; mu.note = 'Réponse de Zernio sans fichier : ' + t.slice(0, 160); renderZernio(); return; }
+    S.zs.manual = null; S.zs.busy = 'Fichier reçu par Zernio…'; renderZernio(); mu.resolve(urls);
+  } catch (e) { mu.checking = false; mu.note = zErr(e); renderZernio(); }
 }
 async function zPublish(mode) {
   const p = S.ed.draft; const m = mediaById(p.mediaId); const acc = (S.zAcc || []).filter((a) => S.zs.sel?.[a.id]);
@@ -1367,6 +1399,8 @@ document.addEventListener('click', async (ev) => {
     case 'z-reload': S.zs = {}; S.zAcc = null; zAccounts(true).then(() => renderZernio()).catch((er) => { S.zs = {err: zErr(er)}; renderZernio(); }); S.zs = {loading: true}; renderZernio(); return;
     case 'z-pub': S.zs.confirm = d.mode; S.zs.err = null; renderZernio(); return;
     case 'z-cancel': S.zs.confirm = null; renderZernio(); return;
+    case 'z-check': zCheckManual(); return;
+    case 'z-abort': { const mu = S.zs.manual; S.zs.manual = null; mu?.reject(new Error('envoi annulé')); return; }
     case 'z-go': { const mode = S.zs.confirm; S.zs.confirm = null; S.zs.busy = 'Préparation…'; renderZernio(); zPublish(mode); return; }
     case 'net': { const n = S.ed.draft.networks ||= []; const on = n.includes(d.v); S.ed.draft.networks = on ? n.filter((x) => x !== d.v) : [...n, d.v]; el.setAttribute('aria-pressed', !on); markDirty(); return; }
     case 'fmt': S.ed.draft.format = d.v; $$('[data-act="fmt"]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === d.v)); S.ed.pv = null; markDirty(); refreshPicker(); renderPreview(); return;

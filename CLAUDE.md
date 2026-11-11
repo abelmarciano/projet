@@ -54,4 +54,4 @@ Voix off : écrire « Grossiti » dans le texte envoyé à ElevenLabs pour une p
 Connecteur claude.ai « Zernio » (comptes : Instagram growthity.ai, Facebook Growthity AI). Dans Studio, éditeur d'un post enregistré →
 bloc « Publier avec Zernio » : média envoyé via `media_get_media_presigned_url` (PUT direct, CORS ouvert), puis `posts_create`
 par compte (publish_now ou schedule_minutes jusqu'à la date du post). Résultat stocké dans `posts/{id}.zernio = {at, by, mode, when, results[]}`
-et statut passé à « live » ou « sched ». Capability page : `mcp: {servers: [{server: 'Zernio', tools: [accounts_list, posts_create, call_tool]}]}`.
+et statut passé à « live » ou « sched ». Le PUT direct est bloqué par le bac à sable de la page : on utilise `items[].url` (lien public GitHub raw) quand il existe, sinon la page d’envoi Zernio (`media_generate_upload_link` puis `media_check_upload_status`). Capability : `mcp` Zernio [accounts_list, posts_create, call_tool, media_generate_upload_link, media_check_upload_status]. Pour chaque nouveau média rendu ici, mettre `items[].url` = lien raw GitHub du fichier commité.
