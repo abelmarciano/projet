@@ -1,0 +1,174 @@
+{
+ "id": "avap2-after",
+ "src": "public/media/fal/avap/apres-raw.mp4",
+ "fps": 30,
+ "text": "Bon, il faut que je vous parle de ce gel pour le corps. La texture est hyper fraîche et l'odeur, j'adore. Le tube de cent cinquante millilitres est à vingt-cinq euros quatre-vingt-dix. Le lien est juste en dessous",
+ "segments": [
+  {
+   "from": 0.51,
+   "to": 0.79
+  },
+  {
+   "from": 1.25,
+   "to": 3.45
+  },
+  {
+   "from": 3.77,
+   "to": 4.89
+  },
+  {
+   "from": 5.19,
+   "to": 8.99
+  },
+  {
+   "from": 13.45,
+   "to": 14.87
+  }
+ ],
+ "words": [
+  {
+   "w": "Bon,",
+   "s": 0.07,
+   "e": 0.21
+  },
+  {
+   "w": "il",
+   "s": 0.35,
+   "e": 0.49
+  },
+  {
+   "w": "faut",
+   "s": 0.55,
+   "e": 0.69
+  },
+  {
+   "w": "que",
+   "s": 0.73,
+   "e": 0.83
+  },
+  {
+   "w": "je",
+   "s": 0.85,
+   "e": 0.93
+  },
+  {
+   "w": "vous",
+   "s": 0.97,
+   "e": 1.11
+  },
+  {
+   "w": "parle",
+   "s": 1.15,
+   "e": 1.45
+  },
+  {
+   "w": "de",
+   "s": 1.67,
+   "e": 1.79
+  },
+  {
+   "w": "ce",
+   "s": 1.85,
+   "e": 1.99
+  },
+  {
+   "w": "gel",
+   "s": 2.15,
+   "e": 2.41
+  },
+  {
+   "w": "pour",
+   "s": 2.55,
+   "e": 2.93
+  },
+  {
+   "w": "le",
+   "s": 3.01,
+   "e": 3.09
+  },
+  {
+   "w": "corps.",
+   "s": 3.21,
+   "e": 3.53
+  },
+  {
+   "w": "La",
+   "s": 3.67,
+   "e": 3.79
+  },
+  {
+   "w": "texture",
+   "s": 3.83,
+   "e": 4.39
+  },
+  {
+   "w": "est",
+   "s": 4.43,
+   "e": 4.69
+  },
+  {
+   "w": "hyper",
+   "s": 4.71,
+   "e": 5.15
+  },
+  {
+   "w": "fraîche",
+   "s": 5.19,
+   "e": 5.57
+  },
+  {
+   "w": "et",
+   "s": 5.85,
+   "e": 5.93
+  },
+  {
+   "w": "l'odeur,",
+   "s": 5.97,
+   "e": 6.43
+  },
+  {
+   "w": "j'adore.",
+   "s": 6.71,
+   "e": 7.33
+  },
+  {
+   "w": "Le",
+   "s": 7.45,
+   "e": 7.55
+  },
+  {
+   "w": "lien",
+   "s": 7.61,
+   "e": 7.83
+  },
+  {
+   "w": "est",
+   "s": 8.03,
+   "e": 8.13
+  },
+  {
+   "w": "juste",
+   "s": 8.19,
+   "e": 8.39
+  },
+  {
+   "w": "en",
+   "s": 8.43,
+   "e": 8.49
+  },
+  {
+   "w": "dessous",
+   "s": 8.51,
+   "e": 8.75
+  }
+ ],
+ "frames": 265,
+ "stickers": [
+  {
+   "text": "Texture hyper fraîche",
+   "from": 3.7800000000000002,
+   "to": 5.63,
+   "y": 360
+  }
+ ]
+}

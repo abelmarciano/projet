@@ -20,6 +20,7 @@ import c3dCfg from './chatpub/c3d.json';
 import i3dCfg from './chatpub/i3d.json';
 import r3dCfg from './chatpub/r3d.json';
 import {AvantApres, AV_TOTAL} from './chatpub/AvantApres';
+import {AvantApres2, AV2} from './chatpub/AvantApres2';
 import adTest from './chatpub/ad-test.json';
 import adAlice from './chatpub/ad-alice.json';
 import adUgc2 from './chatpub/ad-ugc2.json';
@@ -61,6 +62,7 @@ export const Root: React.FC = () => (
     <Composition id="AdEdit-velo" component={AdEdit} durationInFrames={adVelo.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adVelo as unknown as AdCfg}} />
     <Composition id="AdEdit-ugc3" component={AdEdit} durationInFrames={adUgc3.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adUgc3 as unknown as AdCfg}} />
     <Composition id="Pub3D-boulanger" component={Pub3D} durationInFrames={P3D_DEFAULT.total} fps={30} width={1080} height={1920} defaultProps={{cfg: P3D_DEFAULT}} />
+    <Composition id="AvantApres2-gel" component={AvantApres2} durationInFrames={AV2.total} fps={30} width={1080} height={1920} />
     <Composition id="AvantApres-gel" component={AvantApres} durationInFrames={AV_TOTAL} fps={30} width={1080} height={1920} />
     <Composition id="Pub3D-resto" component={Pub3D} durationInFrames={(r3dCfg as unknown as P3DCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: r3dCfg as unknown as P3DCfg}} />
     <Composition id="Pub3D-immo" component={Pub3D} durationInFrames={(i3dCfg as unknown as P3DCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: i3dCfg as unknown as P3DCfg}} />

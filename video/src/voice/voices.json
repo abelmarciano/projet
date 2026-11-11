@@ -514,5 +514,69 @@
   "style": 0.75,
   "speed": 1.1,
   "text": "[confident] Grossiti. Vos pubs vidéo, sans tournage."
+ },
+ "av2-a1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.12,
+  "text": "[sighs] Faire sa pub toute seule… c'est d'abord tourner. Et recommencer."
+ },
+ "av2-a2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.12,
+  "text": "Puis monter la vidéo… jusqu'à minuit."
+ },
+ "av2-a3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.12,
+  "text": "Puis se battre avec le gestionnaire de pubs…"
+ },
+ "av2-a4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.12,
+  "text": "[sighs] Et fixer des statistiques… qui ne bougent pas."
+ },
+ "av2-b1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.12,
+  "text": "[excited] Avec Grossiti ? Vous tapez une phrase…"
+ },
+ "av2-b2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.12,
+  "text": "[confident] Actrice, voix, sous-titres, montage… c'est prêt."
+ },
+ "av2-b3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.12,
+  "text": "[excited] Un clic… et c'est publié sur Meta."
+ },
+ "av2-b4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.12,
+  "text": "[confident] Grossiti. Vos pubs vidéo, sans tournage."
  }
 }
