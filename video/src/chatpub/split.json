@@ -261,7 +261,8 @@
   "ready": 10.4,
   "click": 11.42,
   "meta": 12.46,
-  "cropTop": 200
+  "cropTop": 156,
+  "scale": 0.86
  },
  "prompt": "Une pub pour mon magasin de vélos, acteur naturel, ton fun et sincère.",
  "adVideo": "chat/velo-edit.mp4",

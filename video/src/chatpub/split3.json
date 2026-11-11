@@ -261,7 +261,8 @@
   "ask2": 12.4,
   "send2": 13.5,
   "ready": 14.5,
-  "cropTop": 320
+  "cropTop": 242,
+  "scale": 0.86
  },
  "steps": [
   [
