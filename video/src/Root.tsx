@@ -22,6 +22,7 @@ import r3dCfg from './chatpub/r3d.json';
 import {AvantApres, AV_TOTAL} from './chatpub/AvantApres';
 import {AvantApres2, AV2} from './chatpub/AvantApres2';
 import adAvap2After from './chatpub/ad-avap2-after.json';
+import adAvapMei from './chatpub/ad-avap-mei.json';
 import {AvantApres3, AV3_TOTAL} from './chatpub/AvantApres3';
 import adTest from './chatpub/ad-test.json';
 import adAlice from './chatpub/ad-alice.json';
@@ -65,6 +66,7 @@ export const Root: React.FC = () => (
     <Composition id="AdEdit-ugc3" component={AdEdit} durationInFrames={adUgc3.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adUgc3 as unknown as AdCfg}} />
     <Composition id="Pub3D-boulanger" component={Pub3D} durationInFrames={P3D_DEFAULT.total} fps={30} width={1080} height={1920} defaultProps={{cfg: P3D_DEFAULT}} />
     <Composition id="AvantApres3-gel" component={AvantApres3} durationInFrames={AV3_TOTAL} fps={30} width={1080} height={1920} />
+    <Composition id="AdEdit-avap-mei" component={AdEdit} durationInFrames={adAvapMei.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvapMei as unknown as AdCfg}} />
     <Composition id="AdEdit-avap2-after" component={AdEdit} durationInFrames={adAvap2After.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvap2After as unknown as AdCfg}} />
     <Composition id="AvantApres2-gel" component={AvantApres2} durationInFrames={AV2.total} fps={30} width={1080} height={1920} />
     <Composition id="AvantApres-gel" component={AvantApres} durationInFrames={AV_TOTAL} fps={30} width={1080} height={1920} />

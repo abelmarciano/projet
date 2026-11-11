@@ -126,7 +126,7 @@ const Prompt: React.FC = () => {
 const Pub: React.FC = () => {
   const f = useCurrentFrame();
   const press = 34; const done = f >= press + 4;
-  const c = {video: 'fal/avap/apres-raw.mp4', brand: {name: 'Lili Margo'}, caption: 'La texture est hyper fraîche, et l’odeur, j’adore.'};
+  const c = {video: 'fal/avap/mei-raw.mp4', brand: {name: 'Lili Margo'}, caption: 'La texture est hyper fraîche, et l’odeur, j’adore.'};
   return (
     <AbsoluteFill>
       <StudioBg />

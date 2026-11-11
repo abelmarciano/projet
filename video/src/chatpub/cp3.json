@@ -1,14 +1,14 @@
 {
  "id": "cp3",
  "title": "Gel corps – Lili Margo – Vidéo 9:16",
- "video": "chat/gel-edit.mp4",
- "videoFrames": 265,
+ "video": "chat/gel-mei-edit.mp4",
+ "videoFrames": 331,
  "prompt": "Une pub UGC pour mon gel corps, actrice naturelle, ton enthousiaste.",
  "promptShort": "Une pub UGC pour mon gel corps, actrice naturelle, ton enthousiaste.",
  "actor": {
-  "name": "Charlotte B.",
+  "name": "Mei B.",
   "style": "Lifestyle",
-  "img": "chat/actors/a169.jpg",
+  "img": "chat/actors/a089.jpg",
   "desc": "Femme · face caméra"
  },
  "product": {
@@ -32,9 +32,9 @@
    "img": "chat/actors/a176.jpg"
   },
   {
-   "name": "Charlotte B.",
+   "name": "Mei B.",
    "style": "Lifestyle",
-   "img": "chat/actors/a169.jpg"
+   "img": "chat/actors/a089.jpg"
   },
   {
    "name": "Sandra",
@@ -240,6 +240,6 @@
    }
   ]
  },
- "caption": "La texture est hyper fraîche, et l’odeur, j’adore.",
+ "caption": "Mon nouveau chouchou pour le corps : texture hyper fraîche, et l’odeur… j’adore.",
  "noLeads": true
 }
