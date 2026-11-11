@@ -585,7 +585,7 @@
   "stability": 0.2,
   "style": 0.85,
   "speed": 1.15,
-  "text": "[sighs] Faire sa pub toute seule ? D'abord, tourner… et recommencer."
+  "text": "[sighs] Faire ta pub toute seule ? D'abord, tourner… et recommencer."
  },
  "av3-a2": {
   "voice": "McVZB9hVxVSk3Equu8EH",
@@ -625,7 +625,7 @@
   "stability": 0.2,
   "style": 0.85,
   "speed": 1.15,
-  "text": "[excited] On choisit son actrice…"
+  "text": "[excited] Tu choisis ton actrice…"
  },
  "av3-b2": {
   "voice": "McVZB9hVxVSk3Equu8EH",
@@ -633,7 +633,7 @@
   "stability": 0.2,
   "style": 0.85,
   "speed": 1.15,
-  "text": "[excited] On tape une seule phrase…"
+  "text": "[excited] Tu tapes ta phrase dans l'IA…"
  },
  "av3-b3": {
   "voice": "McVZB9hVxVSk3Equu8EH",
@@ -649,7 +649,7 @@
   "stability": 0.2,
   "style": 0.85,
   "speed": 1.15,
-  "text": "[excited] Un clic : publiée sur Meta !"
+  "text": "[excited] Un clic : ta pub est en ligne sur Meta !"
  },
  "av3-d2": {
   "voice": "McVZB9hVxVSk3Equu8EH",

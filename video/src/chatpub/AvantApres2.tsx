@@ -43,7 +43,7 @@ export const Before: React.FC<{len?: number}> = ({len = 468}) => {
   return (
     <AbsoluteFill style={{background: '#000'}}>
       <AbsoluteFill style={{filter: 'saturate(.8) contrast(.95)'}}>
-        <OffthreadVideo src={staticFile('media/fal/avap/galere-raw.mp4')} playbackRate={450 / len} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+        <OffthreadVideo src={staticFile('media/fal/avap/galere-raw.mp4')} muted playbackRate={450 / len} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
       </AbsoluteFill>
       <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,.45), transparent 26%, transparent 70%, rgba(0,0,0,.55))'}} />
       <div style={{position: 'absolute', left: 0, right: 0, top: 210, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 18}}>
