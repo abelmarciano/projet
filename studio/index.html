@@ -326,6 +326,14 @@ tbody tr:hover td { background: var(--hover) }
 .filters { position: sticky; top: 84px; display: grid; gap: 20px; max-height: calc(100vh - 100px); overflow-y: auto; padding-right: 4px }
 .filters h4 { margin: 0 0 6px 8px; font-size: 11px; font-weight: 600; color: var(--faint); text-transform: uppercase; letter-spacing: .08em }
 .fl { display: grid; gap: 1px }
+.tag.vt { color: var(--c); background: color-mix(in srgb, var(--c) 10%, white); border-color: color-mix(in srgb, var(--c) 28%, white) }
+.vtbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 14px }
+.vtbar > span { font-size: 12.5px; font-weight: 650; color: var(--ink-3, #6B6A76); margin-right: 4px }
+.vtbar button { display: inline-flex; align-items: center; gap: 7px; height: 30px; padding: 0 12px; border-radius: 99px; border: 1px solid var(--line, #E6E5EC); background: #fff; font-size: 13px; font-weight: 600; color: var(--ink-2); cursor: pointer }
+.vtbar button i { width: 8px; height: 8px; border-radius: 3px; background: var(--c) }
+.vtbar button small { color: var(--ink-3, #8A8996); font-weight: 600 }
+.vtbar button[aria-pressed="true"] { background: var(--ink, #15141A); color: #fff; border-color: transparent }
+.vtbar button[aria-pressed="true"] small { color: rgba(255,255,255,.7) }
 .fl button { display: flex; align-items: center; gap: 9px; height: 32px; padding: 0 8px; border: 0; border-radius: 8px; background: transparent; text-align: left; font-size: 13px; font-weight: 550; color: var(--ink-2); width: 100% }
 .fl button:hover { background: var(--sunk) }
 .fl button i { width: 8px; height: 8px; border-radius: 3px; background: var(--c, var(--line-2)); flex: none }
@@ -631,6 +639,10 @@ const VIEWS = [
 ];
 const CAT_C = {'Hook': '#E8452C', 'Transitions': '#2F6BFF', 'Rupture d’attente': '#E8891A', 'Stitch': '#7A5CFF', 'Illusions visuelles': '#0EA5A4', 'Construction & révélation': '#B5651D', 'Mascotte Fennec': '#D97706', 'UGC & coulisses': '#DB2777', 'Storytelling': '#475569', 'Short Growthity': '#5B3DF5', 'Reel Growthity': '#4F46E5', 'Carrousel': '#0891B2', 'Post organique': '#16A34A', 'Visuel pub': '#9333EA', 'Pub Growthity': '#C026D3', 'Du chat à la pub': '#5B45E8', 'UGC réaliste': '#0F766E'};
 const catColor = (c) => CAT_C[c] || '#64748B';
+// Type de vidéo (2e étiquette, surtout pour classer les favoris)
+const VT_C = {'3D animée': '#C026D3', 'Split-screen': '#2563EB', 'Avant / après': '#EA580C', 'UGC acteur': '#0F766E', 'Du chat à la pub': '#5B45E8', 'Motion design': '#7C3AED', 'Reel lancement': '#4F46E5', 'Carrousel': '#0891B2', 'Visuel': '#16A34A'};
+const vtColor = (v) => VT_C[v] || '#64748B';
+const vtTag = (m) => m.vtype ? `<span class="tag vt" style="--c:${vtColor(m.vtype)}">${esc(m.vtype)}</span>` : '';
 const redoTag = (x) => (x?.redo ? '<span class="redo-tag">À refaire</span>' : '');
 const IC = {
   play: '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg>',
@@ -652,7 +664,7 @@ const S = {
   media: [], posts: [], loaded: {media: false, posts: false},
   view: 'accueil', param: null,
   month: som(new Date()), calMode: 'month', weekStart: sow(new Date()),
-  q: '', netFilter: 'all', adFilter: 'all', mf: {format: 'all', kind: 'all'},
+  q: '', netFilter: 'all', adFilter: 'all', mf: {format: 'all', kind: 'all', vt: 'all'},
   ed: null, md: null, usage: null, mcp: null, zAcc: null, zs: {}, upload: null, menuOpen: false, cmdk: null,
 };
 
@@ -953,7 +965,10 @@ function vMedias(main) {
   const f = S.mf; const q = S.q.trim().toLowerCase();
   const cats = {}; S.media.forEach((m) => { if (m.category) cats[m.category] = (cats[m.category] || 0) + 1; });
   const nRedo = S.media.filter((m) => m.redo).length; const nFav = S.media.filter((m) => m.fav).length;
-  const list = S.media.filter((m) => (f.format === 'all' || m.format === f.format) && (f.kind === 'all' || m.kind === f.kind) && (!f.cat || f.cat === 'all' || (f.cat === '__redo' ? m.redo : f.cat === '__fav' ? m.fav : m.category === f.cat)) && (!q || (m.title + ' ' + (m.niche || '') + ' ' + (m.note || '') + ' ' + (m.category || '')).toLowerCase().includes(q)));
+  const list = S.media.filter((m) => (f.format === 'all' || m.format === f.format) && (f.kind === 'all' || m.kind === f.kind) && (!f.cat || f.cat === 'all' || (f.cat === '__redo' ? m.redo : f.cat === '__fav' ? m.fav : m.category === f.cat)) && (!f.vt || f.vt === 'all' || (f.vt === '__none' ? !m.vtype : m.vtype === f.vt)) && (!q || (m.title + ' ' + (m.niche || '') + ' ' + (m.note || '') + ' ' + (m.category || '') + ' ' + (m.vtype || '')).toLowerCase().includes(q)));
+  const vtBase = S.media.filter((m) => !f.cat || f.cat === 'all' || (f.cat === '__redo' ? m.redo : f.cat === '__fav' ? m.fav : m.category === f.cat));
+  const vts = {}; vtBase.forEach((m) => { if (m.vtype) vts[m.vtype] = (vts[m.vtype] || 0) + 1; }); const nNoVt = vtBase.filter((m) => !m.vtype).length;
+  const vtSel = f.vt || 'all';
   const up = S.upload; const cat = f.cat || 'all';
   const fb = (act, v, on, label, n, c) => `<button data-act="${act}" data-v="${esc(v)}" aria-pressed="${on}" ${c ? `style="--c:${c}"` : ''}><i></i><span>${label}</span>${n != null ? `<small>${n}</small>` : ''}</button>`;
   main.innerHTML = `<div class="page">
@@ -964,19 +979,21 @@ function vMedias(main) {
       <aside class="filters">
         <label class="search" style="flex:none">${IC.search}<span class="sr">Rechercher</span><input id="q" type="search" placeholder="Rechercher…" value="${esc(S.q)}"></label>
         <div><h4>Bibliothèque</h4><div class="fl">${fb('mfc', 'all', cat === 'all', 'Tous les médias', S.media.length)}${fb('mfc', '__fav', cat === '__fav', '♥ Favoris', nFav, 'var(--fav)')}${nRedo ? fb('mfc', '__redo', cat === '__redo', 'À refaire', nRedo, 'var(--redo)') : ''}</div></div>
+        <div><h4>Type de vidéo</h4><div class="fl">${fb('mfv', 'all', vtSel === 'all', 'Tous', null)}${Object.entries(vts).sort((a, b) => b[1] - a[1]).map(([v, n]) => fb('mfv', v, vtSel === v, esc(v), n, vtColor(v))).join('')}${nNoVt ? fb('mfv', '__none', vtSel === '__none', 'Sans type', nNoVt, 'var(--line-2)') : ''}</div></div>
         <div><h4>Type</h4><div class="fl">${['all', ...Object.keys(KINDS)].map((x) => fb('mfk', x, f.kind === x, x === 'all' ? 'Tous les types' : KINDS[x], x === 'all' ? null : S.media.filter((m) => m.kind === x).length)).join('')}</div></div>
         <div><h4>Format</h4><div class="fl">${['all', ...FORMATS].map((x) => fb('mff', x, f.format === x, x === 'all' ? 'Tous les formats' : `${x} · ${FORMAT_L[x]}`, x === 'all' ? null : S.media.filter((m) => m.format === x).length)).join('')}</div></div>
         <div><h4>Catégories</h4><div class="fl">${Object.entries(cats).sort((a, b) => b[1] - a[1]).map(([c, n]) => fb('mfc', c, cat === c, esc(c), n, catColor(c))).join('')}</div></div>
       </aside>
       <div class="dropzone" id="drop">
+    ${cat === '__fav' ? `<div class="vtbar"><span>Favoris par type :</span><button data-act="mfv" data-v="all" aria-pressed="${vtSel === 'all'}">Tous <small>${vtBase.length}</small></button>${Object.entries(vts).sort((a, b) => b[1] - a[1]).map(([v, n]) => `<button data-act="mfv" data-v="${esc(v)}" aria-pressed="${vtSel === v}" style="--c:${vtColor(v)}"><i></i>${esc(v)} <small>${n}</small></button>`).join('')}${nNoVt ? `<button data-act="mfv" data-v="__none" aria-pressed="${vtSel === '__none'}">Sans type <small>${nNoVt}</small></button>` : ''}</div>` : ''}
     ${loading() ? skel() : list.length ? `<div class="masonry">${list.map((m) => { const used = S.posts.filter((p) => p.mediaId === m.id).length;
       if (m.drive && !m.items?.length) return `<button class="mc" data-act="media" data-id="${m.id}"><div class="frame"><div class="drv" style="--c:${catColor(m.category)}"><span>${esc(m.category || 'Drive')}</span>${IC.play.replace('<svg', '<svg width="34" height="34"')}<div class="gd">Sur Google Drive</div></div>${favBtn(m)}</div>
-        <div class="meta"><div class="tt">${esc(m.title)}</div><div class="row"><span class="tag mono">${esc(m.format)}</span><span class="tag">Vidéo</span>${redoTag(m)}</div></div></button>`;
+        <div class="meta"><div class="tt">${esc(m.title)}</div><div class="row"><span class="tag mono">${esc(m.format)}</span><span class="tag">Vidéo</span>${vtTag(m)}${redoTag(m)}</div></div></button>`;
       return `<button class="mc" data-act="media" data-id="${m.id}"><div class="frame">${cover(m).replace(/<span class="ico">[\s\S]*?<\/span>(?=<\/div>$)/, '')}
           ${m.kind === 'video' ? `<span class="play">${IC.play.replace('<svg', '<svg width="18" height="18"')}</span>` : ''}
           <span class="badge">${m.kind === 'carousel' ? `<span>${m.items.length} slides</span>` : ''}</span>
           <span class="ov">${used ? `Utilisé ${used} fois` : 'Pas encore utilisé'}</span>${favBtn(m)}</div>
-        <div class="meta"><div class="tt">${esc(m.title)}</div><div class="row"><span class="tag mono">${esc(m.format)}</span>${m.category ? `<span class="tag" style="color:${catColor(m.category)}">${esc(m.category)}</span>` : `<span class="tag">${KINDS[m.kind]}</span>`}${redoTag(m)}</div></div></button>`; }).join('')}</div>`
+        <div class="meta"><div class="tt">${esc(m.title)}</div><div class="row"><span class="tag mono">${esc(m.format)}</span>${m.category ? `<span class="tag" style="color:${catColor(m.category)}">${esc(m.category)}</span>` : `<span class="tag">${KINDS[m.kind]}</span>`}${vtTag(m)}${redoTag(m)}</div></div></button>`; }).join('')}</div>`
       : `<div class="empty"><b>${S.media.length ? 'Aucun média pour ces filtres' : 'La médiathèque est vide'}</b>${S.media.length ? 'Changez de filtre ou de recherche.' : 'Importez des fichiers, ou demandez à Claude de générer une vidéo : elle arrivera ici.'}</div>`}
       </div></div></div>`;
   bindSearch();
@@ -1069,6 +1086,7 @@ function renderMediaDetail(main = $('#main')) {
           <div class="r2"><div class="fld"><label for="m-format">Format</label><select id="m-format">${FORMATS.map((f) => `<option value="${f}" ${f === m.format ? 'selected' : ''}>${f} · ${FORMAT_L[f]}</option>`).join('')}</select></div>
             <div class="fld"><label for="m-niche">Thème</label><input id="m-niche" value="${esc(m.niche || '')}" placeholder="bijoux, B2B, restauration…"></div></div>
           <div class="fld"><label for="m-cat">Catégorie</label><input id="m-cat" list="cat-list" value="${esc(m.category || '')}" placeholder="Hook, Transitions, Carrousel…"><datalist id="cat-list">${cats.map((c) => `<option value="${esc(c)}">`).join('')}</datalist></div>
+          <div class="fld"><label for="m-vt">Type de vidéo</label><input id="m-vt" list="vt-list" value="${esc(m.vtype || '')}" placeholder="3D animée, Split-screen, Avant / après…"><datalist id="vt-list">${[...new Set([...Object.keys(VT_C), ...S.media.map((x) => x.vtype).filter(Boolean)])].map((c) => `<option value="${esc(c)}">`).join('')}</datalist></div>
           <div class="fld"><label for="m-note">Description</label><textarea id="m-note" style="min-height:110px" placeholder="Ce que montre la créa, le prompt utilisé, l’acteur, l’usage prévu…">${esc(m.note || '')}</textarea></div>
           <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="tag">${KINDS[m.kind]}${m.kind === 'carousel' ? ' · ' + items.length + ' slides' : ''}</span>${m.drive ? `<a class="tag" href="${esc(m.drive.url)}" target="_blank" rel="noopener">Google Drive ↗</a>` : ''}<span class="tag">${m.source === 'claude' ? 'Généré par Claude' : m.source === 'drive' ? 'Depuis Google Drive' : 'Importé par l’équipe'}</span>${m.createdAt ? `<span class="tag">Ajouté le ${new Date(m.createdAt).toLocaleDateString('fr-FR')}</span>` : ''}</div>
           <div class="danger-zone"><button class="btn primary" type="submit">Enregistrer</button><span class="grow"></span>
@@ -1079,7 +1097,7 @@ function renderMediaDetail(main = $('#main')) {
       </div></div></div>`;
   $('#mform').onsubmit = async (e) => {
     e.preventDefault();
-    try { await S.db.collection('media').doc(m.id).update({title: $('#m-title').value.trim() || m.title, format: $('#m-format').value, niche: $('#m-niche').value.trim(), category: $('#m-cat').value.trim(), note: $('#m-note').value.trim()}); toast('Média enregistré.'); }
+    try { await S.db.collection('media').doc(m.id).update({title: $('#m-title').value.trim() || m.title, format: $('#m-format').value, niche: $('#m-niche').value.trim(), category: $('#m-cat').value.trim(), vtype: $('#m-vt').value.trim(), note: $('#m-note').value.trim()}); toast('Média enregistré.'); }
     catch (er) { toast('Enregistrement : ' + errMsg(er), true); }
   };
 }
@@ -1428,7 +1446,8 @@ document.addEventListener('click', async (ev) => {
     case 'mff': S.mf.format = d.v; render(); return;
     case 'mfk': S.mf.kind = d.v; render(); return;
     case 'md-slide': { const m = mediaById(S.md.id); S.md.slide = (S.md.slide + Number(d.d) + m.items.length) % m.items.length; renderMediaDetail(); return; }
-    case 'mfc': S.mf.cat = d.v; render(); return;
+    case 'mfc': S.mf.cat = d.v; S.mf.vt = 'all'; render(); return;
+    case 'mfv': S.mf.vt = d.v; render(); return;
     case 'dl': {
       const m = mediaById(d.id); const it = m?.items?.[Number(d.i) || 0]; if (!it || !S.dl) return;
       const ext = ({'video/mp4': 'mp4', 'video/webm': 'webm', 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp'})[it.ct] || (isVid(it) ? 'mp4' : 'jpg');
