@@ -37,7 +37,12 @@ def typing(a, b):
 if 'ask1' in Q:
     for a, b in [('ask1', 'send1'), ('ask2', 'send2')]:
         typing(Q[a], Q[b]); add(sfx, click(1.2), Q[b], 0.5); add(sfx, whoosh(0.4), Q[b] + 0.05, 0.22)
-if 'list' in Q:  # split « concurrents »
+if 'scan' in Q:  # split « marque »
+    add(sfx, chime(80), Q['scan'], 0.12)
+    for k in ['colors', 'font', 'tone', 'products']: add(sfx, pop_sfx(), Q[k], 0.3)
+    for i in range(3): add(sfx, pop_sfx(), Q['ads'] + i * 6 / 30, 0.24)
+    add(sfx, whoosh(0.5), Q['ads'] - 0.25, 0.3); add(sfx, chime(88), Q['ads'] + 0.3, 0.18); add(sfx, boom(), Q['ads'] + 0.3, 0.12)
+elif 'list' in Q:  # split « concurrents »
     for i in range(3): add(sfx, pop_sfx(), Q['list'] + i * 4 / 30, 0.28)
     for k in ['hook', 'angle']: add(sfx, pop_sfx(), Q[k], 0.22)
     add(sfx, click(1.2), Q['pick'], 0.5)
