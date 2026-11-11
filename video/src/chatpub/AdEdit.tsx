@@ -8,7 +8,7 @@ import {EXPO} from '../components/anim';
 // long takes, quick transitions, word-by-word animated subtitles. Output is used as the ad in MotionChatPub.
 
 type Word = {w: string; s: number; e: number};
-export type AdCfg = {id: string; src: string; fps: number; segments: {from: number; to: number; zoom?: number; cy?: number; vsrc?: string}[]; stickers?: {text: string; from: number; to: number; y?: number}[]; comment?: {user: string; text: string; from: number; to: number}; words: Word[]; frames: number; subtitles?: boolean; subY?: number};
+export type AdCfg = {id: string; src: string; fps: number; segments: {from: number; to: number; zoom?: number; cy?: number; vsrc?: string}[]; stickers?: {text: string; from: number; to: number; y?: number}[]; comment?: {user: string; text: string; from: number; to: number}; words: Word[]; frames: number; subtitles?: boolean; subY?: number; fx?: boolean; bed?: string};
 
 const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 const GRAD = 'linear-gradient(120deg, #2563EB 0%, #5B3FE4 52%, #9333EA 100%)';
@@ -21,7 +21,7 @@ const useFonts = () => {
 };
 
 // one segment with its own zoom rhythm
-const Seg: React.FC<{src: string; startFrom: number; len: number; i: number; zoom?: number; cy?: number; vsrc?: string}> = ({src, startFrom, len, i, zoom, cy, vsrc}) => {
+const Seg: React.FC<{src: string; startFrom: number; len: number; i: number; zoom?: number; cy?: number; vsrc?: string; fx?: boolean}> = ({src, startFrom, len, i, zoom, cy, vsrc, fx}) => {
   const f = useCurrentFrame();
   const base = zoom ?? (i % 2 ? 1.12 : 1.0); // jump-cut alternation (or forced crop)
   const punchIn = interpolate(f, [0, 7], [base + 0.08, base], {...clamp, easing: EXPO});
@@ -32,9 +32,14 @@ const Seg: React.FC<{src: string; startFrom: number; len: number; i: number; zoo
   const inner = k > 0 && len - f > 20 ? interpolate(local, [0, 6], [k % 2 ? 0.07 : -0.05, 0], {...clamp, easing: EXPO}) + (k % 2 ? 0.07 : 0) : 0;
   const drift = f * 0.0006;
   const x = i % 3 === 1 ? -14 : i % 3 === 2 ? 14 : 0;
+  // whip-pan entrance + motion blur on each cut (fx mode)
+  const dir = i % 2 ? 1 : -1;
+  const whip = fx && i > 0 ? interpolate(f, [0, 7], [dir * 320, 0], {...clamp, easing: EXPO}) : 0;
+  const blur = fx && i > 0 ? interpolate(f, [0, 6], [26, 0], clamp) : 0;
+  const rot = fx && i > 0 ? interpolate(f, [0, 8], [dir * 4, 0], {...clamp, easing: EXPO}) : 0;
   return (
     <AbsoluteFill style={{overflow: 'hidden', background: '#000'}}>
-      <AbsoluteFill style={{transform: `translateX(${zoom ? 0 : x}px) scale(${punchIn + inner + drift})`, transformOrigin: `50% ${(cy ?? 0.42) * 100}%`}}>
+      <AbsoluteFill style={{transform: `translateX(${(zoom ? 0 : x) + whip}px) rotate(${rot}deg) scale(${punchIn + inner + drift + (blur ? 0.06 : 0)})`, transformOrigin: `50% ${(cy ?? 0.42) * 100}%`, filter: blur ? `blur(${blur}px)` : undefined}}>
         <OffthreadVideo src={vsrc ?? src} muted={!!vsrc} startFrom={startFrom} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
       </AbsoluteFill>
       {vsrc && <Audio src={src} startFrom={startFrom} />}
@@ -89,7 +94,7 @@ export const AdEdit: React.FC<{cfg: AdCfg}> = ({cfg}) => {
     if (i > 0) cuts.push(from);
     return (
       <Sequence key={i} from={from} durationInFrames={len}>
-        <Seg src={src} startFrom={Math.round(s.from * cfg.fps)} len={len} i={i} zoom={s.zoom} cy={s.cy} vsrc={s.vsrc ? staticFile(s.vsrc) : undefined} />
+        <Seg src={src} startFrom={Math.round(s.from * cfg.fps)} len={len} i={i} zoom={s.zoom} cy={s.cy} vsrc={s.vsrc ? staticFile(s.vsrc) : undefined} fx={cfg.fx} />
       </Sequence>
     );
   });
@@ -128,7 +133,10 @@ export const AdEdit: React.FC<{cfg: AdCfg}> = ({cfg}) => {
           </div>
         );
       })()}
+      {cfg.fx && <AbsoluteFill style={{pointerEvents: 'none', mixBlendMode: 'screen', opacity: flash * 0.9, background: 'radial-gradient(60% 50% at 80% 20%, rgba(255,170,90,.9), transparent 70%), radial-gradient(50% 40% at 15% 85%, rgba(150,110,255,.8), transparent 70%)'}} />}
+      {cfg.fx && <AbsoluteFill style={{pointerEvents: 'none', boxShadow: 'inset 0 0 180px rgba(0,0,0,.35)'}} />}
       {cfg.subtitles !== false && <Subs words={cfg.words} y={cfg.subY ?? 1280} />}
+      {cfg.bed && <Audio src={staticFile(cfg.bed)} />}
     </AbsoluteFill>
   );
 };

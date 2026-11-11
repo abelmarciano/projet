@@ -206,10 +206,36 @@
  "frames": 331,
  "stickers": [
   {
-   "text": "Texture hyper fraîche",
-   "from": 4.039000000000001,
-   "to": 5.889,
-   "y": 360
+   "text": "Mon nouveau chouchou 💜",
+   "from": 1.45,
+   "to": 2.95,
+   "y": 330
+  },
+  {
+   "text": "Texture hyper fraîche ❄️",
+   "from": 4.04,
+   "to": 5.6,
+   "y": 330
+  },
+  {
+   "text": "L'odeur… 😍",
+   "from": 5.85,
+   "to": 7.15,
+   "y": 330
+  },
+  {
+   "text": "Routine du matin ☀️",
+   "from": 7.95,
+   "to": 9.45,
+   "y": 330
+  },
+  {
+   "text": "Lien juste en dessous 👇",
+   "from": 9.85,
+   "to": 11.0,
+   "y": 330
   }
- ]
+ ],
+ "fx": true,
+ "bed": "chatpub/avap-mei-bed.wav"
 }
