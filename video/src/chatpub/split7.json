@@ -1,0 +1,299 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "actor": {
+  "name": "Guillaume B.",
+  "img": "chat/actors/a180.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "words": [
+  {
+   "w": "Ta",
+   "s": 0.3,
+   "e": 0.4
+  },
+  {
+   "w": "vidéo",
+   "s": 0.44,
+   "e": 0.8
+  },
+  {
+   "w": "est",
+   "s": 0.84,
+   "e": 0.96
+  },
+  {
+   "w": "bien,",
+   "s": 1.0,
+   "e": 1.2
+  },
+  {
+   "w": "mais",
+   "s": 1.72,
+   "e": 1.9
+  },
+  {
+   "w": "personne",
+   "s": 1.94,
+   "e": 2.3
+  },
+  {
+   "w": "la",
+   "s": 2.36,
+   "e": 2.42
+  },
+  {
+   "w": "regarde",
+   "s": 2.46,
+   "e": 2.8
+  },
+  {
+   "w": "jusqu'au",
+   "s": 2.82,
+   "e": 3.08
+  },
+  {
+   "w": "bout?",
+   "s": 3.14,
+   "e": 3.26
+  },
+  {
+   "w": "Regarde.",
+   "s": 3.8,
+   "e": 4.2
+  },
+  {
+   "w": "J'envoie",
+   "s": 4.88,
+   "e": 5.2
+  },
+  {
+   "w": "ma",
+   "s": 5.24,
+   "e": 5.34
+  },
+  {
+   "w": "vidéo",
+   "s": 5.38,
+   "e": 5.74
+  },
+  {
+   "w": "brute",
+   "s": 5.78,
+   "e": 6.04
+  },
+  {
+   "w": "dans",
+   "s": 6.18,
+   "e": 6.28
+  },
+  {
+   "w": "le",
+   "s": 6.32,
+   "e": 6.42
+  },
+  {
+   "w": "chat",
+   "s": 6.46,
+   "e": 6.64
+  },
+  {
+   "w": "de",
+   "s": 6.68,
+   "e": 6.76
+  },
+  {
+   "w": "Growthity.",
+   "s": 6.8,
+   "e": 7.32
+  },
+  {
+   "w": "Il",
+   "s": 7.92,
+   "e": 8.06
+  },
+  {
+   "w": "coupe",
+   "s": 8.1,
+   "e": 8.26
+  },
+  {
+   "w": "les",
+   "s": 8.3,
+   "e": 8.42
+  },
+  {
+   "w": "blancs,",
+   "s": 8.44,
+   "e": 8.66
+  },
+  {
+   "w": "ajoute",
+   "s": 9.22,
+   "e": 9.46
+  },
+  {
+   "w": "les",
+   "s": 9.5,
+   "e": 9.6
+  },
+  {
+   "w": "sous-titres,",
+   "s": 9.64,
+   "e": 10.1
+  },
+  {
+   "w": "des",
+   "s": 10.6,
+   "e": 10.83
+  },
+  {
+   "w": "zooms,",
+   "s": 10.83,
+   "e": 11.06
+  },
+  {
+   "w": "de",
+   "s": 11.56,
+   "e": 11.66
+  },
+  {
+   "w": "la",
+   "s": 11.7,
+   "e": 11.76
+  },
+  {
+   "w": "musique",
+   "s": 11.86,
+   "e": 12.26
+  },
+  {
+   "w": "et",
+   "s": 12.96,
+   "e": 13.02
+  },
+  {
+   "w": "ma",
+   "s": 13.06,
+   "e": 13.16
+  },
+  {
+   "w": "vidéo",
+   "s": 13.2,
+   "e": 13.58
+  },
+  {
+   "w": "est",
+   "s": 14.04,
+   "e": 14.16
+  },
+  {
+   "w": "prête",
+   "s": 14.2,
+   "e": 14.4
+  },
+  {
+   "w": "à",
+   "s": 14.46,
+   "e": 14.52
+  },
+  {
+   "w": "poster",
+   "s": 14.54,
+   "e": 14.84
+  }
+ ],
+ "video": "fal/split/adrien7-raw.mp4",
+ "total": 451,
+ "audio": "chatpub/split7-voice.wav",
+ "bed": "chatpub/split7-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "cues": {
+  "look": 3.8,
+  "drop": 4.88,
+  "ask1": 5.5,
+  "send1": 7.1,
+  "cut": 8.44,
+  "subs": 9.64,
+  "zoom": 10.6,
+  "music": 11.86,
+  "ready": 13.2,
+  "scale": 0.86,
+  "cropTop": 346
+ },
+ "steps": [
+  [
+   "Ta vidéo brute",
+   "drop"
+  ],
+  [
+   "Blancs coupés",
+   "cut"
+  ],
+  [
+   "Sous-titres",
+   "subs"
+  ],
+  [
+   "Zooms",
+   "zoom"
+  ],
+  [
+   "Musique",
+   "music"
+  ],
+  [
+   "Prête",
+   "ready"
+  ]
+ ],
+ "punches": [
+  "cut",
+  "ready"
+ ],
+ "ask1": "Rends-la virale",
+ "file": {
+  "name": "video-brute.mp4",
+  "dur": "0:17",
+  "thumb": "chat/postprod/raw-thumb.jpg"
+ },
+ "raw": "chat/postprod/raw.mp4",
+ "edited": "chat/postprod/edit.mp4",
+ "rawDur": 17.04,
+ "segments": [
+  {
+   "from": 0.71,
+   "to": 3.15
+  },
+  {
+   "from": 3.949,
+   "to": 7.15
+  },
+  {
+   "from": 7.41,
+   "to": 12.51
+  },
+  {
+   "from": 12.93,
+   "to": 16.91
+  }
+ ],
+ "saved": "2,3 s",
+ "subsSample": [
+  "MARRE",
+  "DU",
+  "RASOIR"
+ ],
+ "hot": [
+  "brute",
+  "Growthity",
+  "blancs",
+  "sous-titres",
+  "zooms",
+  "musique",
+  "poster",
+  "personne"
+ ]
+}
