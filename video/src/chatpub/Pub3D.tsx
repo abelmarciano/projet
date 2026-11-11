@@ -90,7 +90,7 @@ export const Pub3D: React.FC<{cfg: P3DCfg}> = ({cfg}) => {
       <Sequence durationInFrames={VF}><Film cfg={cfg} /></Sequence>
       <Sequence from={VF}><EndCard d={cfg.total - VF} /></Sequence>
       {['1', '2', '3', '4'].map((k) => (
-        <Kinetic key={k} words={VO[k].words} at={VO[k].at} y={1540} size={70} />
+        <Kinetic key={k} words={VO[k].words} at={VO[k].at} y={1180} size={70} />
       ))}
       <AbsoluteFill style={{background: '#fff', opacity: flash * 0.5, pointerEvents: 'none'}} />
       {Object.values(VO).map((v, i) => (

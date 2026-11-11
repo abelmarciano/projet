@@ -311,20 +311,20 @@
    "text": "1 phrase dans Growthity ✨",
    "from": 146,
    "to": 222,
-   "y": 170
+   "y": 260
   },
   {
    "text": "Acteurs · voix · montage",
    "from": 300,
    "to": 356,
-   "y": 170,
+   "y": 260,
    "rot": 3
   },
   {
    "text": "En ligne sur Meta ✅",
    "from": 366,
    "to": 452,
-   "y": 258,
+   "y": 260,
    "big": true
   }
  ],

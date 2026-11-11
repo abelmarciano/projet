@@ -281,13 +281,13 @@
    "text": "1 phrase dans Growthity ✨",
    "from": 150,
    "to": 228,
-   "y": 170
+   "y": 260
   },
   {
    "text": "Diffusée sur Meta 🦋",
    "from": 290,
    "to": 380,
-   "y": 170,
+   "y": 260,
    "rot": 3
   }
  ],
