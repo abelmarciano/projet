@@ -55,7 +55,7 @@ const Film: React.FC<{cfg: P3DCfg}> = ({cfg}) => {
   );
 };
 
-const EndCard: React.FC<{d: number}> = ({d}) => {
+export const EndCard: React.FC<{d: number}> = ({d}) => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill>
