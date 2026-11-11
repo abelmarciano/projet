@@ -4,7 +4,7 @@ import {Easing, Img, OffthreadVideo, Sequence, interpolate, spring, staticFile, 
 import {Check, Cursor, FONT, DISPLAY, GRAD, INK, LINE, Logo, MUTED, SplitCfg, SplitChat, Spinner, clamp, prog} from './SplitChat';
 
 type Prod = {name: string; price: string; img: string};
-type Ad = {kind: 'video' | 'image'; src: string; label: string};
+type Ad = {kind: 'video' | 'image'; src: string; label: string; start?: number; ov?: {top?: string; title: string; price?: string; cta?: string; dark?: boolean; pos?: 'top' | 'bottom'}};
 export type BrandCfg = SplitCfg & {
   ask1: string; ask2: string; site: string;
   b: {name: string; colors: string[]; font: string; tone: string[]; promise: string; products: Prod[]};
@@ -24,7 +24,7 @@ const BrandWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
   if (f >= ask2 && f < send2) composer = typing(cfg.ask2, ask2, send2 - 6);
   const typingNow = (f >= ask1 && f < send1) || (f >= ask2 && f < send2);
   const home = 1 - prog(f, send1, 12);
-  const scroll = prog(f, send2, 18) * 520;
+  const scroll = prog(f, send2, 18) * 545;
 
   const pts: [number, number, number][] = [[0, 640, 600], [ask1 - 4, 560, 690], [send1 - 12, 900, 715], [send1, 900, 715], [products + 20, 760, 560], [ask2 - 2, 600, 690], [send2 - 10, 900, 715], [send2, 900, 715], [ads + 30, 820, 600]];
   const ease = {...clamp, easing: Easing.inOut(Easing.cubic)};
@@ -112,11 +112,12 @@ const BrandWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
                     const at = ads + i * 6; const on = f >= at;
                     return (
                       <div key={i} style={{flex: 1}}>
-                        <div style={{position: 'relative', height: 330, borderRadius: 20, overflow: 'hidden', background: '#0B0A0C', boxShadow: on ? '0 0 0 3px #8B6DFF, 0 20px 40px -18px rgba(91,63,228,0.7)' : 'none', transform: `scale(${on ? 0.95 + spring({frame: f - at, fps, config: {damping: 12}}) * 0.05 : 0.95})`}}>
+                        <div style={{position: 'relative', height: 375, borderRadius: 20, overflow: 'hidden', background: '#0B0A0C', boxShadow: on ? '0 0 0 3px #8B6DFF, 0 20px 40px -18px rgba(91,63,228,0.7)' : 'none', transform: `scale(${on ? 0.95 + spring({frame: f - at, fps, config: {damping: 12}}) * 0.05 : 0.95})`}}>
                           {on ? (a.kind === 'video'
-                            ? <Sequence from={at} layout="none"><OffthreadVideo src={staticFile(`media/${a.src}`)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Sequence>
+                            ? <Sequence from={at} layout="none"><OffthreadVideo src={staticFile(`media/${a.src}`)} startFrom={Math.round((a.start ?? 0) * 30)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Sequence>
                             : <Img src={staticFile(`media/${a.src}`)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />)
                             : <div style={{position: 'absolute', inset: 0, background: `linear-gradient(${110 + f * 3 + i * 40}deg, #1E1B4B, #4C1D95 40%, #2563EB 70%, #1E1B4B)`}} />}
+                          {on && a.ov && <AdOverlay ov={a.ov} brand={cfg.b} p={prog(f, at + 4, 12)} />}
                           {on && <div style={{position: 'absolute', top: 10, left: 10, display: 'flex', alignItems: 'center', gap: 6, padding: '5px 11px', borderRadius: 99, background: '#fff', fontWeight: 700, fontSize: 16, color: '#15803D'}}><div style={{width: 10, height: 10, borderRadius: 99, background: '#22C55E'}} /> Prête</div>}
                         </div>
                         <div style={{marginTop: 8, textAlign: 'center', fontSize: 18, fontWeight: 700, color: '#334155', opacity: on ? 1 : 0.4}}>{a.label}</div>
@@ -139,6 +140,25 @@ const BrandWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
         </div>
       </div>
       <Cursor x={cx} y={cy} down={down} />
+    </div>
+  );
+};
+
+const AdOverlay: React.FC<{ov: NonNullable<Ad['ov']>; brand: BrandCfg['b']; p: number}> = ({ov, brand, p}) => {
+  const fg = ov.dark ? '#fff' : brand.colors[0];
+  const top = ov.pos === 'top';
+  return (
+    <div style={{position: 'absolute', inset: 0, fontFamily: `${brand.font}, ${FONT}`, color: fg, opacity: p}}>
+      <div style={{position: 'absolute', left: 0, right: 0, [top ? 'top' : 'bottom']: 0, height: '40%', background: `linear-gradient(${top ? 'to top' : 'to bottom'}, transparent, ${ov.dark ? 'rgba(0,0,0,0.7)' : 'rgba(248,248,248,0.95)'} 60%)`}} />
+      <div style={{position: 'absolute', [top ? 'bottom' : 'top']: 14, right: 14, fontWeight: 700, fontSize: 18, letterSpacing: '0.32em', color: '#fff', textShadow: '0 2px 10px rgba(0,0,0,0.45)'}}>{brand.name.toUpperCase()}</div>
+      <div style={{position: 'absolute', left: 14, right: 14, [top ? 'top' : 'bottom']: top ? 46 : 16, transform: `translateY(${(1 - p) * 16}px)`}}>
+        {ov.top && <div style={{fontSize: 13, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.85}}>{ov.top}</div>}
+        <div style={{fontSize: 22, fontWeight: 700, lineHeight: 1.12, marginTop: 4}}>{ov.title}</div>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 10}}>
+          {ov.price && <div style={{fontSize: 19, fontWeight: 700}}>{ov.price}</div>}
+          {ov.cta && <div style={{padding: '6px 12px', borderRadius: 99, background: ov.dark ? '#fff' : brand.colors[0], color: ov.dark ? brand.colors[0] : '#fff', fontSize: 14, fontWeight: 700}}>{ov.cta}</div>}
+        </div>
+      </div>
     </div>
   );
 };

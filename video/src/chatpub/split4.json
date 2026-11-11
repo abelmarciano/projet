@@ -337,18 +337,38 @@
  "ads": [
   {
    "kind": "video",
-   "src": "chat/jwel/ad-video.mp4",
-   "label": "Vidéo UGC"
+   "src": "chat/jwel/ad-video2.mp4",
+   "label": "Vidéo produit",
+   "ov": {
+    "title": "L'éclat de votre élégance",
+    "cta": "Découvrir",
+    "dark": true,
+    "pos": "top"
+   },
+   "start": 1.1
   },
   {
    "kind": "image",
-   "src": "chat/jwel/ad-bf.jpg",
-   "label": "Visuel promo"
+   "src": "chat/jwel/nb1.png",
+   "label": "Visuel produit",
+   "ov": {
+    "top": "Bracelet Trèfle",
+    "title": "Le détail qui change tout",
+    "price": "19,99 €",
+    "cta": "Commander"
+   }
   },
   {
    "kind": "image",
-   "src": "chat/jwel/ad-cercle.jpg",
-   "label": "Visuel lifestyle"
+   "src": "chat/jwel/nb2.png",
+   "label": "Visuel lifestyle",
+   "ov": {
+    "top": "Nouvelle collection",
+    "title": "Votre éclat, au quotidien",
+    "cta": "Découvrir",
+    "dark": true,
+    "pos": "top"
+   }
   }
  ],
  "hot": [
