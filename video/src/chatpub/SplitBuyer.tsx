@@ -5,7 +5,7 @@ import {Easing, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remo
 import {Cursor, FONT, DISPLAY, GRAD, INK, LINE, Logo, MetaMark, MUTED, SplitCfg, SplitChat, Spinner, clamp, prog} from './SplitChat';
 
 type Row = {name: string; spend: string; cpl: string; trend: 'up' | 'down' | 'flat'; verdict: 'up' | 'cut' | 'keep' | 'fix'; action: string; cue: string};
-export type BuyerCfg = SplitCfg & {ask1: string; rows: Row[]; hours: number[]; best: [number, number]; slot: string; tip: string};
+export type BuyerCfg = SplitCfg & {ask1: string; rows: Row[]; hours: number[]; best: [number, number]; slot: string; tip: string; launch?: number};
 
 const V = {
   up: {bg: '#DCFCE7', fg: '#15803D', icon: '▲'},
@@ -85,14 +85,21 @@ const BuyerWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
             {/* best time */}
             <div style={{marginTop: 14, padding: '16px 20px', borderRadius: 20, border: `2px solid ${f >= time ? '#C4B5FD' : LINE}`, background: f >= time ? '#FAF8FF' : '#fff', opacity: prog(f, time - 4, 10)}}>
               <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12}}>
-                <div style={{fontSize: 16, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: MUTED}}>⏰ Meilleur créneau de lancement</div>
-                <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 26, color: '#5B3FE4', opacity: prog(f, time + 14, 8)}}>{cfg.slot}</div>
+                <div style={{fontSize: 16, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: MUTED}}>⏰ Quand lancer ta prochaine pub</div>
+                <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 26, color: '#16A34A', opacity: prog(f, time + 14, 8)}}>{cfg.slot}</div>
               </div>
-              <div style={{display: 'flex', alignItems: 'flex-end', gap: 5, height: 90}}>
+              <div style={{display: 'flex', alignItems: 'flex-end', gap: 5, height: 110, paddingTop: 20}}>
                 {cfg.hours.map((h, i) => {
                   const g = prog(f, time + i * 0.7, 10);
                   const isBest = i >= cfg.best[0] && i <= cfg.best[1];
-                  return <div key={i} style={{flex: 1, height: `${(h / maxH) * 100 * g}%`, borderRadius: 5, background: isBest && f >= time + 14 ? GRAD : '#DDD6FE'}} />;
+                  const isLaunch = cfg.launch === i && f >= time + 14;
+                  return (
+                    <div key={i} style={{flex: 1, height: '100%', position: 'relative', display: 'flex', alignItems: 'flex-end'}}>
+                      <div style={{width: '100%', height: `${(h / maxH) * 100 * g}%`, borderRadius: 5, background: isLaunch ? '#16A34A' : isBest && f >= time + 14 ? GRAD : '#DDD6FE'}} />
+                      {isLaunch && <div style={{position: 'absolute', left: '50%', bottom: `${(h / maxH) * 100 + 8}%`, transform: `translateX(-50%) scale(${spring({frame: f - time - 14, fps, config: {damping: 10}})})`, padding: '4px 9px', borderRadius: 8, background: '#16A34A', color: '#fff', fontSize: 14, fontWeight: 800, whiteSpace: 'nowrap'}}>🚀 6 h</div>}
+                      {isBest && i === cfg.best[0] && f >= time + 14 && <div style={{position: 'absolute', left: 0, bottom: '104%', padding: '3px 8px', borderRadius: 8, background: '#EEEBFF', color: '#5B3FE4', fontSize: 13, fontWeight: 800, whiteSpace: 'nowrap', opacity: prog(f, time + 18, 8)}}>Pic d'audience</div>}
+                    </div>
+                  );
                 })}
               </div>
               <div style={{display: 'flex', justifyContent: 'space-between', fontSize: 14, color: MUTED, fontWeight: 600, marginTop: 6}}>{['0 h', '6 h', '12 h', '18 h', '23 h'].map((t) => <span key={t}>{t}</span>)}</div>
