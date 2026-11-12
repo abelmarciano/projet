@@ -5,7 +5,7 @@ import {Check, FONT, DISPLAY, GRAD, INK, LINE, Logo, MUTED, SplitCfg, SplitChat,
 
 export type RoastCfg = SplitCfg & {
   episode: number; account: string; badImg: string; badText: string; flaws: {label: string; cue: string}[];
-  ask: string; badMode?: 'wall' | 'landscape' | 'logo' | 'stock'; badSlogan?: string; badLogo?: {name: string; since: string; time: string}; badCaption?: string; flawBoxes?: {l: number; t: number; w: number; h: number; round?: boolean; labelLeft?: number; labelTop?: number}[]; goodVideo: string; goodTitle: string; goodCta: string; scoreBad: number; scoreGood: number;
+  ask: string; badMode?: 'wall' | 'landscape' | 'logo' | 'stock' | 'avatar'; badClaim?: string; badReview?: {stars: string; text: string; who: string}; badSlogan?: string; badLogo?: {name: string; since: string; time: string}; badCaption?: string; flawBoxes?: {l: number; t: number; w: number; h: number; round?: boolean; labelLeft?: number; labelTop?: number}[]; goodVideo: string; goodTitle: string; goodCta: string; scoreBad: number; scoreGood: number;
 };
 
 const Stamp: React.FC<{score: number; at: number; good?: boolean; size?: number}> = ({score, at, good, size = 1}) => {
@@ -54,7 +54,21 @@ const RoastWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
       {/* left: the bad ad */}
       <div style={{position: 'absolute', left: 50, top: 100, transform: `translate(${shake}px, ${swipe}px) scale(${1 - leftDim * 0.12})`, transformOrigin: 'top left'}}>
         <Phone w={370} dim={leftDim}>
-          {cfg.badMode === 'stock' ? (
+          {cfg.badMode === 'avatar' ? (
+            <div style={{position: 'absolute', inset: 0, background: '#E83E8C'}}>
+              <Img src={staticFile(`media/${cfg.badImg}`)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+              <div style={{position: 'absolute', top: 12, left: 12, display: 'flex', alignItems: 'center', gap: 8, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.5)'}}>
+                <div style={{width: 28, height: 28, borderRadius: 99, background: '#fff', opacity: 0.8}} />
+                <div style={{fontSize: 14, fontWeight: 700}}>{cfg.account.replace('@', '')}<div style={{fontSize: 11, fontWeight: 500}}>Sponsorisé</div></div>
+              </div>
+              <div style={{position: 'absolute', left: 14, right: 14, top: 62, textAlign: 'center', fontFamily: 'Impact, Arial Black, sans-serif', fontSize: 30, lineHeight: 1.05, color: '#FFE600', WebkitTextStroke: '2px #D90000', paintOrder: 'stroke fill'}}>{cfg.badClaim}</div>
+              {cfg.badReview && <div style={{position: 'absolute', left: 16, right: 16, bottom: 34, padding: '10px 12px', borderRadius: 12, background: 'rgba(255,255,255,0.95)', fontSize: 14, color: '#111'}}>
+                <div style={{color: '#F59E0B', fontSize: 18, letterSpacing: 2}}>{cfg.badReview.stars}</div>
+                <div style={{fontWeight: 700}}>{cfg.badReview.text}</div>
+                <div style={{fontSize: 12, color: '#777'}}>— {cfg.badReview.who}</div>
+              </div>}
+            </div>
+          ) : cfg.badMode === 'stock' ? (
             <div style={{position: 'absolute', inset: 0, background: '#fff'}}>
               <div style={{display: 'flex', alignItems: 'center', gap: 10, padding: '14px 14px 10px'}}>
                 <div style={{width: 34, height: 34, borderRadius: 99, background: '#D1FAE5'}} />

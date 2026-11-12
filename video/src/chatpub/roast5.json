@@ -1,0 +1,374 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "actor": {
+  "name": "Guillaume B.",
+  "img": "chat/actors/a180.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "words": [
+  {
+   "w": "Épisode",
+   "s": 0.26,
+   "e": 0.62
+  },
+  {
+   "w": "cinq.",
+   "s": 0.66,
+   "e": 0.92
+  },
+  {
+   "w": "Alors",
+   "s": 1.32,
+   "e": 1.5
+  },
+  {
+   "w": "là,",
+   "s": 1.54,
+   "e": 1.66
+  },
+  {
+   "w": "un",
+   "s": 2.1,
+   "e": 2.16
+  },
+  {
+   "w": "avatar",
+   "s": 2.24,
+   "e": 2.6
+  },
+  {
+   "w": "qui",
+   "s": 2.66,
+   "e": 2.76
+  },
+  {
+   "w": "fait",
+   "s": 2.8,
+   "e": 2.92
+  },
+  {
+   "w": "plus",
+   "s": 2.96,
+   "e": 3.12
+  },
+  {
+   "w": "peur",
+   "s": 3.16,
+   "e": 3.28
+  },
+  {
+   "w": "qu'envie.",
+   "s": 3.32,
+   "e": 3.68
+  },
+  {
+   "w": "Rajeunir",
+   "s": 4.14,
+   "e": 4.56
+  },
+  {
+   "w": "de",
+   "s": 4.6,
+   "e": 4.68
+  },
+  {
+   "w": "vingt",
+   "s": 4.72,
+   "e": 4.88
+  },
+  {
+   "w": "ans",
+   "s": 4.9,
+   "e": 4.98
+  },
+  {
+   "w": "en",
+   "s": 5.0,
+   "e": 5.06
+  },
+  {
+   "w": "trois",
+   "s": 5.1,
+   "e": 5.26
+  },
+  {
+   "w": "jours,",
+   "s": 5.34,
+   "e": 5.5
+  },
+  {
+   "w": "personne",
+   "s": 5.64,
+   "e": 5.94
+  },
+  {
+   "w": "n'y",
+   "s": 5.98,
+   "e": 6.08
+  },
+  {
+   "w": "croit.",
+   "s": 6.12,
+   "e": 6.3
+  },
+  {
+   "w": "Et",
+   "s": 6.7,
+   "e": 6.76
+  },
+  {
+   "w": "un",
+   "s": 6.8,
+   "e": 6.9
+  },
+  {
+   "w": "faux",
+   "s": 6.94,
+   "e": 7.02
+  },
+  {
+   "w": "avis",
+   "s": 7.08,
+   "e": 7.22
+  },
+  {
+   "w": "cinq",
+   "s": 7.26,
+   "e": 7.42
+  },
+  {
+   "w": "étoiles.",
+   "s": 7.48,
+   "e": 7.8
+  },
+  {
+   "w": "Deux",
+   "s": 8.16,
+   "e": 8.26
+  },
+  {
+   "w": "sur",
+   "s": 8.32,
+   "e": 8.46
+  },
+  {
+   "w": "dix.",
+   "s": 8.5,
+   "e": 8.74
+  },
+  {
+   "w": "Je",
+   "s": 9.3,
+   "e": 9.34
+  },
+  {
+   "w": "la",
+   "s": 9.38,
+   "e": 9.44
+  },
+  {
+   "w": "refais",
+   "s": 9.48,
+   "e": 9.7
+  },
+  {
+   "w": "avec",
+   "s": 9.74,
+   "e": 9.9
+  },
+  {
+   "w": "Growthity.",
+   "s": 9.92,
+   "e": 10.42
+  },
+  {
+   "w": "Voilà",
+   "s": 10.9,
+   "e": 11.12
+  },
+  {
+   "w": "une",
+   "s": 11.34,
+   "e": 11.4
+  },
+  {
+   "w": "actrice",
+   "s": 11.46,
+   "e": 11.74
+  },
+  {
+   "w": "réaliste,",
+   "s": 11.78,
+   "e": 12.2
+  },
+  {
+   "w": "une",
+   "s": 12.34,
+   "e": 12.44
+  },
+  {
+   "w": "promesse",
+   "s": 12.46,
+   "e": 12.78
+  },
+  {
+   "w": "honnête.",
+   "s": 12.8,
+   "e": 13.14
+  },
+  {
+   "w": "Neuf",
+   "s": 13.44,
+   "e": 13.58
+  },
+  {
+   "w": "sur",
+   "s": 13.62,
+   "e": 13.76
+  },
+  {
+   "w": "dix,",
+   "s": 13.8,
+   "e": 14.0
+  },
+  {
+   "w": "envoyez-moi",
+   "s": 14.24,
+   "e": 14.64
+  },
+  {
+   "w": "les",
+   "s": 14.66,
+   "e": 14.74
+  },
+  {
+   "w": "vôtres",
+   "s": 14.78,
+   "e": 14.98
+  }
+ ],
+ "video": "fal/roast5/corinne5-ext.mp4",
+ "total": 481,
+ "audio": "chatpub/roast5-voice.wav",
+ "bed": "chatpub/roast5-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "cues": {
+  "look": 1.32,
+  "aie": 1.32,
+  "flaw1": 2.24,
+  "flaw2": 4.14,
+  "flaw3": 6.94,
+  "score1": 8.16,
+  "redo": 9.3,
+  "voila": 10.9,
+  "score2": 13.44,
+  "end": 14.24,
+  "scale": 0.86,
+  "cropTop": 253
+ },
+ "steps": [
+  [
+   "Défaut n°1",
+   "flaw1"
+  ],
+  [
+   "Défaut n°2",
+   "flaw2"
+  ],
+  [
+   "Défaut n°3",
+   "flaw3"
+  ],
+  [
+   "La note",
+   "score1"
+  ],
+  [
+   "Refaite",
+   "voila"
+  ],
+  [
+   "À toi !",
+   "end"
+  ]
+ ],
+ "punches": [
+  "score1",
+  "voila",
+  "score2"
+ ],
+ "episode": 5,
+ "account": "@eterna.beaute",
+ "badText": "PROMO EXCEPTIONNELLE !!! BOUGIE PARFUMÉE DE QUALITÉ FABRIQUÉE AVEC SOIN DISPONIBLE EN PLUSIEURS PARFUMS LIVRAISON RAPIDE CLIQUEZ ICI POUR EN SAVOIR PLUS SUR NOTRE BOUTIQUE !!!",
+ "flaws": [
+  {
+   "label": "Avatar qui fait peur",
+   "cue": "flaw1"
+  },
+  {
+   "label": "Promesse impossible",
+   "cue": "flaw2"
+  },
+  {
+   "label": "Faux avis",
+   "cue": "flaw3"
+  }
+ ],
+ "ask": "Refais cette pub : crème visage Eterna, une actrice naturelle, une promesse honnête.",
+ "goodVideo": "chat/roast5/good.mp4",
+ "goodTitle": "Plus douce.\nTout simplement. 🌿",
+ "goodCta": "Découvrir la crème",
+ "scoreBad": 2,
+ "scoreGood": 9,
+ "hot": [
+  "avatar",
+  "peur",
+  "vingt",
+  "croit",
+  "faux",
+  "deux",
+  "Growthity",
+  "réaliste",
+  "honnête",
+  "neuf",
+  "vôtres"
+ ],
+ "badMode": "avatar",
+ "badCaption": "studio.zenharmonie Venez découvrir notre univers. Plus d’infos en MP.",
+ "badImg": "chat/roast5/bad.png",
+ "flawBoxes": [
+  {
+   "l": 95,
+   "t": 150,
+   "w": 185,
+   "h": 330,
+   "labelLeft": 120,
+   "labelTop": 120
+  },
+  {
+   "l": 18,
+   "t": 60,
+   "w": 334,
+   "h": 90,
+   "labelLeft": 60,
+   "labelTop": 92
+  },
+  {
+   "l": 20,
+   "t": 545,
+   "w": 330,
+   "h": 95,
+   "labelLeft": 90,
+   "labelTop": -34
+  }
+ ],
+ "badClaim": "RAJEUNISSEZ DE 20 ANS EN 3 JOURS !!!",
+ "badReview": {
+  "stars": "★★★★★",
+  "text": "« Incroyable, c’est magique !! »",
+  "who": "Cliente satisfaite"
+ }
+}
