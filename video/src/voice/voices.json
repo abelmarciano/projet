@@ -1010,5 +1010,53 @@
   "style": 0.35,
   "speed": 1.04,
   "text": "[warmly] Grossiti prépare ce carburant : des créas variées, prêtes pour Advantage plus."
+ },
+ "capi-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Ta campagne ne peut pas apprendre si Meta ne voit pas tes ventes. C'est tout le rôle du pixel et de l'API Conversions."
+ },
+ "capi-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Le pixel, c'est un code sur ton site. Il dit à Meta : cette personne a vu une page, ajouté au panier, puis acheté."
+ },
+ "capi-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Le problème : bloqueurs de pub, navigateurs, iPhone… Une partie de ces signaux se perd en route."
+ },
+ "capi-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "L'API Conversions envoie les mêmes événements directement depuis ton serveur. C'est plus fiable."
+ },
+ "capi-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Le bon réglage : les deux ensemble, avec la déduplication, pour qu'une vente ne soit pas comptée deux fois."
+ },
+ "capi-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[warmly] Avec un suivi propre, tes campagnes Grossiti apprennent plus vite."
  }
 }
