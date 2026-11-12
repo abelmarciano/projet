@@ -25,7 +25,17 @@ while i * beat < T:
         ts = np.arange(int(beat * 4 * SR)) / SR
         add(mus, lp(sum(np.sin(2 * np.pi * note(m) * ts) for m in prog[bar]) / 4 * np.minimum(1, ts / 0.08) * np.exp(-ts * 0.5), 1800), at, 0.12)
     i += 1
-e = np.ones(n); fo = int(0.8 * SR); E = int(T * SR); e[E - fo:E] *= np.linspace(1, 0, fo); mus *= e * 0.5
+e = np.ones(n); E = int(T * SR)
+if c.get('smoothEnd'):
+    v0 = int((c['videoDur'] + 0.4) * SR); e[v0:E] *= np.linspace(1, 0, E - v0) ** 1.5; e[E:] = 0
+else:
+    fo = int(0.8 * SR); e[E - fo:E] *= np.linspace(1, 0, fo)
+mus *= e * 0.5
+if c.get('smoothEnd'):  # accord final tenu qui résout la musique
+    ts = np.arange(int((c['endDur'] + 0.3) * SR)) / SR
+    pad = sum(np.sin(2 * np.pi * note(m_) * ts) + 0.4 * np.sin(4 * np.pi * note(m_) * ts) for m_ in [52, 64, 68, 71, 76]) / 5
+    pad *= np.minimum(1, ts / 0.05) * np.exp(-ts * 1.1)
+    add(mus, lp(pad, 2400), c['videoDur'] - 0.05, 0.42)
 for k in range(len(c['hook'])): add(sfx, pop_sfx(), 0.07 + k * 0.2, 0.3)
 for s in c['shots'][1:]: add(sfx, whoosh(0.4), s['from'] - 0.2, 0.32); add(sfx, boom(), s['from'], 0.08)
 for k in range(len(c['shots'])): add(sfx, pop_sfx(), c['shots'][k]['from'] + (1.75 if k == 0 else 0.1), 0.18)

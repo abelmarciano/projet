@@ -1,0 +1,188 @@
+{
+ "video": "fal/multi2/steve-cut.mp4",
+ "videoDur": 9.6,
+ "endDur": 3.4,
+ "smoothEnd": true,
+ "jumps": [
+  7.23
+ ],
+ "words": [
+  {
+   "w": "Je",
+   "s": 0.34,
+   "e": 0.42
+  },
+  {
+   "w": "peux",
+   "s": 0.5,
+   "e": 0.62
+  },
+  {
+   "w": "vendre",
+   "s": 0.66,
+   "e": 0.86
+  },
+  {
+   "w": "ton",
+   "s": 0.88,
+   "e": 1.0
+  },
+  {
+   "w": "produit",
+   "s": 1.04,
+   "e": 1.44
+  },
+  {
+   "w": "au",
+   "s": 1.72,
+   "e": 1.78
+  },
+  {
+   "w": "bureau,",
+   "s": 1.86,
+   "e": 2.18
+  },
+  {
+   "w": "à",
+   "s": 2.68,
+   "e": 2.72
+  },
+  {
+   "w": "l'atelier,",
+   "s": 2.76,
+   "e": 3.24
+  },
+  {
+   "w": "en",
+   "s": 3.7,
+   "e": 3.8
+  },
+  {
+   "w": "terrasse,",
+   "s": 3.84,
+   "e": 4.3
+  },
+  {
+   "w": "depuis",
+   "s": 4.82,
+   "e": 5.12
+  },
+  {
+   "w": "mon",
+   "s": 5.16,
+   "e": 5.28
+  },
+  {
+   "w": "canapé",
+   "s": 5.32,
+   "e": 5.76
+  },
+  {
+   "w": "ou",
+   "s": 6.24,
+   "e": 6.3
+  },
+  {
+   "w": "au",
+   "s": 6.34,
+   "e": 6.42
+  },
+  {
+   "w": "bord",
+   "s": 6.46,
+   "e": 6.6
+  },
+  {
+   "w": "de",
+   "s": 6.64,
+   "e": 6.7
+  },
+  {
+   "w": "la",
+   "s": 6.74,
+   "e": 6.8
+  },
+  {
+   "w": "mer.",
+   "s": 6.86,
+   "e": 7.12
+  },
+  {
+   "w": "Un",
+   "s": 7.46,
+   "e": 7.54
+  },
+  {
+   "w": "seul",
+   "s": 7.6,
+   "e": 7.72
+  },
+  {
+   "w": "acteur,",
+   "s": 7.78,
+   "e": 8.2
+  },
+  {
+   "w": "zéro",
+   "s": 8.64,
+   "e": 8.84
+  },
+  {
+   "w": "tournage",
+   "s": 8.9,
+   "e": 9.32
+  }
+ ],
+ "audio": "chatpub/multi2-voice.wav",
+ "bed": "chatpub/multi2-bed.wav",
+ "hook": [
+  "1 acteur.",
+  "5 décors.",
+  "0 tournage."
+ ],
+ "shots": [
+  {
+   "from": 0,
+   "to": 2.4,
+   "label": "💼 Bureau",
+   "still": "chat/multi2/bureau.jpg"
+  },
+  {
+   "from": 2.4,
+   "to": 3.45,
+   "label": "🪚 Atelier",
+   "still": "chat/multi2/atelier.jpg"
+  },
+  {
+   "from": 3.45,
+   "to": 4.55,
+   "label": "☕ Terrasse",
+   "still": "chat/multi2/terrasse.jpg"
+  },
+  {
+   "from": 4.55,
+   "to": 5.95,
+   "label": "🛋️ Canapé",
+   "still": "chat/multi2/canape.jpg"
+  },
+  {
+   "from": 5.95,
+   "to": 9.62,
+   "label": "🌅 Bord de mer",
+   "still": "chat/multi2/mer.jpg"
+  }
+ ],
+ "endTitle": "Un seul acteur.\nZéro tournage.",
+ "endSub": "Lien en bio pour commencer",
+ "brand": "Growthity",
+ "hot": [
+  "bureau",
+  "l'atelier",
+  "terrasse",
+  "canapé",
+  "mer",
+  "acteur",
+  "zéro",
+  "tournage"
+ ]
+}

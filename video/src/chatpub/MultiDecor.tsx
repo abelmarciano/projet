@@ -6,7 +6,7 @@ import {FONT, DISPLAY, GRAD, INK, Logo, clamp, prog, useFonts} from './SplitChat
 
 type Word = {w: string; s: number; e: number};
 type Shot = {from: number; to: number; label: string; still: string};
-export type MultiCfg = {video: string; videoDur: number; endDur: number; words: Word[]; audio: string; bed: string; hook: string[]; shots: Shot[]; endTitle: string; endSub: string; brand: string; hot?: string[]};
+export type MultiCfg = {video: string; videoDur: number; endDur: number; words: Word[]; audio: string; bed: string; hook: string[]; shots: Shot[]; endTitle: string; endSub: string; brand: string; hot?: string[]; smoothEnd?: boolean; jumps?: number[]};
 
 const Subs: React.FC<{words: Word[]; hot: string[]}> = ({words, hot}) => {
   const f = useCurrentFrame(); const t = f / 30;
@@ -35,20 +35,32 @@ export const MultiDecor: React.FC<{cfg: MultiCfg}> = ({cfg}) => {
   const vEnd = Math.round(cfg.videoDur * 30);
   const cuts = cfg.shots.slice(1).map((s) => Math.round(s.from * 30));
   const flash = cuts.reduce((a, c) => Math.max(a, interpolate(f, [c - 1, c + 1, c + 7], [0, 0.85, 0], clamp)), 0);
-  const punch = cuts.reduce((a, c) => a + interpolate(f, [c, c + 3, c + 14], [0, 1, 0], clamp), 0);
+  const punch = [...cuts, ...(cfg.jumps ?? []).map((j) => Math.round(j * 30))].reduce((a, c) => a + interpolate(f, [c, c + 3, c + 14], [0, 1, 0], clamp), 0);
   const shotI = cfg.shots.findIndex((s) => f / 30 >= s.from && f / 30 < s.to);
   const shot = cfg.shots[shotI];
   const hookP = 1 - prog(f, 52, 10);
   const endF = f - vEnd;
+  // fin douce : le dernier plan se réduit jusqu'à sa case de la grille finale, le fond de fin apparaît derrière
+  const TR = cfg.smoothEnd ? 22 : 0;
+  const m = TR ? interpolate(f, [vEnd - TR, vEnd], [0, 1], {...clamp, easing: (x: number) => 1 - Math.pow(1 - x, 3)}) : 0;
+  const last = cfg.shots.length - 1;
+  const tileW = (1080 - 120 - 36) / 3; const tileX = 60 + (last % 3) * (tileW + 18); const tileY = 190 + Math.floor(last / 3) * 518;
+  const box = {left: m * tileX, top: m * tileY, width: 1080 + m * (tileW - 1080), height: 1920 + m * (500 - 1920)};
+  const total = Math.round((cfg.videoDur + cfg.endDur) * 30);
+  const fadeOut = cfg.smoothEnd ? interpolate(f, [total - 14, total - 1], [0, 1], clamp) : 0;
 
   return (
     <AbsoluteFill style={{background: '#000', fontFamily: FONT}}>
+      {TR > 0 && f >= vEnd - TR && <AbsoluteFill style={{background: 'linear-gradient(160deg, #0B0A1F 0%, #1E1B4B 55%, #4C1D95 100%)', opacity: m}} />}
       <Sequence durationInFrames={vEnd}>
-        <AbsoluteFill style={{transform: `scale(${1.04 + punch * 0.06})`}}>
-          <OffthreadVideo src={staticFile(`media/${cfg.video}`)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-        </AbsoluteFill>
-        <AbsoluteFill style={{background: 'radial-gradient(120% 70% at 50% 45%, transparent 55%, rgba(0,0,0,0.45))'}} />
-        <AbsoluteFill style={{background: '#fff', opacity: flash}} />
+        <div style={{position: 'absolute', ...box, overflow: 'hidden', borderRadius: m * 24, border: m > 0 ? `${3 * m}px solid rgba(255,255,255,${0.85 * m})` : 'none', boxShadow: m > 0 ? '0 20px 50px -14px rgba(0,0,0,0.7)' : 'none', zIndex: 2}}>
+          <AbsoluteFill style={{transform: `scale(${1.04 + punch * 0.06})`}}>
+            <OffthreadVideo src={staticFile(`media/${cfg.video}`)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+          </AbsoluteFill>
+          <AbsoluteFill style={{background: 'radial-gradient(120% 70% at 50% 45%, transparent 55%, rgba(0,0,0,0.45))', opacity: 1 - m}} />
+          <AbsoluteFill style={{background: '#fff', opacity: flash}} />
+        </div>
+        <AbsoluteFill style={{opacity: 1 - m * 1.6, zIndex: 3}}>
 
         {/* hook */}
         {hookP > 0 && (
@@ -72,14 +84,16 @@ export const MultiDecor: React.FC<{cfg: MultiCfg}> = ({cfg}) => {
           );
         })()}
         <Subs words={cfg.words} hot={cfg.hot ?? []} />
+        </AbsoluteFill>
       </Sequence>
 
       {/* end card */}
-      {endF >= 0 && (
-        <AbsoluteFill style={{background: 'linear-gradient(160deg, #0B0A1F 0%, #1E1B4B 55%, #4C1D95 100%)'}}>
+      {(endF >= 0 || (TR > 0 && endF >= -TR + 4)) && (
+        <AbsoluteFill style={{background: TR ? 'transparent' : 'linear-gradient(160deg, #0B0A1F 0%, #1E1B4B 55%, #4C1D95 100%)'}}>
+          {TR > 0 && endF >= 0 && <AbsoluteFill style={{background: 'linear-gradient(160deg, #0B0A1F 0%, #1E1B4B 55%, #4C1D95 100%)', zIndex: -1}} />}
           <div style={{position: 'absolute', left: 60, right: 60, top: 190, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18}}>
             {cfg.shots.map((s, i) => {
-              const p = spring({frame: endF - i * 3, fps: 30, config: {damping: 13}});
+              const p = TR && i === last ? (endF >= 0 ? 1 : 0) : spring({frame: endF + (TR ? TR - 6 : 0) - i * 3, fps: 30, config: {damping: 13}});
               return (
                 <div key={i} style={{gridColumn: i === 4 ? 'span 1' : undefined, position: 'relative', height: 500, borderRadius: 24, overflow: 'hidden', transform: `scale(${0.5 + p * 0.5}) rotate(${(i - 2) * (1 - p) * 8}deg)`, opacity: Math.min(1, p * 1.5), boxShadow: '0 20px 50px -14px rgba(0,0,0,0.7)', border: '3px solid rgba(255,255,255,0.85)'}}>
                   <Img src={staticFile(`media/${s.still}`)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
@@ -98,6 +112,7 @@ export const MultiDecor: React.FC<{cfg: MultiCfg}> = ({cfg}) => {
           </div>
         </AbsoluteFill>
       )}
+      {fadeOut > 0 && <AbsoluteFill style={{background: '#000', opacity: fadeOut, zIndex: 50}} />}
       <Audio src={staticFile(cfg.audio)} />
       <Audio src={staticFile(cfg.bed)} />
     </AbsoluteFill>
