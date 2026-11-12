@@ -24,9 +24,9 @@ export const YtBanner: React.FC = () => {
       {R.map((n, i) => <Tile key={n} n={n} x={[2240, 1990, 2270, 2000][i]} y={[200, 340, 700, 860][i]} r={[7, -4, -6, 5][i]} s={i % 2 ? 0.95 : 1} />)}
       {/* zone sûre 1546×423 */}
       <div style={{position: 'absolute', left: 507, top: 508, width: 1546, height: 423, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 56}}>
-        <div style={{width: 230, height: 230, borderRadius: 64, background: 'linear-gradient(120deg, #2563EB 0%, #5B3FE4 52%, #9333EA 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontFamily: DISPLAY, fontWeight: 700, fontSize: 150, boxShadow: '0 30px 80px -20px rgba(91,63,228,0.9), inset 0 0 0 4px rgba(255,255,255,0.25)', flexShrink: 0}}>G</div>
+        <Img src={staticFile('media/chat/banner/logo.svg')} style={{width: 230, height: 230, flexShrink: 0, filter: 'drop-shadow(0 30px 60px rgba(91,63,228,0.8))'}} />
         <div style={{color: '#fff'}}>
-          <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 150, lineHeight: 0.95, letterSpacing: '-0.03em'}}>Growthity</div>
+          <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 150, lineHeight: 0.95, letterSpacing: '-0.03em'}}>Growthity <span style={{backgroundImage: 'linear-gradient(100deg, #8FA6FF 0%, #A78BFF 45%, #E39BFF 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>AI</span></div>
           <div style={{fontSize: 54, fontWeight: 700, marginTop: 18, lineHeight: 1.1}}>
             Une phrase. <span style={{backgroundImage: 'linear-gradient(100deg, #8FA6FF 0%, #A78BFF 45%, #E39BFF 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>Ta pub Meta est prête.</span>
           </div>

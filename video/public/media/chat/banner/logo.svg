@@ -1,0 +1,16 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="growthity.ai app icon">
+  <defs>
+    <linearGradient id="tile" x1="40" y1="216" x2="216" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2563EB"/><stop offset="0.5" stop-color="#5B3FE4"/><stop offset="1" stop-color="#9333EA"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="256" height="256" rx="58" fill="url(#tile)"/>
+  <g transform="translate(63,63) scale(1.08)">
+    <path d="M22 90 L48 62 L74 71 L99 33" fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M82 39 L99 33 L99.5 51" fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="22" cy="90" r="7" fill="#FFFFFF"/>
+    <circle cx="48" cy="62" r="7" fill="#FFFFFF"/>
+    <circle cx="74" cy="71" r="7" fill="#FFFFFF"/>
+    <path d="M104 16 C104.6 20.2 106.3 21.9 110.5 22.5 C106.3 23.1 104.6 24.8 104 29 C103.4 24.8 101.7 23.1 97.5 22.5 C101.7 21.9 103.4 20.2 104 16 Z" fill="#FFFFFF"/>
+  </g>
+</svg>
