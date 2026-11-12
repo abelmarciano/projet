@@ -363,5 +363,6 @@
   "logo": "SMASH BURGER LYON",
   "offer": "-20 % CE SOIR !",
   "bottom": "COMMANDEZ SUR NOTRE SITE"
- }
+ },
+ "goodSafe": true
 }

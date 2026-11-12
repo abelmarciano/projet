@@ -5,7 +5,7 @@ import {Check, FONT, DISPLAY, GRAD, INK, LINE, Logo, MUTED, SplitCfg, SplitChat,
 
 export type RoastCfg = SplitCfg & {
   episode: number; account: string; badImg: string; badText: string; flaws: {label: string; cue: string}[];
-  ask: string; badMode?: 'wall' | 'landscape' | 'logo' | 'stock' | 'avatar' | 'deadzone'; badDead?: {logo: string; offer: string; bottom: string}; badClaim?: string; badReview?: {stars: string; text: string; who: string}; badSlogan?: string; badLogo?: {name: string; since: string; time: string}; badCaption?: string; flawBoxes?: {l: number; t: number; w: number; h: number; round?: boolean; labelLeft?: number; labelTop?: number}[]; goodVideo: string; goodTitle: string; goodCta: string; scoreBad: number; scoreGood: number;
+  ask: string; badMode?: 'wall' | 'landscape' | 'logo' | 'stock' | 'avatar' | 'deadzone'; badDead?: {logo: string; offer: string; bottom: string}; badClaim?: string; badReview?: {stars: string; text: string; who: string}; badSlogan?: string; badLogo?: {name: string; since: string; time: string}; badCaption?: string; flawBoxes?: {l: number; t: number; w: number; h: number; round?: boolean; labelLeft?: number; labelTop?: number}[]; goodVideo: string; goodTitle: string; goodCta: string; goodSafe?: boolean; scoreBad: number; scoreGood: number;
 };
 
 const Stamp: React.FC<{score: number; at: number; good?: boolean; size?: number}> = ({score, at, good, size = 1}) => {
@@ -185,7 +185,18 @@ const RoastWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
                 <Phone w={370} ring="#8B6DFF">
                   <Sequence from={voila} layout="none"><OffthreadVideo src={staticFile(`media/${cfg.goodVideo}`)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Sequence>
                   <div style={{position: 'absolute', left: 16, right: 16, top: 40, fontFamily: DISPLAY, fontWeight: 700, fontSize: 38, lineHeight: 1.05, color: '#fff', whiteSpace: 'pre-line', textShadow: '0 4px 20px rgba(0,0,0,0.5)', opacity: prog(f, voila + 6, 10)}}>{cfg.goodTitle}</div>
-                  <div style={{position: 'absolute', left: 16, right: 16, bottom: 26, display: 'flex', justifyContent: 'center', opacity: prog(f, voila + 12, 10)}}><div style={{padding: '12px 30px', borderRadius: 99, background: '#fff', color: INK, fontWeight: 800, fontSize: 20}}>{cfg.goodCta}</div></div>
+                  {cfg.goodSafe ? (<>
+                    <div style={{position: 'absolute', left: 16, top: 136, opacity: prog(f, voila + 12, 10)}}><div style={{padding: '11px 24px', borderRadius: 99, background: '#fff', color: INK, fontWeight: 800, fontSize: 19, boxShadow: '0 8px 20px -8px rgba(0,0,0,0.6)'}}>{cfg.goodCta} →</div></div>
+                    <div style={{position: 'absolute', right: 10, bottom: 120, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.7)', opacity: 0.9}}>
+                      {['♡', '💬', '➤', '⋯'].map((t) => <div key={t} style={{fontSize: 24, lineHeight: 1}}>{t}</div>)}
+                    </div>
+                    <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, height: 110, background: 'linear-gradient(transparent, rgba(0,0,0,0.6))'}} />
+                    <div style={{position: 'absolute', left: 12, right: 60, bottom: 20, fontSize: 12, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.7)'}}><b>{cfg.account.replace('@', '')}</b> · Sponsorisé<div style={{opacity: 0.85, marginTop: 3}}>♫ Son original</div></div>
+                    <div style={{position: 'absolute', left: 8, right: 54, top: 26, bottom: 118, border: '3px dashed rgba(34,197,94,0.95)', borderRadius: 14, opacity: prog(f, score2 - 6, 8)}}>
+                      <div style={{position: 'absolute', left: 8, bottom: 6, padding: '3px 9px', borderRadius: 8, background: '#16A34A', color: '#fff', fontSize: 13, fontWeight: 800}}>✓ Zone visible</div>
+                    </div>
+                  </>) : (
+                  <div style={{position: 'absolute', left: 16, right: 16, bottom: 26, display: 'flex', justifyContent: 'center', opacity: prog(f, voila + 12, 10)}}><div style={{padding: '12px 30px', borderRadius: 99, background: '#fff', color: INK, fontWeight: 800, fontSize: 20}}>{cfg.goodCta}</div></div>)}
                   <div style={{position: 'absolute', top: 12, left: 12, display: 'flex', alignItems: 'center', gap: 6, padding: '5px 11px', borderRadius: 99, background: '#fff', fontWeight: 700, fontSize: 15, color: '#15803D'}}><Check s={16} /> Refaite avec {cfg.brand}</div>
                 </Phone>
                 <div style={{position: 'absolute', left: 150, top: 330}}><Stamp score={cfg.scoreGood} at={score2} good /></div>
