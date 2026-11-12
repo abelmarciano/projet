@@ -914,5 +914,53 @@
   "style": 0.35,
   "speed": 1.04,
   "text": "[warmly] Grossiti te génère de nouvelles créas variées, pour ne jamais tomber à court."
+ },
+ "scale-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Ta pub est rentable, et tu as envie de doubler le budget du jour au lendemain. Mauvaise idée."
+ },
+ "scale-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Une hausse brutale peut relancer la phase d'apprentissage. Et tes coûts s'envolent."
+ },
+ "scale-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Avant d'augmenter, vérifie deux choses : tu es sorti de l'apprentissage, et ton coût par résultat est stable."
+ },
+ "scale-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Ensuite, monte par paliers. Petit à petit, en laissant quelques jours à Meta pour s'adapter."
+ },
+ "scale-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Et pour aller plus loin, ajoute de nouvelles créas. Plus de budget, c'est plus de pubs à montrer."
+ },
+ "scale-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[warmly] Grossiti te dit quand augmenter ton budget, et prépare les créas pour suivre."
  }
 }
