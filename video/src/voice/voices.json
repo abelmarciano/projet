@@ -666,5 +666,37 @@
   "style": 0.85,
   "speed": 1.15,
   "text": "[excited] Tu choisis ton produit…"
+ },
+ "av4-a": {
+  "voice": "rbFGGoDXFHtVghjHuS3E",
+  "model": "eleven_v4",
+  "stability": 0.3,
+  "style": 0.7,
+  "speed": 1.08,
+  "text": "[sighs] Faire sa pub tout seul ? [amused] Le trépied qui tombe… la lumière qui ne va jamais… [laughs] et la quinzième prise."
+ },
+ "av4-tr": {
+  "voice": "rbFGGoDXFHtVghjHuS3E",
+  "model": "eleven_v4",
+  "stability": 0.3,
+  "style": 0.7,
+  "speed": 1.08,
+  "text": "[excited] Et avec Grossiti ?"
+ },
+ "av4-b": {
+  "voice": "rbFGGoDXFHtVghjHuS3E",
+  "model": "eleven_v4",
+  "stability": 0.3,
+  "style": 0.7,
+  "speed": 1.08,
+  "text": "[confident] Une phrase… et ta pub est prête."
+ },
+ "av4-end": {
+  "voice": "rbFGGoDXFHtVghjHuS3E",
+  "model": "eleven_v4",
+  "stability": 0.3,
+  "style": 0.7,
+  "speed": 1.08,
+  "text": "[warmly] Ta pub, sans tournage. Avec Grossiti."
  }
 }
