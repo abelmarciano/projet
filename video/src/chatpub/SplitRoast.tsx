@@ -5,7 +5,7 @@ import {Check, FONT, DISPLAY, GRAD, INK, LINE, Logo, MUTED, SplitCfg, SplitChat,
 
 export type RoastCfg = SplitCfg & {
   episode: number; account: string; badImg: string; badText: string; flaws: {label: string; cue: string}[];
-  ask: string; goodVideo: string; goodTitle: string; goodCta: string; scoreBad: number; scoreGood: number;
+  ask: string; badMode?: 'wall' | 'landscape'; badCaption?: string; flawBoxes?: {l: number; t: number; w: number; h: number; round?: boolean; labelLeft?: number; labelTop?: number}[]; goodVideo: string; goodTitle: string; goodCta: string; scoreBad: number; scoreGood: number;
 };
 
 const Stamp: React.FC<{score: number; at: number; good?: boolean; size?: number}> = ({score, at, good, size = 1}) => {
@@ -34,7 +34,7 @@ const RoastWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
   const aie = C('aie'), score1 = C('score1'), redo = C('redo'), voila = C('voila'), score2 = C('score2'), end = C('end');
 
   const shake = f >= aie && f < aie + 12 ? Math.sin((f - aie) * 2.2) * 10 * (1 - (f - aie) / 12) : 0;
-  const scrollFlaw = cfg.flaws.find((x) => x.cue === 'flaw3');
+  const scrollFlaw = cfg.badMode === 'landscape' ? undefined : cfg.flaws.find((x) => x.cue === 'flaw3');
   const sc = scrollFlaw ? C('flaw3') : 9999;
   const swipe = f >= sc && f < sc + 24 ? Math.sin(((f - sc) / 24) * Math.PI) * -160 : 0;
   const phaseB = prog(f, redo - 4, 12);
@@ -54,6 +54,16 @@ const RoastWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
       {/* left: the bad ad */}
       <div style={{position: 'absolute', left: 50, top: 100, transform: `translate(${shake}px, ${swipe}px) scale(${1 - leftDim * 0.12})`, transformOrigin: 'top left'}}>
         <Phone w={370} dim={leftDim}>
+          {cfg.badMode === 'landscape' ? (
+            <div style={{position: 'absolute', inset: 0, background: '#000', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+              <div style={{position: 'absolute', top: 16, left: 14, display: 'flex', alignItems: 'center', gap: 8, color: '#fff'}}>
+                <div style={{width: 30, height: 30, borderRadius: 99, background: '#444'}} />
+                <div style={{fontSize: 15, fontWeight: 700}}>{cfg.account.replace('@', '')}<div style={{fontSize: 11, fontWeight: 500, opacity: 0.7}}>Sponsorisé</div></div>
+              </div>
+              <Img src={staticFile(`media/${cfg.badImg}`)} style={{width: '100%', aspectRatio: '16 / 9', objectFit: 'cover'}} />
+              <div style={{position: 'absolute', left: 14, right: 14, bottom: 22, color: '#fff', fontSize: 13, opacity: 0.85}}>{cfg.badCaption}</div>
+            </div>
+          ) : (<>
           <div style={{display: 'flex', alignItems: 'center', gap: 10, padding: '14px 14px 10px'}}>
             <div style={{width: 34, height: 34, borderRadius: 99, background: '#E5E7EB'}} />
             <div style={{fontSize: 16, fontWeight: 700, color: '#111'}}>{cfg.account.replace('@', '')}<div style={{fontSize: 12, fontWeight: 500, color: '#888'}}>Sponsorisé</div></div>
@@ -64,15 +74,16 @@ const RoastWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
           </div>
           <div style={{margin: '10px 12px', padding: '10px', borderRadius: 8, background: '#EFEFEF', fontSize: 15, fontWeight: 600, color: '#111'}}>En savoir plus ›</div>
           <div style={{padding: '0 12px', fontSize: 13, color: '#333', lineHeight: 1.3}}>{cfg.account.replace('@', '')} Bonjour à tous nous sommes une boutique… <span style={{color: '#999'}}>plus</span></div>
+          </>)}
         </Phone>
         {/* annotations */}
         {cfg.flaws.map((fl, i) => {
           const at = C(fl.cue); if (f < at) return null;
           const p = spring({frame: f - at, fps, config: {damping: 11}});
-          const pos = [{l: 20, t: 120, w: 340, h: 300}, {l: 30, t: 40, w: 300, h: 60}, {l: 300, t: 520, w: 120, h: 120}][i] ?? {l: 0, t: 0, w: 0, h: 0};
+          const pos = (cfg.flawBoxes ?? [{l: 20, t: 120, w: 340, h: 300}, {l: 30, t: 40, w: 300, h: 60}, {l: 300, t: 520, w: 120, h: 120, round: true, labelLeft: -150, labelTop: 30}])[i] ?? {l: 0, t: 0, w: 0, h: 0};
           return (
-            <div key={fl.label} style={{position: 'absolute', left: pos.l, top: pos.t, width: pos.w, height: pos.h, border: '5px solid #DC2626', borderRadius: i === 2 ? 99 : 22, transform: `scale(${0.7 + p * 0.3})`, opacity: Math.min(1, p * 1.6) * (1 - phaseB)}}>
-              <div style={{position: 'absolute', left: i === 2 ? -150 : pos.w - 40, top: i === 2 ? 30 : -26, whiteSpace: 'nowrap', padding: '5px 12px', borderRadius: 10, background: '#DC2626', color: '#fff', fontWeight: 800, fontSize: 19}}>✗ {fl.label}</div>
+            <div key={fl.label} style={{position: 'absolute', left: pos.l, top: pos.t, width: pos.w, height: pos.h, border: '5px solid #DC2626', borderRadius: pos.round ? 99 : 22, transform: `scale(${0.7 + p * 0.3})`, opacity: Math.min(1, p * 1.6) * (1 - phaseB)}}>
+              <div style={{position: 'absolute', left: pos.labelLeft ?? pos.w - 40, top: pos.labelTop ?? -26, whiteSpace: 'nowrap', padding: '5px 12px', borderRadius: 10, background: '#DC2626', color: '#fff', fontWeight: 800, fontSize: 19}}>✗ {fl.label}</div>
             </div>
           );
         })}
