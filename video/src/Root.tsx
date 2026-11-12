@@ -85,6 +85,8 @@ import {VraiFaux, VFCfg} from './brief/VraiFaux';
 import vf1Cfg from './brief/vf1.json';
 import {VraiFaux2} from './brief/VraiFaux2';
 import vf2Cfg from './brief/vf2.json';
+import {VraiFaux3} from './brief/VraiFaux3';
+import vf3Cfg from './brief/vf3.json';
 import learningCfg from './brief/learning.json';
 import {ShowIntro, ShowEnd, SHOW_INTRO, SHOW_END} from './reels/Showcase';
 
@@ -146,6 +148,7 @@ export const Root: React.FC = () => (
     <Composition id="Brief-kpi" component={BriefKpi} durationInFrames={briefTotal(kpiCfg as unknown as KpiCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: kpiCfg as unknown as KpiCfg}} />
     <Composition id="VraiFaux-1" component={VraiFaux} durationInFrames={briefTotal(vf1Cfg as unknown as VFCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: vf1Cfg as unknown as VFCfg}} />
     <Composition id="VraiFaux-2" component={VraiFaux2} durationInFrames={briefTotal(vf2Cfg as unknown as VFCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: vf2Cfg as unknown as VFCfg}} />
+    <Composition id="VraiFaux-3" component={VraiFaux3} durationInFrames={briefTotal(vf3Cfg as unknown as VFCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: vf3Cfg as unknown as VFCfg}} />
     <Composition id="AvantApres3-gel" component={AvantApres3} durationInFrames={AV3_TOTAL} fps={30} width={1080} height={1920} />
     <Composition id="AdEdit-avap-mei" component={AdEdit} durationInFrames={adAvapMei.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvapMei as unknown as AdCfg}} />
     <Composition id="AdEdit-avap2-after" component={AdEdit} durationInFrames={adAvap2After.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvap2After as unknown as AdCfg}} />

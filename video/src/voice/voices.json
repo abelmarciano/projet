@@ -1186,5 +1186,45 @@
   "style": 0.45,
   "speed": 1.06,
   "text": "[warmly] Grossiti crée des pubs pensées pour vendre. Abonne-toi pour le prochain vrai ou faux !"
+ },
+ "vf3-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Vrai ou faux : sur Meta, ta créa compte plus que ton ciblage."
+ },
+ "vf3-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[excited] Vrai ! Aujourd'hui, c'est elle qui fait la différence."
+ },
+ "vf3-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Avec un ciblage large, tes concurrents visent à peu près les mêmes personnes que toi. Ce qui change, c'est ce que tu leur montres."
+ },
+ "vf3-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Alors teste plusieurs angles, plusieurs visages, plusieurs formats. Et garde ce qui marche."
+ },
+ "vf3-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[warmly] Grossiti génère tes créas en série, pour tester plus vite. Abonne-toi pour le prochain vrai ou faux !"
  }
 }
