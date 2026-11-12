@@ -71,6 +71,8 @@ import andromedaCfg from './brief/andromeda.json';
 import {BriefLearning, LearnCfg} from './brief/BriefLearning';
 import {BriefStructure, StructCfg} from './brief/BriefStructure';
 import structureCfg from './brief/structure.json';
+import {BriefFatigue, FatigueCfg} from './brief/BriefFatigue';
+import fatigueCfg from './brief/fatigue.json';
 import learningCfg from './brief/learning.json';
 import {ShowIntro, ShowEnd, SHOW_INTRO, SHOW_END} from './reels/Showcase';
 
@@ -125,6 +127,7 @@ export const Root: React.FC = () => (
     <Composition id="Brief-andromeda" component={BriefAndromeda} durationInFrames={briefTotal(andromedaCfg as unknown as BriefCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: andromedaCfg as unknown as BriefCfg}} />
     <Composition id="Brief-learning" component={BriefLearning} durationInFrames={briefTotal(learningCfg as unknown as LearnCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: learningCfg as unknown as LearnCfg}} />
     <Composition id="Brief-structure" component={BriefStructure} durationInFrames={briefTotal(structureCfg as unknown as StructCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: structureCfg as unknown as StructCfg}} />
+    <Composition id="Brief-fatigue" component={BriefFatigue} durationInFrames={briefTotal(fatigueCfg as unknown as FatigueCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: fatigueCfg as unknown as FatigueCfg}} />
     <Composition id="AvantApres3-gel" component={AvantApres3} durationInFrames={AV3_TOTAL} fps={30} width={1080} height={1920} />
     <Composition id="AdEdit-avap-mei" component={AdEdit} durationInFrames={adAvapMei.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvapMei as unknown as AdCfg}} />
     <Composition id="AdEdit-avap2-after" component={AdEdit} durationInFrames={adAvap2After.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvap2After as unknown as AdCfg}} />

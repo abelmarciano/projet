@@ -866,5 +866,53 @@
   "style": 0.35,
   "speed": 1.04,
   "text": "[warmly] Grossiti organise tes campagnes simplement, et les remplit de créas variées."
+ },
+ "fatigue-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Ta pub cartonnait… et d'un coup, plus rien. C'est la fatigue créative."
+ },
+ "fatigue-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Les mêmes personnes voient ta pub encore et encore. À force, elles ne la regardent même plus."
+ },
+ "fatigue-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Les signes : la fréquence monte, le taux de clic baisse, et ton coût par résultat grimpe."
+ },
+ "fatigue-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Et changer juste la couleur ne suffit pas. Il faut de nouveaux angles, de nouveaux visages, de nouveaux formats."
+ },
+ "fatigue-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Le bon réflexe : ajouter de nouvelles créas régulièrement, avant que les anciennes s'essoufflent."
+ },
+ "fatigue-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[warmly] Grossiti te génère de nouvelles créas variées, pour ne jamais tomber à court."
  }
 }
