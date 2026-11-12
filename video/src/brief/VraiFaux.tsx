@@ -5,7 +5,7 @@ import {DISPLAY, GRAD, INK, MUTED, Check, prog} from '../chatpub/SplitChat';
 import {BriefShell, Grad, Logo, Scene} from './BriefAndromeda';
 
 type Word = {w: string; s: number; e: number};
-export type VFCfg = {episode: number; series: string; epLabel: string; scenes: Scene[]; bed: string; ads: string[]; statement: string; verdict: boolean};
+export type VFCfg = {episode: number; series: string; epLabel: string; scenes: Scene[]; bed: string; ads: string[]; statement: string; verdict: boolean; verdictLine?: [string, string]};
 const sp = (f: number, d = 12) => spring({frame: f, fps: 30, config: {damping: d}});
 const at = (words: Word[], k: string, d = 1) => { const w = words.find((x) => x.w.toLowerCase().includes(k)); return Math.round(((w?.s ?? d) - 0.1) * 30); };
 const RED = '#DC2626';
@@ -67,7 +67,7 @@ const S3: React.FC<{cfg: VFCfg}> = ({cfg}) => {
       <div style={{position: 'absolute', left: 0, right: 0, top: 700, display: 'flex', justifyContent: 'center'}}>
         <div style={{padding: '30px 80px', borderRadius: 40, border: `14px solid ${col}`, color: col, fontFamily: DISPLAY, fontWeight: 700, fontSize: 200, letterSpacing: '0.04em', transform: `scale(${2.2 - stamp * 1.2}) rotate(-8deg)`, opacity: Math.min(1, stamp * 1.5), background: 'rgba(255,255,255,0.85)'}}>{win}</div>
       </div>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 1110, textAlign: 'center', fontSize: 44, fontWeight: 800, color: INK, opacity: prog(f, 26, 8)}}>En général, c’est même <span style={{color: col}}>l’inverse.</span></div>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 1110, textAlign: 'center', fontSize: 44, fontWeight: 800, color: INK, opacity: prog(f, 26, 8)}}>{cfg.verdictLine ? <>{cfg.verdictLine[0]} <span style={{color: col}}>{cfg.verdictLine[1]}</span></> : <>En général, c’est même <span style={{color: col}}>l’inverse.</span></>}</div>
     </AbsoluteFill>
   );
 };
@@ -149,6 +149,7 @@ const S6: React.FC<{ads: string[]}> = ({ads}) => {
   );
 };
 
+export {S1 as VFS1, S2 as VFS2, S3 as VFS3, S6 as VFS6};
 export const VraiFaux: React.FC<{cfg: VFCfg}> = ({cfg}) => (
   <BriefShell cfg={cfg} comps={[<S1 key={0} cfg={cfg} />, <S2 key={1} cfg={cfg} />, <S3 key={2} cfg={cfg} />, <S4 key={3} words={cfg.scenes[3].words} />, <S5 key={4} words={cfg.scenes[4].words} ads={cfg.ads} />, <S6 key={5} ads={cfg.ads} />]} />
 );

@@ -1146,5 +1146,45 @@
   "style": 0.45,
   "speed": 1.06,
   "text": "[warmly] Grossiti fabrique ces créas pour toi. Abonne-toi pour le prochain vrai ou faux !"
+ },
+ "vf2-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Vrai ou faux : une pub qui fait plein de likes, c'est une pub qui vend."
+ },
+ "vf2-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[excited] Faux ! Les likes ne paient pas tes factures."
+ },
+ "vf2-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Si ta campagne vise l'engagement, Meta te trouve des gens qui likent. Pas des gens qui achètent."
+ },
+ "vf2-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Choisis l'objectif Ventes, et juge ta pub sur ton coût par achat."
+ },
+ "vf2-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[warmly] Grossiti crée des pubs pensées pour vendre. Abonne-toi pour le prochain vrai ou faux !"
  }
 }
