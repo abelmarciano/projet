@@ -37,7 +37,18 @@ def typing(a, b):
 if 'ask1' in Q and 'ask2' in Q:
     for a, b in [('ask1', 'send1'), ('ask2', 'send2')]:
         typing(Q[a], Q[b]); add(sfx, click(1.2), Q[b], 0.5); add(sfx, whoosh(0.4), Q[b] + 0.05, 0.22)
-if 'femme' in Q:  # réponse « acteurs fake » : catalogue
+if 'flaw1' in Q:  # « Je note vos pubs »
+    add(sfx, whoosh(0.3), Q['aie'] - 0.15, 0.2); add(sfx, boom(), Q['aie'], 0.1)
+    for k in ['flaw1', 'flaw2', 'flaw3']: add(sfx, pop_sfx(), Q[k], 0.32)
+    add(sfx, whoosh(0.4), Q['flaw3'], 0.2)
+    add(sfx, boom(), Q['score1'], 0.3); add(sfx, click(0.6), Q['score1'], 0.4)
+    add(sfx, whoosh(0.4), Q['redo'] - 0.1, 0.24)
+    t = Q['redo'] + 0.15
+    while t < Q['voila'] - 0.4: add(sfx, click(1.6), t, 0.12); t += 0.08 + rng.random() * 0.05
+    add(sfx, whoosh(0.5), Q['voila'] - 0.2, 0.3); add(sfx, chime(86), Q['voila'], 0.18)
+    add(sfx, boom(), Q['score2'], 0.22); add(sfx, chime(93), Q['score2'], 0.2)
+    add(sfx, pop_sfx(), Q['end'], 0.3)
+elif 'femme' in Q:  # réponse « acteurs fake » : catalogue
     add(sfx, pop_sfx(), 0.07, 0.3); add(sfx, whoosh(0.35), Q['open'] - 0.2, 0.22)
     for i in range(8): add(sfx, pop_sfx(), Q['open'] + i * 2 / 30, 0.12)
     for k in ['femme', 'homme']: add(sfx, click(1.4), Q[k], 0.35)

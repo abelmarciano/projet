@@ -1,0 +1,288 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "actor": {
+  "name": "Guillaume B.",
+  "img": "chat/actors/a180.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "words": [
+  {
+   "w": "Je",
+   "s": 0.3,
+   "e": 0.38
+  },
+  {
+   "w": "note",
+   "s": 0.42,
+   "e": 0.6
+  },
+  {
+   "w": "vos",
+   "s": 0.64,
+   "e": 0.78
+  },
+  {
+   "w": "pubs.",
+   "s": 0.82,
+   "e": 1.1
+  },
+  {
+   "w": "Celle-là,",
+   "s": 1.42,
+   "e": 1.84
+  },
+  {
+   "w": "aïe.",
+   "s": 2.38,
+   "e": 2.62
+  },
+  {
+   "w": "Un",
+   "s": 3.28,
+   "e": 3.36
+  },
+  {
+   "w": "mur",
+   "s": 3.42,
+   "e": 3.58
+  },
+  {
+   "w": "de",
+   "s": 3.62,
+   "e": 3.74
+  },
+  {
+   "w": "texte,",
+   "s": 3.8,
+   "e": 4.08
+  },
+  {
+   "w": "aucune",
+   "s": 4.24,
+   "e": 4.5
+  },
+  {
+   "w": "accroche,",
+   "s": 4.56,
+   "e": 4.9
+  },
+  {
+   "w": "on",
+   "s": 5.0,
+   "e": 5.06
+  },
+  {
+   "w": "scrolle",
+   "s": 5.1,
+   "e": 5.34
+  },
+  {
+   "w": "direct.",
+   "s": 5.38,
+   "e": 5.76
+  },
+  {
+   "w": "Deux",
+   "s": 6.12,
+   "e": 6.22
+  },
+  {
+   "w": "sur",
+   "s": 6.28,
+   "e": 6.42
+  },
+  {
+   "w": "dix.",
+   "s": 6.46,
+   "e": 6.76
+  },
+  {
+   "w": "Allez,",
+   "s": 7.24,
+   "e": 7.4
+  },
+  {
+   "w": "je",
+   "s": 7.58,
+   "e": 7.62
+  },
+  {
+   "w": "la",
+   "s": 7.66,
+   "e": 7.74
+  },
+  {
+   "w": "refais",
+   "s": 7.8,
+   "e": 8.2
+  },
+  {
+   "w": "avec",
+   "s": 8.28,
+   "e": 8.46
+  },
+  {
+   "w": "Growthity,",
+   "s": 8.5,
+   "e": 9.04
+  },
+  {
+   "w": "une",
+   "s": 9.48,
+   "e": 9.64
+  },
+  {
+   "w": "phrase.",
+   "s": 9.66,
+   "e": 10.1
+  },
+  {
+   "w": "Et",
+   "s": 10.52,
+   "e": 10.6
+  },
+  {
+   "w": "voilà.",
+   "s": 10.62,
+   "e": 10.84
+  },
+  {
+   "w": "Ça,",
+   "s": 11.94,
+   "e": 12.02
+  },
+  {
+   "w": "c'est",
+   "s": 12.12,
+   "e": 12.2
+  },
+  {
+   "w": "une",
+   "s": 12.24,
+   "e": 12.38
+  },
+  {
+   "w": "pub.",
+   "s": 12.42,
+   "e": 12.62
+  },
+  {
+   "w": "Neuf",
+   "s": 13.14,
+   "e": 13.3
+  },
+  {
+   "w": "sur",
+   "s": 13.36,
+   "e": 13.5
+  },
+  {
+   "w": "dix.",
+   "s": 13.54,
+   "e": 13.78
+  },
+  {
+   "w": "Envoyez-moi",
+   "s": 14.12,
+   "e": 14.5
+  },
+  {
+   "w": "les",
+   "s": 14.54,
+   "e": 14.62
+  },
+  {
+   "w": "vôtres",
+   "s": 14.64,
+   "e": 14.86
+  }
+ ],
+ "video": "fal/roast/corinne-ext.mp4",
+ "total": 490,
+ "audio": "chatpub/roast-voice.wav",
+ "bed": "chatpub/roast-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "cues": {
+  "look": 1.42,
+  "aie": 2.38,
+  "flaw1": 3.42,
+  "flaw2": 4.24,
+  "flaw3": 5.1,
+  "score1": 6.12,
+  "redo": 7.24,
+  "voila": 10.52,
+  "score2": 13.14,
+  "end": 14.12,
+  "scale": 0.86,
+  "cropTop": 311
+ },
+ "steps": [
+  [
+   "Défaut n°1",
+   "flaw1"
+  ],
+  [
+   "Défaut n°2",
+   "flaw2"
+  ],
+  [
+   "Défaut n°3",
+   "flaw3"
+  ],
+  [
+   "La note",
+   "score1"
+  ],
+  [
+   "Refaite",
+   "voila"
+  ],
+  [
+   "À toi !",
+   "end"
+  ]
+ ],
+ "punches": [
+  "score1",
+  "voila",
+  "score2"
+ ],
+ "episode": 1,
+ "account": "@boutique.lumi",
+ "badImg": "chat/roast/bad.png",
+ "badText": "PROMO EXCEPTIONNELLE !!! BOUGIE PARFUMÉE DE QUALITÉ FABRIQUÉE AVEC SOIN DISPONIBLE EN PLUSIEURS PARFUMS LIVRAISON RAPIDE CLIQUEZ ICI POUR EN SAVOIR PLUS SUR NOTRE BOUTIQUE !!!",
+ "flaws": [
+  {
+   "label": "Mur de texte",
+   "cue": "flaw1"
+  },
+  {
+   "label": "Aucune accroche",
+   "cue": "flaw2"
+  },
+  {
+   "label": "On scrolle direct",
+   "cue": "flaw3"
+  }
+ ],
+ "ask": "Refais cette pub : bougie parfumée, ambiance cocooning, ton chaleureux.",
+ "goodVideo": "chat/roast/good.mp4",
+ "goodTitle": "Ce soir,\non ralentit. 🕯️",
+ "goodCta": "Commander",
+ "scoreBad": 2,
+ "scoreGood": 9,
+ "hot": [
+  "aïe",
+  "texte",
+  "accroche",
+  "scrolle",
+  "deux",
+  "Growthity",
+  "voilà",
+  "neuf",
+  "vôtres"
+ ]
+}
