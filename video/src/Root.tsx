@@ -50,6 +50,8 @@ import split6Cfg from './chatpub/split6.json';
 import {SplitEdit, EditCfg} from './chatpub/SplitEdit';
 import split7Cfg from './chatpub/split7.json';
 import replyCfg from './chatpub/reply.json';
+import {SplitCatalog, CatalogCfg} from './chatpub/SplitCatalog';
+import reply2Cfg from './chatpub/reply2.json';
 import {ShowIntro, ShowEnd, SHOW_INTRO, SHOW_END} from './reels/Showcase';
 
 export const Root: React.FC = () => (
@@ -88,6 +90,7 @@ export const Root: React.FC = () => (
     <Composition id="SplitBatch-adrien" component={SplitBatch} durationInFrames={split6Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: split6Cfg as unknown as BatchCfg}} />
     <Composition id="SplitEdit-adrien" component={SplitEdit} durationInFrames={split7Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: split7Cfg as unknown as EditCfg}} />
     <Composition id="Reply-aicha" component={SplitChat} durationInFrames={replyCfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: replyCfg as unknown as SplitCfg}} />
+    <Composition id="Reply2-aicha" component={SplitCatalog} durationInFrames={reply2Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: reply2Cfg as unknown as CatalogCfg}} />
     <Composition id="AvantApres3-gel" component={AvantApres3} durationInFrames={AV3_TOTAL} fps={30} width={1080} height={1920} />
     <Composition id="AdEdit-avap-mei" component={AdEdit} durationInFrames={adAvapMei.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvapMei as unknown as AdCfg}} />
     <Composition id="AdEdit-avap2-after" component={AdEdit} durationInFrames={adAvap2After.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvap2After as unknown as AdCfg}} />

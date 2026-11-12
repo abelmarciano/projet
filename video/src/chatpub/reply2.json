@@ -1,0 +1,326 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "words": [
+  {
+   "w": "Les",
+   "s": 0.42,
+   "e": 0.54
+  },
+  {
+   "w": "acteurs",
+   "s": 0.6,
+   "e": 0.94
+  },
+  {
+   "w": "IA,",
+   "s": 1.0,
+   "e": 1.22
+  },
+  {
+   "w": "ça",
+   "s": 1.46,
+   "e": 1.54
+  },
+  {
+   "w": "fait",
+   "s": 1.6,
+   "e": 1.7
+  },
+  {
+   "w": "trop",
+   "s": 1.74,
+   "e": 1.92
+  },
+  {
+   "w": "fake?",
+   "s": 1.96,
+   "e": 2.2
+  },
+  {
+   "w": "Franchement,",
+   "s": 2.86,
+   "e": 3.2
+  },
+  {
+   "w": "regarde.",
+   "s": 3.26,
+   "e": 3.64
+  },
+  {
+   "w": "Dans",
+   "s": 4.18,
+   "e": 4.28
+  },
+  {
+   "w": "Growthity,",
+   "s": 4.32,
+   "e": 4.74
+  },
+  {
+   "w": "t'as",
+   "s": 4.86,
+   "e": 4.94
+  },
+  {
+   "w": "un",
+   "s": 4.96,
+   "e": 5.06
+  },
+  {
+   "w": "catalogue",
+   "s": 5.08,
+   "e": 5.48
+  },
+  {
+   "w": "d'acteurs",
+   "s": 5.52,
+   "e": 6.04
+  },
+  {
+   "w": "ultra-réalistes.",
+   "s": 6.12,
+   "e": 6.98
+  },
+  {
+   "w": "Tu",
+   "s": 7.36,
+   "e": 7.44
+  },
+  {
+   "w": "filtres",
+   "s": 7.54,
+   "e": 7.8
+  },
+  {
+   "w": "femme,",
+   "s": 8.18,
+   "e": 8.44
+  },
+  {
+   "w": "homme,",
+   "s": 8.8,
+   "e": 9.04
+  },
+  {
+   "w": "style,",
+   "s": 9.4,
+   "e": 9.7
+  },
+  {
+   "w": "âge,",
+   "s": 10.06,
+   "e": 10.28
+  },
+  {
+   "w": "tu",
+   "s": 10.5,
+   "e": 10.58
+  },
+  {
+   "w": "cliques",
+   "s": 10.66,
+   "e": 10.94
+  },
+  {
+   "w": "et",
+   "s": 11.3,
+   "e": 11.36
+  },
+  {
+   "w": "ils",
+   "s": 11.38,
+   "e": 11.46
+  },
+  {
+   "w": "parlent",
+   "s": 11.5,
+   "e": 11.64
+  },
+  {
+   "w": "dans",
+   "s": 11.66,
+   "e": 11.76
+  },
+  {
+   "w": "ta",
+   "s": 11.78,
+   "e": 11.86
+  },
+  {
+   "w": "pub.",
+   "s": 11.94,
+   "e": 12.16
+  },
+  {
+   "w": "Et",
+   "s": 12.62,
+   "e": 12.68
+  },
+  {
+   "w": "le",
+   "s": 12.72,
+   "e": 12.78
+  },
+  {
+   "w": "meilleur?",
+   "s": 12.82,
+   "e": 13.14
+  },
+  {
+   "w": "Aucun",
+   "s": 13.8,
+   "e": 14.04
+  },
+  {
+   "w": "de",
+   "s": 14.06,
+   "e": 14.1
+  },
+  {
+   "w": "ces",
+   "s": 14.12,
+   "e": 14.24
+  },
+  {
+   "w": "acteurs",
+   "s": 14.3,
+   "e": 14.54
+  },
+  {
+   "w": "n'existe",
+   "s": 14.56,
+   "e": 15.0
+  }
+ ],
+ "video": "fal/reply/aicha2-ext.mp4",
+ "total": 487,
+ "audio": "chatpub/reply2-voice.wav",
+ "bed": "chatpub/reply2-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "actor": {
+  "name": "Camille C.",
+  "img": "chat/reply/actrice.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "cues": {
+  "look": 3.26,
+  "open": 0.3,
+  "femme": 8.18,
+  "homme": 8.8,
+  "style": 9.4,
+  "age": 10.06,
+  "pick": 10.66,
+  "reveal": 13.8,
+  "scale": 0.86,
+  "cropTop": 242
+ },
+ "steps": [
+  [
+   "Le catalogue",
+   "open"
+  ],
+  [
+   "Femme",
+   "femme"
+  ],
+  [
+   "Homme",
+   "homme"
+  ],
+  [
+   "Style",
+   "style"
+  ],
+  [
+   "Âge",
+   "age"
+  ],
+  [
+   "Ton acteur",
+   "pick"
+  ]
+ ],
+ "punches": [
+  "open",
+  "reveal"
+ ],
+ "comment": {
+  "user": "@marc.ecom",
+  "text": "Les acteurs IA, ça fait trop fake non ? 😬",
+  "color": "#3B82F6",
+  "until": 2.5
+ },
+ "actors": [
+  {
+   "name": "Marion",
+   "video": "chat/catalog/marion.mp4",
+   "gender": "f",
+   "age": "25-35",
+   "style": "Casual"
+  },
+  {
+   "name": "Arthur",
+   "video": "chat/catalog/arthur.mp4",
+   "gender": "m",
+   "age": "25-35",
+   "style": "Lifestyle"
+  },
+  {
+   "name": "Damien",
+   "video": "chat/catalog/damien.mp4",
+   "gender": "m",
+   "age": "30-40",
+   "style": "Casual"
+  },
+  {
+   "name": "Elsa",
+   "video": "chat/catalog/elsa.mp4",
+   "gender": "f",
+   "age": "18-25",
+   "style": "Créatif"
+  },
+  {
+   "name": "Baptiste",
+   "video": "chat/catalog/baptiste.mp4",
+   "gender": "m",
+   "age": "25-35",
+   "style": "Lifestyle"
+  },
+  {
+   "name": "Kenza",
+   "video": "chat/catalog/kenza.mp4",
+   "gender": "f",
+   "age": "18-25",
+   "style": "Casual"
+  },
+  {
+   "name": "Lila",
+   "video": "chat/catalog/lila.mp4",
+   "gender": "f",
+   "age": "18-25",
+   "style": "Casual"
+  },
+  {
+   "name": "Kenji",
+   "video": "chat/catalog/kenji.mp4",
+   "gender": "m",
+   "age": "25-35",
+   "style": "Tech"
+  }
+ ],
+ "pickIndex": 5,
+ "reveal": "Aucun de ces acteurs n’existe 🤯",
+ "hot": [
+  "fake",
+  "réalistes",
+  "Growthity",
+  "femme",
+  "homme",
+  "style",
+  "âge",
+  "existe"
+ ]
+}

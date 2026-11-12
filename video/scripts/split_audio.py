@@ -37,7 +37,14 @@ def typing(a, b):
 if 'ask1' in Q and 'ask2' in Q:
     for a, b in [('ask1', 'send1'), ('ask2', 'send2')]:
         typing(Q[a], Q[b]); add(sfx, click(1.2), Q[b], 0.5); add(sfx, whoosh(0.4), Q[b] + 0.05, 0.22)
-if 'drop' in Q:  # split « montage viral »
+if 'femme' in Q:  # réponse « acteurs fake » : catalogue
+    add(sfx, pop_sfx(), 0.07, 0.3); add(sfx, whoosh(0.35), Q['open'] - 0.2, 0.22)
+    for i in range(8): add(sfx, pop_sfx(), Q['open'] + i * 2 / 30, 0.12)
+    for k in ['femme', 'homme']: add(sfx, click(1.4), Q[k], 0.35)
+    for k in ['style', 'age']: add(sfx, pop_sfx(), Q[k], 0.25)
+    add(sfx, click(1.2), Q['pick'], 0.5); add(sfx, whoosh(0.4), Q['pick'] + 0.05, 0.22); add(sfx, chime(86), Q['pick'] + 0.35, 0.14)
+    add(sfx, boom(), Q['reveal'], 0.2); add(sfx, chime(93), Q['reveal'] + 0.1, 0.18)
+elif 'drop' in Q:  # split « montage viral »
     add(sfx, pop_sfx(), Q['drop'], 0.35); add(sfx, whoosh(0.3), Q['drop'] - 0.2, 0.18)
     typing(Q['ask1'], Q['send1']); add(sfx, click(1.2), Q['send1'], 0.5); add(sfx, whoosh(0.4), Q['send1'] + 0.05, 0.22)
     for k in range(3): add(sfx, click(1.6), Q['cut'] + k * 0.18, 0.3)
