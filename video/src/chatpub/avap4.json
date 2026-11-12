@@ -103,7 +103,42 @@
    }
   ],
   "prompt": "Une pub UGC pour mon sac en cuir SORA, actrice chic, terrasse parisienne.",
-  "dur": 2.2
+  "dur": 3.8,
+  "voAt": 1.72,
+  "readyAt": 3.0,
+  "lockAt": 2.3,
+  "pick": 3,
+  "pickLabel": "Margaux A. · Chic · voix FR",
+  "actors": [
+   {
+    "img": "chat/banner/aicha.jpg",
+    "name": "Aïcha"
+   },
+   {
+    "img": "chat/banner/kenza.jpg",
+    "name": "Kenza"
+   },
+   {
+    "img": "chat/banner/marion.jpg",
+    "name": "Marion"
+   },
+   {
+    "img": "chat/avap4/margaux.jpg",
+    "name": "Margaux A."
+   },
+   {
+    "img": "chat/banner/naomi.jpg",
+    "name": "Naomi"
+   },
+   {
+    "img": "chat/banner/alice.jpg",
+    "name": "Alice"
+   },
+   {
+    "img": "chat/banner/lila.jpg",
+    "name": "Lila"
+   }
+  ]
  },
  "after": {
   "video": "fal/avap4/apres-cut.mp4",
