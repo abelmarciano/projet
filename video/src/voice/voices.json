@@ -770,5 +770,53 @@
   "style": 0.35,
   "speed": 1.04,
   "text": "[warmly] C'est exactement ce que fait Grossiti : des séries de pubs variées, prêtes pour Andro-méda."
+ },
+ "learn-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[confident] Tu modifies ta campagne tous les jours ? Tu la sabotes. Je t'explique."
+ },
+ "learn-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[calm] Quand tu lances une campagne, Meta entre en phase d'apprentissage : il teste, il observe, il ajuste."
+ },
+ "learn-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[explaining] En général, il lui faut environ cinquante résultats en une semaine pour se stabiliser."
+ },
+ "learn-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[serious] Mais à chaque grosse modification, le budget, le ciblage, la créa… il repart en apprentissage."
+ },
+ "learn-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[calm] Donc : laisse tourner, regroupe tes budgets, et juge sur sept jours, pas sur une journée."
+ },
+ "learn-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[warmly] Grossiti surveille tes campagnes, et te dit quand agir… et quand ne rien toucher."
  }
 }

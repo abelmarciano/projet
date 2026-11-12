@@ -4,15 +4,16 @@ import {AbsoluteFill, Audio, Img, Sequence, interpolate, spring, staticFile, use
 import {FONT, DISPLAY, GRAD, INK, MUTED, Check, clamp, prog, useFonts} from '../chatpub/SplitChat';
 
 type Word = {w: string; s: number; e: number};
-type Scene = {vo: string; dur: number; words: Word[]};
+export type Word2 = Word;
+export type Scene = {vo: string; dur: number; words: Word[]};
 export type BriefCfg = {episode: number; title: string; scenes: Scene[]; bed: string; ads: {img: string; label: string}[]; personas: string[]; finalAds: string[]};
 
-const PURPLE = '#5B3FE4';
-const Logo: React.FC<{s: number}> = ({s}) => <Img src={staticFile('media/chat/banner/logo.svg')} style={{width: s, height: s}} />;
-const ease = {...clamp, easing: Easing.bezier(0.22, 1, 0.36, 1)};
+export const PURPLE = '#5B3FE4';
+export const Logo: React.FC<{s: number}> = ({s}) => <Img src={staticFile('media/chat/banner/logo.svg')} style={{width: s, height: s}} />;
+export const ease = {...clamp, easing: Easing.bezier(0.22, 1, 0.36, 1)};
 
 // sous-titres intégrés (foncés, mot par mot)
-const Subs: React.FC<{words: Word[]}> = ({words}) => {
+export const Subs: React.FC<{words: Word[]}> = ({words}) => {
   const f = useCurrentFrame(); const t = f / 30;
   const groups: Word[][] = []; let g: Word[] = [];
   words.forEach((w) => { g.push(w); if (g.length === 4 || /[.,:;!?…]$/.test(w.w)) { groups.push(g); g = []; } });
@@ -29,15 +30,15 @@ const Subs: React.FC<{words: Word[]}> = ({words}) => {
   );
 };
 
-const Label: React.FC<{text: string; color?: string; at?: number}> = ({text, color = PURPLE, at = 0}) => {
+export const Label: React.FC<{text: string; color?: string; at?: number}> = ({text, color = PURPLE, at = 0}) => {
   const f = useCurrentFrame(); const p = prog(f, at, 10);
   return <div style={{position: 'absolute', left: 80, top: 330, display: 'flex', alignItems: 'center', gap: 12, fontSize: 30, fontWeight: 800, letterSpacing: '0.16em', color, opacity: p, transform: `translateX(${(1 - p) * -30}px)`}}><div style={{width: 14, height: 14, borderRadius: 99, background: color}} />{text}</div>;
 };
-const Headline: React.FC<{children: React.ReactNode; at?: number; top?: number}> = ({children, at = 4, top = 390}) => {
+export const Headline: React.FC<{children: React.ReactNode; at?: number; top?: number}> = ({children, at = 4, top = 390}) => {
   const f = useCurrentFrame(); const p = prog(f, at, 12);
   return <div style={{position: 'absolute', left: 80, right: 80, top, fontFamily: DISPLAY, fontWeight: 700, fontSize: 76, lineHeight: 1.05, letterSpacing: '-0.025em', color: INK, opacity: p, transform: `translateY(${(1 - p) * 26}px)`}}>{children}</div>;
 };
-const Grad: React.FC<{children: React.ReactNode}> = ({children}) => <span style={{backgroundImage: GRAD, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>{children}</span>;
+export const Grad: React.FC<{children: React.ReactNode}> = ({children}) => <span style={{backgroundImage: GRAD, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>{children}</span>;
 
 // --- S1 : titre + orbites
 const S1: React.FC = () => {
@@ -206,16 +207,15 @@ const S6: React.FC<{ads: string[]; brand: string}> = ({ads, brand}) => {
   );
 };
 
-export const briefTotal = (c: BriefCfg) => Math.round(c.scenes.reduce((a, s) => a + s.dur, 0) * 30);
+export const briefTotal = (c: {scenes: Scene[]}) => Math.round(c.scenes.reduce((a, s) => a + s.dur, 0) * 30);
 
-export const BriefAndromeda: React.FC<{cfg: BriefCfg}> = ({cfg}) => {
+export const BriefShell: React.FC<{cfg: {episode: number; scenes: Scene[]; bed: string}; comps: React.ReactNode[]}> = ({cfg, comps}) => {
   useFonts();
   const f = useCurrentFrame();
   const starts: number[] = []; let acc = 0;
   cfg.scenes.forEach((s) => { starts.push(acc); acc += Math.round(s.dur * 30); });
   const total = acc;
   const cur = starts.filter((s) => f >= s).length - 1;
-  const comps = [<S1 key={0} />, <S2 key={1} words={cfg.scenes[1].words} />, <S3 key={2} ads={cfg.ads.map((a) => a.img)} />, <S4 key={3} ads={cfg.ads} personas={cfg.personas} />, <S5 key={4} words={cfg.scenes[4].words} />, <S6 key={5} ads={cfg.finalAds} brand="Growthity" />];
   return (
     <AbsoluteFill style={{background: '#F7F6F3', fontFamily: FONT, overflow: 'hidden'}}>
       <AbsoluteFill style={{backgroundImage: 'linear-gradient(rgba(15,23,42,0.045) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(15,23,42,0.045) 1.5px, transparent 1.5px)', backgroundSize: '60px 60px'}} />
@@ -244,3 +244,7 @@ export const BriefAndromeda: React.FC<{cfg: BriefCfg}> = ({cfg}) => {
     </AbsoluteFill>
   );
 };
+
+export const BriefAndromeda: React.FC<{cfg: BriefCfg}> = ({cfg}) => (
+  <BriefShell cfg={cfg} comps={[<S1 key={0} />, <S2 key={1} words={cfg.scenes[1].words} />, <S3 key={2} ads={cfg.ads.map((a) => a.img)} />, <S4 key={3} ads={cfg.ads} personas={cfg.personas} />, <S5 key={4} words={cfg.scenes[4].words} />, <S6 key={5} ads={cfg.finalAds} brand="Growthity" />]} />
+);
