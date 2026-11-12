@@ -20,10 +20,10 @@ const Subs: React.FC<{words: Word[]}> = ({words}) => {
   const cur = groups.find((gr, i) => t >= gr[0].s - 0.05 && t < Math.min(groups[i + 1]?.[0].s ?? 99, gr[gr.length - 1].e + 0.35) - 0.05);
   if (!cur) return null;
   return (
-    <div style={{position: 'absolute', left: 60, right: 60, top: 1590, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 14, zIndex: 30}}>
+    <div style={{position: 'absolute', left: 80, right: 150, top: 1330, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 12, zIndex: 30}}>
       {cur.map((w, i) => {
         const on = t >= w.s - 0.03;
-        return <span key={i} style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 58, lineHeight: 1.1, color: on ? INK : 'rgba(15,23,42,0.25)'}}>{w.w.replace(/[«»"]/g, '')}</span>;
+        return <span key={i} style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 54, lineHeight: 1.1, color: on ? INK : 'rgba(15,23,42,0.25)'}}>{w.w.replace(/[«»"]/g, '')}</span>;
       })}
     </div>
   );
@@ -233,7 +233,7 @@ export const BriefAndromeda: React.FC<{cfg: BriefCfg}> = ({cfg}) => {
         const d = Math.round(s.dur * 30);
         return (
           <Sequence key={i} from={starts[i]} durationInFrames={d}>
-            <AbsoluteFill style={{opacity: interpolate(f - starts[i], [0, 8, d - 6, d], [0, 1, 1, i === cfg.scenes.length - 1 ? 1 : 0], clamp), transform: `translateY(${interpolate(f - starts[i], [0, 10], [30, 0], ease)}px)`}}>{comps[i]}</AbsoluteFill>
+            <AbsoluteFill style={{opacity: interpolate(f - starts[i], [0, 8, d - 6, d], [0, 1, 1, i === cfg.scenes.length - 1 ? 1 : 0], clamp), transform: `translateY(${interpolate(f - starts[i], [0, 10], [30, 0], ease)}px)`}}><AbsoluteFill style={{transform: 'scale(0.84)', transformOrigin: '50% 330px'}}>{comps[i]}</AbsoluteFill></AbsoluteFill>
             <Subs words={s.words} />
             <Sequence from={4}><Audio src={staticFile(s.vo)} /></Sequence>
           </Sequence>
