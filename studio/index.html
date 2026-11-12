@@ -375,6 +375,9 @@ tbody tr:hover td { background: var(--hover) }
 .ed-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px }
 .crumb { font-size: 12.5px; color: var(--muted); font-weight: 500; display: flex; gap: 6px; align-items: center }
 .crumb a { text-decoration: none } .crumb a:hover { color: var(--ink) }
+.mnav { display: inline-flex; align-items: center; gap: 4px; padding: 3px; border: 1px solid var(--line, #E6E5EC); border-radius: 12px; background: #fff }
+.mnav .btn.icon { border: 0; box-shadow: none }
+.mnav span { font-size: 12.5px; font-weight: 650; color: var(--ink-2); min-width: 54px; text-align: center }
 .ed-top h1 { margin: 0; font: 650 21px var(--f-display); letter-spacing: -.03em; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
 .saved { font-size: 12px; color: var(--muted); font-weight: 500; display: inline-flex; gap: 6px; align-items: center }
 .saved::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--st-live) }
@@ -961,11 +964,21 @@ function vAds(main) {
 }
 
 // ---------- medias ----------
+// Liste des médias selon les filtres et la recherche de la page Médias (sert aussi aux flèches de la fiche).
+function mediaList() {
+  const f = S.mf; const q = S.q.trim().toLowerCase();
+  return S.media.filter((m) => (f.format === 'all' || m.format === f.format) && (f.kind === 'all' || m.kind === f.kind) && (!f.cat || f.cat === 'all' || (f.cat === '__redo' ? m.redo : f.cat === '__fav' ? m.fav : m.category === f.cat)) && (!f.vt || f.vt === 'all' || (f.vt === '__none' ? !m.vtype : m.vtype === f.vt)) && (!q || (m.title + ' ' + (m.niche || '') + ' ' + (m.note || '') + ' ' + (m.category || '') + ' ' + (m.vtype || '')).toLowerCase().includes(q)));
+}
+function mediaNav(d) {
+  const L = mediaList(); const all = L.some((m) => m.id === S.md?.id) ? L : S.media;
+  const i = all.findIndex((m) => m.id === S.md?.id); if (i < 0 || all.length < 2) return;
+  const n = all[(i + d + all.length) % all.length]; closePlayer(); go('media-' + n.id);
+}
 function vMedias(main) {
   const f = S.mf; const q = S.q.trim().toLowerCase();
   const cats = {}; S.media.forEach((m) => { if (m.category) cats[m.category] = (cats[m.category] || 0) + 1; });
   const nRedo = S.media.filter((m) => m.redo).length; const nFav = S.media.filter((m) => m.fav).length;
-  const list = S.media.filter((m) => (f.format === 'all' || m.format === f.format) && (f.kind === 'all' || m.kind === f.kind) && (!f.cat || f.cat === 'all' || (f.cat === '__redo' ? m.redo : f.cat === '__fav' ? m.fav : m.category === f.cat)) && (!f.vt || f.vt === 'all' || (f.vt === '__none' ? !m.vtype : m.vtype === f.vt)) && (!q || (m.title + ' ' + (m.niche || '') + ' ' + (m.note || '') + ' ' + (m.category || '') + ' ' + (m.vtype || '')).toLowerCase().includes(q)));
+  const list = mediaList();
   const vtBase = S.media.filter((m) => !f.cat || f.cat === 'all' || (f.cat === '__redo' ? m.redo : f.cat === '__fav' ? m.fav : m.category === f.cat));
   const vts = {}; vtBase.forEach((m) => { if (m.vtype) vts[m.vtype] = (vts[m.vtype] || 0) + 1; }); const nNoVt = vtBase.filter((m) => !m.vtype).length;
   const vtSel = f.vt || 'all';
@@ -1066,7 +1079,7 @@ function renderMediaDetail(main = $('#main')) {
   const bedSrc = !it ? '' : isVid(it) ? (it.poster ? blob(it.poster) : '') : blob(it.asset);
   const cats = [...new Set([...Object.keys(CAT_C), ...S.media.map((x) => x.category).filter(Boolean)])];
   main.innerHTML = `<div class="page">
-    <div class="ed-top"><a class="btn icon" href="#medias" aria-label="Retour aux médias">${IC.back}</a><div style="min-width:0;flex:1"><div class="crumb"><a href="#medias">Médias</a>/</div><h1>${esc(m.title)}</h1></div>
+    <div class="ed-top"><a class="btn icon" href="#medias" aria-label="Retour aux médias">${IC.back}</a>${(() => { const L0 = mediaList(); const L = L0.some((x) => x.id === m.id) ? L0 : S.media; const i = L.findIndex((x) => x.id === m.id); return L.length > 1 ? `<div class="mnav"><button class="btn icon" data-act="md-nav" data-d="-1" aria-label="Média précédent" title="Média précédent (←)">${IC.back}</button><span class="mono">${i + 1} / ${L.length}</span><button class="btn icon" data-act="md-nav" data-d="1" aria-label="Média suivant" title="Média suivant (→)">${IC.next}</button></div>` : ''; })()}<div style="min-width:0;flex:1"><div class="crumb"><a href="#medias">Médias</a>/</div><h1>${esc(m.title)}</h1></div>
       ${S.dl && it ? `<button class="btn" data-act="dl" data-id="${m.id}" data-i="${i}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg> Télécharger${items.length > 1 ? ` (${i + 1}/${items.length})` : ''}</button>` : ''}
       <button class="btn fav" data-act="fav" data-id="${m.id}" aria-pressed="${!!m.fav}"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.3 1.1 5 3 1.7-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z" fill="currentColor"/></svg> ${m.fav ? 'Favori' : 'Ajouter aux favoris'}</button>
       <button class="btn" data-act="new" data-type="ad" data-media="${m.id}">${IC.plus} Ad avec ce média</button>
@@ -1445,6 +1458,7 @@ document.addEventListener('click', async (ev) => {
     case 'adf': S.adFilter = d.st; render(); return;
     case 'mff': S.mf.format = d.v; render(); return;
     case 'mfk': S.mf.kind = d.v; render(); return;
+    case 'md-nav': mediaNav(Number(d.d)); return;
     case 'md-slide': { const m = mediaById(S.md.id); S.md.slide = (S.md.slide + Number(d.d) + m.items.length) % m.items.length; renderMediaDetail(); return; }
     case 'mfc': S.mf.cat = d.v; S.mf.vt = 'all'; render(); return;
     case 'mfv': S.mf.vt = d.v; render(); return;
@@ -1563,6 +1577,7 @@ document.addEventListener('keydown', (ev) => {
   if (k === 'enter' && ev.target.matches('tr[data-act="open"]')) go('post-' + ev.target.dataset.id);
   if (k === 'escape' && S.menuOpen) closeMenu();
   if (k === 'escape' && S.playing) closePlayer();
+  if ((k === 'arrowleft' || k === 'arrowright') && S.view === 'media' && !ev.target.matches('input, textarea, select, [contenteditable], video') && !ev.metaKey && !ev.ctrlKey && !ev.altKey) { ev.preventDefault(); mediaNav(k === 'arrowright' ? 1 : -1); }
   if ((k === 'enter' || k === ' ') && ev.target.matches('.pbtn')) { ev.preventDefault(); ev.target.click(); }
 });
 
