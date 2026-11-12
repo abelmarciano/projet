@@ -1106,5 +1106,45 @@
   "style": 0.35,
   "speed": 1.04,
   "text": "[warmly] Grossiti lit tes chiffres pour toi, et te dit quoi corriger."
+ },
+ "vf1-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Vrai ou faux : plus ton ciblage est précis, plus ta pub marche."
+ },
+ "vf1-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[excited] Faux ! En général, c'est même l'inverse."
+ },
+ "vf1-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "L'algorithme de Meta trouve tes clients mieux que toi. Un ciblage trop serré l'empêche de chercher."
+ },
+ "vf1-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Aujourd'hui, le vrai ciblage, c'est ta créa. C'est elle qui attire les bonnes personnes."
+ },
+ "vf1-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[warmly] Grossiti fabrique ces créas pour toi. Abonne-toi pour le prochain vrai ou faux !"
  }
 }

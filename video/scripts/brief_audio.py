@@ -29,6 +29,8 @@ e = np.ones(n); E = int(T * SR); e[E - int(1.6 * SR):E] *= np.linspace(1, 0, int
 add(sfx, boom(), 0.05, 0.18); add(sfx, chime(86), 0.15, 0.14)
 for st in starts[1:]: add(sfx, whoosh(0.35), st - 0.15, 0.22)
 add(sfx, chime(93), starts[-1] + 0.2, 0.16)
+for t in c.get('ticks', []): add(sfx, click(), t, 0.5)
+for t in c.get('stamps', []): add(sfx, boom(), t, 0.35)
 mix = (mus + sfx)[: E]; mix = mix / (np.max(np.abs(mix)) + 1e-9) * 0.24
 os.makedirs('public/brief', exist_ok=True)
 wavfile.write('public/' + c['bed'], SR, (np.stack([mix, mix], 1) * 32767).astype(np.int16)); print('ok', round(T, 2))

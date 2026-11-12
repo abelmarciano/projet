@@ -209,7 +209,7 @@ const S6: React.FC<{ads: string[]; brand: string}> = ({ads, brand}) => {
 
 export const briefTotal = (c: {scenes: Scene[]}) => Math.round(c.scenes.reduce((a, s) => a + s.dur, 0) * 30);
 
-export const BriefShell: React.FC<{cfg: {episode: number; scenes: Scene[]; bed: string}; comps: React.ReactNode[]}> = ({cfg, comps}) => {
+export const BriefShell: React.FC<{cfg: {episode: number; scenes: Scene[]; bed: string; series?: string; epLabel?: string}; comps: React.ReactNode[]}> = ({cfg, comps}) => {
   useFonts();
   const f = useCurrentFrame();
   const starts: number[] = []; let acc = 0;
@@ -222,8 +222,8 @@ export const BriefShell: React.FC<{cfg: {episode: number; scenes: Scene[]; bed: 
       <AbsoluteFill style={{background: 'radial-gradient(60% 40% at 50% 45%, rgba(139,109,255,0.14), transparent 70%)'}} />
       {/* en-tête de série */}
       <div style={{position: 'absolute', left: 80, right: 80, top: 150, display: 'flex', alignItems: 'center', gap: 16, zIndex: 20}}>
-        <div style={{padding: '10px 20px', borderRadius: 12, background: INK, color: '#fff', fontFamily: DISPLAY, fontWeight: 700, fontSize: 26, letterSpacing: '0.12em'}}>LE BRIEF META</div>
-        <div style={{fontSize: 26, fontWeight: 700, color: MUTED}}>Épisode {cfg.episode}</div>
+        <div style={{padding: '10px 20px', borderRadius: 12, background: INK, color: '#fff', fontFamily: DISPLAY, fontWeight: 700, fontSize: 26, letterSpacing: '0.12em'}}>{cfg.series ?? 'LE BRIEF META'}</div>
+        <div style={{fontSize: 26, fontWeight: 700, color: MUTED}}>{cfg.epLabel ?? `Épisode ${cfg.episode}`}</div>
         <div style={{marginLeft: 'auto'}}><Logo s={56} /></div>
       </div>
       <div style={{position: 'absolute', left: 80, right: 80, top: 236, display: 'flex', gap: 10, zIndex: 20}}>
@@ -235,7 +235,7 @@ export const BriefShell: React.FC<{cfg: {episode: number; scenes: Scene[]; bed: 
           <Sequence key={i} from={starts[i]} durationInFrames={d}>
             <AbsoluteFill style={{opacity: interpolate(f - starts[i], [0, 8, d - 6, d], [0, 1, 1, i === cfg.scenes.length - 1 ? 1 : 0], clamp), transform: `translateY(${interpolate(f - starts[i], [0, 10], [30, 0], ease)}px)`}}><AbsoluteFill style={{transform: 'scale(0.84)', transformOrigin: '50% 330px'}}>{comps[i]}</AbsoluteFill></AbsoluteFill>
             <Subs words={s.words} />
-            <Sequence from={4}><Audio src={staticFile(s.vo)} /></Sequence>
+            {s.vo ? <Sequence from={4}><Audio src={staticFile(s.vo)} /></Sequence> : null}
           </Sequence>
         );
       })}
