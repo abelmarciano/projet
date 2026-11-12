@@ -1,0 +1,367 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "actor": {
+  "name": "Guillaume B.",
+  "img": "chat/actors/a180.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "words": [
+  {
+   "w": "Épisode",
+   "s": 0.14,
+   "e": 0.52
+  },
+  {
+   "w": "six.",
+   "s": 0.84,
+   "e": 0.86
+  },
+  {
+   "w": "La",
+   "s": 1.34,
+   "e": 1.4
+  },
+  {
+   "w": "photo",
+   "s": 1.46,
+   "e": 1.7
+  },
+  {
+   "w": "est",
+   "s": 1.74,
+   "e": 1.84
+  },
+  {
+   "w": "belle,",
+   "s": 1.9,
+   "e": 2.16
+  },
+  {
+   "w": "mais",
+   "s": 2.42,
+   "e": 2.64
+  },
+  {
+   "w": "le",
+   "s": 2.72,
+   "e": 2.84
+  },
+  {
+   "w": "texte",
+   "s": 2.88,
+   "e": 3.14
+  },
+  {
+   "w": "est",
+   "s": 3.18,
+   "e": 3.26
+  },
+  {
+   "w": "caché",
+   "s": 3.3,
+   "e": 3.66
+  },
+  {
+   "w": "sous",
+   "s": 3.7,
+   "e": 3.8
+  },
+  {
+   "w": "les",
+   "s": 3.84,
+   "e": 3.94
+  },
+  {
+   "w": "boutons",
+   "s": 3.98,
+   "e": 4.24
+  },
+  {
+   "w": "d'Instagram.",
+   "s": 4.26,
+   "e": 4.88
+  },
+  {
+   "w": "L'offre,",
+   "s": 5.24,
+   "e": 5.48
+  },
+  {
+   "w": "on",
+   "s": 5.52,
+   "e": 5.58
+  },
+  {
+   "w": "ne",
+   "s": 5.62,
+   "e": 5.64
+  },
+  {
+   "w": "la",
+   "s": 5.7,
+   "e": 5.76
+  },
+  {
+   "w": "voit",
+   "s": 5.82,
+   "e": 6.0
+  },
+  {
+   "w": "pas",
+   "s": 6.04,
+   "e": 6.16
+  },
+  {
+   "w": "et",
+   "s": 6.42,
+   "e": 6.48
+  },
+  {
+   "w": "le",
+   "s": 6.52,
+   "e": 6.6
+  },
+  {
+   "w": "logo",
+   "s": 6.66,
+   "e": 6.88
+  },
+  {
+   "w": "est",
+   "s": 6.92,
+   "e": 7.0
+  },
+  {
+   "w": "coupé.",
+   "s": 7.04,
+   "e": 7.32
+  },
+  {
+   "w": "Cinq",
+   "s": 8.06,
+   "e": 8.24
+  },
+  {
+   "w": "sur",
+   "s": 8.28,
+   "e": 8.4
+  },
+  {
+   "w": "dix.",
+   "s": 8.46,
+   "e": 8.72
+  },
+  {
+   "w": "Je",
+   "s": 9.2,
+   "e": 9.24
+  },
+  {
+   "w": "la",
+   "s": 9.28,
+   "e": 9.34
+  },
+  {
+   "w": "refais",
+   "s": 9.42,
+   "e": 9.66
+  },
+  {
+   "w": "avec",
+   "s": 9.7,
+   "e": 9.86
+  },
+  {
+   "w": "Growthity.",
+   "s": 9.9,
+   "e": 10.42
+  },
+  {
+   "w": "Voilà,",
+   "s": 10.8,
+   "e": 11.0
+  },
+  {
+   "w": "tout",
+   "s": 11.32,
+   "e": 11.44
+  },
+  {
+   "w": "est",
+   "s": 11.46,
+   "e": 11.52
+  },
+  {
+   "w": "dans",
+   "s": 11.56,
+   "e": 11.64
+  },
+  {
+   "w": "la",
+   "s": 11.68,
+   "e": 11.78
+  },
+  {
+   "w": "bonne",
+   "s": 11.8,
+   "e": 11.96
+  },
+  {
+   "w": "zone.",
+   "s": 12.04,
+   "e": 12.28
+  },
+  {
+   "w": "Neuf",
+   "s": 12.7,
+   "e": 12.84
+  },
+  {
+   "w": "sur",
+   "s": 12.92,
+   "e": 13.04
+  },
+  {
+   "w": "dix.",
+   "s": 13.1,
+   "e": 13.34
+  },
+  {
+   "w": "Envoyez-moi",
+   "s": 13.8,
+   "e": 14.24
+  },
+  {
+   "w": "les",
+   "s": 14.28,
+   "e": 14.36
+  },
+  {
+   "w": "vôtres",
+   "s": 14.4,
+   "e": 14.66
+  }
+ ],
+ "video": "fal/roast6/corinne6-ext.mp4",
+ "total": 481,
+ "audio": "chatpub/roast6-voice.wav",
+ "bed": "chatpub/roast6-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "cues": {
+  "look": 1.34,
+  "aie": 1.34,
+  "flaw1": 2.88,
+  "flaw2": 5.24,
+  "flaw3": 6.66,
+  "score1": 8.06,
+  "redo": 9.2,
+  "voila": 10.8,
+  "score2": 12.7,
+  "end": 13.8,
+  "scale": 0.86,
+  "cropTop": 308
+ },
+ "steps": [
+  [
+   "Défaut n°1",
+   "flaw1"
+  ],
+  [
+   "Défaut n°2",
+   "flaw2"
+  ],
+  [
+   "Défaut n°3",
+   "flaw3"
+  ],
+  [
+   "La note",
+   "score1"
+  ],
+  [
+   "Refaite",
+   "voila"
+  ],
+  [
+   "À toi !",
+   "end"
+  ]
+ ],
+ "punches": [
+  "score1",
+  "voila",
+  "score2"
+ ],
+ "episode": 6,
+ "account": "@smash.burger.lyon",
+ "badText": "PROMO EXCEPTIONNELLE !!! BOUGIE PARFUMÉE DE QUALITÉ FABRIQUÉE AVEC SOIN DISPONIBLE EN PLUSIEURS PARFUMS LIVRAISON RAPIDE CLIQUEZ ICI POUR EN SAVOIR PLUS SUR NOTRE BOUTIQUE !!!",
+ "flaws": [
+  {
+   "label": "Texte sous l’interface",
+   "cue": "flaw1"
+  },
+  {
+   "label": "Offre cachée",
+   "cue": "flaw2"
+  },
+  {
+   "label": "Logo coupé",
+   "cue": "flaw3"
+  }
+ ],
+ "ask": "Refais cette pub : smash burger du chef, textes dans la zone visible, bouton Commander.",
+ "goodVideo": "chat/roast6/good.mp4",
+ "goodTitle": "Le smash\ndu vendredi. 🔥",
+ "goodCta": "Commander",
+ "scoreBad": 5,
+ "scoreGood": 9,
+ "hot": [
+  "belle",
+  "caché",
+  "boutons",
+  "offre",
+  "logo",
+  "cinq",
+  "Growthity",
+  "zone",
+  "neuf",
+  "vôtres"
+ ],
+ "badMode": "deadzone",
+ "badCaption": "studio.zenharmonie Venez découvrir notre univers. Plus d’infos en MP.",
+ "badImg": "chat/roast6/burger.png",
+ "flawBoxes": [
+  {
+   "l": 18,
+   "t": 560,
+   "w": 270,
+   "h": 105,
+   "labelLeft": 40,
+   "labelTop": -34
+  },
+  {
+   "l": 262,
+   "t": 330,
+   "w": 100,
+   "h": 250,
+   "labelLeft": -170,
+   "labelTop": 110
+  },
+  {
+   "l": 18,
+   "t": 6,
+   "w": 334,
+   "h": 52,
+   "labelLeft": 110,
+   "labelTop": 56
+  }
+ ],
+ "badDead": {
+  "logo": "SMASH BURGER LYON",
+  "offer": "-20 % CE SOIR !",
+  "bottom": "COMMANDEZ SUR NOTRE SITE"
+ }
+}

@@ -5,7 +5,7 @@ import {Check, FONT, DISPLAY, GRAD, INK, LINE, Logo, MUTED, SplitCfg, SplitChat,
 
 export type RoastCfg = SplitCfg & {
   episode: number; account: string; badImg: string; badText: string; flaws: {label: string; cue: string}[];
-  ask: string; badMode?: 'wall' | 'landscape' | 'logo' | 'stock' | 'avatar'; badClaim?: string; badReview?: {stars: string; text: string; who: string}; badSlogan?: string; badLogo?: {name: string; since: string; time: string}; badCaption?: string; flawBoxes?: {l: number; t: number; w: number; h: number; round?: boolean; labelLeft?: number; labelTop?: number}[]; goodVideo: string; goodTitle: string; goodCta: string; scoreBad: number; scoreGood: number;
+  ask: string; badMode?: 'wall' | 'landscape' | 'logo' | 'stock' | 'avatar' | 'deadzone'; badDead?: {logo: string; offer: string; bottom: string}; badClaim?: string; badReview?: {stars: string; text: string; who: string}; badSlogan?: string; badLogo?: {name: string; since: string; time: string}; badCaption?: string; flawBoxes?: {l: number; t: number; w: number; h: number; round?: boolean; labelLeft?: number; labelTop?: number}[]; goodVideo: string; goodTitle: string; goodCta: string; scoreBad: number; scoreGood: number;
 };
 
 const Stamp: React.FC<{score: number; at: number; good?: boolean; size?: number}> = ({score, at, good, size = 1}) => {
@@ -54,7 +54,24 @@ const RoastWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
       {/* left: the bad ad */}
       <div style={{position: 'absolute', left: 50, top: 100, transform: `translate(${shake}px, ${swipe}px) scale(${1 - leftDim * 0.12})`, transformOrigin: 'top left'}}>
         <Phone w={370} dim={leftDim}>
-          {cfg.badMode === 'avatar' ? (
+          {cfg.badMode === 'deadzone' && cfg.badDead ? (
+            <div style={{position: 'absolute', inset: 0, background: '#000', color: '#fff'}}>
+              <Img src={staticFile(`media/${cfg.badImg}`)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+              <div style={{position: 'absolute', left: -20, right: -20, top: -26, textAlign: 'center', fontFamily: 'Impact, Arial Black, sans-serif', fontSize: 50, lineHeight: 1, color: '#FFB800', letterSpacing: '0.02em', whiteSpace: 'nowrap'}}>{cfg.badDead.logo}</div>
+              <div style={{position: 'absolute', right: 8, bottom: 150, width: 92, textAlign: 'right', fontFamily: 'Arial Black, sans-serif', fontSize: 21, lineHeight: 1.05, color: '#FFE600'}}>{cfg.badDead.offer}</div>
+              <div style={{position: 'absolute', left: 14, right: 70, bottom: 40, fontFamily: 'Arial Black, sans-serif', fontSize: 22, lineHeight: 1.05, color: '#fff'}}>{cfg.badDead.bottom}</div>
+              {/* interface Reels par-dessus */}
+              <div style={{position: 'absolute', right: 10, bottom: 120, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, fontSize: 12, fontWeight: 700, textShadow: '0 1px 4px rgba(0,0,0,0.7)'}}>
+                {['♡\n2,1 k', '💬\n148', '➤', '⋯'].map((t) => <div key={t} style={{textAlign: 'center', whiteSpace: 'pre-line', fontSize: 26, lineHeight: 1}}>{t.split('\n')[0]}<div style={{fontSize: 12}}>{t.split('\n')[1] ?? ''}</div></div>)}
+              </div>
+              <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, height: 120, background: 'linear-gradient(transparent, rgba(0,0,0,0.75))'}} />
+              <div style={{position: 'absolute', left: 12, right: 70, bottom: 22, fontSize: 13, textShadow: '0 1px 4px rgba(0,0,0,0.7)'}}>
+                <div style={{display: 'flex', alignItems: 'center', gap: 6, fontWeight: 700}}><div style={{width: 22, height: 22, borderRadius: 99, background: '#FFB800'}} />{cfg.account.replace('@', '')} · Sponsorisé</div>
+                <div style={{marginTop: 4, opacity: 0.95}}>Le meilleur smash de la ville 🍔 #burger #lyon…</div>
+                <div style={{marginTop: 3, opacity: 0.8}}>♫ Son original</div>
+              </div>
+            </div>
+          ) : cfg.badMode === 'avatar' ? (
             <div style={{position: 'absolute', inset: 0, background: '#E83E8C'}}>
               <Img src={staticFile(`media/${cfg.badImg}`)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
               <div style={{position: 'absolute', top: 12, left: 12, display: 'flex', alignItems: 'center', gap: 8, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.5)'}}>
