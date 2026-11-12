@@ -5,7 +5,7 @@ import {Check, FONT, DISPLAY, GRAD, INK, LINE, Logo, MUTED, SplitCfg, SplitChat,
 
 export type RoastCfg = SplitCfg & {
   episode: number; account: string; badImg: string; badText: string; flaws: {label: string; cue: string}[];
-  ask: string; badMode?: 'wall' | 'landscape' | 'logo'; badLogo?: {name: string; since: string; time: string}; badCaption?: string; flawBoxes?: {l: number; t: number; w: number; h: number; round?: boolean; labelLeft?: number; labelTop?: number}[]; goodVideo: string; goodTitle: string; goodCta: string; scoreBad: number; scoreGood: number;
+  ask: string; badMode?: 'wall' | 'landscape' | 'logo' | 'stock'; badSlogan?: string; badLogo?: {name: string; since: string; time: string}; badCaption?: string; flawBoxes?: {l: number; t: number; w: number; h: number; round?: boolean; labelLeft?: number; labelTop?: number}[]; goodVideo: string; goodTitle: string; goodCta: string; scoreBad: number; scoreGood: number;
 };
 
 const Stamp: React.FC<{score: number; at: number; good?: boolean; size?: number}> = ({score, at, good, size = 1}) => {
@@ -54,7 +54,20 @@ const RoastWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
       {/* left: the bad ad */}
       <div style={{position: 'absolute', left: 50, top: 100, transform: `translate(${shake}px, ${swipe}px) scale(${1 - leftDim * 0.12})`, transformOrigin: 'top left'}}>
         <Phone w={370} dim={leftDim}>
-          {cfg.badMode === 'logo' && cfg.badLogo ? (
+          {cfg.badMode === 'stock' ? (
+            <div style={{position: 'absolute', inset: 0, background: '#fff'}}>
+              <div style={{display: 'flex', alignItems: 'center', gap: 10, padding: '14px 14px 10px'}}>
+                <div style={{width: 34, height: 34, borderRadius: 99, background: '#D1FAE5'}} />
+                <div style={{fontSize: 16, fontWeight: 700, color: '#111'}}>{cfg.account.replace('@', '')}<div style={{fontSize: 12, fontWeight: 500, color: '#888'}}>Sponsorisé</div></div>
+              </div>
+              <div style={{position: 'relative', width: '100%', aspectRatio: '1 / 1', overflow: 'hidden'}}>
+                <Img src={staticFile(`media/${cfg.badImg}`)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+                <div style={{position: 'absolute', left: 0, right: 0, bottom: 18, textAlign: 'center', fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 24, color: '#fff', textShadow: '0 2px 10px rgba(0,0,0,0.6)'}}>{cfg.badSlogan}</div>
+              </div>
+              <div style={{margin: '12px', height: 40, borderRadius: 8, border: '2px dashed #E5E7EB'}} />
+              <div style={{padding: '0 12px', fontSize: 13, color: '#333', lineHeight: 1.3}}>{cfg.badCaption}</div>
+            </div>
+          ) : cfg.badMode === 'logo' && cfg.badLogo ? (
             <div style={{position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 40%, #5A3826, #2A170E)', color: '#F5E6D3'}}>
               <div style={{position: 'absolute', top: 16, left: 14, display: 'flex', alignItems: 'center', gap: 8}}>
                 <div style={{width: 30, height: 30, borderRadius: 99, background: '#7A5038'}} />

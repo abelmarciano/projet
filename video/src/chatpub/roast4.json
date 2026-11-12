@@ -1,0 +1,386 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "actor": {
+  "name": "Guillaume B.",
+  "img": "chat/actors/a180.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "words": [
+  {
+   "w": "Épisode",
+   "s": 0.18,
+   "e": 0.56
+  },
+  {
+   "w": "quatre:",
+   "s": 0.6,
+   "e": 0.88
+  },
+  {
+   "w": "une",
+   "s": 1.2,
+   "e": 1.32
+  },
+  {
+   "w": "photo",
+   "s": 1.34,
+   "e": 1.56
+  },
+  {
+   "w": "de",
+   "s": 1.6,
+   "e": 1.64
+  },
+  {
+   "w": "banque",
+   "s": 1.68,
+   "e": 1.82
+  },
+  {
+   "w": "d'images,",
+   "s": 1.86,
+   "e": 2.26
+  },
+  {
+   "w": "des",
+   "s": 2.56,
+   "e": 2.64
+  },
+  {
+   "w": "gens",
+   "s": 2.68,
+   "e": 2.8
+  },
+  {
+   "w": "en",
+   "s": 2.82,
+   "e": 2.9
+  },
+  {
+   "w": "costume",
+   "s": 2.92,
+   "e": 3.32
+  },
+  {
+   "w": "pour",
+   "s": 3.36,
+   "e": 3.44
+  },
+  {
+   "w": "un",
+   "s": 3.48,
+   "e": 3.54
+  },
+  {
+   "w": "studio",
+   "s": 3.56,
+   "e": 3.84
+  },
+  {
+   "w": "de",
+   "s": 3.88,
+   "e": 3.92
+  },
+  {
+   "w": "yoga.",
+   "s": 3.94,
+   "e": 4.2
+  },
+  {
+   "w": "Le",
+   "s": 4.58,
+   "e": 4.64
+  },
+  {
+   "w": "slogan",
+   "s": 4.7,
+   "e": 4.98
+  },
+  {
+   "w": "ne",
+   "s": 5.0,
+   "e": 5.06
+  },
+  {
+   "w": "veut",
+   "s": 5.08,
+   "e": 5.18
+  },
+  {
+   "w": "rien",
+   "s": 5.22,
+   "e": 5.38
+  },
+  {
+   "w": "dire",
+   "s": 5.44,
+   "e": 5.66
+  },
+  {
+   "w": "et",
+   "s": 5.84,
+   "e": 6.02
+  },
+  {
+   "w": "aucun",
+   "s": 6.08,
+   "e": 6.34
+  },
+  {
+   "w": "bouton",
+   "s": 6.38,
+   "e": 6.66
+  },
+  {
+   "w": "pour",
+   "s": 6.7,
+   "e": 6.78
+  },
+  {
+   "w": "réserver.",
+   "s": 6.82,
+   "e": 7.22
+  },
+  {
+   "w": "Trois",
+   "s": 7.8,
+   "e": 7.98
+  },
+  {
+   "w": "sur",
+   "s": 8.02,
+   "e": 8.18
+  },
+  {
+   "w": "dix.",
+   "s": 8.22,
+   "e": 8.48
+  },
+  {
+   "w": "Je",
+   "s": 8.9,
+   "e": 8.96
+  },
+  {
+   "w": "la",
+   "s": 9.0,
+   "e": 9.06
+  },
+  {
+   "w": "refais",
+   "s": 9.12,
+   "e": 9.34
+  },
+  {
+   "w": "avec",
+   "s": 9.4,
+   "e": 9.56
+  },
+  {
+   "w": "Growthity.",
+   "s": 9.6,
+   "e": 10.1
+  },
+  {
+   "w": "Voilà",
+   "s": 10.4,
+   "e": 10.62
+  },
+  {
+   "w": "une",
+   "s": 10.84,
+   "e": 10.96
+  },
+  {
+   "w": "vraie",
+   "s": 11.0,
+   "e": 11.14
+  },
+  {
+   "w": "prof,",
+   "s": 11.22,
+   "e": 11.5
+  },
+  {
+   "w": "un",
+   "s": 11.66,
+   "e": 11.74
+  },
+  {
+   "w": "vrai",
+   "s": 11.78,
+   "e": 11.9
+  },
+  {
+   "w": "cours,",
+   "s": 12.02,
+   "e": 12.22
+  },
+  {
+   "w": "un",
+   "s": 12.38,
+   "e": 12.46
+  },
+  {
+   "w": "bouton",
+   "s": 12.48,
+   "e": 12.72
+  },
+  {
+   "w": "clair.",
+   "s": 12.76,
+   "e": 13.02
+  },
+  {
+   "w": "Huit",
+   "s": 13.36,
+   "e": 13.52
+  },
+  {
+   "w": "sur",
+   "s": 13.58,
+   "e": 13.7
+  },
+  {
+   "w": "dix.",
+   "s": 13.76,
+   "e": 14.0
+  },
+  {
+   "w": "À",
+   "s": 14.22,
+   "e": 14.26
+  },
+  {
+   "w": "la",
+   "s": 14.3,
+   "e": 14.34
+  },
+  {
+   "w": "semaine",
+   "s": 14.38,
+   "e": 14.56
+  },
+  {
+   "w": "prochaine",
+   "s": 14.58,
+   "e": 14.92
+  }
+ ],
+ "video": "fal/roast4/corinne4b-ext.mp4",
+ "total": 481,
+ "audio": "chatpub/roast4-voice.wav",
+ "bed": "chatpub/roast4-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "cues": {
+  "look": 1.34,
+  "aie": 1.34,
+  "flaw1": 1.34,
+  "flaw2": 4.7,
+  "flaw3": 6.08,
+  "score1": 7.8,
+  "redo": 8.9,
+  "voila": 10.4,
+  "score2": 13.36,
+  "end": 14.22,
+  "scale": 0.86,
+  "cropTop": 253
+ },
+ "steps": [
+  [
+   "Défaut n°1",
+   "flaw1"
+  ],
+  [
+   "Défaut n°2",
+   "flaw2"
+  ],
+  [
+   "Défaut n°3",
+   "flaw3"
+  ],
+  [
+   "La note",
+   "score1"
+  ],
+  [
+   "Refaite",
+   "voila"
+  ],
+  [
+   "À toi !",
+   "end"
+  ]
+ ],
+ "punches": [
+  "score1",
+  "voila",
+  "score2"
+ ],
+ "episode": 4,
+ "account": "@studio.zenharmonie",
+ "badText": "PROMO EXCEPTIONNELLE !!! BOUGIE PARFUMÉE DE QUALITÉ FABRIQUÉE AVEC SOIN DISPONIBLE EN PLUSIEURS PARFUMS LIVRAISON RAPIDE CLIQUEZ ICI POUR EN SAVOIR PLUS SUR NOTRE BOUTIQUE !!!",
+ "flaws": [
+  {
+   "label": "Banque d’images",
+   "cue": "flaw1"
+  },
+  {
+   "label": "Slogan creux",
+   "cue": "flaw2"
+  },
+  {
+   "label": "Aucun bouton",
+   "cue": "flaw3"
+  }
+ ],
+ "ask": "Refais cette pub : studio de yoga, une vraie prof en plein cours, bouton Réserver.",
+ "goodVideo": "chat/roast4/good.mp4",
+ "goodTitle": "Ton premier cours\nt’attend. 🧘‍♀️",
+ "goodCta": "Réserver mon cours",
+ "scoreBad": 3,
+ "scoreGood": 8,
+ "hot": [
+  "banque",
+  "costume",
+  "yoga",
+  "slogan",
+  "bouton",
+  "trois",
+  "Growthity",
+  "prof",
+  "huit",
+  "prochaine"
+ ],
+ "badMode": "stock",
+ "badCaption": "studio.zenharmonie Venez découvrir notre univers. Plus d’infos en MP.",
+ "badImg": "chat/roast4/bad.png",
+ "flawBoxes": [
+  {
+   "l": 18,
+   "t": 70,
+   "w": 334,
+   "h": 250
+  },
+  {
+   "l": 40,
+   "t": 325,
+   "w": 290,
+   "h": 55,
+   "labelLeft": 60,
+   "labelTop": -34
+  },
+  {
+   "l": 20,
+   "t": 425,
+   "w": 330,
+   "h": 55,
+   "labelLeft": 80,
+   "labelTop": 58
+  }
+ ],
+ "badSlogan": "L’excellence à votre service"
+}
