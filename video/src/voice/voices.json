@@ -1058,5 +1058,53 @@
   "style": 0.35,
   "speed": 1.04,
   "text": "[warmly] Avec un suivi propre, tes campagnes Grossiti apprennent plus vite."
+ },
+ "kpi-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Ton gestionnaire de publicités affiche des dizaines de colonnes. En vrai, tu as besoin d'en lire quatre."
+ },
+ "kpi-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Un : le CPM, ce que tu paies pour mille affichages. Il te dit combien coûte ton audience."
+ },
+ "kpi-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Deux : le taux de clic. S'il est bas, c'est ta créa qui n'accroche pas."
+ },
+ "kpi-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Trois : le taux de conversion. Des clics, mais pas de ventes ? Le problème est sur ta page, ou dans ton offre."
+ },
+ "kpi-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Et quatre : le coût par résultat, et le retour sur dépense publicitaire. Ce sont eux qui disent si tu gagnes de l'argent."
+ },
+ "kpi-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[warmly] Grossiti lit tes chiffres pour toi, et te dit quoi corriger."
  }
 }

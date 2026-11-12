@@ -79,6 +79,8 @@ import {BriefAdvantage, AdvCfg} from './brief/BriefAdvantage';
 import advCfg from './brief/advantage.json';
 import {BriefCapi, CapiCfg} from './brief/BriefCapi';
 import capiCfg from './brief/capi.json';
+import {BriefKpi, KpiCfg} from './brief/BriefKpi';
+import kpiCfg from './brief/kpi.json';
 import learningCfg from './brief/learning.json';
 import {ShowIntro, ShowEnd, SHOW_INTRO, SHOW_END} from './reels/Showcase';
 
@@ -137,6 +139,7 @@ export const Root: React.FC = () => (
     <Composition id="Brief-scale" component={BriefScale} durationInFrames={briefTotal(scaleCfg as unknown as ScaleCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: scaleCfg as unknown as ScaleCfg}} />
     <Composition id="Brief-advantage" component={BriefAdvantage} durationInFrames={briefTotal(advCfg as unknown as AdvCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: advCfg as unknown as AdvCfg}} />
     <Composition id="Brief-capi" component={BriefCapi} durationInFrames={briefTotal(capiCfg as unknown as CapiCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: capiCfg as unknown as CapiCfg}} />
+    <Composition id="Brief-kpi" component={BriefKpi} durationInFrames={briefTotal(kpiCfg as unknown as KpiCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: kpiCfg as unknown as KpiCfg}} />
     <Composition id="AvantApres3-gel" component={AvantApres3} durationInFrames={AV3_TOTAL} fps={30} width={1080} height={1920} />
     <Composition id="AdEdit-avap-mei" component={AdEdit} durationInFrames={adAvapMei.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvapMei as unknown as AdCfg}} />
     <Composition id="AdEdit-avap2-after" component={AdEdit} durationInFrames={adAvap2After.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvap2After as unknown as AdCfg}} />
