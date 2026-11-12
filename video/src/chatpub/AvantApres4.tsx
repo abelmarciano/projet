@@ -8,7 +8,7 @@ const Logo: React.FC<{s: number}> = ({s}) => <Img src={staticFile('media/chat/ba
 
 type Word = {w: string; s: number; e: number};
 export type Av4Cfg = {
-  before: {video: string; dur: number; vo: string; voWords: Word[]; takes: number; takeAt: number};
+  before: {video: string; start?: number; dur: number; vo: string; voWords: Word[]; takes: number; takeAt: number};
   tr: {vo: string; dur: number};
   chat: {vo: string; voWords: Word[]; prompt: string; dur: number};
   after: {video: string; dur: number; words: Word[]; sticker: {text: string; at: number; to: number}};
@@ -40,7 +40,7 @@ const Subs: React.FC<{words: Word[]; offset?: number; top?: number}> = ({words, 
 const Pill: React.FC<{text: string; color: string; at: number}> = ({text, color, at}) => {
   const f = useCurrentFrame();
   const p = spring({frame: f - at, fps: 30, config: {damping: 12}});
-  return <div style={{position: 'absolute', left: 60, top: 230, padding: '14px 30px', borderRadius: 99, background: color, color: '#fff', fontFamily: DISPLAY, fontWeight: 700, fontSize: 56, letterSpacing: '0.06em', transform: `translateX(${(1 - p) * -200}px)`, boxShadow: '0 16px 40px -12px rgba(0,0,0,0.6)', zIndex: 15}}>{text}</div>;
+  return <div style={{position: 'absolute', left: 60, top: 240, display: 'flex', alignItems: 'center', gap: 14, padding: '14px 26px', borderRadius: 16, background: 'rgba(12,12,16,0.62)', border: '1.5px solid rgba(255,255,255,0.18)', color: '#fff', fontFamily: DISPLAY, fontWeight: 700, fontSize: 44, letterSpacing: '0.14em', transform: `translateX(${(1 - p) * -200}px)`, zIndex: 15}}><div style={{width: 16, height: 16, borderRadius: 99, background: color, boxShadow: `0 0 16px ${color}`}} />{text}</div>;
 };
 
 export const avap4Total = (c: Av4Cfg) => Math.round((c.before.dur + c.tr.dur + c.chat.dur + c.after.dur + c.end.dur) * 30);
@@ -52,41 +52,44 @@ export const AvantApres4: React.FC<{cfg: Av4Cfg}> = ({cfg}) => {
   // compteur de prises
   const takeStart = Math.round(cfg.before.takeAt * 30);
   const take = Math.max(1, Math.round(interpolate(f, [20, takeStart], [1, cfg.before.takes], {...clamp, easing: (x: number) => x * x})));
-  const typed = cfg.chat.prompt.slice(0, Math.round(interpolate(f - T, [8, 50], [0, cfg.chat.prompt.length], clamp)));
-  const ready = f - T >= 62;
+  const typed = cfg.chat.prompt.slice(0, Math.round(interpolate(f - T, [3, 30], [0, cfg.chat.prompt.length], clamp)));
+  const ready = f - T >= 42;
 
   return (
     <AbsoluteFill style={{background: '#000', fontFamily: FONT}}>
       {/* AVANT */}
       <Sequence from={A} durationInFrames={B}>
-        <AbsoluteFill style={{filter: 'saturate(0.55) contrast(1.05)'}}><OffthreadVideo src={staticFile(`media/${cfg.before.video}`)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} /></AbsoluteFill>
+        <AbsoluteFill style={{filter: `saturate(0.55) contrast(1.05) blur(${interpolate(f, [B - 6, B], [0, 18], clamp)}px)`, transform: `scale(${1.02 + (f / B) * 0.05 + interpolate(f, [B - 6, B], [0, 0.25], clamp)})`}}><OffthreadVideo src={staticFile(`media/${cfg.before.video}`)} startFrom={Math.round((cfg.before.start ?? 0) * 30)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} /></AbsoluteFill>
         <AbsoluteFill style={{background: 'radial-gradient(120% 70% at 50% 45%, transparent 50%, rgba(0,0,0,0.55))'}} />
         <Pill text="AVANT" color="#DC2626" at={4} />
-        <div style={{position: 'absolute', right: 60, top: 236, padding: '12px 24px', borderRadius: 18, background: 'rgba(0,0,0,0.65)', color: '#fff', fontFamily: DISPLAY, fontWeight: 700, fontSize: 44, zIndex: 15}}>🎬 Prise n°{take}</div>
+        <div style={{position: 'absolute', right: 60, top: 228, display: 'flex', alignItems: 'baseline', gap: 12, padding: '12px 24px', borderRadius: 16, background: 'rgba(12,12,16,0.62)', border: '1.5px solid rgba(255,255,255,0.18)', color: '#fff', zIndex: 15}}><span style={{fontSize: 24, fontWeight: 700, letterSpacing: '0.18em', opacity: 0.75}}>PRISE</span><span style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 64, lineHeight: 1, color: take >= cfg.before.takes ? '#F87171' : '#fff'}}>{String(take).padStart(2, '0')}</span></div>
         <Subs words={cfg.before.voWords} offset={0.2} />
       </Sequence>
 
       {/* TRANSITION */}
       <Sequence from={B} durationInFrames={T - B}>
-        <AbsoluteFill style={{background: GRAD, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 30}}>
-          <div style={{transform: `scale(${spring({frame: f - B, fps: 30, config: {damping: 10}})})`}}><Logo s={150} /></div>
-          <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 92, color: '#fff', textAlign: 'center', opacity: prog(f, B + 4, 8), transform: `translateY(${(1 - prog(f, B + 4, 8)) * 30}px)`}}>Et avec<br />{cfg.brand} ?</div>
+        <AbsoluteFill style={{background: 'radial-gradient(70% 45% at 50% 46%, #EEEBFF 0%, #F7F6F3 70%)', transform: `scale(${interpolate(f, [B, B + 8], [1.12, 1], {...clamp, easing: (x: number) => 1 - Math.pow(1 - x, 3)})})`, filter: `blur(${interpolate(f, [B, B + 7], [14, 0], clamp)}px)`}}>
+          <div style={{position: 'absolute', left: 0, right: 0, top: 640, display: 'flex', justifyContent: 'center'}}>
+            <div style={{transform: `scale(${0.7 + spring({frame: f - B, fps: 30, config: {damping: 12, stiffness: 180}}) * 0.3})`, filter: 'drop-shadow(0 30px 50px rgba(91,63,228,0.35))'}}><Logo s={190} /></div>
+          </div>
+          <div style={{position: 'absolute', left: 0, right: 0, top: 900, textAlign: 'center', fontFamily: DISPLAY, fontWeight: 700, fontSize: 96, lineHeight: 1.05, letterSpacing: '-0.02em', color: INK, opacity: prog(f, B + 3, 7), transform: `translateY(${(1 - prog(f, B + 3, 7)) * 24}px)`}}>
+            Et avec<br /><span style={{backgroundImage: GRAD, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>{cfg.brand}</span> ?
+          </div>
         </AbsoluteFill>
-        <AbsoluteFill style={{background: '#fff', opacity: interpolate(f, [B, B + 6], [0.9, 0], clamp)}} />
       </Sequence>
 
       {/* CHAT */}
       <Sequence from={T} durationInFrames={C - T}>
-        <AbsoluteFill style={{background: 'linear-gradient(160deg, #F4F1EA, #EDE9FE)'}}>
+        <AbsoluteFill style={{background: 'radial-gradient(70% 45% at 50% 46%, #EEEBFF 0%, #F7F6F3 70%)'}}>
           <div style={{position: 'absolute', left: 70, right: 70, top: 560, borderRadius: 40, background: '#fff', padding: 44, boxShadow: '0 50px 120px -40px rgba(91,63,228,0.6)', transform: `scale(${0.9 + spring({frame: f - T, fps: 30, config: {damping: 13}}) * 0.1})`}}>
             <div style={{display: 'flex', alignItems: 'center', gap: 16, fontWeight: 700, fontSize: 38, color: INK, marginBottom: 28}}><Logo s={56} /> {cfg.brand}</div>
             <div style={{minHeight: 200, padding: '26px 30px', borderRadius: 28, border: '3px solid #C4B5FD', fontSize: 46, lineHeight: 1.3, color: INK, fontWeight: 500}}>{typed}{!ready && <span style={{opacity: Math.floor(f / 8) % 2 ? 1 : 0, color: '#6552E8'}}>|</span>}</div>
             <div style={{display: 'flex', alignItems: 'center', gap: 16, marginTop: 30, fontSize: 40, fontWeight: 800, color: ready ? '#15803D' : '#5B3FE4'}}>
-              {ready ? <><Check s={46} /> Ta pub est prête</> : f - T > 50 ? <><Spinner f={f} s={40} /> Je crée ta pub…</> : null}
+              {ready ? <><Check s={46} /> Ta pub est prête</> : f - T > 31 ? <><Spinner f={f} s={40} /> Je crée ta pub…</> : null}
             </div>
           </div>
         </AbsoluteFill>
-        <Subs words={cfg.chat.voWords} offset={T / 30 + 0.3} top={1380} />
+        <Subs words={cfg.chat.voWords} offset={T / 30 + 0.13} top={1380} />
       </Sequence>
 
       {/* APRÈS */}
@@ -101,33 +104,36 @@ export const AvantApres4: React.FC<{cfg: Av4Cfg}> = ({cfg}) => {
 
       {/* FIN */}
       <Sequence from={D} durationInFrames={E - D}>
-        <AbsoluteFill style={{background: 'linear-gradient(160deg, #0B0A1F 0%, #1E1B4B 55%, #4C1D95 100%)'}}>
-          <div style={{position: 'absolute', left: 60, right: 60, top: 220, display: 'flex', gap: 30}}>
+        <AbsoluteFill style={{background: 'radial-gradient(70% 45% at 50% 40%, #EEEBFF 0%, #F7F6F3 70%)'}}>
+          <div style={{position: 'absolute', left: 70, right: 70, top: 200, display: 'flex', gap: 28}}>
             {[{img: cfg.end.beforeStill, label: cfg.end.left, c: '#DC2626', grey: true}, {img: cfg.end.afterStill, label: cfg.end.right, c: '#16A34A', grey: false}].map((x, i) => {
-              const p = spring({frame: f - D - i * 5, fps: 30, config: {damping: 13}});
+              const p = spring({frame: f - D - i * 4, fps: 30, config: {damping: 14}});
               return (
-                <div key={i} style={{flex: 1, transform: `scale(${0.6 + p * 0.4}) rotate(${(i ? 3 : -3) * (1 - p)}deg)`, opacity: Math.min(1, p * 1.5)}}>
-                  <div style={{height: 760, borderRadius: 30, overflow: 'hidden', border: `6px solid ${x.c}`, boxShadow: '0 30px 60px -20px rgba(0,0,0,0.7)'}}>
-                    <Img src={staticFile(`media/${x.img}`)} style={{width: '100%', height: '100%', objectFit: 'cover', filter: x.grey ? 'saturate(0.4)' : 'none'}} />
+                <div key={i} style={{flex: 1, transform: `translateY(${(1 - p) * 60}px)`, opacity: Math.min(1, p * 1.5)}}>
+                  <div style={{position: 'relative', height: 760, borderRadius: 32, overflow: 'hidden', boxShadow: '0 40px 80px -30px rgba(15,23,42,0.55)'}}>
+                    <Img src={staticFile(`media/${x.img}`)} style={{width: '100%', height: '100%', objectFit: 'cover', filter: x.grey ? 'saturate(0.35) brightness(0.9)' : 'none'}} />
+                    <div style={{position: 'absolute', left: 18, top: 18, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 18px', borderRadius: 14, background: 'rgba(12,12,16,0.62)', color: '#fff', fontFamily: DISPLAY, fontWeight: 700, fontSize: 30, letterSpacing: '0.14em'}}><div style={{width: 12, height: 12, borderRadius: 99, background: x.c}} />{x.label.split('\n')[0]}</div>
                   </div>
-                  <div style={{marginTop: 22, textAlign: 'center', color: '#fff', fontFamily: DISPLAY, fontWeight: 700, fontSize: 46, lineHeight: 1.1, whiteSpace: 'pre-line'}}>{x.label}</div>
+                  <div style={{marginTop: 22, textAlign: 'center', color: INK, fontFamily: DISPLAY, fontWeight: 700, fontSize: 44, lineHeight: 1.1}}>{x.label.split('\n').slice(1).join(' ')}</div>
                 </div>
               );
             })}
           </div>
-          <div style={{position: 'absolute', left: 0, right: 0, top: 1300, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 18, color: '#fff', opacity: prog(f, D + 14, 10)}}>
-            <Logo s={80} /><span style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 72}}>{cfg.brand}</span>
+          <div style={{position: 'absolute', left: 0, right: 0, top: 1210, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 20, opacity: prog(f, D + 10, 9), transform: `translateY(${(1 - prog(f, D + 10, 9)) * 20}px)`}}>
+            <Logo s={92} /><span style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 80, color: INK, letterSpacing: '-0.02em'}}>{cfg.brand}</span>
           </div>
-          <div style={{position: 'absolute', left: 0, right: 0, top: 1420, textAlign: 'center', color: '#fff', fontSize: 40, fontWeight: 600, opacity: prog(f, D + 22, 10) * 0.9}}>Lien en bio pour commencer</div>
+          <div style={{position: 'absolute', left: 0, right: 0, top: 1350, display: 'flex', justifyContent: 'center', opacity: prog(f, D + 16, 9)}}>
+            <div style={{padding: '20px 44px', borderRadius: 99, backgroundImage: GRAD, color: '#fff', fontSize: 38, fontWeight: 800, boxShadow: '0 20px 40px -14px rgba(91,63,228,0.7)'}}>Lien en bio pour commencer</div>
+          </div>
         </AbsoluteFill>
         <AbsoluteFill style={{background: '#000', opacity: interpolate(f, [E - 12, E - 1], [0, 1], clamp)}} />
       </Sequence>
 
       {/* audio */}
       <Sequence from={6}><Audio src={staticFile(cfg.before.vo)} /></Sequence>
-      <Sequence from={B + 3}><Audio src={staticFile(cfg.tr.vo)} /></Sequence>
-      <Sequence from={T + 9}><Audio src={staticFile(cfg.chat.vo)} /></Sequence>
-      <Sequence from={D + 6}><Audio src={staticFile(cfg.end.vo)} /></Sequence>
+      <Sequence from={B + 1}><Audio src={staticFile(cfg.tr.vo)} /></Sequence>
+      <Sequence from={T + 4}><Audio src={staticFile(cfg.chat.vo)} /></Sequence>
+      <Sequence from={D + 4}><Audio src={staticFile(cfg.end.vo)} /></Sequence>
       <Audio src={staticFile(cfg.bed)} />
     </AbsoluteFill>
   );

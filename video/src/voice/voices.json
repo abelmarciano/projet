@@ -698,5 +698,29 @@
   "style": 0.7,
   "speed": 1.08,
   "text": "[warmly] Ta pub, sans tournage. Avec Grossiti."
+ },
+ "av4b-a": {
+  "voice": "rbFGGoDXFHtVghjHuS3E",
+  "model": "eleven_v4",
+  "stability": 0.3,
+  "style": 0.7,
+  "speed": 1.12,
+  "text": "[sighs] Faire sa pub seul ? [amused] Le trépied qui tombe… la lumière… [laughs] quinzième prise."
+ },
+ "av4b-b": {
+  "voice": "rbFGGoDXFHtVghjHuS3E",
+  "model": "eleven_v4",
+  "stability": 0.3,
+  "style": 0.7,
+  "speed": 1.12,
+  "text": "[confident] Une phrase. C'est prêt."
+ },
+ "av4b-end": {
+  "voice": "rbFGGoDXFHtVghjHuS3E",
+  "model": "eleven_v4",
+  "stability": 0.3,
+  "style": 0.7,
+  "speed": 1.12,
+  "text": "[warmly] Ta pub, sans tournage."
  }
 }

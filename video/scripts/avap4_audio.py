@@ -18,8 +18,8 @@ def pad(ms, dur, g=0.12, cut=1500):
     ts = np.arange(int(dur * SR)) / SR
     return lp(sum(np.sin(2 * np.pi * note(m) * ts) for m in ms) / len(ms) * np.minimum(1, ts / 0.3) * np.minimum(1, (dur - ts) / 0.4), cut) * g
 # avant : accords mineurs lents + tic-tac
-for k, ch in enumerate([[57, 60, 64], [53, 57, 60], [55, 59, 62], [52, 55, 59]]):
-    add(mus, pad(ch, 2.6), k * 2.5, 0.9)
+for k, ch in enumerate([[57, 60, 64], [53, 57, 60], [55, 59, 62]]):
+    add(mus, pad(ch, 2.4), k * 2.2, 0.9)
 t = 0.3
 while t < B:
     add(sfx, click(2.2) * 0.5, t, 0.10); t += 0.5
@@ -31,9 +31,9 @@ for k in range(takes):
 tt = np.arange(int(0.9 * SR)) / SR
 add(sfx, hp(rng.standard_normal(len(tt)), 1500) * (tt / 0.9) ** 2 * 0.5, B - 0.85, 0.3); add(sfx, boom(), B, 0.3); add(sfx, chime(84), B + 0.1, 0.18)
 # chat : clavier + chime
-t = T + 0.3
-while t < T + 1.7: add(sfx, click(1.6), t, 0.12); t += 0.07 + rng.random() * 0.05
-add(sfx, chime(91), T + 2.1, 0.2)
+t = T + 0.1
+while t < T + 1.0: add(sfx, click(1.6), t, 0.12); t += 0.06 + rng.random() * 0.04
+add(sfx, chime(91), T + 1.4, 0.2)
 # fond entraînant (chat + après), discret
 bpm = 112; beat = 60 / bpm; prog = [[64, 68, 71], [61, 64, 68], [66, 69, 73], [59, 63, 66]]
 i = 0
