@@ -10,7 +10,7 @@ type Word = {w: string; s: number; e: number};
 export type Av4Cfg = {
   before: {video: string; start?: number; dur: number; vo: string; voWords: Word[]; takes: number; takeAt: number};
   tr: {vo: string; dur: number};
-  chat: {vo: string; voWords: Word[]; prompt: string; dur: number; voAt?: number; actors?: {img: string; name: string}[]; pick?: number; pickLabel?: string; lockAt?: number; readyAt?: number};
+  chat: {vo: string; voWords: Word[]; prompt: string; dur: number; voAt?: number; actors?: {img: string; name: string}[]; pick?: number; pickLabel?: string; lockAt?: number; readyAt?: number; products?: {img: string; name: string}[]; productPick?: number; productLabel?: string; productStart?: number; productLockAt?: number};
   after: {video: string; dur: number; words: Word[]; sticker: {text: string; at: number; to: number}};
   end: {vo: string; dur: number; left: string; right: string; beforeStill: string; afterStill: string};
   bed: string; brand: string;
@@ -43,35 +43,32 @@ const Pill: React.FC<{text: string; color: string; at: number}> = ({text, color,
   return <div style={{position: 'absolute', left: 60, top: 240, display: 'flex', alignItems: 'center', gap: 14, padding: '14px 26px', borderRadius: 16, background: 'rgba(12,12,16,0.62)', border: '1.5px solid rgba(255,255,255,0.18)', color: '#fff', fontFamily: DISPLAY, fontWeight: 700, fontSize: 44, letterSpacing: '0.14em', transform: `translateX(${(1 - p) * -200}px)`, zIndex: 15}}><div style={{width: 16, height: 16, borderRadius: 99, background: color, boxShadow: `0 0 16px ${color}`}} />{text}</div>;
 };
 
-// Carrousel 3D d'acteurs qui défile puis se verrouille sur l'acteur choisi (halo, coche, fiche).
-const ActorPicker: React.FC<{cfg: Av4Cfg; t0: number}> = ({cfg, t0}) => {
-  const f = useCurrentFrame();
-  const A = cfg.chat.actors!; const n = A.length; const pick = cfg.chat.pick ?? 0;
-  const lock = Math.round((cfg.chat.lockAt ?? 2) * 30); const start = 24;
-  const lf = f; // temps relatif à la séquence du chat
-  const turns = 2;
-  const pos = interpolate(lf, [start, lock], [0, turns * n + pick], {...clamp, easing: (x: number) => 1 - Math.pow(1 - x, 3.2)});
+// Carrousel 3D (acteurs ou produits) qui défile puis se verrouille sur l'élément choisi (halo, coche, fiche).
+const Picker: React.FC<{title: string; items: {img: string; name: string}[]; pick: number; start: number; lock: number; label?: string; w?: number; h?: number; height?: number; contain?: boolean}> = ({title, items, pick, start, lock, label, w = 230, h = 330, height = 470, contain}) => {
+  const lf = useCurrentFrame(); // temps relatif à la séquence du chat
+  const n = items.length;
+  const pos = interpolate(lf, [start, lock], [0, 2 * n + pick], {...clamp, easing: (x: number) => 1 - Math.pow(1 - x, 3.2)});
   const locked = lf >= lock; const lp = spring({frame: lf - lock, fps: 30, config: {damping: 11}});
   const appear = prog(lf, start, 8);
   return (
-    <div style={{position: 'relative', height: 470, marginTop: 30, perspective: 1400, opacity: appear}}>
-      <div style={{position: 'absolute', left: 0, top: 8, fontSize: 24, fontWeight: 800, letterSpacing: '0.16em', color: '#6B7280'}}>ACTRICE</div>
-      {A.map((a, i) => {
+    <div style={{position: 'relative', height, marginTop: 24, perspective: 1400, opacity: appear, transform: `translateY(${(1 - appear) * 20}px)`}}>
+      <div style={{position: 'absolute', left: 0, top: 4, fontSize: 24, fontWeight: 800, letterSpacing: '0.16em', color: '#6B7280'}}>{title}</div>
+      {items.map((a, i) => {
         let d = i - (pos % n); if (d > n / 2) d -= n; if (d < -n / 2) d += n;
-        const ang = d * 34; const z = -Math.abs(d) * 120; const x = Math.sin((ang * Math.PI) / 180) * 360;
+        const ang = d * 34; const z = -Math.abs(d) * 120; const x = Math.sin((ang * Math.PI) / 180) * (w * 1.55);
         const isPick = i === pick && locked;
         const sc = isPick ? 1 + lp * 0.12 : 1;
         const op = Math.max(0, 1 - Math.abs(d) * 0.32) * (locked && i !== pick ? 1 - lp * 0.6 : 1);
         return (
-          <div key={i} style={{position: 'absolute', left: '50%', top: 60, width: 230, height: 330, marginLeft: -115, transform: `translateX(${x}px) translateZ(${z}px) rotateY(${-ang * 0.8}deg) scale(${sc})`, opacity: op, zIndex: 100 - Math.round(Math.abs(d) * 10), borderRadius: 26, overflow: 'hidden', boxShadow: isPick ? `0 0 0 ${6 * lp}px #8B6DFF, 0 0 ${60 * lp}px rgba(139,109,255,0.9), 0 30px 60px -20px rgba(0,0,0,0.5)` : '0 20px 40px -18px rgba(0,0,0,0.5)', filter: locked && i !== pick ? `blur(${lp * 3}px)` : 'none'}}>
-            <Img src={staticFile(`media/${a.img}`)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-            <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, padding: '40px 14px 12px', background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', color: '#fff', fontWeight: 800, fontSize: 22}}>{a.name}</div>
-            {isPick && <div style={{position: 'absolute', top: 12, right: 12, width: 50, height: 50, borderRadius: 99, background: '#16A34A', display: 'flex', alignItems: 'center', justifyContent: 'center', transform: `scale(${lp})`}}><Check s={32} c="#fff" /></div>}
+          <div key={i} style={{position: 'absolute', left: '50%', top: 50, width: w, height: h, marginLeft: -w / 2, transform: `translateX(${x}px) translateZ(${z}px) rotateY(${-ang * 0.8}deg) scale(${sc})`, opacity: op, zIndex: 100 - Math.round(Math.abs(d) * 10), borderRadius: 24, overflow: 'hidden', background: '#fff', boxShadow: isPick ? `0 0 0 ${6 * lp}px #8B6DFF, 0 0 ${60 * lp}px rgba(139,109,255,0.9), 0 30px 60px -20px rgba(0,0,0,0.5)` : '0 20px 40px -18px rgba(0,0,0,0.45)', filter: locked && i !== pick ? `blur(${lp * 3}px)` : 'none'}}>
+            <Img src={staticFile(`media/${a.img}`)} style={{width: '100%', height: '100%', objectFit: contain ? 'contain' : 'cover', background: '#F3F4F6'}} />
+            <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, padding: '34px 12px 10px', background: 'linear-gradient(transparent, rgba(0,0,0,0.65))', color: '#fff', fontWeight: 800, fontSize: 20}}>{a.name}</div>
+            {isPick && <div style={{position: 'absolute', top: 10, right: 10, width: 46, height: 46, borderRadius: 99, background: '#16A34A', display: 'flex', alignItems: 'center', justifyContent: 'center', transform: `scale(${lp})`}}><Check s={30} c="#fff" /></div>}
           </div>
         );
       })}
-      {locked && (
-        <div style={{position: 'absolute', left: '50%', bottom: 0, transform: `translateX(-50%) translateY(${(1 - lp) * 20}px)`, opacity: lp, display: 'flex', alignItems: 'center', gap: 12, padding: '12px 24px', borderRadius: 99, background: '#F5F3FF', border: '2px solid #C4B5FD', fontSize: 28, fontWeight: 800, color: '#5B3FE4', whiteSpace: 'nowrap'}}>✨ {cfg.chat.pickLabel}</div>
+      {locked && label && (
+        <div style={{position: 'absolute', left: '50%', bottom: 0, transform: `translateX(-50%) translateY(${(1 - lp) * 20}px)`, opacity: lp, display: 'flex', alignItems: 'center', gap: 12, padding: '10px 22px', borderRadius: 99, background: '#F5F3FF', border: '2px solid #C4B5FD', fontSize: 26, fontWeight: 800, color: '#5B3FE4', whiteSpace: 'nowrap'}}>✨ {label}</div>
       )}
     </div>
   );
@@ -115,16 +112,17 @@ export const AvantApres4: React.FC<{cfg: Av4Cfg}> = ({cfg}) => {
       {/* CHAT */}
       <Sequence from={T} durationInFrames={C - T}>
         <AbsoluteFill style={{background: 'radial-gradient(70% 45% at 50% 46%, #EEEBFF 0%, #F7F6F3 70%)'}}>
-          <div style={{position: 'absolute', left: 70, right: 70, top: cfg.chat.actors ? 360 : 560, borderRadius: 40, background: '#fff', padding: 44, boxShadow: '0 50px 120px -40px rgba(91,63,228,0.6)', transform: `scale(${0.9 + spring({frame: f - T, fps: 30, config: {damping: 13}}) * 0.1})`}}>
+          <div style={{position: 'absolute', left: 70, right: 70, top: cfg.chat.products ? 230 : cfg.chat.actors ? 360 : 560, borderRadius: 40, background: '#fff', padding: 44, boxShadow: '0 50px 120px -40px rgba(91,63,228,0.6)', transform: `scale(${0.9 + spring({frame: f - T, fps: 30, config: {damping: 13}}) * 0.1})`}}>
             <div style={{display: 'flex', alignItems: 'center', gap: 16, fontWeight: 700, fontSize: 38, color: INK, marginBottom: 28}}><Logo s={56} /> {cfg.brand}</div>
             <div style={{minHeight: 200, padding: '26px 30px', borderRadius: 28, border: '3px solid #C4B5FD', fontSize: 46, lineHeight: 1.3, color: INK, fontWeight: 500}}>{typed}{!ready && <span style={{opacity: Math.floor(f / 8) % 2 ? 1 : 0, color: '#6552E8'}}>|</span>}</div>
-            {cfg.chat.actors && f - T >= 24 && <ActorPicker cfg={cfg} t0={T} />}
+            {cfg.chat.actors && f - T >= 24 && <Picker title="ACTRICE" items={cfg.chat.actors} pick={cfg.chat.pick ?? 0} start={24} lock={Math.round((cfg.chat.lockAt ?? 2) * 30)} label={cfg.chat.pickLabel} w={200} h={290} height={410} />}
+            {cfg.chat.products && f - T >= Math.round((cfg.chat.productStart ?? 2.4) * 30) && <Picker title="PRODUIT" items={cfg.chat.products} pick={cfg.chat.productPick ?? 0} start={Math.round((cfg.chat.productStart ?? 2.4) * 30)} lock={Math.round((cfg.chat.productLockAt ?? 3.6) * 30)} label={cfg.chat.productLabel} w={200} h={220} height={340} />}
             <div style={{display: 'flex', alignItems: 'center', gap: 16, marginTop: 30, fontSize: 40, fontWeight: 800, color: ready ? '#15803D' : '#5B3FE4'}}>
-              {ready ? <><Check s={46} /> Ta pub est prête</> : f - T > 27 ? <><Spinner f={f} s={40} /> {cfg.chat.actors && f - T < Math.round((cfg.chat.lockAt ?? 2) * 30) ? 'Je choisis ton actrice…' : 'Je crée ta pub…'}</> : null}
+              {ready ? <><Check s={46} /> Ta pub est prête</> : f - T > 27 ? <><Spinner f={f} s={40} /> {cfg.chat.actors && f - T < Math.round((cfg.chat.lockAt ?? 2) * 30) ? 'Je choisis ton actrice…' : cfg.chat.products && f - T < Math.round((cfg.chat.productLockAt ?? 3.6) * 30) ? 'Je prends ton produit…' : 'Je crée ta pub…'}</> : null}
             </div>
           </div>
         </AbsoluteFill>
-        <Subs words={cfg.chat.voWords} offset={cfg.chat.voAt ?? 0.13} top={1560} dark />
+        <Subs words={cfg.chat.voWords} offset={cfg.chat.voAt ?? 0.13} top={1640} dark />
       </Sequence>
 
       {/* APRÈS */}

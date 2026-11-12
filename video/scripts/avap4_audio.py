@@ -38,7 +38,12 @@ t = T + 0.85
 while t < T + lk - 0.05:  # tic du carrousel qui ralentit
     add(sfx, click(2.0), t, 0.10); t += 0.05 + (t - T - 0.85) * 0.12
 add(sfx, whoosh(0.3), T + lk - 0.2, 0.2); add(sfx, pop_sfx(), T + lk, 0.35); add(sfx, chime(88), T + lk + 0.05, 0.14)
-add(sfx, chime(91), T + rd, 0.2)
+ps = c['chat'].get('productStart'); pl = c['chat'].get('productLockAt')
+if ps:
+    t = T + ps
+    while t < T + pl - 0.05: add(sfx, click(2.0), t, 0.10); t += 0.05 + (t - T - ps) * 0.14
+    add(sfx, whoosh(0.3), T + pl - 0.2, 0.2); add(sfx, pop_sfx(), T + pl, 0.35); add(sfx, chime(91), T + pl + 0.05, 0.12)
+add(sfx, chime(93), T + rd, 0.2)
 # fond entraînant (chat + après), discret
 bpm = 112; beat = 60 / bpm; prog = [[64, 68, 71], [61, 64, 68], [66, 69, 73], [59, 63, 66]]
 i = 0

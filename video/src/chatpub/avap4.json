@@ -103,10 +103,10 @@
    }
   ],
   "prompt": "Une pub UGC pour mon sac en cuir SORA, actrice chic, terrasse parisienne.",
-  "dur": 3.8,
-  "voAt": 1.72,
-  "readyAt": 3.0,
-  "lockAt": 2.3,
+  "dur": 5.0,
+  "voAt": 2.92,
+  "readyAt": 4.2,
+  "lockAt": 2.2,
   "pick": 3,
   "pickLabel": "Margaux A. · Chic · voix FR",
   "actors": [
@@ -137,6 +137,36 @@
    {
     "img": "chat/banner/lila.jpg",
     "name": "Lila"
+   }
+  ],
+  "productStart": 2.45,
+  "productLockAt": 3.7,
+  "productPick": 0,
+  "productLabel": "Sac SORA · cuir cousu main",
+  "products": [
+   {
+    "img": "chat/avap4/bag.png",
+    "name": "Sac SORA"
+   },
+   {
+    "img": "chat/jwel/p-trefle.jpg",
+    "name": "Bracelet Trèfle"
+   },
+   {
+    "img": "chat/roast5/product.png",
+    "name": "Crème Eterna"
+   },
+   {
+    "img": "chat/roast3/product.png",
+    "name": "Café Martin"
+   },
+   {
+    "img": "chat/roast2/product.png",
+    "name": "Baskets"
+   },
+   {
+    "img": "chat/products/gel-lilimargo-gris.png",
+    "name": "Gel Lili Margo"
    }
   ]
  },
