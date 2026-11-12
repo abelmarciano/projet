@@ -722,5 +722,53 @@
   "style": 0.7,
   "speed": 1.12,
   "text": "[warmly] Ta pub, sans tournage."
+ },
+ "andro-1": {
+  "voice": "6kimG24ccauj1GNOEFjF",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[confident] Meta a changé la façon dont tes pubs sont choisies. Ça s'appelle : Andro-méda."
+ },
+ "andro-2": {
+  "voice": "6kimG24ccauj1GNOEFjF",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[calm] Avant, tu ciblais ton audience à la main : l'âge, les intérêts, la ville."
+ },
+ "andro-3": {
+  "voice": "6kimG24ccauj1GNOEFjF",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[explaining] Maintenant, l'IA de Meta trie toutes les pubs disponibles, et choisit pour chaque personne celles qui ont le plus de chances de lui parler."
+ },
+ "andro-4": {
+  "voice": "6kimG24ccauj1GNOEFjF",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[confident] Résultat : ta créa est devenue ton ciblage. Plus tes pubs sont différentes, plus Meta trouve de profils différents."
+ },
+ "andro-5": {
+  "voice": "6kimG24ccauj1GNOEFjF",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[calm] Donc : un ciblage large, une structure simple, et beaucoup de créas vraiment variées."
+ },
+ "andro-6": {
+  "voice": "6kimG24ccauj1GNOEFjF",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[warmly] C'est exactement ce que fait Grossiti : des séries de pubs variées, prêtes pour Andromeda."
  }
 }
