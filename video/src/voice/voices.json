@@ -818,5 +818,53 @@
   "style": 0.35,
   "speed": 1.04,
   "text": "[warmly] Grossiti surveille tes campagnes, et te dit quand agir… et quand ne rien toucher."
+ },
+ "struct-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[confident] Dix campagnes, trente ensembles de pubs… Ton compte est un labyrinthe. Et Meta déteste ça."
+ },
+ "struct-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[explaining] Chaque ensemble de pubs a besoin de résultats pour apprendre. Divise ton budget en trente : aucun n'apprend vraiment."
+ },
+ "struct-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[serious] Pire : tes ensembles se retrouvent en concurrence pour les mêmes personnes."
+ },
+ "struct-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[calm] La solution : une campagne, peu d'ensembles, un budget géré par Meta… et plein de créas à l'intérieur."
+ },
+ "struct-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[confident] Moins de cases, plus de données. L'algorithme apprend plus vite."
+ },
+ "struct-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[warmly] Grossiti organise tes campagnes simplement, et les remplit de créas variées."
  }
 }
