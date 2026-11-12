@@ -319,7 +319,7 @@
  ],
  "ask": "Refais cette pub : crème visage Eterna, une actrice naturelle, une promesse honnête.",
  "goodVideo": "chat/roast5/good.mp4",
- "goodTitle": "Plus douce.\nTout simplement. 🌿",
+ "goodTitle": "Plus douce.\nSimplement. 🌿",
  "goodCta": "Découvrir la crème",
  "scoreBad": 2,
  "scoreGood": 9,
@@ -370,5 +370,6 @@
   "stars": "★★★★★",
   "text": "« Incroyable, c’est magique !! »",
   "who": "Cliente satisfaite"
- }
+ },
+ "goodCtaTop": true
 }

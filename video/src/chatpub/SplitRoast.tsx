@@ -5,7 +5,7 @@ import {Check, FONT, DISPLAY, GRAD, INK, LINE, Logo, MUTED, SplitCfg, SplitChat,
 
 export type RoastCfg = SplitCfg & {
   episode: number; account: string; badImg: string; badText: string; flaws: {label: string; cue: string}[];
-  ask: string; badMode?: 'wall' | 'landscape' | 'logo' | 'stock' | 'avatar' | 'deadzone'; badDead?: {logo: string; offer: string; bottom: string}; badClaim?: string; badReview?: {stars: string; text: string; who: string}; badSlogan?: string; badLogo?: {name: string; since: string; time: string}; badCaption?: string; flawBoxes?: {l: number; t: number; w: number; h: number; round?: boolean; labelLeft?: number; labelTop?: number}[]; goodVideo: string; goodTitle: string; goodCta: string; goodSafe?: boolean; scoreBad: number; scoreGood: number;
+  ask: string; badMode?: 'wall' | 'landscape' | 'logo' | 'stock' | 'avatar' | 'deadzone'; badDead?: {logo: string; offer: string; bottom: string}; badClaim?: string; badReview?: {stars: string; text: string; who: string}; badSlogan?: string; badLogo?: {name: string; since: string; time: string}; badCaption?: string; flawBoxes?: {l: number; t: number; w: number; h: number; round?: boolean; labelLeft?: number; labelTop?: number}[]; goodVideo: string; goodTitle: string; goodCta: string; goodSafe?: boolean; goodCtaTop?: boolean; scoreBad: number; scoreGood: number;
 };
 
 const Stamp: React.FC<{score: number; at: number; good?: boolean; size?: number}> = ({score, at, good, size = 1}) => {
@@ -195,7 +195,9 @@ const RoastWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
                     <div style={{position: 'absolute', left: 8, right: 54, top: 26, bottom: 118, border: '3px dashed rgba(34,197,94,0.95)', borderRadius: 14, opacity: prog(f, score2 - 6, 8)}}>
                       <div style={{position: 'absolute', left: 8, bottom: 6, padding: '3px 9px', borderRadius: 8, background: '#16A34A', color: '#fff', fontSize: 13, fontWeight: 800}}>✓ Zone visible</div>
                     </div>
-                  </>) : (
+                  </>) : cfg.goodCtaTop ? (
+                    <div style={{position: 'absolute', left: 16, top: 136, opacity: prog(f, voila + 12, 10)}}><div style={{padding: '11px 24px', borderRadius: 99, background: '#fff', color: INK, fontWeight: 800, fontSize: 19, boxShadow: '0 8px 20px -8px rgba(0,0,0,0.6)'}}>{cfg.goodCta} →</div></div>
+                  ) : (
                   <div style={{position: 'absolute', left: 16, right: 16, bottom: 26, display: 'flex', justifyContent: 'center', opacity: prog(f, voila + 12, 10)}}><div style={{padding: '12px 30px', borderRadius: 99, background: '#fff', color: INK, fontWeight: 800, fontSize: 20}}>{cfg.goodCta}</div></div>)}
                   <div style={{position: 'absolute', top: 12, left: 12, display: 'flex', alignItems: 'center', gap: 6, padding: '5px 11px', borderRadius: 99, background: '#fff', fontWeight: 700, fontSize: 15, color: '#15803D'}}><Check s={16} /> Refaite avec {cfg.brand}</div>
                 </Phone>

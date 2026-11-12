@@ -339,7 +339,7 @@
  ],
  "ask": "Refais cette pub : studio de yoga, une vraie prof en plein cours, bouton Réserver.",
  "goodVideo": "chat/roast4/good.mp4",
- "goodTitle": "Ton premier cours\nt’attend. 🧘‍♀️",
+ "goodTitle": "Ton cours\nt’attend. 🧘‍♀️",
  "goodCta": "Réserver mon cours",
  "scoreBad": 3,
  "scoreGood": 8,
@@ -382,5 +382,6 @@
    "labelTop": 58
   }
  ],
- "badSlogan": "L’excellence à votre service"
+ "badSlogan": "L’excellence à votre service",
+ "goodCtaTop": true
 }
