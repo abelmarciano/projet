@@ -962,5 +962,53 @@
   "style": 0.35,
   "speed": 1.04,
   "text": "[warmly] Grossiti te dit quand augmenter ton budget, et prépare les créas pour suivre."
+ },
+ "adv-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Advantage plus, c'est le pilote automatique de Meta. Mais faut-il tout lui confier ?"
+ },
+ "adv-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Il automatise quatre choses : l'audience, les placements, le budget, et la créa."
+ },
+ "adv-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "L'audience, les placements et le budget : en général, laisse Meta faire. Son algorithme va plus vite que toi."
+ },
+ "adv-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Mais attention aux améliorations de créa automatiques. Meta peut ajouter de la musique, ou modifier ton texte. Alors, vérifie toujours le résultat."
+ },
+ "adv-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Et surtout, le pilote automatique a besoin de carburant : des créas variées, et un bon suivi des conversions."
+ },
+ "adv-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[warmly] Grossiti prépare ce carburant : des créas variées, prêtes pour Advantage plus."
  }
 }
