@@ -5,7 +5,7 @@ import {Check, FONT, DISPLAY, GRAD, INK, LINE, Logo, MUTED, SplitCfg, SplitChat,
 
 export type RoastCfg = SplitCfg & {
   episode: number; account: string; badImg: string; badText: string; flaws: {label: string; cue: string}[];
-  ask: string; badMode?: 'wall' | 'landscape'; badCaption?: string; flawBoxes?: {l: number; t: number; w: number; h: number; round?: boolean; labelLeft?: number; labelTop?: number}[]; goodVideo: string; goodTitle: string; goodCta: string; scoreBad: number; scoreGood: number;
+  ask: string; badMode?: 'wall' | 'landscape' | 'logo'; badLogo?: {name: string; since: string; time: string}; badCaption?: string; flawBoxes?: {l: number; t: number; w: number; h: number; round?: boolean; labelLeft?: number; labelTop?: number}[]; goodVideo: string; goodTitle: string; goodCta: string; scoreBad: number; scoreGood: number;
 };
 
 const Stamp: React.FC<{score: number; at: number; good?: boolean; size?: number}> = ({score, at, good, size = 1}) => {
@@ -34,7 +34,7 @@ const RoastWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
   const aie = C('aie'), score1 = C('score1'), redo = C('redo'), voila = C('voila'), score2 = C('score2'), end = C('end');
 
   const shake = f >= aie && f < aie + 12 ? Math.sin((f - aie) * 2.2) * 10 * (1 - (f - aie) / 12) : 0;
-  const scrollFlaw = cfg.badMode === 'landscape' ? undefined : cfg.flaws.find((x) => x.cue === 'flaw3');
+  const scrollFlaw = cfg.badMode && cfg.badMode !== 'wall' ? undefined : cfg.flaws.find((x) => x.cue === 'flaw3');
   const sc = scrollFlaw ? C('flaw3') : 9999;
   const swipe = f >= sc && f < sc + 24 ? Math.sin(((f - sc) / 24) * Math.PI) * -160 : 0;
   const phaseB = prog(f, redo - 4, 12);
@@ -54,7 +54,25 @@ const RoastWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
       {/* left: the bad ad */}
       <div style={{position: 'absolute', left: 50, top: 100, transform: `translate(${shake}px, ${swipe}px) scale(${1 - leftDim * 0.12})`, transformOrigin: 'top left'}}>
         <Phone w={370} dim={leftDim}>
-          {cfg.badMode === 'landscape' ? (
+          {cfg.badMode === 'logo' && cfg.badLogo ? (
+            <div style={{position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 40%, #5A3826, #2A170E)', color: '#F5E6D3'}}>
+              <div style={{position: 'absolute', top: 16, left: 14, display: 'flex', alignItems: 'center', gap: 8}}>
+                <div style={{width: 30, height: 30, borderRadius: 99, background: '#7A5038'}} />
+                <div style={{fontSize: 15, fontWeight: 700}}>{cfg.account.replace('@', '')}<div style={{fontSize: 11, fontWeight: 500, opacity: 0.7}}>Sponsorisé</div></div>
+              </div>
+              <div style={{position: 'absolute', left: 0, right: 0, top: 220, textAlign: 'center', fontFamily: 'Georgia, serif'}}>
+                <div style={{fontSize: 44}}>☕</div>
+                <div style={{fontSize: 34, fontWeight: 700, letterSpacing: '0.08em', lineHeight: 1.1, whiteSpace: 'pre-line', marginTop: 8}}>{cfg.badLogo.name}</div>
+                <div style={{fontSize: 16, fontStyle: 'italic', marginTop: 10, opacity: 0.8}}>{cfg.badLogo.since}</div>
+              </div>
+              <div style={{position: 'absolute', right: 14, top: 70, fontSize: 22}}>🔇</div>
+              <div style={{position: 'absolute', left: 16, right: 16, bottom: 46}}>
+                <div style={{height: 4, borderRadius: 2, background: 'rgba(255,255,255,0.25)'}}><div style={{width: '7%', height: '100%', background: '#fff'}} /></div>
+                <div style={{display: 'flex', justifyContent: 'space-between', fontSize: 12, marginTop: 5, opacity: 0.8}}><span>▶ {cfg.badLogo.time}</span><span>🔇</span></div>
+              </div>
+              <div style={{position: 'absolute', left: 14, right: 14, bottom: 14, fontSize: 12, opacity: 0.75}}>{cfg.badCaption}</div>
+            </div>
+          ) : cfg.badMode === 'landscape' ? (
             <div style={{position: 'absolute', inset: 0, background: '#000', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
               <div style={{position: 'absolute', top: 16, left: 14, display: 'flex', alignItems: 'center', gap: 8, color: '#fff'}}>
                 <div style={{width: 30, height: 30, borderRadius: 99, background: '#444'}} />

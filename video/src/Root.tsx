@@ -60,6 +60,7 @@ import {YtBanner} from './chatpub/YtBanner';
 import {SplitRoast, RoastCfg} from './chatpub/SplitRoast';
 import roast1Cfg from './chatpub/roast1.json';
 import roast2Cfg from './chatpub/roast2.json';
+import roast3Cfg from './chatpub/roast3.json';
 import {ShowIntro, ShowEnd, SHOW_INTRO, SHOW_END} from './reels/Showcase';
 
 export const Root: React.FC = () => (
@@ -105,6 +106,7 @@ export const Root: React.FC = () => (
     <Still id="YtBanner" component={YtBanner} width={2560} height={1440} />
     <Composition id="Roast-corinne-1" component={SplitRoast} durationInFrames={roast1Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: roast1Cfg as unknown as RoastCfg}} />
     <Composition id="Roast-corinne-2" component={SplitRoast} durationInFrames={roast2Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: roast2Cfg as unknown as RoastCfg}} />
+    <Composition id="Roast-corinne-3" component={SplitRoast} durationInFrames={roast3Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: roast3Cfg as unknown as RoastCfg}} />
     <Composition id="AvantApres3-gel" component={AvantApres3} durationInFrames={AV3_TOTAL} fps={30} width={1080} height={1920} />
     <Composition id="AdEdit-avap-mei" component={AdEdit} durationInFrames={adAvapMei.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvapMei as unknown as AdCfg}} />
     <Composition id="AdEdit-avap2-after" component={AdEdit} durationInFrames={adAvap2After.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvap2After as unknown as AdCfg}} />

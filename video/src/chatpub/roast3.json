@@ -1,0 +1,352 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "actor": {
+  "name": "Guillaume B.",
+  "img": "chat/actors/a180.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "words": [
+  {
+   "w": "Épisode",
+   "s": 0.22,
+   "e": 0.6
+  },
+  {
+   "w": "trois.",
+   "s": 0.64,
+   "e": 0.88
+  },
+  {
+   "w": "Alors",
+   "s": 1.44,
+   "e": 1.64
+  },
+  {
+   "w": "là,",
+   "s": 1.68,
+   "e": 1.82
+  },
+  {
+   "w": "on",
+   "s": 2.2,
+   "e": 2.28
+  },
+  {
+   "w": "commence",
+   "s": 2.32,
+   "e": 2.56
+  },
+  {
+   "w": "par",
+   "s": 2.6,
+   "e": 2.7
+  },
+  {
+   "w": "le",
+   "s": 2.74,
+   "e": 2.8
+  },
+  {
+   "w": "logo",
+   "s": 2.84,
+   "e": 3.12
+  },
+  {
+   "w": "pendant",
+   "s": 3.32,
+   "e": 3.56
+  },
+  {
+   "w": "trois",
+   "s": 3.6,
+   "e": 3.74
+  },
+  {
+   "w": "secondes.",
+   "s": 3.82,
+   "e": 4.18
+  },
+  {
+   "w": "Le",
+   "s": 4.58,
+   "e": 4.66
+  },
+  {
+   "w": "produit",
+   "s": 4.7,
+   "e": 4.98
+  },
+  {
+   "w": "arrive",
+   "s": 5.04,
+   "e": 5.22
+  },
+  {
+   "w": "à",
+   "s": 5.28,
+   "e": 5.3
+  },
+  {
+   "w": "la",
+   "s": 5.34,
+   "e": 5.44
+  },
+  {
+   "w": "vingtième",
+   "s": 5.48,
+   "e": 5.76
+  },
+  {
+   "w": "seconde",
+   "s": 5.84,
+   "e": 6.16
+  },
+  {
+   "w": "et",
+   "s": 6.36,
+   "e": 6.44
+  },
+  {
+   "w": "pas",
+   "s": 6.48,
+   "e": 6.66
+  },
+  {
+   "w": "un",
+   "s": 6.72,
+   "e": 6.8
+  },
+  {
+   "w": "seul",
+   "s": 6.84,
+   "e": 6.96
+  },
+  {
+   "w": "sous-titre.",
+   "s": 7.04,
+   "e": 7.44
+  },
+  {
+   "w": "Quatre",
+   "s": 7.86,
+   "e": 8.02
+  },
+  {
+   "w": "sur",
+   "s": 8.06,
+   "e": 8.2
+  },
+  {
+   "w": "dix.",
+   "s": 8.24,
+   "e": 8.5
+  },
+  {
+   "w": "Je",
+   "s": 8.9,
+   "e": 8.94
+  },
+  {
+   "w": "la",
+   "s": 9.0,
+   "e": 9.08
+  },
+  {
+   "w": "refais",
+   "s": 9.12,
+   "e": 9.36
+  },
+  {
+   "w": "avec",
+   "s": 9.42,
+   "e": 9.58
+  },
+  {
+   "w": "Growthity.",
+   "s": 9.62,
+   "e": 10.14
+  },
+  {
+   "w": "Voilà,",
+   "s": 11.04,
+   "e": 11.26
+  },
+  {
+   "w": "le",
+   "s": 11.58,
+   "e": 11.68
+  },
+  {
+   "w": "café",
+   "s": 11.72,
+   "e": 12.0
+  },
+  {
+   "w": "dès",
+   "s": 12.12,
+   "e": 12.2
+  },
+  {
+   "w": "la",
+   "s": 12.24,
+   "e": 12.3
+  },
+  {
+   "w": "première",
+   "s": 12.36,
+   "e": 12.58
+  },
+  {
+   "w": "seconde.",
+   "s": 12.64,
+   "e": 12.98
+  },
+  {
+   "w": "Neuf",
+   "s": 13.22,
+   "e": 13.36
+  },
+  {
+   "w": "sur",
+   "s": 13.4,
+   "e": 13.52
+  },
+  {
+   "w": "dix.",
+   "s": 13.58,
+   "e": 13.84
+  },
+  {
+   "w": "Envoyez-moi",
+   "s": 14.2,
+   "e": 14.58
+  },
+  {
+   "w": "les",
+   "s": 14.62,
+   "e": 14.7
+  },
+  {
+   "w": "vôtres",
+   "s": 14.74,
+   "e": 14.98
+  }
+ ],
+ "video": "fal/roast3/corinne3-ext.mp4",
+ "total": 481,
+ "audio": "chatpub/roast3-voice.wav",
+ "bed": "chatpub/roast3-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "cues": {
+  "look": 1.44,
+  "aie": 1.44,
+  "flaw1": 2.84,
+  "flaw2": 4.7,
+  "flaw3": 6.48,
+  "score1": 7.86,
+  "redo": 8.9,
+  "voila": 11.04,
+  "score2": 13.22,
+  "end": 14.2,
+  "scale": 0.86,
+  "cropTop": 280
+ },
+ "steps": [
+  [
+   "Défaut n°1",
+   "flaw1"
+  ],
+  [
+   "Défaut n°2",
+   "flaw2"
+  ],
+  [
+   "Défaut n°3",
+   "flaw3"
+  ],
+  [
+   "La note",
+   "score1"
+  ],
+  [
+   "Refaite",
+   "voila"
+  ],
+  [
+   "À toi !",
+   "end"
+  ]
+ ],
+ "punches": [
+  "score1",
+  "voila",
+  "score2"
+ ],
+ "episode": 3,
+ "account": "@torrefaction.martin",
+ "badText": "PROMO EXCEPTIONNELLE !!! BOUGIE PARFUMÉE DE QUALITÉ FABRIQUÉE AVEC SOIN DISPONIBLE EN PLUSIEURS PARFUMS LIVRAISON RAPIDE CLIQUEZ ICI POUR EN SAVOIR PLUS SUR NOTRE BOUTIQUE !!!",
+ "flaws": [
+  {
+   "label": "3 s de logo",
+   "cue": "flaw1"
+  },
+  {
+   "label": "Produit à 0:20",
+   "cue": "flaw2"
+  },
+  {
+   "label": "Aucun sous-titre",
+   "cue": "flaw3"
+  }
+ ],
+ "ask": "Refais cette pub : café en grains Martin, le café dès la première seconde, ambiance matin.",
+ "goodVideo": "chat/roast3/good.mp4",
+ "goodTitle": "Le café qui\nréveille. ☕",
+ "goodCta": "Commander",
+ "scoreBad": 4,
+ "scoreGood": 9,
+ "hot": [
+  "logo",
+  "trois",
+  "vingtième",
+  "sous-titre",
+  "quatre",
+  "Growthity",
+  "café",
+  "neuf",
+  "vôtres"
+ ],
+ "badMode": "logo",
+ "badCaption": "torrefaction.martin Bonjour à tous ! Aujourd’hui je vais vous présenter notre maison…",
+ "badLogo": {
+  "name": "TORRÉFACTION\nMARTIN",
+  "since": "Maison familiale depuis 1987",
+  "time": "0:03 / 0:45"
+ },
+ "badImg": "chat/roast3/product.png",
+ "flawBoxes": [
+  {
+   "l": 40,
+   "t": 210,
+   "w": 290,
+   "h": 200
+  },
+  {
+   "l": 20,
+   "t": 600,
+   "w": 330,
+   "h": 50,
+   "labelLeft": 60,
+   "labelTop": -34
+  },
+  {
+   "l": 40,
+   "t": 450,
+   "w": 290,
+   "h": 70
+  }
+ ]
+}
