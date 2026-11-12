@@ -55,6 +55,8 @@ import reply2Cfg from './chatpub/reply2.json';
 import {MultiDecor, MultiCfg} from './chatpub/MultiDecor';
 import multiCfg from './chatpub/multi.json';
 import multi2Cfg from './chatpub/multi2.json';
+import multi3Cfg from './chatpub/multi3.json';
+import {YtBanner} from './chatpub/YtBanner';
 import {ShowIntro, ShowEnd, SHOW_INTRO, SHOW_END} from './reels/Showcase';
 
 export const Root: React.FC = () => (
@@ -96,6 +98,8 @@ export const Root: React.FC = () => (
     <Composition id="Reply2-aicha" component={SplitCatalog} durationInFrames={reply2Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: reply2Cfg as unknown as CatalogCfg}} />
     <Composition id="MultiDecor-naomi" component={MultiDecor} durationInFrames={Math.round((multiCfg.videoDur + multiCfg.endDur) * 30)} fps={30} width={1080} height={1920} defaultProps={{cfg: multiCfg as unknown as MultiCfg}} />
     <Composition id="MultiDecor-steve" component={MultiDecor} durationInFrames={Math.round((multi2Cfg.videoDur + multi2Cfg.endDur) * 30)} fps={30} width={1080} height={1920} defaultProps={{cfg: multi2Cfg as unknown as MultiCfg}} />
+    <Composition id="MultiDecor-alice" component={MultiDecor} durationInFrames={Math.round((multi3Cfg.videoDur + multi3Cfg.endDur) * 30)} fps={30} width={1080} height={1920} defaultProps={{cfg: multi3Cfg as unknown as MultiCfg}} />
+    <Still id="YtBanner" component={YtBanner} width={2560} height={1440} />
     <Composition id="AvantApres3-gel" component={AvantApres3} durationInFrames={AV3_TOTAL} fps={30} width={1080} height={1920} />
     <Composition id="AdEdit-avap-mei" component={AdEdit} durationInFrames={adAvapMei.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvapMei as unknown as AdCfg}} />
     <Composition id="AdEdit-avap2-after" component={AdEdit} durationInFrames={adAvap2After.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvap2After as unknown as AdCfg}} />
