@@ -39,8 +39,8 @@ const S1: React.FC<{cfg: VFCfg}> = ({cfg}) => {
 
 const S2: React.FC<{cfg: VFCfg}> = ({cfg}) => {
   const f = useCurrentFrame();
-  const n = 3 - Math.floor(f / 30);
-  const local = f % 30;
+  const n = 3 - Math.floor(f / 12); // compte à rebours rapide : 0,4 s par chiffre
+  const local = f % 12;
   return (
     <AbsoluteFill>
       <Statement text={cfg.statement} f={f} small />
