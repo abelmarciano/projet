@@ -57,6 +57,7 @@ import multiCfg from './chatpub/multi.json';
 import multi2Cfg from './chatpub/multi2.json';
 import multi3Cfg from './chatpub/multi3.json';
 import {YtBanner} from './chatpub/YtBanner';
+import {LinkedInBanner} from './chatpub/LinkedInBanner';
 import {SplitRoast, RoastCfg} from './chatpub/SplitRoast';
 import roast1Cfg from './chatpub/roast1.json';
 import roast2Cfg from './chatpub/roast2.json';
@@ -163,6 +164,8 @@ export const Root: React.FC = () => (
     <Composition id="MultiDecor-steve" component={MultiDecor} durationInFrames={Math.round((multi2Cfg.videoDur + multi2Cfg.endDur) * 30)} fps={30} width={1080} height={1920} defaultProps={{cfg: multi2Cfg as unknown as MultiCfg}} />
     <Composition id="MultiDecor-alice" component={MultiDecor} durationInFrames={Math.round((multi3Cfg.videoDur + multi3Cfg.endDur) * 30)} fps={30} width={1080} height={1920} defaultProps={{cfg: multi3Cfg as unknown as MultiCfg}} />
     <Still id="YtBanner" component={YtBanner} width={2560} height={1440} />
+    <Still id="LinkedInBanner" component={LinkedInBanner} width={2256} height={382} defaultProps={{scale: 2}} />
+    <Still id="LinkedInBanner1x" component={LinkedInBanner} width={1128} height={191} defaultProps={{scale: 1}} />
     <Composition id="Roast-corinne-1" component={SplitRoast} durationInFrames={roast1Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: roast1Cfg as unknown as RoastCfg}} />
     <Composition id="Roast-corinne-2" component={SplitRoast} durationInFrames={roast2Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: roast2Cfg as unknown as RoastCfg}} />
     <Composition id="Roast-corinne-3" component={SplitRoast} durationInFrames={roast3Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: roast3Cfg as unknown as RoastCfg}} />
