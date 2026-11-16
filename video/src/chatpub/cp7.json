@@ -1,0 +1,494 @@
+{
+ "id": "cp7",
+ "title": "Friandises naturelles pour chien – Maison Truffe – Vidéo 9:16",
+ "video": "chat/friandises-sana-raw.mp4",
+ "segments": [
+  {
+   "from": 0.72,
+   "to": 2.92,
+   "zoom": 1.0
+  },
+  {
+   "from": 3.45,
+   "to": 4.9,
+   "zoom": 1.06
+  },
+  {
+   "from": 5.2,
+   "to": 7.0,
+   "zoom": 1.0
+  },
+  {
+   "from": 7.5,
+   "to": 7.95,
+   "zoom": 1.06
+  },
+  {
+   "from": 8.72,
+   "to": 10.15,
+   "zoom": 1.0
+  },
+  {
+   "from": 10.5,
+   "to": 11.2,
+   "zoom": 1.08
+  },
+  {
+   "from": 11.68,
+   "to": 12.62,
+   "zoom": 1.0
+  },
+  {
+   "from": 13.48,
+   "to": 14.9,
+   "zoom": 1.05
+  }
+ ],
+ "adWords": [
+  {
+   "w": "Regarde",
+   "s": 0.28,
+   "e": 0.58
+  },
+  {
+   "w": "sa",
+   "s": 0.62,
+   "e": 0.72
+  },
+  {
+   "w": "tête",
+   "s": 0.78,
+   "e": 0.96
+  },
+  {
+   "w": "quand",
+   "s": 0.98,
+   "e": 1.12
+  },
+  {
+   "w": "il",
+   "s": 1.16,
+   "e": 1.24
+  },
+  {
+   "w": "entend",
+   "s": 1.28,
+   "e": 1.5
+  },
+  {
+   "w": "ce",
+   "s": 1.54,
+   "e": 1.66
+  },
+  {
+   "w": "sachet.",
+   "s": 1.7,
+   "e": 2.12
+  },
+  {
+   "w": "Que",
+   "s": 2.31,
+   "e": 2.43
+  },
+  {
+   "w": "des",
+   "s": 2.47,
+   "e": 2.59
+  },
+  {
+   "w": "ingrédients",
+   "s": 2.65,
+   "e": 3.07
+  },
+  {
+   "w": "naturels.",
+   "s": 3.11,
+   "e": 3.59
+  },
+  {
+   "w": "Rien",
+   "s": 3.73,
+   "e": 3.91
+  },
+  {
+   "w": "de",
+   "s": 3.95,
+   "e": 4.01
+  },
+  {
+   "w": "chimique,",
+   "s": 4.05,
+   "e": 4.45
+  },
+  {
+   "w": "rien",
+   "s": 4.77,
+   "e": 4.93
+  },
+  {
+   "w": "de",
+   "s": 4.97,
+   "e": 5.01
+  },
+  {
+   "w": "caché.",
+   "s": 5.05,
+   "e": 5.37
+  },
+  {
+   "w": "Et",
+   "s": 5.55,
+   "e": 5.61
+  },
+  {
+   "w": "lui,",
+   "s": 5.65,
+   "e": 5.83
+  },
+  {
+   "w": "il",
+   "s": 6.0,
+   "e": 6.06
+  },
+  {
+   "w": "est",
+   "s": 6.1,
+   "e": 6.28
+  },
+  {
+   "w": "complètement",
+   "s": 6.36,
+   "e": 6.92
+  },
+  {
+   "w": "fan.",
+   "s": 6.98,
+   "e": 7.28
+  },
+  {
+   "w": "Regarde-le.",
+   "s": 7.41,
+   "e": 7.97
+  },
+  {
+   "w": "Ton",
+   "s": 8.11,
+   "e": 8.21
+  },
+  {
+   "w": "chien",
+   "s": 8.27,
+   "e": 8.43
+  },
+  {
+   "w": "est",
+   "s": 8.45,
+   "e": 8.51
+  },
+  {
+   "w": "gourmand?",
+   "s": 8.55,
+   "e": 8.91
+  },
+  {
+   "w": "Essaie,",
+   "s": 9.05,
+   "e": 9.39
+  },
+  {
+   "w": "il",
+   "s": 9.57,
+   "e": 9.63
+  },
+  {
+   "w": "va",
+   "s": 9.65,
+   "e": 9.73
+  },
+  {
+   "w": "t'adorer",
+   "s": 9.77,
+   "e": 10.15
+  }
+ ],
+ "prompt": "Une pub UGC pour mes friandises pour chien, ton drôle et complice.",
+ "brand": {
+  "name": "Maison Truffe",
+  "initials": "MT",
+  "handle": "maisontruffe",
+  "site": "maison-truffe.fr",
+  "bg": "#1F3B2D",
+  "fg": "#F2E6C9"
+ },
+ "actor": {
+  "name": "Sana",
+  "img": "chat/actors/sana.jpg"
+ },
+ "product": "Friandises pour chien",
+ "gallery": [
+  "chat/actors/a021.jpg",
+  "chat/actors/a053.jpg",
+  "chat/actors/a065.jpg",
+  "chat/actors/a154.jpg",
+  "chat/actors/a180.jpg"
+ ],
+ "script": [
+  "« Regarde sa tête quand il entend ce sachet ! »",
+  "Que des ingrédients naturels.",
+  "Il est complètement fan.",
+  "« Essaie, il va t’adorer. »"
+ ],
+ "voice": {
+  "h1": "cp6-h1-n",
+  "h2": "cp6-h2-n",
+  "b1": "cp6-b1-n",
+  "b2": "cp6-b2-n",
+  "d1": "cp6-d1-n",
+  "d2": "cp6-d2-n"
+ },
+ "words": {
+  "h1": [
+   {
+    "w": "Pas",
+    "s": 0.0,
+    "e": 0.08
+   },
+   {
+    "w": "de",
+    "s": 0.12,
+    "e": 0.16
+   },
+   {
+    "w": "tournage,",
+    "s": 0.2,
+    "e": 0.62
+   },
+   {
+    "w": "pas",
+    "s": 1.04,
+    "e": 1.12
+   },
+   {
+    "w": "d'agence,",
+    "s": 1.14,
+    "e": 1.66
+   },
+   {
+    "w": "pas",
+    "s": 2.02,
+    "e": 2.12
+   },
+   {
+    "w": "de",
+    "s": 2.16,
+    "e": 2.2
+   },
+   {
+    "w": "monteur",
+    "s": 2.24,
+    "e": 2.64
+   }
+  ],
+  "h2": [
+   {
+    "w": "Juste",
+    "s": 0.16,
+    "e": 0.38
+   },
+   {
+    "w": "une",
+    "s": 0.42,
+    "e": 0.52
+   },
+   {
+    "w": "phrase",
+    "s": 0.56,
+    "e": 0.9
+   }
+  ],
+  "b1": [
+   {
+    "w": "Tu",
+    "s": 0.04,
+    "e": 0.1
+   },
+   {
+    "w": "décris",
+    "s": 0.18,
+    "e": 0.42
+   },
+   {
+    "w": "ta",
+    "s": 0.46,
+    "e": 0.52
+   },
+   {
+    "w": "pub,",
+    "s": 0.64,
+    "e": 0.88
+   },
+   {
+    "w": "tu",
+    "s": 1.12,
+    "e": 1.2
+   },
+   {
+    "w": "choisis",
+    "s": 1.3,
+    "e": 1.6
+   },
+   {
+    "w": "ton",
+    "s": 1.62,
+    "e": 1.74
+   },
+   {
+    "w": "actrice",
+    "s": 1.8,
+    "e": 2.2
+   }
+  ],
+  "b2": [
+   {
+    "w": "Et",
+    "s": 0.06,
+    "e": 0.12
+   },
+   {
+    "w": "Growthity",
+    "s": 0.24,
+    "e": 0.8
+   },
+   {
+    "w": "écrit,",
+    "s": 0.94,
+    "e": 1.24
+   },
+   {
+    "w": "tourne",
+    "s": 1.62,
+    "e": 1.9
+   },
+   {
+    "w": "et",
+    "s": 2.06,
+    "e": 2.12
+   },
+   {
+    "w": "monte",
+    "s": 2.28,
+    "e": 2.46
+   },
+   {
+    "w": "la",
+    "s": 2.5,
+    "e": 2.58
+   },
+   {
+    "w": "vidéo",
+    "s": 2.62,
+    "e": 2.9
+   }
+  ],
+  "d1": [
+   {
+    "w": "Tous",
+    "s": 0.04,
+    "e": 0.16
+   },
+   {
+    "w": "les",
+    "s": 0.2,
+    "e": 0.28
+   },
+   {
+    "w": "formats",
+    "s": 0.38,
+    "e": 0.72
+   },
+   {
+    "w": "et",
+    "s": 1.02,
+    "e": 1.08
+   },
+   {
+    "w": "en",
+    "s": 1.12,
+    "e": 1.2
+   },
+   {
+    "w": "ligne",
+    "s": 1.24,
+    "e": 1.38
+   },
+   {
+    "w": "sur",
+    "s": 1.48,
+    "e": 1.6
+   },
+   {
+    "w": "Meta,",
+    "s": 1.62,
+    "e": 1.86
+   },
+   {
+    "w": "en",
+    "s": 2.1,
+    "e": 2.2
+   },
+   {
+    "w": "un",
+    "s": 2.24,
+    "e": 2.32
+   },
+   {
+    "w": "clic",
+    "s": 2.38,
+    "e": 2.62
+   }
+  ],
+  "d2": [
+   {
+    "w": "Growthity.",
+    "s": 0.12,
+    "e": 0.28
+   },
+   {
+    "w": "ta",
+    "s": 1.06,
+    "e": 1.12
+   },
+   {
+    "w": "pub",
+    "s": 1.2,
+    "e": 1.44
+   },
+   {
+    "w": "en",
+    "s": 1.68,
+    "e": 1.76
+   },
+   {
+    "w": "une",
+    "s": 1.82,
+    "e": 1.94
+   },
+   {
+    "w": "phrase",
+    "s": 1.96,
+    "e": 2.24
+   }
+  ]
+ },
+ "bed": "chatpub/cp7-light-bed.wav",
+ "formatFrom": 4.0,
+ "formatSub": "Que des ingrédients naturels",
+ "formatText": "Les friandises que ton chien va adorer 🐶",
+ "tags": [
+  "SA TÊTE !",
+  "NATURELS",
+  "FAN",
+  "ESSAIE"
+ ],
+ "productIcon": "🐶"
+}

@@ -108,6 +108,7 @@ import adTrefle from './chatpub/ad-trefle-noor.json';
 import cp4 from './chatpub/cp4.json';
 import cp5 from './chatpub/cp5.json';
 import cp6 from './chatpub/cp6.json';
+import cp7 from './chatpub/cp7.json';
 import {LightChatPub, lightTimeline, LightCfg} from './chatpub/LightChatPub';
 import {SocialStory, StoryCfg, storyTotal} from './chatpub/SocialStory';
 import lr4Cfg from './chatpub/lr4.json';
@@ -206,6 +207,7 @@ export const Root: React.FC = () => (
     <Composition id="ChatPubMotion-cp4" component={MotionChatPub} durationInFrames={motionTimeline(cp4 as unknown as ChatPubCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: cp4 as unknown as ChatPubCfg}} />
     <Composition id="ChatPubMotion-cp5" component={MotionChatPub} durationInFrames={motionTimeline(cp5 as unknown as ChatPubCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: cp5 as unknown as ChatPubCfg}} />
     <Composition id="ChatPubLight-cp6" component={LightChatPub} durationInFrames={lightTimeline(cp6 as unknown as LightCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: cp6 as unknown as LightCfg}} />
+    <Composition id="ChatPubLight-cp7" component={LightChatPub} durationInFrames={lightTimeline(cp7 as unknown as LightCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: cp7 as unknown as LightCfg}} />
     <Composition id="Launch-calendrier" component={SocialStory} durationInFrames={storyTotal(lr4Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr4Cfg as unknown as StoryCfg}} />
     <Composition id="Launch-whatsapp" component={SocialStory} durationInFrames={storyTotal(lr5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr5Cfg as unknown as StoryCfg}} />
     <Composition id="AvantApres-julien" component={SocialStory} durationInFrames={storyTotal(av5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: av5Cfg as unknown as StoryCfg}} />

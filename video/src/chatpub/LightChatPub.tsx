@@ -34,7 +34,8 @@ export type LightCfg = {
   segments: Seg[]; // coupes, en secondes du clip source
   adWords: Word[]; // sous-titres, en secondes de la pub montée
   prompt: string;
-  brand: {name: string; initials: string; handle: string; site: string};
+  brand: {name: string; initials: string; handle: string; site: string; bg?: string; fg?: string};
+  productIcon?: string;
   formatFrom?: number;
   formatSub: string;
   formatText: string;
@@ -176,8 +177,8 @@ const Chat: React.FC<{c: LightCfg; T: ReturnType<typeof lightTimeline>}> = ({c, 
           </div>
           <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 62, letterSpacing: '-0.035em', color: INK, marginTop: 60, lineHeight: 1.04}}>Que veux-tu créer<br /><GradText>aujourd’hui ?</GradText></div>
           <div style={{display: 'flex', gap: 12, marginTop: 40, flexWrap: 'wrap'}}>
-            <Chip><span style={{width: 40, height: 40, borderRadius: 20, background: '#3B2416', color: '#F4D8B0', fontWeight: 800, fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>{c.brand.initials}</span>{c.brand.name}</Chip>
-            <Chip><span style={{fontSize: 24}}>☕</span>{c.product}</Chip>
+            <Chip><span style={{width: 40, height: 40, borderRadius: 20, background: c.brand.bg ?? '#3B2416', color: c.brand.fg ?? '#F4D8B0', fontWeight: 800, fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>{c.brand.initials}</span>{c.brand.name}</Chip>
+            <Chip><span style={{fontSize: 24}}>{c.productIcon ?? '☕'}</span>{c.product}</Chip>
             {locked && (
               <Chip style={{transform: `scale(${chipIn})`, borderColor: '#C9C0F7', background: '#F6F4FF'}}>
                 <Img src={staticFile(`media/${c.actor.img}`)} style={{width: 40, height: 40, borderRadius: 20, objectFit: 'cover'}} />Actrice : {c.actor.name}
@@ -185,7 +186,7 @@ const Chat: React.FC<{c: LightCfg; T: ReturnType<typeof lightTimeline>}> = ({c, 
             )}
           </div>
           <div style={{marginTop: 34, flex: 1, borderRadius: 28, background: '#F8F7FC', border: `1px solid ${LINE}`, padding: '30px 32px', position: 'relative'}}>
-            <div style={{fontFamily: FONT, fontWeight: 500, fontSize: 40, lineHeight: 1.3, color: txt ? INK : MUTED}}>
+            <div style={{fontFamily: FONT, fontWeight: 500, fontSize: 37, lineHeight: 1.28, color: txt ? INK : MUTED}}>
               {txt || 'Décris ta pub…'}
               {f < T.send && <span style={{display: 'inline-block', width: 3, height: 44, marginLeft: 3, verticalAlign: 'middle', background: f % 30 < 16 ? '#5B3FE4' : 'transparent'}} />}
             </div>
@@ -479,7 +480,7 @@ const Clip: React.FC<{c: LightCfg; pos: string}> = ({c, pos}) => (
 );
 const Handle: React.FC<{c: LightCfg; dark?: boolean}> = ({c, dark}) => (
   <div style={{display: 'flex', alignItems: 'center', gap: 7}}>
-    <span style={{width: 24, height: 24, borderRadius: 12, background: '#3B2416', color: '#F4D8B0', fontSize: 9, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', border: dark ? '1.5px solid #fff' : 'none'}}>{c.brand.initials}</span>
+    <span style={{width: 24, height: 24, borderRadius: 12, background: c.brand.bg ?? '#3B2416', color: c.brand.fg ?? '#F4D8B0', fontSize: 9, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', border: dark ? '1.5px solid #fff' : 'none'}}>{c.brand.initials}</span>
     <div style={{lineHeight: 1.1}}>
       <div style={{fontSize: 12, fontWeight: 700, color: dark ? '#fff' : INK}}>{c.brand.handle}</div>
       <div style={{fontSize: 10, color: dark ? 'rgba(255,255,255,0.8)' : MUTED}}>Sponsorisé</div>
