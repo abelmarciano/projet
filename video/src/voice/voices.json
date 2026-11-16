@@ -1826,5 +1826,61 @@
   "style": 0.5,
   "speed": 1.08,
   "text": "[confident] Grossiti. Ta pub, en une phrase."
+ },
+ "aio-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[serious] Un monteur. Une agence. Un media buyer… et des outils partout."
+ },
+ "aio-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[curious] Et si tout tenait au même endroit ?"
+ },
+ "aio-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[confident] Grossiti réunit les meilleures IA : script, voix, acteurs, montage."
+ },
+ "aio-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[confident] Il remplace ton monteur, ton graphiste, ton media buyer."
+ },
+ "aio-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[excited] Il publie partout : Instagram, Facebook, TikTok, YouTube, LinkedIn."
+ },
+ "aio-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[confident] Et il pilote tes pubs Meta, jour et nuit, avec des alertes sur WhatsApp."
+ },
+ "aio-7": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[confident] Grossiti. Tout, au même endroit."
  }
 }
