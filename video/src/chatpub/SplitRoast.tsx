@@ -5,7 +5,7 @@ import {Check, FONT, DISPLAY, GRAD, INK, LINE, Logo, MUTED, SplitCfg, SplitChat,
 
 export type RoastCfg = SplitCfg & {
   episode: number; account: string; badImg: string; badText: string; flaws: {label: string; cue: string}[];
-  ask: string; badMode?: 'wall' | 'landscape' | 'logo' | 'stock' | 'avatar' | 'deadzone'; badDead?: {logo: string; offer: string; bottom: string}; badClaim?: string; badReview?: {stars: string; text: string; who: string}; badSlogan?: string; badLogo?: {name: string; since: string; time: string}; badCaption?: string; flawBoxes?: {l: number; t: number; w: number; h: number; round?: boolean; labelLeft?: number; labelTop?: number}[]; goodVideo: string; goodTitle: string; goodCta: string; goodSafe?: boolean; goodCtaTop?: boolean; scoreBad: number; scoreGood: number;
+  ask: string; badMode?: 'wall' | 'landscape' | 'logo' | 'stock' | 'avatar' | 'deadzone' | 'fatigue' | 'feed'; goodMode?: 'video' | 'calendar'; goodAlert?: string; feedTiles?: string[]; badDead?: {logo: string; offer: string; bottom: string}; badClaim?: string; badReview?: {stars: string; text: string; who: string}; badSlogan?: string; badLogo?: {name: string; since: string; time: string}; badCaption?: string; flawBoxes?: {l: number; t: number; w: number; h: number; round?: boolean; labelLeft?: number; labelTop?: number}[]; goodVideo: string; goodTitle: string; goodCta: string; goodSafe?: boolean; goodCtaTop?: boolean; scoreBad: number; scoreGood: number;
 };
 
 const Stamp: React.FC<{score: number; at: number; good?: boolean; size?: number}> = ({score, at, good, size = 1}) => {
@@ -54,7 +54,35 @@ const RoastWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
       {/* left: the bad ad */}
       <div style={{position: 'absolute', left: 50, top: 100, transform: `translate(${shake}px, ${swipe}px) scale(${1 - leftDim * 0.12})`, transformOrigin: 'top left'}}>
         <Phone w={370} dim={leftDim}>
-          {cfg.badMode === 'deadzone' && cfg.badDead ? (
+          {cfg.badMode === 'fatigue' ? (
+            <div style={{position: 'absolute', inset: 0, background: '#000', color: '#fff'}}>
+              <Img src={staticFile(`media/${cfg.badImg}`)} style={{width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(0.75)'}} />
+              <div style={{position: 'absolute', top: 14, left: 12, display: 'flex', alignItems: 'center', gap: 8, textShadow: '0 1px 4px rgba(0,0,0,0.7)'}}>
+                <div style={{width: 28, height: 28, borderRadius: 99, background: '#fff', opacity: 0.85}} />
+                <div style={{fontSize: 14, fontWeight: 700}}>{cfg.account.replace('@', '')}<div style={{fontSize: 11, fontWeight: 500}}>Sponsorisé</div></div>
+              </div>
+              <div style={{position: 'absolute', left: 12, top: 62, padding: '6px 10px', borderRadius: 10, background: 'rgba(0,0,0,0.65)', fontSize: 15, fontWeight: 800}}>📅 En ligne depuis 6 semaines</div>
+              <div style={{position: 'absolute', right: 12, top: 300, padding: '6px 10px', borderRadius: 10, background: 'rgba(220,38,38,0.9)', fontSize: 18, fontWeight: 900}}>👁 vue 9×</div>
+              <div style={{position: 'absolute', left: 12, right: 12, bottom: 22, padding: '10px 12px', borderRadius: 12, background: 'rgba(255,255,255,0.94)', color: '#111', fontSize: 13}}>
+                {[['Fréquence', '↑', '#DC2626'], ['Taux de clic', '↓', '#DC2626'], ['Coût par résultat', '↑', '#DC2626']].map(([l, a, c]) => <div key={l} style={{display: 'flex', justifyContent: 'space-between', fontWeight: 700, padding: '2px 0'}}><span>{l}</span><span style={{color: c}}>{a}</span></div>)}
+              </div>
+            </div>
+          ) : cfg.badMode === 'feed' ? (
+            <div style={{position: 'absolute', inset: 0, background: '#fff', color: '#111'}}>
+              <div style={{display: 'flex', alignItems: 'center', gap: 12, padding: '30px 14px 10px'}}>
+                <div style={{width: 62, height: 62, borderRadius: 99, padding: 3, backgroundImage: 'linear-gradient(45deg,#F59E0B,#E1306C,#7C3AED)'}}><div style={{width: '100%', height: '100%', borderRadius: 99, background: '#F1F5F9', border: '3px solid #fff'}} /></div>
+                <div><div style={{fontSize: 17, fontWeight: 800}}>{cfg.account.replace('@', '')}</div><div style={{fontSize: 12, color: '#777'}}>Boutique en ligne</div></div>
+              </div>
+              <div style={{margin: '4px 12px 10px', padding: '6px 10px', borderRadius: 8, background: '#FEF2F2', color: '#B91C1C', fontSize: 13, fontWeight: 800}}>Dernier post : il y a 3 semaines</div>
+              <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 3}}>
+                {(cfg.feedTiles ?? []).map((t, i) => t.startsWith('PROMO') ? (
+                  <div key={i} style={{aspectRatio: '4 / 5', background: i % 2 ? '#FF1E1E' : '#FFE600', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', fontFamily: 'Arial Black, sans-serif', fontSize: 15, lineHeight: 1.05, color: i % 2 ? '#FFE600' : '#D90000', padding: 4}}>{t}</div>
+                ) : t === '' ? <div key={i} style={{aspectRatio: '4 / 5', background: '#F3F4F6'}} /> : (
+                  <div key={i} style={{aspectRatio: '4 / 5', overflow: 'hidden'}}><Img src={staticFile(`media/${t}`)} style={{width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(0.6)'}} /></div>
+                ))}
+              </div>
+            </div>
+          ) : cfg.badMode === 'deadzone' && cfg.badDead ? (
             <div style={{position: 'absolute', inset: 0, background: '#000', color: '#fff'}}>
               <Img src={staticFile(`media/${cfg.badImg}`)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
               <div style={{position: 'absolute', left: -20, right: -20, top: -26, textAlign: 'center', fontFamily: 'Impact, Arial Black, sans-serif', fontSize: 50, lineHeight: 1, color: '#FFB800', letterSpacing: '0.02em', whiteSpace: 'nowrap'}}>{cfg.badDead.logo}</div>
@@ -183,8 +211,21 @@ const RoastWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
             ) : (
               <div style={{position: 'absolute', left: 30, top: -8, transform: `scale(${0.9 + spring({frame: f - voila, fps, config: {damping: 12}}) * 0.1})`, transformOrigin: 'top center'}}>
                 <Phone w={370} ring="#8B6DFF">
-                  <Sequence from={voila} layout="none"><OffthreadVideo src={staticFile(`media/${cfg.goodVideo}`)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Sequence>
-                  <div style={{position: 'absolute', left: 16, right: 16, top: 40, fontFamily: DISPLAY, fontWeight: 700, fontSize: 38, lineHeight: 1.05, color: '#fff', whiteSpace: 'pre-line', textShadow: '0 4px 20px rgba(0,0,0,0.5)', opacity: prog(f, voila + 6, 10)}}>{cfg.goodTitle}</div>
+                  {cfg.goodMode === 'calendar' ? (
+                    <div style={{position: 'absolute', inset: 0, background: '#fff', padding: '64px 10px 10px'}}>
+                      <div style={{display: 'flex', alignItems: 'center', gap: 6, fontFamily: DISPLAY, fontWeight: 700, fontSize: 20, color: INK, marginBottom: 6}}><Logo s={22} /> Décembre</div>
+                      <div style={{display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 3}}>
+                        {Array.from({length: 35}).map((_, i) => { const on = i % 2 === 1 && i < 31; const p = spring({frame: f - voila - i, fps, config: {damping: 12}}); const imgs = ['chat/batch/g3.png', 'chat/jwel/nb1.png', 'chat/roast6/burger.png', 'chat/batch/g5.png', 'chat/batch/g6.png', 'chat/jwel/ad-cercle.jpg']; return (
+                          <div key={i} style={{height: 64, borderTop: `1px solid ${LINE}`, fontSize: 9, color: MUTED, position: 'relative'}}>{i < 31 ? i + 1 : ''}
+                            {on && <div style={{position: 'absolute', left: 2, right: 2, top: 12, bottom: 2, borderRadius: 5, overflow: 'hidden', borderLeft: '3px solid #5B3FE4', transform: `scale(${p})`}}><Img src={staticFile(`media/${imgs[i % imgs.length]}`)} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></div>}
+                          </div>); })}
+                      </div>
+                      <div style={{marginTop: 10, display: 'flex', gap: 6, flexWrap: 'wrap'}}>{[['Instagram', '#E1306C'], ['Facebook', '#0866FF'], ['TikTok', '#111']].map(([n, c]) => <span key={n} style={{fontSize: 12, fontWeight: 800, color: '#fff', background: c, borderRadius: 6, padding: '3px 7px'}}>{n}</span>)}</div>
+                      <div style={{marginTop: 10, padding: '8px 10px', borderRadius: 10, background: '#DCFCE7', color: '#15803D', fontSize: 15, fontWeight: 800}}>✓ Mois programmé · un post tous les 2 jours</div>
+                    </div>
+                  ) : <Sequence from={voila} layout="none"><OffthreadVideo src={staticFile(`media/${cfg.goodVideo}`)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Sequence>}
+                  {cfg.goodAlert && <div style={{position: 'absolute', left: 10, right: 10, top: 190, padding: '10px 12px', borderRadius: 14, background: 'rgba(255,255,255,0.96)', boxShadow: '0 10px 24px -10px rgba(0,0,0,0.5)', display: 'flex', gap: 8, alignItems: 'center', fontSize: 13, color: INK, opacity: prog(f, voila + 20, 8), transform: `translateY(${(1 - prog(f, voila + 20, 8)) * -20}px)`}}><div style={{width: 30, height: 30, borderRadius: 8, background: '#25D366', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, flexShrink: 0}}>✆</div><div><b>Growthity · WhatsApp</b><div>{cfg.goodAlert}</div></div></div>}
+                  {cfg.goodMode !== 'calendar' && <div style={{position: 'absolute', left: 16, right: 16, top: 40, fontFamily: DISPLAY, fontWeight: 700, fontSize: 38, lineHeight: 1.05, color: '#fff', whiteSpace: 'pre-line', textShadow: '0 4px 20px rgba(0,0,0,0.5)', opacity: prog(f, voila + 6, 10)}}>{cfg.goodTitle}</div>}
                   {cfg.goodSafe ? (<>
                     <div style={{position: 'absolute', left: 16, top: 136, opacity: prog(f, voila + 12, 10)}}><div style={{padding: '11px 24px', borderRadius: 99, background: '#fff', color: INK, fontWeight: 800, fontSize: 19, boxShadow: '0 8px 20px -8px rgba(0,0,0,0.6)'}}>{cfg.goodCta} →</div></div>
                     <div style={{position: 'absolute', right: 10, bottom: 120, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, color: '#fff', textShadow: '0 1px 4px rgba(0,0,0,0.7)', opacity: 0.9}}>
