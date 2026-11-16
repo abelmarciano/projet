@@ -34,11 +34,15 @@ export type LightCfg = {
   segments: Seg[]; // coupes, en secondes du clip source
   adWords: Word[]; // sous-titres, en secondes de la pub montée
   prompt: string;
-  brand: {name: string; initials: string};
+  brand: {name: string; initials: string; handle: string; site: string};
+  formatFrom?: number;
+  formatSub: string;
+  formatText: string;
   actor: {name: string; img: string};
   product: string;
   gallery: string[];
   script: string[];
+  tags: string[];
   voice: Record<string, string>;
   words: Record<string, Word[]>;
   bed: string;
@@ -272,7 +276,7 @@ const Workshop: React.FC<{c: LightCfg; T: ReturnType<typeof lightTimeline>}> = (
         })}
       </div>
       {/* timeline de montage */}
-      <Timeline T={T} o={inP * (1 - coll)} />
+      <Timeline T={T} o={inP * (1 - coll)} tags={c.tags} />
       {/* cadre de la pub */}
       <div style={{position: 'absolute', left: fx, top: fy, width: fw, height: fh, borderRadius: fr, overflow: 'hidden', background: '#fff', border: coll < 1 ? `1px solid ${LINE}` : 'none', boxShadow: coll < 1 ? SHADOW : 'none', opacity: inP, transform: `translateY(${(1 - inP) * 80}px)`}}>
         {/* script tapé */}
@@ -298,7 +302,7 @@ const Workshop: React.FC<{c: LightCfg; T: ReturnType<typeof lightTimeline>}> = (
   );
 };
 
-const Timeline: React.FC<{T: ReturnType<typeof lightTimeline>; o: number}> = ({T, o}) => {
+const Timeline: React.FC<{T: ReturnType<typeof lightTimeline>; o: number; tags: string[]}> = ({T, o, tags}) => {
   const f = useCurrentFrame();
   const blocks = [0.22, 0.18, 0.26, 0.16, 0.18];
   const ed = prog(f, T.edit - 4, 22);
@@ -322,7 +326,7 @@ const Timeline: React.FC<{T: ReturnType<typeof lightTimeline>; o: number}> = ({T
         })}
       </div>
       <div style={{marginTop: 10, display: 'flex', gap: 6}}>
-        {['CE CAFÉ-LÀ', 'TORRÉFIÉ', 'DOUX, ROND', 'ESSAIE'].map((t, i) => (
+        {tags.map((t, i) => (
           <div key={t} style={{padding: '4px 12px', borderRadius: 8, background: '#0B0A1F', color: '#fff', fontFamily: FONT, fontWeight: 800, fontSize: 15, opacity: prog(f, T.edit + 2 + i * 3, 8)}}>{t}</div>
         ))}
       </div>
@@ -341,7 +345,7 @@ const Ad: React.FC<{c: LightCfg}> = ({c}) => {
   let g: Word[] = [];
   c.adWords.forEach((w, i) => {
     const prev = c.adWords[i - 1];
-    if (g.length && (g.length >= 3 || (prev && w.s - prev.e > 0.35) || /[.,!?…]$/.test(prev?.w ?? ''))) { groups.push(g); g = []; }
+    if (g.length && (g.length >= 2 || (prev && w.s - prev.e > 0.35) || /[.,!?…]$/.test(prev?.w ?? ''))) { groups.push(g); g = []; }
     g.push(w);
   });
   if (g.length) groups.push(g);
@@ -356,7 +360,7 @@ const Ad: React.FC<{c: LightCfg}> = ({c}) => {
         acc += dur;
         return (
           <Sequence key={i} from={from} durationInFrames={dur}>
-            <SegVideo src={c.video} start={s.from} zoom={s.zoom ?? 1} dur={dur} />
+            <SegVideo src={c.video} start={s.from} zoom={s.zoom ?? 1} dur={dur} shake={i === 0} />
           </Sequence>
         );
       })}
@@ -382,7 +386,7 @@ const Ad: React.FC<{c: LightCfg}> = ({c}) => {
             const active = on && (nxt ? t < nxt.s - 0.02 : t < w.e + 0.25);
             const p = sp(f - Math.round(w.s * 30), 11);
             return (
-              <span key={i} style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 82, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#fff', padding: '0 14px', borderRadius: 18, background: active ? GRAD : 'transparent', opacity: on ? 1 : 0.0, transform: `scale(${on ? 0.85 + 0.15 * p : 0.85})`, textShadow: active ? 'none' : '0 4px 20px rgba(0,0,0,0.55), 0 2px 4px rgba(0,0,0,0.6)'}}>{w.w.replace(/[.,!?…]+$/, '')}</span>
+              <span key={i} style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 96, letterSpacing: '-0.02em', textTransform: 'uppercase', color: '#fff', padding: '0 14px', borderRadius: 18, background: active ? GRAD : 'transparent', opacity: on ? 1 : 0.0, transform: `scale(${on ? 0.85 + 0.15 * p : 0.85})`, textShadow: active ? 'none' : '0 4px 20px rgba(0,0,0,0.55), 0 2px 4px rgba(0,0,0,0.6)'}}>{w.w.replace(/[.,!?…]+$/, '')}</span>
             );
           })}
         </div>
@@ -395,10 +399,13 @@ const Ad: React.FC<{c: LightCfg}> = ({c}) => {
   );
 };
 
-const SegVideo: React.FC<{src: string; start: number; zoom: number; dur: number}> = ({src, start, zoom, dur}) => {
+const SegVideo: React.FC<{src: string; start: number; zoom: number; dur: number; shake?: boolean}> = ({src, start, zoom, dur, shake}) => {
   const f = useCurrentFrame();
-  const z = interpolate(f, [0, dur], [zoom, zoom + 0.04], clamp);
-  return <OffthreadVideo src={staticFile(`media/${src}`)} startFrom={Math.round(start * 30)} style={{width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${z})`, transformOrigin: '50% 38%'}} />;
+  // « punch » à chaque coupe : léger dézoom rapide puis dérive lente
+  const z = zoom + 0.07 * (1 - prog(f, 0, 7)) + interpolate(f, [0, dur], [0, 0.035], clamp);
+  const sx = shake && f < 14 ? Math.sin(f * 2.3) * 9 * (1 - f / 14) : 0;
+  const sy = shake && f < 14 ? Math.cos(f * 1.9) * 7 * (1 - f / 14) : 0;
+  return <OffthreadVideo src={staticFile(`media/${src}`)} startFrom={Math.round(start * 30)} style={{width: '100%', height: '100%', objectFit: 'cover', transform: `translate(${sx}px, ${sy}px) scale(${z})`, transformOrigin: '50% 38%'}} />;
 };
 
 // ---------- E. formats + publication ----------
@@ -411,9 +418,9 @@ const Formats: React.FC<{c: LightCfg; T: ReturnType<typeof lightTimeline>}> = ({
   const done = f >= press + 6;
   const pr = f >= press && f < press + 6 ? 1 : 0;
   const frames = [
-    {l: 'Reels · Story', r: '9:16', w: 300, h: 533, x: 72},
-    {l: 'Fil d’actualité', r: '4:5', w: 300, h: 375, x: 390},
-    {l: 'Carré', r: '1:1', w: 300, h: 300, x: 708},
+    {l: 'Reels · Story', r: '9:16', x: 72},
+    {l: 'Post Instagram', r: '4:5', x: 390},
+    {l: 'Post Facebook', r: '1:1', x: 708},
   ];
   const btn = sp(f - (meta - 10), 13);
   const curP = prog(f, press - 18, 16, INOUT);
@@ -425,18 +432,20 @@ const Formats: React.FC<{c: LightCfg; T: ReturnType<typeof lightTimeline>}> = ({
       </div>
       {frames.map((fr, i) => {
         const p = sp(f - 4 - i * 5, 14);
-        // le 1er cadre arrive depuis le plein écran
+        // le Reels arrive depuis le plein écran
         const big = i === 0 ? 1 - into : 0;
         const x = interpolate(big, [0, 1], [fr.x, 0]);
-        const y = interpolate(big, [0, 1], [990 - fr.h, 0]);
-        const w = interpolate(big, [0, 1], [fr.w, 1080]);
-        const h = interpolate(big, [0, 1], [fr.h, 1920]);
+        const y = interpolate(big, [0, 1], [440, 0]);
+        const w = interpolate(big, [0, 1], [300, 1080]);
+        const sc = w / 300;
         return (
           <React.Fragment key={i}>
-            <div style={{position: 'absolute', left: x, top: y + 30, width: w, height: h, borderRadius: interpolate(big, [0, 1], [26, 0]), overflow: 'hidden', background: '#000', boxShadow: SHADOW, opacity: i === 0 ? 1 : p, transform: i === 0 ? undefined : `translateY(${(1 - p) * 80}px)`, border: big < 1 ? '5px solid #fff' : 'none'}}>
-              <OffthreadVideo muted src={staticFile(`media/${c.video}`)} startFrom={Math.round(c.segments[c.segments.length - 1].from * 30)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 35%'}} />
+            <div style={{position: 'absolute', left: x, top: y, width: 300, transformOrigin: '0 0', transform: `scale(${sc}) translateY(${i === 0 ? 0 : (1 - p) * 80}px)`, opacity: i === 0 ? 1 : p, filter: big < 0.05 ? 'drop-shadow(0 30px 40px rgba(46,32,140,0.28))' : undefined}}>
+              {i === 0 && <ReelMock c={c} chrome={1 - big} />}
+              {i === 1 && <FeedMock c={c} ratio={1.25} ig />}
+              {i === 2 && <FeedMock c={c} ratio={1} />}
             </div>
-            <div style={{position: 'absolute', left: fr.x, width: fr.w, top: 1045, textAlign: 'center', opacity: prog(f, 10 + i * 5, 10)}}>
+            <div style={{position: 'absolute', left: fr.x, width: 300, top: 1010, textAlign: 'center', opacity: prog(f, 10 + i * 5, 10)}}>
               <div style={{display: 'inline-block', padding: '6px 14px', borderRadius: 99, background: '#EEEBFD', color: '#5B3FE4', fontFamily: FONT, fontWeight: 800, fontSize: 22}}>{fr.r}</div>
               <div style={{fontFamily: FONT, fontWeight: 600, fontSize: 24, color: INK, marginTop: 8}}>{fr.l}</div>
             </div>
@@ -462,6 +471,53 @@ const Formats: React.FC<{c: LightCfg; T: ReturnType<typeof lightTimeline>}> = ({
     </AbsoluteFill>
   );
 };
+
+
+// ---------- maquettes de placement (largeur 300) ----------
+const Clip: React.FC<{c: LightCfg; pos: string}> = ({c, pos}) => (
+  <OffthreadVideo muted src={staticFile(`media/${c.video}`)} startFrom={Math.round((c.formatFrom ?? c.segments[0].from) * 30)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: pos}} />
+);
+const Handle: React.FC<{c: LightCfg; dark?: boolean}> = ({c, dark}) => (
+  <div style={{display: 'flex', alignItems: 'center', gap: 7}}>
+    <span style={{width: 24, height: 24, borderRadius: 12, background: '#3B2416', color: '#F4D8B0', fontSize: 9, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center', border: dark ? '1.5px solid #fff' : 'none'}}>{c.brand.initials}</span>
+    <div style={{lineHeight: 1.1}}>
+      <div style={{fontSize: 12, fontWeight: 700, color: dark ? '#fff' : INK}}>{c.brand.handle}</div>
+      <div style={{fontSize: 10, color: dark ? 'rgba(255,255,255,0.8)' : MUTED}}>Sponsorisé</div>
+    </div>
+  </div>
+);
+const Sub: React.FC<{t: string; size: number}> = ({t, size}) => (
+  <div style={{position: 'absolute', left: 0, right: 0, top: '58%', textAlign: 'center'}}>
+    <span style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: size, color: '#fff', padding: '1px 7px', borderRadius: 6, background: GRAD, textTransform: 'uppercase'}}>{t}</span>
+  </div>
+);
+const ReelMock: React.FC<{c: LightCfg; chrome: number}> = ({c, chrome}) => (
+  <div style={{position: 'relative', width: 300, height: 533, borderRadius: 26 * chrome, overflow: 'hidden', background: '#000', fontFamily: FONT, border: chrome > 0.05 ? '4px solid #fff' : 'none', boxSizing: 'border-box'}}>
+    <Clip c={c} pos="50% 50%" />
+    <div style={{position: 'absolute', inset: 0, opacity: chrome}}>
+      <div style={{position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.55))'}} />
+      <Sub t={c.formatSub} size={22} />
+      <div style={{position: 'absolute', right: 10, bottom: 92, display: 'flex', flexDirection: 'column', gap: 14, alignItems: 'center', color: '#fff', fontSize: 20}}>♡<span>💬</span><span>➤</span></div>
+      <div style={{position: 'absolute', left: 12, bottom: 46}}><Handle c={c} dark /></div>
+      <div style={{position: 'absolute', left: 12, right: 50, bottom: 12, padding: '6px 0', borderRadius: 6, background: 'rgba(255,255,255,0.92)', textAlign: 'center', fontSize: 12, fontWeight: 700, color: INK}}>En savoir plus</div>
+    </div>
+  </div>
+);
+const FeedMock: React.FC<{c: LightCfg; ratio: number; ig?: boolean}> = ({c, ratio, ig}) => (
+  <div style={{width: 300, borderRadius: 18, overflow: 'hidden', background: '#fff', border: `1px solid ${LINE}`, fontFamily: FONT}}>
+    <div style={{padding: '9px 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}><Handle c={c} /><span style={{color: MUTED, fontSize: 14}}>•••</span></div>
+    {!ig && <div style={{padding: '0 10px 7px', fontSize: 11, color: INK, lineHeight: 1.3}}>{c.formatText}</div>}
+    <div style={{position: 'relative', width: 300, height: 300 * ratio, background: '#000'}}>
+      <Clip c={c} pos={ratio > 1 ? '50% 46%' : '50% 52%'} />
+      <Sub t={c.formatSub} size={ratio > 1 ? 18 : 16} />
+    </div>
+    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: ig ? META : '#F0F2F5', color: ig ? '#fff' : INK, fontSize: 12, fontWeight: 700}}>
+      <span>{ig ? 'En savoir plus' : c.brand.site}</span>
+      {ig ? <span>›</span> : <span style={{padding: '4px 10px', borderRadius: 6, background: '#E4E6EB'}}>En savoir plus</span>}
+    </div>
+    {ig && <div style={{padding: '7px 10px', display: 'flex', gap: 12, fontSize: 16, color: INK}}>♡ <span>💬</span> <span>➤</span></div>}
+  </div>
+);
 
 const MetaMark: React.FC<{c?: string}> = ({c = META}) => (
   <svg width={52} height={32} viewBox="0 0 48 30" fill="none"><path d="M6 22 C6 12 10 5 15 5 C20 5 24 13 27 18 C30 23 32 25 35 25 C39 25 42 21 42 15 C42 9 39 5 35 5 C30 5 26 13 23 18 C20 23 18 25 14 25 C9 25 6 22 6 22 Z" stroke={c} strokeWidth={4} strokeLinecap="round" /></svg>

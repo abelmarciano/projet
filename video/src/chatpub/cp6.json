@@ -5,191 +5,248 @@
  "segments": [
   {
    "from": 0.5,
-   "to": 2.6,
+   "to": 1.05,
    "zoom": 1.0
   },
   {
-   "from": 4.05,
-   "to": 7.55,
-   "zoom": 1.08
+   "from": 1.55,
+   "to": 3.65,
+   "zoom": 1.06
   },
   {
-   "from": 7.85,
-   "to": 11.6,
+   "from": 3.92,
+   "to": 5.22,
    "zoom": 1.0
   },
   {
-   "from": 11.8,
-   "to": 12.75,
-   "zoom": 1.12
+   "from": 6.0,
+   "to": 7.62,
+   "zoom": 1.06
   },
   {
-   "from": 13.3,
-   "to": 15.0,
-   "zoom": 1.02
+   "from": 7.66,
+   "to": 9.2,
+   "zoom": 1.0
+  },
+  {
+   "from": 10.45,
+   "to": 11.15,
+   "zoom": 1.06
+  },
+  {
+   "from": 11.58,
+   "to": 12.55,
+   "zoom": 1.0
+  },
+  {
+   "from": 12.78,
+   "to": 14.95,
+   "zoom": 1.06
   }
  ],
  "adWords": [
   {
-   "w": "Ce",
-   "s": 0.22,
-   "e": 0.32
+   "w": "Stop!",
+   "s": 0.14,
+   "e": 0.44
   },
   {
-   "w": "café-là,",
-   "s": 0.36,
-   "e": 0.84
+   "w": "Tu",
+   "s": 0.64,
+   "e": 0.72
   },
   {
-   "w": "je",
-   "s": 1.24,
-   "e": 1.32
+   "w": "bois",
+   "s": 0.84,
+   "e": 1.08
   },
   {
-   "w": "ne",
-   "s": 1.34,
-   "e": 1.38
+   "w": "encore",
+   "s": 1.14,
+   "e": 1.46
   },
   {
-   "w": "m'en",
-   "s": 1.4,
-   "e": 1.52
+   "w": "du",
+   "s": 1.52,
+   "e": 1.62
   },
   {
-   "w": "passe",
-   "s": 1.56,
-   "e": 1.76
-  },
-  {
-   "w": "plus.",
-   "s": 1.78,
-   "e": 1.96
-  },
-  {
-   "w": "Torréfié",
-   "s": 2.33,
-   "e": 2.75
+   "w": "café",
+   "s": 1.66,
+   "e": 1.92
   },
   {
    "w": "en",
-   "s": 2.79,
-   "e": 2.87
+   "s": 1.96,
+   "e": 2.06
   },
   {
-   "w": "petit",
-   "s": 2.91,
-   "e": 3.17
+   "w": "capsule?",
+   "s": 2.1,
+   "e": 2.56
   },
   {
-   "w": "lot",
-   "s": 3.21,
-   "e": 3.35
+   "w": "Goûte",
+   "s": 2.749,
+   "e": 2.97
   },
   {
-   "w": "la",
-   "s": 3.55,
-   "e": 3.67
-  },
-  {
-   "w": "semaine",
-   "s": 3.71,
-   "e": 3.97
-  },
-  {
-   "w": "même.",
-   "s": 4.01,
-   "e": 4.25
-  },
-  {
-   "w": "Sens-moi",
-   "s": 4.77,
-   "e": 5.19
-  },
-  {
-   "w": "ça.",
-   "s": 5.25,
-   "e": 5.47
-  },
-  {
-   "w": "Doux,",
-   "s": 5.81,
-   "e": 5.95
-  },
-  {
-   "w": "rond,",
-   "s": 6.43,
-   "e": 6.61
-  },
-  {
-   "w": "aucune",
-   "s": 7.11,
-   "e": 7.39
-  },
-  {
-   "w": "amertume,",
-   "s": 7.45,
-   "e": 7.93
-  },
-  {
-   "w": "même",
-   "s": 8.49,
-   "e": 8.65
-  },
-  {
-   "w": "sans",
-   "s": 8.69,
-   "e": 8.83
-  },
-  {
-   "w": "sucre.",
-   "s": 8.87,
-   "e": 9.15
-  },
-  {
-   "w": "Essaye",
-   "s": 9.53,
-   "e": 9.79
+   "w": "celui-là",
+   "s": 3.03,
+   "e": 3.43
   },
   {
    "w": "une",
-   "s": 9.83,
-   "e": 9.95
+   "s": 3.47,
+   "e": 3.63
   },
   {
-   "w": "fois,",
-   "s": 10.01,
-   "e": 10.15
+   "w": "fois",
+   "s": 3.69,
+   "e": 3.87
+  },
+  {
+   "w": "et",
+   "s": 4.03,
+   "e": 4.09
   },
   {
    "w": "tu",
-   "s": 10.48,
-   "e": 10.54
+   "s": 4.13,
+   "e": 4.21
   },
   {
-   "w": "m'en",
-   "s": 10.58,
-   "e": 10.7
+   "w": "ne",
+   "s": 4.23,
+   "e": 4.31
   },
   {
-   "w": "diras",
-   "s": 10.74,
-   "e": 10.92
+   "w": "pourras",
+   "s": 4.35,
+   "e": 4.59
   },
   {
-   "w": "des",
-   "s": 10.94,
-   "e": 11.04
+   "w": "plus",
+   "s": 4.61,
+   "e": 4.73
   },
   {
-   "w": "nouvelles",
-   "s": 11.06,
-   "e": 11.38
+   "w": "revenir",
+   "s": 4.77,
+   "e": 5.03
+  },
+  {
+   "w": "en",
+   "s": 5.05,
+   "e": 5.13
+  },
+  {
+   "w": "arrière.",
+   "s": 5.17,
+   "e": 5.53
+  },
+  {
+   "w": "Il",
+   "s": 5.63,
+   "e": 5.69
+  },
+  {
+   "w": "est",
+   "s": 5.73,
+   "e": 5.83
+  },
+  {
+   "w": "torréfié",
+   "s": 5.87,
+   "e": 6.29
+  },
+  {
+   "w": "la",
+   "s": 6.35,
+   "e": 6.41
+  },
+  {
+   "w": "semaine",
+   "s": 6.51,
+   "e": 6.77
+  },
+  {
+   "w": "même",
+   "s": 6.83,
+   "e": 7.05
+  },
+  {
+   "w": "et",
+   "s": 7.18,
+   "e": 7.26
+  },
+  {
+   "w": "l'odeur,",
+   "s": 7.3,
+   "e": 7.76
+  },
+  {
+   "w": "c'est",
+   "s": 7.87,
+   "e": 7.97
+  },
+  {
+   "w": "un",
+   "s": 8.01,
+   "e": 8.09
+  },
+  {
+   "w": "truc",
+   "s": 8.13,
+   "e": 8.31
+  },
+  {
+   "w": "de",
+   "s": 8.35,
+   "e": 8.43
+  },
+  {
+   "w": "fou.",
+   "s": 8.55,
+   "e": 8.69
+  },
+  {
+   "w": "Franchement,",
+   "s": 8.86,
+   "e": 9.26
+  },
+  {
+   "w": "teste-le,",
+   "s": 9.42,
+   "e": 9.84
+  },
+  {
+   "w": "tu",
+   "s": 10.08,
+   "e": 10.16
+  },
+  {
+   "w": "vas",
+   "s": 10.2,
+   "e": 10.28
+  },
+  {
+   "w": "me",
+   "s": 10.32,
+   "e": 10.36
+  },
+  {
+   "w": "remercier",
+   "s": 10.4,
+   "e": 10.86
   }
  ],
  "prompt": "Une pub UGC pour mon café de spécialité, ton chaleureux, avec sous-titres.",
  "brand": {
   "name": "Brûlerie Ardente",
-  "initials": "BA"
+  "initials": "BA",
+  "handle": "brulerieardente",
+  "site": "brulerie-ardente.fr"
  },
  "actor": {
   "name": "Romane",
@@ -204,10 +261,10 @@
   "chat/actors/a061.jpg"
  ],
  "script": [
-  "« Ce café-là, je ne m’en passe plus. »",
-  "Torréfié en petit lot, la semaine même.",
-  "Doux, rond, aucune amertume.",
-  "« Essaie une fois… »"
+  "« Stop ! Tu bois encore du café en capsule ? »",
+  "Goûte celui-là une fois…",
+  "Torréfié la semaine même.",
+  "« Franchement, teste-le. »"
  ],
  "voice": {
   "h1": "cp6-h1-n",
@@ -451,5 +508,14 @@
    }
   ]
  },
- "bed": "chatpub/cp6-light-bed.wav"
+ "bed": "chatpub/cp6-light-bed.wav",
+ "formatFrom": 7.7,
+ "formatSub": "Torréfié la semaine même",
+ "formatText": "Le café qui fait oublier les capsules ☕",
+ "tags": [
+  "STOP !",
+  "CAPSULE ?",
+  "TORRÉFIÉ",
+  "TESTE-LE"
+ ]
 }
