@@ -1,0 +1,365 @@
+{
+ "badge": "POV : tu tournes ta pub toi-même 🎬",
+ "bed": "chatpub/pov2-bed.wav",
+ "segs": [
+  {
+   "type": "clip",
+   "src": "fal/social/out/pov_karim_sketch.mp4",
+   "from": 0.6,
+   "to": 4.4,
+   "words": [
+    {
+     "w": "Bon,",
+     "s": 0.86,
+     "e": 1.0
+    },
+    {
+     "w": "ma",
+     "s": 1.52,
+     "e": 1.58
+    },
+    {
+     "w": "pub,",
+     "s": 1.66,
+     "e": 1.92
+    },
+    {
+     "w": "je",
+     "s": 2.14,
+     "e": 2.2
+    },
+    {
+     "w": "la",
+     "s": 2.24,
+     "e": 2.3
+    },
+    {
+     "w": "tourne",
+     "s": 2.36,
+     "e": 2.54
+    },
+    {
+     "w": "moi-même.",
+     "s": 2.56,
+     "e": 2.94
+    },
+    {
+     "w": "Moteur !",
+     "s": 3.46,
+     "e": 3.9
+    }
+   ],
+   "tag": "PRISE 1"
+  },
+  {
+   "type": "clip",
+   "src": "fal/social/out/pov_karim_sketch.mp4",
+   "from": 5.05,
+   "to": 8.2,
+   "words": [
+    {
+     "w": "Prise",
+     "s": 5.32,
+     "e": 5.54
+    },
+    {
+     "w": "douze :",
+     "s": 5.6,
+     "e": 5.84
+    },
+    {
+     "w": "le",
+     "s": 6.14,
+     "e": 6.2
+    },
+    {
+     "w": "trépied",
+     "s": 6.26,
+     "e": 6.52
+    },
+    {
+     "w": "est",
+     "s": 6.54,
+     "e": 6.6
+    },
+    {
+     "w": "tombé.",
+     "s": 6.64,
+     "e": 6.9
+    },
+    {
+     "w": "Encore.",
+     "s": 7.58,
+     "e": 7.98
+    }
+   ],
+   "tag": "PRISE 12"
+  },
+  {
+   "type": "clip",
+   "src": "fal/social/out/pov_karim_sketch.mp4",
+   "from": 8.3,
+   "to": 11.75,
+   "words": [
+    {
+     "w": "Vingt-trois",
+     "s": 8.52,
+     "e": 8.9
+    },
+    {
+     "w": "heures :",
+     "s": 8.92,
+     "e": 9.14
+    },
+    {
+     "w": "je",
+     "s": 9.46,
+     "e": 9.54
+    },
+    {
+     "w": "découvre",
+     "s": 9.58,
+     "e": 9.94
+    },
+    {
+     "w": "le",
+     "s": 9.98,
+     "e": 10.04
+    },
+    {
+     "w": "montage",
+     "s": 10.1,
+     "e": 10.54
+    },
+    {
+     "w": "et",
+     "s": 10.78,
+     "e": 10.84
+    },
+    {
+     "w": "les",
+     "s": 10.86,
+     "e": 10.96
+    },
+    {
+     "w": "sous-titres.",
+     "s": 11.0,
+     "e": 11.42
+    }
+   ],
+   "tag": "23 H"
+  },
+  {
+   "type": "clip",
+   "src": "fal/social/out/pov_karim_sketch.mp4",
+   "from": 11.75,
+   "to": 15.0,
+   "words": [
+    {
+     "w": "Bilan :",
+     "s": 11.88,
+     "e": 12.16
+    },
+    {
+     "w": "trois",
+     "s": 12.4,
+     "e": 12.54
+    },
+    {
+     "w": "jours",
+     "s": 12.58,
+     "e": 12.7
+    },
+    {
+     "w": "de",
+     "s": 12.74,
+     "e": 12.82
+    },
+    {
+     "w": "boulot",
+     "s": 12.86,
+     "e": 13.14
+    },
+    {
+     "w": "pour",
+     "s": 13.88,
+     "e": 14.04
+    },
+    {
+     "w": "quinze",
+     "s": 14.08,
+     "e": 14.26
+    },
+    {
+     "w": "secondes",
+     "s": 14.3,
+     "e": 14.56
+    },
+    {
+     "w": "de",
+     "s": 14.58,
+     "e": 14.66
+    },
+    {
+     "w": "vidéo",
+     "s": 14.7,
+     "e": 14.98
+    }
+   ],
+   "tag": "BILAN"
+  },
+  {
+   "type": "clip",
+   "src": "fal/social/out/pov_karim_apres.mp4",
+   "from": 0.05,
+   "to": 4.99,
+   "words": [
+    {
+     "w": "Maintenant,",
+     "s": 0.24,
+     "e": 0.58
+    },
+    {
+     "w": "j'écris",
+     "s": 0.88,
+     "e": 1.16
+    },
+    {
+     "w": "une",
+     "s": 1.2,
+     "e": 1.32
+    },
+    {
+     "w": "phrase",
+     "s": 1.34,
+     "e": 1.66
+    },
+    {
+     "w": "dans",
+     "s": 1.7,
+     "e": 1.84
+    },
+    {
+     "w": "Growthity :",
+     "s": 1.88,
+     "e": 2.42
+    },
+    {
+     "w": "la",
+     "s": 3.14,
+     "e": 3.2
+    },
+    {
+     "w": "pub",
+     "s": 3.28,
+     "e": 3.42
+    },
+    {
+     "w": "est",
+     "s": 3.46,
+     "e": 3.54
+    },
+    {
+     "w": "prête,",
+     "s": 3.58,
+     "e": 3.82
+    },
+    {
+     "w": "sous-titres",
+     "s": 4.1,
+     "e": 4.52
+    },
+    {
+     "w": "compris",
+     "s": 4.56,
+     "e": 4.86
+    }
+   ],
+   "tag": "AVEC GROWTHITY",
+   "tagColor": "#16A34A"
+  },
+  {
+   "type": "demo",
+   "dur": 5.42,
+   "vo": "voice/pov2-demo-n.mp3",
+   "voWords": [
+    {
+     "w": "Avec",
+     "s": 0.18,
+     "e": 0.33999999999999997
+    },
+    {
+     "w": "Growthity,",
+     "s": 0.4,
+     "e": 0.86
+    },
+    {
+     "w": "une",
+     "s": 1.32,
+     "e": 1.4200000000000002
+    },
+    {
+     "w": "phrase,",
+     "s": 1.4600000000000002,
+     "e": 1.82
+    },
+    {
+     "w": "un",
+     "s": 2.06,
+     "e": 2.12
+    },
+    {
+     "w": "acteur",
+     "s": 2.18,
+     "e": 2.42
+    },
+    {
+     "w": "réaliste",
+     "s": 2.46,
+     "e": 2.94
+    },
+    {
+     "w": "et",
+     "s": 3.2800000000000002,
+     "e": 3.3200000000000003
+    },
+    {
+     "w": "ta",
+     "s": 3.38,
+     "e": 3.44
+    },
+    {
+     "w": "pub",
+     "s": 3.52,
+     "e": 3.66
+    },
+    {
+     "w": "est",
+     "s": 3.68,
+     "e": 3.74
+    },
+    {
+     "w": "montée",
+     "s": 3.7800000000000002,
+     "e": 4.02
+    }
+   ],
+   "mode": "make",
+   "title": "Avec Growthity",
+   "prompt": "Une pub pour mon garage, ton rassurant, avec sous-titres.",
+   "ads": [
+    "chat/social/karim-ad-1.0.jpg",
+    "chat/social/karim-ad-2.6.jpg",
+    "chat/social/karim-ad-4.0.jpg"
+   ]
+  },
+  {
+   "type": "end",
+   "dur": 3.2,
+   "title": [
+    "Ta pub,",
+    "sans tournage."
+   ]
+  }
+ ]
+}

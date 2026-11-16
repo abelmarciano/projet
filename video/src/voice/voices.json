@@ -1762,5 +1762,21 @@
   "style": 0.45,
   "speed": 1.08,
   "text": "[confident] Avec Grossiti : ciblage large, créas variées… et un media buyer qui te dit quoi faire."
+ },
+ "pov2-demo": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.08,
+  "text": "[confident] Avec Grossiti : une phrase, un acteur réaliste… et ta pub est montée."
+ },
+ "pov3-demo": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.08,
+  "text": "[confident] Avec Grossiti : des visuels pros, une vraie campagne de ventes… et zéro neveu."
  }
 }

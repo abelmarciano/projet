@@ -113,6 +113,8 @@ import lr5Cfg from './chatpub/lr5.json';
 import av5Cfg from './chatpub/av5.json';
 import av6Cfg from './chatpub/av6.json';
 import pov1Cfg from './chatpub/pov1.json';
+import pov2Cfg from './chatpub/pov2.json';
+import pov3Cfg from './chatpub/pov3.json';
 import pat3dCfg from './chatpub/pat3d.json';
 import cav3dCfg from './chatpub/cav3d.json';
 import {VraiFaux6, VraiFaux7} from './brief/VraiFaux67';
@@ -206,6 +208,8 @@ export const Root: React.FC = () => (
     <Composition id="AvantApres-julien" component={SocialStory} durationInFrames={storyTotal(av5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: av5Cfg as unknown as StoryCfg}} />
     <Composition id="AvantApres-helene" component={SocialStory} durationInFrames={storyTotal(av6Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: av6Cfg as unknown as StoryCfg}} />
     <Composition id="POV-premiere-pub" component={SocialStory} durationInFrames={storyTotal(pov1Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: pov1Cfg as unknown as StoryCfg}} />
+    <Composition id="POV-tournage" component={SocialStory} durationInFrames={storyTotal(pov2Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: pov2Cfg as unknown as StoryCfg}} />
+    <Composition id="POV-neveu" component={SocialStory} durationInFrames={storyTotal(pov3Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: pov3Cfg as unknown as StoryCfg}} />
     <Composition id="Pub3D-patissiere" component={Pub3D} durationInFrames={(pat3dCfg as unknown as P3DCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: pat3dCfg as unknown as P3DCfg}} />
     <Composition id="Pub3D-caviste" component={Pub3D} durationInFrames={(cav3dCfg as unknown as P3DCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: cav3dCfg as unknown as P3DCfg}} />
     <Composition id="VraiFaux-6" component={VraiFaux6} durationInFrames={briefTotal(vf6Cfg as unknown as VFCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: vf6Cfg as unknown as VFCfg}} />

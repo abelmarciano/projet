@@ -1,0 +1,390 @@
+{
+ "badge": "POV : c’est ton neveu qui gère tes pubs 🙃",
+ "bed": "chatpub/pov3-bed.wav",
+ "segs": [
+  {
+   "type": "clip",
+   "src": "fal/social/out/pov_sandrine_sketch.mp4",
+   "from": 0.55,
+   "to": 3.9,
+   "words": [
+    {
+     "w": "Mes",
+     "s": 0.82,
+     "e": 0.98
+    },
+    {
+     "w": "pubs,",
+     "s": 1.04,
+     "e": 1.34
+    },
+    {
+     "w": "c'est",
+     "s": 2.22,
+     "e": 2.32
+    },
+    {
+     "w": "mon",
+     "s": 2.36,
+     "e": 2.48
+    },
+    {
+     "w": "neveu",
+     "s": 2.52,
+     "e": 2.72
+    },
+    {
+     "w": "qui",
+     "s": 2.8,
+     "e": 2.86
+    },
+    {
+     "w": "s'en",
+     "s": 2.92,
+     "e": 3.06
+    },
+    {
+     "w": "occupe.",
+     "s": 3.14,
+     "e": 3.52
+    }
+   ]
+  },
+  {
+   "type": "clip",
+   "src": "fal/social/out/pov_sandrine_sketch.mp4",
+   "from": 4.1,
+   "to": 7.75,
+   "words": [
+    {
+     "w": "Il",
+     "s": 4.32,
+     "e": 4.4
+    },
+    {
+     "w": "a",
+     "s": 4.44,
+     "e": 4.52
+    },
+    {
+     "w": "boosté",
+     "s": 4.56,
+     "e": 4.9
+    },
+    {
+     "w": "une",
+     "s": 4.92,
+     "e": 5.06
+    },
+    {
+     "w": "photo",
+     "s": 5.08,
+     "e": 5.38
+    },
+    {
+     "w": "floue",
+     "s": 5.56,
+     "e": 5.78
+    },
+    {
+     "w": "avec",
+     "s": 6.4,
+     "e": 6.62
+    },
+    {
+     "w": "trente",
+     "s": 6.66,
+     "e": 6.9
+    },
+    {
+     "w": "hashtags.",
+     "s": 6.94,
+     "e": 7.44
+    }
+   ],
+   "tag": "LE « BOOST »"
+  },
+  {
+   "type": "clip",
+   "src": "fal/social/out/pov_sandrine_sketch.mp4",
+   "from": 7.85,
+   "to": 11.6,
+   "words": [
+    {
+     "w": "Le",
+     "s": 8.04,
+     "e": 8.16
+    },
+    {
+     "w": "ciblage :",
+     "s": 8.2,
+     "e": 8.7
+    },
+    {
+     "w": "tout",
+     "s": 9.34,
+     "e": 9.44
+    },
+    {
+     "w": "le",
+     "s": 9.46,
+     "e": 9.52
+    },
+    {
+     "w": "monde",
+     "s": 9.56,
+     "e": 9.76
+    },
+    {
+     "w": "tata,",
+     "s": 9.8,
+     "e": 10.08
+    },
+    {
+     "w": "comme",
+     "s": 10.18,
+     "e": 10.3
+    },
+    {
+     "w": "ça,",
+     "s": 10.38,
+     "e": 10.44
+    },
+    {
+     "w": "on",
+     "s": 10.48,
+     "e": 10.54
+    },
+    {
+     "w": "rate",
+     "s": 10.58,
+     "e": 10.74
+    },
+    {
+     "w": "personne.",
+     "s": 10.78,
+     "e": 11.24
+    }
+   ],
+   "tag": "LE CIBLAGE"
+  },
+  {
+   "type": "clip",
+   "src": "fal/social/out/pov_sandrine_sketch.mp4",
+   "from": 11.75,
+   "to": 15.0,
+   "words": [
+    {
+     "w": "Résultat :",
+     "s": 12.06,
+     "e": 12.6
+    },
+    {
+     "w": "des",
+     "s": 13.1,
+     "e": 13.2
+    },
+    {
+     "w": "likes",
+     "s": 13.26,
+     "e": 13.48
+    },
+    {
+     "w": "de",
+     "s": 13.52,
+     "e": 13.58
+    },
+    {
+     "w": "toute",
+     "s": 13.7,
+     "e": 13.86
+    },
+    {
+     "w": "sa",
+     "s": 13.9,
+     "e": 13.98
+    },
+    {
+     "w": "classe",
+     "s": 14.04,
+     "e": 14.24
+    },
+    {
+     "w": "de",
+     "s": 14.28,
+     "e": 14.34
+    },
+    {
+     "w": "terminale",
+     "s": 14.4,
+     "e": 14.9
+    }
+   ],
+   "tag": "RÉSULTAT"
+  },
+  {
+   "type": "clip",
+   "src": "fal/social/out/pov_sandrine_apres.mp4",
+   "from": 0.05,
+   "to": 4.99,
+   "words": [
+    {
+     "w": "Maintenant,",
+     "s": 0.12,
+     "e": 0.62
+    },
+    {
+     "w": "c'est",
+     "s": 0.78,
+     "e": 0.94
+    },
+    {
+     "w": "Growthity",
+     "s": 0.98,
+     "e": 1.48
+    },
+    {
+     "w": "qui",
+     "s": 1.58,
+     "e": 1.68
+    },
+    {
+     "w": "gère",
+     "s": 1.74,
+     "e": 2.06
+    },
+    {
+     "w": "et",
+     "s": 2.68,
+     "e": 2.78
+    },
+    {
+     "w": "mon",
+     "s": 2.86,
+     "e": 3.0
+    },
+    {
+     "w": "neveu,",
+     "s": 3.06,
+     "e": 3.46
+    },
+    {
+     "w": "il",
+     "s": 4.28,
+     "e": 4.38
+    },
+    {
+     "w": "révise",
+     "s": 4.44,
+     "e": 4.96
+    }
+   ],
+   "tag": "AVEC GROWTHITY",
+   "tagColor": "#16A34A"
+  },
+  {
+   "type": "demo",
+   "dur": 6.0,
+   "vo": "voice/pov3-demo-n.mp3",
+   "voWords": [
+    {
+     "w": "Avec",
+     "s": 0.18,
+     "e": 0.32
+    },
+    {
+     "w": "Growthity,",
+     "s": 0.38,
+     "e": 0.86
+    },
+    {
+     "w": "des",
+     "s": 1.3,
+     "e": 1.4000000000000001
+    },
+    {
+     "w": "visuels",
+     "s": 1.4400000000000002,
+     "e": 1.78
+    },
+    {
+     "w": "pros,",
+     "s": 1.82,
+     "e": 2.06
+    },
+    {
+     "w": "une",
+     "s": 2.2800000000000002,
+     "e": 2.42
+    },
+    {
+     "w": "vraie",
+     "s": 2.48,
+     "e": 2.64
+    },
+    {
+     "w": "campagne",
+     "s": 2.68,
+     "e": 2.98
+    },
+    {
+     "w": "de",
+     "s": 3.02,
+     "e": 3.1
+    },
+    {
+     "w": "ventes",
+     "s": 3.14,
+     "e": 3.44
+    },
+    {
+     "w": "et",
+     "s": 3.8000000000000003,
+     "e": 3.94
+    },
+    {
+     "w": "zéro",
+     "s": 4.08,
+     "e": 4.319999999999999
+    },
+    {
+     "w": "neveu",
+     "s": 4.359999999999999,
+     "e": 4.619999999999999
+    }
+   ],
+   "mode": "reco",
+   "title": "Ton media buyer IA",
+   "items": [
+    {
+     "i": "📸",
+     "t": "Des visuels pros",
+     "d": "Fini les photos floues"
+    },
+    {
+     "i": "🛒",
+     "t": "Une campagne Ventes",
+     "d": "Pas une course aux likes"
+    },
+    {
+     "i": "🎯",
+     "t": "Les bonnes personnes",
+     "d": "Ciblage large, l’algorithme cherche pour toi"
+    },
+    {
+     "i": "🔔",
+     "t": "Alerte WhatsApp",
+     "d": "Si ta pub s’essouffle"
+    }
+   ]
+  },
+  {
+   "type": "end",
+   "dur": 3.2,
+   "title": [
+    "Tes pubs,",
+    "entre de bonnes mains."
+   ]
+  }
+ ]
+}
