@@ -85,6 +85,20 @@ elif 'list' in Q:  # split « concurrents »
     for k in ['hook', 'angle']: add(sfx, pop_sfx(), Q[k], 0.22)
     add(sfx, click(1.2), Q['pick'], 0.5)
     add(sfx, whoosh(0.5), Q['ready'] - 0.25, 0.3); add(sfx, chime(88), Q['ready'], 0.18); add(sfx, boom(), Q['ready'], 0.14)
+elif 'drag' in Q:  # split « calendrier »
+    for i in range(6): add(sfx, pop_sfx(), Q['lib'] + i * 0.1, 0.18)
+    add(sfx, whoosh(0.4), Q['drag'], 0.22); add(sfx, click(1.2), Q['drag'] + 0.75, 0.45)
+    add(sfx, pop_sfx(), Q['hour'], 0.3)
+    for k in ['n1', 'n2', 'n3']: add(sfx, pop_sfx(), Q[k], 0.3)
+    for i in range(12): add(sfx, pop_sfx(), Q['month'] + i * 2 / 30, 0.14)
+    add(sfx, chime(84), Q['ready'], 0.18)
+elif 'notif' in Q:  # alertes WhatsApp
+    add(sfx, chime(88), Q['notif'], 0.22); add(sfx, chime(93), Q['notif'] + 0.12, 0.16)
+    for k in ['freq', 'clic']: add(sfx, pop_sfx(), Q[k], 0.25)
+    add(sfx, chime(86), Q['creas'], 0.16)
+    for i in range(3): add(sfx, pop_sfx(), Q['creas'] + i * 4 / 30, 0.22)
+    add(sfx, click(1.2), Q['tap'], 0.5); add(sfx, chime(91), Q['ready'], 0.2)
+    if 'bilan' in Q: add(sfx, chime(84), Q['bilan'], 0.18)
 elif 'ask1' in Q:  # split « stats » : tuiles, leads
     add(sfx, chime(84), Q['sum'], 0.14)
     for k in ['spent', 'cpc', 'cpl']: add(sfx, pop_sfx(), Q[k], 0.32)
