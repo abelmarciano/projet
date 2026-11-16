@@ -1778,5 +1778,53 @@
   "style": 0.45,
   "speed": 1.08,
   "text": "[confident] Avec Grossiti : des visuels pros, une vraie campagne de ventes… et zéro neveu."
+ },
+ "cp6-h1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[confident] Pas de tournage. Pas d'agence. Pas de monteur."
+ },
+ "cp6-h2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[excited] Juste une phrase."
+ },
+ "cp6-b1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[excited] Tu décris ta pub, tu choisis ton actrice…"
+ },
+ "cp6-b2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[amazed] et Grossiti écrit, tourne et monte la vidéo."
+ },
+ "cp6-d1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[excited] Tous les formats… et en ligne sur Meta, en un clic."
+ },
+ "cp6-d2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[confident] Grossiti. Ta pub, en une phrase."
  }
 }
