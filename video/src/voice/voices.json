@@ -1594,5 +1594,85 @@
   "style": 0.45,
   "speed": 1.08,
   "text": "[confident] Avec Grossiti, l'alerte arrive sur WhatsApp, au bon moment."
+ },
+ "vf6-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Vrai ou faux : si ta pub ne vend pas en vingt-quatre heures, il faut la couper."
+ },
+ "vf6-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[excited] Faux ! Laisse-lui le temps d'apprendre."
+ },
+ "vf6-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Les premiers jours, Meta teste ta pub sur différentes personnes. Les résultats bougent beaucoup, c'est normal."
+ },
+ "vf6-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Juge-la plutôt sur plusieurs jours, avec assez de résultats, avant de décider."
+ },
+ "vf6-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[warmly] Grossiti te dit quand couper, et quand attendre. Abonne-toi pour le prochain vrai ou faux !"
+ },
+ "vf7-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Vrai ou faux : pour les Reels et les Stories, une vidéo verticale, c'est mieux."
+ },
+ "vf7-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[excited] Vrai ! Le plein écran capte l'attention."
+ },
+ "vf7-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "En carré, ta vidéo laisse des bandes vides sur l'écran. En vertical, elle prend toute la place."
+ },
+ "vf7-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Pense quand même à la zone sûre : garde tes textes loin des boutons, en bas de l'écran."
+ },
+ "vf7-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[warmly] Grossiti crée tes pubs dans tous les formats. Abonne-toi pour le prochain vrai ou faux !"
  }
 }
