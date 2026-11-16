@@ -3,7 +3,7 @@
 // (01 Créer : les IA réunies · 02 Remplacer : l'équipe · 03 Diffuser : toutes les plateformes · 04 Piloter : media buyer IA + WhatsApp)
 // → final « Tout. Au même endroit. » + « Commencer ». Aucun chiffre de résultat. Zones mortes : rien d'essentiel sous y = 1440.
 import React, {useEffect, useState} from 'react';
-import {AbsoluteFill, Audio, Sequence, continueRender, delayRender, interpolate, random, spring, staticFile, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Audio, Img, Sequence, continueRender, delayRender, interpolate, random, spring, staticFile, useCurrentFrame} from 'remotion';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
@@ -29,8 +29,8 @@ const SHADOW = '0 1px 0 rgba(11,10,31,0.04), 0 2px 6px rgba(11,10,31,0.04), 0 50
 const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 
 // départs des voix (frames)
-export const VO = {1: 8, 2: 152, 3: 236, 4: 404, 5: 526, 6: 702, 7: 852} as Record<number, number>;
-export const SC = {chaos: 0, collapse: 150, reveal: 206, ch1: 226, ch2: 398, ch3: 520, ch4: 696, fin: 842, total: 1000};
+export const VO = {1: 8, 2: 152, 3: 236, 4: 404, 5: 556, 6: 732, 7: 936} as Record<number, number>;
+export const SC = {chaos: 0, collapse: 150, reveal: 206, ch1: 226, ch2: 398, ch3: 550, ch4: 726, fin: 926, total: 1084};
 const cue = (k: number, start: string, dflt = 0) => {
   const w = WD[`aio-${k}`].find((x) => x.w.toLowerCase().startsWith(start));
   return VO[k] + Math.round((w ? w.s : dflt) * 30);
@@ -355,10 +355,10 @@ const OutViz: React.FC<{k: string; t: number}> = ({k, t}) => {
 
 // ============ 02 Remplacer : l'équipe ============
 const ROLES = [
-  {r: 'Monteur vidéo', i: '✂', g: 'monte tes vidéos', k: 'monteur'},
-  {r: 'Graphiste', i: '◆', g: 'crée tes visuels', k: 'graphiste'},
-  {r: 'Media buyer', i: '◎', g: 'pilote tes campagnes', k: 'media'},
-  {r: 'Community manager', i: '✉', g: 'programme tes posts', k: ''},
+  {r: 'Monteur vidéo', i: 'monteur', g: 'monte tes vidéos', k: 'monteur'},
+  {r: 'Graphiste', i: 'graphiste', g: 'crée tes visuels', k: 'graphiste'},
+  {r: 'Media buyer', i: 'buyer', g: 'pilote tes campagnes', k: 'media'},
+  {r: 'Community manager', i: 'cm', g: 'gère tes réseaux', k: 'community'},
 ];
 const Ch2: React.FC = () => {
   const {f, style} = useScene(SC.ch2, SC.ch3);
@@ -367,24 +367,29 @@ const Ch2: React.FC = () => {
       <Headline a="Toute une équipe." b="Dans un seul onglet." at={SC.ch2 + 6} size={96} />
       <div style={{position: 'absolute', left: 70, right: 70, top: 560, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, perspective: 1600}}>
         {ROLES.map((ro, i) => {
-          const flipAt = ro.k ? cue(4, ro.k, 0.6 + i * 0.8) : cue(4, 'buyer', 2.5) + 12;
+          const flipAt = cue(4, ro.k, 0.6 + i * 1.1);
           const p = sp(f - SC.ch2 - 8 - i * 4, 13);
           const fl = interpolate(f, [flipAt, flipAt + 14], [0, 180], {...clamp, easing: INOUT});
           const back = fl > 90;
           return (
-            <div key={ro.r} style={{height: 380, position: 'relative', transform: `translateY(${(1 - p) * 80}px) rotateY(${back ? fl - 180 : fl}deg) scale(${1 + 0.06 * Math.sin((fl / 180) * Math.PI)})`, opacity: p}}>
+            <div key={ro.r} style={{height: 400, position: 'relative', transform: `translateY(${(1 - p) * 80}px) rotateY(${back ? fl - 180 : fl}deg) scale(${1 + 0.06 * Math.sin((fl / 180) * Math.PI)})`, opacity: p}}>
               {/* recto : le prestataire */}
-              <div style={{position: 'absolute', inset: 0, borderRadius: 34, background: '#fff', border: `1px solid ${LINE}`, boxShadow: SHADOW, padding: 30, boxSizing: 'border-box', display: back ? 'none' : 'flex', flexDirection: 'column'}}>
-                <div style={{width: 76, height: 76, borderRadius: 22, background: '#F1F0F6', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 38, color: '#6B6880'}}>{ro.i}</div>
-                <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 40, color: INK, marginTop: 'auto', letterSpacing: '-0.02em', lineHeight: 1.05}}>{ro.r}</div>
-                <div style={{display: 'flex', gap: 8, marginTop: 14}}>
+              <div style={{position: 'absolute', inset: 0, borderRadius: 34, background: '#fff', border: `1px solid ${LINE}`, boxShadow: SHADOW, padding: 16, boxSizing: 'border-box', display: back ? 'none' : 'flex', flexDirection: 'column', overflow: 'hidden'}}>
+                <div style={{height: 250, borderRadius: 24, overflow: 'hidden', background: '#ECE8FB', position: 'relative'}}>
+                  <Img src={staticFile(`allinone/roles/${ro.i}.jpg`)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 30%', transform: `scale(${1.04 + 0.04 * Math.sin((f - SC.ch2) / 20 + i)}) translateY(${Math.sin((f - SC.ch2) / 14 + i * 2) * 4}px)`}} />
+                </div>
+                <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 34, color: INK, marginTop: 14, letterSpacing: '-0.02em', lineHeight: 1.05, paddingLeft: 8}}>{ro.r}</div>
+                <div style={{display: 'flex', gap: 8, marginTop: 10, paddingLeft: 8}}>
                   {['Devis', 'Délais', 'Relances'].map((t) => <span key={t} style={{padding: '6px 12px', borderRadius: 99, background: '#F4F2F8', color: MUTED, fontFamily: FONT, fontWeight: 700, fontSize: 18}}>{t}</span>)}
                 </div>
               </div>
               {/* verso : Growthity */}
               <div style={{position: 'absolute', inset: 0, borderRadius: 34, background: GRAD, boxShadow: '0 40px 80px -30px rgba(91,63,228,0.7)', padding: 30, boxSizing: 'border-box', display: back ? 'flex' : 'none', flexDirection: 'column', overflow: 'hidden'}}>
                 <div style={{position: 'absolute', inset: 0, background: 'radial-gradient(circle at 80% 0%, rgba(255,255,255,0.35), transparent 50%)'}} />
-                <div style={{width: 76, height: 76, borderRadius: 22, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><LogoMark size={50} /></div>
+                <div style={{display: 'flex', alignItems: 'center', gap: 14}}>
+                  <div style={{width: 76, height: 76, borderRadius: 22, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><LogoMark size={50} /></div>
+                  <div style={{width: 76, height: 76, borderRadius: 38, overflow: 'hidden', border: '3px solid rgba(255,255,255,0.8)', filter: 'grayscale(1)', opacity: 0.7}}><Img src={staticFile(`allinone/roles/${ro.i}.jpg`)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 25%'}} /></div>
+                </div>
                 <div style={{fontFamily: FONT, fontWeight: 700, fontSize: 24, color: 'rgba(255,255,255,0.8)', marginTop: 'auto', textDecoration: 'line-through'}}>{ro.r}</div>
                 <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 38, color: '#fff', marginTop: 6, letterSpacing: '-0.02em', lineHeight: 1.08}}>Growthity {ro.g}</div>
               </div>
@@ -403,11 +408,10 @@ const PLATS: {n: string; k: string; c: string; g: React.ReactNode}[] = [
   {n: 'TikTok', k: 'tiktok', c: '#0B0A0C', g: <svg width="54" height="54" viewBox="0 0 24 24" fill="none"><path d="M14 3v11.5a3.5 3.5 0 1 1-3-3.46" stroke="#25F4EE" strokeWidth="2.4" strokeLinecap="round" transform="translate(-0.8,0.6)" /><path d="M14 3v11.5a3.5 3.5 0 1 1-3-3.46" stroke="#FE2C55" strokeWidth="2.4" strokeLinecap="round" transform="translate(0.8,-0.6)" /><path d="M14 3v11.5a3.5 3.5 0 1 1-3-3.46M14 3c.4 2.6 2.2 4.4 5 4.6" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" /></svg>},
   {n: 'YouTube', k: 'youtube', c: '#FF0033', g: <svg width="58" height="58" viewBox="0 0 24 24"><path d="M9.5 8.2v7.6l6.4-3.8z" fill="#fff" /></svg>},
   {n: 'LinkedIn', k: 'linkedin', c: '#0A66C2', g: <span style={{fontFamily: 'Inter', fontWeight: 800, fontSize: 46, color: '#fff'}}>in</span>},
-  {n: 'Pinterest', k: '', c: '#E60023', g: <span style={{fontFamily: 'Georgia, serif', fontWeight: 700, fontSize: 56, color: '#fff'}}>P</span>},
 ];
 const Ch3: React.FC = () => {
   const {f, style} = useScene(SC.ch3, SC.ch4);
-  const cx = 540, cy = 880;
+  const cx = 540, cy = 930;
   const card = sp(f - SC.ch3 - 6, 13);
   return (
     <AbsoluteFill style={style}>
@@ -415,7 +419,7 @@ const Ch3: React.FC = () => {
       <svg width={1080} height={1920} style={{position: 'absolute', inset: 0}}>
         <defs><linearGradient id="link" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#818CF8" /><stop offset="1" stopColor="#C084FC" /></linearGradient></defs>
         {PLATS.map((pl, i) => {
-          const a = pl.k ? cue(5, pl.k, 1.3 + i * 0.7) - 3 : cue(5, 'linkedin', 4) + 14;
+          const a = cue(5, pl.k, 1.3 + i * 0.7) - 3;
           const ang = -Math.PI / 2 + ((i + 0.5) / PLATS.length) * Math.PI * 2;
           const x = cx + Math.cos(ang) * 380, y = cy + Math.sin(ang) * 400;
           const d = prog(f, a, 12);
@@ -443,7 +447,7 @@ const Ch3: React.FC = () => {
         </div>
       </div>
       {PLATS.map((pl, i) => {
-        const a = pl.k ? cue(5, pl.k, 1.3 + i * 0.7) - 3 : cue(5, 'linkedin', 4) + 14;
+        const a = cue(5, pl.k, 1.3 + i * 0.7) - 3;
         const ang = -Math.PI / 2 + ((i + 0.5) / PLATS.length) * Math.PI * 2;
         const x = cx + Math.cos(ang) * 380, y = cy + Math.sin(ang) * 400;
         const p = sp(f - a - 6, 10);
@@ -462,64 +466,116 @@ const Ch3: React.FC = () => {
   );
 };
 
-// ============ 04 Piloter : media buyer IA + WhatsApp ============
+// ============ 04 Piloter : analyse, conseils, pilotage + WhatsApp ============
 const Ch4: React.FC = () => {
   const {f, style} = useScene(SC.ch4, SC.fin);
-  const meta = cue(6, 'meta', 1);
-  const jour = cue(6, 'jour', 1.56);
-  const nuit = cue(6, 'nuit', 1.88);
-  const wa = cue(6, 'whatsapp', 3.2) - 10;
+  const anal = cue(6, 'analyse', 0.14);
+  const cons = cue(6, 'conseille', 1.56);
+  const pil = cue(6, 'pilote', 2.44);
+  const meta = cue(6, 'meta', 3.1);
+  const jour = cue(6, 'jour', 3.6);
+  const nuit = cue(6, 'nuit', 3.92);
+  const wa = cue(6, 'whatsapp', 5.3) - 10;
+  const toB = prog(f, pil - 4, 14, INOUT); // analyse → pilotage
   const panel = sp(f - SC.ch4 - 6, 13);
-  const draw = prog(f, SC.ch4 + 10, 50, INOUT);
+  const draw = prog(f, pil, 40, INOUT);
   const night = prog(f, nuit - 2, 14, INOUT);
+  const dark = night > 0.5;
+  const metrics = [
+    {l: 'Accroche', v: 0.86, t: 'Forte', c: '#16A34A', bg: '#DCFCE7'},
+    {l: 'Rétention', v: 0.42, t: 'À améliorer', c: '#D97706', bg: '#FEF3C7'},
+    {l: 'Ciblage', v: 0.74, t: 'Bon', c: '#16A34A', bg: '#DCFCE7'},
+    {l: 'Coût par résultat', v: 0.58, t: 'En hausse', c: '#DC2626', bg: '#FEE2E2'},
+  ];
   const recos = [
     {t: 'Couper la créa B', i: '✂', c: '#F43F5E'},
     {t: 'Monter le budget sur A', i: '↗', c: '#16A34A'},
     {t: 'Nouvelle créa prête', i: '✦', c: '#6D4CF0'},
   ];
   const path = 'M0 190 C 70 180, 110 150, 170 158 S 280 120, 340 110 S 450 96, 520 70 S 640 40, 720 30';
+  const advice = sp(f - cons + 2, 12) * (1 - prog(f, wa - 8, 10, INOUT));
+  const scan = interpolate(f, [anal, anal + 40], [0, 1], clamp);
   return (
     <AbsoluteFill style={style}>
-      <Headline a="Ton media buyer IA." b="Jour et nuit." at={SC.ch4 + 6} size={96} />
-      {/* soleil → lune */}
-      <div style={{position: 'absolute', right: 90, top: 340, width: 92, height: 92, borderRadius: 46, background: night > 0.5 ? '#1E1B4B' : '#FEF3C7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 50, transform: `rotate(${night * 360}deg) scale(${sp(f - jour + 4, 10)})`}}>{night > 0.5 ? '☾' : '☀'}</div>
-      <div style={{position: 'absolute', left: 70, right: 70, top: 540, borderRadius: 36, background: night > 0.5 ? '#0F0D2A' : '#fff', border: `1px solid ${night > 0.5 ? '#2A2560' : LINE}`, boxShadow: SHADOW, padding: 34, boxSizing: 'border-box', opacity: panel, transform: `translateY(${(1 - panel) * 80}px)`}}>
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-          <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 34, color: night > 0.5 ? '#fff' : INK}}>Campagnes Meta</div>
-          <div style={{display: 'flex', alignItems: 'center', gap: 8, padding: '8px 16px', borderRadius: 99, background: '#DCFCE7', color: '#15803D', fontFamily: FONT, fontWeight: 800, fontSize: 20}}><span style={{width: 10, height: 10, borderRadius: 5, background: '#16A34A', opacity: f % 30 < 18 ? 1 : 0.3}} />En direct</div>
+      <div style={{position: 'absolute', left: 70, right: 70, top: 230, fontFamily: DISPLAY, fontWeight: 700, fontSize: 96, letterSpacing: '-0.045em', lineHeight: 1.02, color: INK}}>
+        <div style={{overflow: 'hidden', paddingBottom: 6}}><div style={{transform: `translateY(${(1 - sp(f - SC.ch4 - 6, 15)) * 110}%)`}}>Ton media buyer IA.</div></div>
+        <div style={{overflow: 'hidden', paddingBottom: 10, height: 112, position: 'relative'}}>
+          <div style={{position: 'absolute', transform: `translateY(${(1 - sp(f - SC.ch4 - 12, 15)) * 110 - toB * 110}%)`}}><G>Analyse et conseille.</G></div>
+          <div style={{position: 'absolute', transform: `translateY(${(1 - toB) * 110}%)`}}><G>Pilote jour et nuit.</G></div>
         </div>
-        <svg width={800} height={230} viewBox="0 0 720 210" style={{marginTop: 20}}>
-          <defs>
-            <linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#8B5CF6" stopOpacity="0.35" /><stop offset="1" stopColor="#8B5CF6" stopOpacity="0" /></linearGradient>
-            <linearGradient id="ln" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#3B82F6" /><stop offset="1" stopColor="#A855F7" /></linearGradient>
-            <clipPath id="rev"><rect x="0" y="0" width={720 * draw} height="210" /></clipPath>
-          </defs>
-          {[50, 100, 150].map((y) => <line key={y} x1="0" x2="720" y1={y} y2={y} stroke={night > 0.5 ? '#2A2560' : '#EEECF6'} strokeWidth="2" />)}
-          <g clipPath="url(#rev)">
-            <path d={`${path} L720 210 L0 210 Z`} fill="url(#area)" />
-            <path d={path} stroke="url(#ln)" strokeWidth="6" fill="none" strokeLinecap="round" />
-          </g>
-          <circle cx={720 * draw} cy={190 - 160 * draw} r="9" fill="#A855F7" opacity={draw} />
-        </svg>
-        <div style={{display: 'flex', flexDirection: 'column', gap: 12, marginTop: 18}}>
-          {recos.map((r, i) => {
-            const a = meta + 2 + i * 8;
-            const p = sp(f - a, 12);
-            return (
-              <div key={r.t} style={{display: 'flex', alignItems: 'center', gap: 14, padding: '14px 18px', borderRadius: 20, background: night > 0.5 ? '#1A1740' : '#F7F6FC', opacity: Math.min(1, p * 1.4), transform: `translateX(${(1 - p) * 120}px)`}}>
-                <span style={{width: 42, height: 42, borderRadius: 13, background: r.c, color: '#fff', fontSize: 22, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>{r.i}</span>
-                <span style={{fontFamily: FONT, fontWeight: 700, fontSize: 27, color: night > 0.5 ? '#fff' : INK}}>{r.t}</span>
-                <span style={{marginLeft: 'auto', fontFamily: FONT, fontWeight: 800, fontSize: 18, color: '#6D4CF0', background: night > 0.5 ? '#2A2560' : '#EEEBFD', padding: '6px 12px', borderRadius: 99}}>IA</span>
-              </div>
-            );
-          })}
+      </div>
+      <div style={{position: 'absolute', left: 70, right: 70, top: 520, height: 590, borderRadius: 36, background: dark ? '#0F0D2A' : '#fff', border: `1px solid ${dark ? '#2A2560' : LINE}`, boxShadow: SHADOW, padding: 34, boxSizing: 'border-box', opacity: panel, transform: `translateY(${(1 - panel) * 80}px)`, overflow: 'hidden'}}>
+        {/* A. analyse de performance */}
+        <div style={{position: 'absolute', inset: 34, opacity: 1 - toB, transform: `translateX(${-toB * 120}px)`}}>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+            <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 34, color: INK}}>Analyse de performance</div>
+            <div style={{padding: '8px 16px', borderRadius: 99, background: '#EEEBFD', color: '#5B3FE4', fontFamily: FONT, fontWeight: 800, fontSize: 20}}>IA</div>
+          </div>
+          <div style={{position: 'relative', marginTop: 26, display: 'flex', flexDirection: 'column', gap: 22}}>
+            {metrics.map((m, i) => {
+              const p = prog(f, anal + 4 + i * 6, 22);
+              const tag = sp(f - anal - 16 - i * 6, 11);
+              return (
+                <div key={m.l}>
+                  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontFamily: FONT, fontWeight: 700, fontSize: 27, color: INK}}>
+                    {m.l}
+                    <span style={{padding: '6px 14px', borderRadius: 99, background: m.bg, color: m.c, fontSize: 20, fontWeight: 800, transform: `scale(${tag})`}}>{m.t}</span>
+                  </div>
+                  <div style={{marginTop: 10, height: 16, borderRadius: 8, background: '#F1EFF8', overflow: 'hidden'}}><div style={{width: `${m.v * p * 100}%`, height: '100%', borderRadius: 8, background: m.c === '#16A34A' ? GRAD : m.c}} /></div>
+                </div>
+              );
+            })}
+            {/* faisceau de scan */}
+            <div style={{position: 'absolute', left: -34, right: -34, top: `${scan * 100}%`, height: 4, background: 'linear-gradient(90deg, transparent, #A78BFA, transparent)', boxShadow: '0 0 30px #A78BFA', opacity: scan > 0 && scan < 1 ? 1 : 0}} />
+          </div>
+        </div>
+        {/* B. pilotage */}
+        <div style={{position: 'absolute', inset: 34, opacity: toB, transform: `translateX(${(1 - toB) * 120}px)`}}>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+            <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 34, color: dark ? '#fff' : INK}}>Campagnes Meta</div>
+            <div style={{display: 'flex', alignItems: 'center', gap: 8, padding: '8px 16px', borderRadius: 99, background: '#DCFCE7', color: '#15803D', fontFamily: FONT, fontWeight: 800, fontSize: 20}}><span style={{width: 10, height: 10, borderRadius: 5, background: '#16A34A', opacity: f % 30 < 18 ? 1 : 0.3}} />En direct</div>
+          </div>
+          <svg width={800} height={200} viewBox="0 0 720 210" style={{marginTop: 16}}>
+            <defs>
+              <linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#8B5CF6" stopOpacity="0.35" /><stop offset="1" stopColor="#8B5CF6" stopOpacity="0" /></linearGradient>
+              <linearGradient id="ln" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#3B82F6" /><stop offset="1" stopColor="#A855F7" /></linearGradient>
+              <clipPath id="rev"><rect x="0" y="0" width={720 * draw} height="210" /></clipPath>
+            </defs>
+            {[50, 100, 150].map((y) => <line key={y} x1="0" x2="720" y1={y} y2={y} stroke={dark ? '#2A2560' : '#EEECF6'} strokeWidth="2" />)}
+            <g clipPath="url(#rev)">
+              <path d={`${path} L720 210 L0 210 Z`} fill="url(#area)" />
+              <path d={path} stroke="url(#ln)" strokeWidth="6" fill="none" strokeLinecap="round" />
+            </g>
+          </svg>
+          <div style={{display: 'flex', flexDirection: 'column', gap: 12, marginTop: 14}}>
+            {recos.map((r, i) => {
+              const a2 = meta + i * 7;
+              const p = sp(f - a2, 12);
+              return (
+                <div key={r.t} style={{display: 'flex', alignItems: 'center', gap: 14, padding: '13px 18px', borderRadius: 20, background: dark ? '#1A1740' : '#F7F6FC', opacity: Math.min(1, p * 1.4), transform: `translateX(${(1 - p) * 120}px)`}}>
+                  <span style={{width: 42, height: 42, borderRadius: 13, background: r.c, color: '#fff', fontSize: 22, fontWeight: 800, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>{r.i}</span>
+                  <span style={{fontFamily: FONT, fontWeight: 700, fontSize: 27, color: dark ? '#fff' : INK}}>{r.t}</span>
+                  <span style={{marginLeft: 'auto', fontFamily: FONT, fontWeight: 800, fontSize: 18, color: '#16A34A'}}>✓ Fait</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+      <div style={{position: 'absolute', left: 716, top: 548, zIndex: 3, width: 64, height: 64, borderRadius: 32, background: dark ? '#1E1B4B' : '#FEF3C7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 36, color: dark ? '#E0E7FF' : '#D97706', opacity: prog(f, jour - 4, 8) * toB, transform: `rotate(${night * 360}deg) scale(${sp(f - jour + 4, 10)})`}}>{dark ? '☾' : '☀'}</div>
+      {/* conseil de l'IA */}
+      <div style={{position: 'absolute', left: 70, right: 70, top: 1150, display: 'flex', gap: 16, alignItems: 'flex-start', opacity: Math.min(1, advice * 1.4), transform: `translateY(${(1 - advice) * 60}px)`}}>
+        <div style={{width: 76, height: 76, borderRadius: 24, background: '#fff', border: `1px solid ${LINE}`, boxShadow: SHADOW, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0}}><LogoMark size={46} /></div>
+        <div style={{flex: 1, padding: '20px 24px', borderRadius: '8px 28px 28px 28px', background: GRAD, color: '#fff', fontFamily: FONT, fontSize: 28, lineHeight: 1.32, fontWeight: 600, boxShadow: '0 30px 60px -24px rgba(91,63,228,0.7)'}}>
+          <div style={{fontSize: 19, fontWeight: 800, letterSpacing: '0.12em', opacity: 0.8, marginBottom: 6}}>CONSEIL DE L’IA</div>
+          {'Ta vidéo perd l’attention trop tôt. Teste une accroche en question dès la première image.'.slice(0, Math.max(0, Math.floor((f - cons) * 3.2)))}
         </div>
       </div>
       {/* alerte WhatsApp */}
       {(() => {
         const p = sp(f - wa, 12);
         return (
-          <div style={{position: 'absolute', left: 110, right: 110, top: 1180, borderRadius: 30, background: '#fff', boxShadow: '0 40px 80px -30px rgba(11,10,31,0.5)', overflow: 'hidden', opacity: Math.min(1, p * 1.4), transform: `translateY(${(1 - p) * 120}px) scale(${0.9 + 0.1 * p})`, zIndex: 5}}>
+          <div style={{position: 'absolute', left: 110, right: 110, top: 1150, borderRadius: 30, background: '#fff', boxShadow: '0 40px 80px -30px rgba(11,10,31,0.5)', overflow: 'hidden', opacity: Math.min(1, p * 1.4), transform: `translateY(${(1 - p) * 120}px) scale(${0.9 + 0.1 * p})`, zIndex: 5}}>
             <div style={{display: 'flex', alignItems: 'center', gap: 12, padding: '14px 20px', background: '#075E54', color: '#fff', fontFamily: FONT, fontWeight: 700, fontSize: 22}}>
               <span style={{width: 34, height: 34, borderRadius: 17, background: '#25D366', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3z" fill="#fff" /></svg></span>
               WhatsApp · Growthity<span style={{marginLeft: 'auto', opacity: 0.7, fontSize: 18}}>maintenant</span>

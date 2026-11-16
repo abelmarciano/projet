@@ -7,8 +7,8 @@ src = open(os.path.join(os.path.dirname(__file__), 'shorts_audio.py')).read().sp
 g = {'__file__': __file__}
 exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'click', 'chime', 'pop_sfx', 'rng'])
-SC = dict(chaos=0, collapse=150, reveal=206, ch1=226, ch2=398, ch3=520, ch4=696, fin=842, total=1000)
-VO = {1: 8, 2: 152, 3: 236, 4: 404, 5: 526, 6: 702, 7: 852}
+SC = dict(chaos=0, collapse=150, reveal=206, ch1=226, ch2=398, ch3=550, ch4=726, fin=926, total=1084)
+VO = {1: 8, 2: 152, 3: 236, 4: 404, 5: 556, 6: 732, 7: 936}
 W = json.load(open('src/allinone/words.json'))
 def cue(k, start, d=0):
     for w in W[f'aio-{k}']:
@@ -101,16 +101,17 @@ add(sfx, riser(0.5, 400, 3000), cue(3, 'ia') - 0.45, 0.25); add(sfx, chime(84), 
 for kk, m in [('script', 81), ('voix', 84), ('acteurs', 86), ('montage', 89)]:
     add(sfx, pop_sfx(), cue(3, kk) - 0.06, 0.3); add(sfx, chime(m), cue(3, kk) + 0.2, 0.16)
 # 02 : retournements de cartes
-for kk in ['monteur', 'graphiste', 'media']:
+for kk in ['monteur', 'graphiste', 'media', 'community']:
     add(sfx, swish(0.25), cue(4, kk), 0.45); add(sfx, chime(86), cue(4, kk) + 0.25, 0.14)
-add(sfx, swish(0.25), cue(4, 'buyer') + 0.4, 0.45)
 # 03 : plateformes
 for j, kk in enumerate(['instagram', 'facebook', 'tiktok', 'youtube', 'linkedin']):
     add(sfx, pop_sfx(), cue(5, kk) + 0.1, 0.35); add(sfx, chime(79 + j * 2), cue(5, kk) + 0.8, 0.12)
-add(sfx, pop_sfx(), cue(5, 'linkedin') + 0.65, 0.35)
-# 04 : courbe, recos, nuit, WhatsApp
-add(sfx, riser(1.6, 300, 1600), s('ch4') + 0.3, 0.15)
-for j in range(3): add(sfx, click(1.2), cue(6, 'meta') + (2 + j * 8) / 30, 0.25)
+# 04 : analyse (scan), conseil, pilotage, nuit, WhatsApp
+add(sfx, riser(1.3, 600, 2600), cue(6, 'analyse'), 0.12)
+for j in range(4): add(sfx, click(1.3), cue(6, 'analyse') + (16 + j * 6) / 30, 0.2)
+add(sfx, pop_sfx(), cue(6, 'conseille') - 0.05, 0.35); add(sfx, chime(86), cue(6, 'conseille') + 0.1, 0.2)
+add(sfx, whoosh(0.45), cue(6, 'pilote') - 0.2, 0.3)
+for j in range(3): add(sfx, click(1.2), cue(6, 'meta') + j * 7 / 30, 0.22)
 add(sfx, whoosh(0.4), cue(6, 'nuit') - 0.1, 0.25)
 add(sfx, pop_sfx(), cue(6, 'whatsapp') - 0.33, 0.5); add(sfx, chime(88), cue(6, 'whatsapp') - 0.2, 0.3); add(sfx, chime(84), cue(6, 'whatsapp') - 0.08, 0.2)
 # final
@@ -119,7 +120,7 @@ add(sfx, riser(0.8, 200, 2800), s('fin') + 0.5, 0.3)
 add(sfx, boom(), s('fin') + 40 / 30, 0.65); add(sfx, sub(1.6, 42), s('fin') + 40 / 30, 0.6)
 add(sfx, chime(81), s('fin') + 42 / 30, 0.3); add(sfx, chime(88), s('fin') + 46 / 30, 0.22); add(sfx, chime(93), s('fin') + 50 / 30, 0.16)
 add(sfx, sub(0.8, 55), cue(7, 'tout'), 0.35)
-mix = (mus + sfx)[: int(s('total') * SR)]
+mix = (mus * 1.0 + sfx * 0.36)[: int(s('total') * SR)]
 mix = np.tanh(mix / (np.max(np.abs(mix)) + 1e-9) * 1.4) * 0.45
 d = int(0.012 * SR)
 st = np.stack([mix, np.concatenate([np.zeros(d), mix[:-d]]) * 0.9 + mix * 0.1], 1)
