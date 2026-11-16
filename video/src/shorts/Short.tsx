@@ -14,6 +14,7 @@ import {S2End, S2Feed, S2Hook, S2Lucas} from './S2';
 import {S3Demos, S3End, S3Grid, S3Hook} from './S3';
 import {S4Caroline, S4End, S4Hook, S4Lila, S4Visual} from './S4';
 import {S5Artisan, S5End, S5Hook, S5Pro, S5Publish} from './S5';
+import {S6Cal, S6Drag, S6End, S6Hook, S6Month, S7Alert, S7End, S7Hook, S7Report, S7Watch} from './S67';
 
 const SCENES: Record<ShortId, React.FC<SceneProps>[]> = {
   s1: [S1Hook, S1Wall, S1Make, S1Promo, S1End],
@@ -21,8 +22,10 @@ const SCENES: Record<ShortId, React.FC<SceneProps>[]> = {
   s3: [S3Hook, S3Demos, S3Grid, S3End],
   s4: [S4Hook, S4Caroline, S4Lila, S4Visual, S4End],
   s5: [S5Hook, S5Artisan, S5Pro, S5Publish, S5End],
+  s6: [S6Hook, S6Cal, S6Drag, S6Month, S6End],
+  s7: [S7Hook, S7Watch, S7Alert, S7Report, S7End],
 };
-const END_SCENES = new Set<React.FC<SceneProps>>([S1End, S2End, S3End, S4End, S5End]);
+const END_SCENES = new Set<React.FC<SceneProps>>([S1End, S2End, S3End, S4End, S5End, S6End, S7End]);
 
 const useFonts = () => {
   const [handle] = useState(() => delayRender('fonts'));

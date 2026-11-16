@@ -1,0 +1,285 @@
+{
+ "id": "s6",
+ "beats": [
+  {
+   "text": "Vous oubliez de poster sur Instagram ? Vous n'êtes pas les seuls.",
+   "audio": "shorts/vo/s6_1.wav",
+   "dur": 3.111,
+   "words": [
+    {
+     "w": "Vous",
+     "s": 0.0,
+     "e": 0.221
+    },
+    {
+     "w": "oubliez",
+     "s": 0.279,
+     "e": 0.522
+    },
+    {
+     "w": "de",
+     "s": 0.546,
+     "e": 0.604
+    },
+    {
+     "w": "poster",
+     "s": 0.65,
+     "e": 0.894
+    },
+    {
+     "w": "sur",
+     "s": 0.917,
+     "e": 1.045
+    },
+    {
+     "w": "Instagram ?",
+     "s": 1.08,
+     "e": 1.637
+    },
+    {
+     "w": "Vous",
+     "s": 1.939,
+     "e": 2.067
+    },
+    {
+     "w": "n'êtes",
+     "s": 2.09,
+     "e": 2.241
+    },
+    {
+     "w": "pas",
+     "s": 2.264,
+     "e": 2.368
+    },
+    {
+     "w": "les",
+     "s": 2.392,
+     "e": 2.508
+    },
+    {
+     "w": "seuls.",
+     "s": 2.531,
+     "e": 3.111
+    }
+   ]
+  },
+  {
+   "text": "Dans Growthity, vos créations arrivent directement dans un calendrier.",
+   "audio": "shorts/vo/s6_2.wav",
+   "dur": 3.622,
+   "words": [
+    {
+     "w": "Dans",
+     "s": 0.0,
+     "e": 0.186
+    },
+    {
+     "w": "Growthity,",
+     "s": 0.209,
+     "e": 0.778
+    },
+    {
+     "w": "vos",
+     "s": 0.859,
+     "e": 1.022
+    },
+    {
+     "w": "créations",
+     "s": 1.045,
+     "e": 1.463
+    },
+    {
+     "w": "arrivent",
+     "s": 1.509,
+     "e": 1.858
+    },
+    {
+     "w": "directement",
+     "s": 1.881,
+     "e": 2.403
+    },
+    {
+     "w": "dans",
+     "s": 2.426,
+     "e": 2.543
+    },
+    {
+     "w": "un",
+     "s": 2.612,
+     "e": 2.659
+    },
+    {
+     "w": "calendrier.",
+     "s": 2.694,
+     "e": 3.622
+    }
+   ]
+  },
+  {
+   "text": "Glissez, déposez, choisissez l'heure. Instagram, Facebook, TikTok : tout part tout seul.",
+   "audio": "shorts/vo/s6_3.wav",
+   "dur": 5.387,
+   "words": [
+    {
+     "w": "Glissez,",
+     "s": 0.0,
+     "e": 0.511
+    },
+    {
+     "w": "déposez,",
+     "s": 0.615,
+     "e": 1.161
+    },
+    {
+     "w": "choisissez",
+     "s": 1.196,
+     "e": 1.707
+    },
+    {
+     "w": "l'heure.",
+     "s": 1.765,
+     "e": 2.043
+    },
+    {
+     "w": "Instagram,",
+     "s": 2.206,
+     "e": 2.856
+    },
+    {
+     "w": "Facebook,",
+     "s": 2.926,
+     "e": 3.483
+    },
+    {
+     "w": "TikTok :",
+     "s": 3.553,
+     "e": 4.156
+    },
+    {
+     "w": "tout",
+     "s": 4.377,
+     "e": 4.551
+    },
+    {
+     "w": "part",
+     "s": 4.574,
+     "e": 4.76
+    },
+    {
+     "w": "tout",
+     "s": 4.783,
+     "e": 4.911
+    },
+    {
+     "w": "seul.",
+     "s": 4.934,
+     "e": 5.387
+    }
+   ]
+  },
+  {
+   "text": "Tout votre mois de contenu, programmé d'un seul coup.",
+   "audio": "shorts/vo/s6_4.wav",
+   "dur": 2.694,
+   "words": [
+    {
+     "w": "Tout",
+     "s": 0.0,
+     "e": 0.197
+    },
+    {
+     "w": "votre",
+     "s": 0.232,
+     "e": 0.511
+    },
+    {
+     "w": "mois",
+     "s": 0.569,
+     "e": 0.708
+    },
+    {
+     "w": "de",
+     "s": 0.743,
+     "e": 0.813
+    },
+    {
+     "w": "contenu,",
+     "s": 0.859,
+     "e": 1.312
+    },
+    {
+     "w": "programmé",
+     "s": 1.416,
+     "e": 1.892
+    },
+    {
+     "w": "d'un",
+     "s": 1.927,
+     "e": 2.067
+    },
+    {
+     "w": "seul",
+     "s": 2.113,
+     "e": 2.252
+    },
+    {
+     "w": "coup.",
+     "s": 2.322,
+     "e": 2.694
+    }
+   ]
+  },
+  {
+   "text": "Vos réseaux tournent sans vous. Growthity, lien en bio !",
+   "audio": "shorts/vo/s6_5.wav",
+   "dur": 3.437,
+   "words": [
+    {
+     "w": "Vos",
+     "s": 0.0,
+     "e": 0.186
+    },
+    {
+     "w": "réseaux",
+     "s": 0.221,
+     "e": 0.488
+    },
+    {
+     "w": "tournent",
+     "s": 0.522,
+     "e": 0.801
+    },
+    {
+     "w": "sans",
+     "s": 0.824,
+     "e": 0.975
+    },
+    {
+     "w": "vous.",
+     "s": 1.01,
+     "e": 1.254
+    },
+    {
+     "w": "Growthity,",
+     "s": 1.811,
+     "e": 2.473
+    },
+    {
+     "w": "lien",
+     "s": 2.577,
+     "e": 2.74
+    },
+    {
+     "w": "en",
+     "s": 2.763,
+     "e": 2.821
+    },
+    {
+     "w": "bio !",
+     "s": 2.879,
+     "e": 3.437
+    }
+   ]
+  }
+ ]
+}

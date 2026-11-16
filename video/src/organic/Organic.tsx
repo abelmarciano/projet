@@ -1019,6 +1019,203 @@ const P23: React.FC = () => <TapeObtenu prompt="je vend des banane et je veux fa
 const P24: React.FC = () => <TapeObtenu prompt="je vend un t shirt et je veux faire une video de pub de…" p="gw44.jpg" pos="50% 42%" niche="mode" />;
 const P25: React.FC = () => <TapeObtenu prompt="je vend des studio de jardin (tiny house) je veux gener…" p="gw45.jpg" pos="50% 28%" niche="studio de jardin" />;
 
+// =====================================================================
+// Réseaux sociaux programmés + alertes WhatsApp (posts 26 → 29)
+// =====================================================================
+const WA_GREEN = '#25D366';
+const WA_DARK = '#075E54';
+const WA_BG = '#ECE5DD';
+
+// mini calendrier Growthity (mois) avec vignettes de posts programmés
+const CAL_THUMBS: Record<number, string> = {2: 'bougie.jpg', 4: 'trefle-packshot.jpg', 6: 'sneakers.jpg', 9: 'pates.jpg', 11: 'bougie916.jpg', 13: 'trefle-packshot.jpg', 16: 'sneakers.jpg', 18: 'bougie.jpg', 20: 'pates.jpg', 23: 'bougie916.jpg', 25: 'trefle-packshot.jpg', 27: 'sneakers.jpg'};
+const CalMock: React.FC<{x: number; y: number; w: number; upTo?: number; title?: string}> = ({x, y, w, upTo = 31, title = 'Décembre'}) => {
+  const cell = (w - 40) / 7;
+  return (
+    <div style={{position: 'absolute', left: x, top: y, width: w, background: '#fff', borderRadius: 34, padding: 20, boxShadow: '0 50px 90px -50px rgba(30,20,80,0.45), 0 0 0 2px #EAE6F7'}}>
+      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '4px 6px 14px'}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: 10, fontFamily: DISPLAY, fontWeight: 700, fontSize: 30}}><LogoMark size={28} /> {title}</div>
+        <div style={{display: 'flex', gap: 8}}>
+          {['IG', 'FB', 'TT'].map((t) => <span key={t} style={{fontSize: 18, fontWeight: 800, color: '#fff', background: t === 'IG' ? '#E1306C' : t === 'FB' ? '#0866FF' : '#111', borderRadius: 8, padding: '4px 8px'}}>{t}</span>)}
+        </div>
+      </div>
+      <div style={{display: 'grid', gridTemplateColumns: `repeat(7, ${cell}px)`, gap: 0}}>
+        {['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((d, i) => <div key={i} style={{textAlign: 'center', fontSize: 18, fontWeight: 700, color: MUTED, paddingBottom: 8}}>{d}</div>)}
+        {Array.from({length: 35}).map((_, i) => {
+          const day = i - 0; const n = day + 1; const th = CAL_THUMBS[n] && n <= upTo ? CAL_THUMBS[n] : null;
+          return (
+            <div key={i} style={{height: cell * 0.84, borderTop: `1.5px solid ${LINE}`, padding: 5, position: 'relative'}}>
+              <div style={{fontSize: 16, fontWeight: 700, color: n > 31 ? '#CFC9BD' : MUTED}}>{n > 31 ? n - 31 : n}</div>
+              {th && <div style={{position: 'absolute', left: 6, right: 6, top: 26, bottom: 6, borderRadius: 10, overflow: 'hidden', borderLeft: `4px solid ${ACCENT}`}}><Img src={ig(th)} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></div>}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+// conversation WhatsApp (mockup)
+const WaMsg: React.FC<{children: React.ReactNode; time?: string; img?: string}> = ({children, time = '09:02', img}) => (
+  <div style={{alignSelf: 'flex-start', maxWidth: '88%', background: '#fff', borderRadius: '6px 22px 22px 22px', padding: img ? 8 : '16px 20px 10px', boxShadow: '0 1px 1px rgba(0,0,0,0.12)', fontSize: 27, lineHeight: 1.35, color: '#111'}}>
+    {img && <div style={{width: 420, height: 230, borderRadius: 14, overflow: 'hidden', marginBottom: 10}}><Img src={ig(img)} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></div>}
+    <div style={{padding: img ? '0 12px' : 0}}>{children}</div>
+    <div style={{textAlign: 'right', fontSize: 18, color: '#8A8F94', marginTop: 4, padding: img ? '0 12px 6px' : 0}}>{time}</div>
+  </div>
+);
+const WaPhone: React.FC<{x: number; y: number; w: number; h: number; children: React.ReactNode}> = ({x, y, w, h, children}) => (
+  <div style={{position: 'absolute', left: x, top: y, width: w, height: h, borderRadius: 60, background: '#0B0A0C', padding: 12, boxShadow: '0 60px 100px -50px rgba(0,0,0,0.6)'}}>
+    <div style={{width: '100%', height: '100%', borderRadius: 48, overflow: 'hidden', background: WA_BG, display: 'flex', flexDirection: 'column'}}>
+      <div style={{background: WA_DARK, color: '#fff', padding: '34px 26px 20px', display: 'flex', alignItems: 'center', gap: 16}}>
+        <div style={{width: 58, height: 58, borderRadius: 29, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><LogoMark size={34} /></div>
+        <div><div style={{fontWeight: 700, fontSize: 28}}>Growthity</div><div style={{fontSize: 19, opacity: 0.8}}>Compte professionnel</div></div>
+      </div>
+      <div style={{flex: 1, padding: 22, display: 'flex', flexDirection: 'column', gap: 16}}>{children}</div>
+    </div>
+  </div>
+);
+
+// ---------- POST 26 — Carrousel « Ton mois de posts, programmé » (6 slides)
+const PLAN = [
+  {t: 'Rassemble tes créations.', d: 'Tes pubs Growthity et tes photos arrivent dans une seule bibliothèque, prêtes à publier.'},
+  {t: 'Choisis un rythme tenable.', d: 'Trois posts par semaine tenus toute l’année valent mieux qu’un sprint suivi de trois semaines de silence.'},
+  {t: 'Glisse-les dans le calendrier.', d: 'Un jour, une heure, une légende. Tu vois ton mois d’un coup d’œil.'},
+  {t: 'Programme sur tous tes réseaux.', d: 'Instagram, Facebook, TikTok, LinkedIn : chaque post part tout seul, à l’heure prévue.'},
+];
+const P26N = 6;
+const P26Cover: React.FC = () => (
+  <Slide n={1} of={P26N} handle swipe>
+    <div style={{position: 'absolute', left: M, right: M, top: 150}}>
+      <Kicker>Réseaux sociaux · Méthode</Kicker>
+      <Title size={112} style={{marginTop: 26}}>Ton mois de posts,<br /><span style={{color: ACCENT}}>programmé.</span></Title>
+    </div>
+    <CalMock x={M} y={560} w={W - 2 * M} />
+  </Slide>
+);
+const P26Step: React.FC<{i: number}> = ({i}) => {
+  const s = PLAN[i];
+  return (
+    <Slide n={i + 2} of={P26N}>
+      <div style={{position: 'absolute', left: M, top: 140, fontFamily: DISPLAY, fontWeight: 700, fontSize: 30, color: ACCENT, letterSpacing: '0.06em', textTransform: 'uppercase'}}>Étape {i + 1}</div>
+      <div style={{position: 'absolute', left: M, right: M, top: 200}}>
+        <Title size={80} style={{lineHeight: 1.03}}>{s.t}</Title>
+        <Body size={36} style={{marginTop: 22}}>{s.d}</Body>
+      </div>
+      {i === 0 && (
+        <div style={{position: 'absolute', left: M, right: M, top: 640, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18}}>
+          {['bougie916.jpg', 'trefle-packshot.jpg', 'lucas.jpg', 'pates.jpg', 'sneakers.jpg', 'solaire.jpg'].map((p) => <div key={p} style={{height: 280, borderRadius: 24, overflow: 'hidden'}}><Img src={ig(p)} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></div>)}
+        </div>
+      )}
+      {i === 1 && (
+        <div style={{position: 'absolute', left: M, right: M, top: 700, display: 'flex', flexDirection: 'column', gap: 40}}>
+          {[{l: 'Le sprint', dots: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], c: '#E2543A'}, {l: 'Le rythme tenable', dots: [1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0], c: '#19A866'}].map((r) => (
+            <div key={r.l}>
+              <div style={{fontWeight: 800, fontSize: 32, color: r.c, marginBottom: 16}}>{r.l}</div>
+              <div style={{display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 12}}>
+                {r.dots.map((d, k) => <div key={k} style={{height: 56, borderRadius: 14, background: d ? r.c : '#E9E4D9'}} />)}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      {i === 2 && <CalMock x={M} y={600} w={W - 2 * M} upTo={18} />}
+      {i === 3 && (
+        <div style={{position: 'absolute', left: M, right: M, top: 660, display: 'flex', flexDirection: 'column', gap: 18}}>
+          {[{n: 'Instagram', c: '#E1306C', h: 'Mar. 18:30'}, {n: 'Facebook', c: '#0866FF', h: 'Mar. 18:30'}, {n: 'TikTok', c: '#111', h: 'Mer. 12:15'}, {n: 'LinkedIn', c: '#0A66C2', h: 'Jeu. 08:45'}].map((r) => (
+            <div key={r.n} style={{display: 'flex', alignItems: 'center', gap: 20, background: '#fff', borderRadius: 24, padding: '22px 26px', boxShadow: `0 0 0 2px ${LINE}`}}>
+              <div style={{width: 18, height: 18, borderRadius: 9, background: r.c}} />
+              <div style={{flex: 1, fontWeight: 800, fontSize: 34}}>{r.n}</div>
+              <div style={{fontSize: 28, fontWeight: 600, color: MUTED}}>{r.h}</div>
+              <span style={{fontSize: 22, fontWeight: 800, color: '#127A4B', background: '#DDF4E7', padding: '8px 14px', borderRadius: 999}}>Programmé</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </Slide>
+  );
+};
+const P26End: React.FC = () => (
+  <Slide n={6} of={P26N} dark handle>
+    <div style={{position: 'absolute', left: M, right: M, top: 330}}>
+      <Title size={100} style={{color: '#fff'}}>Tes réseaux tournent, <span style={{color: '#C4B5FD'}}>même quand tu n’y penses pas.</span></Title>
+      <Body size={42} style={{marginTop: 40, color: 'rgba(255,255,255,0.75)'}}>Calendrier et publication intégrés à Growthity. Lien en bio pour commencer.</Body>
+    </div>
+  </Slide>
+);
+
+// ---------- POST 27 — Carrousel « 4 alertes qui sauvent ta pub » (7 slides)
+const ALERTS = [
+  {k: 'Fatigue créative', m: <>⚠️ Ta pub <b>« Bougie ambre »</b> s’essouffle : fréquence en hausse, clics en baisse.<br />3 nouvelles créas sont prêtes.</>, d: 'Tu remplaces la pub avant qu’elle ne coule.'},
+  {k: 'Coût qui grimpe', m: <>📈 Le coût par résultat de <b>« Soldes hiver »</b> monte depuis 3 jours.<br />On t’explique pourquoi.</>, d: 'Tu comprends ce qui se passe, sans fouiller dans le gestionnaire.'},
+  {k: 'Bon moment pour augmenter', m: <>✅ <b>« Collection trèfle »</b> est sortie d’apprentissage et son coût est stable.<br />Tu peux augmenter le budget par palier.</>, d: 'Tu montes au bon moment, pas sur un coup de tête.'},
+  {k: 'Le bilan du lundi', m: <>👋 Ton bilan de la semaine est prêt : dépenses, résultats, meilleure pub et notre conseil.</>, d: 'Une décision par semaine, à tête reposée.'},
+];
+const P27N = 6;
+const P27Cover: React.FC = () => (
+  <Slide n={1} of={P27N} handle swipe bg="#EEF6F0">
+    <div style={{position: 'absolute', left: M, right: M, top: 150}}>
+      <Kicker color={WA_DARK}>Pubs Meta · Sur WhatsApp</Kicker>
+      <Title size={112} style={{marginTop: 26}}>4 alertes qui<br /><span style={{color: '#128C4B'}}>sauvent ta pub.</span></Title>
+      <Body size={38} style={{marginTop: 34, maxWidth: 860}}>Pas besoin d’ouvrir ton gestionnaire toutes les heures : le bon message arrive au bon moment.</Body>
+    </div>
+    <WaPhone x={170} y={700} w={W - 340} h={520}>
+      <WaMsg time="09:02">⚠️ Ta pub <b>« Bougie ambre »</b> s’essouffle. 3 nouvelles créas sont prêtes.</WaMsg>
+    </WaPhone>
+  </Slide>
+);
+const P27A: React.FC<{i: number}> = ({i}) => {
+  const a = ALERTS[i];
+  return (
+    <Slide n={i + 2} of={P27N} bg="#EEF6F0">
+      <div style={{position: 'absolute', left: M, top: 140, fontFamily: DISPLAY, fontWeight: 700, fontSize: 30, color: '#128C4B', letterSpacing: '0.06em', textTransform: 'uppercase'}}>Alerte {i + 1}</div>
+      <div style={{position: 'absolute', left: M, right: M, top: 200}}>
+        <Title size={84}>{a.k}</Title>
+        <Body size={36} style={{marginTop: 20}}>{a.d}</Body>
+      </div>
+      <WaPhone x={140} y={560} w={W - 280} h={660}>
+        <WaMsg time={['09:02', '18:40', '11:15', 'Lun. 08:30'][i]}>{a.m}</WaMsg>
+        {i === 0 && <div style={{display: 'flex', gap: 10}}>{['Voir les créas', 'Remplacer'].map((b) => <span key={b} style={{flex: 1, textAlign: 'center', background: '#fff', borderRadius: 14, padding: '14px 0', fontWeight: 700, fontSize: 24, color: '#128C4B'}}>{b}</span>)}</div>}
+        {i === 2 && <div style={{display: 'flex', gap: 10}}>{['Augmenter', 'Plus tard'].map((b) => <span key={b} style={{flex: 1, textAlign: 'center', background: '#fff', borderRadius: 14, padding: '14px 0', fontWeight: 700, fontSize: 24, color: '#128C4B'}}>{b}</span>)}</div>}
+      </WaPhone>
+    </Slide>
+  );
+};
+const P27End: React.FC = () => (
+  <Slide n={6} of={P27N} dark handle bg={WA_DARK}>
+    <div style={{position: 'absolute', left: M, right: M, top: 330}}>
+      <Title size={100} style={{color: '#fff'}}>Ton media buyer <span style={{color: '#9BF2BC'}}>t’écrit sur WhatsApp.</span></Title>
+      <Body size={42} style={{marginTop: 40, color: 'rgba(255,255,255,0.8)'}}>Alertes et bilan hebdo inclus dans Growthity. Lien en bio pour commencer.</Body>
+    </div>
+  </Slide>
+);
+
+// ---------- POST 28 — Visuel « Ton media buyer t’écrit sur WhatsApp »
+const P28: React.FC = () => (
+  <Slide handle bg="#EEF6F0">
+    <div style={{position: 'absolute', left: M, right: M, top: 110}}>
+      <Kicker color={WA_DARK}>Nouveau dans Growthity</Kicker>
+      <Title size={92} style={{marginTop: 22}}>Ta pub s’essouffle ?<br /><span style={{color: '#128C4B'}}>Tu le sais avant tout le monde.</span></Title>
+    </div>
+    <WaPhone x={140} y={480} w={W - 280} h={740}>
+      <WaMsg time="09:02">⚠️ Ta pub <b>« Bracelet trèfle »</b> s’essouffle : fréquence en hausse, clics en baisse.</WaMsg>
+      <WaMsg time="09:02" img="trefle-packshot.jpg">✨ 3 nouvelles créas sont prêtes à prendre le relais.</WaMsg>
+      <div style={{display: 'flex', gap: 10}}>{['Voir les créas', 'Lancer'].map((b) => <span key={b} style={{flex: 1, textAlign: 'center', background: '#fff', borderRadius: 14, padding: '14px 0', fontWeight: 700, fontSize: 24, color: '#128C4B'}}>{b}</span>)}</div>
+    </WaPhone>
+  </Slide>
+);
+
+// ---------- POST 29 — Visuel « Ton mois, programmé »
+const P29: React.FC = () => (
+  <Slide handle>
+    <div style={{position: 'absolute', left: M, right: M, top: 110}}>
+      <Kicker>Nouveau dans Growthity</Kicker>
+      <Title size={96} style={{marginTop: 22}}>Un calendrier.<br /><span style={{color: ACCENT}}>Tous tes réseaux.</span></Title>
+      <Body size={36} style={{marginTop: 24}}>Glisse tes créations, choisis l’heure : elles partent toutes seules.</Body>
+    </div>
+    <CalMock x={M} y={560} w={W - 2 * M} />
+  </Slide>
+);
+
+
 // ---------- registry ----------
 export const ORGANIC: {id: string; C: React.FC; w: number; h: number; file: string}[] = [];
 const add = (post: string, slides: React.FC[]) =>
@@ -1051,3 +1248,7 @@ add('post-22-tape-fitness', [P22]);
 add('post-23-tape-bananes', [P23]);
 add('post-24-tape-tshirt', [P24]);
 add('post-25-tape-studio', [P25]);
+add('post-26-mois-programme', [P26Cover, ...PLAN.map((_, i) => bind(P26Step, {i})), P26End]);
+add('post-27-alertes-whatsapp', [P27Cover, ...ALERTS.map((_, i) => bind(P27A, {i})), P27End]);
+add('post-28-visuel-whatsapp', [P28]);
+add('post-29-visuel-calendrier', [P29]);

@@ -1226,5 +1226,181 @@
   "style": 0.45,
   "speed": 1.06,
   "text": "[warmly] Grossiti génère tes créas en série, pour tester plus vite. Abonne-toi pour le prochain vrai ou faux !"
+ },
+ "reg-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Tes pubs tournent. Mais ton compte Instagram, lui, est vide depuis trois semaines."
+ },
+ "reg-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Avant d'acheter, beaucoup de gens vont voir ton profil. Un compte à l'abandon, ça refroidit."
+ },
+ "reg-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Le secret, ce n'est pas de poster plus. C'est de poster régulièrement."
+ },
+ "reg-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Bloque un moment par semaine : prépare tes posts, et programme-les à l'avance."
+ },
+ "reg-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Et recycle tes meilleures pubs en reels. Elles ont déjà fait leurs preuves."
+ },
+ "reg-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[warmly] Avec Grossiti, tu planifies tes posts du mois dans un calendrier, et tout se publie tout seul."
+ },
+ "alert-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Une pub peut basculer en quelques jours. Et souvent, on s'en rend compte trop tard."
+ },
+ "alert-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Trois signaux à surveiller : la fréquence qui monte, le taux de clic qui baisse, et le coût par résultat qui grimpe."
+ },
+ "alert-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Le piège : ouvrir le gestionnaire toutes les heures, et tout modifier sur un coup de stress."
+ },
+ "alert-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "La bonne méthode : une alerte claire, seulement quand un vrai signal apparaît."
+ },
+ "alert-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "Et un bilan chaque semaine, pour décider à tête reposée."
+ },
+ "alert-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.35,
+  "speed": 1.04,
+  "text": "[warmly] Grossiti surveille tes campagnes, et t'envoie l'alerte directement sur WhatsApp."
+ },
+ "vf4-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Vrai ou faux : pour réussir sur Instagram, il faut poster tous les jours."
+ },
+ "vf4-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[excited] Faux ! La régularité compte plus que la quantité."
+ },
+ "vf4-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Poster tous les jours pendant deux semaines, puis plus rien, c'est souvent moins efficace qu'un rythme tenu toute l'année."
+ },
+ "vf4-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Choisis un rythme que tu peux tenir, et programme tes posts à l'avance."
+ },
+ "vf4-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[warmly] Grossiti planifie tes posts pour toi. Abonne-toi pour le prochain vrai ou faux !"
+ },
+ "vf5-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Vrai ou faux : pour bien gérer tes pubs, il faut les surveiller toute la journée."
+ },
+ "vf5-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[excited] Faux ! Ça pousse surtout à trop y toucher."
+ },
+ "vf5-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Regarder tes chiffres toutes les heures, ça donne envie de tout modifier. Et chaque grosse modif relance l'apprentissage."
+ },
+ "vf5-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Mieux vaut une alerte quand un vrai signal apparaît, et un bilan par semaine."
+ },
+ "vf5-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[warmly] Grossiti t'alerte sur WhatsApp quand il faut agir. Abonne-toi pour le prochain vrai ou faux !"
  }
 }

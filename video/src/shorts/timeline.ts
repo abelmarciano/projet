@@ -4,11 +4,13 @@ import s2 from './data/s2_vo.json';
 import s3 from './data/s3_vo.json';
 import s4 from './data/s4_vo.json';
 import s5 from './data/s5_vo.json';
+import s6 from './data/s6_vo.json';
+import s7 from './data/s7_vo.json';
 
 export type Word = {w: string; s: number; e: number};
 export type VOBeat = {text: string; audio: string | null; dur: number; words: Word[]};
-export type ShortId = 's1' | 's2' | 's3' | 's4' | 's5';
-const VO: Record<ShortId, {beats: VOBeat[]}> = {s1, s2, s3, s4, s5} as never;
+export type ShortId = 's1' | 's2' | 's3' | 's4' | 's5' | 's6' | 's7';
+const VO: Record<ShortId, {beats: VOBeat[]}> = {s1, s2, s3, s4, s5, s6, s7} as never;
 
 export const GAP = cfg.gap;
 export const LEAD = cfg.lead;
@@ -56,7 +58,7 @@ export const scenes = (id: ShortId) => {
   });
 };
 
-export const SHORT_IDS: ShortId[] = ['s1', 's2', 's3', 's4', 's5'];
+export const SHORT_IDS: ShortId[] = ['s1', 's2', 's3', 's4', 's5', 's6', 's7'];
 export const shortConf = (id: ShortId) => cfg.shorts[id];
 export const voBeats = (id: ShortId) => VO[id].beats;
 

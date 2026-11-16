@@ -133,6 +133,60 @@
     10,
     0
    ]
+  },
+  "s6": {
+   "title": "Tout ton mois de posts, programmé",
+   "scenes": [
+    [
+     0
+    ],
+    [
+     1
+    ],
+    [
+     2
+    ],
+    [
+     3
+    ],
+    [
+     4
+    ]
+   ],
+   "extra": [
+    6,
+    6,
+    8,
+    10,
+    0
+   ]
+  },
+  "s7": {
+   "title": "Votre media buyer sur WhatsApp",
+   "scenes": [
+    [
+     0
+    ],
+    [
+     1
+    ],
+    [
+     2
+    ],
+    [
+     3
+    ],
+    [
+     4
+    ]
+   ],
+   "extra": [
+    8,
+    6,
+    10,
+    10,
+    0
+   ]
   }
  }
 }
