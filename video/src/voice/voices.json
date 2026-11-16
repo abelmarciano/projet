@@ -1674,5 +1674,85 @@
   "style": 0.45,
   "speed": 1.06,
   "text": "[warmly] Grossiti crée tes pubs dans tous les formats. Abonne-toi pour le prochain vrai ou faux !"
+ },
+ "vf8-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Vrai ou faux : les sous-titres, c'est inutile, les gens regardent avec le son."
+ },
+ "vf8-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[excited] Faux ! Beaucoup regardent sans le son."
+ },
+ "vf8-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Dans le métro, au bureau, au lit… le son est souvent coupé. Sans sous-titres, ton message passe à la trappe."
+ },
+ "vf8-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Mets des sous-titres gros, lisibles, et bien placés au centre de l'écran."
+ },
+ "vf8-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[warmly] Grossiti ajoute les sous-titres à tes pubs automatiquement. Abonne-toi pour le prochain vrai ou faux !"
+ },
+ "vf9-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Vrai ou faux : les trois premières secondes de ta pub sont les plus importantes."
+ },
+ "vf9-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[excited] Vrai ! C'est là qu'on décide de scroller… ou de rester."
+ },
+ "vf9-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Dans le fil, ta pub est noyée au milieu du reste. Si le début n'accroche pas, personne ne voit la suite."
+ },
+ "vf9-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Commence fort : une question, un visage, un mouvement. Pas ton logo."
+ },
+ "vf9-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[warmly] Grossiti écrit des accroches qui arrêtent le scroll. Abonne-toi pour le prochain vrai ou faux !"
  }
 }

@@ -116,6 +116,9 @@ import cav3dCfg from './chatpub/cav3d.json';
 import {VraiFaux6, VraiFaux7} from './brief/VraiFaux67';
 import vf6Cfg from './brief/vf6.json';
 import vf7Cfg from './brief/vf7.json';
+import {VraiFaux8, VraiFaux9} from './brief/VraiFaux89';
+import vf8Cfg from './brief/vf8.json';
+import vf9Cfg from './brief/vf9.json';
 import learningCfg from './brief/learning.json';
 import {ShowIntro, ShowEnd, SHOW_INTRO, SHOW_END} from './reels/Showcase';
 
@@ -202,6 +205,8 @@ export const Root: React.FC = () => (
     <Composition id="Pub3D-caviste" component={Pub3D} durationInFrames={(cav3dCfg as unknown as P3DCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: cav3dCfg as unknown as P3DCfg}} />
     <Composition id="VraiFaux-6" component={VraiFaux6} durationInFrames={briefTotal(vf6Cfg as unknown as VFCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: vf6Cfg as unknown as VFCfg}} />
     <Composition id="VraiFaux-7" component={VraiFaux7} durationInFrames={briefTotal(vf7Cfg as unknown as VFCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: vf7Cfg as unknown as VFCfg}} />
+    <Composition id="VraiFaux-8" component={VraiFaux8} durationInFrames={briefTotal(vf8Cfg as unknown as VFCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: vf8Cfg as unknown as VFCfg}} />
+    <Composition id="VraiFaux-9" component={VraiFaux9} durationInFrames={briefTotal(vf9Cfg as unknown as VFCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: vf9Cfg as unknown as VFCfg}} />
     <Composition id="AvantApres3-gel" component={AvantApres3} durationInFrames={AV3_TOTAL} fps={30} width={1080} height={1920} />
     <Composition id="AdEdit-avap-mei" component={AdEdit} durationInFrames={adAvapMei.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvapMei as unknown as AdCfg}} />
     <Composition id="AdEdit-avap2-after" component={AdEdit} durationInFrames={adAvap2After.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvap2After as unknown as AdCfg}} />
