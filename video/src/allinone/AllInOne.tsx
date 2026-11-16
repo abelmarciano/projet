@@ -163,15 +163,16 @@ const Chaos: React.FC = () => {
           </div>
         );
       })}
+      <div style={{position: 'absolute', left: 540, top: 860, width: 1300, height: 760, transform: 'translate(-50%,-50%)', background: 'radial-gradient(ellipse at center, rgba(7,6,26,0.92) 0%, rgba(7,6,26,0.75) 35%, transparent 68%)', opacity: prog(f, 6, 10) * (1 - prog(f, SC.collapse + 36, 8)), pointerEvents: 'none'}} />
       {/* titres du chaos */}
       {heads.map((h, i) => {
         const on = i === hi && f < VO[2] - 2;
         const p = sp(f - h.a, 15);
         return on ? (
-          <div key={i} style={{position: 'absolute', left: 0, right: 0, top: 120, textAlign: 'center', fontFamily: DISPLAY, fontWeight: 700, fontSize: 84, letterSpacing: '-0.04em', color: '#fff', opacity: Math.min(1, p * 1.5), transform: `translateY(${(1 - p) * 30}px)`, textShadow: '0 10px 40px rgba(0,0,0,0.6)'}}>{h.t}</div>
+          <div key={i} style={{position: 'absolute', left: 50, right: 50, top: 860, textAlign: 'center', fontFamily: DISPLAY, fontWeight: 700, fontSize: i === 3 ? 100 : 116, lineHeight: 1.02, letterSpacing: '-0.045em', color: '#fff', opacity: Math.min(1, p * 1.5), transform: `translateY(-50%) translateY(${(1 - p) * 40}px) scale(${0.92 + 0.08 * p})`, textShadow: '0 10px 50px rgba(0,0,0,0.8)'}}>{h.t}</div>
         ) : null;
       })}
-      <div style={{position: 'absolute', left: 60, right: 60, top: 120, textAlign: 'center', fontFamily: DISPLAY, fontWeight: 700, fontSize: 84, lineHeight: 1.04, letterSpacing: '-0.04em', color: '#fff', opacity: q2 * (1 - prog(f, SC.reveal - 6, 8)), transform: `translateY(${(1 - q2) * 30}px)`}}>
+      <div style={{position: 'absolute', left: 50, right: 50, top: 860, textAlign: 'center', fontFamily: DISPLAY, fontWeight: 700, fontSize: 104, lineHeight: 1.04, letterSpacing: '-0.045em', color: '#fff', opacity: q2 * (1 - prog(f, SC.collapse + 36, 8)), transform: `translateY(-50%) translateY(${(1 - q2) * 40}px) scale(${1 - prog(f, SC.collapse + 30, 14) * 0.15})`, textShadow: '0 10px 50px rgba(0,0,0,0.8)'}}>
         Et si tout tenait<br /><span style={{backgroundImage: 'linear-gradient(100deg,#8FA6FF,#A78BFF 45%,#E39BFF)', WebkitBackgroundClip: 'text', color: 'transparent'}}>au même endroit ?</span>
       </div>
       {/* singularité */}
