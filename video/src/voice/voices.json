@@ -1402,5 +1402,197 @@
   "style": 0.45,
   "speed": 1.06,
   "text": "[warmly] Grossiti t'alerte sur WhatsApp quand il faut agir. Abonne-toi pour le prochain vrai ou faux !"
+ },
+ "pat3d-1": {
+  "voice": "tKaoyJLW05zqV0tIH9FD",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.12,
+  "text": "[storytelling] Chez Lina, les gâteaux étaient parfaits… mais ses réseaux, eux, restaient vides."
+ },
+ "pat3d-2": {
+  "voice": "tKaoyJLW05zqV0tIH9FD",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.12,
+  "text": "[curious] Alors elle a rangé ses posts dans le calendrier de Grossiti…"
+ },
+ "pat3d-3": {
+  "voice": "tKaoyJLW05zqV0tIH9FD",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.12,
+  "text": "[amused] …et chaque matin, un nouveau post s'envolait tout seul."
+ },
+ "pat3d-4": {
+  "voice": "tKaoyJLW05zqV0tIH9FD",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.12,
+  "text": "[joyful] Maintenant ? On fait la queue devant la boutique."
+ },
+ "pat3d-5": {
+  "voice": "tKaoyJLW05zqV0tIH9FD",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.12,
+  "text": "[confident] Grossiti. Vos réseaux, programmés."
+ },
+ "cav3d-1": {
+  "voice": "AfbuxQ9DVtS4azaxN1W7",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[storytelling] Gérard dormait sur ses deux oreilles…"
+ },
+ "cav3d-2": {
+  "voice": "AfbuxQ9DVtS4azaxN1W7",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[curious] Cette nuit-là, Grossiti l'a prévenu sur WhatsApp : sa pub s'essoufflait."
+ },
+ "cav3d-3": {
+  "voice": "AfbuxQ9DVtS4azaxN1W7",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[amused] Trois nouvelles pubs ont pris le relais avant le lever du soleil."
+ },
+ "cav3d-4": {
+  "voice": "AfbuxQ9DVtS4azaxN1W7",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[joyful] Au matin, la cave ne désemplissait pas."
+ },
+ "cav3d-5": {
+  "voice": "AfbuxQ9DVtS4azaxN1W7",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.1,
+  "text": "[confident] Grossiti. Vos pubs, surveillées même la nuit."
+ },
+ "cp4-b1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[excited] Tu choisis ton actrice…"
+ },
+ "cp4-b2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[excited] Tu tapes ta phrase… et tu demandes de la programmer…"
+ },
+ "cp4-b3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[amazed] et Grossiti fait tout !"
+ },
+ "cp4-d1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[excited] Un clic : ta pub est programmée sur Instagram toute la semaine !"
+ },
+ "cp4-d2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[confident] Grossiti. Vos pubs, programmées."
+ },
+ "cp5-b1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[excited] Tu choisis ton actrice…"
+ },
+ "cp5-b2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[excited] Tu tapes ta phrase dans l'IA…"
+ },
+ "cp5-b3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[amazed] et Grossiti fait tout !"
+ },
+ "cp5-d1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[excited] Ta pub est en ligne… et si elle s'essouffle, tu es prévenu sur WhatsApp !"
+ },
+ "cp5-d2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[confident] Grossiti. Vos pubs, surveillées."
+ },
+ "lr1-demo": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.08,
+  "text": "[excited] Nouveau dans Grossiti : le calendrier. Tes posts partent tout seuls."
+ },
+ "lr2-demo": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.08,
+  "text": "[excited] Nouveau dans Grossiti : les alertes WhatsApp. Ta pub est surveillée."
+ },
+ "av5-demo": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.08,
+  "text": "[confident] Avec Grossiti, tout le mois se programme d'un coup."
+ },
+ "av6-demo": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.08,
+  "text": "[confident] Avec Grossiti, l'alerte arrive sur WhatsApp, au bon moment."
  }
 }

@@ -1,0 +1,377 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "actor": {
+  "name": "Guillaume B.",
+  "img": "chat/actors/a180.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "words": [
+  {
+   "w": "Épisode",
+   "s": 0.14,
+   "e": 0.5
+  },
+  {
+   "w": "sept.",
+   "s": 0.56,
+   "e": 0.82
+  },
+  {
+   "w": "Cette",
+   "s": 1.02,
+   "e": 1.2
+  },
+  {
+   "w": "pub",
+   "s": 1.22,
+   "e": 1.42
+  },
+  {
+   "w": "tourne",
+   "s": 1.46,
+   "e": 1.64
+  },
+  {
+   "w": "depuis",
+   "s": 1.68,
+   "e": 1.94
+  },
+  {
+   "w": "six",
+   "s": 2.0,
+   "e": 2.14
+  },
+  {
+   "w": "semaines.",
+   "s": 2.18,
+   "e": 2.52
+  },
+  {
+   "w": "La",
+   "s": 2.88,
+   "e": 2.98
+  },
+  {
+   "w": "même",
+   "s": 3.02,
+   "e": 3.18
+  },
+  {
+   "w": "image",
+   "s": 3.22,
+   "e": 3.62
+  },
+  {
+   "w": "vue",
+   "s": 3.9,
+   "e": 4.04
+  },
+  {
+   "w": "et",
+   "s": 4.08,
+   "e": 4.14
+  },
+  {
+   "w": "revue.",
+   "s": 4.2,
+   "e": 4.54
+  },
+  {
+   "w": "Les",
+   "s": 4.92,
+   "e": 5.0
+  },
+  {
+   "w": "gens",
+   "s": 5.02,
+   "e": 5.14
+  },
+  {
+   "w": "ne",
+   "s": 5.16,
+   "e": 5.22
+  },
+  {
+   "w": "s'arrêtent",
+   "s": 5.24,
+   "e": 5.58
+  },
+  {
+   "w": "plus",
+   "s": 5.62,
+   "e": 5.78
+  },
+  {
+   "w": "et",
+   "s": 6.04,
+   "e": 6.12
+  },
+  {
+   "w": "personne",
+   "s": 6.16,
+   "e": 6.48
+  },
+  {
+   "w": "n'a",
+   "s": 6.52,
+   "e": 6.58
+  },
+  {
+   "w": "rien",
+   "s": 6.64,
+   "e": 6.82
+  },
+  {
+   "w": "vu.",
+   "s": 6.88,
+   "e": 7.02
+  },
+  {
+   "w": "Trois",
+   "s": 7.36,
+   "e": 7.52
+  },
+  {
+   "w": "sur",
+   "s": 7.56,
+   "e": 7.72
+  },
+  {
+   "w": "dix.",
+   "s": 7.76,
+   "e": 8.0
+  },
+  {
+   "w": "Je",
+   "s": 8.34,
+   "e": 8.38
+  },
+  {
+   "w": "la",
+   "s": 8.44,
+   "e": 8.5
+  },
+  {
+   "w": "refais",
+   "s": 8.54,
+   "e": 8.78
+  },
+  {
+   "w": "avec",
+   "s": 8.82,
+   "e": 8.98
+  },
+  {
+   "w": "Growthity.",
+   "s": 9.0,
+   "e": 9.48
+  },
+  {
+   "w": "Voilà,",
+   "s": 9.92,
+   "e": 10.06
+  },
+  {
+   "w": "des",
+   "s": 10.34,
+   "e": 10.44
+  },
+  {
+   "w": "créas",
+   "s": 10.48,
+   "e": 10.74
+  },
+  {
+   "w": "neuves",
+   "s": 10.78,
+   "e": 11.06
+  },
+  {
+   "w": "et",
+   "s": 11.24,
+   "e": 11.28
+  },
+  {
+   "w": "une",
+   "s": 11.32,
+   "e": 11.4
+  },
+  {
+   "w": "alerte",
+   "s": 11.46,
+   "e": 11.72
+  },
+  {
+   "w": "WhatsApp",
+   "s": 11.8,
+   "e": 12.22
+  },
+  {
+   "w": "avant",
+   "s": 12.3,
+   "e": 12.44
+  },
+  {
+   "w": "que",
+   "s": 12.46,
+   "e": 12.5
+  },
+  {
+   "w": "ça",
+   "s": 12.54,
+   "e": 12.6
+  },
+  {
+   "w": "s'essouffle.",
+   "s": 12.66,
+   "e": 13.1
+  },
+  {
+   "w": "Neuf",
+   "s": 13.28,
+   "e": 13.4
+  },
+  {
+   "w": "sur",
+   "s": 13.46,
+   "e": 13.6
+  },
+  {
+   "w": "dix.",
+   "s": 13.64,
+   "e": 13.88
+  },
+  {
+   "w": "Envoyez-moi",
+   "s": 14.18,
+   "e": 14.6
+  },
+  {
+   "w": "les",
+   "s": 14.64,
+   "e": 14.72
+  },
+  {
+   "w": "vôtres",
+   "s": 14.76,
+   "e": 14.98
+  }
+ ],
+ "video": "fal/social/out/roast7.mp4",
+ "total": 469,
+ "audio": "chatpub/roast7-voice.wav",
+ "bed": "chatpub/roast7-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "cues": {
+  "look": 1.02,
+  "aie": 1.02,
+  "flaw1": 2.0,
+  "flaw2": 3.9,
+  "flaw3": 6.16,
+  "score1": 7.36,
+  "redo": 8.54,
+  "voila": 9.92,
+  "score2": 13.28,
+  "end": 14.18,
+  "scale": 0.86,
+  "cropTop": 308
+ },
+ "steps": [
+  [
+   "Défaut n°1",
+   "flaw1"
+  ],
+  [
+   "Défaut n°2",
+   "flaw2"
+  ],
+  [
+   "Défaut n°3",
+   "flaw3"
+  ],
+  [
+   "La note",
+   "score1"
+  ],
+  [
+   "Refaite",
+   "voila"
+  ],
+  [
+   "À toi !",
+   "end"
+  ]
+ ],
+ "punches": [
+  "score1",
+  "voila",
+  "score2"
+ ],
+ "episode": 7,
+ "account": "@maison.bougie",
+ "flaws": [
+  {
+   "label": "Même pub depuis 6 semaines",
+   "cue": "flaw1"
+  },
+  {
+   "label": "Vue et revue",
+   "cue": "flaw2"
+  },
+  {
+   "label": "Personne n’a rien vu",
+   "cue": "flaw3"
+  }
+ ],
+ "ask": "Refais cette pub avec des créas neuves, et préviens-moi sur WhatsApp avant qu’elle s’essouffle.",
+ "goodVideo": "chat/jwel/ad-video2.mp4",
+ "goodTitle": "Nouvelle créa\nchaque semaine ✨",
+ "goodCta": "Découvrir",
+ "scoreBad": 3,
+ "scoreGood": 9,
+ "hot": [
+  "semaines",
+  "revue",
+  "personne",
+  "trois",
+  "Growthity",
+  "neuves",
+  "WhatsApp",
+  "neuf",
+  "vôtres"
+ ],
+ "badMode": "fatigue",
+ "badImg": "chat/batch/g5.png",
+ "flawBoxes": [
+  {
+   "l": 18,
+   "t": 62,
+   "w": 290,
+   "h": 52,
+   "labelLeft": 60,
+   "labelTop": -34
+  },
+  {
+   "l": 240,
+   "t": 300,
+   "w": 140,
+   "h": 56,
+   "labelLeft": -160,
+   "labelTop": 64
+  },
+  {
+   "l": 18,
+   "t": 560,
+   "w": 350,
+   "h": 110,
+   "labelLeft": 40,
+   "labelTop": -34
+  }
+ ],
+ "goodSafe": false,
+ "goodCtaTop": true,
+ "goodAlert": "Ta pub s’essouffle : 3 nouvelles créas prêtes."
+}

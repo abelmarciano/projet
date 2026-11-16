@@ -1,0 +1,253 @@
+{
+ "id": "cp4",
+ "title": "Bougie Ambre – Atelier Lueur – Vidéo 9:16",
+ "video": "chat/bougie-solene-edit.mp4",
+ "videoFrames": 188,
+ "prompt": "Une pub UGC pour ma bougie parfumée, actrice naturelle, et programme-la sur Instagram toute la semaine.",
+ "promptShort": "Une pub UGC pour ma bougie parfumée, actrice naturelle, et programme-la sur Instagram toute la semaine.",
+ "actor": {
+  "name": "Solène",
+  "style": "Lifestyle",
+  "img": "chat/actors/solene.jpg",
+  "desc": "Femme · face caméra"
+ },
+ "product": {
+  "name": "Bougie Ambre",
+  "img": "fal/social/products/bougie.jpg"
+ },
+ "gallery": [
+  {
+   "name": "Freja",
+   "style": "E-commerce / Maison",
+   "img": "chat/actors/a059.jpg"
+  },
+  {
+   "name": "Sabrina",
+   "style": "Casual",
+   "img": "chat/actors/a150.jpg"
+  },
+  {
+   "name": "Justine",
+   "style": "Lifestyle",
+   "img": "chat/actors/a176.jpg"
+  },
+  {
+   "name": "Mei B.",
+   "style": "Lifestyle",
+   "img": "chat/actors/a089.jpg"
+  },
+  {
+   "name": "Sandra",
+   "style": "Créatif",
+   "img": "chat/actors/a184.jpg"
+  },
+  {
+   "name": "Hana",
+   "style": "E-commerce / Café",
+   "img": "chat/actors/a058.jpg"
+  },
+  {
+   "name": "Camille B.",
+   "style": "Casual",
+   "img": "chat/actors/a189.jpg"
+  },
+  {
+   "name": "Solène",
+   "style": "Lifestyle",
+   "img": "chat/actors/solene.jpg"
+  }
+ ],
+ "voice": {
+  "a": "",
+  "b1": "cp4-b1-n",
+  "b2": "cp4-b2-n",
+  "b3": "cp4-b3-n",
+  "d1": "cp4-d1-n",
+  "d2": "cp4-d2-n"
+ },
+ "brand": {
+  "name": "Atelier Lueur"
+ },
+ "words": {
+  "cp4-b1-n": [
+   {
+    "w": "Tu",
+    "s": 0.04,
+    "e": 0.12
+   },
+   {
+    "w": "choisis",
+    "s": 0.18,
+    "e": 0.48
+   },
+   {
+    "w": "ton",
+    "s": 0.52,
+    "e": 0.64
+   },
+   {
+    "w": "actrice",
+    "s": 0.7,
+    "e": 1.14
+   }
+  ],
+  "cp4-b2-n": [
+   {
+    "w": "Tu",
+    "s": 0.02,
+    "e": 0.1
+   },
+   {
+    "w": "tapes",
+    "s": 0.2,
+    "e": 0.34
+   },
+   {
+    "w": "ta",
+    "s": 0.38,
+    "e": 0.44
+   },
+   {
+    "w": "phrase",
+    "s": 0.5,
+    "e": 0.88
+   },
+   {
+    "w": "et",
+    "s": 1.24,
+    "e": 1.32
+   },
+   {
+    "w": "tu",
+    "s": 1.36,
+    "e": 1.44
+   },
+   {
+    "w": "demandes",
+    "s": 1.54,
+    "e": 1.82
+   },
+   {
+    "w": "de",
+    "s": 1.86,
+    "e": 1.92
+   },
+   {
+    "w": "la",
+    "s": 1.96,
+    "e": 2.04
+   },
+   {
+    "w": "programmer",
+    "s": 2.06,
+    "e": 2.5
+   }
+  ],
+  "cp4-b3-n": [
+   {
+    "w": "Et",
+    "s": 0.0,
+    "e": 0.18
+   },
+   {
+    "w": "Growthity",
+    "s": 0.22,
+    "e": 0.88
+   },
+   {
+    "w": "fait",
+    "s": 1.0,
+    "e": 1.12
+   },
+   {
+    "w": "tout",
+    "s": 1.32,
+    "e": 1.56
+   }
+  ],
+  "cp4-d1-n": [
+   {
+    "w": "Un",
+    "s": 0.04,
+    "e": 0.14
+   },
+   {
+    "w": "clic,",
+    "s": 0.18,
+    "e": 0.44
+   },
+   {
+    "w": "ta",
+    "s": 0.82,
+    "e": 0.9
+   },
+   {
+    "w": "pub",
+    "s": 1.02,
+    "e": 1.16
+   },
+   {
+    "w": "est",
+    "s": 1.18,
+    "e": 1.26
+   },
+   {
+    "w": "programmée",
+    "s": 1.3,
+    "e": 1.7
+   },
+   {
+    "w": "sur",
+    "s": 1.74,
+    "e": 1.86
+   },
+   {
+    "w": "Instagram",
+    "s": 1.9,
+    "e": 2.36
+   },
+   {
+    "w": "toute",
+    "s": 2.52,
+    "e": 2.7
+   },
+   {
+    "w": "la",
+    "s": 2.74,
+    "e": 2.8
+   },
+   {
+    "w": "semaine",
+    "s": 2.88,
+    "e": 3.14
+   }
+  ],
+  "cp4-d2-n": [
+   {
+    "w": "Growthity,",
+    "s": 0.12,
+    "e": 0.72
+   },
+   {
+    "w": "vos",
+    "s": 1.22,
+    "e": 1.38
+   },
+   {
+    "w": "pubs",
+    "s": 1.42,
+    "e": 1.72
+   },
+   {
+    "w": "programmées",
+    "s": 2.04,
+    "e": 2.54
+   }
+  ]
+ },
+ "caption": "Ma bougie préférée de l’hiver : bois, vanille… et elle tient des heures 🕯️",
+ "noLeads": true,
+ "publishLabel": "📅 Programmer · 7 jours",
+ "publishDone": "✓ Programmée · Instagram · 7 jours",
+ "safeLayout": true
+}

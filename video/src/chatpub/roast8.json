@@ -1,0 +1,366 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "actor": {
+  "name": "Guillaume B.",
+  "img": "chat/actors/a180.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "words": [
+  {
+   "w": "Épisode",
+   "s": 0.22,
+   "e": 0.6
+  },
+  {
+   "w": "huit.",
+   "s": 0.64,
+   "e": 0.9
+  },
+  {
+   "w": "Votre",
+   "s": 1.22,
+   "e": 1.4
+  },
+  {
+   "w": "Instagram,",
+   "s": 1.44,
+   "e": 1.96
+  },
+  {
+   "w": "trois",
+   "s": 2.12,
+   "e": 2.28
+  },
+  {
+   "w": "semaines",
+   "s": 2.36,
+   "e": 2.62
+  },
+  {
+   "w": "sans",
+   "s": 2.68,
+   "e": 2.78
+  },
+  {
+   "w": "rien",
+   "s": 2.82,
+   "e": 3.0
+  },
+  {
+   "w": "poster,",
+   "s": 3.04,
+   "e": 3.38
+  },
+  {
+   "w": "puis",
+   "s": 3.5,
+   "e": 3.74
+  },
+  {
+   "w": "cinq",
+   "s": 3.82,
+   "e": 4.02
+  },
+  {
+   "w": "promos",
+   "s": 4.06,
+   "e": 4.28
+  },
+  {
+   "w": "le",
+   "s": 4.32,
+   "e": 4.38
+  },
+  {
+   "w": "même",
+   "s": 4.44,
+   "e": 4.6
+  },
+  {
+   "w": "jour.",
+   "s": 4.66,
+   "e": 4.86
+  },
+  {
+   "w": "Aucun",
+   "s": 5.22,
+   "e": 5.48
+  },
+  {
+   "w": "rythme.",
+   "s": 5.54,
+   "e": 5.84
+  },
+  {
+   "w": "Quatre",
+   "s": 6.64,
+   "e": 6.8
+  },
+  {
+   "w": "sur",
+   "s": 6.84,
+   "e": 7.0
+  },
+  {
+   "w": "dix.",
+   "s": 7.04,
+   "e": 7.32
+  },
+  {
+   "w": "Je",
+   "s": 7.68,
+   "e": 7.72
+  },
+  {
+   "w": "le",
+   "s": 7.76,
+   "e": 7.84
+  },
+  {
+   "w": "refais",
+   "s": 7.88,
+   "e": 7.98
+  },
+  {
+   "w": "avec",
+   "s": 8.0,
+   "e": 8.14
+  },
+  {
+   "w": "Growthity.",
+   "s": 8.18,
+   "e": 8.64
+  },
+  {
+   "w": "Voilà,",
+   "s": 8.8,
+   "e": 9.0
+  },
+  {
+   "w": "un",
+   "s": 9.18,
+   "e": 9.28
+  },
+  {
+   "w": "post",
+   "s": 9.32,
+   "e": 9.52
+  },
+  {
+   "w": "tous",
+   "s": 9.68,
+   "e": 9.76
+  },
+  {
+   "w": "les",
+   "s": 9.78,
+   "e": 9.88
+  },
+  {
+   "w": "deux",
+   "s": 9.92,
+   "e": 10.04
+  },
+  {
+   "w": "jours",
+   "s": 10.1,
+   "e": 10.38
+  },
+  {
+   "w": "programmé",
+   "s": 10.42,
+   "e": 10.84
+  },
+  {
+   "w": "à",
+   "s": 10.88,
+   "e": 10.9
+  },
+  {
+   "w": "l'avance",
+   "s": 10.94,
+   "e": 11.54
+  },
+  {
+   "w": "et",
+   "s": 11.6,
+   "e": 11.66
+  },
+  {
+   "w": "du",
+   "s": 11.7,
+   "e": 11.8
+  },
+  {
+   "w": "contenu",
+   "s": 11.84,
+   "e": 12.12
+  },
+  {
+   "w": "varié.",
+   "s": 12.16,
+   "e": 12.46
+  },
+  {
+   "w": "Neuf",
+   "s": 13.02,
+   "e": 13.2
+  },
+  {
+   "w": "sur",
+   "s": 13.24,
+   "e": 13.38
+  },
+  {
+   "w": "dix.",
+   "s": 13.42,
+   "e": 13.7
+  },
+  {
+   "w": "Envoyez-moi",
+   "s": 14.14,
+   "e": 14.54
+  },
+  {
+   "w": "les",
+   "s": 14.56,
+   "e": 14.66
+  },
+  {
+   "w": "vôtres",
+   "s": 14.68,
+   "e": 14.94
+  }
+ ],
+ "video": "fal/social/out/roast8.mp4",
+ "total": 469,
+ "audio": "chatpub/roast8-voice.wav",
+ "bed": "chatpub/roast8-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "cues": {
+  "look": 1.22,
+  "aie": 1.22,
+  "flaw1": 2.12,
+  "flaw2": 4.06,
+  "flaw3": 5.54,
+  "score1": 6.64,
+  "redo": 7.88,
+  "voila": 8.8,
+  "score2": 13.02,
+  "end": 14.14,
+  "scale": 0.86,
+  "cropTop": 308
+ },
+ "steps": [
+  [
+   "Défaut n°1",
+   "flaw1"
+  ],
+  [
+   "Défaut n°2",
+   "flaw2"
+  ],
+  [
+   "Défaut n°3",
+   "flaw3"
+  ],
+  [
+   "La note",
+   "score1"
+  ],
+  [
+   "Refaite",
+   "voila"
+  ],
+  [
+   "À toi !",
+   "end"
+  ]
+ ],
+ "punches": [
+  "score1",
+  "voila",
+  "score2"
+ ],
+ "episode": 8,
+ "account": "@ma.boutique.deco",
+ "flaws": [
+  {
+   "label": "3 semaines sans post",
+   "cue": "flaw1"
+  },
+  {
+   "label": "5 promos le même jour",
+   "cue": "flaw2"
+  },
+  {
+   "label": "Aucun rythme",
+   "cue": "flaw3"
+  }
+ ],
+ "ask": "Programme-moi un post tous les deux jours ce mois-ci, avec du contenu varié.",
+ "goodVideo": "chat/jwel/ad-video2.mp4",
+ "goodTitle": "",
+ "goodCta": "📅 Mois programmé",
+ "scoreBad": 4,
+ "scoreGood": 9,
+ "hot": [
+  "instagram",
+  "semaines",
+  "promos",
+  "rythme",
+  "quatre",
+  "Growthity",
+  "programmé",
+  "varié",
+  "neuf",
+  "vôtres"
+ ],
+ "badMode": "feed",
+ "badImg": "chat/batch/g3.png",
+ "flawBoxes": [
+  {
+   "l": 18,
+   "t": 104,
+   "w": 350,
+   "h": 48,
+   "labelLeft": 60,
+   "labelTop": -34
+  },
+  {
+   "l": 12,
+   "t": 158,
+   "w": 360,
+   "h": 150,
+   "labelLeft": 20,
+   "labelTop": 154
+  },
+  {
+   "l": 12,
+   "t": 320,
+   "w": 360,
+   "h": 300,
+   "labelLeft": 40,
+   "labelTop": 306
+  }
+ ],
+ "goodSafe": false,
+ "goodMode": "calendar",
+ "feedTiles": [
+  "PROMO\n-30 %",
+  "PROMO\nDERNIER JOUR",
+  "PROMO\n-50 %",
+  "PROMO\nFLASH",
+  "PROMO\nSOLDES",
+  "",
+  "",
+  "chat/batch/g3.png",
+  "",
+  "chat/batch/g6.png",
+  "",
+  "chat/roast6/burger.png"
+ ]
+}

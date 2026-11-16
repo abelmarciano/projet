@@ -1,0 +1,190 @@
+{
+ "video": "fal/social/multi4-cut.mp4",
+ "videoDur": 12.32,
+ "endDur": 3.4,
+ "smoothEnd": true,
+ "jumps": [],
+ "audio": "chatpub/multi4-voice.wav",
+ "bed": "chatpub/multi4-bed.wav",
+ "hook": [
+  "1 actrice.",
+  "5 posts.",
+  "1 mois programmé."
+ ],
+ "shots": [
+  {
+   "from": 0,
+   "to": 2.35,
+   "label": "☕ Lundi · routine",
+   "still": "chat/multi4/lundi.jpg"
+  },
+  {
+   "from": 2.35,
+   "to": 4.75,
+   "label": "🍳 Mercredi · recette",
+   "still": "chat/multi4/mercredi.jpg"
+  },
+  {
+   "from": 4.75,
+   "to": 6.85,
+   "label": "👗 Vendredi · look",
+   "still": "chat/multi4/vendredi.jpg"
+  },
+  {
+   "from": 6.85,
+   "to": 8.85,
+   "label": "🏃‍♀️ Samedi · footing",
+   "still": "chat/multi4/samedi.jpg"
+  },
+  {
+   "from": 8.85,
+   "to": 12.3,
+   "label": "🛋️ Dimanche · avis",
+   "still": "chat/multi4/dimanche.jpg"
+  }
+ ],
+ "endTitle": "Une actrice.\nTout le mois programmé.",
+ "endSub": "Lien en bio pour commencer",
+ "brand": "Growthity",
+ "hot": [
+  "lundi",
+  "mercredi",
+  "vendredi",
+  "samedi",
+  "dimanche",
+  "programmé",
+  "tout"
+ ],
+ "words": [
+  {
+   "w": "Lundi,",
+   "s": 0.26,
+   "e": 0.68
+  },
+  {
+   "w": "je",
+   "s": 0.98,
+   "e": 1.08
+  },
+  {
+   "w": "vous",
+   "s": 1.12,
+   "e": 1.22
+  },
+  {
+   "w": "montre",
+   "s": 1.28,
+   "e": 1.54
+  },
+  {
+   "w": "ma",
+   "s": 1.58,
+   "e": 1.66
+  },
+  {
+   "w": "routine.",
+   "s": 1.7,
+   "e": 2.18
+  },
+  {
+   "w": "Mercredi,",
+   "s": 2.55,
+   "e": 3.15
+  },
+  {
+   "w": "ma",
+   "s": 3.45,
+   "e": 3.55
+  },
+  {
+   "w": "recette",
+   "s": 3.61,
+   "e": 3.91
+  },
+  {
+   "w": "express.",
+   "s": 3.97,
+   "e": 4.59
+  },
+  {
+   "w": "Vendredi,",
+   "s": 4.97,
+   "e": 5.53
+  },
+  {
+   "w": "mon",
+   "s": 5.75,
+   "e": 5.87
+  },
+  {
+   "w": "look",
+   "s": 5.91,
+   "e": 6.09
+  },
+  {
+   "w": "du",
+   "s": 6.13,
+   "e": 6.25
+  },
+  {
+   "w": "jour.",
+   "s": 6.33,
+   "e": 6.65
+  },
+  {
+   "w": "Samedi,",
+   "s": 7.05,
+   "e": 7.55
+  },
+  {
+   "w": "mon",
+   "s": 7.87,
+   "e": 8.03
+  },
+  {
+   "w": "footing.",
+   "s": 8.09,
+   "e": 8.67
+  },
+  {
+   "w": "Et",
+   "s": 9.04,
+   "e": 9.12
+  },
+  {
+   "w": "dimanche,",
+   "s": 9.18,
+   "e": 9.7
+  },
+  {
+   "w": "mon",
+   "s": 10.06,
+   "e": 10.22
+  },
+  {
+   "w": "avis",
+   "s": 10.3,
+   "e": 10.5
+  },
+  {
+   "w": "cash.",
+   "s": 10.56,
+   "e": 10.92
+  },
+  {
+   "w": "Tout",
+   "s": 11.3,
+   "e": 11.44
+  },
+  {
+   "w": "est",
+   "s": 11.48,
+   "e": 11.56
+  },
+  {
+   "w": "programmé",
+   "s": 11.6,
+   "e": 12.08
+  }
+ ]
+}

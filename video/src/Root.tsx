@@ -98,6 +98,21 @@ import split8Cfg from './chatpub/split8.json';
 import split9Cfg from './chatpub/split9.json';
 import reply3Cfg from './chatpub/reply3.json';
 import reply4Cfg from './chatpub/reply4.json';
+import roast7Cfg from './chatpub/roast7.json';
+import roast8Cfg from './chatpub/roast8.json';
+import multi4Cfg from './chatpub/multi4.json';
+import multi5Cfg from './chatpub/multi5.json';
+import adBougie from './chatpub/ad-bougie-solene.json';
+import adTrefle from './chatpub/ad-trefle-noor.json';
+import cp4 from './chatpub/cp4.json';
+import cp5 from './chatpub/cp5.json';
+import {SocialStory, StoryCfg, storyTotal} from './chatpub/SocialStory';
+import lr4Cfg from './chatpub/lr4.json';
+import lr5Cfg from './chatpub/lr5.json';
+import av5Cfg from './chatpub/av5.json';
+import av6Cfg from './chatpub/av6.json';
+import pat3dCfg from './chatpub/pat3d.json';
+import cav3dCfg from './chatpub/cav3d.json';
 import learningCfg from './brief/learning.json';
 import {ShowIntro, ShowEnd, SHOW_INTRO, SHOW_END} from './reels/Showcase';
 
@@ -168,6 +183,20 @@ export const Root: React.FC = () => (
     <Composition id="SplitWa-adrien" component={SplitSocial} durationInFrames={split9Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: split9Cfg as unknown as SocialCfg}} />
     <Composition id="Reply3-aicha" component={SplitSocial} durationInFrames={reply3Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: reply3Cfg as unknown as SocialCfg}} />
     <Composition id="Reply4-aicha" component={SplitSocial} durationInFrames={reply4Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: reply4Cfg as unknown as SocialCfg}} />
+    <Composition id="Roast-corinne-7" component={SplitRoast} durationInFrames={roast7Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: roast7Cfg as unknown as RoastCfg}} />
+    <Composition id="Roast-corinne-8" component={SplitRoast} durationInFrames={roast8Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: roast8Cfg as unknown as RoastCfg}} />
+    <Composition id="MultiDecor-amelie" component={MultiDecor} durationInFrames={Math.round((multi4Cfg.videoDur + multi4Cfg.endDur) * 30)} fps={30} width={1080} height={1920} defaultProps={{cfg: multi4Cfg as unknown as MultiCfg}} />
+    <Composition id="MultiDecor-raphael" component={MultiDecor} durationInFrames={Math.round((multi5Cfg.videoDur + multi5Cfg.endDur) * 30)} fps={30} width={1080} height={1920} defaultProps={{cfg: multi5Cfg as unknown as MultiCfg}} />
+    <Composition id="AdEdit-bougie-solene" component={AdEdit} durationInFrames={adBougie.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adBougie as unknown as AdCfg}} />
+    <Composition id="AdEdit-trefle-noor" component={AdEdit} durationInFrames={adTrefle.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adTrefle as unknown as AdCfg}} />
+    <Composition id="ChatPubMotion-cp4" component={MotionChatPub} durationInFrames={motionTimeline(cp4 as unknown as ChatPubCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: cp4 as unknown as ChatPubCfg}} />
+    <Composition id="ChatPubMotion-cp5" component={MotionChatPub} durationInFrames={motionTimeline(cp5 as unknown as ChatPubCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: cp5 as unknown as ChatPubCfg}} />
+    <Composition id="Launch-calendrier" component={SocialStory} durationInFrames={storyTotal(lr4Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr4Cfg as unknown as StoryCfg}} />
+    <Composition id="Launch-whatsapp" component={SocialStory} durationInFrames={storyTotal(lr5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr5Cfg as unknown as StoryCfg}} />
+    <Composition id="AvantApres-julien" component={SocialStory} durationInFrames={storyTotal(av5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: av5Cfg as unknown as StoryCfg}} />
+    <Composition id="AvantApres-helene" component={SocialStory} durationInFrames={storyTotal(av6Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: av6Cfg as unknown as StoryCfg}} />
+    <Composition id="Pub3D-patissiere" component={Pub3D} durationInFrames={(pat3dCfg as unknown as P3DCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: pat3dCfg as unknown as P3DCfg}} />
+    <Composition id="Pub3D-caviste" component={Pub3D} durationInFrames={(cav3dCfg as unknown as P3DCfg).total} fps={30} width={1080} height={1920} defaultProps={{cfg: cav3dCfg as unknown as P3DCfg}} />
     <Composition id="AvantApres3-gel" component={AvantApres3} durationInFrames={AV3_TOTAL} fps={30} width={1080} height={1920} />
     <Composition id="AdEdit-avap-mei" component={AdEdit} durationInFrames={adAvapMei.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvapMei as unknown as AdCfg}} />
     <Composition id="AdEdit-avap2-after" component={AdEdit} durationInFrames={adAvap2After.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvap2After as unknown as AdCfg}} />

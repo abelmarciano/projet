@@ -1,0 +1,248 @@
+{
+ "id": "cp5",
+ "title": "Bracelet Trèfle – Maison Céleste – Vidéo 9:16",
+ "video": "chat/trefle-noor-edit.mp4",
+ "videoFrames": 188,
+ "prompt": "Une pub UGC pour mon bracelet trèfle, et préviens-moi sur WhatsApp si elle s’essouffle.",
+ "promptShort": "Une pub UGC pour mon bracelet trèfle, et préviens-moi sur WhatsApp si elle s’essouffle.",
+ "actor": {
+  "name": "Noor",
+  "style": "Lifestyle",
+  "img": "chat/actors/noor.jpg",
+  "desc": "Femme · face caméra"
+ },
+ "product": {
+  "name": "Bracelet Trèfle",
+  "img": "fal/social/products/trefle.jpg"
+ },
+ "gallery": [
+  {
+   "name": "Freja",
+   "style": "E-commerce / Maison",
+   "img": "chat/actors/a059.jpg"
+  },
+  {
+   "name": "Sabrina",
+   "style": "Casual",
+   "img": "chat/actors/a150.jpg"
+  },
+  {
+   "name": "Justine",
+   "style": "Lifestyle",
+   "img": "chat/actors/a176.jpg"
+  },
+  {
+   "name": "Mei B.",
+   "style": "Lifestyle",
+   "img": "chat/actors/a089.jpg"
+  },
+  {
+   "name": "Sandra",
+   "style": "Créatif",
+   "img": "chat/actors/a184.jpg"
+  },
+  {
+   "name": "Hana",
+   "style": "E-commerce / Café",
+   "img": "chat/actors/a058.jpg"
+  },
+  {
+   "name": "Camille B.",
+   "style": "Casual",
+   "img": "chat/actors/a189.jpg"
+  },
+  {
+   "name": "Noor",
+   "style": "Lifestyle",
+   "img": "chat/actors/noor.jpg"
+  }
+ ],
+ "voice": {
+  "a": "",
+  "b1": "cp5-b1-n",
+  "b2": "cp5-b2-n",
+  "b3": "cp5-b3-n",
+  "d1": "cp5-d1-n",
+  "d2": "cp5-d2-n"
+ },
+ "brand": {
+  "name": "Maison Céleste"
+ },
+ "words": {
+  "cp5-b1-n": [
+   {
+    "w": "Tu",
+    "s": 0.04,
+    "e": 0.14
+   },
+   {
+    "w": "choisis",
+    "s": 0.2,
+    "e": 0.5
+   },
+   {
+    "w": "ton",
+    "s": 0.54,
+    "e": 0.64
+   },
+   {
+    "w": "actrice",
+    "s": 0.7,
+    "e": 1.14
+   }
+  ],
+  "cp5-b2-n": [
+   {
+    "w": "Tu",
+    "s": 0.04,
+    "e": 0.1
+   },
+   {
+    "w": "tapes",
+    "s": 0.22,
+    "e": 0.42
+   },
+   {
+    "w": "ta",
+    "s": 0.46,
+    "e": 0.54
+   },
+   {
+    "w": "phrase",
+    "s": 0.6,
+    "e": 0.84
+   },
+   {
+    "w": "dans",
+    "s": 0.88,
+    "e": 0.98
+   },
+   {
+    "w": "l'IA",
+    "s": 1.02,
+    "e": 1.28
+   }
+  ],
+  "cp5-b3-n": [
+   {
+    "w": "Et",
+    "s": 0.06,
+    "e": 0.12
+   },
+   {
+    "w": "Growthity",
+    "s": 0.24,
+    "e": 0.96
+   },
+   {
+    "w": "fait",
+    "s": 1.04,
+    "e": 1.14
+   },
+   {
+    "w": "tout",
+    "s": 1.36,
+    "e": 1.6
+   }
+  ],
+  "cp5-d1-n": [
+   {
+    "w": "Ta",
+    "s": 0.0,
+    "e": 0.08
+   },
+   {
+    "w": "pub",
+    "s": 0.2,
+    "e": 0.34
+   },
+   {
+    "w": "est",
+    "s": 0.36,
+    "e": 0.48
+   },
+   {
+    "w": "en",
+    "s": 0.5,
+    "e": 0.58
+   },
+   {
+    "w": "ligne",
+    "s": 0.62,
+    "e": 0.9
+   },
+   {
+    "w": "et",
+    "s": 1.3,
+    "e": 1.42
+   },
+   {
+    "w": "si",
+    "s": 1.48,
+    "e": 1.56
+   },
+   {
+    "w": "elle",
+    "s": 1.58,
+    "e": 1.7
+   },
+   {
+    "w": "s'essouffle,",
+    "s": 1.72,
+    "e": 2.18
+   },
+   {
+    "w": "tu",
+    "s": 2.36,
+    "e": 2.42
+   },
+   {
+    "w": "es",
+    "s": 2.46,
+    "e": 2.6
+   },
+   {
+    "w": "prévenu",
+    "s": 2.64,
+    "e": 3.04
+   },
+   {
+    "w": "sur",
+    "s": 3.1,
+    "e": 3.22
+   },
+   {
+    "w": "WhatsApp",
+    "s": 3.26,
+    "e": 3.64
+   }
+  ],
+  "cp5-d2-n": [
+   {
+    "w": "Growthity.",
+    "s": 0.12,
+    "e": 0.66
+   },
+   {
+    "w": "Vos",
+    "s": 1.12,
+    "e": 1.28
+   },
+   {
+    "w": "pubs",
+    "s": 1.34,
+    "e": 1.58
+   },
+   {
+    "w": "surveillées",
+    "s": 1.98,
+    "e": 2.42
+   }
+  ]
+ },
+ "caption": "Le bracelet trèfle que tout le monde me demande ✨",
+ "noLeads": true,
+ "publishLabel": "🚀 Lancer + alerte WhatsApp",
+ "publishDone": "✓ En ligne · alerte WhatsApp activée",
+ "safeLayout": true
+}

@@ -25,7 +25,7 @@ const DISPLAY = '"Space Grotesk", Inter, sans-serif';
 const FONT = 'Inter, system-ui, sans-serif';
 
 type Word = {w: string; s: number; e: number};
-type Cfg = ChatPubCfg & {promptShort?: string; caption?: string; noLeads?: boolean};
+type Cfg = ChatPubCfg & {promptShort?: string; caption?: string; noLeads?: boolean; publishLabel?: string; publishDone?: string; safeLayout?: boolean};
 
 export const motionTimeline = (c: Cfg) => {
   const T: Record<string, number> = {...(TL as unknown as Record<string, number>)};
@@ -446,33 +446,33 @@ const PublishScene: React.FC<{c: Cfg; words: Word[]}> = ({c, words}) => {
     <AbsoluteFill>
       <StudioBg />
       <AbsoluteFill style={{perspective: 2000, alignItems: 'center'}}>
-        <div style={{marginTop: 110, transform: `translateY(${(1 - inP) * -200}px) rotateY(${rotY}deg) rotateX(3deg) scale(${1.2 - inP * 0.2})`, opacity: inP}}>
-          <Phone w={560} glow={0.8}>
+        <div style={{marginTop: c.safeLayout ? 40 : 110, transform: `translateY(${(1 - inP) * -200}px) rotateY(${rotY}deg) rotateX(3deg) scale(${1.2 - inP * 0.2})`, opacity: inP}}>
+          <Phone w={c.safeLayout ? 470 : 560} glow={0.8}>
             <IgFeed c={c} ctaHot={ctaHot} />
           </Phone>
         </div>
       </AbsoluteFill>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 1360, display: 'flex', justifyContent: 'center'}}>
-        <div style={{display: 'flex', alignItems: 'center', gap: 22, padding: '30px 54px', borderRadius: 999, background: done ? '#fff' : '#0866FF', color: done ? '#0F172A' : '#fff', fontFamily: FONT, fontWeight: 700, fontSize: 46, transform: `scale(${btnIn * (pressing ? 0.92 : 1)})`, boxShadow: `0 30px 70px -20px ${done ? 'rgba(255,255,255,0.35)' : 'rgba(8,102,255,0.9)'}`}}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: c.safeLayout ? 1000 : 1360, display: 'flex', justifyContent: 'center'}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: 22, padding: c.safeLayout ? '24px 42px' : '30px 54px', borderRadius: 999, background: done ? '#fff' : '#0866FF', color: done ? '#0F172A' : '#fff', fontFamily: FONT, fontWeight: 700, fontSize: 46, transform: `scale(${btnIn * (pressing ? 0.92 : 1)})`, boxShadow: `0 30px 70px -20px ${done ? 'rgba(255,255,255,0.35)' : 'rgba(8,102,255,0.9)'}`}}>
           {done ? (
             <>
               <div style={{width: 58, height: 58, borderRadius: 99, background: '#16A34A', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                 <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
               </div>
-              Publiée sur
+              {c.publishDone ?? <>Publiée sur
               <MetaMark s={60} />
-              Meta
+              Meta</>}
             </>
           ) : (
             <>
-              <MetaMark s={64} mono="#fff" />
-              Publier sur Meta
+              {c.publishLabel ?? <><MetaMark s={64} mono="#fff" />
+              Publier sur Meta</>}
             </>
           )}
         </div>
       </div>
-      {f >= press - 2 && f < press + 20 && <div style={{position: 'absolute', left: 540 - 220, top: 1420 - 220, width: 440, height: 440, borderRadius: 999, border: '4px solid rgba(255,255,255,0.7)', transform: `scale(${0.3 + prog(f, press - 2, 20) * 1.2})`, opacity: 1 - prog(f, press - 2, 20)}} />}
-      <div style={{position: 'absolute', left: 0, right: 0, top: 1545, display: 'flex', justifyContent: 'center', gap: 34}}>
+      {f >= press - 2 && f < press + 20 && <div style={{position: 'absolute', left: 540 - 220, top: (c.safeLayout ? 1060 : 1420) - 220, width: 440, height: 440, borderRadius: 999, border: '4px solid rgba(255,255,255,0.7)', transform: `scale(${0.3 + prog(f, press - 2, 20) * 1.2})`, opacity: 1 - prog(f, press - 2, 20)}} />}
+      <div style={{position: 'absolute', left: 0, right: 0, top: c.safeLayout ? 1150 : 1545, display: 'flex', justifyContent: 'center', gap: 34}}>
         <div style={{display: 'flex', alignItems: 'center', gap: 14, padding: '16px 28px', borderRadius: 999, background: 'rgba(255,255,255,0.08)', border: '2px solid rgba(255,255,255,0.14)', color: '#fff', fontFamily: FONT, fontWeight: 600, fontSize: 32, transform: `scale(${fb})`}}>
           <FbGlyph s={48} /> Facebook
         </div>
@@ -480,7 +480,7 @@ const PublishScene: React.FC<{c: Cfg; words: Word[]}> = ({c, words}) => {
           <IgGlyph s={48} /> Instagram
         </div>
       </div>
-      <Kinetic words={words} at={TL.vo.d1} y={1690} size={74} />
+      <Kinetic words={words} at={TL.vo.d1} y={c.safeLayout ? 1280 : 1690} size={74} />
     </AbsoluteFill>
   );
 };

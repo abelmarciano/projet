@@ -1,0 +1,188 @@
+{
+ "segs": [
+  {
+   "type": "clip",
+   "src": "fal/social/out/av_helene_avant.mp4",
+   "from": 0.25,
+   "to": 4.99,
+   "words": [
+    {
+     "w": "Je",
+     "s": 0.5,
+     "e": 0.64
+    },
+    {
+     "w": "vérifie",
+     "s": 0.7,
+     "e": 1.26
+    },
+    {
+     "w": "mes",
+     "s": 1.32,
+     "e": 1.54
+    },
+    {
+     "w": "pubs",
+     "s": 1.58,
+     "e": 1.94
+    },
+    {
+     "w": "pour",
+     "s": 2.28,
+     "e": 2.42
+    },
+    {
+     "w": "la",
+     "s": 2.48,
+     "e": 2.62
+    },
+    {
+     "w": "dixième",
+     "s": 3.1,
+     "e": 3.52
+    },
+    {
+     "w": "fois",
+     "s": 3.68,
+     "e": 3.86
+    },
+    {
+     "w": "ce",
+     "s": 4.34,
+     "e": 4.44
+    },
+    {
+     "w": "soir",
+     "s": 4.54,
+     "e": 4.94
+    }
+   ],
+   "tag": "AVANT",
+   "night": true
+  },
+  {
+   "type": "demo",
+   "mode": "wa",
+   "dur": 4.16,
+   "vo": "voice/av6-demo-n.mp3",
+   "voWords": [
+    {
+     "w": "Avec",
+     "s": 0.14,
+     "e": 0.32
+    },
+    {
+     "w": "Growthity,",
+     "s": 0.38,
+     "e": 0.88
+    },
+    {
+     "w": "l'alerte",
+     "s": 1.2000000000000002,
+     "e": 1.5
+    },
+    {
+     "w": "arrive",
+     "s": 1.54,
+     "e": 1.74
+    },
+    {
+     "w": "sur",
+     "s": 1.78,
+     "e": 1.9000000000000001
+    },
+    {
+     "w": "WhatsApp",
+     "s": 1.9400000000000002,
+     "e": 2.3400000000000003
+    },
+    {
+     "w": "au",
+     "s": 2.62,
+     "e": 2.68
+    },
+    {
+     "w": "bon",
+     "s": 2.8000000000000003,
+     "e": 2.94
+    },
+    {
+     "w": "moment",
+     "s": 2.98,
+     "e": 3.18
+    }
+   ],
+   "title": "Avec Growthity"
+  },
+  {
+   "type": "clip",
+   "src": "fal/social/out/av_helene_apres.mp4",
+   "from": 0.91,
+   "to": 4.99,
+   "words": [
+    {
+     "w": "Maintenant,",
+     "s": 1.16,
+     "e": 1.42
+    },
+    {
+     "w": "Growthity",
+     "s": 1.48,
+     "e": 2.0
+    },
+    {
+     "w": "me",
+     "s": 2.04,
+     "e": 2.14
+    },
+    {
+     "w": "prévient",
+     "s": 2.18,
+     "e": 2.54
+    },
+    {
+     "w": "sur",
+     "s": 2.6,
+     "e": 2.72
+    },
+    {
+     "w": "WhatsApp.",
+     "s": 2.8,
+     "e": 3.28
+    },
+    {
+     "w": "Je",
+     "s": 4.06,
+     "e": 4.16
+    },
+    {
+     "w": "dors",
+     "s": 4.2,
+     "e": 4.34
+    },
+    {
+     "w": "tranquille",
+     "s": 4.38,
+     "e": 4.78
+    }
+   ],
+   "tag": "APRÈS",
+   "tagColor": "#16A34A"
+  },
+  {
+   "type": "end",
+   "dur": 3.6,
+   "title": [
+    "Ta pub,",
+    "surveillée."
+   ],
+   "split": {
+    "left": "AVANT\nvérifier ses pubs la nuit",
+    "right": "APRÈS\nune alerte WhatsApp",
+    "leftImg": "chat/social/helene-avant.jpg",
+    "rightImg": "chat/social/helene-apres.jpg"
+   }
+  }
+ ],
+ "bed": "chatpub/av6-bed.wav"
+}

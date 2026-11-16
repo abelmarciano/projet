@@ -12,7 +12,7 @@ import P0 from './p3d.json';
 // Growthity ad « le boulanger » : 3D animated short (Kling 4 multi-shot) + storyteller VO + end card.
 type Word = {w: string; s: number; e: number};
 export type P3DCfg = {vo: Record<string, {at: number; words: Word[]}>; videoFrames: number; total: number; video: string; voPrefix: string; bed: string;
-  stickers: {text: string; from: number; to: number; y: number; rot?: number; big?: boolean}[]; blur: {from: number; top: number; height: number} | null};
+  stickers: {text: string; from: number; to: number; y: number; rot?: number; big?: boolean}[]; blur: {from: number; to?: number; top: number; height: number; left?: number; width?: number} | null; endLine?: [string, string]};
 export const P3D_DEFAULT = P0 as unknown as P3DCfg;
 const GRAD = 'linear-gradient(120deg, #2563EB 0%, #5B3FE4 52%, #9333EA 100%)';
 const GRAD_TXT = 'linear-gradient(100deg, #8FA6FF 0%, #A78BFF 45%, #E39BFF 100%)';
@@ -49,13 +49,13 @@ const Film: React.FC<{cfg: P3DCfg}> = ({cfg}) => {
         <OffthreadVideo src={staticFile(cfg.video)} muted style={{width: '100%', height: '100%', objectFit: 'cover'}} />
       </AbsoluteFill>
       <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 20%, transparent 60%, rgba(0,0,0,0.55) 100%)'}} />
-      {cfg.blur && f >= cfg.blur.from && <div style={{position: 'absolute', left: 0, right: 0, top: cfg.blur.top, height: cfg.blur.height, backdropFilter: 'blur(22px)', WebkitBackdropFilter: 'blur(22px)', background: 'rgba(60,35,20,0.25)', maskImage: 'linear-gradient(180deg, transparent, #000 25%, #000 75%, transparent)', WebkitMaskImage: 'linear-gradient(180deg, transparent, #000 25%, #000 75%, transparent)', opacity: interpolate(f, [cfg.blur.from, cfg.blur.from + 12], [0, 1], clamp)}} />}
+      {cfg.blur && f >= cfg.blur.from && f < (cfg.blur.to ?? 99999) && <div style={{position: 'absolute', left: cfg.blur.left ?? 0, width: cfg.blur.width ?? 1080, top: cfg.blur.top, height: cfg.blur.height, backdropFilter: 'blur(22px)', WebkitBackdropFilter: 'blur(22px)', background: 'rgba(60,35,20,0.25)', maskImage: 'linear-gradient(180deg, transparent, #000 25%, #000 75%, transparent)', WebkitMaskImage: 'linear-gradient(180deg, transparent, #000 25%, #000 75%, transparent)', opacity: interpolate(f, [cfg.blur.from, cfg.blur.from + 12], [0, 1], clamp)}} />}
       {cfg.stickers.map((st, i) => <Sticker key={i} {...st} />)}
     </AbsoluteFill>
   );
 };
 
-export const EndCard: React.FC<{d: number}> = ({d}) => {
+export const EndCard: React.FC<{d: number; line?: [string, string]}> = ({d, line}) => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill>
@@ -66,8 +66,8 @@ export const EndCard: React.FC<{d: number}> = ({d}) => {
         </div>
         <div style={{marginTop: 44}}><Wordmark size={92} dark reveal={prog(f, 8, 16)} /></div>
         <div style={{marginTop: 50, fontFamily: '"Space Grotesk", Inter, sans-serif', fontWeight: 700, fontSize: 84, lineHeight: 1.05, color: '#fff', textAlign: 'center', letterSpacing: '-0.02em', opacity: prog(f, 30, 12), transform: `translateY(${(1 - prog(f, 30, 16)) * 30}px)`}}>
-          Vos pubs vidéo,<br />
-          <span style={{backgroundImage: GRAD_TXT, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>sans tournage.</span>
+          {line ? line[0] : 'Vos pubs vidéo,'}<br />
+          <span style={{backgroundImage: GRAD_TXT, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>{line ? line[1] : 'sans tournage.'}</span>
         </div>
         <div style={{marginTop: 60, display: 'flex', alignItems: 'center', gap: 16, padding: '26px 50px', borderRadius: 999, backgroundImage: GRAD, color: '#fff', fontSize: 42, fontWeight: 700, transform: `scale(${pop(f, 56, 12)})`, boxShadow: '0 24px 60px -16px rgba(91,63,228,0.9)'}}>
           Commencer · lien en bio
@@ -88,7 +88,7 @@ export const Pub3D: React.FC<{cfg: P3DCfg}> = ({cfg}) => {
   return (
     <AbsoluteFill style={{background: '#0B0A0C'}}>
       <Sequence durationInFrames={VF}><Film cfg={cfg} /></Sequence>
-      <Sequence from={VF}><EndCard d={cfg.total - VF} /></Sequence>
+      <Sequence from={VF}><EndCard d={cfg.total - VF} line={cfg.endLine} /></Sequence>
       {['1', '2', '3', '4'].map((k) => (
         <Kinetic key={k} words={VO[k].words} at={VO[k].at} y={1180} size={70} />
       ))}

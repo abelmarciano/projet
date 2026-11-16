@@ -1,0 +1,185 @@
+{
+ "video": "fal/social/multi5-cut.mp4",
+ "videoDur": 10.83,
+ "endDur": 3.4,
+ "smoothEnd": true,
+ "jumps": [],
+ "audio": "chatpub/multi5-voice.wav",
+ "bed": "chatpub/multi5-bed.wav",
+ "hook": [
+  "1 acteur.",
+  "5 réseaux.",
+  "0 tournage."
+ ],
+ "shots": [
+  {
+   "from": 0,
+   "to": 2.3,
+   "label": "💼 LinkedIn",
+   "still": "chat/multi5/linkedin.jpg"
+  },
+  {
+   "from": 2.3,
+   "to": 4.45,
+   "label": "🎵 TikTok",
+   "still": "chat/multi5/tiktok.jpg"
+  },
+  {
+   "from": 4.45,
+   "to": 6.6,
+   "label": "📸 Instagram",
+   "still": "chat/multi5/instagram.jpg"
+  },
+  {
+   "from": 6.6,
+   "to": 8.55,
+   "label": "👥 Facebook",
+   "still": "chat/multi5/facebook.jpg"
+  },
+  {
+   "from": 8.55,
+   "to": 10.8,
+   "label": "▶️ YouTube",
+   "still": "chat/multi5/youtube.jpg"
+  }
+ ],
+ "endTitle": "Un acteur.\nCinq réseaux.",
+ "endSub": "Lien en bio pour commencer",
+ "brand": "Growthity",
+ "hot": [
+  "linkedin",
+  "tiktok",
+  "instagram",
+  "facebook",
+  "youtube",
+  "programmé",
+  "tout"
+ ],
+ "words": [
+  {
+   "w": "Sur",
+   "s": 0.22,
+   "e": 0.34
+  },
+  {
+   "w": "LinkedIn,",
+   "s": 0.38,
+   "e": 0.84
+  },
+  {
+   "w": "je",
+   "s": 1.28,
+   "e": 1.4
+  },
+  {
+   "w": "parle",
+   "s": 1.44,
+   "e": 1.62
+  },
+  {
+   "w": "business.",
+   "s": 1.66,
+   "e": 2.16
+  },
+  {
+   "w": "Sur",
+   "s": 2.47,
+   "e": 2.61
+  },
+  {
+   "w": "TikTok,",
+   "s": 2.65,
+   "e": 3.11
+  },
+  {
+   "w": "je",
+   "s": 3.71,
+   "e": 3.81
+  },
+  {
+   "w": "fais",
+   "s": 3.85,
+   "e": 3.97
+  },
+  {
+   "w": "court.",
+   "s": 4.03,
+   "e": 4.27
+  },
+  {
+   "w": "Sur",
+   "s": 4.61,
+   "e": 4.75
+  },
+  {
+   "w": "Instagram,",
+   "s": 4.79,
+   "e": 5.37
+  },
+  {
+   "w": "les",
+   "s": 5.83,
+   "e": 5.95
+  },
+  {
+   "w": "coulisses.",
+   "s": 5.99,
+   "e": 6.41
+  },
+  {
+   "w": "Sur",
+   "s": 6.78,
+   "e": 6.92
+  },
+  {
+   "w": "Facebook,",
+   "s": 6.96,
+   "e": 7.42
+  },
+  {
+   "w": "ma",
+   "s": 7.72,
+   "e": 7.84
+  },
+  {
+   "w": "communauté.",
+   "s": 7.88,
+   "e": 8.38
+  },
+  {
+   "w": "Et",
+   "s": 8.7,
+   "e": 8.78
+  },
+  {
+   "w": "sur",
+   "s": 8.84,
+   "e": 8.98
+  },
+  {
+   "w": "YouTube,",
+   "s": 9.02,
+   "e": 9.4
+  },
+  {
+   "w": "je",
+   "s": 9.84,
+   "e": 9.96
+  },
+  {
+   "w": "prends",
+   "s": 10.0,
+   "e": 10.12
+  },
+  {
+   "w": "le",
+   "s": 10.16,
+   "e": 10.22
+  },
+  {
+   "w": "temps",
+   "s": 10.26,
+   "e": 10.38
+  }
+ ]
+}

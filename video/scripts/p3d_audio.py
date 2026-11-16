@@ -8,7 +8,7 @@ from scipy.io import wavfile
 src = open(os.path.join(os.path.dirname(__file__), 'shorts_audio.py')).read().split('def timeline')[0]
 g = {'__file__': __file__}; exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, chime, pop_sfx, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'chime', 'pop_sfx', 'rng'])
-TOTAL = 19.5 if NAME == 'p3d' else 20.6
+TOTAL = 19.5 if NAME == 'p3d' else (20.7 if NAME in ('pat3d', 'cav3d') else 20.6)
 INTRO = 4.0 if NAME == 'p3d' else 3.0
 n = int(TOTAL * SR) + SR
 mus = np.zeros(n); sfx = np.zeros(n)
@@ -66,6 +66,19 @@ elif NAME == 'c3d':
     for k in range(3): add(sfx, boom(), 7.6 + k * 0.9, 0.22)   # pulse waves
     for k in range(8): add(sfx, hp(rng.standard_normal(int(0.05 * SR)), 1500) * np.exp(-np.arange(int(0.05 * SR)) / SR * 60), 11.3 + k * 0.42, 0.18)  # claps / jumps
     add(sfx, chime(79), 11.1, 0.22)
+elif NAME == 'pat3d':
+    for c in (3.0, 7.0, 11.0): add(sfx, whoosh(0.5), c - 0.3, 0.22)
+    add(sfx, boom(), 3.5, 0.22); add(sfx, chime(84), 3.7, 0.18)            # calendar opens
+    for k in range(8): add(sfx, pop_sfx(), 4.2 + k * 0.32, 0.2)              # cake photos land
+    for k in range(4): add(sfx, whoosh(0.4), 7.3 + k * 0.9, 0.2)             # paper planes
+    add(sfx, boom(), 11.0, 0.3); add(sfx, chime(79), 11.1, 0.22)
+elif NAME == 'cav3d':
+    for c in (3.0, 7.0, 11.0): add(sfx, whoosh(0.5), c - 0.3, 0.22)
+    for k in range(3): add(sfx, chime(91 + k * 2), 3.6 + k * 0.18, 0.14)     # bird / notification
+    add(sfx, pop_sfx(), 5.2, 0.3)
+    for k in range(3): add(sfx, whoosh(0.5), 7.4 + k * 0.8, 0.22)            # posters fly
+    add(sfx, boom(), 11.0, 0.3); add(sfx, chime(79), 11.1, 0.22)
+    for k in range(3): add(sfx, hp(rng.standard_normal(int(0.03 * SR)), 6000) * np.exp(-np.arange(int(0.03 * SR)) / SR * 120), 12.3 + k * 0.5, 0.12)
 elif NAME == 'g3d':
     for c in (3.0, 7.0, 11.0): add(sfx, whoosh(0.5), c - 0.3, 0.22)
     add(sfx, boom(), 3.6, 0.25)                       # toolbox opens
