@@ -2,7 +2,10 @@
 // Récit : chaos d'outils et de prestataires (sombre) → tout est aspiré dans le logo → monde clair en 4 chapitres
 // (01 Créer : les IA réunies · 02 Remplacer : l'équipe · 03 Diffuser : toutes les plateformes · 04 Piloter : media buyer IA + WhatsApp)
 // → final « Tout. Au même endroit. » + « Commencer ». Aucun chiffre de résultat. Zones mortes : rien d'essentiel sous y = 1440.
-import React, {useEffect, useState} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
+
+// vrai dans la version feed 4:5 (cercle des plateformes resserré)
+const FeedCtx = createContext(false);
 import {AbsoluteFill, Audio, Img, Sequence, continueRender, delayRender, interpolate, random, spring, staticFile, useCurrentFrame} from 'remotion';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
@@ -411,7 +414,8 @@ const PLATS: {n: string; k: string; c: string; g: React.ReactNode}[] = [
 ];
 const Ch3: React.FC = () => {
   const {f, style} = useScene(SC.ch3, SC.ch4);
-  const cx = 540, cy = 930;
+  const feed = useContext(FeedCtx);
+  const cx = 540, cy = feed ? 905 : 930, ry = feed ? 350 : 400;
   const card = sp(f - SC.ch3 - 6, 13);
   return (
     <AbsoluteFill style={style}>
@@ -421,7 +425,7 @@ const Ch3: React.FC = () => {
         {PLATS.map((pl, i) => {
           const a = cue(5, pl.k, 1.3 + i * 0.7) - 3;
           const ang = -Math.PI / 2 + ((i + 0.5) / PLATS.length) * Math.PI * 2;
-          const x = cx + Math.cos(ang) * 380, y = cy + Math.sin(ang) * 400;
+          const x = cx + Math.cos(ang) * 380, y = cy + Math.sin(ang) * ry;
           const d = prog(f, a, 12);
           const pkt = ((f - a) % 24) / 24;
           return (
@@ -449,7 +453,7 @@ const Ch3: React.FC = () => {
       {PLATS.map((pl, i) => {
         const a = cue(5, pl.k, 1.3 + i * 0.7) - 3;
         const ang = -Math.PI / 2 + ((i + 0.5) / PLATS.length) * Math.PI * 2;
-        const x = cx + Math.cos(ang) * 380, y = cy + Math.sin(ang) * 400;
+        const x = cx + Math.cos(ang) * 380, y = cy + Math.sin(ang) * ry;
         const p = sp(f - a - 6, 10);
         const ok = f > a + 22;
         return (
@@ -669,3 +673,14 @@ export const AllInOne: React.FC = () => {
     </AbsoluteFill>
   );
 };
+
+// Version feed 4:5 (1080×1350) : même animation, cadrée sur la zone utile du 9:16 (y 70 → 1420).
+export const AllInOneFeed: React.FC = () => (
+  <AbsoluteFill style={{background: BG, overflow: 'hidden'}}>
+    <div style={{position: 'absolute', left: 0, top: -70, width: 1080, height: 1920}}>
+      <FeedCtx.Provider value={true}>
+        <AllInOne />
+      </FeedCtx.Provider>
+    </div>
+  </AbsoluteFill>
+);
