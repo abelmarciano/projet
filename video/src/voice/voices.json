@@ -1754,5 +1754,13 @@
   "style": 0.45,
   "speed": 1.06,
   "text": "[warmly] Grossiti écrit des accroches qui arrêtent le scroll. Abonne-toi pour le prochain vrai ou faux !"
+ },
+ "pov1-demo": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.08,
+  "text": "[confident] Avec Grossiti : ciblage large, créas variées… et un media buyer qui te dit quoi faire."
  }
 }

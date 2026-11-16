@@ -9,7 +9,7 @@ import {CalGrid, NetRows, WaBubble, WaButtons, WaPhone} from '../brief/socialKit
 type Word = {w: string; s: number; e: number};
 export type Seg =
   | {type: 'clip'; src: string; from: number; to: number; words: Word[]; tag?: string; tagColor?: string; night?: boolean; name?: string}
-  | {type: 'demo'; mode: 'cal' | 'wa'; dur: number; vo?: string; voWords?: Word[]; title: string}
+  | {type: 'demo'; mode: 'cal' | 'wa' | 'reco'; dur: number; vo?: string; voWords?: Word[]; title: string}
   | {type: 'end'; dur: number; vo?: string; voWords?: Word[]; title: [string, string]; split?: {left: string; right: string; leftImg: string; rightImg: string}};
 export type StoryCfg = {segs: Seg[]; bed: string; badge?: string};
 
@@ -58,7 +58,20 @@ const Demo: React.FC<{s: Extract<Seg, {type: 'demo'}>}> = ({s}) => {
     <AbsoluteFill style={{background: '#F4F1EA', fontFamily: FONT}}>
       <AbsoluteFill style={{backgroundImage: 'linear-gradient(rgba(15,23,42,0.05) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(15,23,42,0.05) 1.5px, transparent 1.5px)', backgroundSize: '54px 54px'}} />
       <div style={{position: 'absolute', left: 80, right: 150, top: 270, display: 'flex', alignItems: 'center', gap: 16, fontFamily: DISPLAY, fontWeight: 700, fontSize: 60, lineHeight: 1.05, color: INK, opacity: prog(f, 0, 8)}}><Logo s={64} /> {s.title}</div>
-      {s.mode === 'cal' ? (
+      {s.mode === 'reco' ? (
+        <div style={{position: 'absolute', left: 80, right: 150, top: 420, display: 'flex', flexDirection: 'column', gap: 18}}>
+          {[{i: '🎯', t: 'Ciblage large', d: 'Laisse l’algorithme trouver tes clients'}, {i: '🎬', t: '3 créas variées prêtes', d: 'Visages, angles et formats différents'}, {i: '⏳', t: 'Ne touche à rien 7 jours', d: 'Ta pub est en apprentissage'}, {i: '📈', t: 'Puis augmente par paliers', d: 'Quand le coût est stable'}].map((r, k) => {
+            const p = spring({frame: f - 6 - k * 8, fps: 30, config: {damping: 12}});
+            return (
+              <div key={r.t} style={{display: 'flex', alignItems: 'center', gap: 20, padding: '22px 26px', borderRadius: 26, background: '#fff', border: '2px solid #E5E7EB', boxShadow: '0 20px 40px -26px rgba(15,23,42,0.5)', transform: `translateX(${(1 - p) * 120}px)`, opacity: p}}>
+                <div style={{fontSize: 52}}>{r.i}</div>
+                <div style={{flex: 1}}><div style={{fontSize: 36, fontWeight: 800, color: INK}}>{r.t}</div><div style={{fontSize: 24, color: '#64748B', marginTop: 4}}>{r.d}</div></div>
+                <Check s={36} />
+              </div>
+            );
+          })}
+        </div>
+      ) : s.mode === 'cal' ? (
         <>
           <CalGrid f={f} start={4} x={80} y={420} w={850} step={2} />
           <NetRows f={f} start={30} x={80} y={1010} w={850} rows={[{n: 'Instagram', c: '#E1306C', h: 'Mar. 18:30'}, {n: 'TikTok', c: '#111', h: 'Mer. 12:15'}]} />
