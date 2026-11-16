@@ -93,6 +93,11 @@ import alertCfg from './brief/alertes.json';
 import {VraiFaux4, VraiFaux5} from './brief/VraiFauxSocial';
 import vf4Cfg from './brief/vf4.json';
 import vf5Cfg from './brief/vf5.json';
+import {SplitSocial, SocialCfg} from './chatpub/SplitSocial';
+import split8Cfg from './chatpub/split8.json';
+import split9Cfg from './chatpub/split9.json';
+import reply3Cfg from './chatpub/reply3.json';
+import reply4Cfg from './chatpub/reply4.json';
 import learningCfg from './brief/learning.json';
 import {ShowIntro, ShowEnd, SHOW_INTRO, SHOW_END} from './reels/Showcase';
 
@@ -159,6 +164,10 @@ export const Root: React.FC = () => (
     <Composition id="Brief-alertes" component={BriefAlertes} durationInFrames={briefTotal(alertCfg as unknown as SocCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: alertCfg as unknown as SocCfg}} />
     <Composition id="VraiFaux-4" component={VraiFaux4} durationInFrames={briefTotal(vf4Cfg as unknown as VFCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: vf4Cfg as unknown as VFCfg}} />
     <Composition id="VraiFaux-5" component={VraiFaux5} durationInFrames={briefTotal(vf5Cfg as unknown as VFCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: vf5Cfg as unknown as VFCfg}} />
+    <Composition id="SplitCal-adrien" component={SplitSocial} durationInFrames={split8Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: split8Cfg as unknown as SocialCfg}} />
+    <Composition id="SplitWa-adrien" component={SplitSocial} durationInFrames={split9Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: split9Cfg as unknown as SocialCfg}} />
+    <Composition id="Reply3-aicha" component={SplitSocial} durationInFrames={reply3Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: reply3Cfg as unknown as SocialCfg}} />
+    <Composition id="Reply4-aicha" component={SplitSocial} durationInFrames={reply4Cfg.total} fps={30} width={1080} height={1920} defaultProps={{cfg: reply4Cfg as unknown as SocialCfg}} />
     <Composition id="AvantApres3-gel" component={AvantApres3} durationInFrames={AV3_TOTAL} fps={30} width={1080} height={1920} />
     <Composition id="AdEdit-avap-mei" component={AdEdit} durationInFrames={adAvapMei.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvapMei as unknown as AdCfg}} />
     <Composition id="AdEdit-avap2-after" component={AdEdit} durationInFrames={adAvap2After.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAvap2After as unknown as AdCfg}} />

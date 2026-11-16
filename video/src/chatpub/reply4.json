@@ -1,0 +1,250 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "actor": {
+  "name": "Aïcha B.",
+  "img": "chat/reply/actrice.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "words": [
+  {
+   "w": "J'ai",
+   "s": 0.14,
+   "e": 0.32
+  },
+  {
+   "w": "pas",
+   "s": 0.36,
+   "e": 0.44
+  },
+  {
+   "w": "le",
+   "s": 0.46,
+   "e": 0.5
+  },
+  {
+   "w": "temps",
+   "s": 0.56,
+   "e": 0.66
+  },
+  {
+   "w": "de",
+   "s": 0.68,
+   "e": 0.74
+  },
+  {
+   "w": "surveiller",
+   "s": 0.76,
+   "e": 1.14
+  },
+  {
+   "w": "mes",
+   "s": 1.18,
+   "e": 1.32
+  },
+  {
+   "w": "pubs.",
+   "s": 1.36,
+   "e": 1.58
+  },
+  {
+   "w": "Justement,",
+   "s": 1.86,
+   "e": 2.34
+  },
+  {
+   "w": "t'as",
+   "s": 2.54,
+   "e": 2.68
+  },
+  {
+   "w": "pas",
+   "s": 2.7,
+   "e": 2.82
+  },
+  {
+   "w": "besoin.",
+   "s": 2.86,
+   "e": 3.16
+  },
+  {
+   "w": "Growthity",
+   "s": 3.88,
+   "e": 4.5
+  },
+  {
+   "w": "les",
+   "s": 4.86,
+   "e": 4.96
+  },
+  {
+   "w": "surveille",
+   "s": 5.02,
+   "e": 5.36
+  },
+  {
+   "w": "à",
+   "s": 5.4,
+   "e": 5.42
+  },
+  {
+   "w": "ta",
+   "s": 5.48,
+   "e": 5.56
+  },
+  {
+   "w": "place.",
+   "s": 5.64,
+   "e": 6.0
+  },
+  {
+   "w": "Si",
+   "s": 6.68,
+   "e": 6.82
+  },
+  {
+   "w": "une",
+   "s": 6.88,
+   "e": 7.02
+  },
+  {
+   "w": "pub",
+   "s": 7.04,
+   "e": 7.22
+  },
+  {
+   "w": "s'essouffle,",
+   "s": 7.26,
+   "e": 7.76
+  },
+  {
+   "w": "tu",
+   "s": 8.0,
+   "e": 8.1
+  },
+  {
+   "w": "reçois",
+   "s": 8.14,
+   "e": 8.44
+  },
+  {
+   "w": "une",
+   "s": 8.46,
+   "e": 8.58
+  },
+  {
+   "w": "alerte",
+   "s": 8.66,
+   "e": 8.94
+  },
+  {
+   "w": "sur",
+   "s": 9.0,
+   "e": 9.14
+  },
+  {
+   "w": "WhatsApp",
+   "s": 9.16,
+   "e": 9.64
+  },
+  {
+   "w": "avec",
+   "s": 10.06,
+   "e": 10.26
+  },
+  {
+   "w": "de",
+   "s": 10.3,
+   "e": 10.4
+  },
+  {
+   "w": "nouvelles",
+   "s": 10.44,
+   "e": 10.74
+  },
+  {
+   "w": "créas",
+   "s": 10.78,
+   "e": 11.06
+  },
+  {
+   "w": "prêtes.",
+   "s": 11.1,
+   "e": 11.46
+  },
+  {
+   "w": "Et",
+   "s": 12.02,
+   "e": 12.1
+  },
+  {
+   "w": "chaque",
+   "s": 12.14,
+   "e": 12.32
+  },
+  {
+   "w": "lundi,",
+   "s": 12.38,
+   "e": 12.7
+  },
+  {
+   "w": "ton",
+   "s": 13.04,
+   "e": 13.16
+  },
+  {
+   "w": "bilan",
+   "s": 13.2,
+   "e": 13.46
+  }
+ ],
+ "video": "fal/reply/aicha4-cut.mp4",
+ "total": 450,
+ "audio": "chatpub/reply4-voice.wav",
+ "bed": "chatpub/reply4-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "mode": "wa",
+ "cues": {
+  "look": 1.86,
+  "notif": 7.06,
+  "freq": 7.66,
+  "clic": 8.06,
+  "creas": 10.78,
+  "tap": 11.68,
+  "ready": 12.28,
+  "bilan": 13.2,
+  "scale": 0.86,
+  "cropTop": 242
+ },
+ "steps": [
+  [
+   "Surveillance",
+   "look"
+  ],
+  [
+   "Alerte WhatsApp",
+   "notif"
+  ],
+  [
+   "Créas prêtes",
+   "creas"
+  ],
+  [
+   "Bilan du lundi",
+   "bilan"
+  ]
+ ],
+ "punches": [
+  "ready"
+ ],
+ "bilan": true,
+ "alertAd": "Soldes hiver",
+ "comment": {
+  "user": "@karim_ecom",
+  "text": "J'ai pas le temps de surveiller mes pubs 😩",
+  "color": "#3B82F6",
+  "until": 1.56
+ }
+}

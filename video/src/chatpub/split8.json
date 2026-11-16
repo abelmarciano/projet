@@ -1,0 +1,217 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "actor": {
+  "name": "Adrien A.",
+  "img": "chat/actors/a180.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "words": [
+  {
+   "w": "Tu",
+   "s": 0.1,
+   "e": 0.18
+  },
+  {
+   "w": "postes",
+   "s": 0.28,
+   "e": 0.56
+  },
+  {
+   "w": "encore",
+   "s": 0.62,
+   "e": 0.86
+  },
+  {
+   "w": "à",
+   "s": 0.92,
+   "e": 0.94
+  },
+  {
+   "w": "la",
+   "s": 0.98,
+   "e": 1.04
+  },
+  {
+   "w": "main",
+   "s": 1.1,
+   "e": 1.22
+  },
+  {
+   "w": "tous",
+   "s": 1.6,
+   "e": 1.7
+  },
+  {
+   "w": "les",
+   "s": 1.72,
+   "e": 1.84
+  },
+  {
+   "w": "soirs.",
+   "s": 1.88,
+   "e": 2.18
+  },
+  {
+   "w": "Regarde,",
+   "s": 2.32,
+   "e": 2.7
+  },
+  {
+   "w": "mes",
+   "s": 2.94,
+   "e": 3.06
+  },
+  {
+   "w": "créas",
+   "s": 3.1,
+   "e": 3.32
+  },
+  {
+   "w": "Growthity",
+   "s": 3.38,
+   "e": 3.9
+  },
+  {
+   "w": "arrivent",
+   "s": 4.1,
+   "e": 4.42
+  },
+  {
+   "w": "direct",
+   "s": 4.48,
+   "e": 4.76
+  },
+  {
+   "w": "dans",
+   "s": 4.8,
+   "e": 4.88
+  },
+  {
+   "w": "le",
+   "s": 4.9,
+   "e": 4.94
+  },
+  {
+   "w": "calendrier.",
+   "s": 4.98,
+   "e": 5.48
+  },
+  {
+   "w": "Je",
+   "s": 6.1,
+   "e": 6.18
+  },
+  {
+   "w": "glisse,",
+   "s": 6.26,
+   "e": 6.62
+  },
+  {
+   "w": "je",
+   "s": 6.92,
+   "e": 7.04
+  },
+  {
+   "w": "choisis",
+   "s": 7.08,
+   "e": 7.4
+  },
+  {
+   "w": "l'heure.",
+   "s": 7.44,
+   "e": 7.72
+  },
+  {
+   "w": "Instagram,",
+   "s": 8.12,
+   "e": 8.7
+  },
+  {
+   "w": "Facebook,",
+   "s": 9.02,
+   "e": 9.5
+  },
+  {
+   "w": "TikTok.",
+   "s": 9.82,
+   "e": 10.28
+  },
+  {
+   "w": "Et",
+   "s": 10.86,
+   "e": 10.92
+  },
+  {
+   "w": "tout",
+   "s": 11.08,
+   "e": 11.2
+  },
+  {
+   "w": "mon",
+   "s": 11.24,
+   "e": 11.34
+  },
+  {
+   "w": "mois",
+   "s": 11.38,
+   "e": 11.52
+  },
+  {
+   "w": "est",
+   "s": 11.54,
+   "e": 11.62
+  },
+  {
+   "w": "programmé",
+   "s": 11.64,
+   "e": 12.04
+  }
+ ],
+ "video": "fal/split/adrien8-cut.mp4",
+ "total": 402,
+ "audio": "chatpub/split8-voice.wav",
+ "bed": "chatpub/split8-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "mode": "cal",
+ "cues": {
+  "look": 2.32,
+  "lib": 3.1,
+  "drag": 6.26,
+  "hour": 7.44,
+  "n1": 8.12,
+  "n2": 9.02,
+  "n3": 9.82,
+  "month": 11.08,
+  "ready": 11.64,
+  "scale": 0.86,
+  "cropTop": 346
+ },
+ "steps": [
+  [
+   "Tes créas",
+   "lib"
+  ],
+  [
+   "Glissée",
+   "drag"
+  ],
+  [
+   "Heure choisie",
+   "hour"
+  ],
+  [
+   "3 réseaux",
+   "n3"
+  ],
+  [
+   "Mois programmé",
+   "ready"
+  ]
+ ],
+ "punches": [
+  "ready"
+ ]
+}

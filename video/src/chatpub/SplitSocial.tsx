@@ -100,9 +100,9 @@ const WaWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
   const ads = cfg.newAds ?? ['chat/batch/g2.png', 'chat/jwel/nb2.png', 'chat/batch/g4.png'];
   const press = f >= tap && f < tap + 8;
   // scroll quand la conversation s'allonge
-  const scroll = interpolate(f, [ready - 6, ready + 10, bilan - 6, bilan + 10], [0, 120, 120, cfg.bilan ? 300 : 120], clamp);
+  const scroll = interpolate(f, [ready - 6, ready + 10, bilan - 6, bilan + 10], [0, 110, 110, cfg.bilan ? 260 : 110], clamp);
   return (
-    <div style={{position: 'absolute', left: 270, top: 70, width: 540, height: 900, borderRadius: 64, background: '#0B0A0C', padding: 12, boxShadow: '0 40px 90px -30px rgba(15,23,42,0.6)', fontFamily: FONT}}>
+    <div style={{position: 'absolute', left: 270, top: 100, width: 540, height: 860, borderRadius: 64, background: '#0B0A0C', padding: 12, boxShadow: '0 40px 90px -30px rgba(15,23,42,0.6)', fontFamily: FONT}}>
       <div style={{width: '100%', height: '100%', borderRadius: 52, overflow: 'hidden', background: '#ECE5DD', display: 'flex', flexDirection: 'column'}}>
         <div style={{background: '#075E54', color: '#fff', padding: '34px 22px 16px', display: 'flex', alignItems: 'center', gap: 12, zIndex: 2}}>
           <div style={{width: 50, height: 50, borderRadius: 25, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><Logo s={30} /></div>
@@ -110,6 +110,7 @@ const WaWindow: React.FC<{cfg: SplitCfg}> = ({cfg: base}) => {
         </div>
         <div style={{flex: 1, overflow: 'hidden', position: 'relative'}}>
           <div style={{position: 'absolute', left: 0, right: 0, top: 0, padding: 16, display: 'flex', flexDirection: 'column', gap: 12, transform: `translateY(${-scroll}px)`}}>
+            <div style={{alignSelf: 'center', padding: '4px 12px', borderRadius: 8, background: '#E1F2FB', fontSize: 16, fontWeight: 600, color: '#4B5563'}}>Aujourd’hui</div>
             <Bubble f={f} at={notif} time="09:02">⚠️ Ta pub <b>« {cfg.alertAd ?? 'Bracelet trèfle'} »</b> s’essouffle : <span style={hl(freq)}>fréquence en hausse</span>, <span style={hl(clic)}>clics en baisse</span>.</Bubble>
             {f >= creas && (
               <Bubble f={f} at={creas} time="09:02">

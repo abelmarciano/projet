@@ -1,0 +1,238 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "actor": {
+  "name": "Aïcha B.",
+  "img": "chat/reply/actrice.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "words": [
+  {
+   "w": "Et",
+   "s": 0.1,
+   "e": 0.18
+  },
+  {
+   "w": "après,",
+   "s": 0.26,
+   "e": 0.6
+  },
+  {
+   "w": "je",
+   "s": 0.98,
+   "e": 1.04
+  },
+  {
+   "w": "dois",
+   "s": 1.08,
+   "e": 1.26
+  },
+  {
+   "w": "poster",
+   "s": 1.3,
+   "e": 1.62
+  },
+  {
+   "w": "moi-même ?",
+   "s": 1.66,
+   "e": 2.08
+  },
+  {
+   "w": "Non.",
+   "s": 2.5,
+   "e": 2.98
+  },
+  {
+   "w": "Tes",
+   "s": 3.76,
+   "e": 3.94
+  },
+  {
+   "w": "pubs",
+   "s": 3.98,
+   "e": 4.36
+  },
+  {
+   "w": "et",
+   "s": 4.4,
+   "e": 4.46
+  },
+  {
+   "w": "tes",
+   "s": 4.52,
+   "e": 4.68
+  },
+  {
+   "w": "posts,",
+   "s": 4.72,
+   "e": 5.02
+  },
+  {
+   "w": "tu",
+   "s": 5.2,
+   "e": 5.28
+  },
+  {
+   "w": "les",
+   "s": 5.32,
+   "e": 5.42
+  },
+  {
+   "w": "programmes",
+   "s": 5.46,
+   "e": 5.98
+  },
+  {
+   "w": "direct",
+   "s": 6.04,
+   "e": 6.38
+  },
+  {
+   "w": "dans",
+   "s": 6.42,
+   "e": 6.54
+  },
+  {
+   "w": "Growthity.",
+   "s": 6.56,
+   "e": 7.1
+  },
+  {
+   "w": "Tu",
+   "s": 7.58,
+   "e": 7.68
+  },
+  {
+   "w": "choisis",
+   "s": 7.7,
+   "e": 8.1
+  },
+  {
+   "w": "le",
+   "s": 8.46,
+   "e": 8.56
+  },
+  {
+   "w": "jour,",
+   "s": 8.68,
+   "e": 8.96
+  },
+  {
+   "w": "l'heure,",
+   "s": 9.24,
+   "e": 9.56
+  },
+  {
+   "w": "les",
+   "s": 9.9,
+   "e": 10.0
+  },
+  {
+   "w": "réseaux",
+   "s": 10.06,
+   "e": 10.42
+  },
+  {
+   "w": "et",
+   "s": 11.02,
+   "e": 11.08
+  },
+  {
+   "w": "ça",
+   "s": 11.14,
+   "e": 11.2
+  },
+  {
+   "w": "part",
+   "s": 11.28,
+   "e": 11.42
+  },
+  {
+   "w": "tout",
+   "s": 11.46,
+   "e": 11.58
+  },
+  {
+   "w": "seul.",
+   "s": 11.62,
+   "e": 11.88
+  },
+  {
+   "w": "Toi,",
+   "s": 12.62,
+   "e": 12.74
+  },
+  {
+   "w": "tu",
+   "s": 12.8,
+   "e": 12.88
+  },
+  {
+   "w": "fais",
+   "s": 12.96,
+   "e": 13.04
+  },
+  {
+   "w": "autre",
+   "s": 13.06,
+   "e": 13.2
+  },
+  {
+   "w": "chose",
+   "s": 13.22,
+   "e": 13.56
+  }
+ ],
+ "video": "fal/reply/aicha3-cut.mp4",
+ "total": 450,
+ "audio": "chatpub/reply3-voice.wav",
+ "bed": "chatpub/reply3-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "mode": "cal",
+ "cues": {
+  "look": 2.5,
+  "lib": 3.98,
+  "drag": 5.46,
+  "hour": 9.24,
+  "n1": 8.68,
+  "n2": 9.44,
+  "n3": 10.06,
+  "month": 11.28,
+  "ready": 11.62,
+  "scale": 0.86,
+  "cropTop": 242
+ },
+ "steps": [
+  [
+   "Tes posts",
+   "lib"
+  ],
+  [
+   "Programmés",
+   "drag"
+  ],
+  [
+   "Jour et heure",
+   "hour"
+  ],
+  [
+   "Tes réseaux",
+   "n3"
+  ],
+  [
+   "Ça part tout seul",
+   "ready"
+  ]
+ ],
+ "punches": [
+  "ready"
+ ],
+ "comment": {
+  "user": "@julie.shop",
+  "text": "Et après, je dois poster moi-même ? 😅",
+  "color": "#EC4899",
+  "until": 2.2
+ }
+}

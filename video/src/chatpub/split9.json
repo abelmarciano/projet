@@ -1,0 +1,221 @@
+{
+ "seam": 1000,
+ "brand": "Growthity",
+ "actor": {
+  "name": "Adrien A.",
+  "img": "chat/actors/a180.jpg",
+  "style": "Lifestyle · face caméra"
+ },
+ "words": [
+  {
+   "w": "Ma",
+   "s": 0.14,
+   "e": 0.2
+  },
+  {
+   "w": "pub",
+   "s": 0.3,
+   "e": 0.48
+  },
+  {
+   "w": "commençait",
+   "s": 0.54,
+   "e": 0.86
+  },
+  {
+   "w": "à",
+   "s": 0.88,
+   "e": 0.94
+  },
+  {
+   "w": "s'essouffler",
+   "s": 0.96,
+   "e": 1.4
+  },
+  {
+   "w": "et",
+   "s": 1.82,
+   "e": 1.88
+  },
+  {
+   "w": "j'ai",
+   "s": 1.9,
+   "e": 2.0
+  },
+  {
+   "w": "même",
+   "s": 2.04,
+   "e": 2.18
+  },
+  {
+   "w": "pas",
+   "s": 2.2,
+   "e": 2.28
+  },
+  {
+   "w": "ouvert",
+   "s": 2.3,
+   "e": 2.5
+  },
+  {
+   "w": "le",
+   "s": 2.52,
+   "e": 2.6
+  },
+  {
+   "w": "gestionnaire.",
+   "s": 2.64,
+   "e": 3.12
+  },
+  {
+   "w": "Growthity",
+   "s": 3.42,
+   "e": 3.9
+  },
+  {
+   "w": "m'a",
+   "s": 3.94,
+   "e": 4.02
+  },
+  {
+   "w": "écrit",
+   "s": 4.08,
+   "e": 4.44
+  },
+  {
+   "w": "sur",
+   "s": 4.5,
+   "e": 4.62
+  },
+  {
+   "w": "WhatsApp.",
+   "s": 4.64,
+   "e": 5.08
+  },
+  {
+   "w": "Fréquence",
+   "s": 5.8,
+   "e": 6.18
+  },
+  {
+   "w": "en",
+   "s": 6.24,
+   "e": 6.32
+  },
+  {
+   "w": "hausse,",
+   "s": 6.34,
+   "e": 6.62
+  },
+  {
+   "w": "clics",
+   "s": 7.14,
+   "e": 7.34
+  },
+  {
+   "w": "en",
+   "s": 7.38,
+   "e": 7.48
+  },
+  {
+   "w": "baisse",
+   "s": 7.5,
+   "e": 7.82
+  },
+  {
+   "w": "et",
+   "s": 8.36,
+   "e": 8.46
+  },
+  {
+   "w": "trois",
+   "s": 8.52,
+   "e": 8.7
+  },
+  {
+   "w": "nouvelles",
+   "s": 8.74,
+   "e": 9.0
+  },
+  {
+   "w": "créas",
+   "s": 9.04,
+   "e": 9.3
+  },
+  {
+   "w": "prêtes.",
+   "s": 9.32,
+   "e": 9.64
+  },
+  {
+   "w": "Un",
+   "s": 10.76,
+   "e": 10.88
+  },
+  {
+   "w": "clic",
+   "s": 10.92,
+   "e": 11.18
+  },
+  {
+   "w": "et",
+   "s": 11.46,
+   "e": 11.52
+  },
+  {
+   "w": "c'est",
+   "s": 11.56,
+   "e": 11.66
+  },
+  {
+   "w": "remplacé",
+   "s": 11.68,
+   "e": 12.08
+  }
+ ],
+ "video": "fal/split/adrien9-cut.mp4",
+ "total": 400,
+ "audio": "chatpub/split9-voice.wav",
+ "bed": "chatpub/split9-bed.wav",
+ "prompt": "",
+ "adVideo": "",
+ "script": [],
+ "mode": "wa",
+ "cues": {
+  "look": 0.3,
+  "notif": 3.42,
+  "freq": 5.8,
+  "clic": 7.14,
+  "creas": 9.04,
+  "tap": 10.92,
+  "ready": 11.68,
+  "scale": 0.86,
+  "cropTop": 346
+ },
+ "steps": [
+  [
+   "Alerte WhatsApp",
+   "notif"
+  ],
+  [
+   "Fréquence ↑",
+   "freq"
+  ],
+  [
+   "Clics ↓",
+   "clic"
+  ],
+  [
+   "3 créas prêtes",
+   "creas"
+  ],
+  [
+   "Remplacée",
+   "ready"
+  ]
+ ],
+ "punches": [
+  "ready"
+ ],
+ "alertAd": "Bougie ambre"
+}
