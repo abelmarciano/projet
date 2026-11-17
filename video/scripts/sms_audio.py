@@ -7,8 +7,8 @@ g = {'__file__': __file__}
 exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'click', 'chime', 'pop_sfx', 'rng'])
 C = json.load(open('src/sms/sms.json'))
-MSGS = [(False, 44, 'video'), (False, 176, ''), (True, 198, ''), (False, 214, ''), (True, 230, ''), (False, 244, ''), (True, 258, ''), (False, 274, ''), (True, 304, 'g'), (False, 328, ''), (True, 346, ''), (False, 372, ''), (True, 392, 'link')]
-T = dict(open=36, zoom=430, end=444, total=534)
+MSGS = [(False, 44, 'video'), (False, 140, ''), (True, 162, ''), (False, 178, ''), (True, 194, ''), (False, 208, ''), (True, 222, ''), (False, 238, ''), (True, 268, 'g'), (False, 292, ''), (True, 310, ''), (False, 336, ''), (True, 356, 'link')]
+T = dict(open=36, zoom=394, end=408, total=498)
 AD = round((C['ad']['to'] - C['ad']['from']) * 30)
 s = lambda k: T[k] / 30
 n = int(s('total') * SR) + SR

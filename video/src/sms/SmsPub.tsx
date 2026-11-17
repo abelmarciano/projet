@@ -26,20 +26,20 @@ type Msg = {me: boolean; at: number; t?: string; kind?: 'video' | 'growthity' | 
 const VID_H = 900;
 export const MSGS: Msg[] = [
   {me: false, at: 44, kind: 'video', h: VID_H + 20},
-  {me: false, at: 176, t: 'Attends… c’est toi qui l’as faite ??', h: 120, typing: 12},
-  {me: true, at: 198, t: 'Oui.', h: 110},
-  {me: false, at: 214, t: 'T’as payé une agence ?', h: 110, typing: 8},
-  {me: true, at: 230, t: 'Non.', h: 110},
-  {me: false, at: 244, t: 'Un monteur ?', h: 110, typing: 6},
-  {me: true, at: 258, t: 'Non plus.', h: 110},
-  {me: false, at: 274, t: 'MAIS COMMENT', h: 110, typing: 6},
-  {me: true, at: 304, kind: 'growthity', t: 'Une phrase dans Growthity.', h: 130, typing: 18},
-  {me: false, at: 328, t: 'attends QUOI', h: 110, typing: 6},
-  {me: true, at: 346, t: 'Et elle tourne déjà sur Insta et Facebook.', h: 180},
-  {me: false, at: 372, t: 'envoie le lien stp', h: 110, typing: 8},
-  {me: true, at: 392, kind: 'link', h: 420},
+  {me: false, at: 140, t: 'Attends… c’est toi qui l’as faite ??', h: 120, typing: 12},
+  {me: true, at: 162, t: 'Oui.', h: 110},
+  {me: false, at: 178, t: 'T’as payé une agence ?', h: 110, typing: 8},
+  {me: true, at: 194, t: 'Non.', h: 110},
+  {me: false, at: 208, t: 'Un monteur ?', h: 110, typing: 6},
+  {me: true, at: 222, t: 'Non plus.', h: 110},
+  {me: false, at: 238, t: 'MAIS COMMENT', h: 110, typing: 6},
+  {me: true, at: 268, kind: 'growthity', t: 'Une phrase dans Growthity.', h: 130, typing: 18},
+  {me: false, at: 292, t: 'attends QUOI', h: 110, typing: 6},
+  {me: true, at: 310, t: 'Et elle tourne déjà sur Insta et Facebook.', h: 180},
+  {me: false, at: 336, t: 'envoie le lien stp', h: 110, typing: 8},
+  {me: true, at: 356, kind: 'link', h: 420},
 ];
-export const T = {lock: 0, open: 36, zoom: 430, end: 444, total: 534};
+export const T = {lock: 0, open: 36, zoom: 394, end: 408, total: 498};
 export const VO = {1: T.end + 6} as Record<number, number>;
 const TOP = 230, BOTTOM = 1400, GAP = 18;
 
@@ -91,7 +91,7 @@ const Bubble: React.FC<{m: Msg; f: number}> = ({m, f}) => {
         <Sequence from={m.at} layout="none">
           <OffthreadVideo src={staticFile(C.clip)} startFrom={Math.round(C.ad.from * 30)} volume={(fr) => (fr < Math.round((C.ad.to - C.ad.from) * 30) ? 1 : Math.max(0, 1 - (fr - Math.round((C.ad.to - C.ad.from) * 30)) / 6))} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
         </Sequence>
-        <div style={{position: 'absolute', left: 20, top: 20, padding: '8px 16px', borderRadius: 99, background: 'rgba(0,0,0,0.45)', color: '#fff', fontSize: 22, fontWeight: 700}}>barberclub.paris · Sponsorisé</div>
+        <div style={{position: 'absolute', left: 20, top: 20, padding: '8px 16px', borderRadius: 99, background: 'rgba(0,0,0,0.45)', color: '#fff', fontSize: 22, fontWeight: 700}}>lafriperie.paris · Sponsorisé</div>
         <div style={{position: 'absolute', left: 20, right: 20, top: '66%', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8}}>
           {caps.map((w, i) => <span key={`${w.s}`} style={{fontWeight: 900, fontSize: 44, textTransform: 'uppercase', color: '#fff', padding: '0 10px', borderRadius: 10, background: i === caps.length - 1 ? GRAD : 'transparent', textShadow: '0 4px 16px rgba(0,0,0,0.6)'}}>{w.w.replace(/[.,!?…]+$/, '')}</span>)}
         </div>
