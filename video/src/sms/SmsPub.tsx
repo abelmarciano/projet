@@ -23,24 +23,24 @@ const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 const sp = (f: number, d = 13, m = 0.6) => spring({frame: f, fps: 30, config: {damping: d, mass: m, stiffness: 200}});
 
 type Msg = {me: boolean; at: number; t?: string; kind?: 'video' | 'growthity' | 'link'; h: number; typing?: number; punch?: boolean};
-const RATE = 1.15; // pub légèrement accélérée
+const RATE = 1.25; // pub légèrement accélérée
 const VID_H = 900;
 export const MSGS: Msg[] = [
-  {me: false, at: 26, kind: 'video', h: VID_H + 20},
-  {me: false, at: 104, t: 'Attends… c’est toi qui l’as faite\u00a0??', h: 120, typing: 6},
-  {me: true, at: 116, t: 'Oui.', h: 110},
-  {me: false, at: 128, t: 'T’as payé une agence ?', h: 110, typing: 4},
-  {me: true, at: 138, t: 'Non.', h: 110},
-  {me: false, at: 148, t: 'Un monteur ?', h: 110, typing: 4},
-  {me: true, at: 158, t: 'Non plus.', h: 110},
-  {me: false, at: 170, t: 'MAIS COMMENT', h: 110, typing: 4, punch: true},
-  {me: true, at: 186, kind: 'growthity', t: 'Une phrase dans Growthity.', h: 130, typing: 10, punch: true},
-  {me: false, at: 198, t: 'attends QUOI', h: 110, typing: 4, punch: true},
-  {me: true, at: 212, t: 'Et elle tourne déjà sur Insta et Facebook.', h: 180},
-  {me: false, at: 226, t: 'envoie le lien stp', h: 110, typing: 4},
-  {me: true, at: 238, kind: 'link', h: 420},
+  {me: false, at: 44, kind: 'video', h: VID_H + 20},
+  {me: false, at: 120, t: 'Attends… c’est toi qui l’as faite\u00a0??', h: 120, typing: 12},
+  {me: true, at: 142, t: 'Oui.', h: 110},
+  {me: false, at: 158, t: 'T’as payé une agence ?', h: 110, typing: 8},
+  {me: true, at: 174, t: 'Non.', h: 110},
+  {me: false, at: 188, t: 'Un monteur ?', h: 110, typing: 6},
+  {me: true, at: 202, t: 'Non plus.', h: 110},
+  {me: false, at: 218, t: 'MAIS COMMENT', h: 110, typing: 6},
+  {me: true, at: 248, kind: 'growthity', t: 'Une phrase dans Growthity.', h: 130, typing: 18},
+  {me: false, at: 272, t: 'attends QUOI', h: 110, typing: 6},
+  {me: true, at: 290, t: 'Et elle tourne déjà sur Insta et Facebook.', h: 180},
+  {me: false, at: 316, t: 'envoie le lien stp', h: 110, typing: 8},
+  {me: true, at: 336, kind: 'link', h: 420},
 ];
-export const T = {lock: 0, open: 22, zoom: 262, end: 274, total: 364};
+export const T = {lock: 0, open: 36, zoom: 374, end: 388, total: 478};
 export const VO = {1: T.end + 6} as Record<number, number>;
 const TOP = 230, BOTTOM = 1400, GAP = 18;
 
@@ -54,9 +54,9 @@ const useFonts = () => {
 // ---------- écran verrouillé ----------
 const Lock: React.FC = () => {
   const f = useCurrentFrame();
-  const n1 = sp(f - 3, 12), n2 = sp(f - 11, 12);
-  const tap = f >= 17 && f < 21;
-  const out = prog(f, T.open - 4, 6, INOUT);
+  const n1 = sp(f - 6, 12), n2 = sp(f - 20, 12);
+  const tap = f >= 30 && f < 34;
+  const out = prog(f, T.open - 4, 8, INOUT);
   const Notif: React.FC<{p: number; top: number; title: string; text: string}> = ({p, top, title, text}) => (
     <div style={{position: 'absolute', left: 40, right: 40, top, padding: '26px 28px', borderRadius: 36, background: 'rgba(255,255,255,0.86)', backdropFilter: 'blur(20px)', boxShadow: '0 30px 60px -30px rgba(11,10,31,0.45)', display: 'flex', gap: 20, alignItems: 'flex-start', transform: `translateY(${(1 - p) * -260}px) scale(${tap && top < 600 ? 0.97 : 1})`, opacity: Math.min(1, p * 1.5)}}>
       <div style={{width: 84, height: 84, borderRadius: 22, background: 'linear-gradient(160deg,#5FE07A,#22B24C)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0}}>
@@ -142,7 +142,7 @@ const Typing: React.FC<{me: boolean; f: number}> = ({me, f}) => (
 
 const Chat: React.FC = () => {
   const f = useCurrentFrame();
-  const inP = prog(f, T.open, 8, EXPO);
+  const inP = prog(f, T.open, 12, EXPO);
   const shown = MSGS.filter((m) => f >= m.at);
   const typingMsg = MSGS.find((m) => m.typing && f >= m.at - m.typing && f < m.at);
   // positions et défilement automatique (le bas du contenu reste au-dessus de BOTTOM)
@@ -153,14 +153,10 @@ const Chat: React.FC = () => {
     return Math.max(0, TOP + contentH(k) + typ - BOTTOM);
   };
   // lissage : moyenne du défilement visé sur les 5 dernières images
-  const off = [0, 1, 2].reduce((a, d) => a + target(f - d), 0) / 3;
-  const lastPunch = MSGS.filter((m) => m.punch && f >= m.at).pop();
-  const pk = lastPunch ? f - lastPunch.at : 99;
-  const shake = pk < 8 ? Math.sin(pk * 3.3) * 14 * (1 - pk / 8) : 0;
-  const punchS = pk < 8 ? 1 + 0.04 * (1 - pk / 8) : 1;
+  const off = [0, 1, 2, 3, 4].reduce((a, d) => a + target(f - d), 0) / 5;
   const zoom = prog(f, T.zoom, 14, INOUT);
   return (
-    <AbsoluteFill style={{background: '#fff', opacity: inP, transform: `scale(${(1.08 - 0.08 * inP) * punchS}) translate(${shake}px, ${shake * 0.4}px)`}}>
+    <AbsoluteFill style={{background: '#fff', opacity: inP, transform: `scale(${1.08 - 0.08 * inP})`}}>
       <div style={{position: 'absolute', left: 0, right: 0, top: TOP - off, opacity: 1 - zoom}}>
         {shown.map((m, i) => (
           <div key={i} style={{position: 'absolute', left: 0, right: 0, top: contentH(MSGS.indexOf(m)), display: 'flex', justifyContent: m.me ? 'flex-end' : 'flex-start', padding: '0 40px'}}>
