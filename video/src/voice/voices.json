@@ -1962,5 +1962,37 @@
   "style": 0.5,
   "speed": 1.12,
   "text": "[confident] Grossiti. Fais la pub qui arrête le scroll."
+ },
+ "rw-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.1,
+  "text": "[whispers] Attends… on rembobine."
+ },
+ "rw-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.1,
+  "text": "[intrigued] Tout part d'une seule phrase."
+ },
+ "rw-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.1,
+  "text": "[excited] Script, acteur, voix, montage, formats… Grossiti fait tout."
+ },
+ "rw-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.1,
+  "text": "[confident] Grossiti. Une phrase, c'est tout."
  }
 }
