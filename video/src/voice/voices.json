@@ -1930,5 +1930,37 @@
   "style": 0.45,
   "speed": 1.06,
   "text": "[confident] Grossiti. Tes mots deviennent des pubs."
+ },
+ "scroll-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.12,
+  "text": "[urgent] Dans le fil, tu as une seconde."
+ },
+ "scroll-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.12,
+  "text": "[excited] Une phrase suffit. Peu importe ce que tu vends."
+ },
+ "scroll-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.12,
+  "text": "[excited] Tous les formats. En ligne sur Meta."
+ },
+ "scroll-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.5,
+  "speed": 1.12,
+  "text": "[confident] Grossiti. Fais la pub qui arrête le scroll."
  }
 }
