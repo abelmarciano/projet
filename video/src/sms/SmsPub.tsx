@@ -22,24 +22,25 @@ const FONT = 'Inter, system-ui, sans-serif';
 const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 const sp = (f: number, d = 13, m = 0.6) => spring({frame: f, fps: 30, config: {damping: d, mass: m, stiffness: 200}});
 
-type Msg = {me: boolean; at: number; t?: string; kind?: 'video' | 'growthity' | 'link'; h: number; typing?: number};
+type Msg = {me: boolean; at: number; t?: string; kind?: 'video' | 'growthity' | 'link'; h: number; typing?: number; punch?: boolean};
+const RATE = 1.15; // pub légèrement accélérée
 const VID_H = 900;
 export const MSGS: Msg[] = [
-  {me: false, at: 44, kind: 'video', h: VID_H + 20},
-  {me: false, at: 140, t: 'Attends… c’est toi qui l’as faite ??', h: 120, typing: 12},
-  {me: true, at: 162, t: 'Oui.', h: 110},
-  {me: false, at: 178, t: 'T’as payé une agence ?', h: 110, typing: 8},
-  {me: true, at: 194, t: 'Non.', h: 110},
-  {me: false, at: 208, t: 'Un monteur ?', h: 110, typing: 6},
-  {me: true, at: 222, t: 'Non plus.', h: 110},
-  {me: false, at: 238, t: 'MAIS COMMENT', h: 110, typing: 6},
-  {me: true, at: 268, kind: 'growthity', t: 'Une phrase dans Growthity.', h: 130, typing: 18},
-  {me: false, at: 292, t: 'attends QUOI', h: 110, typing: 6},
-  {me: true, at: 310, t: 'Et elle tourne déjà sur Insta et Facebook.', h: 180},
-  {me: false, at: 336, t: 'envoie le lien stp', h: 110, typing: 8},
-  {me: true, at: 356, kind: 'link', h: 420},
+  {me: false, at: 26, kind: 'video', h: VID_H + 20},
+  {me: false, at: 104, t: 'Attends… c’est toi qui l’as faite\u00a0??', h: 120, typing: 6},
+  {me: true, at: 116, t: 'Oui.', h: 110},
+  {me: false, at: 128, t: 'T’as payé une agence ?', h: 110, typing: 4},
+  {me: true, at: 138, t: 'Non.', h: 110},
+  {me: false, at: 148, t: 'Un monteur ?', h: 110, typing: 4},
+  {me: true, at: 158, t: 'Non plus.', h: 110},
+  {me: false, at: 170, t: 'MAIS COMMENT', h: 110, typing: 4, punch: true},
+  {me: true, at: 186, kind: 'growthity', t: 'Une phrase dans Growthity.', h: 130, typing: 10, punch: true},
+  {me: false, at: 198, t: 'attends QUOI', h: 110, typing: 4, punch: true},
+  {me: true, at: 212, t: 'Et elle tourne déjà sur Insta et Facebook.', h: 180},
+  {me: false, at: 226, t: 'envoie le lien stp', h: 110, typing: 4},
+  {me: true, at: 238, kind: 'link', h: 420},
 ];
-export const T = {lock: 0, open: 36, zoom: 394, end: 408, total: 498};
+export const T = {lock: 0, open: 22, zoom: 262, end: 274, total: 364};
 export const VO = {1: T.end + 6} as Record<number, number>;
 const TOP = 230, BOTTOM = 1400, GAP = 18;
 
@@ -53,9 +54,9 @@ const useFonts = () => {
 // ---------- écran verrouillé ----------
 const Lock: React.FC = () => {
   const f = useCurrentFrame();
-  const n1 = sp(f - 6, 12), n2 = sp(f - 20, 12);
-  const tap = f >= 30 && f < 34;
-  const out = prog(f, T.open - 4, 8, INOUT);
+  const n1 = sp(f - 3, 12), n2 = sp(f - 11, 12);
+  const tap = f >= 17 && f < 21;
+  const out = prog(f, T.open - 4, 6, INOUT);
   const Notif: React.FC<{p: number; top: number; title: string; text: string}> = ({p, top, title, text}) => (
     <div style={{position: 'absolute', left: 40, right: 40, top, padding: '26px 28px', borderRadius: 36, background: 'rgba(255,255,255,0.86)', backdropFilter: 'blur(20px)', boxShadow: '0 30px 60px -30px rgba(11,10,31,0.45)', display: 'flex', gap: 20, alignItems: 'flex-start', transform: `translateY(${(1 - p) * -260}px) scale(${tap && top < 600 ? 0.97 : 1})`, opacity: Math.min(1, p * 1.5)}}>
       <div style={{width: 84, height: 84, borderRadius: 22, background: 'linear-gradient(160deg,#5FE07A,#22B24C)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0}}>
@@ -79,18 +80,27 @@ const Lock: React.FC = () => {
   );
 };
 
+// ---------- grain « filmé au téléphone » ----------
+const Grain: React.FC<{f: number}> = ({f}) => (
+  <svg width="100%" height="100%" style={{position: 'absolute', inset: 0, opacity: 0.16, mixBlendMode: 'overlay', pointerEvents: 'none'}}>
+    <filter id={`g${f % 4}`}><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed={f % 4} /></filter>
+    <rect width="100%" height="100%" filter={`url(#g${f % 4})`} />
+  </svg>
+);
+
 // ---------- conversation ----------
 const Bubble: React.FC<{m: Msg; f: number}> = ({m, f}) => {
   const p = sp(f - m.at, 12, 0.5);
   const base: React.CSSProperties = {maxWidth: 800, padding: '24px 32px', borderRadius: 40, fontFamily: FONT, fontWeight: 600, fontSize: 46, lineHeight: 1.25, transform: `scale(${0.6 + 0.4 * p})`, transformOrigin: m.me ? 'right bottom' : 'left bottom', opacity: Math.min(1, p * 2)};
   if (m.kind === 'video') {
-    const t = Math.max(0, f - m.at) / 30;
+    const t = (Math.max(0, f - m.at) / 30) * RATE;
     const caps = C.caps.filter((w) => t >= w.s - 0.03 && t < w.e + 0.4).slice(-3);
     return (
       <div style={{...base, padding: 0, width: 506, height: VID_H, borderRadius: 40, overflow: 'hidden', position: 'relative', background: '#000'}}>
         <Sequence from={m.at} layout="none">
-          <OffthreadVideo src={staticFile(C.clip)} startFrom={Math.round(C.ad.from * 30)} volume={(fr) => (fr < Math.round((C.ad.to - C.ad.from) * 30) ? 1 : Math.max(0, 1 - (fr - Math.round((C.ad.to - C.ad.from) * 30)) / 6))} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+          <OffthreadVideo src={staticFile(C.clip)} startFrom={Math.round(C.ad.from * 30)} playbackRate={RATE} volume={(fr) => { const n = Math.round(((C.ad.to - C.ad.from) * 30) / RATE); return fr < n ? 1 : Math.max(0, 1 - (fr - n) / 5); }} style={{width: '100%', height: '100%', objectFit: 'cover', filter: 'saturate(0.88) contrast(1.06) brightness(1.02)', transform: `scale(1.06) translate(${Math.sin(f / 7) * 4}px, ${Math.cos(f / 9) * 5}px) rotate(${Math.sin(f / 11) * 0.4}deg)`}} />
         </Sequence>
+        <Grain f={f} />
         <div style={{position: 'absolute', left: 20, top: 20, padding: '8px 16px', borderRadius: 99, background: 'rgba(0,0,0,0.45)', color: '#fff', fontSize: 22, fontWeight: 700}}>lafriperie.paris · Sponsorisé</div>
         <div style={{position: 'absolute', left: 20, right: 20, top: '66%', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8}}>
           {caps.map((w, i) => <span key={`${w.s}`} style={{fontWeight: 900, fontSize: 44, textTransform: 'uppercase', color: '#fff', padding: '0 10px', borderRadius: 10, background: i === caps.length - 1 ? GRAD : 'transparent', textShadow: '0 4px 16px rgba(0,0,0,0.6)'}}>{w.w.replace(/[.,!?…]+$/, '')}</span>)}
@@ -132,7 +142,7 @@ const Typing: React.FC<{me: boolean; f: number}> = ({me, f}) => (
 
 const Chat: React.FC = () => {
   const f = useCurrentFrame();
-  const inP = prog(f, T.open, 12, EXPO);
+  const inP = prog(f, T.open, 8, EXPO);
   const shown = MSGS.filter((m) => f >= m.at);
   const typingMsg = MSGS.find((m) => m.typing && f >= m.at - m.typing && f < m.at);
   // positions et défilement automatique (le bas du contenu reste au-dessus de BOTTOM)
@@ -143,10 +153,14 @@ const Chat: React.FC = () => {
     return Math.max(0, TOP + contentH(k) + typ - BOTTOM);
   };
   // lissage : moyenne du défilement visé sur les 5 dernières images
-  const off = [0, 1, 2, 3, 4].reduce((a, d) => a + target(f - d), 0) / 5;
+  const off = [0, 1, 2].reduce((a, d) => a + target(f - d), 0) / 3;
+  const lastPunch = MSGS.filter((m) => m.punch && f >= m.at).pop();
+  const pk = lastPunch ? f - lastPunch.at : 99;
+  const shake = pk < 8 ? Math.sin(pk * 3.3) * 14 * (1 - pk / 8) : 0;
+  const punchS = pk < 8 ? 1 + 0.04 * (1 - pk / 8) : 1;
   const zoom = prog(f, T.zoom, 14, INOUT);
   return (
-    <AbsoluteFill style={{background: '#fff', opacity: inP, transform: `scale(${1.08 - 0.08 * inP})`}}>
+    <AbsoluteFill style={{background: '#fff', opacity: inP, transform: `scale(${(1.08 - 0.08 * inP) * punchS}) translate(${shake}px, ${shake * 0.4}px)`}}>
       <div style={{position: 'absolute', left: 0, right: 0, top: TOP - off, opacity: 1 - zoom}}>
         {shown.map((m, i) => (
           <div key={i} style={{position: 'absolute', left: 0, right: 0, top: contentH(MSGS.indexOf(m)), display: 'flex', justifyContent: m.me ? 'flex-end' : 'flex-start', padding: '0 40px'}}>

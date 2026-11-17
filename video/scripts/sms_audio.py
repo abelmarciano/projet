@@ -7,9 +7,9 @@ g = {'__file__': __file__}
 exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'click', 'chime', 'pop_sfx', 'rng'])
 C = json.load(open('src/sms/sms.json'))
-MSGS = [(False, 44, 'video'), (False, 140, ''), (True, 162, ''), (False, 178, ''), (True, 194, ''), (False, 208, ''), (True, 222, ''), (False, 238, ''), (True, 268, 'g'), (False, 292, ''), (True, 310, ''), (False, 336, ''), (True, 356, 'link')]
-T = dict(open=36, zoom=394, end=408, total=498)
-AD = round((C['ad']['to'] - C['ad']['from']) * 30)
+MSGS = [(False, 26, 'video'), (False, 104, ''), (True, 116, ''), (False, 128, ''), (True, 138, ''), (False, 148, ''), (True, 158, ''), (False, 170, 'p'), (True, 186, 'g'), (False, 198, 'p'), (True, 212, ''), (False, 226, ''), (True, 238, 'link')]
+T = dict(open=22, zoom=262, end=274, total=364)
+AD = round((C['ad']['to'] - C['ad']['from']) * 30 / 1.15)
 s = lambda k: T[k] / 30
 n = int(s('total') * SR) + SR
 mus = np.zeros(n); sfx = np.zeros(n)
@@ -30,7 +30,7 @@ def notif():
     out = np.zeros(int(0.5 * SR)); out[:len(x)] += x; out[int(0.12 * SR):int(0.12 * SR) + len(y)] += y
     return out
 # lo-fi : accords doux, kick feutré, vinyle
-bpm = 86; bt = 60 / bpm; bar = bt * 4
+bpm = 100; bt = 60 / bpm; bar = bt * 4
 chords = [[50, 57, 60, 65], [47, 55, 59, 62], [45, 52, 57, 60], [43, 50, 55, 59]]
 b = 0
 while b * bar < s('total'):
@@ -49,16 +49,17 @@ while i * bt < s('total'):
 add(mus, lp(hp(rng.standard_normal(n), 3000), 9000) * 0.012, 0)
 env = np.ones(n)
 # la pub dans la bulle : musique baissée
-a0 = int((44 / 30) * SR); a1 = int(((44 + AD) / 30) * SR)
+a0 = int((26 / 30) * SR); a1 = int(((26 + AD) / 30) * SR)
 env[a0 - 4000:a0] = np.linspace(1, 0.25, 4000); env[a0:a1] = 0.25; env[a1:a1 + 6000] = np.linspace(0.25, 1, 6000)
 tl = int((s('total') - 0.8) * SR); te = int(s('total') * SR); env[tl:te] = np.linspace(1, 0, te - tl); env[te:] = 0
 mus *= env
 # sons
-add(sfx, notif(), 6 / 30, 0.5); add(sfx, notif(), 20 / 30, 0.45)
-add(sfx, click(1.2), 31 / 30, 0.4); add(sfx, whoosh(0.4), s('open') - 0.15, 0.25)
+add(sfx, notif(), 3 / 30, 0.5); add(sfx, notif(), 11 / 30, 0.45)
+add(sfx, click(1.2), 18 / 30, 0.4); add(sfx, whoosh(0.4), s('open') - 0.15, 0.25)
 for me, at, k in MSGS:
     add(sfx, sent() if me else received(), at / 30, 0.45)
-    if k == 'g': add(sfx, chime(86), at / 30 + 0.05, 0.25)
+    if k == 'g': add(sfx, chime(86), at / 30 + 0.05, 0.25); add(sfx, boom(), at / 30, 0.35)
+    if k == 'p': add(sfx, boom(), at / 30, 0.3)
 add(sfx, whoosh(0.5), s('zoom'), 0.35); add(sfx, boom(), s('end'), 0.4); add(sfx, chime(84), s('end') + 0.1, 0.25)
 mix = (mus + sfx * 0.5)[: int(s('total') * SR)]
 mix = np.tanh(mix / (np.max(np.abs(mix)) + 1e-9) * 1.3) * 0.45
