@@ -7,9 +7,9 @@ g = {'__file__': __file__}
 exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'click', 'chime', 'pop_sfx', 'rng'])
 C = json.load(open('src/sms/sms.json'))
-MSGS = [(False, 44, 'video'), (False, 120, ''), (True, 142, ''), (False, 158, ''), (True, 174, ''), (False, 188, ''), (True, 202, ''), (False, 218, ''), (True, 248, 'g'), (False, 272, ''), (True, 290, ''), (False, 316, ''), (True, 336, 'link')]
-T = dict(open=36, zoom=374, end=388, total=478)
-AD = round((C['ad']['to'] - C['ad']['from']) * 30 / 1.25)
+MSGS = [(False, 44, 'video'), (False, 104, ''), (True, 124, ''), (False, 140, ''), (True, 154, ''), (False, 168, ''), (True, 182, ''), (False, 198, ''), (True, 224, 'g'), (False, 248, ''), (True, 266, ''), (False, 292, ''), (True, 312, 'link')]
+T = dict(open=36, zoom=352, end=366, total=456)
+AD = round(C['dur'] * 30)
 s = lambda k: T[k] / 30
 n = int(s('total') * SR) + SR
 mus = np.zeros(n); sfx = np.zeros(n)
@@ -30,7 +30,7 @@ def notif():
     out = np.zeros(int(0.5 * SR)); out[:len(x)] += x; out[int(0.12 * SR):int(0.12 * SR) + len(y)] += y
     return out
 # lo-fi : accords doux, kick feutré, vinyle
-bpm = 86; bt = 60 / bpm; bar = bt * 4
+bpm = 96; bt = 60 / bpm; bar = bt * 4
 chords = [[50, 57, 60, 65], [47, 55, 59, 62], [45, 52, 57, 60], [43, 50, 55, 59]]
 b = 0
 while b * bar < s('total'):
@@ -50,7 +50,7 @@ add(mus, lp(hp(rng.standard_normal(n), 3000), 9000) * 0.012, 0)
 env = np.ones(n)
 # la pub dans la bulle : musique baissée
 a0 = int((44 / 30) * SR); a1 = int(((44 + AD) / 30) * SR)
-env[a0 - 4000:a0] = np.linspace(1, 0.25, 4000); env[a0:a1] = 0.25; env[a1:a1 + 6000] = np.linspace(0.25, 1, 6000)
+env[a0 - 4000:a0] = np.linspace(1, 0.25, 4000); env[a0:a1] = 0.3; env[a1:a1 + 6000] = np.linspace(0.25, 1, 6000)
 tl = int((s('total') - 0.8) * SR); te = int(s('total') * SR); env[tl:te] = np.linspace(1, 0, te - tl); env[te:] = 0
 mus *= env
 # sons
