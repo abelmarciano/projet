@@ -110,6 +110,7 @@ import cp5 from './chatpub/cp5.json';
 import cp6 from './chatpub/cp6.json';
 import cp7 from './chatpub/cp7.json';
 import {AllInOne, AllInOneFeed, AllInOneLand} from './allinone/AllInOne';
+import {MotsPub} from './mots/MotsPub';
 import {LightChatPub, lightTimeline, LightCfg} from './chatpub/LightChatPub';
 import {SocialStory, StoryCfg, storyTotal} from './chatpub/SocialStory';
 import lr4Cfg from './chatpub/lr4.json';
@@ -212,6 +213,7 @@ export const Root: React.FC = () => (
     <Composition id="AllInOne" component={AllInOne} durationInFrames={1084} fps={30} width={1080} height={1920} />
     <Composition id="AllInOne-4x5" component={AllInOneFeed} durationInFrames={1084} fps={30} width={1080} height={1350} />
     <Composition id="AllInOne-191x1" component={AllInOneLand} durationInFrames={1084} fps={30} width={1910} height={1000} />
+    <Composition id="MotsPub" component={MotsPub} durationInFrames={744} fps={30} width={1080} height={1920} />
     <Composition id="Launch-calendrier" component={SocialStory} durationInFrames={storyTotal(lr4Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr4Cfg as unknown as StoryCfg}} />
     <Composition id="Launch-whatsapp" component={SocialStory} durationInFrames={storyTotal(lr5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr5Cfg as unknown as StoryCfg}} />
     <Composition id="AvantApres-julien" component={SocialStory} durationInFrames={storyTotal(av5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: av5Cfg as unknown as StoryCfg}} />

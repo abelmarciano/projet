@@ -1882,5 +1882,53 @@
   "style": 0.45,
   "speed": 1.06,
   "text": "[confident] Grossiti. Tout, au même endroit."
+ },
+ "mots-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[intrigued] Et si tes mots devenaient une pub ?"
+ },
+ "mots-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[confident] Tu écris une phrase."
+ },
+ "mots-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[amazed] Grossiti comprend ton produit… ton ambiance… ton réseau."
+ },
+ "mots-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[excited] Et il en fait une vidéo prête à vendre."
+ },
+ "mots-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[confident] Plusieurs versions, testées pour toi. La meilleure reste en ligne."
+ },
+ "mots-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[confident] Grossiti. Tes mots deviennent des pubs."
  }
 }
