@@ -6,6 +6,8 @@ import React, {createContext, useContext, useEffect, useState} from 'react';
 
 // vrai dans la version feed 4:5 (cercle des plateformes resserré)
 const FeedCtx = createContext(false);
+// vrai dans la version horizontale 1,91:1 (textes à gauche, animation à droite, fond géré par l'habillage)
+const LandCtx = createContext(false);
 import {AbsoluteFill, Audio, Img, Sequence, continueRender, delayRender, interpolate, random, spring, staticFile, useCurrentFrame} from 'remotion';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
@@ -131,10 +133,11 @@ const Chaos: React.FC = () => {
     return {x, y, appear, t, i};
   });
   const q2 = prog(f, VO[2] - 2, 14);
+  const land = useContext(LandCtx);
   const shake = f > outils - 2 && f < outils + 16 ? Math.sin(f * 2.1) * 6 * (1 - (f - outils + 2) / 18) : 0;
   return (
     <AbsoluteFill style={{transform: `translate(${shake}px, ${shake * 0.6}px) scale(${1 + 0.05 * prog(f, 0, 150, (t) => t)})`}}>
-      <DarkBg />
+      {!land && <DarkBg />}
       {/* fils emmêlés */}
       <svg width={1080} height={1920} style={{position: 'absolute', inset: 0, opacity: 1 - coll}}>
         <defs>
@@ -163,6 +166,7 @@ const Chaos: React.FC = () => {
           </div>
         );
       })}
+      {!land && (<>
       <div style={{position: 'absolute', left: 540, top: 860, width: 1300, height: 760, transform: 'translate(-50%,-50%)', background: 'radial-gradient(ellipse at center, rgba(7,6,26,0.92) 0%, rgba(7,6,26,0.75) 35%, transparent 68%)', opacity: prog(f, 6, 10) * (1 - prog(f, SC.collapse + 36, 8)), pointerEvents: 'none'}} />
       {/* titres du chaos */}
       {heads.map((h, i) => {
@@ -175,6 +179,7 @@ const Chaos: React.FC = () => {
       <div style={{position: 'absolute', left: 50, right: 50, top: 860, textAlign: 'center', fontFamily: DISPLAY, fontWeight: 700, fontSize: 104, lineHeight: 1.04, letterSpacing: '-0.045em', color: '#fff', opacity: q2 * (1 - prog(f, SC.collapse + 36, 8)), transform: `translateY(-50%) translateY(${(1 - q2) * 40}px) scale(${1 - prog(f, SC.collapse + 30, 14) * 0.15})`, textShadow: '0 10px 50px rgba(0,0,0,0.8)'}}>
         Et si tout tenait<br /><span style={{backgroundImage: 'linear-gradient(100deg,#8FA6FF,#A78BFF 45%,#E39BFF)', WebkitBackgroundClip: 'text', color: 'transparent'}}>au même endroit ?</span>
       </div>
+      </>)}
       {/* singularité */}
       <Singularity />
     </AbsoluteFill>
@@ -212,6 +217,7 @@ const Reveal: React.FC = () => {
 const CHAPTERS = ['Créer', 'Remplacer', 'Diffuser', 'Piloter'];
 const ChapterRail: React.FC = () => {
   const f = useCurrentFrame();
+  if (useContext(LandCtx)) return null;
   const starts = [SC.ch1, SC.ch2, SC.ch3, SC.ch4];
   const idx = starts.reduce((a, s, i) => (f >= s ? i : a), 0);
   const o = prog(f, SC.ch1, 14) * (1 - prog(f, SC.fin, 12));
@@ -249,6 +255,7 @@ const useScene = (start: number, end: number) => {
 
 const Headline: React.FC<{a: string; b: string; at: number; size?: number; top?: number}> = ({a, b, at, size = 104, top = 230}) => {
   const f = useCurrentFrame();
+  if (useContext(LandCtx)) return null;
   const p1 = sp(f - at, 15);
   const p2 = sp(f - at - 6, 15);
   return (
@@ -415,7 +422,9 @@ const PLATS: {n: string; k: string; c: string; g: React.ReactNode}[] = [
 ];
 const Ch3: React.FC = () => {
   const {f, style} = useScene(SC.ch3, SC.ch4);
-  const feed = useContext(FeedCtx);
+  const feedC = useContext(FeedCtx);
+  const landC = useContext(LandCtx);
+  const feed = feedC || landC;
   const cx = 540, cy = feed ? 905 : 930, ry = feed ? 350 : 400;
   const card = sp(f - SC.ch3 - 6, 13);
   return (
@@ -500,15 +509,16 @@ const Ch4: React.FC = () => {
   const path = 'M0 190 C 70 180, 110 150, 170 158 S 280 120, 340 110 S 450 96, 520 70 S 640 40, 720 30';
   const advice = sp(f - cons + 2, 12) * (1 - prog(f, wa - 8, 10, INOUT));
   const scan = interpolate(f, [anal, anal + 40], [0, 1], clamp);
+  const land = useContext(LandCtx);
   return (
     <AbsoluteFill style={style}>
-      <div style={{position: 'absolute', left: 70, right: 70, top: 230, fontFamily: DISPLAY, fontWeight: 700, fontSize: 96, letterSpacing: '-0.045em', lineHeight: 1.02, color: INK}}>
+      {!land && <div style={{position: 'absolute', left: 70, right: 70, top: 230, fontFamily: DISPLAY, fontWeight: 700, fontSize: 96, letterSpacing: '-0.045em', lineHeight: 1.02, color: INK}}>
         <div style={{overflow: 'hidden', paddingBottom: 6}}><div style={{transform: `translateY(${(1 - sp(f - SC.ch4 - 6, 15)) * 110}%)`}}>Ton media buyer IA.</div></div>
         <div style={{overflow: 'hidden', paddingBottom: 10, height: 112, position: 'relative'}}>
           <div style={{position: 'absolute', transform: `translateY(${(1 - sp(f - SC.ch4 - 12, 15)) * 110 - toB * 110}%)`}}><G>Analyse et conseille.</G></div>
           <div style={{position: 'absolute', transform: `translateY(${(1 - toB) * 110}%)`}}><G>Pilote jour et nuit.</G></div>
         </div>
-      </div>
+      </div>}
       <div style={{position: 'absolute', left: 70, right: 70, top: 520, height: 590, borderRadius: 36, background: dark ? '#0F0D2A' : '#fff', border: `1px solid ${dark ? '#2A2560' : LINE}`, boxShadow: SHADOW, padding: 34, boxSizing: 'border-box', opacity: panel, transform: `translateY(${(1 - panel) * 80}px)`, overflow: 'hidden'}}>
         {/* A. analyse de performance */}
         <div style={{position: 'absolute', inset: 34, opacity: 1 - toB, transform: `translateX(${-toB * 120}px)`}}>
@@ -610,13 +620,15 @@ const Final: React.FC = () => {
   const t1 = sp(f - tout + 2, 15);
   const t2 = sp(f - tout - 10, 15);
   const cta = sp(f - tout - 24, 13);
+  const land = useContext(LandCtx);
+  const dy = land ? 330 : 0;
   return (
     <AbsoluteFill>
       {tiles.map((t, i) => {
         const p = sp(f - i * 3, 13);
         const gx = (i % 2) * 2 - 1, gy = Math.floor(i / 2) * 2 - 1;
         const x = 540 + gx * 150 * (1 - merge);
-        const y = 640 + gy * 150 * (1 - merge);
+        const y = 640 + dy + gy * 150 * (1 - merge);
         return (
           <div key={t} style={{position: 'absolute', left: x, top: y, transform: `translate(-50%,-50%) scale(${p * (1 - merge * 0.6)}) rotate(${merge * 45}deg)`, opacity: 1 - prog(f, 38, 6)}}>
             <div style={{width: 260, height: 260, borderRadius: 50, background: '#fff', border: `1px solid ${LINE}`, boxShadow: SHADOW, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12}}>
@@ -627,13 +639,14 @@ const Final: React.FC = () => {
         );
       })}
       {f > 38 && (
-        <div style={{position: 'absolute', left: 540, top: 600, transform: `translate(-50%,-50%) scale(${logo})`, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <div style={{position: 'absolute', left: 540, top: 600 + dy, transform: `translate(-50%,-50%) scale(${logo})`, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
           <div style={{width: 170, height: 170, borderRadius: 50, background: '#fff', border: `1px solid ${LINE}`, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 0 90px rgba(139,92,246,0.45), ${SHADOW}`}}><LogoMark size={110} draw={prog(f, 40, 18)} /></div>
           <div style={{marginTop: 30}}><Wordmark size={74} /></div>
         </div>
       )}
       {/* onde de choc */}
-      <div style={{position: 'absolute', left: 540, top: 600, width: 20, height: 20, borderRadius: '50%', border: '3px solid #A78BFA', transform: `translate(-50%,-50%) scale(${prog(f, 40, 26) * 70})`, opacity: (1 - prog(f, 40, 26)) * (f > 40 ? 0.8 : 0)}} />
+      <div style={{position: 'absolute', left: 540, top: 600 + dy, width: 20, height: 20, borderRadius: '50%', border: '3px solid #A78BFA', transform: `translate(-50%,-50%) scale(${prog(f, 40, 26) * 70})`, opacity: (1 - prog(f, 40, 26)) * (f > 40 ? 0.8 : 0)}} />
+      {!land && (<>
       <div style={{position: 'absolute', left: 60, right: 60, top: 880, textAlign: 'center', fontFamily: DISPLAY, fontWeight: 700, letterSpacing: '-0.05em', lineHeight: 1, color: INK}}>
         <div style={{fontSize: 170, opacity: Math.min(1, t1 * 1.5), transform: `translateY(${(1 - t1) * 60}px)`}}>Tout.</div>
         <div style={{fontSize: 104, marginTop: 10, opacity: Math.min(1, t2 * 1.5), transform: `translateY(${(1 - t2) * 60}px)`}}><G>Au même endroit.</G></div>
@@ -641,6 +654,7 @@ const Final: React.FC = () => {
       <div style={{position: 'absolute', left: 0, right: 0, top: 1250, display: 'flex', justifyContent: 'center', opacity: Math.min(1, cta * 1.4), transform: `translateY(${(1 - cta) * 40}px)`}}>
         <div style={{padding: '30px 64px', borderRadius: 99, background: GRAD, color: '#fff', fontFamily: FONT, fontWeight: 800, fontSize: 40, boxShadow: '0 30px 60px -20px rgba(91,63,228,0.8)', transform: `scale(${1 + 0.025 * Math.sin(f / 5) * prog(f, tout + 40, 10)})`}}>Commencer →</div>
       </div>
+      </>)}
     </AbsoluteFill>
   );
 };
@@ -648,11 +662,12 @@ const Final: React.FC = () => {
 export const AllInOne: React.FC = () => {
   useFonts();
   const f = useCurrentFrame();
+  const land = useContext(LandCtx);
   return (
-    <AbsoluteFill style={{background: BG, fontFamily: FONT}}>
-      {f >= SC.reveal && <LightBg />}
+    <AbsoluteFill style={{background: land ? 'transparent' : BG, fontFamily: FONT}}>
+      {f >= SC.reveal && !land && <LightBg />}
       {f < SC.reveal + 20 && <Chaos />}
-      <Sequence from={SC.reveal} durationInFrames={20}><Reveal /></Sequence>
+      {!land && <Sequence from={SC.reveal} durationInFrames={20}><Reveal /></Sequence>}
       {f >= SC.reveal && f < SC.ch1 + 10 && (
         <div style={{position: 'absolute', left: 540, top: 860, transform: `translate(-50%,-50%) scale(${1 - prog(f, SC.ch1 - 6, 14, INOUT) * 0.2})`, opacity: 1 - prog(f, SC.ch1, 10)}}>
           <div style={{width: 210, height: 210, borderRadius: 60, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: SHADOW, border: `1px solid ${LINE}`}}><LogoMark size={140} /></div>
@@ -664,9 +679,9 @@ export const AllInOne: React.FC = () => {
       {f >= SC.ch4 - 2 && f < SC.fin + 2 && <Ch4 />}
       <ChapterRail />
       <Sequence from={SC.fin}><Final /></Sequence>
-      {[SC.ch2, SC.ch3, SC.ch4, SC.fin].map((a) => <Sweep key={a} at={a} />)}
+      {!land && [SC.ch2, SC.ch3, SC.ch4, SC.fin].map((a) => <Sweep key={a} at={a} />)}
       {/* flash blanc à la révélation */}
-      <AbsoluteFill style={{background: '#fff', opacity: interpolate(f, [SC.reveal - 2, SC.reveal + 2, SC.reveal + 14], [0, 0.85, 0], clamp), pointerEvents: 'none'}} />
+      {!land && <AbsoluteFill style={{background: '#fff', opacity: interpolate(f, [SC.reveal - 2, SC.reveal + 2, SC.reveal + 14], [0, 0.85, 0], clamp), pointerEvents: 'none'}} />}
       <Audio src={staticFile('allinone/bed.wav')} />
       {[1, 2, 3, 4, 5, 6, 7].map((k) => (
         <Sequence key={k} from={VO[k]}><Audio src={staticFile(`voice/aio-${k}-n.mp3`)} /></Sequence>
@@ -685,3 +700,117 @@ export const AllInOneFeed: React.FC = () => (
     </div>
   </AbsoluteFill>
 );
+
+// ============ version horizontale Meta 1,91:1 (1910×1000) ============
+// L'animation (zone utile du 9:16, y 400 → 1440) à droite, les textes en grand à gauche, un fond continu.
+const LW = 1910, LH = 1000;
+const LS = 0.86; // échelle de l'animation
+const LTOP = (LH - 1040 * LS) / 2;
+const LX = LW - 1080 * LS - 60; // bord gauche de l'animation
+const LOGO = {x: LX + 540 * LS, y: LTOP + (860 - 400) * LS};
+const TW = 790; // largeur de la colonne de texte
+
+const LandBlock: React.FC<{start: number; end: number; children: React.ReactNode}> = ({start, end, children}) => {
+  const f = useCurrentFrame();
+  if (f < start - 2 || f > end + 2) return null;
+  const i = prog(f, start, 18, EXPO);
+  const o = prog(f, end - 12, 12, INOUT);
+  return <div style={{position: 'absolute', left: 110, width: TW, top: 0, height: LH, display: 'flex', flexDirection: 'column', justifyContent: 'center', opacity: i * (1 - o), transform: `translateY(${(1 - i) * 50 - o * 60}px)`, filter: `blur(${(1 - i) * 8 + o * 8}px)`}}>{children}</div>;
+};
+
+const LineReveal: React.FC<{at: number; children: React.ReactNode; size: number; grad?: boolean; color?: string}> = ({at, children, size, grad, color = INK}) => {
+  const f = useCurrentFrame();
+  const p = sp(f - at, 15);
+  return (
+    <div style={{overflow: 'hidden', paddingBottom: size * 0.12}}>
+      <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: size, letterSpacing: '-0.045em', lineHeight: 1.02, color, transform: `translateY(${(1 - p) * 110}%)`}}>{grad ? <G>{children}</G> : children}</div>
+    </div>
+  );
+};
+
+const LandChapter: React.FC<{idx: number; start: number; end: number; a: string; b: React.ReactNode; sub: string}> = ({idx, start, end, a, b, sub}) => {
+  const f = useCurrentFrame();
+  return (
+    <LandBlock start={start} end={end}>
+      <div style={{display: 'flex', alignItems: 'center', gap: 22, marginBottom: 34}}>
+        <div style={{fontFamily: FONT, fontWeight: 800, fontSize: 24, letterSpacing: '0.18em', color: '#5B3FE4'}}>0{idx + 1} — {CHAPTERS[idx].toUpperCase()}</div>
+        <div style={{display: 'flex', gap: 8}}>{CHAPTERS.map((_, i) => <div key={i} style={{width: i === idx ? 44 : 12, height: 12, borderRadius: 6, background: i <= idx ? GRAD : '#DCD9EA'}} />)}</div>
+      </div>
+      <LineReveal at={start + 6} size={80}>{a}</LineReveal>
+      <div style={{position: 'relative'}}><LineReveal at={start + 12} size={80} grad={typeof b === 'string'}>{b}</LineReveal></div>
+      <div style={{marginTop: 26, fontFamily: FONT, fontWeight: 600, fontSize: 30, lineHeight: 1.4, color: '#5E5A75', maxWidth: 640, opacity: prog(f, start + 22, 14), transform: `translateY(${(1 - prog(f, start + 22, 14)) * 20}px)`}}>{sub}</div>
+    </LandBlock>
+  );
+};
+
+const LandTexts: React.FC = () => {
+  const f = useCurrentFrame();
+  const heads = [
+    {t: 'Un monteur.', a: cue(1, 'monteur', 0.1) - 4},
+    {t: 'Une agence.', a: cue(1, 'agence', 1.1) - 4},
+    {t: 'Un media buyer…', a: cue(1, 'média', 2.1) - 4},
+    {t: 'Et des outils partout.', a: cue(1, 'outils', 3.6) - 8},
+  ];
+  const hi = heads.reduce((acc, h, i) => (f >= h.a ? i : acc), -1);
+  const q2 = sp(f - VO[2] + 2, 15);
+  const pil = cue(6, 'pilote', 2.44);
+  const toB = prog(f, pil - 4, 14, INOUT);
+  const tout = VO[7] + Math.round((WD['aio-7'].find((w) => w.w.startsWith('Tout'))?.s ?? 1) * 30);
+  const t1 = sp(f - tout + 2, 15), t2 = sp(f - tout - 10, 15), cta = sp(f - tout - 24, 13);
+  return (
+    <>
+      {/* chaos */}
+      {f < VO[2] - 2 && hi >= 0 && (() => {
+        const p = sp(f - heads[hi].a, 15);
+        return <div style={{position: 'absolute', left: 110, width: TW, top: LH / 2, transform: `translateY(-50%) translateY(${(1 - p) * 40}px)`, opacity: Math.min(1, p * 1.5), fontFamily: DISPLAY, fontWeight: 700, fontSize: 104, lineHeight: 1.02, letterSpacing: '-0.045em', color: '#fff'}}>{heads[hi].t}</div>;
+      })()}
+      {f >= VO[2] - 2 && f < SC.reveal && (
+        <div style={{position: 'absolute', left: 110, width: TW, top: LH / 2, transform: `translateY(-50%) translateY(${(1 - q2) * 40}px)`, opacity: Math.min(1, q2 * 1.5) * (1 - prog(f, SC.collapse + 40, 10)), fontFamily: DISPLAY, fontWeight: 700, fontSize: 90, lineHeight: 1.04, letterSpacing: '-0.045em', color: '#fff'}}>
+          Et si tout tenait <span style={{backgroundImage: 'linear-gradient(100deg,#8FA6FF,#A78BFF 45%,#E39BFF)', WebkitBackgroundClip: 'text', color: 'transparent'}}>au même endroit ?</span>
+        </div>
+      )}
+      <LandChapter idx={0} start={SC.ch1} end={SC.ch2} a="Les meilleures IA." b="Réunies." sub="Script, voix, acteurs, montage : ta pub vidéo générée à partir d’une phrase." />
+      <LandChapter idx={1} start={SC.ch2} end={SC.ch3} a="Toute une équipe." b="Dans un seul onglet." sub="Monteur, graphiste, media buyer, community manager : Growthity fait le travail." />
+      <LandChapter idx={2} start={SC.ch3} end={SC.ch4} a="Partout." b="En un seul clic." sub="Instagram, Facebook, TikTok, YouTube, LinkedIn : tes contenus publiés et programmés." />
+      <LandChapter idx={3} start={SC.ch4} end={SC.fin} a="Ton media buyer IA." b={
+        <span style={{position: 'relative', display: 'block', height: '1.04em'}}>
+          <span style={{position: 'absolute', left: 0, whiteSpace: 'nowrap', backgroundImage: GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', transform: `translateY(${-toB * 110}%)`, opacity: 1 - toB}}>Analyse et conseille.</span>
+          <span style={{position: 'absolute', left: 0, whiteSpace: 'nowrap', backgroundImage: GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', transform: `translateY(${(1 - toB) * 110}%)`, opacity: toB}}>Pilote jour et nuit.</span>
+        </span>
+      } sub="Analyse de performance, conseils de l’IA, campagnes Meta pilotées et alertes sur WhatsApp." />
+      {f >= SC.fin && (
+        <div style={{position: 'absolute', left: 110, width: TW, top: 0, height: LH, display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+          <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 176, letterSpacing: '-0.05em', lineHeight: 0.95, color: INK, opacity: Math.min(1, t1 * 1.5), transform: `translateY(${(1 - t1) * 60}px)`}}>Tout.</div>
+          <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 88, letterSpacing: '-0.045em', lineHeight: 1.05, marginTop: 12, opacity: Math.min(1, t2 * 1.5), transform: `translateY(${(1 - t2) * 60}px)`}}><G>Au même endroit.</G></div>
+          <div style={{marginTop: 50, opacity: Math.min(1, cta * 1.4), transform: `translateY(${(1 - cta) * 40}px)`}}>
+            <span style={{display: 'inline-block', padding: '28px 60px', borderRadius: 99, background: GRAD, color: '#fff', fontFamily: FONT, fontWeight: 800, fontSize: 38, boxShadow: '0 30px 60px -20px rgba(91,63,228,0.8)', transform: `scale(${1 + 0.025 * Math.sin(f / 5) * prog(f, tout + 40, 10)})`}}>Commencer →</span>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export const AllInOneLand: React.FC = () => {
+  useFonts();
+  const f = useCurrentFrame();
+  const r = interpolate(f, [SC.reveal, SC.reveal + 18], [0, 2400], {...clamp, easing: INOUT});
+  return (
+    <AbsoluteFill style={{background: BG, overflow: 'hidden', fontFamily: FONT}}>
+      {f < SC.reveal + 20 && <DarkBg />}
+      {f >= SC.reveal && <AbsoluteFill style={{clipPath: `circle(${r}px at ${LOGO.x}px ${LOGO.y}px)`}}><LightBg /></AbsoluteFill>}
+      {/* séparateur lumineux discret entre texte et animation */}
+      <div style={{position: 'absolute', left: LX - 30, top: 120, bottom: 120, width: 2, background: 'linear-gradient(180deg, transparent, rgba(139,92,246,0.35), transparent)', opacity: prog(f, SC.ch1, 20) * (1 - prog(f, SC.fin, 12))}} />
+      <div style={{position: 'absolute', left: 0, top: 0, width: 1080, height: 1920, transformOrigin: '0 0', transform: `translate(${LX}px, ${LTOP}px) scale(${LS}) translateY(-400px)`}}>
+        <LandCtx.Provider value={true}>
+          <AllInOne />
+        </LandCtx.Provider>
+      </div>
+      <LandTexts />
+      {[SC.ch2, SC.ch3, SC.ch4, SC.fin].map((a) => (
+        <div key={a} style={{position: 'absolute', inset: 0, transform: 'scale(1.8)', pointerEvents: 'none'}}><Sweep at={a} /></div>
+      ))}
+      <AbsoluteFill style={{background: '#fff', opacity: interpolate(f, [SC.reveal - 2, SC.reveal + 2, SC.reveal + 14], [0, 0.85, 0], clamp), pointerEvents: 'none'}} />
+    </AbsoluteFill>
+  );
+};
