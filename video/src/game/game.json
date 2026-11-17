@@ -1,0 +1,45 @@
+{
+ "clip": "game/priya.mp4",
+ "ad": {
+  "from": 7.55,
+  "to": 9.95
+ },
+ "caps": [
+  {
+   "w": "Commande",
+   "s": 0.31,
+   "e": 0.59
+  },
+  {
+   "w": "en",
+   "s": 0.63,
+   "e": 0.71
+  },
+  {
+   "w": "ligne,",
+   "s": 0.77,
+   "e": 1.01
+  },
+  {
+   "w": "on",
+   "s": 1.25,
+   "e": 1.31
+  },
+  {
+   "w": "s'occupe",
+   "s": 1.39,
+   "e": 1.73
+  },
+  {
+   "w": "du",
+   "s": 1.77,
+   "e": 1.87
+  },
+  {
+   "w": "reste",
+   "s": 1.91,
+   "e": 2.27
+  }
+ ],
+ "prompt": "Une pub pour ma boutique de fleurs, avec une fleuriste souriante."
+}

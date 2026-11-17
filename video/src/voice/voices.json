@@ -1994,5 +1994,37 @@
   "style": 0.5,
   "speed": 1.1,
   "text": "[confident] Grossiti. Une phrase, c'est tout."
+ },
+ "game-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.1,
+  "text": "[playful] Faire une pub ? Allez… mode difficile."
+ },
+ "game-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.1,
+  "text": "[sarcastic] Trouver un acteur. Tourner. Monter. Lancer. Et tout recommencer."
+ },
+ "game-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.1,
+  "text": "[excited] Mode facile : une phrase dans Grossiti."
+ },
+ "game-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.1,
+  "text": "[confident] Grossiti. Passe en mode facile."
  }
 }
