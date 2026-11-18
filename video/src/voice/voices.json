@@ -2163,30 +2163,6 @@
   "speed": 1.06,
   "text": "[confident] Grossiti. Plus de leads, moins d'efforts."
  },
- "lb-1": {
-  "voice": "3Tp5mYhT9wrfnry9pzvV",
-  "model": "eleven_v4",
-  "stability": 0.5,
-  "style": 0.4,
-  "speed": 1.06,
-  "text": "[confident] Tu achètes encore tes leads ?"
- },
- "lb-2": {
-  "voice": "3Tp5mYhT9wrfnry9pzvV",
-  "model": "eleven_v4",
-  "stability": 0.5,
-  "style": 0.4,
-  "speed": 1.06,
-  "text": "Des contacts revendus à plusieurs installateurs, déjà appelés, des numéros qui ne répondent pas… et tu paies quand même."
- },
- "lb-3": {
-  "voice": "3Tp5mYhT9wrfnry9pzvV",
-  "model": "eleven_v4",
-  "stability": 0.5,
-  "style": 0.4,
-  "speed": 1.06,
-  "text": "[confident] Avec Grossiti, tu génères tes propres leads. Exclusifs. Rien qu'à toi."
- },
  "lb-4": {
   "voice": "3Tp5mYhT9wrfnry9pzvV",
   "model": "eleven_v4",
@@ -2242,5 +2218,21 @@
   "style": 0.4,
   "speed": 1.06,
   "text": "[confident] Arrête d'acheter tes leads. Génère les tiens, avec Grossiti."
+ },
+ "lh-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "[excited] Regarde : des leads pompe à chaleur qui tombent en direct… et ce sont les tiens."
+ },
+ "lh-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "Pas achetés. Pas revendus à d'autres installateurs. Rien qu'à toi. Voilà comment Grossiti fait."
  }
 }

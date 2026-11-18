@@ -7,8 +7,9 @@ g = {'__file__': __file__}
 exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'click', 'chime', 'pop_sfx', 'rng'])
 W = json.load(open('src/leads/words_lb.json'))
-VO = {1: 8, 2: 48, 3: 256, 4: 390, 5: 520, 6: 705, 7: 790, 8: 946, 9: 1145, 10: 1370}
-T = dict(hook=0, prob=44, turn=250, pub=385, form=515, camp=700, wa=785, leads=940, res=1140, end=1365, total=1490)
+VO = {4: 297, 5: 427, 6: 612, 7: 697, 8: 853, 9: 1052, 10: 1277}
+VOH = {1: 4, 2: 126}
+T = dict(hook=0, pub=292, form=422, camp=607, wa=692, leads=847, res=1047, end=1272, total=1397)
 def cue(k, start, d=0):
     for w in W[f'lb-{k}']:
         if w['w'].lower().startswith(start): return (VO[k] + round(w['s'] * 30)) / 30
@@ -45,7 +46,7 @@ while b * bar < s('total'):
 i = 0
 while i * bt < s('total') - 0.5:
     at = i * bt
-    if at >= s('turn') - 0.05 and not (s('end') - 0.3 < at < s('end') + 1.2):
+    if at >= 0.0 and not (s('end') - 0.3 < at < s('end') + 1.2):
         add(mus, kick(), at, 0.42)
         if i % 2 == 1: add(mus, hp(rng.standard_normal(int(0.1 * SR)), 2200) * np.exp(-np.arange(int(0.1 * SR)) / SR * 32), at, 0.14)
     hh = hp(rng.standard_normal(int(0.02 * SR)), 9500) * np.exp(-np.arange(int(0.02 * SR)) / SR * 180)
@@ -55,18 +56,19 @@ env = np.ones(n) * 0.9
 tl = int((s('total') - 1.0) * SR); te = int(s('total') * SR); env[tl:te] = np.linspace(0.9, 0, te - tl); env[te:] = 0
 mus *= env
 
-# accroche + problème (tension : sub + hits)
-add(sfx, sub(1.2, 40), 0.05, 0.55); add(sfx, boom(), 0.12, 0.35)
-add(sfx, whoosh(0.3), cue(1, 'leads') - 0.1, 0.3); add(sfx, pop_sfx(), cue(1, 'leads') + 0.1, 0.3)
-add(sfx, whoosh(0.5), s('prob') - 0.1, 0.3)
-for k in range(3): add(sfx, pop_sfx(), (T['prob'] + 6 + k * 5) / 30, 0.2)
-for kk in ['revendus', 'déjà', 'numéros']:
-    for i in range(3): add(sfx, click(0.8), cue(2, kk) + i * 3 / 30, 0.28)
-for i in range(3): add(sfx, boom(), cue(2, 'paies') + i * 3 / 30, 0.28)
-# bascule
-add(sfx, riser(1.4), s('turn') - 1.4, 0.35); add(sfx, boom(), s('turn'), 0.5); add(sfx, sub(1.4, 42), s('turn'), 0.5)
-add(sfx, chime(84), cue(3, 'exclusifs'), 0.25); add(sfx, chime(91), cue(3, 'rien'), 0.22)
-for i in range(3): add(sfx, pop_sfx(), cue(3, 'exclusifs') + (2 + i * 4) / 30, 0.2)
+# accroche : leads qui tombent en direct
+def cueH(k, start, d=0):
+    for w in W[f'lh-{k}']:
+        if w['w'].lower().startswith(start): return (VOH[k] + round(w['s'] * 30)) / 30
+    return (VOH[k] + d * 30) / 30
+add(sfx, sub(1.2, 40), 0.0, 0.5); add(sfx, boom(), 0.02, 0.35)
+for i, a in enumerate([2, 12, 22, 34, 44, 56, 70, 84, 100, 118]):
+    add(sfx, tone(88, 0.22, r=11), a / 30, 0.2); add(sfx, tone(95, 0.28, r=9), a / 30 + 0.08, 0.17)
+for i in range(5): add(sfx, pop_sfx(), cueH(1, 'tiens') + i * 2 / 30, 0.2)
+add(sfx, chime(84), cueH(1, 'tiens'), 0.25)
+add(sfx, boom(), cueH(2, 'pas'), 0.3); add(sfx, boom(), cueH(2, 'revendu'), 0.3)
+add(sfx, chime(84), cueH(2, 'rien'), 0.28); add(sfx, chime(91), cueH(2, 'rien') + 0.12, 0.2)
+add(sfx, riser(1.0), s('pub') - 1.0, 0.3)
 # scènes
 for k in ['pub', 'form', 'camp', 'wa', 'leads', 'res']:
     add(sfx, whoosh(0.45), s(k) - 0.15, 0.3); add(sfx, sub(0.7, 50), s(k) + 0.03, 0.3)
