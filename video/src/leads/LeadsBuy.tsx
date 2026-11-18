@@ -1,6 +1,6 @@
 // « Arrête d'acheter tes leads » — motion 16:9 pour les entreprises qui achètent leurs leads (exemple : pompe à chaleur).
 // Problème (leads revendus, déjà appelés, injoignables) → bascule (tes propres leads, exclusifs) → pub (Alice) → formulaire
-// qualifiant → campagne Prospects dans ta zone → alerte WhatsApp → « Montre-moi mes leads » → résultats + media buyer IA → fin.
+// qualifiant → campagne Prospects dans ta zone → leads en direct dans Growthity → « Montre-moi mes leads » → résultats + media buyer IA → fin.
 // Aucun chiffre ni prix ; contacts et entreprise fictifs.
 import React, {useEffect, useState} from 'react';
 import {AbsoluteFill, Audio, Img, OffthreadVideo, Sequence, continueRender, delayRender, interpolate, spring, staticFile, useCurrentFrame} from 'remotion';
@@ -30,8 +30,8 @@ const G: React.FC<{children: React.ReactNode}> = ({children}) => (
   <span style={{backgroundImage: GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent'}}>{children}</span>
 );
 
-export const VO = {1: 8, 2: 48, 3: 256, 4: 390, 5: 520, 6: 705, 7: 790, 8: 926, 9: 1120, 10: 1320} as Record<number, number>;
-export const S = {hook: 0, prob: 44, turn: 250, pub: 385, form: 515, camp: 700, wa: 785, leads: 920, res: 1115, end: 1315, total: 1440};
+export const VO = {1: 8, 2: 48, 3: 256, 4: 390, 5: 520, 6: 705, 7: 790, 8: 946, 9: 1145, 10: 1370} as Record<number, number>;
+export const S = {hook: 0, prob: 44, turn: 250, pub: 385, form: 515, camp: 700, wa: 785, leads: 940, res: 1140, end: 1365, total: 1490};
 const cue = (k: number, start: string, d = 0) => {
   const w = WD[`lb-${k}`].find((x) => x.w.toLowerCase().startsWith(start));
   return VO[k] + Math.round((w ? w.s : d) * 30);
@@ -57,7 +57,7 @@ const Bg: React.FC = () => {
 };
 
 // ---------- colonne de texte à gauche ----------
-const STEPS = ['La pub', 'Le formulaire', 'La campagne', 'Les alertes', 'Les leads', 'Les résultats'];
+const STEPS = ['La pub', 'Le formulaire', 'La campagne', 'En direct', 'Les leads', 'Les résultats'];
 const Side: React.FC<{idx: number; label?: string; color?: string; start: number; end: number; a: React.ReactNode; b: React.ReactNode; sub: string; a2?: React.ReactNode; b2?: React.ReactNode; sub2?: string; swapAt?: number; red?: boolean}> = ({idx, label, color = ACC, start, end, a, b, sub, a2, b2, sub2, swapAt, red}) => {
   const f = useCurrentFrame();
   if (f < start - 2 || f > end + 2) return null;
@@ -366,45 +366,57 @@ const CampDemo: React.FC = () => {
   );
 };
 
-// ---------- 6. alertes WhatsApp ----------
-const WaDemo: React.FC = () => {
+// ---------- 6. les leads arrivent dans Growthity ----------
+const InboxDemo: React.FC = () => {
   const f = useCurrentFrame();
-  const call = cue(7, 'rappelles', 2.2);
-  const excl = cue(7, 'personne', 3.2);
+  const call = cue(7, 'rappelles', 2.6);
+  const excl = cue(7, 'personne', 3.6);
   const alerts = [
     {n: 'Julien R.', d: 'Maison · Fioul · Propriétaire', at: cue(7, 'lead', 0.5)},
-    {n: 'Nadia K.', d: 'Maison · Gaz · Propriétaire', at: cue(7, 'whatsapp', 1.3) + 10},
+    {n: 'Nadia K.', d: 'Maison · Gaz · Propriétaire', at: cue(7, 'direct', 1.4) + 6},
+    {n: 'Philippe M.', d: 'Maison · Gaz · Propriétaire', at: cue(7, 'direct', 1.4) + 22},
   ];
+  const nb = alerts.filter((a) => f >= a.at).length;
+  const toast = alerts[0].at;
+  const tp = sp(f - toast + 4, 12), tOut = prog(f, toast + 40, 12, INOUT);
   return (
-    <div style={{display: 'flex', justifyContent: 'center'}}>
-      <div style={{width: 480, height: 760, borderRadius: 60, background: '#0B0B10', padding: 14, boxSizing: 'border-box', boxShadow: SH_LG}}>
-        <div style={{width: '100%', height: '100%', borderRadius: 48, overflow: 'hidden', background: '#EFE7DE', position: 'relative'}}>
-          <div style={{height: 110, background: '#075E54', display: 'flex', alignItems: 'flex-end', gap: 12, padding: '0 20px 16px'}}>
-            <span style={{width: 48, height: 48, borderRadius: 24, background: '#fff', display: 'grid', placeItems: 'center'}}><LogoMark size={28} /></span>
-            <div style={{fontFamily: FONT, color: '#fff'}}><div style={{fontWeight: 700, fontSize: 22}}>Growthity</div><div style={{fontSize: 16, opacity: 0.8}}>Alertes leads</div></div>
-          </div>
-          <div style={{padding: 18, display: 'flex', flexDirection: 'column', gap: 14}}>
-            {alerts.map((al, i) => {
-              const p = sp(f - al.at, 12);
-              if (f < al.at) return null;
-              const calling = i === 0 && f >= call;
-              return (
-                <div key={al.n} style={{background: '#fff', borderRadius: '6px 18px 18px 18px', padding: '14px 16px', boxShadow: '0 1px 1px rgba(0,0,0,.08)', transform: `translateY(${(1 - p) * 30}px) scale(${0.9 + 0.1 * p})`, opacity: Math.min(1, p * 1.5), fontFamily: FONT, outline: calling ? `3px solid #25D366` : 'none'}}>
-                  <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <span style={{fontWeight: 800, fontSize: 19, color: '#128C7E'}}>Nouveau lead · Étude PAC</span>
-                    {i === 0 && f >= excl && <span style={{padding: '4px 10px', borderRadius: 999, background: ACC_SOFT, color: ACC_INK, fontWeight: 800, fontSize: 15, transform: `scale(${sp(f - excl, 10)})`}}>Exclusif</span>}
-                  </div>
-                  <div style={{fontSize: 20, color: FG, marginTop: 6, lineHeight: 1.4}}><b>{al.n}</b> · {al.d}</div>
-                  <div style={{display: 'flex', gap: 8, marginTop: 10}}>
-                    <span style={{padding: '8px 14px', borderRadius: 10, background: calling ? '#25D366' : '#E7F8EF', color: calling ? '#fff' : '#128C7E', fontWeight: 800, fontSize: 17, transform: `scale(${calling && f < call + 5 ? 0.92 : 1})`}}>{calling ? '📞 Appel en cours…' : 'Appeler'}</span>
-                    <span style={{padding: '8px 14px', borderRadius: 10, background: '#F3F4F6', color: '#4B5563', fontWeight: 700, fontSize: 17}}>Voir le lead</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+    <div style={{position: 'relative'}}>
+      <Card style={{padding: 0, overflow: 'hidden'}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: 14, padding: '20px 26px', borderBottom: `1px solid ${LINE}`, background: RAISED}}>
+          <span style={{width: 46, height: 46, borderRadius: 13, background: ACC_SOFT, display: 'grid', placeItems: 'center'}}><LogoMark size={28} /></span>
+          <div style={{fontFamily: FONT}}><div style={{fontWeight: 800, fontSize: 26, color: FG}}>Leads</div><div style={{fontSize: 17, color: DIM}}>Formulaire · Étude PAC</div></div>
+          <span style={{marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 14px', borderRadius: 999, background: OK_SOFT, color: OK, fontFamily: FONT, fontWeight: 700, fontSize: 17}}><span style={{width: 10, height: 10, borderRadius: 5, background: OK, opacity: 0.5 + 0.5 * Math.sin(f / 4)}} />En direct</span>
+          <span style={{position: 'relative', width: 46, height: 46, borderRadius: 13, border: `1px solid ${LINE}`, background: SURF, display: 'grid', placeItems: 'center', fontSize: 22, transform: `rotate(${nb && f < toast + 14 ? Math.sin(f) * 12 : 0}deg)`}}>
+            🔔{nb > 0 && <span style={{position: 'absolute', top: -8, right: -8, minWidth: 24, height: 24, borderRadius: 12, background: RED, color: '#fff', fontFamily: FONT, fontWeight: 800, fontSize: 14, display: 'grid', placeItems: 'center'}}>{nb}</span>}
+          </span>
         </div>
-      </div>
+        <div style={{padding: 22, display: 'flex', flexDirection: 'column', gap: 14, minHeight: 330}}>
+          {alerts.map((al, i) => {
+            const p = sp(f - al.at, 12);
+            if (f < al.at) return null;
+            const calling = i === 0 && f >= call;
+            return (
+              <div key={al.n} style={{display: 'flex', alignItems: 'center', gap: 16, padding: '16px 18px', borderRadius: 16, border: `1.5px solid ${calling ? ACC : LINE}`, background: i === nb - 1 && f < al.at + 20 ? ACC_SOFT : SURF, transform: `translateY(${(1 - p) * -30}px) scale(${0.94 + 0.06 * p})`, opacity: Math.min(1, p * 1.5), fontFamily: FONT}}>
+                <span style={{width: 50, height: 50, borderRadius: 25, background: ['#F59E0B', '#10B981', '#3B82F6'][i], color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 20, flex: 'none'}}>{al.n[0]}</span>
+                <div style={{flex: 1, minWidth: 0}}>
+                  <div style={{display: 'flex', alignItems: 'center', gap: 10}}>
+                    <b style={{fontSize: 22, color: FG}}>{al.n}</b>
+                    <span style={{padding: '3px 10px', borderRadius: 999, background: ACC_SOFT, color: ACC_INK, fontWeight: 800, fontSize: 14}}>Nouveau</span>
+                    {i === 0 && f >= excl && <span style={{padding: '3px 10px', borderRadius: 999, background: OK_SOFT, color: OK, fontWeight: 800, fontSize: 14, transform: `scale(${sp(f - excl, 10)})`}}>✓ Exclusif</span>}
+                  </div>
+                  <div style={{fontSize: 19, color: DIM, marginTop: 4}}>{al.d}</div>
+                </div>
+                <span style={{padding: '10px 16px', borderRadius: 10, background: calling ? ACC : SURF, color: calling ? '#fff' : FG, border: `1px solid ${calling ? ACC : LINE2}`, fontWeight: 800, fontSize: 17, whiteSpace: 'nowrap', transform: `scale(${calling && f < call + 5 ? 0.92 : 1})`}}>{calling ? '📞 Appel en cours…' : 'Appeler'}</span>
+              </div>
+            );
+          })}
+        </div>
+      </Card>
+      {f >= toast - 4 && (
+        <div style={{position: 'absolute', right: -10, top: -54, display: 'flex', alignItems: 'center', gap: 12, padding: '14px 20px', borderRadius: 16, background: FG, color: '#fff', fontFamily: FONT, fontWeight: 700, fontSize: 20, boxShadow: SH_LG, opacity: Math.min(1, tp * 1.4) * (1 - tOut), transform: `translateY(${(1 - tp) * -24}px)`}}>
+          <LogoMark size={22} color="#fff" /> Nouveau lead · Julien R. vient de remplir ton formulaire
+        </div>
+      )}
     </div>
   );
 };
@@ -509,7 +521,7 @@ const ResDemo: React.FC = () => {
 };
 const BuyerDemo: React.FC = () => {
   const f = useCurrentFrame();
-  const nuit = cue(9, 'nuit', 6.0);
+  const nuit = cue(9, 'nuit', 7.1);
   const night = prog(f, nuit - 4, 14, INOUT) > 0.5;
   const acts = ['Budget déplacé vers la vidéo d’Alice', 'Nouvelle version de la pub mise en test', 'Diffusion aux heures où tes prospects répondent'];
   return (
@@ -578,8 +590,8 @@ export const LeadsBuyVideo: React.FC = () => {
       <Stage start={S.form} end={S.camp} top={70}><FormDemo /></Stage>
       <Side idx={2} start={S.camp} end={S.wa} a="Ta campagne," b="dans ta zone." sub="Objectif Prospects, formulaire lié, sur Facebook et Instagram." />
       <Stage start={S.camp} end={S.wa} top={190}><CampDemo /></Stage>
-      <Side idx={3} start={S.wa} end={S.leads} a="Tu rappelles" b="le premier." sub="Une alerte WhatsApp à chaque lead. Personne d’autre ne l’a." />
-      <Stage start={S.wa} end={S.leads} top={160}><WaDemo /></Stage>
+      <Side idx={3} start={S.wa} end={S.leads} a="Tu rappelles" b="le premier." sub="Chaque lead arrive en direct dans Growthity. Personne d’autre ne l’a." />
+      <Stage start={S.wa} end={S.leads} top={230}><InboxDemo /></Stage>
       <Side idx={4} start={S.leads} end={S.res} a="« Montre-moi" b="mes leads. »" a2="Filtrés, vérifiés," b2="exportables." swapAt={cue(8, 'filtr', 3.6) - 6} sub="Tous tes leads dans le chat, par formulaire." sub2="Numéros douteux signalés, export CSV en un clic." />
       <Stage start={S.leads} end={S.res} top={200}><LeadsTable /></Stage>
       <Side idx={5} start={S.res} end={S.end} a="« Montre-moi" b="les résultats. »" a2="Optimisé" b2="jour et nuit." swapAt={BUYER - 6} sub="Quelle pub t’apporte les meilleurs leads, et quoi faire ensuite." sub2="Le media buyer IA ajuste tes campagnes en continu." />
