@@ -8,7 +8,7 @@ exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'click', 'chime', 'pop_sfx', 'rng'])
 W = json.load(open('src/leads/words_lb.json'))
 VO = {4: 297, 5: 427, 6: 612, 7: 697, 8: 853, 9: 1052, 10: 1277}
-VOH = {1: 4, 2: 126}
+VOH = {1: 4, 2: 93}
 T = dict(hook=0, pub=292, form=422, camp=607, wa=692, leads=847, res=1047, end=1272, total=1397)
 def cue(k, start, d=0):
     for w in W[f'lb-{k}']:

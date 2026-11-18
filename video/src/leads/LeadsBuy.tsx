@@ -134,7 +134,7 @@ const Typing: React.FC<{from: number; to: number; text: string}> = ({from, to, t
 };
 
 // ---------- 1. accroche : les leads tombent en direct, dès la première image ----------
-const VOH = {1: 4, 2: 126} as Record<number, number>;
+const VOH = {1: 4, 2: 93} as Record<number, number>;
 const cueH = (k: number, start: string, d = 0) => {
   const w = WD[`lh-${k}`].find((x) => x.w.toLowerCase().startsWith(start));
   return VOH[k] + Math.round((w ? w.s : d) * 30);
