@@ -2082,5 +2082,85 @@
   "style": 0.4,
   "speed": 1.06,
   "text": "[confident] Grossiti. Crée ta première pub vidéo aujourd'hui."
+ },
+ "ld-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "[confident] Des leads… pas des likes. Voici tout ce que fait Grossiti pour remplir ton agenda."
+ },
+ "ld-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "[confident] Tu décris ta pub : Grossiti crée la vidéo, avec un acteur réaliste."
+ },
+ "ld-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "[confident] Il construit ton formulaire de contact Meta, avec les bonnes questions pour qualifier tes prospects."
+ },
+ "ld-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "[confident] Puis il lance ta campagne de prospects sur Facebook et Instagram."
+ },
+ "ld-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "[excited] Et à chaque nouveau contact, tu reçois une alerte sur WhatsApp."
+ },
+ "ld-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "[confident] Ensuite, tu demandes simplement au chat : montre-moi mes leads."
+ },
+ "ld-7": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "[confident] Ils sont là, filtrés par formulaire, avec les numéros douteux signalés… et l'export en un clic."
+ },
+ "ld-8": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "[confident] Montre-moi les résultats : il te dit quelle pub t'apporte les meilleurs leads, et quoi faire ensuite."
+ },
+ "ld-9": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "[confident] Et son media buyer IA optimise tes campagnes, jour et nuit."
+ },
+ "ld-10": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "[confident] Grossiti. Plus de leads, moins d'efforts."
  }
 }
