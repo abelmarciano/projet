@@ -15,7 +15,8 @@ import CFG from './conv.json';
 
 type Word = {w: string; s: number; e: number};
 const WD = WORDS as Record<string, Word[]>;
-const C = CFG as unknown as {wall: string[]; hero: {src: string; from: number; caps: Word[]}; proof: {l: string; src: string; from: number}[]; prompt: string};
+type Proof = {l: string; src: string; from: number; hook: [string, string]; key: string};
+const C = CFG as unknown as {wall: string[]; hero: {src: string; from: number; caps: Word[]}; proof: Proof[]; prompt: string};
 const INK = '#0A0A12';
 const SUB = '#55536A';
 const LINE = '#E7E5EE';
@@ -29,8 +30,8 @@ const G: React.FC<{children: React.ReactNode}> = ({children}) => (
   <span style={{backgroundImage: GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent'}}>{children}</span>
 );
 
-export const VO = {1: 6, 2: 150, 3: 214, 4: 364, 5: 474, 6: 606} as Record<number, number>;
-export const T = {wall: 0, prompt: 138, send: 200, demo: 208, meta: 358, proof: 470, cta: 600, total: 720};
+export const VO = {1: 6, 2: 150, 3: 214, 4: 364, 5: 474, 6: 626} as Record<number, number>;
+export const T = {wall: 0, prompt: 138, send: 200, demo: 208, meta: 358, proof: 470, cta: 620, total: 740};
 const cue = (k: number, start: string, d = 0) => {
   const w = WD[`conv-${k}`].find((x) => x.w.toLowerCase().startsWith(start));
   return VO[k] + Math.round((w ? w.s : d) * 30);
@@ -96,9 +97,9 @@ const Wall: React.FC = () => {
         </div>
       </div>
       {/* voile clair pour lire le titre */}
-      <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(247,246,243,0.97) 0%, rgba(247,246,243,0.85) 26%, rgba(247,246,243,0) 46%, rgba(247,246,243,0) 66%, rgba(247,246,243,0.9) 82%)', opacity: 1 - dive}} />
-      <Title a="Des pubs vidéo" b={<G>qui vendent.</G>} at={cue(1, 'des', 0.08) - 2} at2={cue(1, 'vendent', 1.2) - 4} top={170} size={120} out={T.prompt - 26} />
-      <div style={{position: 'absolute', left: 0, right: 0, top: 1250, display: 'flex', justifyContent: 'center', gap: 14, opacity: 1 - dive}}>
+      <AbsoluteFill style={{background: 'radial-gradient(ellipse 900px 620px at 50% 46%, rgba(247,246,243,0.96) 0%, rgba(247,246,243,0.88) 45%, rgba(247,246,243,0) 80%)', opacity: 1 - dive}} />
+      <Title a="Des pubs vidéo" b={<G>qui vendent.</G>} at={cue(1, 'des', 0.08) - 2} at2={cue(1, 'vendent', 1.2) - 4} top={640} size={136} out={T.prompt - 26} />
+      <div style={{position: 'absolute', left: 0, right: 0, top: 1010, display: 'flex', justifyContent: 'center', gap: 14, opacity: 1 - dive}}>
         {sansT.map((s, i) => {
           const p = sp(f - sans[i], 13);
           return <div key={s} style={{padding: '18px 26px', borderRadius: 99, background: '#fff', border: `1px solid ${LINE}`, boxShadow: SHADOW, fontFamily: FONT, fontWeight: 800, fontSize: 32, color: INK, transform: `translateY(${(1 - p) * 40}px) scale(${0.9 + 0.1 * p})`, opacity: p, whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 10}}><span style={{color: '#DC2626', fontSize: 28}}>✕</span>{s}</div>;
@@ -270,31 +271,70 @@ const MetaPanel: React.FC<{pub: number; opt: number; nuit: number}> = ({pub, opt
   );
 };
 
-// ---------- E. preuve : 6 métiers ----------
+// ---------- E. preuve : 6 pubs montrées en version virale, puis la grille ----------
 const Proof: React.FC = () => {
   const f = useCurrentFrame(); // absolu
-  const ats = [cue(5, 'café', 0), cue(5, 'fleuriste', 0.64), cue(5, 'resto', 1.32), cue(5, 'friperie', 1.92), cue(5, 'quel', 2.8), cue(5, 'quel', 2.8) + 5];
+  const q = cue(5, 'quel', 2.78);
+  const ats = [cue(5, 'café', 0), cue(5, 'garage', 0.66), cue(5, 'resto', 1.3), cue(5, 'friperie', 1.92), q - 8, q + 6];
+  const GRID = q + 22;
   const out = prog(f, T.cta - 8, 10, INOUT);
-  const w = 300, h = 533, gx = 28, gy = 92;
+  const cur = ats.reduce((acc, t, i) => (f >= t ? i : acc), -1);
+  const W = 620, H = 1102;
+  const w = 300, h = 437, gx = 28, gy = 92;
   return (
     <AbsoluteFill style={{opacity: 1 - out}}>
       <Bg />
-      <Title a="Quel que soit" b={<G>ton business.</G>} at={cue(5, 'quel', 2.8) - 4} top={130} size={96} />
-      <div style={{position: 'absolute', left: (1080 - (3 * w + 2 * gx)) / 2, top: 400, display: 'grid', gridTemplateColumns: `repeat(3, ${w}px)`, columnGap: gx, rowGap: gy}}>
-        {C.proof.map((pr, i) => {
-          const p = sp(f - ats[i] + 2, 13);
-          return (
-            <div key={pr.l} style={{position: 'relative', width: w, height: h * 0.82, opacity: Math.min(1, p * 1.5), transform: `translateY(${(1 - p) * 80}px) scale(${0.85 + 0.15 * p})`}}>
-              <div style={{width: '100%', height: '100%', borderRadius: 28, overflow: 'hidden', background: '#000', boxShadow: SHADOW}}>
-                <Sequence from={ats[i] - 2} layout="none"><OffthreadVideo muted src={staticFile(pr.src)} startFrom={Math.round(pr.from * 30)} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Sequence>
-              </div>
-              <div style={{position: 'absolute', left: 0, right: 0, bottom: -60, display: 'flex', justifyContent: 'center'}}>
-                <span style={{padding: '10px 22px', borderRadius: 99, background: '#fff', border: `1px solid ${LINE}`, boxShadow: SHADOW, fontFamily: FONT, fontWeight: 800, fontSize: 28, color: INK}}>{pr.l}</span>
-              </div>
+      {/* une pub à la fois, en grand */}
+      {f < GRID + 6 && cur >= 0 && (() => {
+        const pr = C.proof[cur];
+        const lf = f - ats[cur];
+        const pin = sp(lf, 12, 0.6);
+        const punch = 1.14 - 0.14 * prog(lf, 0, 8);
+        const flash = interpolate(lf, [0, 1, 5], [0, 0.7, 0], clamp);
+        const toGrid = prog(f, GRID - 2, 8, INOUT);
+        return (
+          <div style={{position: 'absolute', left: 540 - W / 2, top: 340, width: W, height: H, borderRadius: 40, overflow: 'hidden', background: '#000', boxShadow: SHADOW, transform: `translateY(${(1 - pin) * 260}px) rotate(${(1 - pin) * (cur % 2 ? 4 : -4)}deg) scale(${1 - toGrid * 0.4})`, opacity: 1 - toGrid}}>
+            <Sequence from={ats[cur]} layout="none">
+              <OffthreadVideo muted src={staticFile(pr.src)} startFrom={Math.round(pr.from * 30)} style={{width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${punch})`}} />
+            </Sequence>
+            <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 30%)'}} />
+            <div style={{position: 'absolute', left: 30, right: 30, top: 120, textAlign: 'center'}}>
+              {pr.hook.map((line, li) => {
+                const pl = sp(lf - 2 - li * 3, 10, 0.5);
+                return (
+                  <div key={li} style={{fontFamily: FONT, fontWeight: 900, fontSize: 64, lineHeight: 1.05, letterSpacing: '-0.01em', color: '#fff', WebkitTextStroke: '3px #000', paintOrder: 'stroke fill', textShadow: '0 6px 0 #000', transform: `scale(${0.7 + 0.3 * pl})`, opacity: Math.min(1, pl * 2)}}>
+                    {line.split(' ').map((wd, wi) => <span key={wi} style={{color: wd.replace(/[^A-ZÀ-Ü’]/g, '') === pr.key ? '#FFE14D' : '#fff'}}>{wd}{' '}</span>)}
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
-      </div>
+            <div style={{position: 'absolute', left: 26, bottom: 30, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 20px 10px 12px', borderRadius: 99, background: 'rgba(255,255,255,0.94)', fontFamily: FONT, fontWeight: 800, fontSize: 26, color: INK}}><LogoMark size={28} />Faite avec Growthity</div>
+            <div style={{position: 'absolute', right: 26, bottom: 30, padding: '10px 22px', borderRadius: 99, background: INK, color: '#fff', fontFamily: FONT, fontWeight: 800, fontSize: 28}}>{pr.l}</div>
+            <AbsoluteFill style={{background: '#fff', opacity: flash}} />
+          </div>
+        );
+      })()}
+      {/* la grille finale */}
+      {f >= GRID - 2 && (
+        <>
+          <Title a="Quel que soit" b={<G>ton business.</G>} at={GRID - 2} top={150} size={96} />
+          <div style={{position: 'absolute', left: (1080 - (3 * w + 2 * gx)) / 2, top: 420, display: 'grid', gridTemplateColumns: `repeat(3, ${w}px)`, columnGap: gx, rowGap: gy}}>
+            {C.proof.map((pr, i) => {
+              const p = sp(f - GRID - i * 2, 13);
+              return (
+                <div key={pr.l} style={{position: 'relative', width: w, height: h, opacity: Math.min(1, p * 1.5), transform: `scale(${0.6 + 0.4 * p})`}}>
+                  <div style={{width: '100%', height: '100%', borderRadius: 28, overflow: 'hidden', background: '#000', boxShadow: SHADOW}}>
+                    <Sequence from={GRID} layout="none"><OffthreadVideo muted src={staticFile(pr.src)} startFrom={Math.round((pr.from + 1) * 30)} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Sequence>
+                  </div>
+                  <div style={{position: 'absolute', left: 0, right: 0, bottom: -60, display: 'flex', justifyContent: 'center'}}>
+                    <span style={{padding: '10px 22px', borderRadius: 99, background: '#fff', border: `1px solid ${LINE}`, boxShadow: SHADOW, fontFamily: FONT, fontWeight: 800, fontSize: 28, color: INK}}>{pr.l}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
     </AbsoluteFill>
   );
 };

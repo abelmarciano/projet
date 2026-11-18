@@ -7,8 +7,8 @@ g = {'__file__': __file__}
 exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'click', 'chime', 'pop_sfx', 'rng'])
 W = json.load(open('src/conv/words.json'))
-VO = {1: 6, 2: 150, 3: 214, 4: 364, 5: 474, 6: 606}
-T = dict(wall=0, prompt=138, send=200, demo=208, meta=358, proof=470, cta=600, total=720)
+VO = {1: 6, 2: 150, 3: 214, 4: 364, 5: 474, 6: 626}
+T = dict(wall=0, prompt=138, send=200, demo=208, meta=358, proof=470, cta=620, total=740)
 def cue(k, start, d=0):
     for w in W[f'conv-{k}']:
         if w['w'].lower().startswith(start): return (VO[k] + round(w['s'] * 30)) / 30
@@ -67,7 +67,9 @@ add(sfx, whoosh(0.5), s('meta') - 0.1, 0.3)
 add(sfx, chime(84), cue(4, 'publie'), 0.3); add(sfx, chime(91), cue(4, 'publie') + 0.12, 0.2)
 for j in range(3): add(sfx, click(1.3), cue(4, "l'optimise") + (4 + j * 6) / 30, 0.25)
 add(sfx, whoosh(0.5), s('proof') - 0.2, 0.3)
-for kk, d0 in [('café', 0), ('fleuriste', 0), ('resto', 0), ('friperie', 0), ('quel', 0), ('quel', 5 / 30)]: add(sfx, pop_sfx(), cue(5, kk) + d0, 0.35)
+for kk, d0 in [('café', 0), ('garage', 0), ('resto', 0), ('friperie', 0), ('quel', -8 / 30), ('quel', 6 / 30)]:
+    add(sfx, whoosh(0.25), cue(5, kk) + d0 - 0.1, 0.3); add(sfx, boom(), cue(5, kk) + d0, 0.25)
+for i in range(6): add(sfx, pop_sfx(), cue(5, 'quel') + (22 + i * 2) / 30, 0.2)
 add(sfx, boom(), s('cta'), 0.5); add(sfx, sub(1.4, 42), s('cta'), 0.5); add(sfx, chime(81), s('cta') + 0.1, 0.25); add(sfx, chime(88), s('cta') + 0.25, 0.18)
 mix = (mus + sfx * 0.36)[: int(s('total') * SR)]
 mix = np.tanh(mix / (np.max(np.abs(mix)) + 1e-9) * 1.3) * 0.45

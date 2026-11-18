@@ -152,32 +152,62 @@
   {
    "l": "Café",
    "src": "media/fal/social/out/multi_amelie.mp4",
-   "from": 1.5
+   "from": 1.5,
+   "hook": [
+    "LE CAFÉ QUI FAIT",
+    "OUBLIER LES CAPSULES"
+   ],
+   "key": "CAPSULES"
   },
   {
-   "l": "Fleuriste",
-   "src": "game/priya.mp4",
-   "from": 0.9
+   "l": "Garage",
+   "src": "media/fal/social/out/pov_karim_apres.mp4",
+   "from": 0.3,
+   "hook": [
+    "TON GARAGE",
+    "DE CONFIANCE"
+   ],
+   "key": "CONFIANCE"
   },
   {
    "l": "Resto",
    "src": "rewind/yanis.mp4",
-   "from": 0.3
+   "from": 0.3,
+   "hook": [
+    "PÂTES FRAÎCHES",
+    "FAITES MAIN"
+   ],
+   "key": "MAIN"
   },
   {
    "l": "Friperie",
    "src": "sms/anais.mp4",
-   "from": 0.4
+   "from": 0.4,
+   "hook": [
+    "LA FRIPERIE",
+    "DE TES RÊVES"
+   ],
+   "key": "RÊVES"
   },
   {
    "l": "Bijoux",
    "src": "media/chat/trefle-noor-raw.mp4",
-   "from": 3.0
+   "from": 3.0,
+   "hook": [
+    "LE BRACELET QU’ON",
+    "TE DEMANDE PARTOUT"
+   ],
+   "key": "PARTOUT"
   },
   {
    "l": "Animalerie",
    "src": "media/chat/friandises-sana-raw.mp4",
-   "from": 0.6
+   "from": 0.6,
+   "hook": [
+    "IL EST",
+    "COMPLÈTEMENT FAN"
+   ],
+   "key": "FAN"
   }
  ],
  "prompt": "Une pub pour mon café de spécialité, avec une actrice qui le recommande."
