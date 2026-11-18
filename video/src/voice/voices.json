@@ -2209,7 +2209,7 @@
   "stability": 0.5,
   "style": 0.4,
   "speed": 1.06,
-  "text": "Montre-moi les résultats : il te dit quelle pub t'apporte les meilleurs leads. Et son media buyer, une i-a, optimise tes campagnes, jour et nuit."
+  "text": "Montre-moi les résultats : il te dit quelle pub t'apporte les meilleurs leads. Et son media buyer optimise tes campagnes, jour et nuit."
  },
  "lb-10": {
   "voice": "3Tp5mYhT9wrfnry9pzvV",
@@ -2234,5 +2234,13 @@
   "style": 0.4,
   "speed": 1.06,
   "text": "Pas d'agence, pas de leads achetés : c'est ton outil. Regarde."
+ },
+ "lm-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "Tu connectes ton compte Meta Ads. Tu n'en as pas, ou tu n'y connais rien ? Tu es guidé de A à Z."
  }
 }

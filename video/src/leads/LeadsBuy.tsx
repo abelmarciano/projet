@@ -1,6 +1,6 @@
 // « Arrête d'acheter tes leads » — motion 16:9 pour les entreprises qui achètent leurs leads (exemple : pompe à chaleur).
 // Accroche : l'outil Growthity à l'écran, une phrase tapée, les leads tombent (pas d'agence, pas de leads achetés) → pub (Alice) → formulaire
-// qualifiant → campagne Prospects dans ta zone → leads en direct dans Growthity → « Montre-moi mes leads » → résultats + media buyer IA → fin.
+// qualifiant → campagne Prospects dans ta zone → leads en direct dans Growthity → « Montre-moi mes leads » → résultats + media buyer → fin.
 // Aucun chiffre ni prix ; contacts et entreprise fictifs.
 import React, {useEffect, useState} from 'react';
 import {AbsoluteFill, Audio, Img, OffthreadVideo, Sequence, continueRender, delayRender, interpolate, spring, staticFile, useCurrentFrame} from 'remotion';
@@ -30,8 +30,13 @@ const G: React.FC<{children: React.ReactNode}> = ({children}) => (
   <span style={{backgroundImage: GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent'}}>{children}</span>
 );
 
-export const VO = {4: 271, 5: 401, 6: 586, 7: 671, 8: 827, 9: 1026, 10: 1251} as Record<number, number>;
-export const S = {hook: 0, pub: 266, form: 396, camp: 581, wa: 666, leads: 821, res: 1021, end: 1246, total: 1371};
+export const VO = {4: 271, 5: 591, 6: 776, 7: 865, 8: 1022, 9: 1225, 10: 1432} as Record<number, number>;
+export const S = {hook: 0, pub: 266, meta: 402, form: 586, camp: 771, wa: 860, leads: 1017, res: 1220, end: 1427, total: 1556};
+const VM = 407;
+const cueM = (start: string, d = 0) => {
+  const w = WD['lm-1'].find((x) => x.w.toLowerCase().startsWith(start));
+  return VM + Math.round((w ? w.s : d) * 30);
+};
 const cue = (k: number, start: string, d = 0) => {
   const w = WD[`lb-${k}`].find((x) => x.w.toLowerCase().startsWith(start));
   return VO[k] + Math.round((w ? w.s : d) * 30);
@@ -57,7 +62,7 @@ const Bg: React.FC = () => {
 };
 
 // ---------- colonne de texte à gauche ----------
-const STEPS = ['La pub', 'Le formulaire', 'La campagne', 'En direct', 'Les leads', 'Les résultats'];
+const STEPS = ['La pub', 'Meta Ads', 'Le formulaire', 'La campagne', 'En direct', 'Les leads', 'Les résultats'];
 const Side: React.FC<{idx: number; label?: string; color?: string; start: number; end: number; a: React.ReactNode; b: React.ReactNode; sub: string; a2?: React.ReactNode; b2?: React.ReactNode; sub2?: string; swapAt?: number; red?: boolean}> = ({idx, label, color = ACC, start, end, a, b, sub, a2, b2, sub2, swapAt, red}) => {
   const f = useCurrentFrame();
   if (f < start - 2 || f > end + 2) return null;
@@ -296,6 +301,56 @@ const PubDemo: React.FC = () => {
           </div>
         </div>
       </Ai>
+    </Card>
+  );
+};
+
+// ---------- 3 bis. connexion Meta Ads, guidée de A à Z ----------
+const MetaDemo: React.FC = () => {
+  const f = useCurrentFrame();
+  const click = cueM('connectes', 0.3) + 16;
+  const noAcc = cueM('pas', 2.0) + 4;
+  const guide = cueM('guidé', 4.1) - 6;
+  const steps = ['Créer ton Business Manager', 'Créer ton compte publicitaire', 'Relier ta page Facebook et Instagram', 'Ajouter un moyen de paiement', 'C’est prêt : compte connecté'];
+  const stepAt = (i: number) => guide + 6 + i * 9;
+  const done = f >= stepAt(4) + 6;
+  const g = sp(f - guide, 14);
+  return (
+    <Card style={{padding: 32}}>
+      <div style={{display: 'flex', alignItems: 'center', gap: 16}}>
+        <span style={{width: 56, height: 56, borderRadius: 16, background: '#E8F0FF', display: 'grid', placeItems: 'center'}}>
+          <svg width="34" height="22" viewBox="0 0 34 22"><path d="M3 18 C 3 6, 10 2, 17 11 C 24 20, 31 16, 31 9 C 31 3, 26 2, 22 6 L 12 17 C 8 21, 3 21, 3 18 Z" fill="none" stroke={META} strokeWidth="3.4" strokeLinecap="round" /></svg>
+        </span>
+        <div style={{fontFamily: FONT}}>
+          <div style={{fontWeight: 800, fontSize: 30, color: FG}}>Connecte ton compte Meta Ads</div>
+          <div style={{fontSize: 19, color: DIM, marginTop: 2}}>Pour publier tes pubs sur Facebook et Instagram</div>
+        </div>
+        {done && <span style={{marginLeft: 'auto', padding: '10px 16px', borderRadius: 999, background: OK_SOFT, color: OK, fontFamily: FONT, fontWeight: 800, fontSize: 19, transform: `scale(${sp(f - stepAt(4) - 6, 10)})`}}>● Connecté</span>}
+      </div>
+      <div style={{marginTop: 24, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14}}>
+        <div style={{height: 64, borderRadius: 14, background: META, color: '#fff', display: 'grid', placeItems: 'center', fontFamily: FONT, fontWeight: 800, fontSize: 22, transform: `scale(${f >= click && f < click + 5 ? 0.95 : 1})`, boxShadow: f >= click && f < noAcc ? `0 0 0 5px rgba(8,102,255,.18)` : 'none'}}>Continuer avec Facebook</div>
+        <div style={{height: 64, borderRadius: 14, border: `1.5px solid ${f >= noAcc ? ACC : LINE2}`, background: f >= noAcc ? ACC_SOFT : SURF, color: f >= noAcc ? ACC_INK : FG, display: 'grid', placeItems: 'center', fontFamily: FONT, fontWeight: 700, fontSize: 20, transform: `scale(${f >= noAcc && f < noAcc + 5 ? 0.95 : 1})`}}>Je n’ai pas de compte publicitaire</div>
+      </div>
+      <div style={{marginTop: 22, overflow: 'hidden', maxHeight: 470 * g, opacity: g}}>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontFamily: FONT, marginBottom: 12}}>
+          <b style={{fontSize: 22, color: FG}}>Guide pas à pas</b>
+          <span style={{fontSize: 18, color: DIM, fontWeight: 600}}>de A à Z</span>
+        </div>
+        <div style={{height: 8, borderRadius: 4, background: SUNK, marginBottom: 16}}><div style={{height: '100%', borderRadius: 4, background: GRAD, width: `${Math.min(1, Math.max(0, (f - guide - 6) / (stepAt(4) - guide)) ) * 100}%`}} /></div>
+        <div style={{display: 'flex', flexDirection: 'column', gap: 10}}>
+          {steps.map((t, i) => {
+            const ok = f >= stepAt(i) + 4;
+            const cur = f >= stepAt(i) - 4 && !ok;
+            return (
+              <div key={t} style={{display: 'flex', alignItems: 'center', gap: 14, padding: '13px 16px', borderRadius: 14, border: `1px solid ${cur ? ACC : LINE}`, background: i === 4 && ok ? OK_SOFT : cur ? ACC_SOFT : SURF, fontFamily: FONT}}>
+                <span style={{width: 32, height: 32, borderRadius: 16, display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 16, background: ok ? (i === 4 ? OK : ACC) : SUNK, color: ok ? '#fff' : DIM, transform: `scale(${ok ? sp(f - stepAt(i) - 4, 10) * 0.2 + 0.8 : 1})`}}>{ok ? '✓' : String.fromCharCode(65 + i)}</span>
+                <span style={{fontWeight: 600, fontSize: 21, color: i === 4 && ok ? OK : FG}}>{t}</span>
+                {!ok && i < 4 && <span style={{marginLeft: 'auto', fontSize: 16, color: DIM}}>Je te montre comment</span>}
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </Card>
   );
 };
@@ -557,7 +612,7 @@ const BuyerDemo: React.FC = () => {
       <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
         <div style={{display: 'flex', alignItems: 'center', gap: 14}}>
           <span style={{width: 52, height: 52, borderRadius: 15, background: ACC_SOFT, display: 'grid', placeItems: 'center'}}><LogoMark size={30} /></span>
-          <div style={{fontFamily: FONT, fontWeight: 800, fontSize: 30, color: night ? '#fff' : FG}}>Media buyer IA</div>
+          <div style={{fontFamily: FONT, fontWeight: 800, fontSize: 30, color: night ? '#fff' : FG}}>Ton media buyer</div>
         </div>
         <span style={{padding: '10px 18px', borderRadius: 999, background: night ? '#2A2560' : '#FEF3C7', color: night ? '#C7D2FE' : '#B45309', fontFamily: FONT, fontWeight: 800, fontSize: 20}}>{night ? '☾ Nuit' : '☀ Jour'}</span>
       </div>
@@ -610,23 +665,26 @@ export const LeadsBuyVideo: React.FC = () => {
       <Bg />
       {f < S.pub + 2 && <HookSide />}
       <Stage start={0} end={S.pub} top={150}><Feed /></Stage>
-      <Side idx={0} start={S.pub} end={S.form} a="Ta pub vidéo" b="en une phrase." sub="Growthity écrit le script, choisit une actrice réaliste et monte la vidéo." />
-      <Stage start={S.pub} end={S.form} top={150}><PubDemo /></Stage>
-      <Side idx={1} start={S.form} end={S.camp} a="Un formulaire" b="qui qualifie." sub="Logement, chauffage, propriétaire : tu ne reçois que des prospects sérieux." />
+      <Side idx={0} start={S.pub} end={S.meta} a="Ta pub vidéo" b="en une phrase." sub="Growthity écrit le script, choisit une actrice réaliste et monte la vidéo." />
+      <Stage start={S.pub} end={S.meta} top={150}><PubDemo /></Stage>
+      <Side idx={1} start={S.meta} end={S.form} a="Meta Ads," b="guidé de A à Z." sub="Tu le connectes en un clic. Pas de compte ? Growthity t’accompagne étape par étape." />
+      <Stage start={S.meta} end={S.form} top={150}><MetaDemo /></Stage>
+      <Side idx={2} start={S.form} end={S.camp} a="Un formulaire" b="qui qualifie." sub="Logement, chauffage, propriétaire : tu ne reçois que des prospects sérieux." />
       <Stage start={S.form} end={S.camp} top={70}><FormDemo /></Stage>
-      <Side idx={2} start={S.camp} end={S.wa} a="Ta campagne," b="dans ta zone." sub="Objectif Prospects, formulaire lié, sur Facebook et Instagram." />
+      <Side idx={3} start={S.camp} end={S.wa} a="Ta campagne," b="dans ta zone." sub="Objectif Prospects, formulaire lié, sur Facebook et Instagram." />
       <Stage start={S.camp} end={S.wa} top={190}><CampDemo /></Stage>
-      <Side idx={3} start={S.wa} end={S.leads} a="Tu rappelles" b="le premier." sub="Chaque lead arrive en direct dans Growthity. Personne d’autre ne l’a." />
+      <Side idx={4} start={S.wa} end={S.leads} a="Tu rappelles" b="le premier." sub="Chaque lead arrive en direct dans Growthity. Personne d’autre ne l’a." />
       <Stage start={S.wa} end={S.leads} top={230}><InboxDemo /></Stage>
-      <Side idx={4} start={S.leads} end={S.res} a="« Montre-moi" b="mes leads. »" a2="Filtrés, vérifiés," b2="exportables." swapAt={cue(8, 'filtr', 3.6) - 6} sub="Tous tes leads dans le chat, par formulaire." sub2="Numéros douteux signalés, export CSV en un clic." />
+      <Side idx={5} start={S.leads} end={S.res} a="« Montre-moi" b="mes leads. »" a2="Filtrés, vérifiés," b2="exportables." swapAt={cue(8, 'filtr', 3.6) - 6} sub="Tous tes leads dans le chat, par formulaire." sub2="Numéros douteux signalés, export CSV en un clic." />
       <Stage start={S.leads} end={S.res} top={200}><LeadsTable /></Stage>
-      <Side idx={5} start={S.res} end={S.end} a="« Montre-moi" b="les résultats. »" a2="Optimisé" b2="jour et nuit." swapAt={BUYER - 6} sub="Quelle pub t’apporte les meilleurs leads, et quoi faire ensuite." sub2="Le media buyer IA ajuste tes campagnes en continu." />
+      <Side idx={6} start={S.res} end={S.end} a="« Montre-moi" b="les résultats. »" a2="Optimisé" b2="jour et nuit." swapAt={BUYER - 6} sub="Quelle pub t’apporte les meilleurs leads, et quoi faire ensuite." sub2="Ton media buyer ajuste tes campagnes en continu." />
       <Stage start={S.res} end={BUYER} top={190}><ResDemo /></Stage>
       <Stage start={BUYER} end={S.end} top={300}><BuyerDemo /></Stage>
       <Sequence from={S.end}><End /></Sequence>
       <AbsoluteFill style={{background: '#fff', opacity: Math.max(flash(S.pub), flash(S.end)), pointerEvents: 'none'}} />
       <Audio src={staticFile('leads/bed-lb.wav')} />
       {[1, 2].map((k) => <Sequence key={`h${k}`} from={VOH[k]}><Audio src={staticFile(`voice/lh-${k}-n.mp3`)} /></Sequence>)}
+      <Sequence from={VM}><Audio src={staticFile('voice/lm-1-n.mp3')} /></Sequence>
       {[4, 5, 6, 7, 8, 9, 10].map((k) => (
         <Sequence key={k} from={VO[k]}><Audio src={staticFile(`voice/lb-${k}-n.mp3`)} /></Sequence>
       ))}

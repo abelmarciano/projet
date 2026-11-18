@@ -7,9 +7,10 @@ g = {'__file__': __file__}
 exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'click', 'chime', 'pop_sfx', 'rng'])
 W = json.load(open('src/leads/words_lb.json'))
-VO = {4: 271, 5: 401, 6: 586, 7: 671, 8: 827, 9: 1026, 10: 1251}
+VO = {4: 271, 5: 591, 6: 776, 7: 865, 8: 1022, 9: 1225, 10: 1432}
 VOH = {1: 4, 2: 154}
-T = dict(hook=0, pub=266, form=396, camp=581, wa=666, leads=821, res=1021, end=1246, total=1371)
+T = dict(hook=0, pub=266, meta=402, form=586, camp=771, wa=860, leads=1017, res=1220, end=1427, total=1556)
+VM = 407
 def cue(k, start, d=0):
     for w in W[f'lb-{k}']:
         if w['w'].lower().startswith(start): return (VO[k] + round(w['s'] * 30)) / 30
@@ -72,7 +73,15 @@ add(sfx, chime(84), cueH(2, 'outil'), 0.28); add(sfx, chime(91), cueH(2, 'outil'
 for i in range(5): add(sfx, pop_sfx(), cueH(2, 'outil') + i * 2 / 30, 0.18)
 add(sfx, riser(1.0), s('pub') - 1.0, 0.3)
 # scènes
-for k in ['pub', 'form', 'camp', 'wa', 'leads', 'res']:
+def cueM(start, d=0):
+    for w in W['lm-1']:
+        if w['w'].lower().startswith(start): return (VM + round(w['s'] * 30)) / 30
+    return (VM + d * 30) / 30
+ck = cueM('connectes', 0.3) + 16 / 30; na = cueM('pas', 2.0) + 4 / 30; gd = cueM('guidé', 4.1) - 6 / 30
+add(sfx, click(1.3), ck, 0.3); add(sfx, click(1.3), na, 0.3); add(sfx, whoosh(0.3), gd - 0.05, 0.25)
+for i in range(5): add(sfx, pop_sfx(), gd + (10 + i * 9) / 30, 0.25)
+add(sfx, chime(84), gd + (10 + 4 * 9 + 2) / 30, 0.25); add(sfx, chime(91), gd + (10 + 4 * 9 + 6) / 30, 0.2)
+for k in ['pub', 'meta', 'form', 'camp', 'wa', 'leads', 'res']:
     add(sfx, whoosh(0.45), s(k) - 0.15, 0.3); add(sfx, sub(0.7, 50), s(k) + 0.03, 0.3)
 for j in range(T['pub'] + 6, T['pub'] + 50, 2): add(sfx, click(1.0 + 0.5 * rng.random()), j / 30, 0.09)
 add(sfx, chime(86), cue(4, 'crée') - 0.1, 0.25)
