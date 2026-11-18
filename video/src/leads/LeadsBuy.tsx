@@ -262,15 +262,19 @@ const HookSide: React.FC = () => {
         <div style={{transform: `translateY(${(1 - b) * 60}px)`, opacity: b}}><G>toi-même.</G></div>
       </div>
       <div style={{marginTop: 22, fontFamily: FONT, fontWeight: 600, fontSize: 30, color: MUTED, opacity: prog(f, cueH(1, 'sans', 3.3), 10)}}>Sans compétences. En 2 minutes.</div>
-      <div style={{marginTop: 30, display: 'flex', gap: 14, flexWrap: 'wrap', minHeight: 140}}>
+      <div style={{marginTop: 30, display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'flex-start', alignContent: 'flex-start', minHeight: 140}}>
         {chips.map((c) => {
           if (f < c.at) return null;
-          const p = sp(f - c.at, 10);
-          const strike = prog(f, c.at + 4, 8);
+          const p = sp(f - c.at, 12);
+          const strike = prog(f, c.at + 5, 9);
+          const col = c.bad ? RED : OK;
           return (
-            <span key={c.t} style={{position: 'relative', padding: '14px 24px', borderRadius: 999, background: c.bad ? RED_SOFT : OK_SOFT, color: c.bad ? RED : OK, fontFamily: FONT, fontWeight: 800, fontSize: 30, transform: `scale(${1.5 - 0.5 * p})`, opacity: Math.min(1, p * 1.5)}}>
-              {c.bad ? '✕ ' : '✓ '}{c.t}
-              {c.bad && <span style={{position: 'absolute', left: 50, right: 20, top: '50%', height: 4, borderRadius: 2, background: RED, transform: `scaleX(${strike})`, transformOrigin: 'left'}} />}
+            <span key={c.t} style={{display: 'inline-flex', alignItems: 'center', gap: 12, height: 60, padding: '0 24px 0 12px', borderRadius: 30, background: c.bad ? RED_SOFT : OK_SOFT, border: `1.5px solid ${c.bad ? 'rgba(217,45,32,.18)' : 'rgba(19,122,69,.2)'}`, fontFamily: FONT, fontWeight: 800, fontSize: 28, lineHeight: 1, color: col, transform: `scale(${1.25 - 0.25 * p})`, opacity: Math.min(1, p * 1.5), whiteSpace: 'nowrap'}}>
+              <span style={{width: 36, height: 36, borderRadius: 18, background: col, color: '#fff', display: 'grid', placeItems: 'center', fontSize: 20, fontWeight: 900}}>{c.bad ? '✕' : '✓'}</span>
+              <span style={{position: 'relative', opacity: c.bad ? 1 - 0.35 * strike : 1}}>
+                {c.t}
+                {c.bad && <span style={{position: 'absolute', left: -4, right: -4, top: '52%', height: 4, marginTop: -2, borderRadius: 2, background: col, transform: `scaleX(${strike})`, transformOrigin: 'left'}} />}
+              </span>
             </span>
           );
         })}
