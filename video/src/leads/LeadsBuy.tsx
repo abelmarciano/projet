@@ -1,5 +1,5 @@
 // « Arrête d'acheter tes leads » — motion 16:9 pour les entreprises qui achètent leurs leads (exemple : pompe à chaleur).
-// Accroche : tes leads pompe à chaleur tombent en direct (pas achetés, pas revendus) → pub (Alice) → formulaire
+// Accroche : l'outil Growthity à l'écran, une phrase tapée, les leads tombent (pas d'agence, pas de leads achetés) → pub (Alice) → formulaire
 // qualifiant → campagne Prospects dans ta zone → leads en direct dans Growthity → « Montre-moi mes leads » → résultats + media buyer IA → fin.
 // Aucun chiffre ni prix ; contacts et entreprise fictifs.
 import React, {useEffect, useState} from 'react';
@@ -146,48 +146,92 @@ const FEED = [
   ['Gérard L.', 'Maison · Fioul · Propriétaire', '#F97316'], ['Émilie P.', 'Maison · Bois · Propriétaire', '#6366F1'],
   ['Karim A.', 'Maison · Gaz · Propriétaire', '#0EA5E9'], ['Lucie V.', 'Maison · Électrique · Propriétaire', '#E11D48'],
 ];
-const ARR = [2, 12, 22, 34, 44, 56, 70, 84, 100, 118];
+const ARR = [64, 74, 84, 96, 108, 122, 138, 154, 172, 192];
+const PROMPT = 'Je veux des leads pompe à chaleur dans ma zone.';
+const SEND = 40;
+// l'outil Growthity à l'écran dès la 1re image : on tape une phrase, la campagne part, les leads tombent
 const Feed: React.FC = () => {
   const f = useCurrentFrame();
-  const mine = cueH(1, 'tiens', 3.4);
+  const mine = cueH(2, 'outil', 3.1);
   const n = ARR.filter((a) => f >= a).length;
-  const ROW = 104;
+  const ROW = 96;
   const last = ARR[n - 1] ?? 0;
   const pn = sp(f - last, 16);
+  const typed = PROMPT.slice(0, Math.max(0, Math.floor((f - 2) * 1.35)));
+  const sent = f >= SEND;
+  const bub = sp(f - SEND, 13), ai = sp(f - SEND - 10, 13);
+  const nav = [['💬', 'Chat'], ['🎬', 'Pubs'], ['📣', 'Campagnes'], ['👥', 'Leads']];
+  const leadsOn = f >= ARR[0];
   return (
     <div style={{position: 'relative'}}>
-      <Card style={{padding: 0, overflow: 'hidden'}}>
-        <div style={{display: 'flex', alignItems: 'center', gap: 14, padding: '20px 26px', borderBottom: `1px solid ${LINE}`, background: RAISED}}>
-          <span style={{width: 46, height: 46, borderRadius: 13, background: ACC_SOFT, display: 'grid', placeItems: 'center'}}><LogoMark size={28} /></span>
-          <div style={{fontFamily: FONT}}><div style={{fontWeight: 800, fontSize: 26, color: FG}}>Tes leads</div><div style={{fontSize: 17, color: DIM}}>Étude pompe à chaleur</div></div>
-          <span style={{marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 14px', borderRadius: 999, background: OK_SOFT, color: OK, fontFamily: FONT, fontWeight: 700, fontSize: 17}}><span style={{width: 10, height: 10, borderRadius: 5, background: OK, opacity: 0.5 + 0.5 * Math.sin(f / 3)}} />En direct</span>
-          <span style={{position: 'relative', width: 46, height: 46, borderRadius: 13, border: `1px solid ${LINE}`, background: SURF, display: 'grid', placeItems: 'center', fontSize: 22, transform: `rotate(${f - last < 10 ? Math.sin(f * 1.3) * 14 : 0}deg)`}}>🔔<span style={{position: 'absolute', top: -5, right: -5, width: 16, height: 16, borderRadius: 8, background: RED, border: '2px solid #fff'}} /></span>
+      <Card style={{padding: 0, overflow: 'hidden', borderRadius: 22}}>
+        <div style={{height: 44, display: 'flex', alignItems: 'center', gap: 8, padding: '0 18px', background: '#EDEDF2', borderBottom: `1px solid ${LINE}`}}>
+          {['#FF5F57', '#FEBC2E', '#28C840'].map((c) => <span key={c} style={{width: 13, height: 13, borderRadius: 7, background: c}} />)}
+          <span style={{marginLeft: 18, flex: 1, maxWidth: 420, height: 28, borderRadius: 8, background: SURF, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: FONT, fontSize: 15, color: DIM}}>🔒 app.growthity.ai</span>
         </div>
-        <div style={{position: 'relative', height: 5 * ROW + 8, overflow: 'hidden'}}>
-          {FEED.slice(0, n).map(([nm, d, c], i) => {
-            const p = sp(f - ARR[i], 12);
-            const idx = n - 1 - i; // 0 = plus récent, en haut
-            const y = 12 + (idx - 1 + pn) * ROW;
-            const ex = f >= mine + (idx < 5 ? idx * 2 : 0);
-            return (
-              <div key={nm} style={{position: 'absolute', left: 18, right: 18, top: y, height: ROW - 14, display: 'flex', alignItems: 'center', gap: 16, padding: '0 18px', borderRadius: 16, border: `1.5px solid ${ex ? OK : LINE}`, background: idx === 0 && f - ARR[i] < 14 ? ACC_SOFT : SURF, opacity: Math.min(1, p * 1.6) * (idx >= 5 ? 1 - pn : 1), transform: `scale(${0.94 + 0.06 * p})`, fontFamily: FONT}}>
-                <span style={{width: 50, height: 50, borderRadius: 25, background: c, color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 20, flex: 'none'}}>{nm[0]}</span>
-                <div style={{flex: 1, minWidth: 0}}>
-                  <div style={{display: 'flex', alignItems: 'center', gap: 10}}><b style={{fontSize: 22, color: FG}}>{nm}</b><span style={{padding: '3px 10px', borderRadius: 999, background: ACC_SOFT, color: ACC_INK, fontWeight: 800, fontSize: 14}}>Nouveau</span></div>
-                  <div style={{fontSize: 19, color: DIM, marginTop: 4}}>{d}</div>
+        <div style={{display: 'flex', height: 640}}>
+          <div style={{width: 190, borderRight: `1px solid ${LINE}`, background: RAISED, padding: '18px 12px', display: 'flex', flexDirection: 'column', gap: 6}}>
+            <div style={{display: 'flex', alignItems: 'center', gap: 8, padding: '0 8px 14px'}}><LogoMark size={24} /><span style={{fontFamily: FONT, fontWeight: 800, fontSize: 19, color: FG}}>Growthity</span></div>
+            {nav.map(([ic, t], i) => {
+              const on = i === 0 ? !leadsOn : i === 3 && leadsOn;
+              return (
+                <div key={t} style={{display: 'flex', alignItems: 'center', gap: 10, padding: '10px 10px', borderRadius: 10, background: on ? ACC_SOFT : 'transparent', color: on ? ACC_INK : MUTED, fontFamily: FONT, fontWeight: on ? 700 : 600, fontSize: 18}}>
+                  <span style={{fontSize: 16}}>{ic}</span>{t}
+                  {i === 3 && leadsOn && <span style={{marginLeft: 'auto', width: 10, height: 10, borderRadius: 5, background: RED}} />}
                 </div>
-                {ex ? <span style={{padding: '8px 14px', borderRadius: 999, background: OK_SOFT, color: OK, fontWeight: 800, fontSize: 17, whiteSpace: 'nowrap', transform: `scale(${sp(f - mine - idx * 2, 10)})`}}>✓ À toi</span>
-                  : <span style={{padding: '10px 16px', borderRadius: 10, border: `1px solid ${LINE2}`, color: FG, fontWeight: 800, fontSize: 17}}>Appeler</span>}
+              );
+            })}
+          </div>
+          <div style={{flex: 1, position: 'relative', padding: 22, display: 'flex', flexDirection: 'column', gap: 14}}>
+            {!sent && (
+              <div style={{position: 'absolute', inset: 22, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 24}}>
+                <div style={{fontFamily: FONT, fontWeight: 800, fontSize: 34, color: FG, letterSpacing: '-0.02em'}}>Que veux-tu créer aujourd’hui ?</div>
+                <div style={{width: '100%', padding: '18px 20px', borderRadius: 18, border: `1.5px solid ${ACC}`, background: SURF, boxShadow: SH, display: 'flex', alignItems: 'center', gap: 12}}>
+                  <span style={{flex: 1, fontFamily: FONT, fontSize: 23, color: FG, minHeight: 30}}>{typed}<span style={{opacity: Math.floor(f / 8) % 2 ? 0 : 1, color: ACC}}>|</span></span>
+                  <span style={{width: 44, height: 44, borderRadius: 22, background: typed.length === PROMPT.length ? ACC : LINE2, color: '#fff', display: 'grid', placeItems: 'center', fontSize: 22, fontWeight: 800}}>↑</span>
+                </div>
               </div>
-            );
-          })}
+            )}
+            {sent && (
+              <>
+                <div style={{display: 'flex', justifyContent: 'flex-end', opacity: bub, transform: `translateY(${(1 - bub) * 20}px)`}}>
+                  <div style={{padding: '12px 18px', borderRadius: '18px 18px 6px 18px', background: SUNK, fontFamily: FONT, fontWeight: 500, fontSize: 21, color: FG}}>{PROMPT}</div>
+                </div>
+                <div style={{display: 'flex', alignItems: 'center', gap: 10, opacity: ai, transform: `translateY(${(1 - ai) * 16}px)`, flexWrap: 'nowrap'}}>
+                  <span style={{width: 38, height: 38, borderRadius: 11, background: ACC_SOFT, display: 'grid', placeItems: 'center'}}><LogoMark size={22} /></span>
+                  {['Pub vidéo', 'Formulaire', 'Campagne'].map((t, i) => <span key={t} style={{padding: '7px 12px', borderRadius: 999, background: OK_SOFT, color: OK, fontFamily: FONT, fontWeight: 800, fontSize: 16, opacity: prog(f, SEND + 12 + i * 4, 6)}}>✓ {t}</span>)}
+                  <span style={{marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: FONT, fontWeight: 700, fontSize: 16, color: OK, opacity: prog(f, SEND + 24, 6)}}><span style={{width: 9, height: 9, borderRadius: 5, background: OK, opacity: 0.5 + 0.5 * Math.sin(f / 3)}} />En ligne</span>
+                </div>
+                <div style={{fontFamily: FONT, fontWeight: 800, fontSize: 15, letterSpacing: '0.1em', color: DIM, marginTop: 4, opacity: leadsOn ? 1 : 0}}>TES LEADS · EN DIRECT</div>
+                <div style={{position: 'relative', flex: 1, overflow: 'hidden'}}>
+                  {FEED.slice(0, n).map(([nm, d, c], i) => {
+                    const p = sp(f - ARR[i], 12);
+                    const idx = n - 1 - i;
+                    const y = (idx - 1 + pn) * ROW;
+                    const ex = f >= mine + Math.min(idx, 5) * 2;
+                    return (
+                      <div key={nm} style={{position: 'absolute', left: 0, right: 0, top: y, height: ROW - 12, display: 'flex', alignItems: 'center', gap: 14, padding: '0 16px', borderRadius: 14, border: `1.5px solid ${ex ? OK : LINE}`, background: idx === 0 && f - ARR[i] < 14 ? ACC_SOFT : SURF, opacity: Math.min(1, p * 1.6) * (idx >= 4 ? 1 - pn : 1), transform: `scale(${0.94 + 0.06 * p})`, fontFamily: FONT}}>
+                        <span style={{width: 46, height: 46, borderRadius: 23, background: c, color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 19, flex: 'none'}}>{nm[0]}</span>
+                        <div style={{flex: 1, minWidth: 0}}>
+                          <div style={{display: 'flex', alignItems: 'center', gap: 10}}><b style={{fontSize: 21, color: FG}}>{nm}</b><span style={{padding: '3px 10px', borderRadius: 999, background: ACC_SOFT, color: ACC_INK, fontWeight: 800, fontSize: 13}}>Nouveau</span></div>
+                          <div style={{fontSize: 18, color: DIM, marginTop: 3}}>{d}</div>
+                        </div>
+                        {ex ? <span style={{padding: '8px 14px', borderRadius: 999, background: OK_SOFT, color: OK, fontWeight: 800, fontSize: 16, whiteSpace: 'nowrap', transform: `scale(${sp(f - mine - Math.min(idx, 5) * 2, 10)})`}}>✓ À toi</span>
+                          : <span style={{padding: '9px 14px', borderRadius: 10, border: `1px solid ${LINE2}`, color: FG, fontWeight: 800, fontSize: 16}}>Appeler</span>}
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </Card>
-      {ARR.slice(0, 6).map((a, i) => {
+      {ARR.slice(0, 5).map((a, i) => {
         if (f < a || f > a + 14) return null;
         const tp = sp(f - a, 11), o = prog(f, a + 8, 6, INOUT);
         return (
-          <div key={a} style={{position: 'absolute', right: -20 + (i % 2) * 30, top: -70, display: 'flex', alignItems: 'center', gap: 12, padding: '14px 20px', borderRadius: 16, background: FG, color: '#fff', fontFamily: FONT, fontWeight: 700, fontSize: 21, boxShadow: SH_LG, opacity: Math.min(1, tp * 1.5) * (1 - o), transform: `translateY(${(1 - tp) * -30 - o * 20}px)`, whiteSpace: 'nowrap'}}>
+          <div key={a} style={{position: 'absolute', right: -20, top: -64, display: 'flex', alignItems: 'center', gap: 12, padding: '14px 20px', borderRadius: 16, background: FG, color: '#fff', fontFamily: FONT, fontWeight: 700, fontSize: 21, boxShadow: SH_LG, opacity: Math.min(1, tp * 1.5) * (1 - o), transform: `translateY(${(1 - tp) * -30 - o * 20}px)`, whiteSpace: 'nowrap'}}>
             <LogoMark size={22} color="#fff" /> Nouveau lead · {FEED[i][0]} veut une étude
           </div>
         );
@@ -200,21 +244,19 @@ const HookSide: React.FC = () => {
   const a = sp(f, 13), b = sp(f - 5, 13);
   const o = prog(f, S.pub - 12, 12, INOUT);
   const chips = [
-    {t: 'Achetés', at: cueH(2, 'pas', 0.1), bad: true},
-    {t: 'Revendus', at: cueH(2, 'revendu', 0.9), bad: true},
-    {t: 'Rien qu’à toi', at: cueH(2, 'rien', 2.7), bad: false},
+    {t: 'Agence', at: cueH(2, "d'agence", 0.3), bad: true},
+    {t: 'Leads achetés', at: cueH(2, 'achetés', 1.3), bad: true},
+    {t: 'Ton outil', at: cueH(2, 'outil', 3.1), bad: false},
   ];
   return (
-    <div style={{position: 'absolute', left: 120, top: 0, width: 680, height: 1080, display: 'flex', flexDirection: 'column', justifyContent: 'center', opacity: 1 - o, transform: `translateY(${-o * 40}px)`}}>
-      <div style={{display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28, opacity: a}}>
-        <span style={{width: 14, height: 14, borderRadius: 7, background: RED, opacity: 0.5 + 0.5 * Math.sin(f / 3)}} />
-        <span style={{fontFamily: FONT, fontWeight: 800, fontSize: 22, letterSpacing: '0.16em', color: RED}}>EN DIRECT</span>
+    <div style={{position: 'absolute', left: 110, top: 0, width: 640, height: 1080, display: 'flex', flexDirection: 'column', justifyContent: 'center', opacity: 1 - o, transform: `translateY(${-o * 40}px)`}}>
+      <div style={{fontFamily: FONT, fontWeight: 800, fontSize: 22, letterSpacing: '0.16em', color: ACC, marginBottom: 26, opacity: a}}>TOI + GROWTHITY</div>
+      <div style={{fontFamily: FONT, fontWeight: 900, fontSize: 104, lineHeight: 1, letterSpacing: '-0.05em', color: FG}}>
+        <div style={{transform: `translateY(${(1 - a) * 60}px)`, opacity: a}}>Tes leads,</div>
+        <div style={{transform: `translateY(${(1 - b) * 60}px)`, opacity: b}}><G>toi-même.</G></div>
       </div>
-      <div style={{fontFamily: FONT, fontWeight: 900, fontSize: 100, lineHeight: 1, letterSpacing: '-0.05em', color: FG}}>
-        <div style={{transform: `translateY(${(1 - a) * 60}px)`, opacity: a}}>Tes leads</div>
-        <div style={{transform: `translateY(${(1 - b) * 60}px)`, opacity: b}}><G>pompe à chaleur.</G></div>
-      </div>
-      <div style={{marginTop: 34, display: 'flex', gap: 14, flexWrap: 'wrap'}}>
+      <div style={{marginTop: 22, fontFamily: FONT, fontWeight: 600, fontSize: 30, color: MUTED, opacity: prog(f, cueH(1, 'en', 1.9), 10)}}>En une phrase.</div>
+      <div style={{marginTop: 30, display: 'flex', gap: 14, flexWrap: 'wrap', minHeight: 140}}>
         {chips.map((c) => {
           if (f < c.at) return null;
           const p = sp(f - c.at, 10);
@@ -230,7 +272,6 @@ const HookSide: React.FC = () => {
     </div>
   );
 };
-
 // ---------- 3. la pub (Alice) ----------
 const PubDemo: React.FC = () => {
   const f = useCurrentFrame();
@@ -568,7 +609,7 @@ export const LeadsBuyVideo: React.FC = () => {
     <AbsoluteFill style={{background: PAGE, fontFamily: FONT}}>
       <Bg />
       {f < S.pub + 2 && <HookSide />}
-      <Stage start={0} end={S.pub} top={190}><Feed /></Stage>
+      <Stage start={0} end={S.pub} top={150}><Feed /></Stage>
       <Side idx={0} start={S.pub} end={S.form} a="Ta pub vidéo" b="en une phrase." sub="Growthity écrit le script, choisit une actrice réaliste et monte la vidéo." />
       <Stage start={S.pub} end={S.form} top={150}><PubDemo /></Stage>
       <Side idx={1} start={S.form} end={S.camp} a="Un formulaire" b="qui qualifie." sub="Logement, chauffage, propriétaire : tu ne reçois que des prospects sérieux." />

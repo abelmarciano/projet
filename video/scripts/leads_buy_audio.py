@@ -62,12 +62,14 @@ def cueH(k, start, d=0):
         if w['w'].lower().startswith(start): return (VOH[k] + round(w['s'] * 30)) / 30
     return (VOH[k] + d * 30) / 30
 add(sfx, sub(1.2, 40), 0.0, 0.5); add(sfx, boom(), 0.02, 0.35)
-for i, a in enumerate([2, 12, 22, 34, 44, 56, 70, 84, 100, 118]):
+for j in range(2, 38, 2): add(sfx, click(1.0 + 0.5 * rng.random()), j / 30, 0.1)
+add(sfx, pop_sfx(), 40 / 30, 0.4); add(sfx, riser(0.3, 400, 2000), 40 / 30 - 0.25, 0.2)
+for i in range(3): add(sfx, pop_sfx(), (52 + i * 4) / 30, 0.2)
+for i, a in enumerate([64, 74, 84, 96, 108, 122, 138, 154, 172, 192]):
     add(sfx, tone(88, 0.22, r=11), a / 30, 0.2); add(sfx, tone(95, 0.28, r=9), a / 30 + 0.08, 0.17)
-for i in range(5): add(sfx, pop_sfx(), cueH(1, 'tiens') + i * 2 / 30, 0.2)
-add(sfx, chime(84), cueH(1, 'tiens'), 0.25)
-add(sfx, boom(), cueH(2, 'pas'), 0.3); add(sfx, boom(), cueH(2, 'revendu'), 0.3)
-add(sfx, chime(84), cueH(2, 'rien'), 0.28); add(sfx, chime(91), cueH(2, 'rien') + 0.12, 0.2)
+add(sfx, boom(), cueH(2, "d'agence"), 0.3); add(sfx, boom(), cueH(2, 'achetés'), 0.3)
+add(sfx, chime(84), cueH(2, 'outil'), 0.28); add(sfx, chime(91), cueH(2, 'outil') + 0.12, 0.2)
+for i in range(5): add(sfx, pop_sfx(), cueH(2, 'outil') + i * 2 / 30, 0.18)
 add(sfx, riser(1.0), s('pub') - 1.0, 0.3)
 # scènes
 for k in ['pub', 'form', 'camp', 'wa', 'leads', 'res']:
