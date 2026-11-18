@@ -7,9 +7,9 @@ g = {'__file__': __file__}
 exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'click', 'chime', 'pop_sfx', 'rng'])
 W = json.load(open('src/leads/words_lb.json'))
-VO = {4: 297, 5: 427, 6: 612, 7: 697, 8: 853, 9: 1052, 10: 1277}
-VOH = {1: 4, 2: 93}
-T = dict(hook=0, pub=292, form=422, camp=607, wa=692, leads=847, res=1047, end=1272, total=1397)
+VO = {4: 271, 5: 401, 6: 586, 7: 671, 8: 827, 9: 1026, 10: 1251}
+VOH = {1: 4, 2: 154}
+T = dict(hook=0, pub=266, form=396, camp=581, wa=666, leads=821, res=1021, end=1246, total=1371)
 def cue(k, start, d=0):
     for w in W[f'lb-{k}']:
         if w['w'].lower().startswith(start): return (VO[k] + round(w['s'] * 30)) / 30

@@ -30,8 +30,8 @@ const G: React.FC<{children: React.ReactNode}> = ({children}) => (
   <span style={{backgroundImage: GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent'}}>{children}</span>
 );
 
-export const VO = {4: 297, 5: 427, 6: 612, 7: 697, 8: 853, 9: 1052, 10: 1277} as Record<number, number>;
-export const S = {hook: 0, pub: 292, form: 422, camp: 607, wa: 692, leads: 847, res: 1047, end: 1272, total: 1397};
+export const VO = {4: 271, 5: 401, 6: 586, 7: 671, 8: 827, 9: 1026, 10: 1251} as Record<number, number>;
+export const S = {hook: 0, pub: 266, form: 396, camp: 581, wa: 666, leads: 821, res: 1021, end: 1246, total: 1371};
 const cue = (k: number, start: string, d = 0) => {
   const w = WD[`lb-${k}`].find((x) => x.w.toLowerCase().startsWith(start));
   return VO[k] + Math.round((w ? w.s : d) * 30);
@@ -134,7 +134,7 @@ const Typing: React.FC<{from: number; to: number; text: string}> = ({from, to, t
 };
 
 // ---------- 1. accroche : les leads tombent en direct, dès la première image ----------
-const VOH = {1: 4, 2: 93} as Record<number, number>;
+const VOH = {1: 4, 2: 154} as Record<number, number>;
 const cueH = (k: number, start: string, d = 0) => {
   const w = WD[`lh-${k}`].find((x) => x.w.toLowerCase().startsWith(start));
   return VOH[k] + Math.round((w ? w.s : d) * 30);
@@ -250,12 +250,12 @@ const HookSide: React.FC = () => {
   ];
   return (
     <div style={{position: 'absolute', left: 110, top: 0, width: 640, height: 1080, display: 'flex', flexDirection: 'column', justifyContent: 'center', opacity: 1 - o, transform: `translateY(${-o * 40}px)`}}>
-      <div style={{fontFamily: FONT, fontWeight: 800, fontSize: 22, letterSpacing: '0.16em', color: ACC, marginBottom: 26, opacity: a}}>TOI + GROWTHITY</div>
+      <div style={{fontFamily: FONT, fontWeight: 800, fontSize: 22, letterSpacing: '0.16em', color: ACC, marginBottom: 26, opacity: a}}>ÇA Y EST</div>
       <div style={{fontFamily: FONT, fontWeight: 900, fontSize: 104, lineHeight: 1, letterSpacing: '-0.05em', color: FG}}>
         <div style={{transform: `translateY(${(1 - a) * 60}px)`, opacity: a}}>Tes leads,</div>
         <div style={{transform: `translateY(${(1 - b) * 60}px)`, opacity: b}}><G>toi-même.</G></div>
       </div>
-      <div style={{marginTop: 22, fontFamily: FONT, fontWeight: 600, fontSize: 30, color: MUTED, opacity: prog(f, cueH(1, 'en', 1.9), 10)}}>En une phrase.</div>
+      <div style={{marginTop: 22, fontFamily: FONT, fontWeight: 600, fontSize: 30, color: MUTED, opacity: prog(f, cueH(1, 'sans', 3.3), 10)}}>Sans compétences. En 2 minutes.</div>
       <div style={{marginTop: 30, display: 'flex', gap: 14, flexWrap: 'wrap', minHeight: 140}}>
         {chips.map((c) => {
           if (f < c.at) return null;
