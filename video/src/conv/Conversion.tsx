@@ -279,8 +279,8 @@ const Proof: React.FC = () => {
   const GRID = q + 22;
   const out = prog(f, T.cta - 8, 10, INOUT);
   const cur = ats.reduce((acc, t, i) => (f >= t ? i : acc), -1);
-  const W = 620, H = 1102;
-  const w = 300, h = 437, gx = 28, gy = 92;
+  const W = 540, H = 960;
+  const w = 256, h = 370, gx = 22, gy = 76;
   return (
     <AbsoluteFill style={{opacity: 1 - out}}>
       <Bg />
@@ -293,16 +293,16 @@ const Proof: React.FC = () => {
         const flash = interpolate(lf, [0, 1, 5], [0, 0.7, 0], clamp);
         const toGrid = prog(f, GRID - 2, 8, INOUT);
         return (
-          <div style={{position: 'absolute', left: 540 - W / 2, top: 340, width: W, height: H, borderRadius: 40, overflow: 'hidden', background: '#000', boxShadow: SHADOW, transform: `translateY(${(1 - pin) * 260}px) rotate(${(1 - pin) * (cur % 2 ? 4 : -4)}deg) scale(${1 - toGrid * 0.4})`, opacity: 1 - toGrid}}>
+          <div style={{position: 'absolute', left: 540 - W / 2, top: 290, width: W, height: H, borderRadius: 40, overflow: 'hidden', background: '#000', boxShadow: SHADOW, transform: `translateY(${(1 - pin) * 260}px) rotate(${(1 - pin) * (cur % 2 ? 4 : -4)}deg) scale(${1 - toGrid * 0.4})`, opacity: 1 - toGrid}}>
             <Sequence from={ats[cur]} layout="none">
               <OffthreadVideo muted src={staticFile(pr.src)} startFrom={Math.round(pr.from * 30)} style={{width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${punch})`}} />
             </Sequence>
-            <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 30%)'}} />
-            <div style={{position: 'absolute', left: 30, right: 30, top: 120, textAlign: 'center'}}>
+            <AbsoluteFill style={{background: 'linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.45) 100%)'}} />
+            <div style={{position: 'absolute', left: 24, right: 24, bottom: 120, textAlign: 'center'}}>
               {pr.hook.map((line, li) => {
                 const pl = sp(lf - 2 - li * 3, 10, 0.5);
                 return (
-                  <div key={li} style={{fontFamily: FONT, fontWeight: 900, fontSize: 64, lineHeight: 1.05, letterSpacing: '-0.01em', color: '#fff', WebkitTextStroke: '3px #000', paintOrder: 'stroke fill', textShadow: '0 6px 0 #000', transform: `scale(${0.7 + 0.3 * pl})`, opacity: Math.min(1, pl * 2)}}>
+                  <div key={li} style={{fontFamily: FONT, fontWeight: 900, fontSize: 50, lineHeight: 1.08, letterSpacing: '-0.01em', color: '#fff', WebkitTextStroke: '3px #000', paintOrder: 'stroke fill', textShadow: '0 6px 0 #000', transform: `scale(${0.7 + 0.3 * pl})`, opacity: Math.min(1, pl * 2)}}>
                     {line.split(' ').map((wd, wi) => <span key={wi} style={{color: wd.replace(/[^A-ZÀ-Ü’]/g, '') === pr.key ? '#FFE14D' : '#fff'}}>{wd}{' '}</span>)}
                   </div>
                 );
@@ -317,8 +317,8 @@ const Proof: React.FC = () => {
       {/* la grille finale */}
       {f >= GRID - 2 && (
         <>
-          <Title a="Quel que soit" b={<G>ton business.</G>} at={GRID - 2} top={150} size={96} />
-          <div style={{position: 'absolute', left: (1080 - (3 * w + 2 * gx)) / 2, top: 420, display: 'grid', gridTemplateColumns: `repeat(3, ${w}px)`, columnGap: gx, rowGap: gy}}>
+          <Title a="Quel que soit" b={<G>ton business.</G>} at={GRID - 2} top={120} size={92} />
+          <div style={{position: 'absolute', left: (1080 - (3 * w + 2 * gx)) / 2, top: 370, display: 'grid', gridTemplateColumns: `repeat(3, ${w}px)`, columnGap: gx, rowGap: gy}}>
             {C.proof.map((pr, i) => {
               const p = sp(f - GRID - i * 2, 13);
               return (
@@ -326,8 +326,8 @@ const Proof: React.FC = () => {
                   <div style={{width: '100%', height: '100%', borderRadius: 28, overflow: 'hidden', background: '#000', boxShadow: SHADOW}}>
                     <Sequence from={GRID} layout="none"><OffthreadVideo muted src={staticFile(pr.src)} startFrom={Math.round((pr.from + 1) * 30)} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Sequence>
                   </div>
-                  <div style={{position: 'absolute', left: 0, right: 0, bottom: -60, display: 'flex', justifyContent: 'center'}}>
-                    <span style={{padding: '10px 22px', borderRadius: 99, background: '#fff', border: `1px solid ${LINE}`, boxShadow: SHADOW, fontFamily: FONT, fontWeight: 800, fontSize: 28, color: INK}}>{pr.l}</span>
+                  <div style={{position: 'absolute', left: 0, right: 0, bottom: -52, display: 'flex', justifyContent: 'center'}}>
+                    <span style={{padding: '8px 20px', borderRadius: 99, background: '#fff', border: `1px solid ${LINE}`, boxShadow: SHADOW, fontFamily: FONT, fontWeight: 800, fontSize: 26, color: INK}}>{pr.l}</span>
                   </div>
                 </div>
               );
@@ -335,7 +335,30 @@ const Proof: React.FC = () => {
           </div>
         </>
       )}
+      <Marquee y={1296} dir={-1} items={TRADES_A} at={ats[0] + 6} />
+      <Marquee y={1370} dir={1} items={TRADES_B} at={ats[0] + 12} />
     </AbsoluteFill>
+  );
+};
+
+const TRADES_A = ['Boulangerie', 'Coiffeur', 'Plombier', 'Coach sportif', 'Immobilier', 'Esthéticienne', 'Opticien', 'Photographe', 'Caviste', 'Salle de sport', 'Pâtisserie', 'Électricien'];
+const TRADES_B = ['E-commerce', 'Fleuriste', 'Barbier', 'Agence de voyage', 'Paysagiste', 'Traiteur', 'Concession auto', 'Institut de beauté', 'Librairie', 'Menuisier', 'Food truck', 'Création de bijoux'];
+const DOTS = ['#2563EB', '#7C3AED', '#DB2777', '#EA580C', '#16A34A', '#0891B2'];
+const Marquee: React.FC<{y: number; dir: 1 | -1; items: string[]; at: number}> = ({y, dir, items, at}) => {
+  const f = useCurrentFrame();
+  const p = sp(f - at, 14);
+  const row = [...items, ...items, ...items];
+  const shift = ((f * 3.2) % 1800) * dir;
+  return (
+    <div style={{position: 'absolute', left: 0, right: 0, top: y, height: 66, overflow: 'hidden', opacity: p, transform: `translateY(${(1 - p) * 40}px)`, maskImage: 'linear-gradient(90deg, transparent, black 12%, black 88%, transparent)', WebkitMaskImage: 'linear-gradient(90deg, transparent, black 12%, black 88%, transparent)'}}>
+      <div style={{position: 'absolute', top: 0, left: dir < 0 ? 0 : -1800, display: 'flex', gap: 14, transform: `translateX(${shift}px)`}}>
+        {row.map((t, i) => (
+          <span key={i} style={{display: 'flex', alignItems: 'center', gap: 10, padding: '12px 22px', borderRadius: 99, background: '#fff', border: `1px solid ${LINE}`, boxShadow: '0 10px 24px -16px rgba(10,10,18,0.35)', fontFamily: FONT, fontWeight: 800, fontSize: 28, color: INK, whiteSpace: 'nowrap'}}>
+            <span style={{width: 12, height: 12, borderRadius: 6, background: DOTS[i % DOTS.length]}} />{t}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 };
 
