@@ -115,6 +115,7 @@ import {ScrollStop} from './scroll/ScrollStop';
 import {Rewind, T as RW_T} from './rewind/Rewind';
 import {ModeFacile, T as MF_T} from './game/ModeFacile';
 import {SmsPub, T as SMS_T} from './sms/SmsPub';
+import {Conversion} from './conv/Conversion';
 import {LightChatPub, lightTimeline, LightCfg} from './chatpub/LightChatPub';
 import {SocialStory, StoryCfg, storyTotal} from './chatpub/SocialStory';
 import lr4Cfg from './chatpub/lr4.json';
@@ -222,6 +223,7 @@ export const Root: React.FC = () => (
     <Composition id="Rewind" component={Rewind} durationInFrames={RW_T.total} fps={30} width={1080} height={1920} />
     <Composition id="ModeFacile" component={ModeFacile} durationInFrames={MF_T.total} fps={30} width={1080} height={1920} />
     <Composition id="SmsPub" component={SmsPub} durationInFrames={SMS_T.total} fps={30} width={1080} height={1920} />
+    <Composition id="Conversion" component={Conversion} durationInFrames={720} fps={30} width={1080} height={1920} />
     <Composition id="Launch-calendrier" component={SocialStory} durationInFrames={storyTotal(lr4Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr4Cfg as unknown as StoryCfg}} />
     <Composition id="Launch-whatsapp" component={SocialStory} durationInFrames={storyTotal(lr5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr5Cfg as unknown as StoryCfg}} />
     <Composition id="AvantApres-julien" component={SocialStory} durationInFrames={storyTotal(av5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: av5Cfg as unknown as StoryCfg}} />

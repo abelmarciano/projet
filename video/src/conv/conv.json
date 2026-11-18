@@ -1,0 +1,184 @@
+{
+ "wall": [
+  "media/fal/social/out/lr_aurelie.mp4",
+  "media/fal/social/out/lr_darius.mp4",
+  "media/fal/social/out/lr_isabella.mp4",
+  "media/fal/social/out/lr_rania.mp4",
+  "media/fal/social/out/lr_sofiane.mp4",
+  "media/fal/social/out/lr_theo.mp4",
+  "media/fal/social/out/multi_raphael.mp4",
+  "media/fal/social/out/av_helene_apres.mp4",
+  "media/fal/social/out/av_julien_apres.mp4",
+  "media/fal/social/out/pov_sandrine_apres.mp4",
+  "media/fal/social/out/pov_apres.mp4"
+ ],
+ "hero": {
+  "src": "media/fal/social/out/cp6-romane-v2.mp4",
+  "from": 0.45,
+  "caps": [
+   {
+    "w": "Stop!",
+    "s": 0.19,
+    "e": 0.49
+   },
+   {
+    "w": "Tu",
+    "s": 1.19,
+    "e": 1.27
+   },
+   {
+    "w": "bois",
+    "s": 1.39,
+    "e": 1.63
+   },
+   {
+    "w": "encore",
+    "s": 1.69,
+    "e": 2.01
+   },
+   {
+    "w": "du",
+    "s": 2.07,
+    "e": 2.17
+   },
+   {
+    "w": "café",
+    "s": 2.21,
+    "e": 2.47
+   },
+   {
+    "w": "en",
+    "s": 2.51,
+    "e": 2.61
+   },
+   {
+    "w": "capsule?",
+    "s": 2.65,
+    "e": 3.11
+   },
+   {
+    "w": "Goûte",
+    "s": 3.569,
+    "e": 3.79
+   },
+   {
+    "w": "celui-là",
+    "s": 3.85,
+    "e": 4.25
+   },
+   {
+    "w": "une",
+    "s": 4.29,
+    "e": 4.45
+   },
+   {
+    "w": "fois",
+    "s": 4.51,
+    "e": 4.69
+   },
+   {
+    "w": "et",
+    "s": 5.63,
+    "e": 5.69
+   },
+   {
+    "w": "tu",
+    "s": 5.73,
+    "e": 5.81
+   },
+   {
+    "w": "ne",
+    "s": 5.83,
+    "e": 5.91
+   },
+   {
+    "w": "pourras",
+    "s": 5.95,
+    "e": 6.19
+   },
+   {
+    "w": "plus",
+    "s": 6.21,
+    "e": 6.33
+   },
+   {
+    "w": "revenir",
+    "s": 6.37,
+    "e": 6.63
+   },
+   {
+    "w": "en",
+    "s": 6.65,
+    "e": 6.73
+   },
+   {
+    "w": "arrière.",
+    "s": 6.77,
+    "e": 7.13
+   },
+   {
+    "w": "Il",
+    "s": 7.27,
+    "e": 7.33
+   },
+   {
+    "w": "est",
+    "s": 7.37,
+    "e": 7.47
+   },
+   {
+    "w": "torréfié",
+    "s": 7.51,
+    "e": 7.93
+   },
+   {
+    "w": "la",
+    "s": 7.99,
+    "e": 8.05
+   },
+   {
+    "w": "semaine",
+    "s": 8.15,
+    "e": 8.41
+   },
+   {
+    "w": "même",
+    "s": 8.47,
+    "e": 8.69
+   }
+  ]
+ },
+ "proof": [
+  {
+   "l": "Café",
+   "src": "media/fal/social/out/multi_amelie.mp4",
+   "from": 1.5
+  },
+  {
+   "l": "Fleuriste",
+   "src": "game/priya.mp4",
+   "from": 0.9
+  },
+  {
+   "l": "Resto",
+   "src": "rewind/yanis.mp4",
+   "from": 0.3
+  },
+  {
+   "l": "Friperie",
+   "src": "sms/anais.mp4",
+   "from": 0.4
+  },
+  {
+   "l": "Bijoux",
+   "src": "media/chat/trefle-noor-raw.mp4",
+   "from": 3.0
+  },
+  {
+   "l": "Animalerie",
+   "src": "media/chat/friandises-sana-raw.mp4",
+   "from": 0.6
+  }
+ ],
+ "prompt": "Une pub pour mon café de spécialité, avec une actrice qui le recommande."
+}
