@@ -13,6 +13,7 @@ import '@fontsource/inter/900.css';
 import {LogoMark, Wordmark} from '../components/UI';
 import {EXPO, INOUT, prog} from '../components/anim';
 import WORDS from './words_lb.json';
+import FRANCE from './france_deps.json';
 
 type Word = {w: string; s: number; e: number};
 const WD = WORDS as unknown as Record<string, Word[]>;
@@ -30,8 +31,8 @@ const G: React.FC<{children: React.ReactNode}> = ({children}) => (
   <span style={{backgroundImage: GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent'}}>{children}</span>
 );
 
-export const VO = {4: 271, 5: 591, 6: 776, 7: 865, 8: 1022, 9: 1225, 10: 1432} as Record<number, number>;
-export const S = {hook: 0, pub: 266, meta: 402, form: 586, camp: 771, wa: 860, leads: 1017, res: 1220, end: 1427, total: 1556};
+export const VO = {4: 271, 5: 591, 6: 776, 7: 889, 8: 1046, 9: 1249, 10: 1456} as Record<number, number>;
+export const S = {hook: 0, pub: 266, meta: 402, form: 586, camp: 771, wa: 884, leads: 1041, res: 1244, end: 1451, total: 1580};
 const VM = 407;
 const cueM = (start: string, d = 0) => {
   const w = WD['lm-1'].find((x) => x.w.toLowerCase().startsWith(start));
@@ -94,12 +95,12 @@ const Side: React.FC<{idx: number; label?: string; color?: string; start: number
   );
 };
 
-const Stage: React.FC<{start: number; end: number; children: React.ReactNode; top?: number; w?: number}> = ({start, end, children, top = 150, w = 920}) => {
+const Stage: React.FC<{start: number; end: number; children: React.ReactNode; top?: number; w?: number; left?: number}> = ({start, end, children, top = 150, w = 920, left = 860}) => {
   const f = useCurrentFrame();
   if (f < start - 2 || f > end + 2) return null;
   const i = sp(f - start - 2, 16), o = prog(f, end - 12, 12, INOUT);
   return (
-    <div style={{position: 'absolute', left: 860, top, width: w, opacity: Math.min(1, i * 1.4) * (1 - o), transform: `translateX(${(1 - i) * 120 + o * -60}px) scale(${0.96 + 0.04 * i})`, filter: `blur(${o * 8}px)`}}>{children}</div>
+    <div style={{position: 'absolute', left, top, width: w, opacity: Math.min(1, i * 1.4) * (1 - o), transform: `translateX(${(1 - i) * 120 + o * -60}px) scale(${0.96 + 0.04 * i})`, filter: `blur(${o * 8}px)`}}>{children}</div>
   );
 };
 const Card: React.FC<{children: React.ReactNode; style?: React.CSSProperties}> = ({children, style}) => (
@@ -407,44 +408,63 @@ const FormDemo: React.FC = () => {
 };
 
 // ---------- 5. la campagne dans ta zone ----------
+const FR = FRANCE as unknown as {w: number; h: number; deps: {c: string; n: string; d: string; x: number; y: number}[]};
+const ZONE_DEPS = ['69', '01', '38', '42', '71', '73', '74', '26', '07', '43', '63', '03'];
 const CampDemo: React.FC = () => {
   const f = useCurrentFrame();
   const zone = cue(6, 'zone', 2.2);
-  const live = zone + 12;
-  const z = sp(f - zone + 4, 12);
+  const fill0 = S.camp + 16;
+  const fillAt = (i: number) => fill0 + i * 4;
+  const live = Math.max(zone + 14, fillAt(ZONE_DEPS.length - 1) + 14);
+  const MS = 1.0;
+  const zm = prog(f, fillAt(ZONE_DEPS.length - 1) + 6, 28, INOUT);
+  const lyon = FR.deps.find((d) => d.c === '69')!;
+  const ring = prog(f, fill0 - 4, 30);
   return (
-    <Card style={{padding: 32}}>
+    <Card style={{padding: 30}}>
       <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-        <div style={{fontFamily: FONT, fontWeight: 800, fontSize: 32, color: FG}}>Campagne de prospects</div>
-        <span style={{padding: '8px 14px', borderRadius: 999, background: '#E8F0FF', color: META, fontFamily: FONT, fontWeight: 700, fontSize: 18}}>Meta Ads</span>
+        <div style={{fontFamily: FONT, fontWeight: 800, fontSize: 30, color: FG}}>Campagne de prospects</div>
+        <div style={{display: 'flex', gap: 8}}>
+          {[['✓ Prospects', true], ['Étude PAC', false], ['Vidéo Alice', false]].map(([t, on]) => <span key={t as string} style={{padding: '8px 14px', borderRadius: 999, background: on ? ACC_SOFT : RAISED, border: `1px solid ${on ? ACC : LINE}`, color: on ? ACC_INK : MUTED, fontFamily: FONT, fontWeight: 700, fontSize: 16}}>{t as string}</span>)}
+        </div>
       </div>
-      <div style={{marginTop: 20, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12}}>
-        {[['Objectif', '✓ Prospects'], ['Formulaire', 'Étude PAC'], ['Créa', 'Vidéo Alice']].map(([k, v], i) => {
-          const p = sp(f - S.camp - 6 - i * 4, 13);
-          return <div key={k} style={{padding: '14px 16px', borderRadius: 14, background: i === 0 ? ACC_SOFT : RAISED, border: `1px solid ${i === 0 ? ACC : LINE}`, fontFamily: FONT, fontSize: 18, color: MUTED, opacity: p}}>{k}<br /><b style={{color: i === 0 ? ACC_INK : FG, fontSize: 22}}>{v}</b></div>;
-        })}
-      </div>
-      <div style={{marginTop: 18, display: 'flex', gap: 18, alignItems: 'stretch'}}>
-        <div style={{position: 'relative', width: 330, height: 200, borderRadius: 16, overflow: 'hidden', background: '#EAF1E6', border: `1px solid ${LINE}`}}>
-          {/* mini carte */}
-          <svg width="330" height="200" style={{position: 'absolute', inset: 0}}>
-            <path d="M0 140 C 80 120, 140 170, 330 110" stroke="#C9D8F0" strokeWidth="14" fill="none" />
-            <path d="M40 0 L 120 200 M 210 0 L 260 200 M 0 60 L 330 80" stroke="#FFFFFF" strokeWidth="6" fill="none" />
-            <path d="M0 30 L 330 170" stroke="#FFFFFF" strokeWidth="4" fill="none" />
+      <div style={{marginTop: 18, display: 'flex', gap: 22}}>
+        <div style={{position: 'relative', width: FR.w * MS + 20, height: FR.h * MS + 20, borderRadius: 18, background: RAISED, border: `1px solid ${LINE}`, padding: 10, boxSizing: 'border-box', flex: 'none', overflow: 'hidden'}}>
+          <svg width={FR.w * MS} height={FR.h * MS} viewBox={`${lyon.x * 0.42 * zm} ${(lyon.y - 20) * 0.42 * zm} ${FR.w * (1 - 0.42 * zm)} ${FR.h * (1 - 0.42 * zm)}`} style={{borderRadius: 12}}>
+            <defs>
+              <linearGradient id="zg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#2563EB" /><stop offset="1" stopColor="#9333EA" /></linearGradient>
+            </defs>
+            {FR.deps.map((d) => {
+              const i = ZONE_DEPS.indexOf(d.c);
+              const p = i < 0 ? 0 : sp(f - fillAt(i), 12);
+              return <path key={d.c} d={d.d} fill={i < 0 ? '#E3E3EC' : p > 0.02 ? 'url(#zg)' : '#E3E3EC'} fillOpacity={i < 0 ? 1 : 0.25 + 0.75 * p} stroke="#FFFFFF" strokeWidth={1.2} strokeLinejoin="round" />;
+            })}
+            {FR.deps.filter((d) => ZONE_DEPS.includes(d.c)).map((d) => {
+              const p = sp(f - fillAt(ZONE_DEPS.indexOf(d.c)), 12);
+              return <path key={'o' + d.c} d={d.d} fill="none" stroke="#FFFFFF" strokeWidth={2} opacity={p} />;
+            })}
+            <circle cx={lyon.x} cy={lyon.y} r={20 + ring * 110} fill="none" stroke={ACC} strokeWidth={3} opacity={(1 - ring) * 0.8} />
+            <circle cx={lyon.x} cy={lyon.y} r={7} fill="#fff" stroke={ACC} strokeWidth={4} opacity={prog(f, fill0, 8)} />
           </svg>
-          <div style={{position: 'absolute', left: 165 - 80 * z, top: 100 - 80 * z, width: 160 * z, height: 160 * z, borderRadius: '50%', background: 'rgba(91,63,228,0.16)', border: `3px solid ${ACC}`}} />
-          <div style={{position: 'absolute', left: 151, top: 72, fontSize: 30}}>📍</div>
+          <span style={{position: 'absolute', left: 18, top: 16, padding: '6px 12px', borderRadius: 999, background: SURF, border: `1px solid ${LINE}`, fontFamily: FONT, fontWeight: 700, fontSize: 15, color: MUTED}}>France · départements</span>
         </div>
-        <div style={{flex: 1, display: 'flex', flexDirection: 'column', gap: 12}}>
-          <div style={{fontFamily: FONT, fontWeight: 700, fontSize: 18, letterSpacing: '0.08em', color: DIM}}>ZONE</div>
-          <span style={{alignSelf: 'flex-start', padding: '12px 18px', borderRadius: 999, border: `1.5px solid ${f >= zone ? ACC : LINE}`, background: f >= zone ? ACC_SOFT : SURF, color: f >= zone ? ACC_INK : MUTED, fontFamily: FONT, fontWeight: 700, fontSize: 21}}>Ta zone d’intervention {f >= zone ? '✓' : ''}</span>
-          <div style={{fontFamily: FONT, fontWeight: 700, fontSize: 18, letterSpacing: '0.08em', color: DIM, marginTop: 4}}>PLACEMENTS</div>
-          <div style={{display: 'flex', gap: 10}}>
-            {[['Facebook', '#1877F2'], ['Instagram', 'linear-gradient(45deg,#F59E0B,#EC4899,#8B5CF6)']].map(([n, c]) => <span key={n} style={{display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 16px', borderRadius: 999, border: `1.5px solid ${ACC}`, fontFamily: FONT, fontWeight: 700, fontSize: 19, color: FG}}><span style={{width: 16, height: 16, borderRadius: 8, background: c}} />{n} ✓</span>)}
+        <div style={{flex: 1, display: 'flex', flexDirection: 'column', gap: 12, minWidth: 0}}>
+          <div style={{fontFamily: FONT, fontWeight: 800, fontSize: 17, letterSpacing: '0.08em', color: DIM}}>TES DÉPARTEMENTS</div>
+          <div style={{display: 'flex', flexWrap: 'wrap', gap: 8}}>
+            {ZONE_DEPS.map((c, i) => {
+              if (f < fillAt(i)) return null;
+              const d = FR.deps.find((x) => x.c === c)!;
+              const p = sp(f - fillAt(i), 11);
+              return <span key={c} style={{padding: '7px 12px', borderRadius: 999, background: ACC_SOFT, color: ACC_INK, fontFamily: FONT, fontWeight: 700, fontSize: 16, transform: `scale(${0.6 + 0.4 * p})`, opacity: p}}><b>{c}</b> {d.n}</span>;
+            })}
           </div>
+          <div style={{fontFamily: FONT, fontWeight: 800, fontSize: 17, letterSpacing: '0.08em', color: DIM, marginTop: 6}}>PLACEMENTS</div>
+          <div style={{display: 'flex', gap: 8}}>
+            {[['Facebook', '#1877F2'], ['Instagram', 'linear-gradient(45deg,#F59E0B,#EC4899,#8B5CF6)']].map(([n, c]) => <span key={n} style={{display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 14px', borderRadius: 999, border: `1.5px solid ${ACC}`, fontFamily: FONT, fontWeight: 700, fontSize: 17, color: FG}}><span style={{width: 14, height: 14, borderRadius: 7, background: c}} />{n} ✓</span>)}
+          </div>
+          <div style={{marginTop: 'auto', height: 62, borderRadius: 14, background: f >= live ? OK_SOFT : META, color: f >= live ? OK : '#fff', display: 'grid', placeItems: 'center', fontFamily: FONT, fontWeight: 800, fontSize: 22, transform: `scale(${f >= live - 4 && f < live ? 0.96 : 1})`}}>{f >= live ? '● Active dans tes départements' : 'Publier sur Meta'}</div>
         </div>
       </div>
-      <div style={{marginTop: 22, height: 64, borderRadius: 14, background: f >= live ? OK_SOFT : META, color: f >= live ? OK : '#fff', display: 'grid', placeItems: 'center', fontFamily: FONT, fontWeight: 800, fontSize: 26, transform: `scale(${f >= live - 4 && f < live ? 0.96 : 1})`}}>{f >= live ? '● Campagne active dans ta zone' : 'Publier sur Meta'}</div>
     </Card>
   );
 };
@@ -670,9 +690,9 @@ export const LeadsBuyVideo: React.FC = () => {
       <Side idx={1} start={S.meta} end={S.form} a="Meta Ads," b="guidé de A à Z." sub="Tu le connectes en un clic. Pas de compte ? Growthity t’accompagne étape par étape." />
       <Stage start={S.meta} end={S.form} top={150}><MetaDemo /></Stage>
       <Side idx={2} start={S.form} end={S.camp} a="Un formulaire" b="qui qualifie." sub="Logement, chauffage, propriétaire : tu ne reçois que des prospects sérieux." />
-      <Stage start={S.form} end={S.camp} top={70}><FormDemo /></Stage>
-      <Side idx={3} start={S.camp} end={S.wa} a="Ta campagne," b="dans ta zone." sub="Objectif Prospects, formulaire lié, sur Facebook et Instagram." />
-      <Stage start={S.camp} end={S.wa} top={190}><CampDemo /></Stage>
+      <Stage start={S.form} end={S.camp} top={190} left={990}><FormDemo /></Stage>
+      <Side idx={3} start={S.camp} end={S.wa} a="Ta campagne," b="dans ta zone." sub="Tu choisis tes départements : ta pub ne tourne que là où tu interviens." />
+      <Stage start={S.camp} end={S.wa} top={190} w={960} left={840}><CampDemo /></Stage>
       <Side idx={4} start={S.wa} end={S.leads} a="Tu rappelles" b="le premier." sub="Chaque lead arrive en direct dans Growthity. Personne d’autre ne l’a." />
       <Stage start={S.wa} end={S.leads} top={230}><InboxDemo /></Stage>
       <Side idx={5} start={S.leads} end={S.res} a="« Montre-moi" b="mes leads. »" a2="Filtrés, vérifiés," b2="exportables." swapAt={cue(8, 'filtr', 3.6) - 6} sub="Tous tes leads dans le chat, par formulaire." sub2="Numéros douteux signalés, export CSV en un clic." />

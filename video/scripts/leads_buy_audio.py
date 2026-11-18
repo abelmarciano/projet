@@ -7,9 +7,9 @@ g = {'__file__': __file__}
 exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'click', 'chime', 'pop_sfx', 'rng'])
 W = json.load(open('src/leads/words_lb.json'))
-VO = {4: 271, 5: 591, 6: 776, 7: 865, 8: 1022, 9: 1225, 10: 1432}
+VO = {4: 271, 5: 591, 6: 776, 7: 889, 8: 1046, 9: 1249, 10: 1456}
 VOH = {1: 4, 2: 154}
-T = dict(hook=0, pub=266, meta=402, form=586, camp=771, wa=860, leads=1017, res=1220, end=1427, total=1556)
+T = dict(hook=0, pub=266, meta=402, form=586, camp=771, wa=884, leads=1041, res=1244, end=1451, total=1580)
 VM = 407
 def cue(k, start, d=0):
     for w in W[f'lb-{k}']:
@@ -86,7 +86,9 @@ for k in ['pub', 'meta', 'form', 'camp', 'wa', 'leads', 'res']:
 for j in range(T['pub'] + 6, T['pub'] + 50, 2): add(sfx, click(1.0 + 0.5 * rng.random()), j / 30, 0.09)
 add(sfx, chime(86), cue(4, 'crée') - 0.1, 0.25)
 for kk in ['logement', 'chauffage', 'propriétaire']: add(sfx, pop_sfx(), cue(5, kk) - 4 / 30, 0.3); add(sfx, click(1.3), cue(5, kk) + 8 / 30, 0.2)
-add(sfx, pop_sfx(), cue(6, 'zone') - 4 / 30, 0.3); add(sfx, chime(84), cue(6, 'zone') + 12 / 30, 0.28); add(sfx, chime(91), cue(6, 'zone') + 16 / 30, 0.2)
+for i in range(12): add(sfx, pop_sfx(), (T['camp'] + 16 + i * 4) / 30, 0.2); add(sfx, tone(84 + (i % 4) * 2, 0.15, r=14), (T['camp'] + 16 + i * 4) / 30, 0.06)
+lv = max(cue(6, 'zone') + 14 / 30, (T['camp'] + 16 + 11 * 4 + 14) / 30)
+add(sfx, click(1.3), lv - 4 / 30, 0.3); add(sfx, chime(84), lv, 0.28); add(sfx, chime(91), lv + 0.12, 0.2)
 for t0 in [cue(7, 'lead'), cue(7, 'direct') + 6 / 30, cue(7, 'direct') + 22 / 30]:
     add(sfx, tone(88, 0.25, r=10), t0, 0.22); add(sfx, tone(95, 0.3, r=9), t0 + 0.09, 0.2)
 add(sfx, click(1.3), cue(7, 'rappelles'), 0.3); add(sfx, pop_sfx(), cue(7, 'personne'), 0.3)
