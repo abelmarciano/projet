@@ -1295,7 +1295,9 @@ function renderZernio() {
         <button class="btn accent" data-act="z-pub" data-mode="now" ${zs.busy || zs.manual || !m ? 'disabled' : ''}>Publier maintenant</button>
         <button class="btn" data-act="z-pub" data-mode="sched" ${zs.busy || zs.manual || !m || !future ? 'disabled' : ''} title="${future ? '' : 'Choisissez une date de publication dans le futur'}">Programmer ${future ? 'le ' + when.toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'}) : '(date requise)'}</button>
       </div>
-      ${zs.confirm ? `<div class="zmsg warn">${zs.confirm === 'now' ? 'Publier tout de suite' : 'Programmer'} sur ${Object.values(sel).filter(Boolean).length} compte(s) avec la légende et le média de ce post ? <button class="btn accent sm" data-act="z-go">Confirmer</button><button class="btn sm" data-act="z-cancel">Annuler</button></div>` : ''}`}`;
+      ${zs.confirm ? (() => { const vid = m && (m.items || []).length && isVid(m.items[0]); const noCov = vid && !m.cover?.url; const n = Object.values(sel).filter(Boolean).length; const what = zs.confirm === 'now' ? 'Publier tout de suite' : 'Programmer';
+        return noCov ? `<div class="zmsg warn" style="display:block;line-height:1.55"><b>⚠ Attention : cette vidéo n’a pas de miniature${m.cover?.asset ? ' en ligne (l’image importée n’a pas de lien public)' : ''}.</b><br>Chaque réseau choisira une image de la vidéo au hasard. Voulez-vous quand même ${zs.confirm === 'now' ? 'publier' : 'programmer'} sur ${n} compte(s) ?<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" data-act="z-cancel">Non, j’ajoute une miniature</button><button class="btn accent sm" data-act="z-go">${what} quand même</button></div></div>`
+          : `<div class="zmsg warn">${what} sur ${n} compte(s) avec la légende, le média${vid ? ' et la miniature' : ''} de ce post ? <button class="btn accent sm" data-act="z-go">Confirmer</button><button class="btn sm" data-act="z-cancel">Annuler</button></div>`; })() : ''}`}`;
 }
 async function zUpload(m) {
   // 1) public URL already known for every item → Zernio fetches it itself
