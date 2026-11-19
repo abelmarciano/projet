@@ -121,6 +121,14 @@ main { min-width: 0; padding-block: 28px 96px; padding-left: max(24px, env(safe-
 .net.Facebook { background: #1877F2 }
 .net.TikTok { background: #111 }
 .net.LinkedIn { background: #0A66C2 }
+.net.YouTube { background: #FF0033 }
+.net.done { box-shadow: 0 0 0 2px var(--st-live); position: relative }
+.net.done::after { content: '✓'; position: absolute; right: -5px; bottom: -5px; width: 10px; height: 10px; border-radius: 50%; background: var(--st-live); color: #fff; font-size: 7px; line-height: 10px; text-align: center }
+.net.fail { box-shadow: 0 0 0 2px var(--danger) }
+.zsum { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0 2px }
+.zsum span { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: #E9F7EF; color: #137A45 }
+.zsum span.ko { background: #FDECEC; color: #C02B2B }
+.zdup { font-size: 12.5px; color: var(--muted); margin: 4px 0 0 }
 .nets { display: inline-flex; gap: 3px }
 
 .empty { border: 1px dashed var(--line-2); border-radius: var(--r); padding: 36px 24px; text-align: center; color: var(--muted); background: var(--panel) }
@@ -624,8 +632,8 @@ tbody tr:hover td { background: var(--hover) }
 // ---------- constants ----------
 const STATUS = {idea: {l: 'Idée', c: 'var(--st-idea)'}, make: {l: 'En création', c: 'var(--st-make)'}, review: {l: 'À valider', c: 'var(--st-review)'}, sched: {l: 'Programmé', c: 'var(--st-sched)'}, live: {l: 'Publié', c: 'var(--st-live)'}};
 const AD_STATUS = {draft: {l: 'Brouillon', c: 'var(--st-idea)'}, review: {l: 'À valider', c: 'var(--st-review)'}, ready: {l: 'Prête', c: 'var(--st-sched)'}, live: {l: 'En ligne', c: 'var(--st-live)'}, pause: {l: 'En pause', c: 'var(--st-pause)'}, done: {l: 'Terminée', c: 'var(--st-idea)'}};
-const NETS = ['Instagram', 'Facebook', 'TikTok', 'LinkedIn'];
-const NET_L = {Instagram: 'IG', Facebook: 'f', TikTok: 'TT', LinkedIn: 'in'};
+const NETS = ['Instagram', 'Facebook', 'TikTok', 'YouTube', 'LinkedIn'];
+const NET_L = {Instagram: 'IG', Facebook: 'f', TikTok: 'TT', YouTube: 'YT', LinkedIn: 'in'};
 const FORMATS = ['9:16', '4:5', '1:1', '16:9'];
 const FORMAT_L = {'9:16': 'Reel / Story', '4:5': 'Feed portrait', '1:1': 'Carré', '16:9': 'Paysage'};
 const KINDS = {video: 'Vidéo', image: 'Image', carousel: 'Carrousel'};
@@ -690,7 +698,8 @@ const isVid = (it) => (it?.ct || '').startsWith('video');
 const stMap = (p) => (p.type === 'ad' ? AD_STATUS : STATUS);
 const stOf = (p) => stMap(p)[p.status] || Object.values(stMap(p))[0];
 const pill = (st) => `<span class="pill" style="--c:${st.c}">${esc(st.l)}</span>`;
-const netsHTML = (nets) => `<span class="nets">${(nets || []).map((n) => `<span class="net ${esc(n)}" title="${esc(n)}">${NET_L[n] || ''}</span>`).join('')}</span>`;
+const zState = (z) => { const o = {}; for (const r of (z?.results || [])) { const n = Z_NET[r.platform]; if (n) o[n] = o[n] === 'ok' || r.ok ? 'ok' : 'ko'; } return o; };
+const netsHTML = (nets, z) => { const st = zState(z); const all = [...new Set([...(nets || []), ...Object.keys(st)])]; return `<span class="nets">${all.map((n) => `<span class="net ${esc(n)}${st[n] === 'ok' ? ' done' : st[n] === 'ko' ? ' fail' : ''}" title="${esc(n)}${st[n] === 'ok' ? (z.mode === 'now' ? ' · publié' : ' · programmé') : st[n] === 'ko' ? ' · échec' : ''}">${NET_L[n] || ''}</span>`).join('')}</span>`; };
 function toast(t, err) { const el = $('#toast'); el.innerHTML = `<i>${err ? '!' : IC.check}</i>${esc(t)}`; el.className = 'toast' + (err ? ' err' : ''); el.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => (el.hidden = true), err ? 5000 : 2400); }
 const errMsg = (e) => ({not_granted: 'accès refusé (il faut être Éditeur de la page)', unavailable: 'service momentanément indisponible, réessayez', quota_exceeded: 'quota atteint', too_large: 'fichier trop lourd (20 Mo max)', unsupported_type: 'format non accepté'}[e?.code] || e?.message || 'erreur inconnue');
 const srcOf = (m) => { const it = m?.items?.[0]; if (!it) return null; return isVid(it) ? (it.poster ? blob(it.poster) : null) : blob(it.asset); };
@@ -838,7 +847,7 @@ function vHome(main) {
         ${loading() ? skel(4, '5/1') : queue.length ? `<div class="queue">${queue.slice(0, 8).map((p) => { const m = mediaById(p.mediaId);
           return `<article class="qc"><span class="cvw">${cover(m)}${playBadge(m)}</span>
             <div class="body" data-act="open" data-id="${p.id}"><div class="tt">${esc(p.title || 'Sans titre')}</div>${p.caption ? `<div class="cap">${esc(p.caption)}</div>` : ''}
-              <div class="row">${netsHTML(p.networks)}<span class="tag mono">${esc(p.format || m?.format || '')}</span><span>${p.date ? relDay(p.date) + ' · ' + p.date.slice(11, 16) : 'Sans date'}</span>${redoTag(p)}</div></div>
+              <div class="row">${netsHTML(p.networks, p.zernio)}<span class="tag mono">${esc(p.format || m?.format || '')}</span><span>${p.date ? relDay(p.date) + ' · ' + p.date.slice(11, 16) : 'Sans date'}</span>${redoTag(p)}</div></div>
             <div class="acts"><button class="btn sm accent" data-act="qv-ok" data-id="${p.id}">${IC.check} Valider</button><button class="btn sm" data-act="open" data-id="${p.id}">Ouvrir</button></div></article>`; }).join('')}</div>`
           : `<div class="empty"><b>Rien à valider</b>Les contenus passés en « À valider » apparaîtront ici.</div>`}
       </section>
@@ -854,7 +863,7 @@ function vHome(main) {
       </aside></div></div>`;
 }
 function liHTML(p) {
-  return `<button class="li" data-act="open" data-id="${p.id}"><span class="cvw">${cover(mediaById(p.mediaId))}${playBadge(mediaById(p.mediaId))}</span><div style="min-width:0"><div class="tt">${p.type === 'ad' ? '<span class="tag ad" style="margin-right:6px">AD</span>' : ''}${esc(p.title || 'Sans titre')}</div><div class="sub">${pill(stOf(p))}${netsHTML(p.networks)}<span class="tag mono">${esc(p.format || '')}</span></div></div>
+  return `<button class="li" data-act="open" data-id="${p.id}"><span class="cvw">${cover(mediaById(p.mediaId))}${playBadge(mediaById(p.mediaId))}</span><div style="min-width:0"><div class="tt">${p.type === 'ad' ? '<span class="tag ad" style="margin-right:6px">AD</span>' : ''}${esc(p.title || 'Sans titre')}</div><div class="sub">${pill(stOf(p))}${netsHTML(p.networks, p.zernio)}<span class="tag mono">${esc(p.format || '')}</span></div></div>
     <div class="when">${p.date ? relDay(p.date) + `<small>${p.date.slice(11, 16)}</small>` : '<small>Sans date</small>'}</div></button>`;
 }
 
@@ -928,7 +937,7 @@ function vPosts(main) {
         ${list.map((p) => { const m = mediaById(p.mediaId); const st = stOf(p);
           return `<div class="rw" data-act="open" data-id="${p.id}" tabindex="0"><span class="cvw">${cover(m)}</span>
             <div class="t"><div class="tt"><span style="overflow:hidden;text-overflow:ellipsis">${esc(p.title || 'Sans titre')}</span>${redoTag(p)}</div><div class="cap">${esc((p.caption || '').split('\n')[0] || ' ')}</div></div>
-            <div>${netsHTML(p.networks)}</div><div><span class="tag mono">${esc(p.format || m?.format || '–')}</span></div>
+            <div>${netsHTML(p.networks, p.zernio)}</div><div><span class="tag mono">${esc(p.format || m?.format || '–')}</span></div>
             <div class="when">${p.date ? relDay(p.date) + `<small>${p.date.slice(11, 16)}</small>` : '<small>Sans date</small>'}</div>
             <div><select class="stsel-in" data-act="noop" data-setst="${p.id}" style="--c:${st.c}" aria-label="Statut de ${esc(p.title || 'ce post')}">${Object.entries(STATUS).map(([k, x]) => `<option value="${k}" ${k === stOfK(p) ? 'selected' : ''}>${x.l}</option>`).join('')}</select></div></div>`; }).join('')}</div>`
       : `<div class="empty"><b>Aucun post ici</b>Changez d’onglet ou de recherche.<br><button class="btn primary" data-act="new" data-type="post" ${tab !== 'all' ? `data-status="${tab}"` : ''}>${IC.plus} Nouveau post</button></div>`}`}</div>`;
@@ -939,7 +948,7 @@ function cardHTML(p) {
   return `<button class="card" draggable="true" data-drag="${p.id}" data-act="open" data-id="${p.id}"><span class="cvw">${cover(m)}${playBadge(m)}</span>
     <div class="cb"><div class="tt">${esc(p.title || 'Sans titre')}</div>
       ${p.caption ? `<div class="cap">${esc(p.caption)}</div>` : ''}
-      <div class="row">${netsHTML(p.networks)}<span class="tag mono">${esc(p.format || m?.format || '')}</span>${redoTag(p)}${redoTag(m)}</div>
+      <div class="row">${netsHTML(p.networks, p.zernio)}<span class="tag mono">${esc(p.format || m?.format || '')}</span>${redoTag(p)}${redoTag(m)}</div>
       <div class="ft"><span class="when">${p.date ? relDay(p.date) + ' · ' + p.date.slice(11, 16) : 'Sans date'}</span></div></div></button>`;
 }
 function bindSearch() { const q = $('#q'); if (!q) return; q.oninput = () => { S.q = q.value; const pos = q.selectionStart; render(); const n = $('#q'); n.focus(); n.setSelectionRange(pos, pos); }; }
@@ -1200,7 +1209,9 @@ function vEditor(main) {
 
 // ---------- Zernio : publication sur les réseaux ----------
 const ZN = 'Zernio';
-const Z_PLAT = {Instagram: 'instagram', Facebook: 'facebook', TikTok: 'tiktok', LinkedIn: 'linkedin'};
+const Z_PLAT = {Instagram: 'instagram', Facebook: 'facebook', TikTok: 'tiktok', YouTube: 'youtube', LinkedIn: 'linkedin'};
+const Z_NET = Object.fromEntries(Object.entries(Z_PLAT).map(([k, v]) => [v, k]));
+const Z_SKIP = new Set(['phone', 'whatsapp']); // messagerie : pas de publication de posts
 const zText = (r) => { const v = r?.payload; if (v == null) return ''; if (typeof v === 'string') return v; if (typeof v.result === 'string') return v.result; return JSON.stringify(v); };
 function zErr(e) {
   switch (e?.code) {
@@ -1220,7 +1231,10 @@ async function zAccounts(force) {
   const r = await S.mcp.callTool(ZN, 'accounts_list', {}, {cache: {staleTime: 300000, gcTime: 600000, refresh: !!force}});
   const t = zText(r); const out = [];
   for (const m of t.matchAll(/-\s*([a-z]+):\s*(.+?)\s*\(ID:\s*([A-Za-z0-9_-]+)\)/g)) out.push({platform: m[1], name: m[2], id: m[3]});
-  S.zAcc = out; return out;
+  // un même compte relié dans deux profils Zernio apparaît deux fois : on n'en garde qu'un (le plus récent) pour ne jamais publier en double
+  const seen = new Map(); let dup = 0;
+  for (const a of out) { if (Z_SKIP.has(a.platform)) continue; const k = a.platform + '|' + a.name.toLowerCase(); if (seen.has(k)) dup++; seen.set(k, a); }
+  S.zDup = dup; S.zAcc = [...seen.values()].sort((a, b) => Object.values(Z_PLAT).indexOf(a.platform) - Object.values(Z_PLAT).indexOf(b.platform)); return S.zAcc;
 }
 function renderZernio() {
   const box = $('#zernio'); if (!box || !S.ed) return;
@@ -1230,13 +1244,15 @@ function renderZernio() {
   if (!acc && !zs.loading && !zs.err) { S.zs = {...zs, loading: true}; zAccounts().then(() => { S.zs = {}; renderZernio(); }).catch((e) => { S.zs = {err: zErr(e)}; renderZernio(); }); }
   const sel = zs.sel || Object.fromEntries((acc || []).map((a) => [a.id, (p.networks || []).some((n) => Z_PLAT[n] === a.platform)]));
   S.zs = {...S.zs, sel};
-  const hist = z ? `<div class="zhist"><b>${z.mode === 'now' ? 'Publié' : 'Programmé'} via Zernio</b> le ${new Date(z.at).toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'})}${z.when ? ` · pour le ${new Date(z.when).toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'})}` : ''}
-      <ul>${(z.results || []).map((r) => `<li class="${r.ok ? 'ok' : 'ko'}">${r.ok ? '✓' : '✕'} ${esc(r.platform)} — ${esc(r.msg || '')}</li>`).join('')}</ul></div>` : '';
+  const zr = z?.results || []; const nOk = zr.filter((r) => r.ok).length;
+  const hist = z ? `<div class="zhist"><b>${nOk === zr.length ? (z.mode === 'now' ? 'Publié partout' : 'Programmé partout') : nOk ? `${z.mode === 'now' ? 'Publié' : 'Programmé'} sur ${nOk} réseau${nOk > 1 ? 'x' : ''} sur ${zr.length}` : 'Échec de la publication'}</b> · via Zernio le ${new Date(z.at).toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'})}${z.when ? ` · pour le ${new Date(z.when).toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'})}` : ''}
+      <div class="zsum">${zr.map((r) => `<span class="${r.ok ? '' : 'ko'}">${r.ok ? '✓' : '✕'} ${esc(Z_NET[r.platform] || r.platform)}</span>`).join('')}</div>
+      <ul>${zr.map((r) => `<li class="${r.ok ? 'ok' : 'ko'}">${r.ok ? '✓' : '✕'} ${esc(Z_NET[r.platform] || r.platform)} · ${esc(r.account || '')} — ${esc(r.msg || '')}</li>`).join('')}</ul></div>` : '';
   const m = mediaById(p.mediaId); const when = p.date ? new Date(p.date) : null; const future = when && when.getTime() > Date.now() + 5 * 60000;
   box.innerHTML = `<h3>Publier avec Zernio <small>Instagram, Facebook… depuis le CRM</small></h3>${hist}
     ${zs.err ? `<div class="zmsg ko">${esc(zs.err)} <button class="btn sm" data-act="z-reload">Réessayer</button></div>` : ''}
     ${!acc ? (zs.err ? '' : '<div style="font-size:13px;color:var(--muted)">Chargement des comptes Zernio…</div>') : `
-      <div class="fld"><span class="lb">Comptes</span><div class="chips">${acc.length ? acc.map((a) => `<button type="button" class="chk" data-act="z-acc" data-id="${a.id}" aria-pressed="${!!sel[a.id]}">${esc(a.platform)} · ${esc(a.name)}</button>`).join('') : '<span style="font-size:13px;color:var(--muted)">Aucun compte relié dans Zernio.</span>'}</div></div>
+      <div class="fld"><span class="lb">Comptes</span><div class="chips">${acc.length ? acc.map((a) => `<button type="button" class="chk" data-act="z-acc" data-id="${a.id}" aria-pressed="${!!sel[a.id]}">${Z_NET[a.platform] ? `<span class="net ${Z_NET[a.platform]}">${NET_L[Z_NET[a.platform]]}</span>` : ''}${esc(Z_NET[a.platform] || a.platform)} · ${esc(a.name)}</button>`).join('') : '<span style="font-size:13px;color:var(--muted)">Aucun compte relié dans Zernio.</span>'}</div>${S.zDup ? `<p class="zdup">Certains comptes sont reliés deux fois dans Zernio (deux profils) : ils n’apparaissent qu’une fois ici, pour ne jamais publier en double.</p>` : ''}</div>
       ${!m ? '<div class="zmsg ko">Choisissez d’abord un média.</div>' : ''}
       ${zs.busy ? `<div class="zmsg">${esc(zs.busy)}</div>` : ''}
       ${zs.manual ? `<div class="zmsg warn" style="display:block;line-height:1.6"><b>Le navigateur bloque l’envoi direct du fichier.</b> Faites-le en 3 clics :<br>
@@ -1316,10 +1332,12 @@ async function zPublish(mode) {
   } catch (e) { S.zs = {...S.zs, busy: null, err: 'Média : ' + (e?.code ? zErr(e) : e.message || e)}; renderZernio(); return; }
   const ok = results.some((r) => r.ok);
   const z = {at: Date.now(), by: S.me || null, mode, when: mode === 'sched' ? when : null, results};
-  const patch = {zernio: z, updatedAt: Date.now()}; if (ok) patch.status = mode === 'now' ? 'live' : 'sched';
+  const nets = [...new Set([...(p.networks || []), ...results.filter((r) => r.ok).map((r) => Z_NET[r.platform]).filter(Boolean)])];
+  const patch = {zernio: z, networks: nets, updatedAt: Date.now()}; if (ok) patch.status = mode === 'now' ? 'live' : 'sched';
   try { await S.db.collection('posts').doc(p.id).update(patch); Object.assign(S.ed.draft, patch); } catch (e) { toast('Publié, mais le CRM n’a pas pu être mis à jour : ' + errMsg(e), true); }
   S.zs = {...S.zs, busy: null, confirm: null};
-  toast(ok ? (mode === 'now' ? 'Publié via Zernio.' : 'Programmé via Zernio.') : 'Zernio n’a rien publié.', !ok);
+  const nOk = results.filter((r) => r.ok).length;
+  toast(!ok ? 'Zernio n’a rien publié.' : nOk === results.length ? (mode === 'now' ? 'Publié partout : ' : 'Programmé partout : ') + results.map((r) => Z_NET[r.platform] || r.platform).join(', ') + '.' : `${mode === 'now' ? 'Publié' : 'Programmé'} sur ${nOk} réseau(x) sur ${results.length} : voyez le détail.`, !ok || nOk < results.length);
   render();
 }
 function refreshPicker() {
