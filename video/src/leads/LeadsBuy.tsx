@@ -294,8 +294,8 @@ const HookSide: React.FC = () => {
   );
 };
 // ---------- 2. s'inspirer des pubs des concurrents ----------
-const SPY = [
-  {b: 'ThermiConfort', vid: 'media/ugc-pac-awa.mp4', c: '#0EA5E9'},
+const SPY: {b: string; c: string; vid?: string; img?: string; head?: string}[] = [
+  {b: 'ThermiConfort', img: 'leads/spy-sunset.jpg', head: 'Chauffe-toi autrement cet hiver', c: '#0EA5E9'},
   {b: 'Éco Chaleur', img: 'leads/spy-rge.jpg', c: '#10B981'},
   {b: 'Clim & Habitat', vid: 'media/ugc-pac-hugo.mp4', c: '#F97316'},
   {b: 'Rénov’Énergie', img: 'leads/spy-fioul.jpg', c: '#8B5CF6'},
@@ -326,8 +326,8 @@ const SpyDemo: React.FC = () => {
                 <span style={{width: 28, height: 28, borderRadius: 14, background: a.c, color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 13}}>{a.b[0]}</span>
                 <div style={{minWidth: 0}}><div style={{fontWeight: 700, fontSize: 14, color: FG, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{a.b}</div><div style={{fontSize: 12, color: DIM}}>Sponsorisé</div></div>
               </div>
-              <div style={{height: 300, background: '#000', overflow: 'hidden'}}>
-                {a.vid ? <Sequence from={show + i * 4} layout="none"><OffthreadVideo muted src={staticFile(a.vid)} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Sequence> : <Img src={staticFile(a.img!)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />}
+              <div style={{height: 300, background: '#000', overflow: 'hidden', position: 'relative'}}>
+                {a.vid ? <Sequence from={show + i * 4} layout="none"><OffthreadVideo muted src={staticFile(a.vid)} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Sequence> : <div style={{position: 'relative', width: '100%', height: '100%'}}><Img src={staticFile(a.img!)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />{a.head && <div style={{position: 'absolute', left: 10, right: 10, top: 16, textAlign: 'center', fontFamily: FONT, fontWeight: 900, fontSize: 24, lineHeight: 1.08, letterSpacing: '-0.02em', color: '#fff', textShadow: '0 2px 12px rgba(0,0,0,.45)'}}>{a.head}</div>}</div>}
               </div>
               <div style={{padding: 10, display: 'flex', flexDirection: 'column', gap: 8}}>
                 <span style={{display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 700, color: OK}}><span style={{width: 8, height: 8, borderRadius: 4, background: OK}} />En diffusion</span>
