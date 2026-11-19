@@ -7,10 +7,11 @@ g = {'__file__': __file__}
 exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'click', 'chime', 'pop_sfx', 'rng'])
 W = json.load(open('src/leads/words_lb.json'))
-VO = {4: 271, 5: 591, 6: 776, 7: 889, 8: 1046, 9: 1249, 10: 1456}
+VO = {4: 431, 5: 751, 6: 936, 7: 1049, 8: 1206, 9: 1409, 10: 1616}
 VOH = {1: 4, 2: 154}
-T = dict(hook=0, pub=266, meta=402, form=586, camp=771, wa=884, leads=1041, res=1244, end=1451, total=1580)
-VM = 407
+T = dict(hook=0, spy=266, pub=426, meta=562, form=746, camp=931, wa=1044, leads=1201, res=1404, end=1611, total=1740)
+VM = 567
+VC = 271
 def cue(k, start, d=0):
     for w in W[f'lb-{k}']:
         if w['w'].lower().startswith(start): return (VO[k] + round(w['s'] * 30)) / 30
@@ -71,7 +72,7 @@ for i, a in enumerate([64, 74, 84, 96, 108, 122, 138, 154, 172, 192]):
 add(sfx, boom(), cueH(2, "d'agence"), 0.3); add(sfx, boom(), cueH(2, 'achetés'), 0.3)
 add(sfx, chime(84), cueH(2, 'outil'), 0.28); add(sfx, chime(91), cueH(2, 'outil') + 0.12, 0.2)
 for i in range(5): add(sfx, pop_sfx(), cueH(2, 'outil') + i * 2 / 30, 0.18)
-add(sfx, riser(1.0), s('pub') - 1.0, 0.3)
+add(sfx, riser(1.0), s('spy') - 1.0, 0.3)
 # scènes
 def cueM(start, d=0):
     for w in W['lm-1']:
@@ -81,7 +82,15 @@ ck = cueM('connectes', 0.3) + 16 / 30; na = cueM('pas', 2.0) + 4 / 30; gd = cueM
 add(sfx, click(1.3), ck, 0.3); add(sfx, click(1.3), na, 0.3); add(sfx, whoosh(0.3), gd - 0.05, 0.25)
 for i in range(5): add(sfx, pop_sfx(), gd + (10 + i * 9) / 30, 0.25)
 add(sfx, chime(84), gd + (10 + 4 * 9 + 2) / 30, 0.25); add(sfx, chime(91), gd + (10 + 4 * 9 + 6) / 30, 0.2)
-for k in ['pub', 'meta', 'form', 'camp', 'wa', 'leads', 'res']:
+def cueC(start, d=0):
+    for w in W['lc-1']:
+        if w['w'].lower().startswith(start): return (VC + round(w['s'] * 30)) / 30
+    return (VC + d * 30) / 30
+for j in range(T['spy'] + 4, T['spy'] + 22, 2): add(sfx, click(1.0 + 0.5 * rng.random()), j / 30, 0.09)
+for i in range(4): add(sfx, pop_sfx(), cueC('concurrents') - 8 / 30 + i * 4 / 30, 0.22)
+pk = cueC('domaine') + 2 / 30
+add(sfx, click(1.3), pk, 0.3); add(sfx, chime(86), pk + 8 / 30, 0.25)
+for k in ['spy', 'pub', 'meta', 'form', 'camp', 'wa', 'leads', 'res']:
     add(sfx, whoosh(0.45), s(k) - 0.15, 0.3); add(sfx, sub(0.7, 50), s(k) + 0.03, 0.3)
 for j in range(T['pub'] + 6, T['pub'] + 50, 2): add(sfx, click(1.0 + 0.5 * rng.random()), j / 30, 0.09)
 add(sfx, chime(86), cue(4, 'crée') - 0.1, 0.25)

@@ -31,9 +31,16 @@ const G: React.FC<{children: React.ReactNode}> = ({children}) => (
   <span style={{backgroundImage: GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent'}}>{children}</span>
 );
 
-export const VO = {4: 271, 5: 591, 6: 776, 7: 889, 8: 1046, 9: 1249, 10: 1456} as Record<number, number>;
-export const S = {hook: 0, pub: 266, meta: 402, form: 586, camp: 771, wa: 884, leads: 1041, res: 1244, end: 1451, total: 1580};
-const VM = 407;
+export const VO = {4: 431, 5: 751, 6: 936, 7: 1049, 8: 1206, 9: 1409, 10: 1616} as Record<number, number>;
+export const S = {hook: 0, spy: 266, pub: 426, meta: 562, form: 746, camp: 931, wa: 1044, leads: 1201, res: 1404, end: 1611, total: 1740};
+const VM = 567;
+const VC = 271;
+const cueC = (start: string, d = 0) => {
+  const w = WD['lc-1'].find((x) => x.w.toLowerCase().startsWith(start));
+  return VC + Math.round((w ? w.s : d) * 30);
+};
+// format vertical 9:16
+export const VertCtx = React.createContext(false);
 const cueM = (start: string, d = 0) => {
   const w = WD['lm-1'].find((x) => x.w.toLowerCase().startsWith(start));
   return VM + Math.round((w ? w.s : d) * 30);
@@ -63,7 +70,7 @@ const Bg: React.FC = () => {
 };
 
 // ---------- colonne de texte à gauche ----------
-const STEPS = ['La pub', 'Meta Ads', 'Le formulaire', 'La campagne', 'En direct', 'Les leads', 'Les résultats'];
+const STEPS = ['Inspiration', 'La pub', 'Meta Ads', 'Le formulaire', 'La campagne', 'En direct', 'Les leads', 'Les résultats'];
 const Side: React.FC<{idx: number; label?: string; color?: string; start: number; end: number; a: React.ReactNode; b: React.ReactNode; sub: string; a2?: React.ReactNode; b2?: React.ReactNode; sub2?: string; swapAt?: number; red?: boolean}> = ({idx, label, color = ACC, start, end, a, b, sub, a2, b2, sub2, swapAt, red}) => {
   const f = useCurrentFrame();
   if (f < start - 2 || f > end + 2) return null;
@@ -77,8 +84,9 @@ const Side: React.FC<{idx: number; label?: string; color?: string; start: number
     </div>
   );
   const em = (x: React.ReactNode) => (red ? <span style={{color: RED}}>{x}</span> : <G>{x}</G>);
+  const v = React.useContext(VertCtx);
   return (
-    <div style={{position: 'absolute', left: 120, top: 0, width: 660, height: 1080, display: 'flex', flexDirection: 'column', justifyContent: 'center', opacity: i * (1 - o), transform: `translateY(${(1 - i) * 30 - o * 40}px)`}}>
+    <div style={{position: 'absolute', left: v ? 90 : 120, top: v ? 150 : 0, width: v ? 900 : 660, height: v ? 420 : 1080, display: 'flex', flexDirection: 'column', justifyContent: v ? 'flex-start' : 'center', opacity: i * (1 - o), transform: `translateY(${(1 - i) * 30 - o * 40}px)`}}>
       <div style={{display: 'flex', alignItems: 'center', gap: 16, marginBottom: 30}}>
         <span style={{fontFamily: FONT, fontWeight: 800, fontSize: 22, letterSpacing: '0.16em', color}}>{label ?? `0${idx + 1} — ${STEPS[idx].toUpperCase()}`}</span>
         {idx >= 0 && <span style={{display: 'flex', gap: 6}}>{STEPS.map((_, k) => <span key={k} style={{width: k === idx ? 34 : 10, height: 10, borderRadius: 5, background: k <= idx ? ACC : LINE2}} />)}</span>}
@@ -87,7 +95,7 @@ const Side: React.FC<{idx: number; label?: string; color?: string; start: number
         {line(a, p1, a2)}
         {line(em(b), p2, b2 ? em(b2) : undefined)}
       </div>
-      <div style={{position: 'relative', marginTop: 26, fontFamily: FONT, fontWeight: 500, fontSize: 28, lineHeight: 1.45, color: MUTED, maxWidth: 600, minHeight: 82}}>
+      <div style={{position: 'relative', marginTop: 26, fontFamily: FONT, fontWeight: 500, fontSize: v ? 32 : 28, lineHeight: 1.45, color: MUTED, maxWidth: v ? 860 : 600, minHeight: 82}}>
         <div style={{opacity: prog(f, start + 18, 14) * (1 - (sub2 ? sw : 0))}}>{sub}</div>
         {sub2 && <div style={{position: 'absolute', left: 0, top: 0, opacity: sw}}>{sub2}</div>}
       </div>
@@ -95,12 +103,14 @@ const Side: React.FC<{idx: number; label?: string; color?: string; start: number
   );
 };
 
-const Stage: React.FC<{start: number; end: number; children: React.ReactNode; top?: number; w?: number; left?: number}> = ({start, end, children, top = 150, w = 920, left = 860}) => {
+const Stage: React.FC<{start: number; end: number; children: React.ReactNode; top?: number; w?: number; left?: number; vtop?: number}> = ({start, end, children, top = 150, w = 920, left = 860, vtop = 600}) => {
   const f = useCurrentFrame();
+  const v = React.useContext(VertCtx);
   if (f < start - 2 || f > end + 2) return null;
   const i = sp(f - start - 2, 16), o = prog(f, end - 12, 12, INOUT);
+  const sc = v ? Math.min(1.02, 910 / w) : 1;
   return (
-    <div style={{position: 'absolute', left, top, width: w, opacity: Math.min(1, i * 1.4) * (1 - o), transform: `translateX(${(1 - i) * 120 + o * -60}px) scale(${0.96 + 0.04 * i})`, filter: `blur(${o * 8}px)`}}>{children}</div>
+    <div style={{position: 'absolute', left: v ? 75 + (910 - w * sc) / 2 : left, top: v ? vtop : top, width: w, transformOrigin: 'top left', opacity: Math.min(1, i * 1.4) * (1 - o), transform: `translate${v ? 'Y' : 'X'}(${(1 - i) * 120 + o * -60}px) scale(${sc * (0.96 + 0.04 * i)})`, filter: `blur(${o * 8}px)`}}>{children}</div>
   );
 };
 const Card: React.FC<{children: React.ReactNode; style?: React.CSSProperties}> = ({children, style}) => (
@@ -248,21 +258,22 @@ const Feed: React.FC = () => {
 const HookSide: React.FC = () => {
   const f = useCurrentFrame();
   const a = sp(f, 13), b = sp(f - 5, 13);
-  const o = prog(f, S.pub - 12, 12, INOUT);
+  const o = prog(f, S.spy - 12, 12, INOUT);
+  const v = React.useContext(VertCtx);
   const chips = [
     {t: 'Agence', at: cueH(2, "d'agence", 0.3), bad: true},
     {t: 'Leads achetés', at: cueH(2, 'achetés', 1.3), bad: true},
     {t: 'Ton outil', at: cueH(2, 'outil', 3.1), bad: false},
   ];
   return (
-    <div style={{position: 'absolute', left: 110, top: 0, width: 640, height: 1080, display: 'flex', flexDirection: 'column', justifyContent: 'center', opacity: 1 - o, transform: `translateY(${-o * 40}px)`}}>
+    <div style={{position: 'absolute', left: v ? 90 : 110, top: v ? 130 : 0, width: v ? 900 : 640, height: v ? 520 : 1080, display: 'flex', flexDirection: 'column', justifyContent: v ? 'flex-start' : 'center', opacity: 1 - o, transform: `translateY(${-o * 40}px)`}}>
       <div style={{fontFamily: FONT, fontWeight: 800, fontSize: 22, letterSpacing: '0.16em', color: ACC, marginBottom: 26, opacity: a}}>ÇA Y EST</div>
-      <div style={{fontFamily: FONT, fontWeight: 900, fontSize: 104, lineHeight: 1, letterSpacing: '-0.05em', color: FG}}>
+      <div style={{fontFamily: FONT, fontWeight: 900, fontSize: v ? 96 : 104, lineHeight: 1, letterSpacing: '-0.05em', color: FG}}>
         <div style={{transform: `translateY(${(1 - a) * 60}px)`, opacity: a}}>Tes leads,</div>
         <div style={{transform: `translateY(${(1 - b) * 60}px)`, opacity: b}}><G>toi-même.</G></div>
       </div>
-      <div style={{marginTop: 22, fontFamily: FONT, fontWeight: 600, fontSize: 30, color: MUTED, opacity: prog(f, cueH(1, 'sans', 3.3), 10)}}>Sans compétences. En 2 minutes.</div>
-      <div style={{marginTop: 30, display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'flex-start', alignContent: 'flex-start', minHeight: 140}}>
+      <div style={{marginTop: v ? 16 : 22, fontFamily: FONT, fontWeight: 600, fontSize: 30, color: MUTED, opacity: prog(f, cueH(1, 'sans', 3.3), 10)}}>Sans compétences. En 2 minutes.</div>
+      <div style={{marginTop: v ? 20 : 30, display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'flex-start', alignContent: 'flex-start', minHeight: v ? 60 : 140}}>
         {chips.map((c) => {
           if (f < c.at) return null;
           const p = sp(f - c.at, 12);
@@ -282,6 +293,55 @@ const HookSide: React.FC = () => {
     </div>
   );
 };
+// ---------- 2. s'inspirer des pubs des concurrents ----------
+const SPY = [
+  {b: 'ThermiConfort', vid: 'media/ugc-pac-awa.mp4', c: '#0EA5E9'},
+  {b: 'Éco Chaleur', img: 'leads/spy-rge.jpg', c: '#10B981'},
+  {b: 'Clim & Habitat', vid: 'media/ugc-pac-hugo.mp4', c: '#F97316'},
+  {b: 'Rénov’Énergie', img: 'leads/spy-fioul.jpg', c: '#8B5CF6'},
+];
+const SpyDemo: React.FC = () => {
+  const f = useCurrentFrame();
+  const q = 'pompe à chaleur';
+  const typed = q.slice(0, Math.max(0, Math.floor((f - S.spy - 4) * 0.9)));
+  const show = cueC('concurrents', 2.0) - 8;
+  const pick = cueC('domaine', 4.3) + 2;
+  return (
+    <Card style={{padding: 26}}>
+      <div style={{display: 'flex', alignItems: 'center', gap: 14}}>
+        <span style={{width: 48, height: 48, borderRadius: 14, background: ACC_SOFT, display: 'grid', placeItems: 'center', fontSize: 24}}>🔍</span>
+        <div style={{fontFamily: FONT}}><div style={{fontWeight: 800, fontSize: 28, color: FG}}>Pubs des concurrents</div><div style={{fontSize: 17, color: DIM}}>Celles qui tournent déjà sur Facebook et Instagram</div></div>
+        <span style={{marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 14px', borderRadius: 999, background: '#E8F0FF', color: META, fontFamily: FONT, fontWeight: 700, fontSize: 16}}>Meta · France</span>
+      </div>
+      <div style={{marginTop: 16, height: 54, borderRadius: 14, border: `1.5px solid ${ACC}`, display: 'flex', alignItems: 'center', gap: 12, padding: '0 18px', fontFamily: FONT, fontSize: 22, color: FG}}>
+        <span style={{color: DIM}}>Ton domaine :</span><b style={{fontWeight: 700}}>{typed}</b><span style={{color: ACC, opacity: Math.floor(f / 8) % 2 ? 0 : 1}}>|</span>
+      </div>
+      <div style={{marginTop: 16, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14}}>
+        {SPY.map((a, i) => {
+          const p = sp(f - show - i * 4, 13);
+          const on = i === 0 && f >= pick;
+          return (
+            <div key={a.b} style={{borderRadius: 16, border: `${on ? 2.5 : 1}px solid ${on ? ACC : LINE}`, background: SURF, overflow: 'hidden', opacity: Math.min(1, p * 1.5), transform: `translateY(${(1 - p) * 40}px) scale(${on ? 1 + 0.03 * sp(f - pick, 10) : 1})`, boxShadow: on ? '0 16px 40px -16px rgba(91,63,228,.5)' : SH, fontFamily: FONT}}>
+              <div style={{display: 'flex', alignItems: 'center', gap: 8, padding: '10px 10px'}}>
+                <span style={{width: 28, height: 28, borderRadius: 14, background: a.c, color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 13}}>{a.b[0]}</span>
+                <div style={{minWidth: 0}}><div style={{fontWeight: 700, fontSize: 14, color: FG, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{a.b}</div><div style={{fontSize: 12, color: DIM}}>Sponsorisé</div></div>
+              </div>
+              <div style={{height: 300, background: '#000', overflow: 'hidden'}}>
+                {a.vid ? <Sequence from={show + i * 4} layout="none"><OffthreadVideo muted src={staticFile(a.vid)} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Sequence> : <Img src={staticFile(a.img!)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />}
+              </div>
+              <div style={{padding: 10, display: 'flex', flexDirection: 'column', gap: 8}}>
+                <span style={{display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 700, color: OK}}><span style={{width: 8, height: 8, borderRadius: 4, background: OK}} />En diffusion</span>
+                <span style={{height: 36, borderRadius: 10, background: on ? ACC : SURF, border: `1px solid ${on ? ACC : LINE2}`, color: on ? '#fff' : FG, display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 15, transform: `scale(${on && f < pick + 5 ? 0.94 : 1})`}}>{on ? '✓ Ajouté' : 'S’inspirer'}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      {f >= pick + 8 && <div style={{marginTop: 16, display: 'inline-flex', alignItems: 'center', gap: 10, padding: '12px 18px', borderRadius: 12, background: ACC_SOFT, color: ACC_INK, fontFamily: FONT, fontWeight: 700, fontSize: 19, transform: `scale(${sp(f - pick - 8, 11)})`, transformOrigin: 'left center'}}><LogoMark size={20} /> Ajouté à ton brief : l’accroche, l’angle et le format</div>}
+    </Card>
+  );
+};
+
 // ---------- 3. la pub (Alice) ----------
 const PubDemo: React.FC = () => {
   const f = useCurrentFrame();
@@ -660,17 +720,18 @@ const End: React.FC = () => {
   const f = useCurrentFrame(); // local
   const L = (k: string, d: number) => cue(10, k, d) - S.end;
   const a = sp(f - L('arrête', 0) + 2, 12), b = sp(f - L('génère', 1.7) + 2, 12), logo = sp(f - L('avec', 2.6), 12), cta = sp(f - L('avec', 2.6) - 10, 13);
+  const v = React.useContext(VertCtx);
   return (
-    <AbsoluteFill>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 250, textAlign: 'center', fontFamily: FONT, fontWeight: 900, fontSize: 118, letterSpacing: '-0.055em', lineHeight: 1.04, color: FG}}>
-        <div style={{opacity: a, transform: `translateY(${(1 - a) * 40}px)`}}>Arrête d’acheter tes leads.</div>
+    <AbsoluteFill style={{transform: v ? 'translateY(170px)' : undefined}}>
+      <div style={{position: 'absolute', left: v ? 60 : 0, right: v ? 60 : 0, top: v ? 200 : 250, textAlign: 'center', fontFamily: FONT, fontWeight: 900, fontSize: v ? 104 : 118, letterSpacing: '-0.055em', lineHeight: 1.04, color: FG}}>
+        <div style={{opacity: a, transform: `translateY(${(1 - a) * 40}px)`}}>{v ? <>Arrête d’acheter<br />tes leads.</> : 'Arrête d’acheter tes leads.'}</div>
         <div style={{opacity: b, transform: `translateY(${(1 - b) * 40}px)`}}><G>Génère les tiens.</G></div>
       </div>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 580, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 18, opacity: logo, transform: `scale(${0.8 + 0.2 * logo})`}}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: v ? 690 : 580, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 18, opacity: logo, transform: `scale(${0.8 + 0.2 * logo})`}}>
         <div style={{width: 84, height: 84, borderRadius: 24, background: SURF, border: `1px solid ${LINE}`, boxShadow: SH, display: 'grid', placeItems: 'center'}}><LogoMark size={54} draw={prog(f, L('avec', 2.6), 18)} /></div>
         <Wordmark size={60} />
       </div>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 740, display: 'flex', justifyContent: 'center', opacity: Math.min(1, cta * 1.4), transform: `translateY(${(1 - cta) * 30}px)`}}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: v ? 850 : 740, display: 'flex', justifyContent: 'center', opacity: Math.min(1, cta * 1.4), transform: `translateY(${(1 - cta) * 30}px)`}}>
         <div style={{position: 'relative'}}>
           <div style={{position: 'absolute', inset: -12, borderRadius: 99, background: GRAD, filter: 'blur(22px)', opacity: 0.5 + 0.2 * Math.sin(f / 6)}} />
           <div style={{position: 'relative', padding: '30px 72px', borderRadius: 99, background: FG, color: '#fff', fontFamily: FONT, fontWeight: 900, fontSize: 42}}>Commencer →</div>
@@ -680,6 +741,12 @@ const End: React.FC = () => {
   );
 };
 
+export const LeadsBuyVertical: React.FC = () => (
+  <VertCtx.Provider value>
+    <LeadsBuyVideo />
+  </VertCtx.Provider>
+);
+
 export const LeadsBuyVideo: React.FC = () => {
   useFonts();
   const f = useCurrentFrame();
@@ -687,27 +754,30 @@ export const LeadsBuyVideo: React.FC = () => {
   return (
     <AbsoluteFill style={{background: PAGE, fontFamily: FONT}}>
       <Bg />
-      {f < S.pub + 2 && <HookSide />}
-      <Stage start={0} end={S.pub} top={150}><Feed /></Stage>
-      <Side idx={0} start={S.pub} end={S.meta} a="Ta pub vidéo" b="en une phrase." sub="Growthity écrit le script, choisit une actrice réaliste et monte la vidéo." />
+      {f < S.spy + 2 && <HookSide />}
+      <Stage start={0} end={S.spy} top={150} vtop={690}><Feed /></Stage>
+      <Side idx={0} start={S.spy} end={S.pub} a="Inspire-toi" b="des concurrents." sub="Les pubs Meta qui tournent déjà dans ton domaine, pour trouver la bonne accroche." />
+      <Stage start={S.spy} end={S.pub} top={170}><SpyDemo /></Stage>
+      <Side idx={1} start={S.pub} end={S.meta} a="Ta pub vidéo" b="en une phrase." sub="Growthity écrit le script, choisit une actrice réaliste et monte la vidéo." />
       <Stage start={S.pub} end={S.meta} top={150}><PubDemo /></Stage>
-      <Side idx={1} start={S.meta} end={S.form} a="Meta Ads," b="guidé de A à Z." sub="Tu le connectes en un clic. Pas de compte ? Growthity t’accompagne étape par étape." />
+      <Side idx={2} start={S.meta} end={S.form} a="Meta Ads," b="guidé de A à Z." sub="Tu le connectes en un clic. Pas de compte ? Growthity t’accompagne étape par étape." />
       <Stage start={S.meta} end={S.form} top={150}><MetaDemo /></Stage>
-      <Side idx={2} start={S.form} end={S.camp} a="Un formulaire" b="qui qualifie." sub="Logement, chauffage, propriétaire : tu ne reçois que des prospects sérieux." />
+      <Side idx={3} start={S.form} end={S.camp} a="Un formulaire" b="qui qualifie." sub="Logement, chauffage, propriétaire : tu ne reçois que des prospects sérieux." />
       <Stage start={S.form} end={S.camp} top={190} left={990}><FormDemo /></Stage>
-      <Side idx={3} start={S.camp} end={S.wa} a="Ta campagne," b="dans ta zone." sub="Tu choisis tes départements : ta pub ne tourne que là où tu interviens." />
+      <Side idx={4} start={S.camp} end={S.wa} a="Ta campagne," b="dans ta zone." sub="Tu choisis tes départements : ta pub ne tourne que là où tu interviens." />
       <Stage start={S.camp} end={S.wa} top={190} w={960} left={840}><CampDemo /></Stage>
-      <Side idx={4} start={S.wa} end={S.leads} a="Tu rappelles" b="le premier." sub="Chaque lead arrive en direct dans Growthity. Personne d’autre ne l’a." />
+      <Side idx={5} start={S.wa} end={S.leads} a="Tu rappelles" b="le premier." sub="Chaque lead arrive en direct dans Growthity. Personne d’autre ne l’a." />
       <Stage start={S.wa} end={S.leads} top={230}><InboxDemo /></Stage>
-      <Side idx={5} start={S.leads} end={S.res} a="« Montre-moi" b="mes leads. »" a2="Filtrés, vérifiés," b2="exportables." swapAt={cue(8, 'filtr', 3.6) - 6} sub="Tous tes leads dans le chat, par formulaire." sub2="Numéros douteux signalés, export CSV en un clic." />
+      <Side idx={6} start={S.leads} end={S.res} a="« Montre-moi" b="mes leads. »" a2="Filtrés, vérifiés," b2="exportables." swapAt={cue(8, 'filtr', 3.6) - 6} sub="Tous tes leads dans le chat, par formulaire." sub2="Numéros douteux signalés, export CSV en un clic." />
       <Stage start={S.leads} end={S.res} top={200}><LeadsTable /></Stage>
-      <Side idx={6} start={S.res} end={S.end} a="« Montre-moi" b="les résultats. »" a2="Optimisé" b2="jour et nuit." swapAt={BUYER - 6} sub="Quelle pub t’apporte les meilleurs leads, et quoi faire ensuite." sub2="Ton media buyer ajuste tes campagnes en continu." />
+      <Side idx={7} start={S.res} end={S.end} a="« Montre-moi" b="les résultats. »" a2="Optimisé" b2="jour et nuit." swapAt={BUYER - 6} sub="Quelle pub t’apporte les meilleurs leads, et quoi faire ensuite." sub2="Ton media buyer ajuste tes campagnes en continu." />
       <Stage start={S.res} end={BUYER} top={190}><ResDemo /></Stage>
       <Stage start={BUYER} end={S.end} top={300}><BuyerDemo /></Stage>
       <Sequence from={S.end}><End /></Sequence>
-      <AbsoluteFill style={{background: '#fff', opacity: Math.max(flash(S.pub), flash(S.end)), pointerEvents: 'none'}} />
+      <AbsoluteFill style={{background: '#fff', opacity: Math.max(flash(S.spy), flash(S.end)), pointerEvents: 'none'}} />
       <Audio src={staticFile('leads/bed-lb.wav')} />
       {[1, 2].map((k) => <Sequence key={`h${k}`} from={VOH[k]}><Audio src={staticFile(`voice/lh-${k}-n.mp3`)} /></Sequence>)}
+      <Sequence from={VC}><Audio src={staticFile('voice/lc-1-n.mp3')} /></Sequence>
       <Sequence from={VM}><Audio src={staticFile('voice/lm-1-n.mp3')} /></Sequence>
       {[4, 5, 6, 7, 8, 9, 10].map((k) => (
         <Sequence key={k} from={VO[k]}><Audio src={staticFile(`voice/lb-${k}-n.mp3`)} /></Sequence>

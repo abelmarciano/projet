@@ -2242,5 +2242,13 @@
   "style": 0.4,
   "speed": 1.06,
   "text": "Tu connectes ton compte Meta Ads. Tu n'en as pas, ou tu n'y connais rien ? Tu es guidé de A à Z."
+ },
+ "lc-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "Avant de créer ta pub, inspire-toi des concurrents qui font déjà de la pub Meta dans ton domaine."
  }
 }
