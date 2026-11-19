@@ -2250,5 +2250,61 @@
   "style": 0.4,
   "speed": 1.06,
   "text": "Avant de créer ta pub, Grossiti va chercher pour toi les pubs Meta de tes concurrents, et s'en inspire."
+ },
+ "bt-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "[excited] Un bouton."
+ },
+ "bt-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "Et ta pub vidéo est prête."
+ },
+ "bt-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "Tu écris une phrase. Grossiti trouve l'idée, choisit un acteur réaliste et monte la vidéo."
+ },
+ "bt-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "Il la publie sur Facebook et Instagram, autour de toi."
+ },
+ "bt-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "Son media buyer la pilote, jour et nuit."
+ },
+ "bt-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "Les clients arrivent. Toi, tu fais ton métier."
+ },
+ "bt-7": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.06,
+  "text": "[confident] Grossiti. Ta pub, en un clic."
  }
 }
