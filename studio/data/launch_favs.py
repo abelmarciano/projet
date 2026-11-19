@@ -10,24 +10,27 @@ START = datetime.date(2026, 11, 23)  # lundi
 WEEKS_N = 16
 OFF = {datetime.date(2026, 12, 25), datetime.date(2027, 1, 1)}
 TIME = {'Reel': '12:30', 'Carrousel': '18:30', 'Image': '11:00'}
-FIRST = ['m-r6', 'm-cp2', 'm-short1', 'm-reel-lancement-calendrier', 'm-pov-1-premiere-pub', 'm-reel-lancement-whatsapp']
-SERIES = [
-    ['m-cp4', 'm-cp5'],
-    ['m-pub3d-boulanger', 'm-pub3d-fleuriste', 'm-pub3d-garagiste', 'm-pub3d-coach', 'm-pub3d-immo', 'm-pub3d-resto', 'm-pub3d-patissiere', 'm-pub3d-caviste'],
-    [f'm-roast-{i}-corinne' for i in range(1, 9)],
-    ['m-brief-1-andromeda', 'm-brief-2-apprentissage', 'm-brief-3-structure', 'm-brief-4-fatigue', 'm-brief-5-budget', 'm-brief-6-advantage', 'm-brief-7-pixel-capi', 'm-brief-8-chiffres', 'm-brief-9-regularite', 'm-brief-10-alertes'],
-    ['m-vf-1-ciblage', 'm-vf-2-likes', 'm-vf-3-crea', 'm-vf-4-quotidien', 'm-vf-5-surveiller', 'm-vf-6-24h', 'm-vf-7-vertical', 'm-vf-8-sous-titres', 'm-vf-9-3-secondes'],
-    ['m-split-chat-adrien', 'm-split-stats-adrien', 'm-split-spy-adrien', 'm-split-brand-adrien', 'm-split-buyer-adrien', 'm-split-batch-adrien', 'm-split-edit-adrien', 'm-split-cal-adrien', 'm-split-wa-adrien'],
-    ['m-reply-flan-aicha', 'm-reply-fake-aicha', 'm-reply-poster-aicha', 'm-reply-surveiller-aicha'],
-    ['m-multi-decors-naomi', 'm-multi-decors-steve', 'm-multi-decors-alice', 'm-multi-decors-raphael', 'm-multi-decors-amelie'],
-    ['m-pov-2-tournage', 'm-pov-3-neveu'],
-    ['m-avap2-gel', 'm-avap-sac', 'm-avap-5-julien', 'm-avap-6-helene'],
-    ['m-short2', 'm-short3', 'm-short4', 'm-short6', 'm-short7'],
-]
-# statiques : (semaine, jour) → média ; mercredi chaque semaine + samedi des semaines 2, 5, 9, 13
-STATIC = {(1, 2): 'm-p15', (2, 2): 'm-c11', (2, 5): 'm-p7', (3, 2): 'm-c21', (4, 2): 'm-c4', (5, 2): 'm-p17', (5, 5): 'm-p16',
-          (6, 2): 'm-c20', (7, 2): 'm-c26', (8, 2): 'm-p13', (9, 2): 'm-c10', (9, 5): 'm-p29', (10, 2): 'm-c18', (11, 2): 'm-p12',
-          (12, 2): 'm-c27', (13, 2): 'm-p5', (13, 5): 'm-p28', (14, 2): 'm-c2', (15, 2): 'm-p14', (16, 2): 'm-p6'}
+# Semaine 1 (fixe) : présenter l'outil
+W1 = ['m-tout-au-meme-endroit', 'm-cp2', 'm-c8', 'm-split-chat-adrien', 'm-pov-1-premiere-pub', 'm-reel-lancement-calendrier']
+EXCLUDE = {'m-r6'}  # retiré à la demande
+# piliers : chaque jour a son rôle ; dans un pilier, les séries sont entrelacées (ordre des épisodes conservé)
+PILLARS = {
+    'demo': [['m-reel-lancement-whatsapp'], ['m-cp4', 'm-cp5'], ['m-short1', 'm-short2', 'm-short3', 'm-short4', 'm-short6', 'm-short7'],
+             ['m-split-stats-adrien', 'm-split-spy-adrien', 'm-split-brand-adrien', 'm-split-buyer-adrien', 'm-split-batch-adrien', 'm-split-edit-adrien', 'm-split-cal-adrien', 'm-split-wa-adrien']],
+    'edu': [['m-brief-1-andromeda', 'm-brief-2-apprentissage', 'm-brief-3-structure', 'm-brief-4-fatigue', 'm-brief-5-budget', 'm-brief-6-advantage', 'm-brief-7-pixel-capi', 'm-brief-8-chiffres', 'm-brief-9-regularite', 'm-brief-10-alertes'],
+            ['m-vf-1-ciblage', 'm-vf-2-likes', 'm-vf-3-crea', 'm-vf-4-quotidien', 'm-vf-5-surveiller', 'm-vf-6-24h', 'm-vf-7-vertical', 'm-vf-8-sous-titres', 'm-vf-9-3-secondes']],
+    'metier': [['m-pub3d-boulanger', 'm-pub3d-fleuriste', 'm-pub3d-garagiste', 'm-pub3d-coach', 'm-pub3d-immo', 'm-pub3d-resto', 'm-pub3d-patissiere', 'm-pub3d-caviste'],
+               ['m-multi-decors-naomi', 'm-multi-decors-steve', 'm-multi-decors-alice', 'm-multi-decors-raphael', 'm-multi-decors-amelie'],
+               ['m-avap2-gel', 'm-avap-sac', 'm-avap-5-julien', 'm-avap-6-helene']],
+    'fun': [[f'm-roast-{i}-corinne' for i in range(1, 9)], ['m-pov-2-tournage', 'm-pov-3-neveu'],
+            ['m-reply-flan-aicha', 'm-reply-fake-aicha', 'm-reply-poster-aicha', 'm-reply-surveiller-aicha']],
+}
+DAY_PILLAR = {0: 'demo', 1: 'edu', 3: 'metier', 4: 'fun'}  # mercredi = statique, samedi = pilier le plus en retard
+WED = ['m-c11', 'm-c21', 'm-c4', 'm-p17', 'm-c20', 'm-c26', 'm-p13', 'm-c10', 'm-c18', 'm-p12', 'm-c27', 'm-p5', 'm-c2', 'm-p14', 'm-p6']  # semaines 2 à 16
+SAT_STATIC = {2: 'm-p15', 5: 'm-p16', 8: 'm-p7', 11: 'm-p29', 14: 'm-p28'}
+NOW = 1795176000000
+NEW_POSTS = {'l-tout-au-meme-endroit': {'type': 'post', 'title': 'Reel – Tout. Au même endroit.', 'mediaId': 'm-tout-au-meme-endroit', 'format': '9:16', 'networks': ['Instagram', 'Facebook'], 'status': 'review', 'ad': None, 'createdAt': NOW, 'updatedAt': NOW, 'createdBy': None,
+    'caption': 'Un monteur, une agence, un media buyer… et des outils partout ?\\n\\nGrowthity réunit tout : les meilleures IA pour créer vos pubs, la publication sur tous vos réseaux, l’analyse de vos performances avec les conseils de l’IA, et un media buyer qui pilote vos campagnes Meta jour et nuit.\\n\\nTout. Au même endroit. Lien en bio pour commencer.\\n\\n#lancement #growthity #publicitemeta #facebookads #instagramads #ugc'}}
 WEEKS = [
     ('Growthity est en ligne', 'Présenter l’outil : une phrase, une pub, publiée sur Meta. Reel de lancement, Du chat à la pub, nouveautés calendrier et alertes.'),
     ('Ce que Growthity fait pour toi', 'Montrer le chat en action (split-screen), répondre aux premières questions (FAQ) et lancer les séries récurrentes.'),
@@ -54,43 +57,52 @@ def main(db, out):
     favs = {k for k, d in M.items() if d.get('fav')}
     post_of = {}
     for pid, p in P.items():
-        if p.get('type') == 'post' and p.get('mediaId') in favs and p.get('status') != 'live':
+        if p.get('type') == 'post' and p.get('mediaId') in favs:
             post_of.setdefault(p['mediaId'], pid)
-    live = {p.get('mediaId') for p in P.values() if p.get('status') == 'live'}
-    organic = {m for m in post_of if m not in live}
-    planned = set(FIRST) | {m for s in SERIES for m in s} | set(STATIC.values())
-    missing = organic - planned
-    extra = planned - organic
-    assert not missing, f'favoris non placés : {missing}'
-    assert not extra, f'hors favoris : {extra}'
-    # reels : FIRST puis entrelacement proportionnel des séries (ordre de chaque série conservé)
-    rest = []
-    for s in SERIES:
-        n = len(s)
-        rest += [((i + 0.5) / n, j, m) for j, m in enumerate([None]) for i, m in enumerate(s)]
-    rest.sort(key=lambda x: (x[0], x[1]))
-    reels = FIRST + [m for _, _, m in rest]
-    slots, ri = [], 0
+    post_of.setdefault('m-tout-au-meme-endroit', 'l-tout-au-meme-endroit')
+    live = set()
+    organic = ({m for m in post_of} | set(W1)) - EXCLUDE
+    def weave(series):
+        out = [((i + 0.5) / len(sr), j, m) for j, sr in enumerate(series) for i, m in enumerate(sr)]
+        return [m for _, _, m in sorted(out)]
+    Q = {k: weave(v) for k, v in PILLARS.items()}
+    planned = set(W1) | set(WED) | set(SAT_STATIC.values()) | {m for q in Q.values() for m in q}
+    assert not (organic - planned), f'favoris non placés : {organic - planned}'
+    assert not (planned - organic), f'hors favoris : {planned - organic}'
+    slots = []
+    def kind(mid):
+        return 'Carrousel' if M[mid].get('kind') == 'carousel' else ('Image' if M[mid].get('kind') == 'image' else 'Reel')
     for w in range(1, WEEKS_N + 1):
         for d in range(6):
             day = START + datetime.timedelta(days=7 * (w - 1) + d)
             if day in OFF:
                 continue
-            if (w, d) in STATIC:
-                mid = STATIC[(w, d)]
-                typ = 'Carrousel' if M[mid].get('kind') == 'carousel' else 'Image'
-            elif ri < len(reels):
-                mid, typ = reels[ri], 'Reel'; ri += 1
+            if w == 1:
+                mid = W1[d]
+            elif d == 2:
+                mid = WED[w - 2]
+            elif d == 5 and w in SAT_STATIC:
+                mid = SAT_STATIC[w]
             else:
-                continue
-            slots.append((w, d, day, typ, mid))
-    assert ri == len(reels), 'pas assez de créneaux'
+                pil = DAY_PILLAR.get(d)
+                if d == 5 or not Q.get(pil):
+                    left = [k for k in Q if Q[k]]
+                    if not left:
+                        continue
+                    pil = max(left, key=lambda k: len(Q[k]))
+                mid = Q[pil].pop(0)
+            slots.append((w, d, day, kind(mid), mid))
+    assert not any(Q.values()), Q
     writes, k_by_w = [], {}
     for w, d, day, typ, mid in slots:
         k = k_by_w.get(w, 0); k_by_w[w] = k + 1
         pid = post_of[mid]
+        if pid not in P:
+            writes.append({'op': 'set', 'collection': 'posts', 'doc_id': pid, 'data': NEW_POSTS[pid] | {'date': f'{day.isoformat()}T{TIME[typ]}', 'launch': {'week': w, 'slot': k}}})
+            print(f'S{w:02d} {day:%a %d/%m} {TIME[typ]} {typ:9} {mid:32} (nouvelle fiche)')
+            continue
         writes.append({'op': 'update', 'collection': 'posts', 'doc_id': pid, 'if_version': P[pid]['__v'] if '__v' in P[pid] else None,
-                       'data': {'date': f'{day.isoformat()}T{TIME[typ]}', 'launch': {'week': w, 'slot': k}, 'status': 'review' if P[pid].get('status') in ('idea', 'make', 'review', None) else P[pid]['status']}})
+                       'data': {'date': f'{day.isoformat()}T{TIME[typ]}', 'launch': {'week': w, 'slot': k}, 'status': 'review'}})
         print(f'S{w:02d} {day:%a %d/%m} {TIME[typ]} {typ:9} {mid:32} {M[mid]["title"][:60]}')
     keep = {post_of[m] for _, _, _, _, m in slots}
     for pid, p in P.items():
