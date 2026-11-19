@@ -2322,5 +2322,13 @@
   "style": 0.45,
   "speed": 1.0,
   "text": "[sighs] Franchement, l'hiver dernier, j'avais froid chez moi… même avec le chauffage à fond. J'ai fait isoler mes murs par l'intérieur avec une entreprise certifiée RGE… et le gros plus, c'est qu'ils ont monté tout le dossier d'aides de l'État à ma place. [laughs softly] Moi, j'ai rien eu à gérer. Le devis est gratuit, alors demandez le vôtre, sérieux !"
+ },
+ "aspi-rafael": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.45,
+  "speed": 1.0,
+  "text": "[sighs] Franchement, le soir, quand je rentre du boulot, j'ai zéro énergie pour passer l'aspirateur… Du coup, j'ai pris un aspirateur robot qui aspire et lave le sol en même temps. Je le lance depuis mon téléphone avant de partir… [laughs softly] et quand je rentre, c'est propre. Honnêtement, je sais pas pourquoi j'ai attendu aussi longtemps. Le lien est juste en dessous !"
  }
 }
