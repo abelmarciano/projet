@@ -184,7 +184,7 @@ const Feed: React.FC = () => {
       <Card style={{padding: 0, overflow: 'hidden', borderRadius: 22}}>
         <div style={{height: 44, display: 'flex', alignItems: 'center', gap: 8, padding: '0 18px', background: '#EDEDF2', borderBottom: `1px solid ${LINE}`}}>
           {['#FF5F57', '#FEBC2E', '#28C840'].map((c) => <span key={c} style={{width: 13, height: 13, borderRadius: 7, background: c}} />)}
-          <span style={{marginLeft: 18, flex: 1, maxWidth: 420, height: 28, borderRadius: 8, background: SURF, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: FONT, fontSize: 15, color: DIM}}>🔒 app.growthity.ai</span>
+          <span style={{marginLeft: 18, flex: 1, maxWidth: 420, height: 28, borderRadius: 8, background: SURF, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: FONT, fontSize: 15, color: DIM}}>🔒 growthity.ai</span>
         </div>
         <div style={{display: 'flex', height: 640}}>
           <div style={{width: 190, borderRight: `1px solid ${LINE}`, background: RAISED, padding: '18px 12px', display: 'flex', flexDirection: 'column', gap: 6}}>
@@ -303,42 +303,44 @@ const SPY: {b: string; c: string; vid?: string; img?: string; head?: string}[] =
 ];
 const SpyDemo: React.FC = () => {
   const f = useCurrentFrame();
-  const q = 'pompe à chaleur';
-  const typed = q.slice(0, Math.max(0, Math.floor((f - S.spy - 4) * 0.9)));
-  const show = cueC('concurrents', 2.0) - 8;
-  const pick = cueC('domaine', 4.3) + 2;
+  const scan0 = S.spy + 6;
+  const show = cueC('chercher', 1.9) + 4;
+  const pick = cueC('concurrents', 3.6) + 10;
+  const found = f >= show;
   return (
     <Card style={{padding: 26}}>
       <div style={{display: 'flex', alignItems: 'center', gap: 14}}>
-        <span style={{width: 48, height: 48, borderRadius: 14, background: ACC_SOFT, display: 'grid', placeItems: 'center', fontSize: 24}}>🔍</span>
-        <div style={{fontFamily: FONT}}><div style={{fontWeight: 800, fontSize: 28, color: FG}}>Pubs des concurrents</div><div style={{fontSize: 17, color: DIM}}>Celles qui tournent déjà sur Facebook et Instagram</div></div>
-        <span style={{marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 14px', borderRadius: 999, background: '#E8F0FF', color: META, fontFamily: FONT, fontWeight: 700, fontSize: 16}}>Meta · France</span>
+        <span style={{width: 48, height: 48, borderRadius: 14, background: ACC_SOFT, display: 'grid', placeItems: 'center'}}><LogoMark size={28} /></span>
+        <div style={{fontFamily: FONT}}><div style={{fontWeight: 800, fontSize: 28, color: FG}}>Pubs de tes concurrents</div><div style={{fontSize: 17, color: DIM}}>Growthity les trouve et les analyse pour toi</div></div>
+        <span style={{marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 14px', borderRadius: 999, background: '#E8F0FF', color: META, fontFamily: FONT, fontWeight: 700, fontSize: 16}}>Meta · Pompe à chaleur</span>
       </div>
-      <div style={{marginTop: 16, height: 54, borderRadius: 14, border: `1.5px solid ${ACC}`, display: 'flex', alignItems: 'center', gap: 12, padding: '0 18px', fontFamily: FONT, fontSize: 22, color: FG}}>
-        <span style={{color: DIM}}>Ton domaine :</span><b style={{fontWeight: 700}}>{typed}</b><span style={{color: ACC, opacity: Math.floor(f / 8) % 2 ? 0 : 1}}>|</span>
+      <div style={{marginTop: 16, position: 'relative', height: 54, borderRadius: 14, background: found ? OK_SOFT : ACC_SOFT, overflow: 'hidden', display: 'flex', alignItems: 'center', gap: 12, padding: '0 18px', fontFamily: FONT, fontSize: 21, fontWeight: 700, color: found ? OK : ACC_INK}}>
+        {!found && <div style={{position: 'absolute', top: 0, bottom: 0, width: 220, left: `${((f - scan0) * 22) % 1100 - 220}px`, background: 'linear-gradient(90deg, transparent, rgba(91,63,228,.22), transparent)'}} />}
+        <span style={{position: 'relative'}}>{found ? '✓ Pubs en diffusion trouvées dans ton domaine' : 'Growthity cherche les pubs de tes concurrents' + '.'.repeat(1 + (Math.floor(f / 6) % 3))}</span>
       </div>
       <div style={{marginTop: 16, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14}}>
         {SPY.map((a, i) => {
           const p = sp(f - show - i * 4, 13);
           const on = i === 0 && f >= pick;
           return (
-            <div key={a.b} style={{borderRadius: 16, border: `${on ? 2.5 : 1}px solid ${on ? ACC : LINE}`, background: SURF, overflow: 'hidden', opacity: Math.min(1, p * 1.5), transform: `translateY(${(1 - p) * 40}px) scale(${on ? 1 + 0.03 * sp(f - pick, 10) : 1})`, boxShadow: on ? '0 16px 40px -16px rgba(91,63,228,.5)' : SH, fontFamily: FONT}}>
+            <div key={a.b} style={{position: 'relative', borderRadius: 16, border: `${on ? 2.5 : 1}px solid ${on ? ACC : LINE}`, background: SURF, overflow: 'hidden', opacity: Math.min(1, p * 1.5), transform: `translateY(${(1 - p) * 40}px) scale(${on ? 1 + 0.03 * sp(f - pick, 10) : 1})`, boxShadow: on ? '0 16px 40px -16px rgba(91,63,228,.5)' : SH, fontFamily: FONT}}>
               <div style={{display: 'flex', alignItems: 'center', gap: 8, padding: '10px 10px'}}>
                 <span style={{width: 28, height: 28, borderRadius: 14, background: a.c, color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 13}}>{a.b[0]}</span>
                 <div style={{minWidth: 0}}><div style={{fontWeight: 700, fontSize: 14, color: FG, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>{a.b}</div><div style={{fontSize: 12, color: DIM}}>Sponsorisé</div></div>
               </div>
               <div style={{height: 300, background: '#000', overflow: 'hidden', position: 'relative'}}>
                 {a.vid ? <Sequence from={show + i * 4} layout="none"><OffthreadVideo muted src={staticFile(a.vid)} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Sequence> : <div style={{position: 'relative', width: '100%', height: '100%'}}><Img src={staticFile(a.img!)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />{a.head && <div style={{position: 'absolute', left: 10, right: 10, top: 16, textAlign: 'center', fontFamily: FONT, fontWeight: 900, fontSize: 24, lineHeight: 1.08, letterSpacing: '-0.02em', color: '#fff', textShadow: '0 2px 12px rgba(0,0,0,.45)'}}>{a.head}</div>}</div>}
+                {f >= show + 10 + i * 4 && f < pick + 4 && <div style={{position: 'absolute', left: 0, right: 0, height: 3, top: `${((f - show - i * 4) * 9) % 300}px`, background: 'rgba(91,63,228,.85)', boxShadow: '0 0 14px rgba(91,63,228,.9)'}} />}
               </div>
               <div style={{padding: 10, display: 'flex', flexDirection: 'column', gap: 8}}>
                 <span style={{display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 700, color: OK}}><span style={{width: 8, height: 8, borderRadius: 4, background: OK}} />En diffusion</span>
-                <span style={{height: 36, borderRadius: 10, background: on ? ACC : SURF, border: `1px solid ${on ? ACC : LINE2}`, color: on ? '#fff' : FG, display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 15, transform: `scale(${on && f < pick + 5 ? 0.94 : 1})`}}>{on ? '✓ Ajouté' : 'S’inspirer'}</span>
+                <span style={{height: 36, borderRadius: 10, background: on ? ACC : SUNK, color: on ? '#fff' : DIM, display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 14, transform: `scale(${on && f < pick + 5 ? 0.94 : 1})`}}>{on ? '✓ Choisie par Growthity' : f >= pick ? 'Analysée' : 'Analyse…'}</span>
               </div>
             </div>
           );
         })}
       </div>
-      {f >= pick + 8 && <div style={{marginTop: 16, display: 'inline-flex', alignItems: 'center', gap: 10, padding: '12px 18px', borderRadius: 12, background: ACC_SOFT, color: ACC_INK, fontFamily: FONT, fontWeight: 700, fontSize: 19, transform: `scale(${sp(f - pick - 8, 11)})`, transformOrigin: 'left center'}}><LogoMark size={20} /> Ajouté à ton brief : l’accroche, l’angle et le format</div>}
+      {f >= pick + 8 && <div style={{marginTop: 16, display: 'inline-flex', alignItems: 'center', gap: 10, padding: '12px 18px', borderRadius: 12, background: ACC_SOFT, color: ACC_INK, fontFamily: FONT, fontWeight: 700, fontSize: 19, transform: `scale(${sp(f - pick - 8, 11)})`, transformOrigin: 'left center'}}><LogoMark size={20} /> Growthity s’en inspire pour ta pub : l’accroche, l’angle et le format</div>}
     </Card>
   );
 };
@@ -792,7 +794,7 @@ export const LeadsBuyVideo: React.FC = () => {
       <Bg />
       {f < S.spy + 2 && <HookSide />}
       <Stage start={0} end={S.spy} top={150} vtop={690}><Feed /></Stage>
-      <Side idx={0} start={S.spy} end={S.pub} a="Inspire-toi" b="des concurrents." sub="Les pubs Meta qui tournent déjà dans ton domaine, pour trouver la bonne accroche." />
+      <Side idx={0} start={S.spy} end={S.pub} a="Growthity analyse" b="tes concurrents." sub="Growthity va chercher les pubs Meta qui tournent dans ton domaine, et s’en inspire." />
       <Stage start={S.spy} end={S.pub} top={170}><SpyDemo /></Stage>
       <Side idx={1} start={S.pub} end={S.meta} a="Ta pub vidéo" b="en une phrase." sub="Growthity écrit le script, choisit une actrice réaliste et monte la vidéo." />
       <Stage start={S.pub} end={S.meta} top={150}><PubDemo /></Stage>

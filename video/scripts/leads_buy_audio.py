@@ -88,9 +88,9 @@ def cueC(start, d=0):
     for w in W['lc-1']:
         if w['w'].lower().startswith(start): return (VC + round(w['s'] * 30)) / 30
     return (VC + d * 30) / 30
-for j in range(T['spy'] + 4, T['spy'] + 22, 2): add(sfx, click(1.0 + 0.5 * rng.random()), j / 30, 0.09)
-for i in range(4): add(sfx, pop_sfx(), cueC('concurrents') - 8 / 30 + i * 4 / 30, 0.22)
-pk = cueC('domaine') + 2 / 30
+add(sfx, riser(1.2, 300, 1800), (T['spy'] + 6) / 30, 0.12)
+for i in range(4): add(sfx, pop_sfx(), cueC('chercher') + 4 / 30 + i * 4 / 30, 0.22)
+pk = cueC('concurrents') + 10 / 30
 add(sfx, click(1.3), pk, 0.3); add(sfx, chime(86), pk + 8 / 30, 0.25)
 add(sfx, whoosh(0.5), s('big') - 0.15, 0.32); add(sfx, sub(0.9, 46), s('big') + 0.05, 0.35)
 for k in ['spy', 'pub', 'meta', 'form', 'camp', 'wa', 'leads', 'res']:
