@@ -125,6 +125,11 @@ main { min-width: 0; padding-block: 28px 96px; padding-left: max(24px, env(safe-
 .net.done { box-shadow: 0 0 0 2px var(--st-live); position: relative }
 .net.done::after { content: '✓'; position: absolute; right: -5px; bottom: -5px; width: 10px; height: 10px; border-radius: 50%; background: var(--st-live); color: #fff; font-size: 7px; line-height: 10px; text-align: center }
 .net.fail { box-shadow: 0 0 0 2px var(--danger) }
+.covrow { display: flex; gap: 14px; align-items: flex-start }
+.covimg { position: relative; width: 96px; aspect-ratio: 9/16; border-radius: 12px; overflow: hidden; background: var(--sunk, #F1F1F5); border: 1px solid var(--line); flex: none; display: grid; place-items: center }
+.covimg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover }
+.covnone { position: relative; font-size: 11px; font-weight: 700; color: var(--muted); background: rgba(255,255,255,.85); padding: 2px 6px; border-radius: 6px }
+.covtxt { flex: 1; min-width: 0 }
 .zsum { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0 2px }
 .zsum span { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: #E9F7EF; color: #137A45 }
 .zsum span.ko { background: #FDECEC; color: #C02B2B }
@@ -702,7 +707,7 @@ const zState = (z) => { const o = {}; for (const r of (z?.results || [])) { cons
 const netsHTML = (nets, z) => { const st = zState(z); const all = [...new Set([...(nets || []), ...Object.keys(st)])]; return `<span class="nets">${all.map((n) => `<span class="net ${esc(n)}${st[n] === 'ok' ? ' done' : st[n] === 'ko' ? ' fail' : ''}" title="${esc(n)}${st[n] === 'ok' ? (z.mode === 'now' ? ' · publié' : ' · programmé') : st[n] === 'ko' ? ' · échec' : ''}">${NET_L[n] || ''}</span>`).join('')}</span>`; };
 function toast(t, err) { const el = $('#toast'); el.innerHTML = `<i>${err ? '!' : IC.check}</i>${esc(t)}`; el.className = 'toast' + (err ? ' err' : ''); el.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => (el.hidden = true), err ? 5000 : 2400); }
 const errMsg = (e) => ({not_granted: 'accès refusé (il faut être Éditeur de la page)', unavailable: 'service momentanément indisponible, réessayez', quota_exceeded: 'quota atteint', too_large: 'fichier trop lourd (20 Mo max)', unsupported_type: 'format non accepté'}[e?.code] || e?.message || 'erreur inconnue');
-const srcOf = (m) => { const it = m?.items?.[0]; if (!it) return null; return isVid(it) ? (it.poster ? blob(it.poster) : null) : blob(it.asset); };
+const srcOf = (m) => { if (m?.cover?.asset) return blob(m.cover.asset); const it = m?.items?.[0]; if (!it) return null; return isVid(it) ? (it.poster ? blob(it.poster) : null) : blob(it.asset); };
 
 const favBtn = (m) => `<span class="favbtn" role="button" tabindex="0" data-act="fav" data-id="${m.id}" aria-pressed="${!!m.fav}" aria-label="${m.fav ? 'Retirer des favoris' : 'Ajouter aux favoris'}" title="${m.fav ? 'Retirer des favoris' : 'Ajouter aux favoris'}"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.3 1.1 5 3 1.7-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z" fill="currentColor"/></svg></span>`;
 const playBadge = (m) => (m && (m.items || []).length && isVid(m.items[0]) ? `<span class="pbtn" role="button" tabindex="0" data-act="play" data-media="${m.id}" aria-label="Lire la vidéo avec le son"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>` : '');
@@ -1198,13 +1203,38 @@ function vEditor(main) {
           <div class="r2"><div class="fld"><label for="a-cta">Bouton</label><select id="a-cta" data-af="cta">${CTAS.map((o) => `<option ${o === ad.cta ? 'selected' : ''}>${o}</option>`).join('')}</select></div>
             <div class="fld"><label for="a-link">Lien de destination</label><input id="a-link" data-af="link" value="${esc(ad.link || '')}" placeholder="https://growthity.ai"></div></div>
           <div class="fld"><label for="a-aud">Audience</label><input id="a-aud" data-af="audience" value="${esc(ad.audience || '')}" placeholder="ex. e-commerçants, France, 25-55 ans"></div></div>` : ''}
+        <div class="panel" id="coverp"></div>
         ${isAd || isNew ? '' : '<div class="panel" id="zernio"></div>'}
         <div style="margin-top:16px">${redoBlock(p, 'post')}</div>
         ${isNew ? '' : `<div class="panel"><div class="danger-zone" id="dz">${S.ed.confirm ? `<span class="confirm">Supprimer définitivement ?</span><button class="btn danger solid sm" data-act="del-yes">Supprimer</button><button class="btn sm" data-act="del-no">Annuler</button>` : `<span style="font-size:12.5px;color:var(--muted)">Créé le ${new Date(p.createdAt || Date.now()).toLocaleDateString('fr-FR')}</span><span class="grow"></span><button class="btn quiet danger sm" data-act="del">Supprimer ${isAd ? 'l’ad' : 'le post'}</button>`}</div></div>`}
       </div>
       <div class="pv" id="pv"></div>
     </div></div>`;
-  refreshPicker(); renderPreview(); updCount(); renderZernio();
+  refreshPicker(); renderPreview(); updCount(); renderCover(); renderZernio();
+}
+
+// ---------- couverture (miniature) ----------
+function renderCover() {
+  const box = $('#coverp'); if (!box || !S.ed) return;
+  const m = mediaById(S.ed.draft.mediaId);
+  if (!m || !(m.items || []).length || !isVid(m.items[0])) { box.innerHTML = `<h3>Couverture</h3><div style="font-size:13px;color:var(--muted)">${m ? 'Pas de couverture pour une image ou un carrousel : c’est le visuel lui-même.' : 'Choisissez d’abord un média.'}</div>`; return; }
+  const c = m.cover; const busy = S.coverBusy;
+  box.innerHTML = `<h3>Couverture <small>la miniature affichée sur les réseaux</small></h3>
+    <div class="covrow">
+      <div class="covimg">${c?.asset ? `<img src="${blob(c.asset)}" alt="Couverture">` : m.items[0].poster ? `<img src="${blob(m.items[0].poster)}" alt="" style="opacity:.55"><span class="covnone">Image auto</span>` : '<span class="covnone">Aucune</span>'}</div>
+      <div class="covtxt">
+        ${c?.asset ? (c.url ? '<div class="zmsg" style="margin:0 0 8px">✓ Envoyée automatiquement comme miniature sur Instagram, Facebook, TikTok, YouTube et LinkedIn à la publication.</div>' : '<div class="zmsg warn" style="margin:0 0 8px">Image importée : visible ici. Pour qu’elle parte sur les réseaux, il faut un lien public (demandez à Claude de la mettre en ligne).</div>')
+          : '<div style="font-size:13px;color:var(--muted);margin-bottom:8px">Sans couverture, chaque réseau prend une image de la vidéo au hasard (souvent la première).</div>'}
+        ${S.assets ? `<label class="btn sm"><input type="file" id="cover-file" accept="image/png,image/jpeg" hidden>${busy ? 'Envoi…' : c?.asset ? 'Changer la couverture' : 'Importer une couverture'}</label>${c?.asset ? ' <button class="btn quiet sm" data-act="cover-del">Retirer</button>' : ''}` : ''}
+        <div style="font-size:12px;color:var(--muted);margin-top:6px">Format conseillé : 1080 × 1920, titre au centre (Instagram rogne la grille en 3:4).</div>
+      </div>
+    </div>`;
+}
+async function setCover(val) {
+  const m = mediaById(S.ed?.draft.mediaId); if (!m) return;
+  const old = m.cover; m.cover = val; renderCover(); renderPreview();
+  try { await S.db.collection('media').doc(m.id).update({cover: val || null}); toast(val ? 'Couverture enregistrée.' : 'Couverture retirée.'); }
+  catch (e) { m.cover = old; renderCover(); toast('Couverture : ' + errMsg(e), true); }
 }
 
 // ---------- Zernio : publication sur les réseaux ----------
@@ -1319,7 +1349,24 @@ async function zPublish(mode) {
   const results = [];
   try {
     const urls = await zUpload(m);
-    for (const a of acc) {
+    const cov = m.cover?.url && isVid(m.items[0]) ? m.cover.url : null;
+    if (cov && urls.length === 1) {
+      S.zs.busy = `${mode === 'now' ? 'Publication' : 'Programmation'} avec la couverture sur ${acc.length} compte(s)…`; renderZernio();
+      const args = {content: p.caption || '', media_items: [{type: 'video', url: urls[0], thumbnail: cov, instagramThumbnail: cov}],
+        platforms: acc.map((a) => a.platform === 'youtube' ? {platform: a.platform, accountId: a.id, platformSpecificData: {title: (p.title || m.title || 'Growthity').slice(0, 95), visibility: 'public'}} : {platform: a.platform, accountId: a.id})};
+      if (acc.some((a) => a.platform === 'tiktok')) args.tiktok_settings = {privacyLevel: 'PUBLIC_TO_EVERYONE', allowComment: true, allowDuet: true, allowStitch: true, contentPreviewConfirmed: true, expressConsentGiven: true, videoCoverImageUrl: cov};
+      if (mode === 'now') args.publish_now = true; else args.scheduled_for = new Date(when).toISOString();
+      try {
+        const r = await S.mcp.callTool(ZN, 'call_tool', {name: 'posts_create_post', arguments: args}, {cache: false});
+        const t = zText(r); let j = null; try { j = JSON.parse(JSON.parse(t).result || t); } catch { try { j = JSON.parse(t); } catch {} }
+        const post = j?.post || {}; const pid = post._id || (t.match(/"_id"\s*:\s*"([a-f0-9]{16,})"/) || [])[1] || null;
+        for (const a of acc) {
+          const e = (post.platforms || []).find((x) => (x.accountId?._id || x.accountId) === a.id);
+          const bad = e && /fail|error/i.test(e.status || '');
+          results.push({platform: a.platform, account: a.name, ok: !bad, id: pid, msg: (bad ? (e.errorMessage || e.status) : 'ok' + (pid ? ` (post ${pid})` : '')) + ' · avec couverture'});
+        }
+      } catch (e) { for (const a of acc) results.push({platform: a.platform, account: a.name, ok: false, msg: zErr(e)}); }
+    } else for (const a of acc) {
       S.zs.busy = `${mode === 'now' ? 'Publication' : 'Programmation'} sur ${a.platform}…`; renderZernio();
       const input = {platform: a.platform, account_id: a.id, content: p.caption || '', media_urls: urls.join(',')};
       if (mode === 'now') input.publish_now = true; else input.schedule_minutes = Math.max(1, Math.round((when - Date.now()) / 60000));
@@ -1358,7 +1405,7 @@ function renderPreview() {
   const vertical = (S.ed.pv || (p.format === '9:16' ? 'reel' : 'feed')) === 'reel';
   const items = m?.items || []; const i = Math.min(S.ed.slide, Math.max(0, items.length - 1)); const it = items[i];
   const snd = `<button class="snd" data-act="pv-sound" aria-label="${S.ed.sound ? 'Couper le son' : 'Activer le son'}">${S.ed.sound ? '🔊 Son' : '🔇 Activer le son'}</button>`;
-  const mediaEl = it ? (isVid(it) ? `<video id="pv-video" data-act="pv-vid" src="${blob(it.asset)}" ${it.poster ? `poster="${blob(it.poster)}"` : ''} ${S.ed.sound ? '' : 'muted'} loop playsinline autoplay preload="metadata"></video>${snd}` : `<img src="${blob(it.asset)}" alt="">`) : '';
+  const mediaEl = it ? (isVid(it) ? `<video id="pv-video" data-act="pv-vid" src="${blob(it.asset)}" ${m?.cover?.asset ? `poster="${blob(m.cover.asset)}"` : it.poster ? `poster="${blob(it.poster)}"` : ''} ${S.ed.sound ? '' : 'muted'} loop playsinline autoplay preload="metadata"></video>${snd}` : `<img src="${blob(it.asset)}" alt="">`) : '';
   const av = `<span class="ig-av"><div>${IC.logo}</div></span>`;
   const cap = (p.caption || '').trim();
   let screen;
@@ -1552,6 +1599,7 @@ document.addEventListener('click', async (ev) => {
     case 'z-cancel': S.zs.confirm = null; renderZernio(); return;
     case 'z-check': zCheckManual(); return;
     case 'z-abort': { const mu = S.zs.manual; S.zs.manual = null; mu?.reject(new Error('envoi annulé')); return; }
+    case 'cover-del': setCover(null); return;
     case 'z-go': { const mode = S.zs.confirm; S.zs.confirm = null; S.zs.busy = 'Préparation…'; renderZernio(); zPublish(mode); return; }
     case 'net': { const n = S.ed.draft.networks ||= []; const on = n.includes(d.v); S.ed.draft.networks = on ? n.filter((x) => x !== d.v) : [...n, d.v]; el.setAttribute('aria-pressed', !on); markDirty(); return; }
     case 'fmt': S.ed.draft.format = d.v; $$('[data-act="fmt"]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === d.v)); S.ed.pv = null; markDirty(); refreshPicker(); renderPreview(); return;
@@ -1579,6 +1627,8 @@ document.addEventListener('input', (ev) => {
   if (t.dataset.af) { S.ed.draft.ad ||= {}; S.ed.draft.ad[t.dataset.af] = t.value; markDirty(); if (t.dataset.af === 'cta') renderPreview(); }
 });
 document.addEventListener('change', async (ev) => { const t = ev.target;
+  if (t.id === 'cover-file' && t.files?.[0]) { const f = t.files[0]; t.value = ''; if (!S.assets) return; S.coverBusy = true; renderCover();
+    try { const r = await S.assets.upload(f); S.coverBusy = false; await setCover({asset: r.id, url: null, by: S.me || null}); } catch (e) { S.coverBusy = false; renderCover(); toast('Couverture : ' + errMsg(e), true); } return; }
   if (t.dataset?.setst) { const p = postById(t.dataset.setst); if (!p) return; const v = t.value; t.style.setProperty('--c', STATUS[v].c);
     try { await S.db.collection('posts').doc(p.id).update({status: v, updatedAt: Date.now()}); toast('Statut : ' + STATUS[v].l + '.'); } catch (er) { toast('Statut non modifié : ' + errMsg(er), true); render(); } return; }
   if (S.ed && S.view === 'post' && (t.dataset.f || t.dataset.af)) { if (t.dataset.f) S.ed.draft[t.dataset.f] = t.value; else { S.ed.draft.ad ||= {}; S.ed.draft.ad[t.dataset.af] = t.value; } markDirty(); renderPreview(); } });
