@@ -31,6 +31,7 @@ import adUgc3 from './chatpub/ad-ugc3.json';
 import adVelo from './chatpub/ad-velo.json';
 import adStudio from './chatpub/ad-studio.json';
 import adIsoWan from './chatpub/ad-iso-wan.json';
+import adAspiWan from './chatpub/ad-aspi-wan.json';
 import adSkingen from './chatpub/ad-skingen.json';
 import adSkingenK from './chatpub/ad-skingen-k.json';
 import adLaser from './chatpub/ad-laser.json';
@@ -166,6 +167,7 @@ export const Root: React.FC = () => (
     <Composition id="AdEdit-skingen" component={AdEdit} durationInFrames={adSkingen.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adSkingen as unknown as AdCfg}} />
     <Composition id="AdEdit-studio" component={AdEdit} durationInFrames={adStudio.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adStudio as unknown as AdCfg}} />
     <Composition id="AdEdit-iso-wan" component={AdEdit} durationInFrames={adIsoWan.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adIsoWan as unknown as AdCfg}} />
+    <Composition id="AdEdit-aspi-wan" component={AdEdit} durationInFrames={adAspiWan.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adAspiWan as unknown as AdCfg}} />
     <Composition id="AdEdit-velo" component={AdEdit} durationInFrames={adVelo.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adVelo as unknown as AdCfg}} />
     <Composition id="AdEdit-ugc3" component={AdEdit} durationInFrames={adUgc3.frames} fps={30} width={1080} height={1920} defaultProps={{cfg: adUgc3 as unknown as AdCfg}} />
     <Composition id="Pub3D-boulanger" component={Pub3D} durationInFrames={P3D_DEFAULT.total} fps={30} width={1080} height={1920} defaultProps={{cfg: P3D_DEFAULT}} />
