@@ -31,9 +31,10 @@ const G: React.FC<{children: React.ReactNode}> = ({children}) => (
   <span style={{backgroundImage: GRAD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent'}}>{children}</span>
 );
 
-export const VO = {4: 431, 5: 751, 6: 936, 7: 1049, 8: 1206, 9: 1409, 10: 1616} as Record<number, number>;
-export const S = {hook: 0, spy: 266, pub: 426, meta: 562, form: 746, camp: 931, wa: 1044, leads: 1201, res: 1404, end: 1611, total: 1740};
-const VM = 567;
+export const VO = {4: 431, 5: 1015, 6: 1200, 7: 1313, 8: 1470, 9: 1673, 10: 1880} as Record<number, number>;
+export const S = {hook: 0, spy: 266, pub: 426, big: 560, meta: 826, form: 1010, camp: 1195, wa: 1308, leads: 1465, res: 1668, end: 1875, total: 2004};
+const BIG_AUDIO = S.big + 6, BIG_LEN = 245;
+const VM = 831;
 const VC = 271;
 const cueC = (start: string, d = 0) => {
   const w = WD['lc-1'].find((x) => x.w.toLowerCase().startsWith(start));
@@ -353,8 +354,9 @@ const PubDemo: React.FC = () => {
       <div style={{height: 22}} />
       <Ai at={ready - 10}>
         <div style={{display: 'flex', gap: 22, alignItems: 'flex-start'}}>
-          <div style={{width: 300, height: 533, borderRadius: 18, overflow: 'hidden', background: '#000', flex: 'none', transform: `scale(${0.9 + 0.1 * vid})`, opacity: vid}}>
+          <div style={{width: 300, height: 533, borderRadius: 18, overflow: 'hidden', background: '#000', flex: 'none', transform: `scale(${0.9 + 0.1 * vid})`, opacity: vid, position: 'relative'}}>
             <Sequence from={ready} layout="none"><OffthreadVideo muted src={staticFile('media/chat/alice-edit.mp4')} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Sequence>
+            <div style={{position: 'absolute', left: 12, top: 12, display: 'flex', alignItems: 'center', gap: 6, padding: '5px 10px 5px 7px', borderRadius: 999, background: 'rgba(255,255,255,.82)', boxShadow: '0 2px 8px rgba(0,0,0,.18)'}}><LogoMark size={16} /><span style={{fontFamily: FONT, fontWeight: 800, fontSize: 13, color: FG}}>Growthity</span></div>
           </div>
           <div style={{display: 'flex', flexDirection: 'column', gap: 12, paddingTop: 6}}>
             <span style={{alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: 8, padding: '8px 14px', borderRadius: 999, background: OK_SOFT, color: OK, fontFamily: FONT, fontWeight: 700, fontSize: 20}}>● Prête</span>
@@ -367,6 +369,40 @@ const PubDemo: React.FC = () => {
         </div>
       </Ai>
     </Card>
+  );
+};
+
+// ---------- la vidéo créée, en grand et avec le son ----------
+const BigVideo: React.FC = () => {
+  const f = useCurrentFrame();
+  const v = React.useContext(VertCtx);
+  if (f < S.big - 2 || f > S.meta + 2) return null;
+  const inn = sp(f - S.big, 15, 0.9), out = prog(f, S.meta - 14, 14, INOUT);
+  const bg = prog(f, S.big, 12) * (1 - out);
+  const H = v ? 1280 : 960, W = H * 9 / 16;
+  const top = v ? 140 : 60;
+  const tag = sp(f - S.big - 14, 13);
+  return (
+    <AbsoluteFill style={{pointerEvents: 'none'}}>
+      <AbsoluteFill style={{background: `rgba(244,244,247,${0.9 * bg})`, backdropFilter: `blur(${bg * 18}px)`}} />
+      <AbsoluteFill style={{background: `radial-gradient(${W * 1.6}px ${H}px at 50% ${top + H / 2}px, rgba(91,63,228,${0.18 * bg}), transparent 70%)`}} />
+      <div style={{position: 'absolute', left: '50%', top, width: W, height: H, marginLeft: -W / 2, borderRadius: 34, overflow: 'hidden', background: '#000', boxShadow: '0 50px 120px -40px rgba(20,20,60,.6), 0 0 0 8px rgba(255,255,255,.9)', opacity: Math.min(1, inn * 1.5) * (1 - out), transform: `translateY(${(1 - inn) * 80 + out * -40}px) scale(${(0.55 + 0.45 * inn) * (1 - out * 0.08)}) rotate(${(1 - inn) * -4}deg)`}}>
+        <Sequence from={BIG_AUDIO} durationInFrames={BIG_LEN + 10} layout="none">
+          <OffthreadVideo src={staticFile('media/chat/alice-edit.mp4')} volume={(fr) => interpolate(fr, [0, 4, BIG_LEN - 6, BIG_LEN], [0, 1, 1, 0], clamp)} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+        </Sequence>
+        <div style={{position: 'absolute', left: 22, top: 22, display: 'flex', alignItems: 'center', gap: 10, padding: '9px 16px 9px 11px', borderRadius: 999, background: 'rgba(255,255,255,.85)', boxShadow: '0 4px 16px rgba(0,0,0,.2)'}}>
+          <LogoMark size={26} /><span style={{fontFamily: FONT, fontWeight: 800, fontSize: 21, color: FG}}>Growthity</span>
+        </div>
+      </div>
+      <div style={{position: 'absolute', left: '50%', top: v ? top + H + 28 : top + 40, marginLeft: v ? -200 : W / 2 + 40, width: 400, display: 'flex', flexDirection: 'column', gap: 12, alignItems: v ? 'center' : 'flex-start', opacity: tag * (1 - out), transform: `translateX(${(1 - tag) * 30}px)`}}>
+        {!v && (
+          <>
+            <span style={{padding: '10px 18px', borderRadius: 999, background: OK_SOFT, color: OK, fontFamily: FONT, fontWeight: 800, fontSize: 22}}>● Ta pub est prête</span>
+            {['Actrice réaliste', 'Voix française', 'Sous-titres animés'].map((t, i) => <span key={t} style={{padding: '10px 18px', borderRadius: 999, background: SURF, border: `1px solid ${LINE}`, boxShadow: SH, fontFamily: FONT, fontWeight: 700, fontSize: 21, color: FG, opacity: prog(f, S.big + 22 + i * 6, 10)}}>✓ {t}</span>)}
+          </>
+        )}
+      </div>
+    </AbsoluteFill>
   );
 };
 
@@ -760,6 +796,7 @@ export const LeadsBuyVideo: React.FC = () => {
       <Stage start={S.spy} end={S.pub} top={170}><SpyDemo /></Stage>
       <Side idx={1} start={S.pub} end={S.meta} a="Ta pub vidéo" b="en une phrase." sub="Growthity écrit le script, choisit une actrice réaliste et monte la vidéo." />
       <Stage start={S.pub} end={S.meta} top={150}><PubDemo /></Stage>
+      <BigVideo />
       <Side idx={2} start={S.meta} end={S.form} a="Meta Ads," b="guidé de A à Z." sub="Tu le connectes en un clic. Pas de compte ? Growthity t’accompagne étape par étape." />
       <Stage start={S.meta} end={S.form} top={150}><MetaDemo /></Stage>
       <Side idx={3} start={S.form} end={S.camp} a="Un formulaire" b="qui qualifie." sub="Logement, chauffage, propriétaire : tu ne reçois que des prospects sérieux." />

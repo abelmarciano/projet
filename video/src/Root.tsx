@@ -227,8 +227,8 @@ export const Root: React.FC = () => (
     <Composition id="SmsPub" component={SmsPub} durationInFrames={SMS_T.total} fps={30} width={1080} height={1920} />
     <Composition id="Conversion" component={Conversion} durationInFrames={740} fps={30} width={1080} height={1920} />
     <Composition id="LeadsDemo" component={LeadsDemoVideo} durationInFrames={1300} fps={30} width={1920} height={1080} />
-    <Composition id="LeadsBuy" component={LeadsBuyVideo} durationInFrames={1740} fps={30} width={1920} height={1080} />
-    <Composition id="LeadsBuy-9x16" component={LeadsBuyVertical} durationInFrames={1740} fps={30} width={1080} height={1920} />
+    <Composition id="LeadsBuy" component={LeadsBuyVideo} durationInFrames={2004} fps={30} width={1920} height={1080} />
+    <Composition id="LeadsBuy-9x16" component={LeadsBuyVertical} durationInFrames={2004} fps={30} width={1080} height={1920} />
     <Composition id="Launch-calendrier" component={SocialStory} durationInFrames={storyTotal(lr4Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr4Cfg as unknown as StoryCfg}} />
     <Composition id="Launch-whatsapp" component={SocialStory} durationInFrames={storyTotal(lr5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr5Cfg as unknown as StoryCfg}} />
     <Composition id="AvantApres-julien" component={SocialStory} durationInFrames={storyTotal(av5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: av5Cfg as unknown as StoryCfg}} />

@@ -7,10 +7,10 @@ g = {'__file__': __file__}
 exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'click', 'chime', 'pop_sfx', 'rng'])
 W = json.load(open('src/leads/words_lb.json'))
-VO = {4: 431, 5: 751, 6: 936, 7: 1049, 8: 1206, 9: 1409, 10: 1616}
+VO = {4: 431, 5: 1015, 6: 1200, 7: 1313, 8: 1470, 9: 1673, 10: 1880}
 VOH = {1: 4, 2: 154}
-T = dict(hook=0, spy=266, pub=426, meta=562, form=746, camp=931, wa=1044, leads=1201, res=1404, end=1611, total=1740)
-VM = 567
+T = dict(hook=0, spy=266, pub=426, big=560, meta=826, form=1010, camp=1195, wa=1308, leads=1465, res=1668, end=1875, total=2004)
+VM = 831
 VC = 271
 def cue(k, start, d=0):
     for w in W[f'lb-{k}']:
@@ -56,6 +56,8 @@ while i * bt < s('total') - 0.5:
     i += 1
 env = np.ones(n) * 0.9
 tl = int((s('total') - 1.0) * SR); te = int(s('total') * SR); env[tl:te] = np.linspace(0.9, 0, te - tl); env[te:] = 0
+ia = int((s('big') - 0.2) * SR); ib = int((s('big') + 0.3) * SR); ic = int((s('meta') - 0.4) * SR); idd = int((s('meta') + 0.1) * SR)
+env[ia:ib] = np.linspace(0.9, 0.22, ib - ia); env[ib:ic] = 0.22; env[ic:idd] = np.linspace(0.22, 0.9, idd - ic)
 mus *= env
 
 # accroche : leads qui tombent en direct
@@ -90,6 +92,7 @@ for j in range(T['spy'] + 4, T['spy'] + 22, 2): add(sfx, click(1.0 + 0.5 * rng.r
 for i in range(4): add(sfx, pop_sfx(), cueC('concurrents') - 8 / 30 + i * 4 / 30, 0.22)
 pk = cueC('domaine') + 2 / 30
 add(sfx, click(1.3), pk, 0.3); add(sfx, chime(86), pk + 8 / 30, 0.25)
+add(sfx, whoosh(0.5), s('big') - 0.15, 0.32); add(sfx, sub(0.9, 46), s('big') + 0.05, 0.35)
 for k in ['spy', 'pub', 'meta', 'form', 'camp', 'wa', 'leads', 'res']:
     add(sfx, whoosh(0.45), s(k) - 0.15, 0.3); add(sfx, sub(0.7, 50), s(k) + 0.03, 0.3)
 for j in range(T['pub'] + 6, T['pub'] + 50, 2): add(sfx, click(1.0 + 0.5 * rng.random()), j / 30, 0.09)
