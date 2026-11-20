@@ -21,7 +21,10 @@ q = req(EP, body)
 print('request', q['request_id'], flush=True)
 while True:
     time.sleep(15)
-    s = req(q['status_url'])
+    try:
+        s = req(q['status_url'])
+    except urllib.error.HTTPError as e:
+        print('status', e.code, e.read()[:300], flush=True); continue
     if s.get('status') == 'COMPLETED': break
     print(s.get('status'), s.get('queue_position', ''), flush=True)
 res = req(q['response_url'])
