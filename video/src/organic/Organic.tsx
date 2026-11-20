@@ -525,7 +525,7 @@ const P7: React.FC = () => (
 // =====================================================================
 // POST 8 — Carrousel « Growthity est en ligne » (7 slides, v2)
 // =====================================================================
-const P8N = 7;
+const P8N = 11;
 const P8Brand: React.FC<{k: string; s: number; color?: string}> = ({k, s, color}) => {
   if (k === 'meta') return <P8Meta s={s} />;
   const c = color ?? {instagram: '#FF0069', facebook: '#0866FF', tiktok: '#000000', youtube: '#FF0000', whatsapp: '#25D366', linkedin: '#0A66C2'}[k];
@@ -559,17 +559,18 @@ const StepHead: React.FC<{k: string; t: string}> = ({k, t}) => (
 const P8S1: React.FC = () => (
   <Slide n={2} of={P8N}>
     <StepHead k="Étape 1 · Décrivez" t="Une phrase sur votre produit." />
-    <Prompt text="Coffret de thés bio pour les fêtes. Une cliente le déballe et le goûte au coin du feu." size={50} style={{left: M, right: M, top: 460}} />
-    <Body size={36} style={{position: 'absolute', left: M, right: M, top: 1080}}>Le produit, la personne, la situation. <b style={{color: INK}}>C’est tout.</b></Body>
+    <Prompt text="Je veux une pub pour le Black Friday pour ma marque." size={50} style={{left: M, right: M, top: 460}} />
+    <Body size={36} style={{position: 'absolute', left: M, right: M, top: 1000}}>Pas de brief, pas de réunion. <b style={{color: INK}}>Growthity s’occupe du reste.</b></Body>
   </Slide>
 );
 const P8S2: React.FC = () => {
   const cols = 8, rows = 6, gw = 104, gh = 116, gap = 12;
-  const list = (ACTORS_REAL as {name: string; img: string}[]).slice(0, cols * rows);
   const pick = 19;
+  const all = ACTORS_REAL as {name: string; img: string}[]; const sol = all.find((x) => x.name === 'Solène')!;
+  const list = all.filter((x) => x !== sol).slice(0, cols * rows - 1); list.splice(pick, 0, sol);
   return (
-    <Slide n={3} of={P8N}>
-      <StepHead k="Étape 2 · Choisissez votre acteur" t="Des visages réalistes, pour chaque métier." />
+    <Slide n={5} of={P8N}>
+      <StepHead k="Étape 4 · Choisissez votre acteur" t="Des visages réalistes. Choisissez le vôtre." />
       <div style={{position: 'absolute', left: M, top: 420, display: 'grid', gridTemplateColumns: `repeat(${cols}, ${gw}px)`, gap}}>
         {list.map((a, i) => (
           <div key={a.img} style={{position: 'relative', width: gw, height: gh, borderRadius: 16, overflow: 'hidden', boxShadow: i === pick ? `0 0 0 5px ${ACCENT}, 0 24px 50px -16px rgba(91,63,228,0.7)` : '0 10px 24px -18px rgba(0,0,0,0.5)', transform: i === pick ? 'scale(1.12)' : 'none', zIndex: i === pick ? 2 : 1}}>
@@ -578,13 +579,13 @@ const P8S2: React.FC = () => {
           </div>
         ))}
       </div>
-      <Body size={34} style={{position: 'absolute', left: M, right: M, top: 1190}}>Plus de 140 acteurs réalistes. <b style={{color: INK}}>Un clic, et il présente votre produit.</b></Body>
+      <Body size={34} style={{position: 'absolute', left: M, right: M, top: 1190}}>Plus de 140 acteurs réalistes. <b style={{color: INK}}>Solène présentera votre bougie.</b></Body>
     </Slide>
   );
 };
 const P8S3: React.FC = () => (
-  <Slide n={4} of={P8N}>
-    <StepHead k="Étape 3 · Lancez" t="Directement sur Meta Ads." />
+  <Slide n={7} of={P8N}>
+    <StepHead k="Étape 6 · Lancez" t="Directement sur Meta Ads." />
     <div style={{position: 'absolute', left: M, right: M, top: 440, background: '#fff', borderRadius: 34, padding: '36px 38px', boxShadow: '0 40px 80px -50px rgba(0,0,0,0.45)', border: `1px solid ${LINE}`}}>
       <div style={{display: 'flex', alignItems: 'center', gap: 22}}>
         <P8Meta s={86} />
@@ -613,7 +614,7 @@ const P8S4: React.FC = () => {
   const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven'];
   const posts: [number, string, string][] = [[0, 'instagram', 'Reel'], [1, 'tiktok', 'Vidéo'], [2, 'linkedin', 'Post'], [3, 'facebook', 'Carrousel'], [4, 'youtube', 'Short']];
   return (
-    <Slide n={5} of={P8N}>
+    <Slide n={9} of={P8N}>
       <StepHead k="Et en plus" t="Postez aussi sur vos réseaux sociaux." />
       <div style={{position: 'absolute', left: M, right: M, top: 470, display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 14}}>
         {days.map((d, i) => (
@@ -641,7 +642,7 @@ const P8Wa: React.FC<{icon: string; t: string; d: string; time: string}> = ({ico
   </div>
 );
 const P8S5: React.FC = () => (
-  <Slide n={6} of={P8N}>
+  <Slide n={10} of={P8N}>
     <StepHead k="Alertes WhatsApp" t="Prévenu dès qu’il faut agir." />
     <div style={{position: 'absolute', left: M, right: M, top: 410, borderRadius: 34, overflow: 'hidden', boxShadow: '0 40px 80px -50px rgba(0,0,0,0.5)', border: `1px solid ${LINE}`}}>
       <div style={{background: '#075E54', color: '#fff', display: 'flex', alignItems: 'center', gap: 18, padding: '22px 28px'}}>
@@ -657,8 +658,92 @@ const P8S5: React.FC = () => (
     </div>
   </Slide>
 );
+const bf = (f: string) => staticFile(`media/bf/${f}`);
+const Card: React.FC<{style?: React.CSSProperties; children: React.ReactNode}> = ({style, children}) => (
+  <div style={{position: 'absolute', background: '#fff', borderRadius: 34, padding: '34px 36px', boxShadow: '0 40px 80px -50px rgba(0,0,0,0.45)', border: `1px solid ${LINE}`, ...style}}>{children}</div>
+);
+const Check: React.FC<{s?: number; c?: string}> = ({s = 34, c = '#16A34A'}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>;
+const P8Brandkit: React.FC = () => (
+  <Slide n={3} of={P8N}>
+    <StepHead k="Étape 2 · Growthity analyse votre marque" t="Votre univers, compris en quelques secondes." />
+    <Card style={{left: M, right: M, top: 470}}>
+      <div style={{display: 'flex', alignItems: 'center', gap: 14, fontSize: 26, color: MUTED, fontWeight: 600}}><LogoMark size={30} /> Analyse de votre site et de votre page Instagram</div>
+      <div style={{display: 'flex', alignItems: 'center', gap: 26, marginTop: 30}}>
+        <div style={{width: 150, height: 150, borderRadius: 30, background: '#2A1D12', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#E8B26A', fontFamily: 'Georgia, serif', fontSize: 30, textAlign: 'center', lineHeight: 1.05, letterSpacing: '0.04em'}}>MAISON<br />AMBRE</div>
+        <div style={{flex: 1}}>
+          <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 44}}>Maison Ambre</div>
+          <div style={{fontSize: 28, color: MUTED, marginTop: 4}}>Bougies parfumées · fait main</div>
+          <div style={{display: 'flex', gap: 12, marginTop: 18}}>{['#C9862E', '#F3E6D2', '#5A3A1E', '#2A1D12'].map((c) => <div key={c} style={{width: 54, height: 54, borderRadius: 14, background: c, border: `1px solid ${LINE}`}} />)}</div>
+        </div>
+      </div>
+      <div style={{height: 1, background: LINE, margin: '30px 0 18px'}} />
+      {[['Ton de la marque', 'Chaleureux · cocooning · premium'], ['Clientèle', 'Amatrices de déco, idées cadeaux'], ['Produits', 'Catalogue importé'], ['Logo et couleurs', 'Repris dans chaque pub']].map(([k, v]) => (
+        <div key={k} style={{display: 'flex', alignItems: 'center', gap: 16, padding: '12px 0', fontSize: 30}}><Check /><b style={{minWidth: 300}}>{k}</b><span style={{color: MUTED}}>{v}</span></div>
+      ))}
+    </Card>
+  </Slide>
+);
+const PRODS = [{f: 'p1.jpg', n: 'Bougie Bois & Vanille'}, {f: 'p2.jpg', n: 'Bougie Ambre'}, {f: 'p3.jpg', n: 'Diffuseur'}, {f: 'p4.jpg', n: 'Coffret trio'}, {f: 'p5.jpg', n: 'Bougie 3 mèches'}, {f: 'p1.jpg', n: ''}];
+const P8Product: React.FC = () => (
+  <Slide n={4} of={P8N}>
+    <StepHead k="Étape 3 · Choisissez le produit" t="Votre catalogue, déjà prêt." />
+    <div style={{position: 'absolute', left: M, right: M, top: 440, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 22}}>
+      {PRODS.slice(0, 5).map((p, i) => (
+        <div key={p.n} style={{position: 'relative', background: '#fff', borderRadius: 28, padding: 14, border: i === 0 ? `5px solid ${ACCENT}` : `1px solid ${LINE}`, boxShadow: i === 0 ? '0 30px 60px -30px rgba(91,63,228,0.7)' : '0 20px 40px -34px rgba(0,0,0,0.4)'}}>
+          <Img src={bf(p.f)} style={{width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 18, display: 'block'}} />
+          <div style={{fontSize: 26, fontWeight: 700, marginTop: 12, lineHeight: 1.15}}>{p.n}</div>
+          {i === 0 && <div style={{position: 'absolute', right: 22, top: 22, width: 52, height: 52, borderRadius: 99, background: ACCENT, display: 'flex', alignItems: 'center', justifyContent: 'center'}}><Check s={30} c="#fff" /></div>}
+          {i === 0 && <div style={{position: 'absolute', left: 22, top: 22, background: '#111', color: '#fff', fontWeight: 800, fontSize: 20, padding: '8px 14px', borderRadius: 999, letterSpacing: '0.04em'}}>BLACK FRIDAY</div>}
+        </div>
+      ))}
+      <div style={{borderRadius: 28, border: `2px dashed ${LINE}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, color: MUTED, fontWeight: 600, textAlign: 'center', padding: 20}}>+ Ajouter<br />un produit</div>
+    </div>
+  </Slide>
+);
+const P8Video: React.FC = () => (
+  <Slide n={6} of={P8N}>
+    <StepHead k="Étape 5 · Growthity crée" t="Acteur + produit : votre vidéo est prête." />
+    <div style={{position: 'absolute', left: M, top: 450, width: 400, height: 711, borderRadius: 50, padding: 12, background: '#16141A', boxShadow: '0 50px 90px -40px rgba(0,0,0,0.6)'}}>
+      <div style={{position: 'relative', width: '100%', height: '100%', borderRadius: 40, overflow: 'hidden'}}>
+        <Img src={bf('video.jpg')} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+        <div style={{position: 'absolute', left: 0, right: 0, top: 420, textAlign: 'center'}}><span style={{background: ACCENT, color: '#fff', fontWeight: 900, fontSize: 25, padding: '6px 12px', borderRadius: 12}}>MA BOUGIE</span><span style={{color: '#fff', fontWeight: 900, fontSize: 25, marginLeft: 8, textShadow: '0 2px 10px rgba(0,0,0,0.8)'}}>PRÉFÉRÉE</span></div>
+        <div style={{position: 'absolute', left: 18, top: 22, background: '#111', color: '#fff', fontWeight: 800, fontSize: 18, padding: '7px 12px', borderRadius: 999}}>BLACK FRIDAY</div>
+        <div style={{position: 'absolute', left: '50%', top: '42%', width: 96, height: 96, marginLeft: -48, borderRadius: 99, background: 'rgba(255,255,255,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><svg width="40" height="40" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill={INK} /></svg></div>
+      </div>
+    </div>
+    <div style={{position: 'absolute', left: M + 440, right: M, top: 470, display: 'grid', gap: 18}}>
+      {[{img: staticFile('media/actors-real/r079.jpg'), k: 'Actrice', v: 'Solène'}, {img: bf('p1.jpg'), k: 'Produit', v: 'Bougie Bois & Vanille'}].map((x) => (
+        <div key={x.k} style={{display: 'flex', alignItems: 'center', gap: 16, background: '#fff', borderRadius: 24, padding: 14, border: `1px solid ${LINE}`}}>
+          <Img src={x.img} style={{width: 84, height: 84, borderRadius: 16, objectFit: 'cover'}} />
+          <div><div style={{fontSize: 20, color: MUTED, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase'}}>{x.k}</div><div style={{fontSize: 27, fontWeight: 700}}>{x.v}</div></div>
+        </div>
+      ))}
+      {['Script écrit pour vous', 'Voix en français', 'Sous-titres animés', 'Format 9:16, 4:5, 1:1'].map((t) => <div key={t} style={{display: 'flex', alignItems: 'center', gap: 12, fontSize: 28, fontWeight: 600}}><Check s={30} />{t}</div>)}
+      <div style={{marginTop: 8, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10, background: '#E8F7EE', color: '#15803D', fontWeight: 800, fontSize: 28, padding: '14px 0', borderRadius: 999}}>Vidéo prête</div>
+    </div>
+  </Slide>
+);
+const P8Perf: React.FC = () => {
+  const bars = [0.35, 0.42, 0.4, 0.55, 0.62, 0.6, 0.74, 0.82, 0.9];
+  return (
+    <Slide n={8} of={P8N}>
+      <StepHead k="Étape 7 · Suivez vos performances" t="Votre media buyer optimise, jour et nuit." />
+      <Card style={{left: M, right: M, top: 470}}>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}><div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 40}}>Campagne Black Friday</div><span style={{background: '#E8F7EE', color: '#15803D', fontWeight: 800, fontSize: 24, padding: '8px 16px', borderRadius: 999}}>● En diffusion</span></div>
+        <div style={{display: 'flex', alignItems: 'flex-end', gap: 14, height: 220, marginTop: 30, padding: '0 6px', borderBottom: `2px solid ${LINE}`}}>
+          {bars.map((h, i) => <div key={i} style={{flex: 1, height: `${h * 100}%`, borderRadius: '12px 12px 4px 4px', background: i === bars.length - 1 ? GRAD : '#E7E2F8'}} />)}
+        </div>
+        <div style={{display: 'grid', gap: 4, marginTop: 22}}>
+          {[['🏆', 'Meilleure pub repérée', 'Solène · Bougie Bois & Vanille'], ['💸', 'Budget déplacé', 'vers la pub qui vend le plus'], ['✨', 'Nouvelle version testée', 'accroche « Offre Black Friday »']].map(([i, t, d]) => (
+            <div key={t} style={{display: 'flex', alignItems: 'center', gap: 16, padding: '12px 0', fontSize: 29}}><span style={{fontSize: 34}}>{i}</span><b>{t}</b><span style={{color: MUTED}}>{d}</span></div>
+          ))}
+        </div>
+      </Card>
+    </Slide>
+  );
+};
 const P8End: React.FC = () => (
-  <Slide n={7} of={P8N} dark handle>
+  <Slide n={11} of={P8N} dark handle>
     <div style={{position: 'absolute', left: M, right: M, top: 300}}>
       <Title size={110} style={{color: '#fff'}}>Votre prochaine pub est <span style={{color: '#B9A8FF'}}>à une phrase.</span></Title>
       <div style={{marginTop: 70, display: 'inline-flex', alignItems: 'center', gap: 14, background: '#fff', color: INK, fontWeight: 800, fontSize: 40, padding: '22px 38px', borderRadius: 999}}>Lien en bio pour commencer ↑</div>
@@ -1297,7 +1382,7 @@ add('post-04-6-conseils', [P4Cover, ...TIPS.map((_, i) => bind(P4Tip, {i}))]);
 add('post-05-anatomie-ugc', [P5]);
 add('post-06-citation', [P6]);
 add('post-07-tape-obtenu', [P7]);
-add('post-08-lancement', [P8Cover, P8S1, P8S2, P8S3, P8S4, P8S5, P8End]);
+add('post-08-lancement', [P8Cover, P8S1, P8Brandkit, P8Product, P8S2, P8Video, P8S3, P8Perf, P8S4, P8S5, P8End]);
 add('post-09-5-idees-pubs', [P9Cover, ...IDEAS.map((_, i) => bind(P9Idea, {i})), P9End]);
 add('post-10-3-scripts-ugc', [P10Cover, ...SCRIPTS.map((_, i) => bind(P10Script, {i})), P10End]);
 add('post-11-faq', [P11Cover, ...FAQ.map((_, i) => bind(P11Q, {i})), P11End]);
