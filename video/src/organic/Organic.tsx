@@ -543,7 +543,7 @@ const P8Cover: React.FC = () => (
     <div style={{position: 'absolute', left: M, right: M, top: 190}}>
       <Kicker>Lancement</Kicker>
       <Title size={136} style={{marginTop: 30}}>Growthity<br /><span style={{color: ACCENT}}>est en ligne.</span></Title>
-      <Body size={40} style={{marginTop: 46, maxWidth: 880}}>Vos pubs et vos posts générés et publiés <b style={{color: INK}}>en 2 minutes.</b></Body>
+      <Body size={40} style={{marginTop: 46, maxWidth: 880}}>Vos pubs et vos posts générés et publiés <b style={{color: INK}}>en 2&nbsp;minutes.</b></Body>
       <div style={{display: 'flex', gap: 18, marginTop: 70, flexWrap: 'wrap'}}>
         {['meta', 'instagram', 'facebook', 'tiktok', 'youtube', 'linkedin', 'whatsapp'].map((k) => <P8BrandChip key={k} k={k} s={104} />)}
       </div>
