@@ -10,6 +10,8 @@ import '@fontsource/space-grotesk/600.css';
 import '@fontsource/space-grotesk/700.css';
 import {LogoMark} from '../components/UI';
 import {C, DISPLAY, FONT, GRAD} from '../theme';
+import {BRAND_PATHS} from '../components/brands';
+import ACTORS_REAL from './actors_real.json';
 
 // Organic Instagram feed posts (4:5, 1080×1350): carousels, behind-the-scenes, tips.
 // Editorial look (warm paper, dark ink), discreet handle instead of a logo + CTA block.
@@ -521,15 +523,30 @@ const P7: React.FC = () => (
 );
 
 // =====================================================================
-// POST 8 — Carrousel « Growthity est en ligne » (6 slides)
+// POST 8 — Carrousel « Growthity est en ligne » (7 slides, v2)
 // =====================================================================
-const P8N = 6;
+const P8N = 7;
+const P8Brand: React.FC<{k: string; s: number; color?: string}> = ({k, s, color}) => {
+  if (k === 'meta') return <P8Meta s={s} />;
+  const c = color ?? {instagram: '#FF0069', facebook: '#0866FF', tiktok: '#000000', youtube: '#FF0000', whatsapp: '#25D366', linkedin: '#0A66C2'}[k];
+  return <svg width={s} height={s} viewBox="0 0 24 24"><path d={BRAND_PATHS[k]} fill={c} /></svg>;
+};
+// Meta logo with its official blue gradient
+const P8Meta: React.FC<{s: number}> = ({s}) => (
+  <svg width={s} height={s} viewBox="0 0 24 24"><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#0064E0" /><stop offset="0.6" stopColor="#0082FB" /><stop offset="1" stopColor="#0099FF" /></linearGradient></defs><path d={BRAND_PATHS.meta} fill="url(#mg)" /></svg>
+);
+const P8BrandChip: React.FC<{k: string; s?: number}> = ({k, s = 92}) => (
+  <div style={{width: s, height: s, borderRadius: s * 0.28, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 18px 40px -24px rgba(0,0,0,0.45)', border: `1px solid ${LINE}`}}><P8Brand k={k} s={s * 0.56} /></div>
+);
 const P8Cover: React.FC = () => (
   <Slide n={1} of={P8N} handle swipe>
-    <div style={{position: 'absolute', left: M, right: M, top: 200}}>
+    <div style={{position: 'absolute', left: M, right: M, top: 190}}>
       <Kicker>Lancement</Kicker>
       <Title size={136} style={{marginTop: 30}}>Growthity<br /><span style={{color: ACCENT}}>est en ligne.</span></Title>
-      <Body size={40} style={{marginTop: 46, maxWidth: 840}}>Vos pubs Meta, de la phrase à la publication. Voici comment ça marche, en 4 étapes.</Body>
+      <Body size={40} style={{marginTop: 46, maxWidth: 880}}>Vos pubs Meta, vos réseaux sociaux et vos alertes WhatsApp. <b style={{color: INK}}>Au même endroit.</b></Body>
+      <div style={{display: 'flex', gap: 18, marginTop: 70, flexWrap: 'wrap'}}>
+        {['meta', 'instagram', 'facebook', 'tiktok', 'youtube', 'linkedin', 'whatsapp'].map((k) => <P8BrandChip key={k} k={k} s={104} />)}
+      </div>
     </div>
   </Slide>
 );
@@ -546,52 +563,102 @@ const P8S1: React.FC = () => (
     <Body size={36} style={{position: 'absolute', left: M, right: M, top: 1080}}>Le produit, la personne, la situation. <b style={{color: INK}}>C’est tout.</b></Body>
   </Slide>
 );
-const P8S2: React.FC = () => (
-  <Slide n={3} of={P8N}>
-    <StepHead k="Étape 2 · Growthity crée" t="Script, acteur, voix, sous-titres." />
-    {['scierie.jpg', 'solaire.jpg', 'homme.jpg', 'femme.jpg'].map((p, i) => (
-      <Photo key={p} p={p} pos="50% 28%" style={{left: M + (i % 2) * 470, top: 420 + Math.floor(i / 2) * 400, width: 450, height: 380}} radius={30} />
-    ))}
-    <Body size={32} style={{position: 'absolute', left: M, right: M, top: 1225}}>Des acteurs IA au rendu naturel, pour chaque métier.</Body>
-  </Slide>
-);
-const Frame: React.FC<{p: string; x: number; y: number; w: number; ar: number; label: string; sub: string; pos?: string}> = ({p, x, y, w, ar, label, sub, pos = '50% 35%'}) => (
-  <>
-    <Photo p={p} pos={pos} style={{left: x, top: y, width: w, height: w / ar}} radius={26} />
-    <div style={{position: 'absolute', left: x, top: y + w / ar + 18, width: w}}>
-      <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 40, letterSpacing: '-0.02em'}}>{label}</div>
-      <div style={{fontWeight: 500, fontSize: 26, color: MUTED, marginTop: 4}}>{sub}</div>
-    </div>
-  </>
-);
+const P8S2: React.FC = () => {
+  const cols = 8, rows = 6, gw = 104, gh = 116, gap = 12;
+  const list = (ACTORS_REAL as {name: string; img: string}[]).slice(0, cols * rows);
+  const pick = 19;
+  return (
+    <Slide n={3} of={P8N}>
+      <StepHead k="Étape 2 · Choisissez votre acteur" t="Des visages réalistes, pour chaque métier." />
+      <div style={{position: 'absolute', left: M, top: 420, display: 'grid', gridTemplateColumns: `repeat(${cols}, ${gw}px)`, gap}}>
+        {list.map((a, i) => (
+          <div key={a.img} style={{position: 'relative', width: gw, height: gh, borderRadius: 16, overflow: 'hidden', boxShadow: i === pick ? `0 0 0 5px ${ACCENT}, 0 24px 50px -16px rgba(91,63,228,0.7)` : '0 10px 24px -18px rgba(0,0,0,0.5)', transform: i === pick ? 'scale(1.12)' : 'none', zIndex: i === pick ? 2 : 1}}>
+            <Img src={staticFile(`media/${a.img}`)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 30%'}} />
+            {i === pick && <div style={{position: 'absolute', right: 6, top: 6, width: 30, height: 30, borderRadius: 99, background: ACCENT, display: 'flex', alignItems: 'center', justifyContent: 'center'}}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></div>}
+          </div>
+        ))}
+      </div>
+      <Body size={34} style={{position: 'absolute', left: M, right: M, top: 1190}}>Plus de 140 acteurs réalistes. <b style={{color: INK}}>Un clic, et il présente votre produit.</b></Body>
+    </Slide>
+  );
+};
 const P8S3: React.FC = () => (
   <Slide n={4} of={P8N}>
-    <StepHead k="Étape 3 · Choisissez le format" t="Reel, fil ou carrousel." />
-    <Frame p="femme.jpg" x={M} y={430} w={300} ar={9 / 16} label="9:16" sub="Reels · Stories" pos="50% 30%" />
-    <Frame p="pates.jpg" x={M + 330} y={430} w={290} ar={4 / 5} label="4:5" sub="Fil Instagram" />
-    <Frame p="sneakers.jpg" x={M + 650} y={430} w={270} ar={1} label="1:1" sub="Fil · carrousel" pos="50% 65%" />
-  </Slide>
-);
-const P8S4: React.FC = () => (
-  <Slide n={5} of={P8N}>
-    <StepHead k="Étape 4 · Publiez" t="Directement sur Meta." />
-    <div style={{position: 'absolute', left: M, right: M, top: 480, display: 'grid', gap: 22}}>
-      {[{n: 'Instagram', c: 'linear-gradient(135deg,#F9A13A,#E1306C 55%,#833AB4)'}, {n: 'Facebook', c: '#1877F2'}].map((s) => (
-        <div key={s.n} style={{display: 'flex', alignItems: 'center', gap: 26, background: '#fff', borderRadius: 30, padding: '30px 32px', boxShadow: '0 30px 60px -40px rgba(0,0,0,0.35)'}}>
-          <div style={{width: 92, height: 92, borderRadius: 24, background: s.c}} />
-          <div style={{flex: 1}}>
-            <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 46}}>{s.n}</div>
-            <div style={{fontSize: 28, color: MUTED, fontWeight: 500}}>Reels · Stories · Fil</div>
-          </div>
-          <span style={{display: 'flex', alignItems: 'center', gap: 10, background: C.success, color: '#fff', fontWeight: 800, fontSize: 28, padding: '12px 22px', borderRadius: 999}}>En ligne</span>
+    <StepHead k="Étape 3 · Lancez" t="Directement sur Meta Ads." />
+    <div style={{position: 'absolute', left: M, right: M, top: 440, background: '#fff', borderRadius: 34, padding: '36px 38px', boxShadow: '0 40px 80px -50px rgba(0,0,0,0.45)', border: `1px solid ${LINE}`}}>
+      <div style={{display: 'flex', alignItems: 'center', gap: 22}}>
+        <P8Meta s={86} />
+        <div style={{flex: 1}}>
+          <div style={{fontFamily: DISPLAY, fontWeight: 700, fontSize: 50, letterSpacing: '-0.02em'}}>Meta Ads</div>
+          <div style={{fontSize: 28, color: MUTED, fontWeight: 500}}>Compte publicitaire connecté</div>
+        </div>
+        <span style={{background: '#E8F7EE', color: '#15803D', fontWeight: 800, fontSize: 26, padding: '10px 20px', borderRadius: 999}}>Connecté</span>
+      </div>
+      <div style={{height: 1, background: LINE, margin: '30px 0'}} />
+      {[{k: 'facebook', n: 'Facebook', d: 'Fil · Reels · Stories'}, {k: 'instagram', n: 'Instagram', d: 'Fil · Reels · Stories'}].map((x) => (
+        <div key={x.k} style={{display: 'flex', alignItems: 'center', gap: 20, padding: '14px 0'}}>
+          <P8Brand k={x.k} s={58} />
+          <div style={{flex: 1, fontSize: 36, fontWeight: 700}}>{x.n}<span style={{fontSize: 26, color: MUTED, fontWeight: 500, marginLeft: 14}}>{x.d}</span></div>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
         </div>
       ))}
+      <div style={{marginTop: 26, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, background: '#0866FF', color: '#fff', borderRadius: 22, padding: '26px 0', fontWeight: 800, fontSize: 38}}>
+        <svg width="46" height="46" viewBox="0 0 24 24"><path d={BRAND_PATHS.meta} fill="#fff" /></svg>Publier sur Meta
+      </div>
     </div>
-    <Body size={36} style={{position: 'absolute', left: M, right: M, top: 1000}}>Sans changer d’outil, <b style={{color: INK}}>sans exporter de fichier.</b></Body>
+    <Body size={36} style={{position: 'absolute', left: M, right: M, top: 1030}}>Pas de compte ? <b style={{color: INK}}>Vous êtes guidé de A à Z.</b></Body>
+  </Slide>
+);
+const P8S4: React.FC = () => {
+  const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven'];
+  const posts: [number, string, string][] = [[0, 'instagram', 'Reel'], [1, 'tiktok', 'Vidéo'], [2, 'linkedin', 'Post'], [3, 'facebook', 'Carrousel'], [4, 'youtube', 'Short']];
+  return (
+    <Slide n={5} of={P8N}>
+      <StepHead k="Et en plus" t="Postez aussi sur vos réseaux sociaux." />
+      <div style={{position: 'absolute', left: M, right: M, top: 470, display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 14}}>
+        {days.map((d, i) => (
+          <div key={d} style={{background: '#fff', borderRadius: 24, border: `1px solid ${LINE}`, padding: '18px 14px 22px', height: 300, boxShadow: '0 24px 50px -40px rgba(0,0,0,0.4)'}}>
+            <div style={{fontSize: 26, fontWeight: 700, color: MUTED}}>{d}</div>
+            {posts.filter((p) => p[0] === i).map(([, k, t]) => (
+              <div key={k} style={{marginTop: 18, borderRadius: 18, background: PAPER, padding: '18px 12px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12}}>
+                <P8Brand k={k} s={56} />
+                <div style={{fontSize: 24, fontWeight: 700}}>{t}</div>
+                <div style={{fontSize: 20, fontWeight: 800, color: '#15803D'}}>Programmé</div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+      <Body size={36} style={{position: 'absolute', left: M, right: M, top: 850}}>Instagram, Facebook, TikTok, YouTube, LinkedIn : <b style={{color: INK}}>vous planifiez, Growthity publie.</b></Body>
+    </Slide>
+  );
+};
+const P8Wa: React.FC<{icon: string; t: string; d: string; time: string}> = ({icon, t, d, time}) => (
+  <div style={{alignSelf: 'flex-start', maxWidth: 800, background: '#fff', borderRadius: '6px 26px 26px 26px', padding: '20px 26px 14px', boxShadow: '0 2px 2px rgba(0,0,0,0.08)'}}>
+    <div style={{fontSize: 30, fontWeight: 700, color: INK}}>{icon} {t}</div>
+    <div style={{fontSize: 27, color: '#3B3A40', marginTop: 6, lineHeight: 1.35}}>{d}</div>
+    <div style={{fontSize: 20, color: '#8A8F98', textAlign: 'right', marginTop: 4}}>{time}</div>
+  </div>
+);
+const P8S5: React.FC = () => (
+  <Slide n={6} of={P8N}>
+    <StepHead k="Alertes WhatsApp" t="Prévenu dès qu’il faut agir." />
+    <div style={{position: 'absolute', left: M, right: M, top: 410, borderRadius: 34, overflow: 'hidden', boxShadow: '0 40px 80px -50px rgba(0,0,0,0.5)', border: `1px solid ${LINE}`}}>
+      <div style={{background: '#075E54', color: '#fff', display: 'flex', alignItems: 'center', gap: 18, padding: '22px 28px'}}>
+        <div style={{width: 64, height: 64, borderRadius: 99, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><LogoMark size={40} /></div>
+        <div style={{flex: 1}}><div style={{fontSize: 32, fontWeight: 700}}>Growthity</div><div style={{fontSize: 22, opacity: 0.8}}>Alertes de vos pubs</div></div>
+        <P8Brand k="whatsapp" s={52} color="#fff" />
+      </div>
+      <div style={{background: '#ECE5DD', padding: '26px 24px 30px', display: 'flex', flexDirection: 'column', gap: 18}}>
+        <P8Wa icon="🔔" t="Nouveau lead" d="Julie R. vient de demander un devis. Rappelez-la depuis Growthity." time="09:12" />
+        <P8Wa icon="⚠️" t="Votre pub s’essouffle" d="Les clics baissent depuis hier. Une nouvelle version est prête à valider." time="11:40" />
+        <P8Wa icon="✅" t="Pub validée par Meta" d="Votre nouvelle pub est en diffusion." time="14:05" />
+      </div>
+    </div>
   </Slide>
 );
 const P8End: React.FC = () => (
-  <Slide n={6} of={P8N} dark handle>
+  <Slide n={7} of={P8N} dark handle>
     <div style={{position: 'absolute', left: M, right: M, top: 300}}>
       <Title size={110} style={{color: '#fff'}}>Votre prochaine pub est <span style={{color: '#B9A8FF'}}>à une phrase.</span></Title>
       <div style={{marginTop: 70, display: 'inline-flex', alignItems: 'center', gap: 14, background: '#fff', color: INK, fontWeight: 800, fontSize: 40, padding: '22px 38px', borderRadius: 999}}>Lien en bio pour commencer ↑</div>
@@ -1230,7 +1297,7 @@ add('post-04-6-conseils', [P4Cover, ...TIPS.map((_, i) => bind(P4Tip, {i}))]);
 add('post-05-anatomie-ugc', [P5]);
 add('post-06-citation', [P6]);
 add('post-07-tape-obtenu', [P7]);
-add('post-08-lancement', [P8Cover, P8S1, P8S2, P8S3, P8S4, P8End]);
+add('post-08-lancement', [P8Cover, P8S1, P8S2, P8S3, P8S4, P8S5, P8End]);
 add('post-09-5-idees-pubs', [P9Cover, ...IDEAS.map((_, i) => bind(P9Idea, {i})), P9End]);
 add('post-10-3-scripts-ugc', [P10Cover, ...SCRIPTS.map((_, i) => bind(P10Script, {i})), P10End]);
 add('post-11-faq', [P11Cover, ...FAQ.map((_, i) => bind(P11Q, {i})), P11End]);
