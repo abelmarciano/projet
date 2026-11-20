@@ -1291,6 +1291,7 @@ function renderZernio() {
         3. <button class="btn accent sm" data-act="z-check" ${zs.manual.checking ? 'disabled' : ''}>${zs.manual.checking ? 'Vérification…' : 'C’est envoyé, publier'}</button>
         <button class="btn sm" data-act="z-abort">Annuler</button>
         ${zs.manual.note ? `<div style="margin-top:6px">${esc(zs.manual.note)}</div>` : ''}</div>` : ''}
+      <div class="fld" style="margin-top:8px"><label for="z-date">Date et heure de programmation</label><input type="datetime-local" id="z-date" value="${esc(p.date || '')}" min="${(() => { const d = new Date(Date.now() + 6 * 60000); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16); })()}" ${zs.busy || zs.manual ? 'disabled' : ''}><span style="font-size:12px;color:var(--muted)">Change aussi la date du post dans le Planning (enregistré automatiquement).</span></div>
       <div class="chips" style="margin-top:6px">
         <button class="btn accent" data-act="z-pub" data-mode="now" ${zs.busy || zs.manual || !m ? 'disabled' : ''}>Publier maintenant</button>
         <button class="btn" data-act="z-pub" data-mode="sched" ${zs.busy || zs.manual || !m || !future ? 'disabled' : ''} title="${future ? '' : 'Choisissez une date de publication dans le futur'}">Programmer ${future ? 'le ' + when.toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'}) : '(date requise)'}</button>
@@ -1633,6 +1634,8 @@ document.addEventListener('change', async (ev) => { const t = ev.target;
     try { const r = await S.assets.upload(f); S.coverBusy = false; await setCover({asset: r.id, url: null, by: S.me || null}); } catch (e) { S.coverBusy = false; renderCover(); toast('Couverture : ' + errMsg(e), true); } return; }
   if (t.dataset?.setst) { const p = postById(t.dataset.setst); if (!p) return; const v = t.value; t.style.setProperty('--c', STATUS[v].c);
     try { await S.db.collection('posts').doc(p.id).update({status: v, updatedAt: Date.now()}); toast('Statut : ' + STATUS[v].l + '.'); } catch (er) { toast('Statut non modifié : ' + errMsg(er), true); render(); } return; }
+  if (t.id === 'z-date' && S.ed) { const v = t.value; if (v && new Date(v).getTime() < Date.now() + 5 * 60000) { toast('Choisissez une date au moins 5 minutes dans le futur.', true); t.value = S.ed.draft.date || ''; return; }
+    S.ed.draft.date = v; const e = $('#e-date'); if (e) e.value = v; await saveEditor(); return; }
   if (S.ed && S.view === 'post' && (t.dataset.f || t.dataset.af)) { if (t.dataset.f) S.ed.draft[t.dataset.f] = t.value; else { S.ed.draft.ad ||= {}; S.ed.draft.ad[t.dataset.af] = t.value; } markDirty(); renderPreview(); } });
 document.addEventListener('keydown', (ev) => {
   const k = ev.key.toLowerCase();
