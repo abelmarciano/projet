@@ -570,6 +570,22 @@ tbody tr:hover td { background: var(--hover) }
 .slot .d { font: 500 10.5px var(--f-mono); color: var(--muted); display: flex; justify-content: space-between }
 .slot .tt { font-size: 12px; font-weight: 600; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden }
 .slot .row { display: flex; gap: 4px; flex-wrap: wrap }
+.zpick { margin-top: 10px; border: 1px solid var(--line-2); border-radius: 12px; padding: 12px; background: var(--panel) }
+.zpick .zph { display: flex; align-items: center; justify-content: space-between; font-weight: 700; font-size: 13.5px; margin-bottom: 8px; text-transform: capitalize }
+.zpick .zph button { border: 0; background: var(--sunk); border-radius: 8px; width: 30px; height: 30px; cursor: pointer; font-size: 15px; color: inherit }
+.zpick .zph button:disabled { opacity: .35; cursor: default }
+.zpick .zgrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center }
+.zpick .zgrid .dw { font-size: 11px; color: var(--muted); padding: 2px 0 4px; text-transform: uppercase }
+.zpick .zgrid button { border: 0; background: transparent; border-radius: 8px; height: 34px; font-size: 13px; cursor: pointer; color: inherit }
+.zpick .zgrid button:hover:not(:disabled) { background: var(--sunk) }
+.zpick .zgrid button:disabled { opacity: .3; cursor: default }
+.zpick .zgrid button.today { box-shadow: inset 0 0 0 1px var(--line-2) }
+.zpick .zgrid button.on { background: var(--accent, #5B3FE4); color: #fff; font-weight: 700 }
+.zpick .ztimes { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 10px; font-size: 12.5px }
+.zpick .ztimes button { border: 1px solid var(--line-2); background: var(--panel); border-radius: 999px; padding: 5px 11px; font-size: 12.5px; cursor: pointer; color: inherit }
+.zpick .ztimes button.on { background: var(--accent, #5B3FE4); border-color: transparent; color: #fff; font-weight: 700 }
+.zpick .ztimes select { border: 1px solid var(--line-2); border-radius: 8px; padding: 5px 6px; background: var(--panel); color: inherit; font-size: 12.5px }
+.zpick .zsel { margin-top: 10px; font-size: 13px }
 .zhist { font-size: 12.5px; line-height: 1.5; padding: 10px 12px; border-radius: 10px; background: var(--sunk) }
 .zhist ul { margin: 6px 0 0; padding-left: 16px }
 .zhist .ok { color: var(--st-live) }
@@ -1266,6 +1282,38 @@ async function zAccounts(force) {
   for (const a of out) { if (Z_SKIP.has(a.platform)) continue; const k = a.platform + '|' + a.name.toLowerCase(); if (seen.has(k)) dup++; seen.set(k, a); }
   S.zDup = dup; S.zAcc = [...seen.values()].sort((a, b) => Object.values(Z_PLAT).indexOf(a.platform) - Object.values(Z_PLAT).indexOf(b.platform)); return S.zAcc;
 }
+const zPad = (n) => String(n).padStart(2, '0');
+const zLocal = (d) => `${d.getFullYear()}-${zPad(d.getMonth() + 1)}-${zPad(d.getDate())}T${zPad(d.getHours())}:${zPad(d.getMinutes())}`;
+function zPickerHTML(p, zs) {
+  const sel = p.date ? new Date(p.date) : null; const now = new Date();
+  const base = S.zPick || (sel && sel > now ? {y: sel.getFullYear(), m: sel.getMonth()} : {y: now.getFullYear(), m: now.getMonth()});
+  S.zPick = base;
+  const first = new Date(base.y, base.m, 1); const lead = (first.getDay() + 6) % 7; const days = new Date(base.y, base.m + 1, 0).getDate();
+  const today0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  const canPrev = base.y > now.getFullYear() || (base.y === now.getFullYear() && base.m > now.getMonth());
+  const off = zs.busy || zs.manual ? 'disabled' : '';
+  let cells = ['lun', 'mar', 'mer', 'jeu', 'ven', 'sam', 'dim'].map((d) => `<div class="dw">${d}</div>`).join('') + '<div></div>'.repeat(lead);
+  for (let d = 1; d <= days; d++) {
+    const t = new Date(base.y, base.m, d).getTime();
+    const on = sel && sel.getFullYear() === base.y && sel.getMonth() === base.m && sel.getDate() === d;
+    cells += `<button type="button" data-act="z-day" data-d="${d}" class="${on ? 'on' : ''} ${t === today0 ? 'today' : ''}" ${t < today0 || off ? 'disabled' : ''}>${d}</button>`;
+  }
+  const hh = sel ? sel.getHours() : 18, mm = sel ? sel.getMinutes() : 0;
+  const quick = ['08:00', '12:30', '18:00', '20:30'];
+  const cur = sel ? `${zPad(hh)}:${zPad(mm)}` : '';
+  return `<div class="zpick"><div class="zph"><button type="button" data-act="z-mon" data-dir="-1" ${canPrev ? '' : 'disabled'} aria-label="Mois précédent">‹</button>${first.toLocaleDateString('fr-FR', {month: 'long', year: 'numeric'})}<button type="button" data-act="z-mon" data-dir="1" aria-label="Mois suivant">›</button></div>
+    <div class="zgrid">${cells}</div>
+    <div class="ztimes">Heure : ${quick.map((q) => `<button type="button" data-act="z-time" data-t="${q}" class="${cur === q ? 'on' : ''}" ${off}>${q}</button>`).join('')}
+      <select id="z-h" aria-label="Heure" ${off}>${Array.from({length: 24}, (_, i) => `<option value="${i}" ${i === hh ? 'selected' : ''}>${zPad(i)} h</option>`).join('')}</select>
+      <select id="z-mi" aria-label="Minutes" ${off}>${[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].map((i) => `<option value="${i}" ${i === mm - (mm % 5) ? 'selected' : ''}>${zPad(i)}</option>`).join('')}</select></div>
+    <div class="zsel">${sel ? `Publication prévue le <b>${sel.toLocaleString('fr-FR', {weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit'})}</b>` : 'Choisissez un jour dans le calendrier.'}</div></div>`;
+}
+async function zSetDate(d) {
+  if (!S.ed) return;
+  if (d.getTime() < Date.now() + 5 * 60000) { toast('Choisissez un moment au moins 5 minutes dans le futur.', true); renderZernio(); return; }
+  const v = zLocal(d); S.ed.draft.date = v; const e = $('#e-date'); if (e) e.value = v; await saveEditor();
+}
+function zCurDate() { const p = S.ed?.draft; return p?.date ? new Date(p.date) : null; }
 function renderZernio() {
   const box = $('#zernio'); if (!box || !S.ed) return;
   const p = S.ed.draft; const z = p.zernio || null; const zs = S.zs || {};
@@ -1291,7 +1339,7 @@ function renderZernio() {
         3. <button class="btn accent sm" data-act="z-check" ${zs.manual.checking ? 'disabled' : ''}>${zs.manual.checking ? 'Vérification…' : 'C’est envoyé, publier'}</button>
         <button class="btn sm" data-act="z-abort">Annuler</button>
         ${zs.manual.note ? `<div style="margin-top:6px">${esc(zs.manual.note)}</div>` : ''}</div>` : ''}
-      <div class="fld" style="margin-top:8px"><label for="z-date">Date et heure de programmation</label><input type="datetime-local" id="z-date" value="${esc(p.date || '')}" min="${(() => { const d = new Date(Date.now() + 6 * 60000); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16); })()}" ${zs.busy || zs.manual ? 'disabled' : ''}><span style="font-size:12px;color:var(--muted)">Change aussi la date du post dans le Planning (enregistré automatiquement).</span></div>
+      ${zPickerHTML(p, zs)}
       <div class="chips" style="margin-top:6px">
         <button class="btn accent" data-act="z-pub" data-mode="now" ${zs.busy || zs.manual || !m ? 'disabled' : ''}>Publier maintenant</button>
         <button class="btn" data-act="z-pub" data-mode="sched" ${zs.busy || zs.manual || !m || !future ? 'disabled' : ''} title="${future ? '' : 'Choisissez une date de publication dans le futur'}">Programmer ${future ? 'le ' + when.toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'}) : '(date requise)'}</button>
@@ -1598,6 +1646,9 @@ document.addEventListener('click', async (ev) => {
     case 'st': S.ed.draft.status = d.v; $$('[data-act="st"]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === d.v)); markDirty(); return;
     case 'z-acc': { const sel = S.zs.sel || {}; sel[d.id] = !sel[d.id]; S.zs.sel = sel; renderZernio(); return; }
     case 'z-reload': S.zs = {}; S.zAcc = null; zAccounts(true).then(() => renderZernio()).catch((er) => { S.zs = {err: zErr(er)}; renderZernio(); }); S.zs = {loading: true}; renderZernio(); return;
+    case 'z-mon': { const b = S.zPick; const dt = new Date(b.y, b.m + Number(d.dir), 1); S.zPick = {y: dt.getFullYear(), m: dt.getMonth()}; renderZernio(); return; }
+    case 'z-day': { const c = zCurDate(); const dt = new Date(S.zPick.y, S.zPick.m, Number(d.d), c ? c.getHours() : 18, c ? c.getMinutes() : 0); zSetDate(dt); return; }
+    case 'z-time': { const c = zCurDate(); if (!c) { toast('Choisissez d’abord un jour.', true); return; } const [h, mi] = d.t.split(':').map(Number); c.setHours(h, mi, 0, 0); zSetDate(c); return; }
     case 'z-pub': S.zs.confirm = d.mode; S.zs.err = null; renderZernio(); return;
     case 'z-cancel': S.zs.confirm = null; renderZernio(); return;
     case 'z-check': zCheckManual(); return;
@@ -1634,8 +1685,7 @@ document.addEventListener('change', async (ev) => { const t = ev.target;
     try { const r = await S.assets.upload(f); S.coverBusy = false; await setCover({asset: r.id, url: null, by: S.me || null}); } catch (e) { S.coverBusy = false; renderCover(); toast('Couverture : ' + errMsg(e), true); } return; }
   if (t.dataset?.setst) { const p = postById(t.dataset.setst); if (!p) return; const v = t.value; t.style.setProperty('--c', STATUS[v].c);
     try { await S.db.collection('posts').doc(p.id).update({status: v, updatedAt: Date.now()}); toast('Statut : ' + STATUS[v].l + '.'); } catch (er) { toast('Statut non modifié : ' + errMsg(er), true); render(); } return; }
-  if (t.id === 'z-date' && S.ed) { const v = t.value; if (v && new Date(v).getTime() < Date.now() + 5 * 60000) { toast('Choisissez une date au moins 5 minutes dans le futur.', true); t.value = S.ed.draft.date || ''; return; }
-    S.ed.draft.date = v; const e = $('#e-date'); if (e) e.value = v; await saveEditor(); return; }
+  if ((t.id === 'z-h' || t.id === 'z-mi') && S.ed) { const c = zCurDate(); if (!c) { toast('Choisissez d’abord un jour.', true); renderZernio(); return; } if (t.id === 'z-h') c.setHours(Number(t.value)); else c.setMinutes(Number(t.value)); c.setSeconds(0, 0); await zSetDate(c); return; }
   if (S.ed && S.view === 'post' && (t.dataset.f || t.dataset.af)) { if (t.dataset.f) S.ed.draft[t.dataset.f] = t.value; else { S.ed.draft.ad ||= {}; S.ed.draft.ad[t.dataset.af] = t.value; } markDirty(); renderPreview(); } });
 document.addEventListener('keydown', (ev) => {
   const k = ev.key.toLowerCase();
