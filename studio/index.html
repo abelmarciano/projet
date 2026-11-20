@@ -1417,6 +1417,29 @@ async function zPublish(mode) {
           results.push({platform: a.platform, account: a.name, ok: !bad, id: pid, msg: (bad ? (e.errorMessage || e.status) : 'ok' + (pid ? ` (post ${pid})` : '')) + ' · avec couverture'});
         }
       } catch (e) { for (const a of acc) results.push({platform: a.platform, account: a.name, ok: false, msg: zErr(e)}); }
+    } else if (!isVid(m.items[0])) {
+      // images / carrousel : un seul post Zernio. YouTube n’accepte pas d’images ; TikTok = carrousel photo avec musique ajoutée par TikTok.
+      const yt = acc.filter((a) => a.platform === 'youtube'); const acc2 = acc.filter((a) => a.platform !== 'youtube');
+      for (const a of yt) results.push({platform: a.platform, account: a.name, ok: false, msg: 'YouTube n’accepte pas les carrousels d’images (vidéos et Shorts uniquement)'});
+      if (acc2.length) {
+        S.zs.busy = `${mode === 'now' ? 'Publication' : 'Programmation'} du carrousel sur ${acc2.length} compte(s)…`; renderZernio();
+        const cap = p.caption || ''; const first = (cap.split('\n').find((l) => l.trim()) || p.title || 'Growthity').replace(/#[\p{L}\d_]+/gu, '').trim().slice(0, 88);
+        const args = {content: cap, media_items: urls.map((u) => ({type: 'image', url: u})),
+          platforms: acc2.map((a) => a.platform === 'tiktok' ? {platform: a.platform, accountId: a.id, customContent: first} : {platform: a.platform, accountId: a.id})};
+        if (acc2.some((a) => a.platform === 'tiktok')) args.tiktok_settings = {privacyLevel: 'PUBLIC_TO_EVERYONE', allowComment: true, contentPreviewConfirmed: true, expressConsentGiven: true, mediaType: 'photo', photoCoverIndex: 0, autoAddMusic: true, description: cap.slice(0, 4000)};
+        if (mode === 'now') args.publish_now = true; else args.scheduled_for = new Date(when).toISOString();
+        try {
+          const r = await S.mcp.callTool(ZN, 'call_tool', {name: 'posts_create_post', arguments: args}, {cache: false});
+          const t = zText(r); let j = null; try { j = JSON.parse(JSON.parse(t).result || t); } catch { try { j = JSON.parse(t); } catch {} }
+          const post = j?.post || {}; const pid = post._id || (t.match(/"_id"\s*:\s*"([a-f0-9]{16,})"/) || [])[1] || null;
+          if (!pid && /error|invalid|400/i.test(t)) throw new Error(t.slice(0, 300));
+          for (const a of acc2) {
+            const e = (post.platforms || []).find((x) => (x.accountId?._id || x.accountId) === a.id);
+            const bad = e && /fail|error/i.test(e.status || '');
+            results.push({platform: a.platform, account: a.name, ok: !bad, id: pid, msg: (bad ? (e.errorMessage || e.status) : 'ok' + (pid ? ` (post ${pid})` : '')) + (a.platform === 'tiktok' ? ' · carrousel photo + musique TikTok' : '')});
+          }
+        } catch (e) { for (const a of acc2) results.push({platform: a.platform, account: a.name, ok: false, msg: zErr(e)}); }
+      }
     } else for (const a of acc) {
       S.zs.busy = `${mode === 'now' ? 'Publication' : 'Programmation'} sur ${a.platform}…`; renderZernio();
       const input = {platform: a.platform, account_id: a.id, content: p.caption || '', media_urls: urls.join(',')};
