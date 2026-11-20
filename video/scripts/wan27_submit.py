@@ -10,7 +10,8 @@ body = {"prompt": open(ptxt).read().strip(), "audio_url": uri(aud),
         "negative_prompt": "texte, sous-titres, logo, musique, visage déformé, lèvres floues, mains devant la bouche"}
 EP = 'https://queue.fal.run/fal-ai/wan/v2.7/image-to-video'
 if img == '-':  # text-to-video: WAN invente la personne et le décor
-    EP = 'https://queue.fal.run/fal-ai/wan/v2.7/text-to-video'; body['aspect_ratio'] = '9:16'
+    # WAN 2.7 text-to-video est retiré chez fal : WAN 2.5 est le seul text-to-video qui accepte un audio imposé (5 ou 10 s)
+    EP = 'https://queue.fal.run/fal-ai/wan-25-preview/text-to-video'; body['aspect_ratio'] = '9:16'; body['duration'] = str(body['duration'])
 else:
     body['image_url'] = uri(img)
 def req(url, data=None):
