@@ -751,7 +751,7 @@ async function boot() {
   clearTimeout(timer);
   if (user) { try { S.me = await user.id(); } catch {} }
   c.use('downloads').then((dl) => { S.dl = dl; if (S.view === 'media') renderMediaDetail(); }).catch(() => {});
-  c.use('mcp').then((m) => { S.mcp = m; if (S.view === 'post') renderZernio(); }).catch(() => {});
+  c.use('mcp').then((m) => { S.mcp = m; if (S.view === 'post') renderZernio(); zSync(); setInterval(zSync, 5 * 60000); }).catch(() => {});
   db.collection('media').onSnapshot((snap) => {
     S.media = snap.docs.map((d) => ({id: d.id, ...d.data()})).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
     S.loaded.media = true; onData();
@@ -759,7 +759,7 @@ async function boot() {
   db.collection('config').onSnapshot((snap) => { const d = snap.docs.find((x) => x.id === 'launch'); S.launch = d ? d.data() : null; if (S.view === 'lancement') render(); }, () => {});
   db.collection('posts').onSnapshot((snap) => {
     S.posts = snap.docs.map((d) => ({id: d.id, ...d.data()}));
-    S.loaded.posts = true; onData();
+    S.loaded.posts = true; onData(); if (!S.zSynced) zSync();
   }, (e) => toast('Posts : ' + errMsg(e), true));
   refreshUsage();
 }
@@ -1314,6 +1314,39 @@ async function zSetDate(d) {
   const v = zLocal(d); S.ed.draft.date = v; const e = $('#e-date'); if (e) e.value = v; await saveEditor();
 }
 function zCurDate() { const p = S.ed?.draft; return p?.date ? new Date(p.date) : null; }
+// Synchronise les posts programmés avec Zernio : statut réel par réseau + liens publiés.
+async function zSync() {
+  if (!S.mcp || !S.loaded?.posts || S.zSyncing) return;
+  const todo = (S.posts || []).filter((p) => p.zernio && p.zernio.mode === 'sched' && p.status !== 'live' && (p.zernio.results || []).some((r) => r.id) && (p.zernio.when || 0) < Date.now() + 60000);
+  S.zSynced = true; if (!todo.length) return; S.zSyncing = true;
+  try {
+    for (const p of todo) {
+      const ids = [...new Set(p.zernio.results.map((r) => r.id).filter(Boolean))]; const plats = {};
+      for (const id of ids) {
+        try {
+          const r = await S.mcp.callTool(ZN, 'call_tool', {name: 'posts_get_post', arguments: {post_id: id}}, {cache: false});
+          const t = zText(r); let j = null; try { j = JSON.parse(JSON.parse(t).result || t); } catch { try { j = JSON.parse(t); } catch {} }
+          for (const e of (j?.post?.platforms || [])) plats[e.platform + '|' + (e.accountId?._id || e.accountId)] = e;
+        } catch {}
+      }
+      if (!Object.keys(plats).length) continue;
+      const results = p.zernio.results.map((r) => {
+        const e = Object.entries(plats).find(([k]) => k.startsWith(r.platform + '|'))?.[1];
+        if (!e) return r;
+        const st = e.status || '';
+        if (st === 'published') return {...r, ok: true, url: e.platformPostUrl || r.url || null, publishedAt: e.publishedAt ? Date.parse(e.publishedAt) : null, msg: 'Publié' + (e.publishedAt ? ' le ' + new Date(e.publishedAt).toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'}) : '')};
+        if (/fail|error/i.test(st)) return {...r, ok: false, msg: 'Échec : ' + (e.errorMessage || st)};
+        return {...r, msg: r.msg};
+      });
+      const pub = results.filter((r) => r.url).length; const done = results.every((r) => r.url || r.ok === false);
+      const changed = results.some((r, i) => r.url !== p.zernio.results[i].url || r.ok !== p.zernio.results[i].ok);
+      if (!changed) continue;
+      const patch = {zernio: {...p.zernio, results, syncedAt: Date.now()}, updatedAt: Date.now()};
+      if (pub && done) patch.status = 'live';
+      try { await S.db.collection('posts').doc(p.id).update(patch); } catch {}
+    }
+  } finally { S.zSyncing = false; }
+}
 function renderZernio() {
   const box = $('#zernio'); if (!box || !S.ed) return;
   const p = S.ed.draft; const z = p.zernio || null; const zs = S.zs || {};
@@ -1323,9 +1356,10 @@ function renderZernio() {
   const sel = zs.sel || Object.fromEntries((acc || []).map((a) => [a.id, (p.networks || []).some((n) => Z_PLAT[n] === a.platform)]));
   S.zs = {...S.zs, sel};
   const zr = z?.results || []; const nOk = zr.filter((r) => r.ok).length;
-  const hist = z ? `<div class="zhist"><b>${nOk === zr.length ? (z.mode === 'now' ? 'Publié partout' : 'Programmé partout') : nOk ? `${z.mode === 'now' ? 'Publié' : 'Programmé'} sur ${nOk} réseau${nOk > 1 ? 'x' : ''} sur ${zr.length}` : 'Échec de la publication'}</b> · via Zernio le ${new Date(z.at).toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'})}${z.when ? ` · pour le ${new Date(z.when).toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'})}` : ''}
+  const nPub = zr.filter((r) => r.url).length;
+  const hist = z ? `<div class="zhist"><b>${nPub && nPub === zr.length ? 'Publié partout' : nPub ? `Publié sur ${nPub} réseau${nPub > 1 ? 'x' : ''} sur ${zr.length}` : nOk === zr.length ? (z.mode === 'now' ? 'Publié partout' : 'Programmé partout') : nOk ? `${z.mode === 'now' ? 'Publié' : 'Programmé'} sur ${nOk} réseau${nOk > 1 ? 'x' : ''} sur ${zr.length}` : 'Échec de la publication'}</b> · via Zernio le ${new Date(z.at).toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'})}${z.when ? ` · pour le ${new Date(z.when).toLocaleString('fr-FR', {dateStyle: 'short', timeStyle: 'short'})}` : ''}
       <div class="zsum">${zr.map((r) => `<span class="${r.ok ? '' : 'ko'}">${r.ok ? '✓' : '✕'} ${esc(Z_NET[r.platform] || r.platform)}</span>`).join('')}</div>
-      <ul>${zr.map((r) => `<li class="${r.ok ? 'ok' : 'ko'}">${r.ok ? '✓' : '✕'} ${esc(Z_NET[r.platform] || r.platform)} · ${esc(r.account || '')} — ${esc(r.msg || '')}</li>`).join('')}</ul></div>` : '';
+      <ul>${zr.map((r) => `<li class="${r.ok ? 'ok' : 'ko'}">${r.ok ? '✓' : '✕'} ${esc(Z_NET[r.platform] || r.platform)} · ${esc(r.account || '')} — ${esc(r.msg || '')}${r.url ? ` · <a href="${esc(r.url)}" target="_blank" rel="noopener">voir le post</a>` : ''}</li>`).join('')}</ul></div>` : '';
   const m = mediaById(p.mediaId); const when = p.date ? new Date(p.date) : null; const future = when && when.getTime() > Date.now() + 5 * 60000;
   box.innerHTML = `<h3>Publier avec Zernio <small>Instagram, Facebook… depuis le CRM</small></h3>${hist}
     ${zs.err ? `<div class="zmsg ko">${esc(zs.err)} <button class="btn sm" data-act="z-reload">Réessayer</button></div>` : ''}
