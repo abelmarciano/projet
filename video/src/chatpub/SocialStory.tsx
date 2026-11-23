@@ -8,7 +8,7 @@ import {CalGrid, NetRows, WaBubble, WaButtons, WaPhone} from '../brief/socialKit
 
 type Word = {w: string; s: number; e: number};
 export type Seg =
-  | {type: 'clip'; src: string; from: number; to: number; words: Word[]; tag?: string; tagColor?: string; night?: boolean; name?: string}
+  | {type: 'clip'; src: string; from: number; to: number; words: Word[]; tag?: string; tagColor?: string; night?: boolean; name?: string; insert?: {img: string; at: number; until: number; label?: string}}
   | {type: 'demo'; mode: 'cal' | 'wa' | 'reco' | 'make'; dur: number; items?: {i: string; t: string; d: string}[]; prompt?: string; ads?: string[]; vo?: string; voWords?: Word[]; title: string}
   | {type: 'end'; dur: number; vo?: string; voWords?: Word[]; title: [string, string]; split?: {left: string; right: string; leftImg: string; rightImg: string}};
 export type StoryCfg = {segs: Seg[]; bed: string; badge?: string};
@@ -47,6 +47,21 @@ const Clip: React.FC<{s: Extract<Seg, {type: 'clip'}>; badge?: string}> = ({s, b
       {badge && <div style={{position: 'absolute', left: 80, top: 260, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 20px', borderRadius: 99, background: 'rgba(255,255,255,0.95)', fontFamily: FONT, fontWeight: 800, fontSize: 28, color: INK, opacity: prog(f, 2, 8)}}><Logo s={30} /> {badge}</div>}
       {s.tag && <div style={{position: 'absolute', left: 80, top: badge ? 340 : 260, padding: '12px 26px', borderRadius: 16, background: s.tagColor ?? '#DC2626', color: '#fff', fontFamily: DISPLAY, fontWeight: 700, fontSize: 48, letterSpacing: '0.04em', transform: `scale(${spring({frame: f - 2, fps: 30, config: {damping: 10}})}) rotate(-3deg)`}}>{s.tag}</div>}
       {s.name && <div style={{position: 'absolute', left: 80, top: 1120, fontFamily: FONT, fontWeight: 700, fontSize: 26, color: 'rgba(255,255,255,0.85)', opacity: prog(f, 4, 8)}}>{s.name}</div>}
+      {s.insert && (() => {
+        const a = Math.round(s.insert.at * 30), b = Math.round(s.insert.until * 30);
+        if (f < a || f > b + 6) return null;
+        const p = spring({frame: f - a, fps: 30, config: {damping: 12}});
+        const o = interpolate(f, [b, b + 6], [1, 0], clamp);
+        return (
+          <>
+            <AbsoluteFill style={{background: `rgba(0,0,0,${0.45 * o})`}} />
+            <div style={{position: 'absolute', left: 220, top: 300, width: 640, opacity: o, transform: `scale(${0.6 + p * 0.4}) rotate(${(1 - p) * -8 + 2}deg)`, transformOrigin: '50% 40%'}}>
+              {s.insert.label && <div style={{display: 'inline-block', marginBottom: 14, padding: '10px 22px', borderRadius: 14, background: '#DC2626', color: '#fff', fontFamily: DISPLAY, fontWeight: 700, fontSize: 40}}>{s.insert.label}</div>}
+              <Img src={staticFile(`media/${s.insert.img}`)} style={{width: 640, borderRadius: 20, boxShadow: '0 40px 90px -20px rgba(0,0,0,0.8)', border: '6px solid #fff', display: 'block'}} />
+            </div>
+          </>
+        );
+      })()}
       <Caps words={s.words} offset={s.from} />
     </AbsoluteFill>
   );

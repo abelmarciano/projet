@@ -4,7 +4,7 @@
  "segs": [
   {
    "type": "clip",
-   "src": "fal/social/out/pov_sketch.mp4",
+   "src": "fal/social/out/pov_sketch_sts.mp4",
    "from": 0.0,
    "to": 4.1,
    "words": [
@@ -83,7 +83,7 @@
   },
   {
    "type": "clip",
-   "src": "fal/social/out/pov_sketch.mp4",
+   "src": "fal/social/out/pov_sketch_sts.mp4",
    "from": 4.12,
    "to": 7.62,
    "words": [
@@ -147,11 +147,17 @@
      "s": 7.3,
      "e": 7.52
     }
-   ]
+   ],
+   "insert": {
+    "img": "fal/social/bad-visuel.png",
+    "at": 0.1,
+    "until": 3.4,
+    "label": "Le visuel 😬"
+   }
   },
   {
    "type": "clip",
-   "src": "fal/social/out/pov_sketch.mp4",
+   "src": "fal/social/out/pov_sketch_sts.mp4",
    "from": 7.62,
    "to": 11.5,
    "words": [
@@ -230,7 +236,7 @@
   },
   {
    "type": "clip",
-   "src": "fal/social/out/pov_sketch.mp4",
+   "src": "fal/social/out/pov_sketch_sts.mp4",
    "from": 11.5,
    "to": 15.0,
    "words": [
@@ -284,7 +290,7 @@
   },
   {
    "type": "clip",
-   "src": "fal/social/out/pov_apres.mp4",
+   "src": "fal/social/out/pov_apres_sts.mp4",
    "from": 0.15,
    "to": 4.85,
    "words": [
