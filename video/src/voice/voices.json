@@ -2434,5 +2434,53 @@
   "style": 0.45,
   "speed": 1.06,
   "text": "[confident] Ta prochaine pub ? Sans tournage."
+ },
+ "dr-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[curious] Un de ces deux clients est réel. L'autre a été créé en une phrase. Lequel ?"
+ },
+ "dr-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Réponds en commentaire… trois, deux, un."
+ },
+ "dr-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[laughs] Raté ! Aucun des deux n'existe. Ils ont été créés dans Grossiti."
+ },
+ "dr-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Tu décris ta pub, tu choisis ton acteur… et la voix et les sous-titres arrivent tout seuls."
+ },
+ "dr-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Un clic, et elle tourne sur Facebook et Instagram."
+ },
+ "dr-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[confident] Une vraie pub. Et tu n'as rien tourné."
  }
 }
