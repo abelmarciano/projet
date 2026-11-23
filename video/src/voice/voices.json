@@ -2482,5 +2482,53 @@
   "style": 0.45,
   "speed": 1.06,
   "text": "[confident] Une vraie pub. Et tu n'as rien tourné."
+ },
+ "ds-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[curious] Regarde bien ces deux personnes. Une seule existe vraiment. Laquelle ?"
+ },
+ "ds-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Écris A ou B en commentaire… trois, deux, un."
+ },
+ "ds-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[laughs] Piège ! Aucune des deux n'existe. Tout a été créé dans Grossiti."
+ },
+ "ds-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Une phrase sur ton activité, un acteur réaliste… et la voix et les sous-titres sont faits pour toi."
+ },
+ "ds-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Un clic, et ta pub est en ligne sur Facebook et Instagram."
+ },
+ "ds-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[confident] Ta pub vidéo ? Prête en une phrase."
  }
 }
