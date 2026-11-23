@@ -2330,5 +2330,61 @@
   "style": 0.45,
   "speed": 1.0,
   "text": "[sighs] Franchement, le soir, quand je rentre du boulot, j'ai zéro énergie pour passer l'aspirateur… Du coup, j'ai pris un aspirateur robot qui aspire et lave le sol en même temps. Je le lance depuis mon téléphone avant de partir… [laughs softly] et quand je rentre, c'est propre. Honnêtement, je sais pas pourquoi j'ai attendu aussi longtemps. Le lien est juste en dessous !"
+ },
+ "ns-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[whispers] Pendant que tu dormais… [excited] ta pub a bossé."
+ },
+ "ns-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Hier soir, vingt-trois heures. Une seule phrase dans Grossiti."
+ },
+ "ns-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Il trouve l'idée, choisit l'actrice et monte la vidéo."
+ },
+ "ns-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Il la lance sur Facebook et Instagram, autour de chez toi."
+ },
+ "ns-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Toute la nuit, il ajuste le budget et teste de nouvelles versions."
+ },
+ "ns-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[excited] Au réveil… les commandes t’attendent."
+ },
+ "ns-7": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[confident] Toi, tu dors. Grossiti bosse."
  }
 }

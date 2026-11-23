@@ -123,6 +123,7 @@ import {Conversion} from './conv/Conversion';
 import {LeadsDemoVideo} from './leads/LeadsDemo';
 import {LeadsBuyVideo, LeadsBuyVertical} from './leads/LeadsBuy';
 import {BoutonVideo} from './bouton/Bouton';
+import {NightShift, NS} from './night/NightShift';
 import {LightChatPub, lightTimeline, LightCfg} from './chatpub/LightChatPub';
 import {SocialStory, StoryCfg, storyTotal} from './chatpub/SocialStory';
 import lr4Cfg from './chatpub/lr4.json';
@@ -239,6 +240,7 @@ export const Root: React.FC = () => (
     <Composition id="LeadsBuy" component={LeadsBuyVideo} durationInFrames={2004} fps={30} width={1920} height={1080} />
     <Composition id="LeadsBuy-9x16" component={LeadsBuyVertical} durationInFrames={2004} fps={30} width={1080} height={1920} />
     <Composition id="Bouton" component={BoutonVideo} durationInFrames={660} fps={30} width={1080} height={1920} />
+    <Composition id="NightShift" component={NightShift} durationInFrames={NS.total} fps={30} width={1080} height={1920} />
     <Composition id="Launch-calendrier" component={SocialStory} durationInFrames={storyTotal(lr4Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr4Cfg as unknown as StoryCfg}} />
     <Composition id="Launch-whatsapp" component={SocialStory} durationInFrames={storyTotal(lr5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr5Cfg as unknown as StoryCfg}} />
     <Composition id="AvantApres-julien" component={SocialStory} durationInFrames={storyTotal(av5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: av5Cfg as unknown as StoryCfg}} />
