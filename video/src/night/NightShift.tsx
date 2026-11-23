@@ -2,7 +2,7 @@
 // (texte entre x 110–970 et y 230–1440).
 // Accroche : un téléphone verrouillé à 07:12 qui vibre, les notifications de commandes tombent en cascade.
 // Retour à la veille 23:47 : une phrase → idée, actrice, montage → lancée sur Facebook et Instagram autour de chez toi →
-// pilotée toute la nuit → au réveil les commandes attendent → « Toi, tu dors. Growthity bosse. »
+// diffusée toute seule toute la nuit → au réveil les commandes attendent → « Toi, tu dors. Growthity bosse. »
 // Aucun chiffre de résultat ; une seule actrice (Solène), marque de bougies fictive.
 import React, {useEffect, useState} from 'react';
 import {AbsoluteFill, Audio, OffthreadVideo, Sequence, continueRender, delayRender, interpolate, random, spring, staticFile, useCurrentFrame} from 'remotion';
@@ -176,8 +176,8 @@ const Publish: React.FC = () => {
   );
 };
 
-// ---------- 4. toute la nuit, il pilote ----------
-const LOG = [['00:41', 'Budget déplacé sur la meilleure version'], ['02:18', 'Nouvelle accroche mise en test'], ['04:05', 'Version fatiguée coupée'], ['06:30', 'Diffusion relancée pour le réveil']];
+// ---------- 4. toute la nuit, ta pub tourne ----------
+const LOG = [['00:41', 'Vue par quelqu’un près de chez toi'], ['02:18', 'Un clic sur ta pub'], ['04:05', 'Visite de ta boutique'], ['06:30', 'Toujours en diffusion']];
 const Night: React.FC = () => {
   const f = useCurrentFrame();
   if (f < NS.night - 2 || f > NS.wake + 10) return null;
@@ -190,14 +190,14 @@ const Night: React.FC = () => {
     <AbsoluteFill style={{opacity: 1 - out}}>
       <div style={{position: 'absolute', left: 0, right: 0, top: 470, textAlign: 'center', fontFamily: FONT, fontWeight: 800, fontSize: 130, letterSpacing: '-0.04em', color: '#fff', opacity: inP}}>{clock}</div>
       <div style={{position: 'absolute', left: 120, right: 120, top: 660, padding: '30px 30px 20px', borderRadius: 36, background: 'rgba(30,27,75,0.92)', border: '1px solid #2A2560', boxShadow: SH_LG, transform: `translateY(${(1 - inP) * 60}px)`, opacity: inP}}>
-        <div style={{display: 'flex', alignItems: 'center', gap: 14, fontFamily: FONT, fontWeight: 800, fontSize: 32, color: '#fff'}}><span style={{width: 56, height: 56, borderRadius: 17, background: '#fff', display: 'grid', placeItems: 'center'}}><LogoMark size={34} /></span>Ton media buyer<span style={{marginLeft: 'auto', padding: '8px 16px', borderRadius: 999, background: '#2A2560', color: '#C7D2FE', fontSize: 22}}>☾ actif</span></div>
+        <div style={{display: 'flex', alignItems: 'center', gap: 14, fontFamily: FONT, fontWeight: 800, fontSize: 32, color: '#fff'}}><span style={{width: 56, height: 56, borderRadius: 17, background: '#fff', display: 'grid', placeItems: 'center'}}><Brand k="meta" s={36} /></span>Ta pub sur Meta<span style={{marginLeft: 'auto', padding: '8px 16px', borderRadius: 999, background: '#14532D', color: '#86EFAC', fontSize: 22}}>● En diffusion</span></div>
         <div style={{marginTop: 26, display: 'flex', flexDirection: 'column', gap: 14}}>
           {LOG.map(([t, a], i) => {
             const at = NS.night + 14 + Math.round((i * (dur - 30)) / LOG.length);
             const p = sp(f - at, 12);
             return f >= at ? <div key={t} style={{display: 'flex', alignItems: 'center', gap: 16, padding: '18px 18px', borderRadius: 20, background: '#1E1B4B', fontFamily: FONT, opacity: Math.min(1, p * 1.5), transform: `translateX(${(1 - p) * 60}px)`}}>
               <span style={{fontWeight: 800, fontSize: 24, color: '#A5B4FC', width: 78}}>{t}</span>
-              <span style={{width: 40, height: 40, borderRadius: 12, background: GRAD, color: '#fff', display: 'grid', placeItems: 'center', fontSize: 22, flex: 'none'}}>✓</span>
+              <span style={{width: 40, height: 40, borderRadius: 12, background: '#2A2560', display: 'grid', placeItems: 'center', flex: 'none'}}><Brand k={i % 2 ? 'instagram' : 'facebook'} s={24} c="#fff" /></span>
               <span style={{fontWeight: 700, fontSize: 27, color: '#fff'}}>{a}</span>
             </div> : null;
           })}
@@ -266,7 +266,7 @@ export const NightShift: React.FC = () => {
       <Chat />
       <Title start={NS.pub + 2} end={NS.night} a="Lancée sur Meta," b="autour de chez toi." size={86} />
       <Publish />
-      <Title start={NS.night + 2} end={NS.wake} a="Toute la nuit," b="il pilote." size={96} dark={isNight(f)} />
+      <Title start={NS.night + 2} end={NS.wake} a="Toute la nuit," b="ta pub tourne." size={96} dark={isNight(f)} />
       <Night />
       <Title start={NS.wake + 2} end={NS.end} a="Au réveil, les commandes" b="t’attendent." size={70} />
       <Wake />
