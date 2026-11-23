@@ -2386,5 +2386,53 @@
   "style": 0.45,
   "speed": 1.06,
   "text": "[confident] Toi, tu dors. Grossiti bosse."
+ },
+ "dq-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[curious] Une de ces deux vidéos a été tournée avec un vrai acteur. Laquelle ?"
+ },
+ "dq-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Dis-le en commentaire… trois, deux, un."
+ },
+ "dq-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[laughs] Aucune des deux ! Elles ont été créées dans Grossiti."
+ },
+ "dq-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "Tu écris une phrase, tu choisis ton acteur… et la voix et les sous-titres sont ajoutés tout seuls."
+ },
+ "dq-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "En un clic, ta pub part sur Facebook et Instagram."
+ },
+ "dq-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.06,
+  "text": "[confident] Ta prochaine pub ? Sans tournage."
  }
 }
