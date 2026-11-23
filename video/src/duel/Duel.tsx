@@ -4,7 +4,7 @@
 // (incite à commenter), révélation « aucune des deux, créées dans Growthity », puis comment : une phrase, un acteur,
 // voix + sous-titres, publiée sur Meta en un clic → « Ta prochaine pub ? Sans tournage. »
 // Aucun chiffre de résultat ; deux personnes qui n'apparaissent dans aucun autre short (Léa — isolation,
-// homme inventé par WAN — aspirateur).
+// homme en pull gris — aspirateur v1).
 import React, {useEffect, useState} from 'react';
 import {AbsoluteFill, Audio, Img, OffthreadVideo, Sequence, continueRender, delayRender, interpolate, random, spring, staticFile, useCurrentFrame} from 'remotion';
 import '@fontsource/inter/600.css';
@@ -37,7 +37,7 @@ const cue = (k: number, start: string, d = 0) => {
   return VO[k] + Math.round((w ? w.s : d) * 30);
 };
 const VA = staticFile('media/isolation/iso-wan.mp4');
-const VB = staticFile('media/wan-aspi3/aspi-wan.mp4');
+const VB = staticFile('media/wan-aspi2/aspi-wan.mp4');
 const Brand: React.FC<{k: string; s: number; c?: string}> = ({k, s, c}) => <svg width={s} height={s} viewBox="0 0 24 24"><path d={BRAND_PATHS[k]} fill={c ?? ({facebook: '#0866FF', instagram: '#FF0069', meta: '#0866FF'} as Record<string, string>)[k]} /></svg>;
 
 const useFonts = () => {
@@ -94,7 +94,7 @@ const Duel: React.FC = () => {
   return (
     <AbsoluteFill style={{opacity: 1 - out, transform: `scale(${1 - out * 0.08})`}}>
       <Card src={VA} x={110} label="A" from={60} reveal={reveal} tilt={-3} />
-      <Card src={VB} x={570} label="B" from={30} reveal={reveal + 6} tilt={3} />
+      <Card src={VB} x={570} label="B" from={75} reveal={reveal + 6} tilt={3} />
       {f >= DS.count && f < reveal && (
         <>
           {[['💬 A !', 140, 1210, 0], ['💬 Clairement B', 560, 1250, 9], ['💬 A, j’en suis sûr', 300, 1320, 18]].map(([t, x, y, d]) => {
