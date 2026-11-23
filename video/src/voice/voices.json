@@ -2530,5 +2530,93 @@
   "style": 0.45,
   "speed": 1.06,
   "text": "[confident] Ta pub vidéo ? Prête en une phrase."
+ },
+ "gl-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.05,
+  "text": "[excited] Grossiti est en ligne. Vos pubs et vos posts, générés et publiés en deux minutes."
+ },
+ "gl-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.05,
+  "text": "Vous écrivez une phrase. Par exemple : je veux une pub pour le Black Friday."
+ },
+ "gl-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.05,
+  "text": "Grossiti analyse votre marque : votre ton, vos couleurs, votre logo."
+ },
+ "gl-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.05,
+  "text": "Vous choisissez le produit…"
+ },
+ "gl-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.05,
+  "text": "puis l'acteur, parmi plus de cent quarante visages réalistes."
+ },
+ "gl-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.05,
+  "text": "Et votre vidéo est prête : le script, la voix, les sous-titres."
+ },
+ "gl-7": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.05,
+  "text": "Vous la lancez sur Meta Ads, Facebook et Instagram. Même sans compte, vous êtes guidé."
+ },
+ "gl-8": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.05,
+  "text": "Votre media buyer analyse vos résultats, et vous dit quoi améliorer."
+ },
+ "gl-9": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.05,
+  "text": "Vous publiez aussi sur tous vos réseaux : Instagram, TikTok, YouTube, LinkedIn."
+ },
+ "gl-10": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.05,
+  "text": "Et vous êtes alerté sur WhatsApp : un nouveau lead, une pub qui s'essouffle."
+ },
+ "gl-11": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.5,
+  "style": 0.4,
+  "speed": 1.05,
+  "text": "[confident] Votre prochaine pub est à une phrase. Rendez-vous sur Grossiti point A I."
  }
 }
