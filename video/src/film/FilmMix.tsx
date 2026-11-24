@@ -312,7 +312,7 @@ const S5: React.FC = () => (
     return (<>
       <div style={{position: 'absolute', left: RX, top: 150, width: 440, height: 782, borderRadius: 54, padding: 12, background: '#16141A', boxShadow: '0 60px 100px -40px rgba(0,0,0,.6)', transform: `translateY(${(1 - ph) * 200}px) rotate(${(1 - ph) * 6}deg)`}}>
         <div style={{width: '100%', height: '100%', borderRadius: 44, overflow: 'hidden', position: 'relative'}}>
-          <div style={{position: 'absolute', inset: 0, transform: `scale(${[1, 1.06, 1.02, 1.08, 1.03, 1.06][Math.floor(f / 24) % 6]})`, transformOrigin: '50% 75%'}}><LoopVid src="brume/ugc.mp4" style={{width: '100%', height: '100%', objectFit: 'cover'}} /></div>
+          <div style={{position: 'absolute', inset: 0, transform: 'none'}}><LoopVid src="brume/ugc.mp4" style={{width: '100%', height: '100%', objectFit: 'cover'}} /></div>
           <BrumeCaps f={f} />
           {[['😮‍💨', 18, 200, 'enlève'], ['☁️', 340, 230, 'doux'], ['👌', 18, 380, 'parfaite'], ['🔥', 340, 360, 'confortable']].map(([e, x, y, w]) => { const t = BW.find((z) => z.w.toLowerCase().startsWith(w as string)); const q = sp(f - Math.round((t ? t.s : 1) * 30), 9); return <div key={e as string} style={{position: 'absolute', left: x as number, top: (y as number) - q * 30, fontSize: 54, transform: `scale(${q}) rotate(${(1 - q) * 40}deg)`, opacity: q > 0.05 ? 1 : 0}}>{e}</div>; })}
           <div style={{position: 'absolute', left: 16, right: 16, bottom: 16, height: 5, borderRadius: 3, background: 'rgba(255,255,255,.35)'}}><div style={{width: `${Math.min(100, f / 2.4)}%`, height: '100%', borderRadius: 3, background: '#fff'}} /></div>
@@ -341,7 +341,7 @@ const BrumeCaps: React.FC<{f: number}> = ({f}) => {
   if (i < 0 || t < BW[0].s - 0.05) return null;
   const grp = BW.slice(Math.floor(i / 2) * 2, Math.floor(i / 2) * 2 + 2);
   return (
-    <div style={{position: 'absolute', left: 16, right: 16, top: 255, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8, fontFamily: FONT}}>
+    <div style={{position: 'absolute', left: 16, right: 16, top: 330, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8, fontFamily: FONT}}>
       {grp.map((w, j) => { const on = t >= w.s - 0.02; const hot = on && t <= w.e + 0.06; const p = sp(Math.round((t - w.s) * 30), 9); return <span key={j} style={{fontWeight: 900, fontSize: 40, letterSpacing: '-0.01em', textTransform: 'uppercase', color: hot ? '#fff' : '#fff', background: hot ? ACC : 'transparent', padding: '2px 10px', borderRadius: 10, textShadow: hot ? 'none' : '0 3px 10px rgba(0,0,0,.8), 0 0 3px rgba(0,0,0,.9)', opacity: on ? 1 : 0, transform: `scale(${on ? 0.7 + 0.3 * p : 0.7})`}}>{w.w.replace(/[.,:?!]$/, '')}</span>; })}
     </div>
   );
