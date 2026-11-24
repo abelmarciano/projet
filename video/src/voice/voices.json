@@ -2238,10 +2238,10 @@
  "lm-1": {
   "voice": "3Tp5mYhT9wrfnry9pzvV",
   "model": "eleven_v4",
-  "stability": 0.5,
-  "style": 0.4,
-  "speed": 1.06,
-  "text": "Tu connectes ton compte Meta Ads. Tu n'en as pas, ou tu n'y connais rien ? Tu es guidé de A à Z."
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "[confident] Grossiti est en ligne. Vos pubs et vos posts, générés et publiés en deux minutes."
  },
  "lc-1": {
   "voice": "3Tp5mYhT9wrfnry9pzvV",
@@ -2770,5 +2770,85 @@
   "style": 0.45,
   "speed": 1.07,
   "text": "[confident] Votre prochaine campagne est à une phrase. Grossiti point A I."
+ },
+ "lm-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "Étape un : une phrase. « Une pub pour Noël, pour mes bijoux. »"
+ },
+ "lm-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "Grossiti analyse votre site et votre Instagram : votre ton, vos couleurs, vos clients."
+ },
+ "lm-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "Votre catalogue est déjà importé. Choisissez le produit…"
+ },
+ "lm-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "puis le visage qui va le présenter, parmi des centaines d'acteurs réalistes."
+ },
+ "lm-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "Script, voix, sous-titres, montage : votre vidéo est prête."
+ },
+ "lm-7": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "Un clic, et elle part sur Meta Ads. Dès un euro par jour, zéro commission."
+ },
+ "lm-8": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "Ensuite, votre media buyer IA analyse vos résultats, et vous dit quoi améliorer."
+ },
+ "lm-9": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "Et en plus, postez sur tous vos réseaux : vous planifiez, Grossiti publie."
+ },
+ "lm-10": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "Un nouveau lead ? Une pub qui s'essouffle ? Vous êtes prévenu sur WhatsApp."
+ },
+ "lm-11": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "[confident] Votre prochaine pub est à une phrase. Grossiti point A I."
  }
 }
