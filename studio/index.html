@@ -626,6 +626,62 @@ tbody tr:hover td { background: var(--hover) }
   .toast { bottom: calc(84px + env(safe-area-inset-bottom, 0px)) }
   .menu.mob { position: fixed; left: 16px; right: 16px; width: auto; top: auto; bottom: calc(76px + env(safe-area-inset-bottom, 0px)) }
 }
+
+/* ---- page Ads : campagne de lancement ---- */
+.adhero { display: grid; grid-template-columns: 1.25fr 1fr; gap: 28px; padding: 30px 32px; border-radius: 22px; border: 1px solid var(--line); background: radial-gradient(700px 360px at 92% 0%, rgba(91,63,228,.16), transparent 70%), radial-gradient(500px 300px at 0% 100%, rgba(37,99,235,.08), transparent 70%), var(--panel); box-shadow: var(--sh-1); margin-bottom: 16px; animation: in .3s var(--ease) both }
+.eyebrow-c { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 650; letter-spacing: .04em; color: var(--accent); background: var(--accent-soft); padding: 5px 11px; border-radius: 999px }
+.eyebrow-c .dot { width: 7px; height: 7px; border-radius: 9px; background: #16A35B; box-shadow: 0 0 0 4px rgba(22,163,91,.18) }
+.adhero h1 { margin: 14px 0 0; font: 720 40px/1.04 var(--f-display); letter-spacing: -.045em; text-wrap: balance }
+.adhero h1 em { font-style: normal; background: linear-gradient(120deg,#2563EB,#5B3FE4 52%,#9333EA); -webkit-background-clip: text; background-clip: text; color: transparent }
+.adhero p { margin: 12px 0 0; color: var(--ink-2); font-size: 15px; max-width: 56ch; line-height: 1.55 }
+.adhero-k { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap }
+.adhero-k span { padding: 7px 13px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); font-size: 13px; color: var(--muted) }
+.adhero-k b { color: var(--ink); font-weight: 750; margin-right: 3px }
+.adhero-s { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; align-content: center }
+.adhero-s li { display: flex; gap: 12px; align-items: flex-start; padding: 11px 13px; border-radius: 13px; background: rgba(255,255,255,.7); border: 1px solid var(--line); font-size: 13px; line-height: 1.45; color: var(--ink-2) }
+.adhero-s li span { flex: none; width: 22px; height: 22px; border-radius: 7px; display: grid; place-items: center; background: var(--ink); color: #fff; font: 700 11.5px var(--f-mono) }
+.adfacts { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 10px; margin-bottom: 30px }
+.adf { display: flex; gap: 11px; align-items: center; padding: 13px 14px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); box-shadow: var(--sh-1); min-width: 0 }
+.adf-i { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent) }
+.adf-i svg { width: 18px; height: 18px }
+.adf small { display: block; font-size: 11.5px; color: var(--muted); font-weight: 550 }
+.adf b { display: block; font-size: 13.5px; font-weight: 680; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+.adsec { display: flex; align-items: center; gap: 12px; margin-bottom: 14px }
+.adsec h2 { margin: 0; font: 700 20px var(--f-display); letter-spacing: -.03em }
+.adgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 16px; margin-bottom: 30px }
+.adx { display: flex; flex-direction: column; gap: 10px; animation: in .35s var(--ease) both; animation-delay: var(--d) }
+.adx-top { display: flex; align-items: center; gap: 10px; min-width: 0 }
+.adx-top b { display: block; font-size: 13.5px; font-weight: 700 }
+.adx-top small { display: block; font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px }
+.adx-rank { flex: none; width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; background: linear-gradient(135deg,#2563EB,#5B3FE4 55%,#9333EA); color: #fff; font: 750 14px var(--f-display); box-shadow: 0 8px 18px -8px rgba(91,63,228,.8) }
+.fb { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 1px 2px rgba(20,20,40,.04), 0 18px 40px -26px rgba(20,20,60,.45); cursor: pointer; transition: transform .2s var(--ease), box-shadow .2s; color: #1C1E21 }
+.fb:hover { transform: translateY(-3px); box-shadow: 0 1px 2px rgba(20,20,40,.04), 0 28px 56px -28px rgba(20,20,60,.55) }
+.fb-h { display: flex; align-items: center; gap: 9px; padding: 11px 12px 6px }
+.fb-av { width: 34px; height: 34px; border-radius: 99px; display: grid; place-items: center; color: #fff; font: 800 15px var(--f-display); background: linear-gradient(135deg,#2563EB,#5B3FE4 55%,#9333EA) }
+.fb-h b { display: block; font-size: 13px; font-weight: 700 }
+.fb-h small { display: flex; align-items: center; gap: 4px; font-size: 11.5px; color: #65676B }
+.fb-dots { color: #65676B; font-weight: 800; letter-spacing: 1px }
+.fb-t { margin: 0; padding: 2px 12px 10px; font-size: 13px; line-height: 1.42; white-space: pre-line; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden }
+.fb-m { position: relative; aspect-ratio: 4/5; background: #111; overflow: hidden }
+.fb-m .fb-bed { position: absolute; inset: -20px; background-size: cover; background-position: center; filter: blur(18px) brightness(.8) }
+.fb-m img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30% }
+.fb-m .cv { position: absolute; inset: 0; border-radius: 0 }
+.fb-m .pbtn { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%) }
+.fb-fmt { position: absolute; right: 9px; top: 9px; font: 600 10.5px var(--f-mono); color: #fff; background: rgba(0,0,0,.5); padding: 3px 7px; border-radius: 6px; backdrop-filter: blur(4px) }
+.fb-f { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #F0F2F5 }
+.fb-f > div { flex: 1; min-width: 0 }
+.fb-f small { display: block; font-size: 10.5px; color: #65676B; letter-spacing: .03em }
+.fb-f b { display: block; font-size: 13.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+.fb-cta { flex: none; background: #E4E6EB; color: #050505; font-weight: 700; font-size: 13px; padding: 8px 12px; border-radius: 7px }
+.adx-why { margin: 0; font-size: 12.5px; line-height: 1.45; color: var(--ink-2); padding: 0 2px }
+.adx-act { display: flex; gap: 6px; flex-wrap: wrap }
+.adold { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); padding: 4px 16px 4px; margin-bottom: 30px }
+.adold summary { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 12px 0; font-weight: 650; list-style: none }
+.adold summary::-webkit-details-marker { display: none }
+.adold summary small { color: var(--muted); font-weight: 500 }
+.adold[open] { padding-bottom: 16px }
+@media (max-width: 1100px) { .adfacts { grid-template-columns: repeat(2, minmax(0,1fr)) } .adhero { grid-template-columns: 1fr } }
+@media (max-width: 640px) { .adhero { padding: 22px 18px } .adhero h1 { font-size: 30px } .adfacts { grid-template-columns: 1fr } }
 </style>
 
 <div class="app">
@@ -756,7 +812,7 @@ async function boot() {
     S.media = snap.docs.map((d) => ({id: d.id, ...d.data()})).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
     S.loaded.media = true; onData();
   }, (e) => toast('Médias : ' + errMsg(e), true));
-  db.collection('config').onSnapshot((snap) => { const d = snap.docs.find((x) => x.id === 'launch'); S.launch = d ? d.data() : null; if (S.view === 'lancement') render(); }, () => {});
+  db.collection('config').onSnapshot((snap) => { const d = snap.docs.find((x) => x.id === 'launch'); S.launch = d ? d.data() : null; const da = snap.docs.find((x) => x.id === 'ads'); S.adcamp = da ? da.data() : null; if (S.view === 'lancement' || S.view === 'ads') render(); }, () => {});
   db.collection('posts').onSnapshot((snap) => {
     S.posts = snap.docs.map((d) => ({id: d.id, ...d.data()}));
     S.loaded.posts = true; onData(); if (!S.zSynced) zSync();
@@ -975,21 +1031,48 @@ function cardHTML(p) {
 function bindSearch() { const q = $('#q'); if (!q) return; q.oninput = () => { S.q = q.value; const pos = q.selectionStart; render(); const n = $('#q'); n.focus(); n.setSelectionRange(pos, pos); }; }
 
 // ---------- ads ----------
+// Page Ads : la campagne prête à lancer (config/ads + ads campaign: 'lancement'), en aperçus façon fil Meta, puis les autres ads repliées.
+function adPreview(a, i) {
+  const m = mediaById(a.mediaId); const ad = a.ad || {}; const txt = a.caption || ad.primary || ''; const src = srcOf(m);
+  return `<article class="adx" style="--d:${i * 60}ms">
+    <div class="adx-top"><span class="adx-rank">${a.rank || i + 1}</span><div><b>${esc(a.angle || 'Créa')}</b><small>${esc(a.title || '')}</small></div><span class="grow"></span>${pill(stOf(a))}</div>
+    <div class="fb" data-act="open" data-id="${a.id}" tabindex="0" role="button" aria-label="Ouvrir ${esc(a.title || 'la pub')}">
+      <div class="fb-h"><span class="fb-av">G</span><div><b>Growthity AI</b><small>Sponsorisé · <svg width="10" height="10" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M2 12h20M12 2c3 3 3 17 0 20M12 2c-3 3-3 17 0 20" fill="none" stroke="currentColor" stroke-width="2"/></svg></small></div><span class="grow"></span><span class="fb-dots">···</span></div>
+      <p class="fb-t">${esc(txt)}</p>
+      <div class="fb-m">${src ? `<span class="fb-bed" style="background-image:url('${src}')"></span><img src="${src}" alt="" loading="lazy" draggable="false">` : cover(m)}${playBadge(m)}<span class="fb-fmt">${esc(a.format || m?.format || '9:16')}</span></div>
+      <div class="fb-f"><div><small>GROWTHITY.AI</small><b>${esc(ad.headline || a.title || '')}</b></div><span class="fb-cta">${esc(ad.cta || 'Commencer')}</span></div>
+    </div>
+    ${a.why ? `<p class="adx-why">${esc(a.why)}</p>` : ''}
+    <div class="adx-act"><button class="btn sm" data-act="adcopy" data-id="${a.id}">${IC.copy || ''} Copier texte + titre</button><button class="btn sm quiet" data-act="open" data-id="${a.id}">Modifier</button></div>
+  </article>`;
+}
 function vAds(main) {
   const all = S.posts.filter((p) => p.type === 'ad');
-  const ads = all.filter((a) => (S.adFilter === 'all' || a.status === S.adFilter) && matchQ(a)).sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
-  const counts = {}; all.forEach((a) => (counts[a.status] = (counts[a.status] || 0) + 1));
+  const C = S.adcamp || {};
+  const order = C.order || [];
+  const camp = all.filter((a) => a.campaign === 'lancement').sort((x, y) => (order.indexOf(x.id) + 99) % 99 - (order.indexOf(y.id) + 99) % 99 || (x.rank || 9) - (y.rank || 9));
+  const others = all.filter((a) => a.campaign !== 'lancement' && matchQ(a)).sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+  const ready = camp.filter((a) => a.status === 'ready' || a.status === 'live').length;
+  const facts = [['Campagne', C.name || 'Lancement Growthity', IC.ad], ['Objectif', C.objective || 'Inscriptions', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>'], ['Ensemble', C.adset || 'France · ciblage large', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17 14c2.4.2 4 1.8 4.6 4.5"/></svg>'], ['Placements', 'Advantage+ (automatiques)', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="7" height="16" rx="2"/><rect x="14" y="4" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="6" rx="2"/></svg>'], ['Bouton', (C.cta || 'Commencer') + ' → ' + (C.link || 'growthity.ai').replace(/^https?:\/\//, ''), '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>']];
   main.innerHTML = `<div class="page">
-    <div class="ph"><div><div class="eyebrow">${IC.ad.replace('<svg', '<svg width="14" height="14"')} Meta Ads</div><h1>Ads</h1><p>Vos publicités Facebook et Instagram : créa, objectif, budget, bouton d’action et lien.</p></div><span class="grow"></span><button class="btn primary" data-act="new" data-type="ad">${IC.plus} Nouvelle ad</button></div>
-    <div class="stats"><button class="stat" data-act="adf" data-st="all" aria-pressed="${S.adFilter === 'all'}">Toutes <b>${all.length}</b></button>
-      ${Object.entries(AD_STATUS).map(([k, s]) => `<button class="stat" data-act="adf" data-st="${k}" aria-pressed="${S.adFilter === k}">${pill(s)}<b>${counts[k] || 0}</b></button>`).join('')}</div>
-    <div class="toolbar"><label class="search">${IC.search}<span class="sr">Rechercher</span><input id="q" type="search" placeholder="Rechercher une ad…" value="${esc(S.q)}"></label></div>
-    ${loading() ? skel(4, '5/1') : ads.length ? `<div class="tbl"><table><thead><tr><th>Publicité</th><th>Statut</th><th>Objectif</th><th>Format</th><th>Budget / jour</th><th>Bouton</th><th>Lancement</th></tr></thead><tbody>
-      ${ads.map((a) => { const m = mediaById(a.mediaId); const ad = a.ad || {}; return `<tr data-act="open" data-id="${a.id}" tabindex="0">
-        <td><div class="adn">${cover(m)}<div>${esc(a.title || 'Sans titre')}<small>${m ? esc(KINDS[m.kind]) : 'Sans média'}${ad.audience ? ' · ' + esc(ad.audience) : ''}</small></div></div></td>
-        <td>${pill(stOf(a))}</td><td>${esc(ad.objective || '—')}</td><td><span class="tag mono">${esc(a.format || '—')}</span></td>
-        <td class="mono">${ad.budget ? esc(ad.budget) + ' €' : '—'}</td><td>${esc(ad.cta || '—')}</td><td class="mono">${a.date ? new Date(a.date).toLocaleDateString('fr-FR', {day: 'numeric', month: 'short'}) : '—'}</td></tr>`; }).join('')}
-      </tbody></table></div>` : `<div class="empty"><b>${all.length ? 'Aucune ad pour ce filtre' : 'Aucune publicité'}</b>${all.length ? 'Changez de statut ou de recherche.' : 'Créez une ad à partir d’une vidéo ou d’un visuel de la médiathèque.'}<br><button class="btn primary" data-act="new" data-type="ad">${IC.plus} Nouvelle ad</button></div>`}</div>`;
+    <section class="adhero">
+      <div class="adhero-l"><div class="eyebrow-c"><span class="dot"></span> Meta Ads · prête à lancer</div>
+        <h1>La campagne de <em>lancement</em></h1>
+        <p>Une campagne, un seul ensemble, et seulement les créas qui accrochent dès la première seconde. Copiez chaque texte dans le Gestionnaire de publicités, importez la vidéo, c’est parti.</p>
+        <div class="adhero-k"><span><b>${camp.length}</b> créas</span><span><b>${ready}</b> prêtes</span><span><b>1</b> ensemble</span></div></div>
+      <ol class="adhero-s">${(C.steps || []).map((t, i) => `<li><span>${i + 1}</span>${esc(t)}</li>`).join('')}</ol>
+    </section>
+    <div class="adfacts">${facts.map(([k, v, ic]) => `<div class="adf"><span class="adf-i">${ic}</span><div><small>${k}</small><b>${esc(v)}</b></div></div>`).join('')}</div>
+    <div class="adsec"><h2>Les créas à lancer</h2><span class="grow"></span><button class="btn primary" data-act="new" data-type="ad">${IC.plus} Nouvelle ad</button></div>
+    ${loading() ? skel(5, '9/16') : camp.length ? `<div class="adgrid">${camp.map(adPreview).join('')}</div>` : `<div class="empty"><b>Aucune créa dans la campagne</b>Ajoutez des ads avec le champ « campaign: lancement ».</div>`}
+    <details class="adold"${S.q ? ' open' : ''}><summary><span>Autres ads</span><span class="tag">${others.length}</span><span class="grow"></span><small>Brouillons et anciennes versions, hors campagne</small></summary>
+      <div class="toolbar"><label class="search">${IC.search}<span class="sr">Rechercher</span><input id="q" type="search" placeholder="Rechercher une ad…" value="${esc(S.q)}"></label></div>
+      ${others.length ? `<div class="tbl"><table><thead><tr><th>Publicité</th><th>Statut</th><th>Objectif</th><th>Format</th><th>Bouton</th></tr></thead><tbody>
+      ${others.map((a) => { const m = mediaById(a.mediaId); const ad = a.ad || {}; return `<tr data-act="open" data-id="${a.id}" tabindex="0">
+        <td><div class="adn">${cover(m)}<div>${esc(a.title || 'Sans titre')}<small>${m ? esc(KINDS[m.kind]) : 'Sans média'}</small></div></div></td>
+        <td>${pill(stOf(a))}</td><td>${esc(ad.objective || '—')}</td><td><span class="tag mono">${esc(a.format || '—')}</span></td><td>${esc(ad.cta || '—')}</td></tr>`; }).join('')}
+      </tbody></table></div>` : `<div class="empty"><b>Rien d’autre ici</b></div>`}</details>
+  </div>`;
   bindSearch();
 }
 
@@ -1218,6 +1301,7 @@ function vEditor(main) {
             <div class="fld"><label for="a-budget">Budget par jour (€)</label><input id="a-budget" data-af="budget" inputmode="decimal" value="${esc(ad.budget || '')}" placeholder="ex. 20"></div></div>
           <div class="r2"><div class="fld"><label for="a-cta">Bouton</label><select id="a-cta" data-af="cta">${CTAS.map((o) => `<option ${o === ad.cta ? 'selected' : ''}>${o}</option>`).join('')}</select></div>
             <div class="fld"><label for="a-link">Lien de destination</label><input id="a-link" data-af="link" value="${esc(ad.link || '')}" placeholder="https://growthity.ai"></div></div>
+          <div class="fld"><label for="a-hl">Titre (sous la vidéo)</label><input id="a-hl" data-af="headline" value="${esc(ad.headline || '')}" placeholder="ex. Une phrase = une pub vidéo"></div>
           <div class="fld"><label for="a-aud">Audience</label><input id="a-aud" data-af="audience" value="${esc(ad.audience || '')}" placeholder="ex. e-commerçants, France, 25-55 ans"></div></div>` : ''}
         <div class="panel" id="coverp"></div>
         ${isAd || isNew ? '' : '<div class="panel" id="zernio"></div>'}
@@ -1629,6 +1713,7 @@ document.addEventListener('click', async (ev) => {
     case 'cal-mode': S.calMode = d.mode; if (d.mode === 'week') { const n = new Date(); S.weekStart = sow(S.month.getMonth() === n.getMonth() && S.month.getFullYear() === n.getFullYear() ? n : S.month); } render(); return;
     case 'netf': S.netFilter = d.net; render(); return;
     case 'adf': S.adFilter = d.st; render(); return;
+    case 'adcopy': { const a = S.posts.find((x) => x.id === d.id); if (!a) return; const ad = a.ad || {}; const t = `${a.caption || ad.primary || ''}\n\nTitre : ${ad.headline || ''}\nBouton : ${ad.cta || 'Commencer'}\nLien : ${ad.link || 'https://growthity.ai'}`; try { await navigator.clipboard.writeText(t); toast('Texte et titre copiés.'); } catch (e) { toast('Copie impossible : sélectionnez le texte dans la fiche.', true); } return; }
     case 'mff': S.mf.format = d.v; render(); return;
     case 'mfk': S.mf.kind = d.v; render(); return;
     case 'md-nav': mediaNav(Number(d.d)); return;
