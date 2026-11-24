@@ -68,7 +68,7 @@ const Ugc: React.FC = () => {
   const k = interpolate(g, [T.reveal - 10, T.reveal + 14], [0, 1], {...clamp, easing: INOUT});
   const out = prog(g, T.chat - 10, 14, INOUT);
   const W0 = 1080, H0p = 1920, W1 = 500, H1 = 889;
-  const w = W0 + (W1 - W0) * k, h = H0p + (H1 - H0p) * k, x = (1080 - w) / 2, y = (1920 - h) / 2 + 250 * k;
+  const w = W0 + (W1 - W0) * k, h = H0p + (H1 - H0p) * k, x = (1080 - w) / 2, y = (1920 - h) / 2 + 110 * k;
   const r = 70 * k;
   const punch = g < T.reveal - 10 ? [1, 1.04, 1.01, 1.05, 1.02][Math.floor(g / 36) % 5] : 1;
   return (
@@ -77,7 +77,7 @@ const Ugc: React.FC = () => {
         <Loop durationInFrames={238} layout="none"><OffthreadVideo muted src={M('brume/ugc.mp4')} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Loop>
       </div>
       {g < T.reveal - 6 && <Caps words={BW} t={g / 30} top={700} size={78} />}
-      {g < T.reveal - 6 && <div style={{position: 'absolute', left: 60, top: 270, fontFamily: FONT, display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(255,255,255,.92)', borderRadius: 999, padding: '10px 22px 10px 12px', opacity: sp(g - 20, 12), transform: `translateY(${(1 - sp(g - 20, 12)) * -20}px)`}}>
+      {g < T.reveal - 6 && <div style={{position: 'absolute', left: 80, top: 320, fontFamily: FONT, display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(255,255,255,.92)', borderRadius: 999, padding: '10px 22px 10px 12px', opacity: sp(g - 20, 12), transform: `translateY(${(1 - sp(g - 20, 12)) * -20}px)`}}>
         <div style={{width: 46, height: 46, borderRadius: 99, background: '#2E3033', color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 900, fontSize: 18, letterSpacing: '0.08em'}}>B</div>
         <div><div style={{fontSize: 26, fontWeight: 800, color: INK}}>BRUME</div><div style={{fontSize: 18, color: MUTED, fontWeight: 600}}>Sponsorisé</div></div>
       </div>}
@@ -94,12 +94,12 @@ const Reveal: React.FC = () => {
   const items: [string, string, string, string][] = [['photo', '📸 1 photo du produit', 'brume/p1.jpg', 'Jogging Nuage'], ['acteur', '👤 1 acteur IA', 'brume/face.jpg', 'Yanis'], ['phrase', '✍️ 1 phrase', '', '« Une pub pour mon nouveau jogging »']];
   return (
     <AbsoluteFill style={{opacity: 1 - out, fontFamily: FONT}}>
-      <div style={{position: 'absolute', left: 70, right: 70, top: 270, textAlign: 'center', fontWeight: 900, fontSize: 92, lineHeight: 1.0, letterSpacing: '-0.05em', color: INK}}>
+      <div style={{position: 'absolute', left: 70, right: 70, top: 310, textAlign: 'center', fontWeight: 900, fontSize: 88, lineHeight: 1.0, letterSpacing: '-0.05em', color: INK}}>
         <div style={{overflow: 'hidden', paddingBottom: 6}}><div style={{transform: `translateY(${(1 - t1) * 110}%)`}}>Cette pub n’a jamais</div></div>
         <div style={{overflow: 'hidden', paddingBottom: 12}}><div style={{transform: `translateY(${(1 - t2) * 110}%)`}}><G>été tournée.</G> 🤯</div></div>
       </div>
       {items.map(([w, t, img, sub], i) => { const p = sp(g - hc(w, 2 + i), 11); const left = i === 1; return (
-        <div key={w} style={{position: 'absolute', [left ? 'left' : 'right']: 40, top: 620 + i * 260, width: 360, background: SURF, borderRadius: 28, padding: 20, border: `1px solid ${LINE}`, boxShadow: SH, opacity: p, transform: `translateX(${(1 - p) * (left ? -120 : 120)}px) rotate(${left ? -4 : 4}deg) scale(${0.85 + 0.15 * p})`, zIndex: 5}}>
+        <div key={w} style={{position: 'absolute', [left ? 'left' : 'right']: left ? 50 : 130, top: 560 + i * 215, width: 340, background: SURF, borderRadius: 28, padding: 20, border: `1px solid ${LINE}`, boxShadow: SH, opacity: p, transform: `translateX(${(1 - p) * (left ? -120 : 120)}px) rotate(${left ? -4 : 4}deg) scale(${0.85 + 0.15 * p})`, zIndex: 5}}>
           <div style={{fontSize: 30, fontWeight: 900, color: INK}}>{t}</div>
           <div style={{display: 'flex', alignItems: 'center', gap: 12, marginTop: 10}}>{img && <Img src={M(img)} style={{width: 80, height: 80, borderRadius: 16, objectFit: 'cover'}} />}<div style={{fontSize: 26, color: MUTED, fontWeight: 600, lineHeight: 1.25}}>{sub}</div></div>
         </div>); })}
@@ -118,8 +118,8 @@ const Chat: React.FC = () => {
   const ready = sp(g - hc('montage', 8) - 8, 11);
   return (
     <AbsoluteFill style={{opacity: Math.min(1, inP * 1.4) * (1 - out), transform: `translateY(${(1 - inP) * 120}px)`, fontFamily: FONT}}>
-      <div style={{position: 'absolute', left: 60, right: 60, top: 260, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14}}><LogoMark size={52} /><Wordmark size={48} /></div>
-      <div style={{position: 'absolute', left: 60, right: 60, top: 370, background: SURF, borderRadius: 34, padding: '30px 32px', border: `1px solid ${LINE}`, boxShadow: SH}}>
+      <div style={{position: 'absolute', left: 60, right: 60, top: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14}}><LogoMark size={52} /><Wordmark size={48} /></div>
+      <div style={{position: 'absolute', left: 70, right: 70, top: 390, background: SURF, borderRadius: 34, padding: '26px 30px', border: `1px solid ${LINE}`, boxShadow: SH}}>
         <div style={{display: 'flex', gap: 12}}>
           {[['brume/face.jpg', 'ACTEUR', 'Yanis'], ['brume/p1.jpg', 'PRODUIT', 'Jogging Nuage']].map(([im, k, v]) => (
             <div key={k} style={{flex: 1, display: 'flex', alignItems: 'center', gap: 12, background: '#F7F5F0', borderRadius: 18, padding: 10}}><Img src={M(im)} style={{width: 62, height: 62, borderRadius: 12, objectFit: 'cover'}} /><div><div style={{fontSize: 16, fontWeight: 800, color: MUTED, letterSpacing: '0.08em'}}>{k}</div><div style={{fontSize: 25, fontWeight: 800, color: INK}}>{v}</div></div></div>
@@ -128,11 +128,11 @@ const Chat: React.FC = () => {
         <div style={{marginTop: 22, fontSize: 44, fontWeight: 700, color: INK, minHeight: 60}}>{PROMPT.slice(0, n)}<span style={{display: 'inline-block', width: 4, height: 46, background: ACC, marginLeft: 4, verticalAlign: -6, opacity: Math.floor(g / 12) % 2 ? 1 : 0.2}} /></div>
         <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: 16}}><span style={{background: GRAD, color: '#fff', fontWeight: 800, fontSize: 28, padding: '14px 30px', borderRadius: 999}}>✦ Générer</span></div>
       </div>
-      <div style={{position: 'absolute', left: 60, right: 60, top: 790, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14}}>
+      <div style={{position: 'absolute', left: 70, right: 70, top: 760, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14}}>
         {steps.map(([t, w]) => { const p = sp(g - hc(w, 6), 11); return <div key={t} style={{display: 'flex', alignItems: 'center', gap: 12, background: SURF, border: `1px solid ${LINE}`, borderRadius: 20, padding: '18px 20px', fontSize: 30, fontWeight: 800, color: INK, opacity: 0.35 + 0.65 * p, transform: `scale(${0.92 + 0.08 * p})`}}>{p > 0.5 ? <Check s={34} /> : <span style={{width: 34, height: 34, borderRadius: 99, border: `4px solid ${LINE}`}} />}{t}</div>; })}
       </div>
-      <div style={{position: 'absolute', left: 60, right: 60, top: 1010, display: 'flex', alignItems: 'center', gap: 20, background: SURF, borderRadius: 28, padding: 16, border: `3px solid ${ready > 0.5 ? '#16A34A' : LINE}`, boxShadow: SH, opacity: ready, transform: `translateY(${(1 - ready) * 40}px)`}}>
-        <div style={{width: 120, height: 213, borderRadius: 16, overflow: 'hidden', flex: 'none'}}><Loop durationInFrames={238} layout="none"><OffthreadVideo muted src={M('brume/ugc.mp4')} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Loop></div>
+      <div style={{position: 'absolute', left: 70, right: 70, top: 955, display: 'flex', alignItems: 'center', gap: 20, background: SURF, borderRadius: 28, padding: 16, border: `3px solid ${ready > 0.5 ? '#16A34A' : LINE}`, boxShadow: SH, opacity: ready, transform: `translateY(${(1 - ready) * 40}px)`}}>
+        <div style={{width: 100, height: 178, borderRadius: 14, overflow: 'hidden', flex: 'none'}}><Loop durationInFrames={238} layout="none"><OffthreadVideo muted src={M('brume/ugc.mp4')} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Loop></div>
         <div><div style={{display: 'inline-block', background: OK_SOFT, color: OK, fontWeight: 900, fontSize: 26, padding: '8px 18px', borderRadius: 999}}>● Prête</div><div style={{fontSize: 32, fontWeight: 800, color: INK, marginTop: 10}}>Pub jogging Nuage</div><div style={{fontSize: 24, color: MUTED, marginTop: 4}}>9:16 · 4:5 · 1:1</div></div>
       </div>
     </AbsoluteFill>
@@ -156,14 +156,14 @@ const Meta: React.FC = () => {
       </div>
       {f > click - 24 && (() => { const p = interpolate(f, [click - 24, click], [0, 1], {...clamp, easing: INOUT}); const c = interpolate(f, [click, click + 3, click + 8], [1, 0.82, 1], clamp); return (
         <div style={{position: 'absolute', left: 900 - 340 * p, top: 1300 - 470 * p}}><svg width="70" height="70" viewBox="0 0 24 24" style={{transform: `scale(${c})`, transformOrigin: '0 0', filter: 'drop-shadow(0 8px 12px rgba(0,0,0,.3))'}}><path d="M4 2l15 11-6.5 1.2L16 21l-3 1.4-3.4-6.8L4 20z" fill="#111" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round" /></svg></div>); })()}
-      <div style={{position: 'absolute', left: 540 - 165, top: 720, width: 330, height: 560, borderRadius: 46, padding: 10, background: '#16141A', boxShadow: SH, transform: `translateY(${(1 - inP) * 200}px)`}}>
+      <div style={{position: 'absolute', left: 540 - 140, top: 700, width: 280, height: 480, borderRadius: 46, padding: 10, background: '#16141A', boxShadow: SH, transform: `translateY(${(1 - inP) * 200}px)`}}>
         <div style={{position: 'relative', width: '100%', height: '100%', borderRadius: 37, overflow: 'hidden', background: '#000'}}>
           <Loop durationInFrames={238} layout="none"><OffthreadVideo muted src={M('brume/ugc.mp4')} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Loop>
           <div style={{position: 'absolute', left: 12, top: 14, display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,.92)', borderRadius: 999, padding: '5px 12px 5px 5px'}}><span style={{width: 28, height: 28, borderRadius: 99, background: '#2E3033', color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 900, fontSize: 12}}>B</span><span style={{fontSize: 15, fontWeight: 800, color: INK}}>BRUME · Sponsorisé</span></div>
           <div style={{position: 'absolute', left: 12, right: 12, bottom: 12, background: '#fff', borderRadius: 12, padding: '8px 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 16, fontWeight: 800, color: INK, opacity: live ? 1 : 0.5}}>Jogging Nuage<span style={{background: '#0866FF', color: '#fff', borderRadius: 8, padding: '5px 10px', fontSize: 14}}>Acheter</span></div>
         </div>
       </div>
-      {live && ['❤️', '👍', '😍', '🔥'].map((e, i) => { const q = sp(f - click - 10 - i * 5, 9); return <div key={e} style={{position: 'absolute', left: [150, 820, 120, 840][i], top: 800 - q * 90, fontSize: 70, opacity: q > 0.05 ? 1 - prog(f, click + 40 + i * 5, 20) : 0, transform: `scale(${q})`}}>{e}</div>; })}
+      {live && ['❤️', '👍', '😍', '🔥'].map((e, i) => { const q = sp(f - click - 10 - i * 5, 9); return <div key={e} style={{position: 'absolute', left: [170, 800, 140, 780][i], top: 820 - q * 90, fontSize: 70, opacity: q > 0.05 ? 1 - prog(f, click + 40 + i * 5, 20) : 0, transform: `scale(${q})`}}>{e}</div>; })}
     </AbsoluteFill>
   );
 };
@@ -197,7 +197,7 @@ export const EcomAd: React.FC = () => {
       <Reveal />
       <Chat />
       <Meta />
-      {g >= T.reveal && g < T.end && <Caps words={HW} t={(g - H0) / 30} top={1290} size={50} dark />}
+      {g >= T.reveal && g < T.end && <Caps words={HW} t={(g - H0) / 30} top={1175} size={46} dark />}
       <Sequence from={T.end}><End /></Sequence>
       <AbsoluteFill style={{background: '#fff', opacity: flash, pointerEvents: 'none'}} />
       <Audio src={staticFile('ecom/bed.wav')} />
