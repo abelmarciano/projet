@@ -134,7 +134,7 @@ const Intro: React.FC = () => {
   const out = prog(g, FM.s1 - 12, 14, INOUT);
   const t1 = sp(g - 6, 12), t2 = sp(g - cue(1, 'en', 0.6), 12), body = sp(g - cue(1, 'vos', 1.6), 12);
   const nets = ['meta', 'instagram', 'facebook', 'tiktok', 'youtube', 'linkedin', 'whatsapp'];
-  const phones: [string, number, number, number][] = [['lr_isabella', 1080, 150, -6], ['cp7-sana', 1370, 230, 3], ['lr_theo', 1640, 120, 8]];
+  const phones: [string, number, number, number][] = [['ugc2-serum-web', 1080, 150, -6], ['ugc-skingen-freja-web', 1370, 230, 3], ['ugc-velo-guillaume-web', 1640, 120, 8]];
   return (
     <AbsoluteFill style={{opacity: 1 - out, transform: `translateX(${-out * 80}px)`}}>
       <div style={{position: 'absolute', left: 120, top: 210, width: 900, fontFamily: FONT}}>
@@ -156,7 +156,7 @@ const Intro: React.FC = () => {
         const fl = Math.sin((g + i * 30) / 28) * 10;
         return (
           <div key={n} style={{position: 'absolute', left: x, top: y + fl + (1 - p) * 500, width: 270, height: 480, borderRadius: 40, padding: 9, background: '#16141A', transform: `rotate(${r}deg)`, boxShadow: '0 50px 90px -40px rgba(0,0,0,.6)', opacity: p}}>
-            <div style={{width: '100%', height: '100%', borderRadius: 32, overflow: 'hidden'}}><OffthreadVideo muted src={CLIP(n)} startFrom={20 + i * 12} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></div>
+            <div style={{width: '100%', height: '100%', borderRadius: 32, overflow: 'hidden'}}><OffthreadVideo muted src={M(`film/${n}.mp4`)} startFrom={30 + i * 20} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></div>
           </div>
         );
       })}
@@ -195,7 +195,7 @@ const S1: React.FC = () => (
 const S2: React.FC = () => (
   <Stage k="s2">{(f) => {
     const scan = interpolate(f, [8, 60], [0, 1], clamp);
-    const rows: [string, string, string][] = [['Ton de la marque', 'Délicat · élégant · féminin', 'ton'], ['Clientèle', 'Idées cadeaux, femmes 25-45 ans', 'clients'], ['Produits', 'Catalogue importé', 'vos'], ['Logo et couleurs', 'Repris dans chaque pub', 'couleurs']];
+    const rows: [string, string, string][] = [['Ton de la marque', 'Délicat · élégant · féminin', 'ton'], ['Logo et couleurs', 'Repris dans chaque pub', 'couleurs'], ['Produits analysés', 'Matières, style, usages', 'produits'], ['Points forts', 'Ce qui rend chaque bijou unique', 'unique']];
     return (
       <Card style={{left: RX, top: 230, width: RW}}>
         <div style={{display: 'flex', alignItems: 'center', gap: 14, fontSize: 24, color: MUTED, fontWeight: 600}}>
@@ -327,32 +327,34 @@ const S5: React.FC = () => (
 // ---------- 6. Meta Ads ----------
 const S6: React.FC = () => (
   <Stage k="s6">{(f) => {
-    const click = cue(7, 'leads', 4) - FM.s6 + 12;
+    const click = cue(7, 'leads', 8) - FM.s6 + 12;
+    const conn = cue(7, 'compte', 0.8) - FM.s6 + 14, connected = f >= conn + 6;
+    const guide = sp(f - (cue(7, 'guidé', 4.5) - FM.s6), 11);
     const live = f >= click + 14, lp = sp(f - click - 14, 11);
-    const chips = sp(f - (cue(7, 'dès', 2.4) - FM.s6), 12);
-    return (<>
+        return (<>
       <Card style={{left: RX, top: 170, width: RW}}>
         <div style={{display: 'flex', alignItems: 'center', gap: 22}}>
           <Brand k="meta" s={84} />
-          <div style={{flex: 1}}><div style={{fontWeight: 800, fontSize: 48, letterSpacing: '-0.02em'}}>Meta Ads</div><div style={{fontSize: 26, color: MUTED, fontWeight: 500}}>Compte publicitaire connecté</div></div>
-          <span style={{background: OK_SOFT, color: OK, fontWeight: 800, fontSize: 24, padding: '10px 20px', borderRadius: 999}}>Connecté</span>
+          <div style={{flex: 1}}><div style={{fontWeight: 800, fontSize: 48, letterSpacing: '-0.02em'}}>Meta Ads</div><div style={{fontSize: 26, color: MUTED, fontWeight: 500}}>{connected ? 'Compte publicitaire connecté' : 'Connectez votre compte'}</div></div>
+          <span style={{background: connected ? OK_SOFT : '#0866FF', color: connected ? OK : '#fff', fontWeight: 800, fontSize: 24, padding: '10px 20px', borderRadius: 999, transform: `scale(${interpolate(f, [conn, conn + 4, conn + 10], [1, 0.9, 1], clamp)})`}}>{connected ? '✓ Connecté' : 'Connecter'}</span>
         </div>
         <div style={{display: 'flex', alignItems: 'center', gap: 14, marginTop: 24}}>
           <span style={{fontSize: 24, fontWeight: 700, color: MUTED, marginRight: 6}}>Objectif</span>
-          {[['Ventes', 'vendre'], ['Leads', 'leads']].map(([t, w]) => { const on = f >= cue(7, w, 3) - FM.s6 && (t === 'Leads' || f < cue(7, 'leads', 4) - FM.s6); const p = sp(f - (cue(7, w, 3) - FM.s6), 10); return <span key={t} style={{fontSize: 28, fontWeight: 800, padding: '12px 26px', borderRadius: 999, background: on ? INK : '#F4F1EA', color: on ? '#fff' : MUTED, transform: `scale(${on ? 1 + 0.06 * p : 1})`}}>{t === 'Ventes' ? '🛒 ' : '📩 '}{t}</span>; })}
+          {[['Ventes', 'vendre'], ['Leads', 'leads']].map(([t, w]) => { const on = f >= cue(7, w, 7) - FM.s6 && (t === 'Leads' || f < cue(7, 'leads', 8) - FM.s6); const p = sp(f - (cue(7, w, 7) - FM.s6), 10); return <span key={t} style={{fontSize: 28, fontWeight: 800, padding: '12px 26px', borderRadius: 999, background: on ? INK : '#F4F1EA', color: on ? '#fff' : MUTED, transform: `scale(${on ? 1 + 0.06 * p : 1})`}}>{t === 'Ventes' ? '🛒 ' : '📩 '}{t}</span>; })}
         </div>
         <div style={{height: 1, background: LINE, margin: '22px 0 6px'}} />
         {[{k: 'facebook', n: 'Facebook', d: 'Fil · Reels · Stories'}, {k: 'instagram', n: 'Instagram', d: 'Fil · Reels · Stories'}].map((x) => (
           <div key={x.k} style={{display: 'flex', alignItems: 'center', gap: 20, padding: '8px 0'}}><Brand k={x.k} s={50} /><div style={{flex: 1, fontSize: 34, fontWeight: 700}}>{x.n}<span style={{fontSize: 24, color: MUTED, fontWeight: 500, marginLeft: 14}}>{x.d}</span></div><Check s={38} /></div>
         ))}
-        <div style={{display: 'flex', gap: 14, margin: '18px 0 4px', opacity: chips, transform: `translateY(${(1 - chips) * 16}px)`}}>
-          {['Dès 1 € / jour', '0 % de commission'].map((t) => <span key={t} style={{fontSize: 26, fontWeight: 800, padding: '10px 20px', borderRadius: 999, background: '#F0ECFF', color: ACC}}>{t}</span>)}
+        <div style={{display: 'flex', alignItems: 'center', gap: 14, margin: '16px 0 4px', padding: '14px 18px', borderRadius: 18, background: '#F0ECFF', opacity: guide, transform: `translateY(${(1 - guide) * 16}px)`}}>
+          <span style={{fontSize: 34}}>🧭</span><div><div style={{fontSize: 26, fontWeight: 800, color: ACC}}>Pas de compte ? Vous n’y connaissez rien ?</div><div style={{fontSize: 22, color: MUTED, fontWeight: 600}}>Growthity vous guide pas à pas, de la création du compte à la mise en ligne.</div></div>
         </div>
         <div style={{marginTop: 22, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, background: live ? '#16A34A' : '#0866FF', color: '#fff', borderRadius: 22, padding: '24px 0', fontWeight: 800, fontSize: 36, transform: `scale(${interpolate(f, [click, click + 4, click + 10], [1, 0.95, 1], clamp)})`}}>
           {live ? <span style={{transform: `scale(${lp})`, display: 'flex', alignItems: 'center', gap: 14}}><Check s={40} c="#fff" />En diffusion sur Meta</span> : <><svg width="44" height="44" viewBox="0 0 24 24"><path d={BRAND_PATHS.meta} fill="#fff" /></svg>Publier sur Meta</>}
         </div>
       </Card>
-      <Cursor f={f} from={[RX + 1000, 1000]} to={[RX + RW / 2, 860]} at={click - 2} click={click} />
+      <Cursor f={f} from={[RX + 1000, 1000]} to={[RX + RW - 110, 230]} at={conn - 2} click={conn} />
+      {f > conn + 10 && <Cursor f={f} from={[RX + RW - 110, 230]} to={[RX + RW / 2, 880]} at={click - 2} click={click} />}
     </>);
   }}</Stage>
 );
@@ -391,9 +393,16 @@ const S7: React.FC = () => (
     const bars = [0.35, 0.42, 0.4, 0.55, 0.62, 0.6, 0.74, 0.82, 0.9];
     const ins: [string, string, string, string][] = [['🏆', 'Meilleure pub repérée', 'Noor · Bracelet Trèfle', 'analyse'], ['💡', 'À améliorer', 'l’accroche des 3 premières secondes', 'résultats'], ['✨', 'Nouvelle version prête', 'à valider en un clic', 'faire']];
     return (
-      <Card style={{left: RX, top: 210, width: RW}}>
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}><div style={{fontWeight: 800, fontSize: 40, letterSpacing: '-0.02em'}}>Campagne Noël</div><span style={{background: OK_SOFT, color: OK, fontWeight: 800, fontSize: 22, padding: '8px 16px', borderRadius: 999}}>● En diffusion</span></div>
-        <div style={{display: 'flex', alignItems: 'flex-end', gap: 14, height: 230, marginTop: 28, padding: '0 6px', borderBottom: `2px solid ${LINE}`}}>
+      <Card style={{left: RX, top: 160, width: RW}}>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}><div style={{fontWeight: 800, fontSize: 40, letterSpacing: '-0.02em'}}>Campagne Noël</div><span style={{display: 'flex', alignItems: 'center', gap: 8, background: '#EEF4FF', color: '#0866FF', fontWeight: 800, fontSize: 20, padding: '8px 16px', borderRadius: 999}}><Brand k="meta" s={22} />Synchronisé avec Meta Ads</span></div>
+        <div style={{display: 'flex', gap: 12, marginTop: 20}}>
+          {['Dépenses', 'Clics', 'Leads', 'Ventes'].map((k, i) => { const p = sp(f - (cue(8, 'performances', 0.6) - FM.s7) - i * 3, 11); return (
+            <div key={k} style={{flex: 1, background: '#F7F5F0', borderRadius: 16, padding: '12px 14px', opacity: p, transform: `translateY(${(1 - p) * 20}px)`}}>
+              <div style={{fontSize: 20, fontWeight: 700, color: MUTED}}>{k}</div>
+              <svg width="100%" height="34" viewBox="0 0 100 34" preserveAspectRatio="none"><polyline points={[0, 26, 20, 22, 40, 24, 60, 15, 80, 12, 100, 5].join(' ')} fill="none" stroke={i === 2 ? ACC : '#9A93A6'} strokeWidth="3" strokeDasharray="200" strokeDashoffset={200 * (1 - p)} /></svg>
+            </div>); })}
+        </div>
+        <div style={{display: 'flex', alignItems: 'flex-end', gap: 14, height: 150, marginTop: 18, padding: '0 6px', borderBottom: `2px solid ${LINE}`}}>
           {bars.map((h, i) => <div key={i} style={{flex: 1, height: `${h * 100 * sp(f - 4 - i * 2, 14)}%`, borderRadius: '12px 12px 4px 4px', background: i === bars.length - 1 ? GRAD : '#E7E2F8'}} />)}
         </div>
         <div style={{display: 'flex', alignItems: 'center', gap: 12, marginTop: 24, fontSize: 22, fontWeight: 800, letterSpacing: '0.1em', color: ACC}}><LogoMark size={26} /> GROWTHITY VOUS DIT QUOI FAIRE</div>
@@ -501,7 +510,7 @@ export const FilmMix: React.FC = () => {
       <Rail />
       <Head k="s1" kick="Étape 1 · Décrivez" a="Une phrase" b="sur votre produit." />
       <S1 />
-      <Head k="s2" kick="Étape 2 · Growthity analyse votre marque" a="Votre univers," b="compris en secondes." />
+      <Head k="s2" kick="Étape 2 · Growthity analyse tout" a="Marque et produits," b="compris en secondes." />
       <S2 />
       <Head k="s3" kick="Étape 3 · Choisissez le produit" a="Votre catalogue," b="déjà prêt." />
       <S3 />
@@ -509,11 +518,11 @@ export const FilmMix: React.FC = () => {
       <S4 />
       <Head k="s5" kick="Étape 5 · Growthity crée" a="Script, voix, montage :" b="c’est prêt." />
       <S5 />
-      <Head k="s6" kick="Étape 6 · Lancez" a="Directement" b="sur Meta Ads." />
+      <Head k="s6" kick="Étape 6 · Lancez sur Meta Ads" a="Connectez Meta." b="On vous guide." />
       <S6 />
       <Head k="s6b" kick="Étape 7 · Récupérez vos leads" a="Chaque lead," b="relié à sa pub." />
       <S6b />
-      <Head k="s7" kick="Étape 8 · Suivez vos performances" a="Plus besoin" b="de media buyer." />
+      <Head k="s7" kick="Étape 8 · Vos performances Meta" a="Plus besoin" b="de media buyer." />
       <S7 />
       <Head k="s8" kick="Et en plus" a="Postez aussi" b="sur vos réseaux sociaux." />
       <S8 />

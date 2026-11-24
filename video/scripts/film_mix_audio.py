@@ -70,8 +70,10 @@ for w in ['un', 'une', 'motion', 'cinématique', 'photo', 'visuels']: add(sfx, p
 for j in range(0, 22, 3): add(sfx, click(1.2), cue(5, 'cinq', 3) + j / 30, 0.1)
 for w in ['script', 'voix', 'sous', 'montage', 'formats']: add(sfx, pop_sfx(), cue(6, w, 1), 0.2)
 add(sfx, chime(84), cue(6, 'prêt', 2.6), 0.28); add(sfx, chime(91), cue(6, 'prêt', 2.6) + 0.1, 0.2)
-c6 = cue(7, 'leads', 4) + 12 / 30
-for w in ['vendre', 'leads']: add(sfx, pop_sfx(), cue(7, w, 3), 0.25)
+c6 = cue(7, 'leads', 8) + 12 / 30
+for w in ['vendre', 'leads']: add(sfx, pop_sfx(), cue(7, w, 7), 0.25)
+add(sfx, click(1.6), cue(7, 'compte', 0.8) + 14 / 30, 0.45); add(sfx, chime(84), cue(7, 'compte', 0.8) + 20 / 30, 0.2); add(sfx, chime(91), cue(7, 'guidé', 4.5), 0.2)
+for i in range(4): add(sfx, pop_sfx(), cue(8, 'performances', 0.6) + i * 3 / 30, 0.16)
 add(sfx, click(1.6), cue(12, 'formulaire', 1.4) + 8 / 30, 0.45)
 for i in range(3): add(sfx, tone(88, 0.22, r=11), cue(12, 'lead', 2.2) + i * 9 / 30, 0.2)
 add(sfx, chime(84), cue(12, 'relié', 3.4), 0.22); add(sfx, click(1.6), c6, 0.5); add(sfx, chime(84), c6 + 14 / 30, 0.25)
