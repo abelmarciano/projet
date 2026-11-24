@@ -672,6 +672,7 @@ tbody tr:hover td { background: var(--hover) }
 .fb-f > div { flex: 1; min-width: 0 }
 .fb-f small { display: block; font-size: 10.5px; color: #65676B; letter-spacing: .03em }
 .fb-f b { display: block; font-size: 13.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+.fb-d { display: block; font-size: 12px; color: #65676B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px }
 .fb-cta { flex: none; background: #E4E6EB; color: #050505; font-weight: 700; font-size: 13px; padding: 8px 12px; border-radius: 7px }
 .adx-why { margin: 0; font-size: 12.5px; line-height: 1.45; color: var(--ink-2); padding: 0 2px }
 .adx-act { display: flex; gap: 6px; flex-wrap: wrap }
@@ -1040,10 +1041,10 @@ function adPreview(a, i) {
       <div class="fb-h"><span class="fb-av">G</span><div><b>Growthity AI</b><small>Sponsorisé · <svg width="10" height="10" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M2 12h20M12 2c3 3 3 17 0 20M12 2c-3 3-3 17 0 20" fill="none" stroke="currentColor" stroke-width="2"/></svg></small></div><span class="grow"></span><span class="fb-dots">···</span></div>
       <p class="fb-t">${esc(txt)}</p>
       <div class="fb-m">${src ? `<span class="fb-bed" style="background-image:url('${src}')"></span><img src="${src}" alt="" loading="lazy" draggable="false">` : cover(m)}${playBadge(m)}<span class="fb-fmt">${esc(a.format || m?.format || '9:16')}</span></div>
-      <div class="fb-f"><div><small>GROWTHITY.AI</small><b>${esc(ad.headline || a.title || '')}</b></div><span class="fb-cta">${esc(ad.cta || 'Commencer')}</span></div>
+      <div class="fb-f"><div><small>GROWTHITY.AI</small><b>${esc(ad.headline || a.title || '')}</b>${ad.description ? `<span class="fb-d">${esc(ad.description)}</span>` : ''}</div><span class="fb-cta">${esc(ad.cta || 'Commencer')}</span></div>
     </div>
     ${a.why ? `<p class="adx-why">${esc(a.why)}</p>` : ''}
-    <div class="adx-act"><button class="btn sm" data-act="adcopy" data-id="${a.id}">${IC.copy || ''} Copier texte + titre</button><button class="btn sm quiet" data-act="open" data-id="${a.id}">Modifier</button></div>
+    <div class="adx-act"><button class="btn sm" data-act="adcopy" data-id="${a.id}">${IC.copy || ''} Copier l’annonce</button><button class="btn sm quiet" data-act="open" data-id="${a.id}">Modifier</button></div>
   </article>`;
 }
 function vAds(main) {
@@ -1301,7 +1302,8 @@ function vEditor(main) {
             <div class="fld"><label for="a-budget">Budget par jour (€)</label><input id="a-budget" data-af="budget" inputmode="decimal" value="${esc(ad.budget || '')}" placeholder="ex. 20"></div></div>
           <div class="r2"><div class="fld"><label for="a-cta">Bouton</label><select id="a-cta" data-af="cta">${CTAS.map((o) => `<option ${o === ad.cta ? 'selected' : ''}>${o}</option>`).join('')}</select></div>
             <div class="fld"><label for="a-link">Lien de destination</label><input id="a-link" data-af="link" value="${esc(ad.link || '')}" placeholder="https://growthity.ai"></div></div>
-          <div class="fld"><label for="a-hl">Titre (sous la vidéo)</label><input id="a-hl" data-af="headline" value="${esc(ad.headline || '')}" placeholder="ex. Une phrase = une pub vidéo"></div>
+          <div class="r2"><div class="fld"><label for="a-hl">Titre (sous la vidéo)</label><input id="a-hl" data-af="headline" value="${esc(ad.headline || '')}" placeholder="ex. Une phrase = une pub vidéo"></div>
+            <div class="fld"><label for="a-desc">Description</label><input id="a-desc" data-af="description" value="${esc(ad.description || '')}" placeholder="ex. Une phrase suffit. Growthity fait le reste."></div></div>
           <div class="fld"><label for="a-aud">Audience</label><input id="a-aud" data-af="audience" value="${esc(ad.audience || '')}" placeholder="ex. e-commerçants, France, 25-55 ans"></div></div>` : ''}
         <div class="panel" id="coverp"></div>
         ${isAd || isNew ? '' : '<div class="panel" id="zernio"></div>'}
@@ -1713,7 +1715,7 @@ document.addEventListener('click', async (ev) => {
     case 'cal-mode': S.calMode = d.mode; if (d.mode === 'week') { const n = new Date(); S.weekStart = sow(S.month.getMonth() === n.getMonth() && S.month.getFullYear() === n.getFullYear() ? n : S.month); } render(); return;
     case 'netf': S.netFilter = d.net; render(); return;
     case 'adf': S.adFilter = d.st; render(); return;
-    case 'adcopy': { const a = S.posts.find((x) => x.id === d.id); if (!a) return; const ad = a.ad || {}; const t = `${a.caption || ad.primary || ''}\n\nTitre : ${ad.headline || ''}\nBouton : ${ad.cta || 'Commencer'}\nLien : ${ad.link || 'https://growthity.ai'}`; try { await navigator.clipboard.writeText(t); toast('Texte et titre copiés.'); } catch (e) { toast('Copie impossible : sélectionnez le texte dans la fiche.', true); } return; }
+    case 'adcopy': { const a = S.posts.find((x) => x.id === d.id); if (!a) return; const ad = a.ad || {}; const t = `${a.caption || ad.primary || ''}\n\nTitre : ${ad.headline || ''}\nDescription : ${ad.description || ''}\nBouton : ${ad.cta || 'Commencer'}\nLien : ${ad.link || 'https://growthity.ai'}`; try { await navigator.clipboard.writeText(t); toast('Texte et titre copiés.'); } catch (e) { toast('Copie impossible : sélectionnez le texte dans la fiche.', true); } return; }
     case 'mff': S.mf.format = d.v; render(); return;
     case 'mfk': S.mf.kind = d.v; render(); return;
     case 'md-nav': mediaNav(Number(d.d)); return;
