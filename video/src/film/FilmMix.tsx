@@ -258,7 +258,7 @@ const STYLES: {k: string; t: string; h: string; w: string; v?: string}[] = [
 const MotionPrev: React.FC<{f: number}> = ({f}) => (
   <AbsoluteFill style={{background: GRAD, overflow: 'hidden', fontFamily: FONT, color: '#fff'}}>
     {[0, 1, 2].map((i) => <div key={i} style={{position: 'absolute', left: 30 + i * 80, top: 40 + i * 70, width: 90, height: 90, borderRadius: i === 1 ? 99 : 20, border: '6px solid rgba(255,255,255,.35)', transform: `rotate(${f * (2 + i)}deg) translateY(${Math.sin((f + i * 20) / 10) * 14}px)`}} />)}
-    <div style={{position: 'absolute', left: 0, right: 0, top: 120, textAlign: 'center', fontWeight: 900, fontSize: 46, lineHeight: 1, letterSpacing: '-0.03em', transform: `scale(${1 + 0.06 * Math.sin(f / 6)})`}}>NOUVELLE<br />COLLECTION</div>
+    <div style={{position: 'absolute', left: 0, right: 0, top: 120, textAlign: 'center', fontWeight: 900, fontSize: 34, lineHeight: 1.05, letterSpacing: '-0.03em', transform: `scale(${1 + 0.06 * Math.sin(f / 6)})`}}>NOUVELLE<br />COLLECTION</div>
     <div style={{position: 'absolute', left: 40, right: 40, bottom: 40, height: 46, borderRadius: 99, background: '#fff', color: INK, display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 20, transform: `translateY(${(1 - sp(f % 45, 10)) * 60}px)`}}>Découvrir</div>
   </AbsoluteFill>
 );
