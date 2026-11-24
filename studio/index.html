@@ -807,7 +807,7 @@ async function boot() {
   if (!db) { clearTimeout(timer); S.failed = true; render(); return; }
   clearTimeout(timer);
   if (user) { try { S.me = await user.id(); } catch {} }
-  c.use('downloads').then((dl) => { S.dl = dl; if (S.view === 'media') renderMediaDetail(); }).catch(() => {});
+  c.use('downloads').then((dl) => { S.dl = dl; if (S.view === 'media') renderMediaDetail(); else if (S.view === 'ads' || S.view === 'post') render(); }).catch(() => {});
   c.use('mcp').then((m) => { S.mcp = m; if (S.view === 'post') renderZernio(); zSync(); setInterval(zSync, 5 * 60000); }).catch(() => {});
   db.collection('media').onSnapshot((snap) => {
     S.media = snap.docs.map((d) => ({id: d.id, ...d.data()})).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
@@ -1033,6 +1033,14 @@ function bindSearch() { const q = $('#q'); if (!q) return; q.oninput = () => { S
 
 // ---------- ads ----------
 // Page Ads : la campagne prête à lancer (config/ads + ads campaign: 'lancement'), en aperçus façon fil Meta, puis les autres ads repliées.
+// bouton Télécharger : capability downloads, sinon lien direct vers le fichier (GitHub)
+function dlBtn(m, cls = '') {
+  const it = m?.items?.[0]; if (!it) return '';
+  const ico = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>';
+  if (S.dl) return `<button class="btn ${cls}" data-act="dl" data-id="${m.id}" data-i="0">${ico} Télécharger</button>`;
+  const u = it.url || blob(it.asset);
+  return `<a class="btn ${cls}" href="${esc(u)}" target="_blank" rel="noopener" download>${ico} Télécharger</a>`;
+}
 function adPreview(a, i) {
   const m = mediaById(a.mediaId); const ad = a.ad || {}; const txt = a.caption || ad.primary || ''; const src = srcOf(m);
   return `<article class="adx" style="--d:${i * 60}ms">
@@ -1044,7 +1052,7 @@ function adPreview(a, i) {
       <div class="fb-f"><div><small>GROWTHITY.AI</small><b>${esc(ad.headline || a.title || '')}</b>${ad.description ? `<span class="fb-d">${esc(ad.description)}</span>` : ''}</div><span class="fb-cta">${esc(ad.cta || 'Commencer')}</span></div>
     </div>
     ${a.why ? `<p class="adx-why">${esc(a.why)}</p>` : ''}
-    <div class="adx-act"><button class="btn sm" data-act="adcopy" data-id="${a.id}">${IC.copy || ''} Copier l’annonce</button><button class="btn sm quiet" data-act="open" data-id="${a.id}">Modifier</button></div>
+    <div class="adx-act">${dlBtn(m, 'sm primary')}<button class="btn sm" data-act="adcopy" data-id="${a.id}">${IC.copy || ''} Copier l’annonce</button><button class="btn sm quiet" data-act="open" data-id="${a.id}">Modifier</button></div>
   </article>`;
 }
 function vAds(main) {
@@ -1293,6 +1301,7 @@ function vEditor(main) {
           <div class="fld"><span class="lb">Format</span><div class="seg" role="group" aria-label="Format">${FORMATS.map((f) => `<button type="button" data-act="fmt" data-v="${f}" aria-pressed="${f === p.format}">${f} <span style="font-weight:500;opacity:.8">· ${FORMAT_L[f]}</span></button>`).join('')}</div></div>
         </div>
         <div class="panel"><h3>Média <small>${S.media.length} dans la médiathèque · le format choisi en premier</small></h3><div class="picker" id="picker"></div>
+          ${p.mediaId && mediaById(p.mediaId)?.items?.length ? `<div style="margin:4px 0 10px">${dlBtn(mediaById(p.mediaId), 'primary')}</div>` : ''}
           <div style="font-size:12.5px;color:var(--muted)">Besoin d’un nouveau fichier ? <a href="#medias">Importez-le dans Médias</a>.</div></div>
         <div class="panel"><div class="fld"><label for="e-cap">${isAd ? 'Texte principal de la pub' : 'Légende'}</label>
           <textarea id="e-cap" data-f="caption" placeholder="${isAd ? 'Le texte affiché au-dessus de la pub…' : 'Accroche, corps du texte, appel à l’action, hashtags…'}">${esc(p.caption)}</textarea>
