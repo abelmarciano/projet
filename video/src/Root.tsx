@@ -131,6 +131,7 @@ import {GoLive, GS} from './golive/GoLive';
 import {LinkedInLaunch, LS} from './linkedin/LinkedInLaunch';
 import {Film, FS} from './film/Film';
 import {FilmMix, FM} from './film/FilmMix';
+import {EcomAd, T as ECOM_T} from './ecom/EcomAd';
 import {LightChatPub, lightTimeline, LightCfg} from './chatpub/LightChatPub';
 import {SocialStory, StoryCfg, storyTotal} from './chatpub/SocialStory';
 import lr4Cfg from './chatpub/lr4.json';
@@ -255,6 +256,7 @@ export const Root: React.FC = () => (
     <Composition id="LinkedInLaunch" component={LinkedInLaunch} durationInFrames={LS.total} fps={30} width={1080} height={1350} />
     <Composition id="LaunchFilm" component={Film} durationInFrames={FS.total} fps={30} width={1920} height={1080} />
     <Composition id="LaunchFilmMix" component={FilmMix} durationInFrames={FM.total} fps={30} width={1920} height={1080} />
+    <Composition id="EcomAd" component={EcomAd} durationInFrames={ECOM_T.total} fps={30} width={1080} height={1920} />
     <Composition id="Launch-calendrier" component={SocialStory} durationInFrames={storyTotal(lr4Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr4Cfg as unknown as StoryCfg}} />
     <Composition id="Launch-whatsapp" component={SocialStory} durationInFrames={storyTotal(lr5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr5Cfg as unknown as StoryCfg}} />
     <Composition id="AvantApres-julien" component={SocialStory} durationInFrames={storyTotal(av5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: av5Cfg as unknown as StoryCfg}} />

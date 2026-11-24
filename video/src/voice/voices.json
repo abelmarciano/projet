@@ -2866,5 +2866,13 @@
   "style": 0.55,
   "speed": 1.06,
   "text": "[excited] Ce jogging ? Je l'enlève plus. [laughs] Hyper doux, coupe parfaite… franchement, le plus confortable que j'ai jamais porté. Foncez !"
+ },
+ "ecom-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.5,
+  "speed": 1.1,
+  "text": "[excited] Cette pub n'a jamais été tournée. Une photo de ton produit, un acteur IA, une phrase… et Grossiti crée la vidéo, avec la voix, les sous-titres, le montage. Un clic, et elle est en ligne sur Meta. Ton produit mérite sa pub."
  }
 }
