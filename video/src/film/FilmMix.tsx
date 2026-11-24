@@ -389,14 +389,14 @@ const S6b: React.FC = () => (
 const S7: React.FC = () => (
   <Stage k="s7">{(f) => {
     const bars = [0.35, 0.42, 0.4, 0.55, 0.62, 0.6, 0.74, 0.82, 0.9];
-    const ins: [string, string, string, string][] = [['🏆', 'Meilleure pub repérée', 'Noor · Bracelet Trèfle', 'analyse'], ['💡', 'À améliorer', 'l’accroche des 3 premières secondes', 'quoi'], ['✨', 'Nouvelle version prête', 'à valider en un clic', 'améliorer']];
+    const ins: [string, string, string, string][] = [['🏆', 'Meilleure pub repérée', 'Noor · Bracelet Trèfle', 'analyse'], ['💡', 'À améliorer', 'l’accroche des 3 premières secondes', 'résultats'], ['✨', 'Nouvelle version prête', 'à valider en un clic', 'faire']];
     return (
       <Card style={{left: RX, top: 210, width: RW}}>
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}><div style={{fontWeight: 800, fontSize: 40, letterSpacing: '-0.02em'}}>Campagne Noël</div><span style={{background: OK_SOFT, color: OK, fontWeight: 800, fontSize: 22, padding: '8px 16px', borderRadius: 999}}>● En diffusion</span></div>
         <div style={{display: 'flex', alignItems: 'flex-end', gap: 14, height: 230, marginTop: 28, padding: '0 6px', borderBottom: `2px solid ${LINE}`}}>
           {bars.map((h, i) => <div key={i} style={{flex: 1, height: `${h * 100 * sp(f - 4 - i * 2, 14)}%`, borderRadius: '12px 12px 4px 4px', background: i === bars.length - 1 ? GRAD : '#E7E2F8'}} />)}
         </div>
-        <div style={{display: 'flex', alignItems: 'center', gap: 12, marginTop: 24, fontSize: 22, fontWeight: 800, letterSpacing: '0.1em', color: ACC}}><LogoMark size={26} /> VOTRE MEDIA BUYER IA</div>
+        <div style={{display: 'flex', alignItems: 'center', gap: 12, marginTop: 24, fontSize: 22, fontWeight: 800, letterSpacing: '0.1em', color: ACC}}><LogoMark size={26} /> GROWTHITY VOUS DIT QUOI FAIRE</div>
         <div style={{display: 'grid', gap: 2, marginTop: 8}}>
           {ins.map(([i, t, d, w], j) => { const p = sp(f - Math.min(cue(8, w, 1.5 + j) - FM.s7, 40 + j * 20), 12); return (
             <div key={t} style={{display: 'flex', alignItems: 'center', gap: 16, padding: '12px 0', fontSize: 29, opacity: p, transform: `translateX(${(1 - p) * 30}px)`}}><span style={{fontSize: 34}}>{i}</span><b>{t}</b><span style={{color: MUTED}}>{d}</span></div>); })}
@@ -513,7 +513,7 @@ export const FilmMix: React.FC = () => {
       <S6 />
       <Head k="s6b" kick="Étape 7 · Récupérez vos leads" a="Chaque lead," b="relié à sa pub." />
       <S6b />
-      <Head k="s7" kick="Étape 8 · Suivez vos performances" a="Votre media buyer" b="vous dit quoi améliorer." />
+      <Head k="s7" kick="Étape 8 · Suivez vos performances" a="Plus besoin" b="de media buyer." />
       <S7 />
       <Head k="s8" kick="Et en plus" a="Postez aussi" b="sur vos réseaux sociaux." />
       <S8 />
