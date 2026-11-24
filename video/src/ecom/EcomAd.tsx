@@ -18,7 +18,7 @@ import WJ from './words.json';
 type Word = {w: string; s: number; e: number};
 const BW = (BWJ as Word[]).filter((w) => /[\p{L}]/u.test(w.w));
 const HW = (WJ as unknown as Record<string, Word[]>)['ecom-1'];
-const H0 = 243; // début de la voix off Hugo
+const H0 = 108; // début de la voix off Hugo (la pub UGC dure ~3,5 s)
 const hc = (start: string, d = 0) => { const w = HW.find((x) => x.w.toLowerCase().startsWith(start)); return H0 + Math.round((w ? w.s : d) * 30); };
 const last = HW[HW.length - 1];
 const at = (sec: number) => H0 + Math.round(sec * 30);
@@ -77,10 +77,7 @@ const Ugc: React.FC = () => {
         <Loop durationInFrames={238} layout="none"><OffthreadVideo muted src={M('brume/ugc.mp4')} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></Loop>
       </div>
       {g < T.reveal - 6 && <Caps words={BW} t={g / 30} top={700} size={78} />}
-      {g < T.reveal - 6 && <div style={{position: 'absolute', left: 80, top: 320, fontFamily: FONT, display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(255,255,255,.92)', borderRadius: 999, padding: '10px 22px 10px 12px', opacity: sp(g - 20, 12), transform: `translateY(${(1 - sp(g - 20, 12)) * -20}px)`}}>
-        <div style={{width: 46, height: 46, borderRadius: 99, background: '#2E3033', color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 900, fontSize: 18, letterSpacing: '0.08em'}}>B</div>
-        <div><div style={{fontSize: 26, fontWeight: 800, color: INK}}>BRUME</div><div style={{fontSize: 18, color: MUTED, fontWeight: 600}}>Sponsorisé</div></div>
-      </div>}
+      {g < T.reveal - 6 && <div style={{position: 'absolute', left: 0, right: 0, top: 305, textAlign: 'center', fontFamily: FONT, opacity: sp(g - 12, 11), transform: `scale(${0.8 + 0.2 * sp(g - 12, 11)})`}}><span style={{background: '#fff', color: INK, fontWeight: 900, fontSize: 46, padding: '10px 22px', borderRadius: 16, boxShadow: '0 12px 30px -10px rgba(0,0,0,.45)'}}>Cette pub ? Faite en <span style={{color: ACC}}>1 phrase</span> 👇</span></div>}
     </div>
   );
 };
@@ -201,7 +198,7 @@ export const EcomAd: React.FC = () => {
       <Sequence from={T.end}><End /></Sequence>
       <AbsoluteFill style={{background: '#fff', opacity: flash, pointerEvents: 'none'}} />
       <Audio src={staticFile('ecom/bed.wav')} />
-      <Audio src={staticFile('media/brume/vo.mp3')} />
+      <Audio src={staticFile('media/brume/vo.mp3')} endAt={H0 + 4} volume={(f) => interpolate(f, [H0 - 8, H0 + 4], [1, 0], clamp)} />
       <Sequence from={H0}><Audio src={staticFile('voice/ecom-1-n.mp3')} /></Sequence>
     </AbsoluteFill>
   );

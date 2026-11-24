@@ -5,7 +5,7 @@ from scipy.io import wavfile
 src = open(os.path.join(os.path.dirname(__file__), 'shorts_audio.py')).read().split('def timeline')[0]
 g = {'__file__': __file__}; exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, click, chime, pop_sfx, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'click', 'chime', 'pop_sfx', 'rng'])
-W = json.load(open('src/ecom/words.json'))['ecom-1']; H0 = 243 / 30
+W = json.load(open('src/ecom/words.json'))['ecom-1']; H0 = 108 / 30
 def hc(start, d=0):
     for w in W:
         if w['w'].lower().startswith(start): return H0 + w['s']
