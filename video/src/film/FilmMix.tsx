@@ -1,6 +1,6 @@
 // « Growthity est en ligne » — film de lancement 16:9 (1920×1080, ~58 s), version « carrousel animé ».
 // Reprend la structure et le style clair du carrousel de lancement (post-08 : couverture, étapes 1 → 7, réseaux,
-// alertes WhatsApp, fin) en motion design, avec un autre exemple : bijoux (marque fictive Maison Trèfle), pub de Noël.
+// alertes WhatsApp, fin) en motion design, avec un autre exemple : joggings (marque fictive BRUME), lancement du jogging Nuage.
 // Aucun chiffre de résultat. Voix off Hugo (lm-1 … lm-11).
 import React, {useEffect, useState} from 'react';
 import {AbsoluteFill, Audio, Img, Loop, OffthreadVideo, Sequence, continueRender, delayRender, interpolate, spring, staticFile, useCurrentFrame} from 'remotion';
@@ -15,6 +15,7 @@ import {BRAND_PATHS} from '../components/brands';
 import ACTORS from '../organic/actors_real.json';
 import WORDS from './words_mix.json';
 import TLJ from './timeline_mix.json';
+import BWJ from './brume_words.json';
 
 type Word = {w: string; s: number; e: number};
 const WD = WORDS as unknown as Record<string, Word[]>;
@@ -123,7 +124,7 @@ const Stage: React.FC<{k: string; children: (f: number) => React.ReactNode}> = (
   return <AbsoluteFill style={{opacity: Math.min(1, inP * 1.4) * (1 - o), transform: `translateX(${(1 - inP) * 160 + o * 90}px) scale(${1 + f * 0.0002})`}}><Sequence from={s0 - 2} layout="none">{children(f)}</Sequence></AbsoluteFill>;
 };
 // vidéo qui tourne en boucle depuis le début de la scène (jamais figée)
-const LEN: Record<string, number> = {'fal/social/out/lr_rania.mp4': 151, 'vid-oeufs-cuisine.mp4': 240, 'gw/gw-48.mp4': 240, 'gw/gw-44.mp4': 240, 'film/salome-trefle.mp4': 450, 'vid-sneakers.mp4': 240, 'chat/trefle-noor-edit.mp4': 188};
+const LEN: Record<string, number> = {'fal/social/out/lr_rania.mp4': 151, 'vid-oeufs-cuisine.mp4': 240, 'gw/gw-48.mp4': 240, 'gw/gw-44.mp4': 240, 'film/salome-trefle.mp4': 450, 'vid-sneakers.mp4': 240, 'chat/trefle-noor-edit.mp4': 188, 'brume/ugc.mp4': 240};
 const LoopVid: React.FC<{src: string; from?: number; style?: React.CSSProperties}> = ({src, from = 0, style}) => (
   <Loop durationInFrames={(LEN[src] ?? 240) - from - 2} layout="none"><OffthreadVideo muted src={M(src)} startFrom={from} style={style} /></Loop>
 );
@@ -170,7 +171,7 @@ const Intro: React.FC = () => {
 };
 
 // ---------- 1. décrivez ----------
-const PROMPT = 'Je veux une pub pour Noël pour mes bijoux.';
+const PROMPT = 'Je veux une pub pour mon nouveau jogging.';
 const S1: React.FC = () => (
   <Stage k="s1">{(f) => {
     const g = f + FM.s1;
@@ -183,7 +184,7 @@ const S1: React.FC = () => (
         <div style={{display: 'flex', alignItems: 'center', gap: 12, fontSize: 24, color: MUTED, fontWeight: 600}}><LogoMark size={28} /> Décrivez votre pub</div>
         <div style={{marginTop: 22, minHeight: 150, fontSize: 52, fontWeight: 600, lineHeight: 1.25, letterSpacing: '-0.02em'}}>{PROMPT.slice(0, n)}<span style={{display: 'inline-block', width: 4, height: 54, background: ACC, marginLeft: 4, verticalAlign: -8, opacity: Math.floor(g / 15) % 2 ? 1 : 0.2}} /></div>
         <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 26}}>
-          <div style={{display: 'flex', gap: 10}}>{['Maison Trèfle', 'Noël'].map((t) => <span key={t} style={{fontSize: 22, fontWeight: 700, padding: '8px 16px', borderRadius: 999, background: '#F4F1EA', color: MUTED}}>{t}</span>)}</div>
+          <div style={{display: 'flex', gap: 10}}>{['BRUME', 'Nouveauté'].map((t) => <span key={t} style={{fontSize: 22, fontWeight: 700, padding: '8px 16px', borderRadius: 999, background: '#F4F1EA', color: MUTED}}>{t}</span>)}</div>
           <div style={{position: 'relative', overflow: 'hidden', background: GRAD, color: '#fff', fontWeight: 800, fontSize: 28, padding: '16px 34px', borderRadius: 999, transform: `scale(${pressed ? interpolate(f, [click, click + 4, click + 10], [1, 0.92, 1], clamp) : 1})`}}>
             {load > 0 && load < 1 ? 'Génération…' : load >= 1 ? '✓ C’est parti' : '+ Générer'}
             {load > 0 && <div style={{position: 'absolute', left: 0, bottom: 0, height: 5, width: `${load * 100}%`, background: 'rgba(255,255,255,.8)'}} />}
@@ -200,19 +201,19 @@ const S1: React.FC = () => (
 const S2: React.FC = () => (
   <Stage k="s2">{(f) => {
     const scan = interpolate(f, [8, 60], [0, 1], clamp);
-    const rows: [string, string, string][] = [['Ton de la marque', 'Délicat · élégant · féminin', 'ton'], ['Logo et couleurs', 'Repris dans chaque pub', 'couleurs'], ['Produits analysés', 'Matières, style, usages', 'produits'], ['Points forts', 'Ce qui rend chaque bijou unique', 'unique']];
+    const rows: [string, string, string][] = [['Ton de la marque', 'Doux · minimaliste · cocooning', 'ton'], ['Logo et couleurs', 'Repris dans chaque pub', 'couleurs'], ['Produits analysés', 'Matières, style, usages', 'produits'], ['Points forts', 'Ce qui rend chaque jogging unique', 'unique']];
     return (
       <Card style={{left: RX, top: 230, width: RW}}>
         <div style={{display: 'flex', alignItems: 'center', gap: 14, fontSize: 24, color: MUTED, fontWeight: 600}}>
-          <LogoMark size={28} /> Analyse de <b style={{color: INK, margin: '0 6px'}}>maison-trefle.fr</b> et de <Brand k="instagram" s={26} /> @maisontrefle
+          <LogoMark size={28} /> Analyse de <b style={{color: INK, margin: '0 6px'}}>brume-paris.fr</b> et de <Brand k="instagram" s={26} /> @brume.paris
         </div>
         <div style={{height: 6, borderRadius: 3, background: '#F1EDE6', marginTop: 18, overflow: 'hidden'}}><div style={{width: `${scan * 100}%`, height: '100%', background: GRAD}} /></div>
         <div style={{display: 'flex', alignItems: 'center', gap: 28, marginTop: 30, opacity: sp(f - 20, 12)}}>
-          <div style={{width: 150, height: 150, borderRadius: 30, overflow: 'hidden', border: `1px solid ${LINE}`}}><Img src={M('ig/trefle-packshot.jpg')} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></div>
+          <div style={{width: 150, height: 150, borderRadius: 30, overflow: 'hidden', border: `1px solid ${LINE}`}}><Img src={M('brume/p3.jpg')} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></div>
           <div style={{flex: 1}}>
-            <div style={{fontWeight: 800, fontSize: 48, letterSpacing: '-0.02em'}}>Maison Trèfle</div>
-            <div style={{fontSize: 28, color: MUTED, marginTop: 4}}>Bijoux · faits à la main</div>
-            <div style={{display: 'flex', gap: 12, marginTop: 18}}>{['#1A1A1A', '#C9A227', '#F3EDE2', '#8C6A3F'].map((c, i) => <div key={c} style={{width: 54, height: 54, borderRadius: 14, background: c, border: `1px solid ${LINE}`, transform: `scale(${sp(f - cue(3, 'couleurs', 3) + FM.s2 - i * 3, 11)})`}} />)}</div>
+            <div style={{fontWeight: 800, fontSize: 48, letterSpacing: '0.12em'}}>BRUME</div>
+            <div style={{fontSize: 28, color: MUTED, marginTop: 4}}>Joggings premium · Paris</div>
+            <div style={{display: 'flex', gap: 12, marginTop: 18}}>{['#8FA68E', '#EFE8DA', '#B9B9B6', '#2E3033'].map((c, i) => <div key={c} style={{width: 54, height: 54, borderRadius: 14, background: c, border: `1px solid ${LINE}`, transform: `scale(${sp(f - cue(3, 'couleurs', 3) + FM.s2 - i * 3, 11)})`}} />)}</div>
           </div>
         </div>
         <div style={{height: 1, background: LINE, margin: '28px 0 14px'}} />
@@ -224,7 +225,7 @@ const S2: React.FC = () => (
 );
 
 // ---------- 3. produit ----------
-const PRODS = [{img: 'ig/trefle-packshot.jpg', n: 'Bracelet Trèfle', pos: '50% 50%'}, {img: 'img-bracelet-cercle.jpg', n: 'Bracelet Soleil', pos: '50% 75%'}, {img: 'ig/lou-poignet.jpg', n: 'Bracelet Trèfle nacre', pos: '50% 50%'}];
+const PRODS = [{img: 'brume/p1.jpg', n: 'Jogging Nuage · sauge', pos: '50% 50%'}, {img: 'brume/p2.jpg', n: 'Jogging Nuage · gris chiné', pos: '50% 40%'}, {img: 'brume/p3.jpg', n: 'Le trio Nuage', pos: '60% 50%'}];
 const S3: React.FC = () => (
   <Stage k="s3">{(f) => {
     const pick = cue(4, 'choisissez', 1.6) - FM.s3 + 8;
@@ -236,7 +237,7 @@ const S3: React.FC = () => (
             <Img src={M(p.img)} style={{width: '100%', aspectRatio: '1.25', objectFit: 'cover', objectPosition: p.pos, borderRadius: 16, display: 'block'}} />
             <div style={{fontSize: 26, fontWeight: 700, marginTop: 10, color: INK}}>{p.n}</div>
             {sel && <div style={{position: 'absolute', right: 22, top: 22, width: 50, height: 50, borderRadius: 99, background: ACC, display: 'grid', placeItems: 'center'}}><Check s={28} c="#fff" /></div>}
-            {sel && <div style={{position: 'absolute', left: 22, top: 22, background: '#B91C1C', color: '#fff', fontWeight: 800, fontSize: 20, padding: '8px 14px', borderRadius: 999, letterSpacing: '0.06em'}}>NOËL</div>}
+            {sel && <div style={{position: 'absolute', left: 22, top: 22, background: '#2E3033', color: '#fff', fontWeight: 800, fontSize: 20, padding: '8px 14px', borderRadius: 999, letterSpacing: '0.06em'}}>NOUVEAU</div>}
           </div>); })}
         <div style={{borderRadius: 26, border: `2px dashed ${LINE}`, display: 'grid', placeItems: 'center', fontSize: 28, color: MUTED, fontWeight: 600, textAlign: 'center', opacity: sp(f - 18, 12)}}>+ Ajouter<br />un produit</div>
       </div>
@@ -257,12 +258,12 @@ const STYLES: {k: string; t: string; h: string; w: string; v?: string}[] = [
 const MotionPrev: React.FC<{f: number}> = ({f}) => (
   <AbsoluteFill style={{background: GRAD, overflow: 'hidden', fontFamily: FONT, color: '#fff'}}>
     {[0, 1, 2].map((i) => <div key={i} style={{position: 'absolute', left: 30 + i * 80, top: 40 + i * 70, width: 90, height: 90, borderRadius: i === 1 ? 99 : 20, border: '6px solid rgba(255,255,255,.35)', transform: `rotate(${f * (2 + i)}deg) translateY(${Math.sin((f + i * 20) / 10) * 14}px)`}} />)}
-    <div style={{position: 'absolute', left: 0, right: 0, top: 120, textAlign: 'center', fontWeight: 900, fontSize: 46, lineHeight: 1, letterSpacing: '-0.03em', transform: `scale(${1 + 0.06 * Math.sin(f / 6)})`}}>OFFRE<br />DE NOËL</div>
-    <div style={{position: 'absolute', left: 40, right: 40, bottom: 40, height: 46, borderRadius: 99, background: '#fff', color: INK, display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 20, transform: `translateY(${(1 - sp(f % 45, 10)) * 60}px)`}}>Commander</div>
+    <div style={{position: 'absolute', left: 0, right: 0, top: 120, textAlign: 'center', fontWeight: 900, fontSize: 46, lineHeight: 1, letterSpacing: '-0.03em', transform: `scale(${1 + 0.06 * Math.sin(f / 6)})`}}>NOUVELLE<br />COLLECTION</div>
+    <div style={{position: 'absolute', left: 40, right: 40, bottom: 40, height: 46, borderRadius: 99, background: '#fff', color: INK, display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 20, transform: `translateY(${(1 - sp(f % 45, 10)) * 60}px)`}}>Découvrir</div>
   </AbsoluteFill>
 );
 const ImgPrev: React.FC<{f: number}> = ({f}) => {
-  const imgs = ['ig/trefle-packshot.jpg', 'img-bracelet-cercle.jpg', 'ig/lou-poignet.jpg'];
+  const imgs = ['brume/p1.jpg', 'brume/p2.jpg', 'brume/p3.jpg'];
   const cur = Math.floor(f / 20) % 3;
   return (
     <AbsoluteFill style={{background: '#EFEBE3'}}>
@@ -311,16 +312,17 @@ const S5: React.FC = () => (
     return (<>
       <div style={{position: 'absolute', left: RX, top: 150, width: 440, height: 782, borderRadius: 54, padding: 12, background: '#16141A', boxShadow: '0 60px 100px -40px rgba(0,0,0,.6)', transform: `translateY(${(1 - ph) * 200}px) rotate(${(1 - ph) * 6}deg)`}}>
         <div style={{width: '100%', height: '100%', borderRadius: 44, overflow: 'hidden', position: 'relative'}}>
-          <div style={{position: 'absolute', inset: 0, transform: `scale(${[1, 1.12, 1.04, 1.16, 1.06][Math.floor(f / 26) % 5]})`, transformOrigin: '50% 40%'}}><LoopVid src="film/salome-trefle.mp4" from={75} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></div>
-          <div style={{position: 'absolute', left: 22, right: 22, top: 70, textAlign: 'center', transform: `scale(${sp(f - 2, 10)})`}}><span style={{background: '#fff', color: '#111', fontFamily: FONT, fontWeight: 900, fontSize: 30, lineHeight: 1.25, padding: '6px 12px', borderRadius: 10, boxDecorationBreak: 'clone', WebkitBoxDecorationBreak: 'clone'}}>Le cadeau qu’elle ne quittera plus 🎁</span></div>
-          {[['💛', 40, 520, 30], ['✨', 330, 470, 50], ['😍', 60, 330, 75], ['🎄', 320, 290, 100]].map(([e, x, y, at]) => { const q = sp(f - (at as number), 9); return <div key={e as string} style={{position: 'absolute', left: x as number, top: (y as number) - q * 30, fontSize: 52, transform: `scale(${q}) rotate(${(1 - q) * 40}deg)`, opacity: q > 0.05 ? 1 : 0}}>{e}</div>; })}
-          <div style={{position: 'absolute', left: 0, right: 0, bottom: 150, textAlign: 'center', opacity: sp(f - 40, 10)}}><span style={{background: ACC, color: '#fff', fontFamily: FONT, fontWeight: 900, fontSize: 32, padding: '6px 14px', borderRadius: 10}}>BRACELET TRÈFLE</span></div>
-          <div style={{position: 'absolute', left: 16, right: 16, bottom: 16, height: 5, borderRadius: 3, background: 'rgba(255,255,255,.35)'}}><div style={{width: `${Math.min(100, f / 1.6)}%`, height: '100%', borderRadius: 3, background: '#fff'}} /></div>
-          <div style={{position: 'absolute', left: 18, top: 22, background: '#B91C1C', color: '#fff', fontWeight: 800, fontSize: 18, padding: '7px 12px', borderRadius: 999, fontFamily: FONT}}>NOËL</div>
+          <div style={{position: 'absolute', inset: 0, transform: `scale(${[1, 1.1, 1.03, 1.14, 1.05, 1.12][Math.floor(f / 24) % 6]})`, transformOrigin: '50% 35%'}}><LoopVid src="brume/ugc.mp4" style={{width: '100%', height: '100%', objectFit: 'cover'}} /></div>
+          <div style={{position: 'absolute', left: 22, right: 22, top: 62, textAlign: 'center', transform: `scale(${sp(f - 2, 10)})`}}><span style={{background: '#fff', color: '#111', fontFamily: FONT, fontWeight: 900, fontSize: 30, lineHeight: 1.25, padding: '6px 12px', borderRadius: 10, boxDecorationBreak: 'clone', WebkitBoxDecorationBreak: 'clone'}}>Le jogging que je n’enlève plus ☁️</span></div>
+          <BrumeCaps f={f} />
+          {[['😮‍💨', 34, 300, 'enlève'], ['☁️', 330, 360, 'doux'], ['👌', 40, 470, 'parfaite'], ['🔥', 320, 250, 'confortable']].map(([e, x, y, w]) => { const t = BW.find((z) => z.w.toLowerCase().startsWith(w as string)); const q = sp(f - Math.round((t ? t.s : 1) * 30), 9); return <div key={e as string} style={{position: 'absolute', left: x as number, top: (y as number) - q * 30, fontSize: 54, transform: `scale(${q}) rotate(${(1 - q) * 40}deg)`, opacity: q > 0.05 ? 1 : 0}}>{e}</div>; })}
+          <div style={{position: 'absolute', left: 0, right: 0, bottom: 44, textAlign: 'center', opacity: sp(f - 150, 10)}}><span style={{background: '#2E3033', color: '#fff', fontFamily: FONT, fontWeight: 900, fontSize: 26, padding: '8px 16px', borderRadius: 10, letterSpacing: '0.08em'}}>JOGGING NUAGE · BRUME</span></div>
+          <div style={{position: 'absolute', left: 16, right: 16, bottom: 16, height: 5, borderRadius: 3, background: 'rgba(255,255,255,.35)'}}><div style={{width: `${Math.min(100, f / 2.4)}%`, height: '100%', borderRadius: 3, background: '#fff'}} /></div>
+          <div style={{position: 'absolute', left: 18, top: 18, background: '#2E3033', color: '#fff', fontWeight: 800, fontSize: 16, padding: '6px 12px', borderRadius: 999, fontFamily: FONT, letterSpacing: '0.06em'}}>NOUVEAU</div>
         </div>
       </div>
       <div style={{position: 'absolute', left: RX + 490, top: 200, width: 430, display: 'grid', gap: 16, fontFamily: FONT, color: INK}}>
-        {[{img: M('actors-real/r110.jpg'), k: 'Acteur UGC', v: 'Salomé'}, {img: M('ig/trefle-packshot.jpg'), k: 'Produit', v: 'Bracelet Trèfle'}].map((x, i) => { const p = sp(f - 6 - i * 5, 12); return (
+        {[{img: M('brume/face.jpg'), k: 'Acteur UGC', v: 'Yanis'}, {img: M('brume/p1.jpg'), k: 'Produit', v: 'Jogging Nuage'}].map((x, i) => { const p = sp(f - 6 - i * 5, 12); return (
           <div key={x.k} style={{display: 'flex', alignItems: 'center', gap: 16, background: SURF, borderRadius: 24, padding: 14, border: `1px solid ${LINE}`, opacity: p, transform: `translateX(${(1 - p) * 40}px)`}}>
             <Img src={x.img} style={{width: 80, height: 80, borderRadius: 16, objectFit: 'cover'}} />
             <div><div style={{fontSize: 18, color: MUTED, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase'}}>{x.k}</div><div style={{fontSize: 28, fontWeight: 700}}>{x.v}</div></div>
@@ -332,6 +334,20 @@ const S5: React.FC = () => (
     </>);
   }}</Stage>
 );
+
+// sous-titres animés mot par mot de la pub BRUME (dans le téléphone)
+const BW = (BWJ as Word[]).filter((w) => /[\p{L}]/u.test(w.w));
+const BrumeCaps: React.FC<{f: number}> = ({f}) => {
+  const t = (f % 238) / 30;
+  const i = BW.findIndex((w) => t < w.e + 0.1);
+  if (i < 0 || t < BW[0].s - 0.05) return null;
+  const grp = BW.slice(Math.floor(i / 2) * 2, Math.floor(i / 2) * 2 + 2);
+  return (
+    <div style={{position: 'absolute', left: 16, right: 16, top: 430, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8, fontFamily: FONT}}>
+      {grp.map((w, j) => { const on = t >= w.s - 0.02; const hot = on && t <= w.e + 0.06; const p = sp(Math.round((t - w.s) * 30), 9); return <span key={j} style={{fontWeight: 900, fontSize: 40, letterSpacing: '-0.01em', textTransform: 'uppercase', color: hot ? '#fff' : '#fff', background: hot ? ACC : 'transparent', padding: '2px 10px', borderRadius: 10, textShadow: hot ? 'none' : '0 3px 10px rgba(0,0,0,.8), 0 0 3px rgba(0,0,0,.9)', opacity: on ? 1 : 0, transform: `scale(${on ? 0.7 + 0.3 * p : 0.7})`}}>{w.w.replace(/[.,:?!]$/, '')}</span>; })}
+    </div>
+  );
+};
 
 // ---------- 6. Meta Ads ----------
 const S6: React.FC = () => (
@@ -369,7 +385,7 @@ const S6: React.FC = () => (
 );
 
 // ---------- 7. leads ----------
-const LEADS: [string, string, string][] = [['Julie R.', 'Gravure personnalisée', 'à l’instant'], ['Sarah M.', 'Coffret cadeau de Noël', 'il y a 4 min'], ['Inès B.', 'Bracelet sur mesure', 'il y a 12 min']];
+const LEADS: [string, string, string][] = [['Julie R.', 'Commande pour son club de sport', 'à l’instant'], ['Sarah M.', 'Boutique revendeuse à Lyon', 'il y a 4 min'], ['Inès B.', 'Question sur les tailles', 'il y a 12 min']];
 const S6b: React.FC = () => (
   <Stage k="s6b">{(f) => {
     const form = sp(f - 2, 13), sent = cue(12, 'formulaire', 1.4) - FM.s6b + 8;
@@ -378,7 +394,7 @@ const S6b: React.FC = () => (
     return (<>
       <Card style={{left: RX, top: 160, width: 400, padding: '26px 28px', transform: `scale(${form})`, transformOrigin: 'left top'}}>
         <div style={{display: 'flex', alignItems: 'center', gap: 10, fontSize: 20, color: MUTED, fontWeight: 700}}><Brand k="meta" s={26} /> Formulaire Meta</div>
-        <div style={{fontSize: 30, fontWeight: 800, marginTop: 10}}>Maison Trèfle</div>
+        <div style={{fontSize: 30, fontWeight: 800, marginTop: 10, letterSpacing: '0.1em'}}>BRUME</div>
         {[['Prénom', 'Julie'], ['Téléphone', '06 •• •• •• 12']].map(([k, v], i) => { const n = Math.max(0, Math.min(v.length, Math.floor((f - 10 - i * 12) * 0.9))); return (
           <div key={k} style={{marginTop: 14, border: `1px solid ${LINE}`, borderRadius: 14, padding: '10px 14px'}}><div style={{fontSize: 16, color: MUTED, fontWeight: 700}}>{k}</div><div style={{fontSize: 24, fontWeight: 600, minHeight: 30}}>{v.slice(0, n)}</div></div>); })}
         <div style={{marginTop: 16, background: f >= sent ? '#16A34A' : '#0866FF', color: '#fff', borderRadius: 14, padding: '14px 0', textAlign: 'center', fontWeight: 800, fontSize: 24, transform: `scale(${interpolate(f, [sent, sent + 4, sent + 10], [1, 0.94, 1], clamp)})`}}>{f >= sent ? '✓ Envoyé' : 'Envoyer'}</div>
@@ -389,7 +405,7 @@ const S6b: React.FC = () => (
           <div key={n} style={{display: 'flex', alignItems: 'center', gap: 14, padding: '12px 0', borderTop: i ? `1px solid ${LINE}` : 'none', marginTop: i ? 0 : 12, opacity: p, transform: `translateY(${(1 - p) * -20}px)`}}>
             <div style={{width: 48, height: 48, borderRadius: 99, background: '#F0ECFF', color: ACC, display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 22}}>{n[0]}</div>
             <div style={{flex: 1}}><div style={{fontSize: 26, fontWeight: 700}}>{n} {i === 0 && <span style={{fontSize: 16, fontWeight: 800, color: '#fff', background: '#16A34A', borderRadius: 99, padding: '3px 10px', marginLeft: 6, verticalAlign: 4}}>NOUVEAU</span>}</div><div style={{fontSize: 20, color: MUTED}}>{d} · {t}</div></div>
-            <div style={{display: 'flex', alignItems: 'center', gap: 8, background: '#F4F1EA', borderRadius: 12, padding: '6px 10px 6px 6px', opacity: link, transform: `scale(${0.8 + 0.2 * link})`}}><Img src={M('actors-real/r110.jpg')} style={{width: 34, height: 34, borderRadius: 8, objectFit: 'cover'}} /><span style={{fontSize: 18, fontWeight: 700}}>Pub Noël</span></div>
+            <div style={{display: 'flex', alignItems: 'center', gap: 8, background: '#F4F1EA', borderRadius: 12, padding: '6px 10px 6px 6px', opacity: link, transform: `scale(${0.8 + 0.2 * link})`}}><Img src={M('brume/face.jpg')} style={{width: 34, height: 34, borderRadius: 8, objectFit: 'cover'}} /><span style={{fontSize: 18, fontWeight: 700}}>Pub Nuage</span></div>
           </div>); })}
       </Card>
     </>);
@@ -400,10 +416,10 @@ const S6b: React.FC = () => (
 const S7: React.FC = () => (
   <Stage k="s7">{(f) => {
     const bars = [0.35, 0.42, 0.4, 0.55, 0.62, 0.6, 0.74, 0.82, 0.9];
-    const ins: [string, string, string, string][] = [['🏆', 'Meilleure pub repérée', 'Salomé · Bracelet Trèfle', 'analyse'], ['💡', 'À améliorer', 'l’accroche des 3 premières secondes', 'résultats'], ['✨', 'Nouvelle version prête', 'à valider en un clic', 'faire']];
+    const ins: [string, string, string, string][] = [['🏆', 'Meilleure pub repérée', 'Yanis · Jogging Nuage', 'analyse'], ['💡', 'À améliorer', 'l’accroche des 3 premières secondes', 'résultats'], ['✨', 'Nouvelle version prête', 'à valider en un clic', 'faire']];
     return (
       <Card style={{left: RX, top: 160, width: RW}}>
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}><div style={{fontWeight: 800, fontSize: 40, letterSpacing: '-0.02em'}}>Campagne Noël</div><span style={{display: 'flex', alignItems: 'center', gap: 8, background: '#EEF4FF', color: '#0866FF', fontWeight: 800, fontSize: 20, padding: '8px 16px', borderRadius: 999}}><Brand k="meta" s={22} />Synchronisé avec Meta Ads</span></div>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}><div style={{fontWeight: 800, fontSize: 40, letterSpacing: '-0.02em'}}>Campagne Jogging Nuage</div><span style={{display: 'flex', alignItems: 'center', gap: 8, background: '#EEF4FF', color: '#0866FF', fontWeight: 800, fontSize: 20, padding: '8px 16px', borderRadius: 999}}><Brand k="meta" s={22} />Synchronisé avec Meta Ads</span></div>
         <div style={{display: 'flex', gap: 12, marginTop: 20}}>
           {['Dépenses', 'Clics', 'Leads', 'Ventes'].map((k, i) => { const p = sp(f - (cue(8, 'performances', 0.6) - FM.s7) - i * 3, 11); return (
             <div key={k} style={{flex: 1, background: '#F7F5F0', borderRadius: 16, padding: '12px 14px', opacity: p, transform: `translateY(${(1 - p) * 20}px)`}}>

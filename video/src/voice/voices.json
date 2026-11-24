@@ -2777,7 +2777,7 @@
   "stability": 0.45,
   "style": 0.45,
   "speed": 1.13,
-  "text": "Une phrase. « Une pub pour Noël, pour mes bijoux. »"
+  "text": "Une phrase. « Une pub pour mon nouveau jogging. »"
  },
  "lm-3": {
   "voice": "3Tp5mYhT9wrfnry9pzvV",
@@ -2858,5 +2858,13 @@
   "style": 0.45,
   "speed": 1.13,
   "text": "Vos prospects remplissent le formulaire, et chaque lead arrive dans Grossiti, relié à la pub qui l'a apporté."
+ },
+ "brume-1": {
+  "voice": "Ayvd8fDj52DfUWXZeAFe",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.06,
+  "text": "[excited] Ce jogging ? Je l'enlève plus. [laughs] Hyper doux, coupe parfaite… franchement, le plus confortable que j'ai jamais porté. Foncez !"
  }
 }
