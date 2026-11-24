@@ -73,7 +73,7 @@ const Bg: React.FC = () => {
 };
 
 // barre d'étapes en haut (comme le fil du carrousel)
-const STEPS = [['s1', 'Décrivez'], ['s2', 'Marque'], ['s3', 'Produit'], ['s4', 'Acteur'], ['s5', 'Vidéo'], ['s6', 'Meta Ads'], ['s7', 'Performances']];
+const STEPS = [['s1', 'Décrivez'], ['s2', 'Marque'], ['s3', 'Produit'], ['s4', 'Style'], ['s5', 'Vidéo'], ['s6', 'Meta Ads'], ['s7', 'Performances']];
 const Rail: React.FC = () => {
   const g = useCurrentFrame();
   if (g < FM.s1 - 10 || g > FM.end) return null;
@@ -169,8 +169,8 @@ const PROMPT = 'Je veux une pub pour Noël pour mes bijoux.';
 const S1: React.FC = () => (
   <Stage k="s1">{(f) => {
     const g = f + FM.s1;
-    const t0 = cue(2, 'une', 1.5) - FM.s1 + 6, n = Math.max(0, Math.min(PROMPT.length, Math.floor((f - t0) * 1.25)));
-    const click = t0 + PROMPT.length / 1.25 + 10;
+    const t0 = cue(2, 'une', 0.9) - FM.s1 + 4, n = Math.max(0, Math.min(PROMPT.length, Math.floor((f - t0) * 1.7)));
+    const click = t0 + PROMPT.length / 1.7 + 8;
     const pressed = f >= click;
     const load = interpolate(f, [click, click + 30], [0, 1], clamp);
     return (<>
@@ -240,37 +240,68 @@ const S3: React.FC = () => (
   }}</Stage>
 );
 
-// ---------- 4. acteur ----------
+// ---------- 4. style (les 5 styles vidéo de Growthity + visuels/carrousels) ----------
+const STYLES: {k: string; t: string; h: string; w: string; v?: string}[] = [
+  {k: 'ugc', t: 'Acteur UGC', h: '500+ acteurs, ou vous', w: 'un', v: 'gw/gw-28.mp4'},
+  {k: 'vo', t: 'Produit + voix off', h: 'Votre produit, une voix', w: 'une', v: 'vid-oeufs-cuisine.mp4'},
+  {k: 'motion', t: 'Motion design', h: 'Offre, lancement, promo', w: 'motion'},
+  {k: 'cine', t: 'Cinématique', h: 'Plans soignés, lumière', w: 'cinématique', v: 'gw/gw-48.mp4'},
+  {k: 'anim', t: 'Photo animée', h: 'Votre photo prend vie', w: 'photo', v: 'vid-sneakers.mp4'},
+  {k: 'img', t: 'Visuels & carrousels', h: '1 à 10 images', w: 'visuels'},
+];
+const MotionPrev: React.FC<{f: number}> = ({f}) => (
+  <AbsoluteFill style={{background: GRAD, overflow: 'hidden', fontFamily: FONT, color: '#fff'}}>
+    {[0, 1, 2].map((i) => <div key={i} style={{position: 'absolute', left: 30 + i * 80, top: 40 + i * 70, width: 90, height: 90, borderRadius: i === 1 ? 99 : 20, border: '6px solid rgba(255,255,255,.35)', transform: `rotate(${f * (2 + i)}deg) translateY(${Math.sin((f + i * 20) / 10) * 14}px)`}} />)}
+    <div style={{position: 'absolute', left: 0, right: 0, top: 120, textAlign: 'center', fontWeight: 900, fontSize: 46, lineHeight: 1, letterSpacing: '-0.03em', transform: `scale(${1 + 0.06 * Math.sin(f / 6)})`}}>OFFRE<br />DE NOËL</div>
+    <div style={{position: 'absolute', left: 40, right: 40, bottom: 40, height: 46, borderRadius: 99, background: '#fff', color: INK, display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 20, transform: `translateY(${(1 - sp(f % 45, 10)) * 60}px)`}}>Commander</div>
+  </AbsoluteFill>
+);
+const ImgPrev: React.FC<{f: number}> = ({f}) => {
+  const imgs = ['ig/trefle-packshot.jpg', 'img-bracelet-cercle.jpg', 'ig/lou-poignet.jpg'];
+  const cur = Math.floor(f / 20) % 3;
+  return (
+    <AbsoluteFill style={{background: '#EFEBE3'}}>
+      {imgs.map((im, i) => { const d = (i - cur + 3) % 3; return <div key={im} style={{position: 'absolute', left: 40 + d * 22, top: 40 + d * 16, width: 190, height: 240, borderRadius: 16, overflow: 'hidden', boxShadow: '0 16px 30px -16px rgba(0,0,0,.5)', zIndex: 3 - d, transform: `rotate(${(d - 1) * 4}deg)`}}><Img src={M(im)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 70%'}} /></div>; })}
+      <div style={{position: 'absolute', left: 0, right: 0, bottom: 14, display: 'flex', justifyContent: 'center', gap: 6}}>{[0, 1, 2].map((i) => <span key={i} style={{width: 9, height: 9, borderRadius: 9, background: i === cur ? ACC : '#C9C2B6'}} />)}</div>
+    </AbsoluteFill>
+  );
+};
 const S4: React.FC = () => (
   <Stage k="s4">{(f) => {
-    const all = (ACTORS as {name: string; img: string}[]).filter((a) => a !== NOOR);
-    const cols = 7, rows = 7, gw = 118, gh = 132, gap = 12, pickIdx = 3 * cols + 3;
-    const list = all.slice(0, cols * rows - 1); list.splice(pickIdx, 0, NOOR);
-    const scroll = interpolate(f, [0, 70], [-260, 0], {...clamp, easing: INOUT});
-    const pick = Math.min(cue(5, 'centaines', 2) - FM.s4 + 6, 82);
-    const on = f >= pick, z = sp(f - pick, 12);
-    return (<>
-      <div style={{position: 'absolute', left: RX + 20, top: 170, width: RW, height: 860, overflow: 'hidden', borderRadius: 30, maskImage: 'linear-gradient(transparent, black 8%, black 92%, transparent)', WebkitMaskImage: 'linear-gradient(transparent, black 8%, black 92%, transparent)'}}>
-        <div style={{display: 'grid', gridTemplateColumns: `repeat(${cols}, ${gw}px)`, gap, transform: `translateY(${scroll}px)`, paddingTop: 40}}>
-          {list.map((a, i) => { const sel = on && i === pickIdx; const dim = on && !sel; return (
-            <div key={a.img} style={{position: 'relative', width: gw, height: gh, borderRadius: 18, overflow: 'hidden', opacity: dim ? 1 - 0.45 * z : 1, boxShadow: sel ? `0 0 0 5px ${ACC}, 0 24px 50px -16px rgba(91,63,228,.7)` : '0 10px 24px -18px rgba(0,0,0,.5)', transform: `scale(${sel ? 1 + 0.25 * z : 1})`, zIndex: sel ? 3 : 1}}>
-              <Img src={M(a.img)} style={{width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 30%'}} />
-              {sel && <div style={{position: 'absolute', right: 6, top: 6, width: 30, height: 30, borderRadius: 99, background: ACC, display: 'grid', placeItems: 'center'}}><Check s={18} c="#fff" /></div>}
-            </div>); })}
-        </div>
+    const g = f + FM.s4;
+    const at = STYLES.map((x) => cue(5, x.w, 1));
+    let act = -1; at.forEach((t, i) => { if (g >= t - 2) act = i; });
+    const faces = (ACTORS as {name: string; img: string}[]).filter((a) => a !== NOOR);
+    const flipFrom = cue(5, 'cinq', 3), meAt = cue(5, 'vous', 4);
+    const fi = Math.floor((g - flipFrom) / 3);
+    return (
+      <div style={{position: 'absolute', left: RX - 10, top: 150, width: RW + 20, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, fontFamily: FONT, color: INK}}>
+        {STYLES.map((x, i) => {
+          const p = sp(f - 2 - i * 2, 12), on = i === act, seen = i <= act, pop = sp(g - at[i], 10);
+          return (
+            <div key={x.k} style={{position: 'relative', background: SURF, borderRadius: 26, padding: 10, border: on ? `4px solid ${ACC}` : `1px solid ${LINE}`, boxShadow: on ? '0 30px 60px -26px rgba(91,63,228,.7)' : '0 20px 40px -34px rgba(0,0,0,.4)', transform: `scale(${p * (on ? 1 + 0.05 * pop : 1)})`, opacity: act >= 0 && !on ? 0.6 : 1, zIndex: on ? 2 : 1}}>
+              <div style={{position: 'relative', height: 300, borderRadius: 18, overflow: 'hidden', background: '#EFEBE3'}}>
+                {x.v && <OffthreadVideo muted src={M(x.v)} startFrom={x.k === 'cine' ? 50 : 30} style={{width: '100%', height: '100%', objectFit: 'cover'}} />}
+                {x.k === 'motion' && <MotionPrev f={f} />}
+                {x.k === 'img' && <ImgPrev f={f} />}
+                {x.k === 'ugc' && g >= flipFrom && g < meAt && <Img src={M(faces[(fi * 7) % faces.length].img)} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 30%'}} />}
+                {x.k === 'ugc' && g >= flipFrom && <div style={{position: 'absolute', left: 10, top: 10, background: ACC, color: '#fff', fontWeight: 800, fontSize: 18, padding: '6px 12px', borderRadius: 999, transform: `scale(${sp(g - flipFrom, 10)})`}}>{g >= meAt ? 'Ou le vôtre, depuis une photo' : '500+ acteurs'}</div>}
+              </div>
+              <div style={{display: 'flex', alignItems: 'center', gap: 8, marginTop: 12, fontSize: 26, fontWeight: 800}}>{seen && <Check s={24} />}{x.t}</div>
+              <div style={{fontSize: 19, color: MUTED, marginTop: 2}}>{x.h}</div>
+            </div>
+          );
+        })}
       </div>
-      <div style={{position: 'absolute', left: 120, top: 700, fontFamily: FONT, display: 'flex', alignItems: 'center', gap: 16, background: SURF, borderRadius: 999, padding: '10px 26px 10px 10px', border: `1px solid ${LINE}`, opacity: z, transform: `scale(${z})`, transformOrigin: 'left'}}>
-        <Img src={M(NOOR.img)} style={{width: 66, height: 66, borderRadius: 99, objectFit: 'cover'}} /><span style={{fontSize: 30, fontWeight: 800, color: INK}}>Noor</span><span style={{fontSize: 26, color: MUTED}}>présentera le bracelet</span>
-      </div>
-    </>);
+    );
   }}</Stage>
 );
 
 // ---------- 5. vidéo prête ----------
 const S5: React.FC = () => (
   <Stage k="s5">{(f) => {
-    const items: [string, string][] = [['Script', 'script'], ['Voix en français', 'voix'], ['Sous-titres animés', 'sous'], ['Montage', 'montage']];
-    const ready = sp(f - (cue(6, 'votre', 2.6) - FM.s5), 11);
+    const items: [string, string][] = [['Script', 'script'], ['Voix en français', 'voix'], ['Sous-titres animés', 'sous'], ['Montage', 'montage'], ['9:16 · 4:5 · 1:1 · 16:9', 'formats']];
+    const ready = sp(f - (cue(6, 'prêt', 2.6) - FM.s5), 11);
     const ph = sp(f, 14);
     return (<>
       <div style={{position: 'absolute', left: RX, top: 150, width: 440, height: 782, borderRadius: 54, padding: 12, background: '#16141A', boxShadow: '0 60px 100px -40px rgba(0,0,0,.6)', transform: `translateY(${(1 - ph) * 200}px) rotate(${(1 - ph) * 6}deg)`}}>
@@ -280,7 +311,7 @@ const S5: React.FC = () => (
         </div>
       </div>
       <div style={{position: 'absolute', left: RX + 490, top: 200, width: 430, display: 'grid', gap: 16, fontFamily: FONT, color: INK}}>
-        {[{img: M(NOOR.img), k: 'Actrice', v: 'Noor'}, {img: M('ig/trefle-packshot.jpg'), k: 'Produit', v: 'Bracelet Trèfle'}].map((x, i) => { const p = sp(f - 6 - i * 5, 12); return (
+        {[{img: M(NOOR.img), k: 'Acteur UGC', v: 'Noor'}, {img: M('ig/trefle-packshot.jpg'), k: 'Produit', v: 'Bracelet Trèfle'}].map((x, i) => { const p = sp(f - 6 - i * 5, 12); return (
           <div key={x.k} style={{display: 'flex', alignItems: 'center', gap: 16, background: SURF, borderRadius: 24, padding: 14, border: `1px solid ${LINE}`, opacity: p, transform: `translateX(${(1 - p) * 40}px)`}}>
             <Img src={x.img} style={{width: 80, height: 80, borderRadius: 16, objectFit: 'cover'}} />
             <div><div style={{fontSize: 18, color: MUTED, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase'}}>{x.k}</div><div style={{fontSize: 28, fontWeight: 700}}>{x.v}</div></div>
@@ -442,9 +473,9 @@ export const FilmMix: React.FC = () => {
       <S2 />
       <Head k="s3" kick="Étape 3 · Choisissez le produit" a="Votre catalogue," b="déjà prêt." />
       <S3 />
-      <Head k="s4" kick="Étape 4 · Choisissez votre acteur" a="Des visages réalistes." b="Choisissez le vôtre." />
+      <Head k="s4" kick="Étape 4 · Choisissez le style" a="Le style" b="qui vous va." />
       <S4 />
-      <Head k="s5" kick="Étape 5 · Growthity crée" a="Acteur + produit :" b="votre vidéo est prête." />
+      <Head k="s5" kick="Étape 5 · Growthity crée" a="Script, voix, montage :" b="c’est prêt." />
       <S5 />
       <Head k="s6" kick="Étape 6 · Lancez" a="Directement" b="sur Meta Ads." />
       <S6 />
