@@ -2618,5 +2618,77 @@
   "style": 0.4,
   "speed": 1.05,
   "text": "[confident] Votre prochaine pub est à une phrase. Rendez-vous sur Grossiti point A I."
+ },
+ "li-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.42,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[excited] Cette pub n'a jamais été tournée."
+ },
+ "li-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.42,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "Elle a été créée dans Grossiti, à partir d’une seule phrase."
+ },
+ "li-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.42,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "Vous décrivez votre activité. Grossiti écrit le script, choisit l'actrice, ajoute la voix et les sous-titres."
+ },
+ "li-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.42,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "Un clic, et votre pub est en ligne sur Facebook et Instagram, dans votre zone."
+ },
+ "li-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.42,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "Les personnes intéressées remplissent votre formulaire…"
+ },
+ "li-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.42,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "et les demandes arrivent directement dans Grossiti. Vous êtes même prévenu sur WhatsApp."
+ },
+ "li-7": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.42,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "Votre media buyer analyse vos résultats et vous dit quoi améliorer."
+ },
+ "li-8": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.42,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "Et vos posts partent aussi sur tous vos réseaux."
+ },
+ "li-9": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.42,
+  "style": 0.5,
+  "speed": 1.08,
+  "text": "[confident] Grossiti est en ligne. Vos pubs et vos clients, au même endroit."
  }
 }
