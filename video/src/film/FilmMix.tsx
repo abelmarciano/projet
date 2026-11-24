@@ -123,7 +123,7 @@ const Stage: React.FC<{k: string; children: (f: number) => React.ReactNode}> = (
   return <AbsoluteFill style={{opacity: Math.min(1, inP * 1.4) * (1 - o), transform: `translateX(${(1 - inP) * 160 + o * 90}px) scale(${1 + f * 0.0002})`}}><Sequence from={s0 - 2} layout="none">{children(f)}</Sequence></AbsoluteFill>;
 };
 // vidéo qui tourne en boucle depuis le début de la scène (jamais figée)
-const LEN: Record<string, number> = {'fal/social/out/lr_rania.mp4': 151, 'vid-oeufs-cuisine.mp4': 240, 'gw/gw-48.mp4': 240, 'vid-sneakers.mp4': 240, 'chat/trefle-noor-edit.mp4': 188};
+const LEN: Record<string, number> = {'fal/social/out/lr_rania.mp4': 151, 'vid-oeufs-cuisine.mp4': 240, 'gw/gw-48.mp4': 240, 'gw/gw-44.mp4': 240, 'film/salome-trefle.mp4': 450, 'vid-sneakers.mp4': 240, 'chat/trefle-noor-edit.mp4': 188};
 const LoopVid: React.FC<{src: string; from?: number; style?: React.CSSProperties}> = ({src, from = 0, style}) => (
   <Loop durationInFrames={(LEN[src] ?? 240) - from - 2} layout="none"><OffthreadVideo muted src={M(src)} startFrom={from} style={style} /></Loop>
 );
@@ -250,7 +250,7 @@ const STYLES: {k: string; t: string; h: string; w: string; v?: string}[] = [
   {k: 'ugc', t: 'Acteur UGC', h: '500+ acteurs, ou vous', w: 'un', v: 'fal/social/out/lr_rania.mp4'},
   {k: 'vo', t: 'Produit + voix off', h: 'Votre produit, une voix', w: 'une', v: 'vid-oeufs-cuisine.mp4'},
   {k: 'motion', t: 'Motion design', h: 'Offre, lancement, promo', w: 'motion'},
-  {k: 'cine', t: 'Cinématique', h: 'Plans soignés, lumière', w: 'cinématique', v: 'gw/gw-48.mp4'},
+  {k: 'cine', t: 'Cinématique', h: 'Plans soignés, lumière', w: 'cinématique', v: 'gw/gw-44.mp4'},
   {k: 'anim', t: 'Photo animée', h: 'Votre photo prend vie', w: 'photo', v: 'vid-sneakers.mp4'},
   {k: 'img', t: 'Visuels & carrousels', h: '1 à 10 images', w: 'visuels'},
 ];
@@ -286,7 +286,7 @@ const S4: React.FC = () => (
           return (
             <div key={x.k} style={{position: 'relative', background: SURF, borderRadius: 26, padding: 10, border: on ? `4px solid ${ACC}` : `1px solid ${LINE}`, boxShadow: on ? '0 30px 60px -26px rgba(91,63,228,.7)' : '0 20px 40px -34px rgba(0,0,0,.4)', transform: `scale(${p * (on ? 1 + 0.05 * pop : 1)})`, opacity: act >= 0 && !on ? 0.6 : 1, zIndex: on ? 2 : 1}}>
               <div style={{position: 'relative', height: 300, borderRadius: 18, overflow: 'hidden', background: '#EFEBE3'}}>
-                {x.v && <LoopVid src={x.v} from={x.k === 'cine' ? 50 : x.k === 'ugc' ? 0 : 30} style={{width: '100%', height: '100%', objectFit: 'cover'}} />}
+                {x.v && <LoopVid src={x.v} from={x.k === 'ugc' ? 0 : x.k === 'cine' ? 0 : 30} style={{width: '100%', height: '100%', objectFit: 'cover'}} />}
                 {x.k === 'motion' && <MotionPrev f={f} />}
                 {x.k === 'img' && <ImgPrev f={f} />}
                 {x.k === 'ugc' && g >= flipFrom && g < meAt && <Img src={M(faces[(fi * 7) % faces.length].img)} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 30%'}} />}
@@ -311,12 +311,16 @@ const S5: React.FC = () => (
     return (<>
       <div style={{position: 'absolute', left: RX, top: 150, width: 440, height: 782, borderRadius: 54, padding: 12, background: '#16141A', boxShadow: '0 60px 100px -40px rgba(0,0,0,.6)', transform: `translateY(${(1 - ph) * 200}px) rotate(${(1 - ph) * 6}deg)`}}>
         <div style={{width: '100%', height: '100%', borderRadius: 44, overflow: 'hidden', position: 'relative'}}>
-          <LoopVid src="chat/trefle-noor-edit.mp4" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+          <div style={{position: 'absolute', inset: 0, transform: `scale(${[1, 1.12, 1.04, 1.16, 1.06][Math.floor(f / 26) % 5]})`, transformOrigin: '50% 40%'}}><LoopVid src="film/salome-trefle.mp4" from={75} style={{width: '100%', height: '100%', objectFit: 'cover'}} /></div>
+          <div style={{position: 'absolute', left: 22, right: 22, top: 70, textAlign: 'center', transform: `scale(${sp(f - 2, 10)})`}}><span style={{background: '#fff', color: '#111', fontFamily: FONT, fontWeight: 900, fontSize: 30, lineHeight: 1.25, padding: '6px 12px', borderRadius: 10, boxDecorationBreak: 'clone', WebkitBoxDecorationBreak: 'clone'}}>Le cadeau qu’elle ne quittera plus 🎁</span></div>
+          {[['💛', 40, 520, 30], ['✨', 330, 470, 50], ['😍', 60, 330, 75], ['🎄', 320, 290, 100]].map(([e, x, y, at]) => { const q = sp(f - (at as number), 9); return <div key={e as string} style={{position: 'absolute', left: x as number, top: (y as number) - q * 30, fontSize: 52, transform: `scale(${q}) rotate(${(1 - q) * 40}deg)`, opacity: q > 0.05 ? 1 : 0}}>{e}</div>; })}
+          <div style={{position: 'absolute', left: 0, right: 0, bottom: 150, textAlign: 'center', opacity: sp(f - 40, 10)}}><span style={{background: ACC, color: '#fff', fontFamily: FONT, fontWeight: 900, fontSize: 32, padding: '6px 14px', borderRadius: 10}}>BRACELET TRÈFLE</span></div>
+          <div style={{position: 'absolute', left: 16, right: 16, bottom: 16, height: 5, borderRadius: 3, background: 'rgba(255,255,255,.35)'}}><div style={{width: `${Math.min(100, f / 1.6)}%`, height: '100%', borderRadius: 3, background: '#fff'}} /></div>
           <div style={{position: 'absolute', left: 18, top: 22, background: '#B91C1C', color: '#fff', fontWeight: 800, fontSize: 18, padding: '7px 12px', borderRadius: 999, fontFamily: FONT}}>NOËL</div>
         </div>
       </div>
       <div style={{position: 'absolute', left: RX + 490, top: 200, width: 430, display: 'grid', gap: 16, fontFamily: FONT, color: INK}}>
-        {[{img: M(NOOR.img), k: 'Acteur UGC', v: 'Noor'}, {img: M('ig/trefle-packshot.jpg'), k: 'Produit', v: 'Bracelet Trèfle'}].map((x, i) => { const p = sp(f - 6 - i * 5, 12); return (
+        {[{img: M('actors-real/r110.jpg'), k: 'Acteur UGC', v: 'Salomé'}, {img: M('ig/trefle-packshot.jpg'), k: 'Produit', v: 'Bracelet Trèfle'}].map((x, i) => { const p = sp(f - 6 - i * 5, 12); return (
           <div key={x.k} style={{display: 'flex', alignItems: 'center', gap: 16, background: SURF, borderRadius: 24, padding: 14, border: `1px solid ${LINE}`, opacity: p, transform: `translateX(${(1 - p) * 40}px)`}}>
             <Img src={x.img} style={{width: 80, height: 80, borderRadius: 16, objectFit: 'cover'}} />
             <div><div style={{fontSize: 18, color: MUTED, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase'}}>{x.k}</div><div style={{fontSize: 28, fontWeight: 700}}>{x.v}</div></div>
@@ -385,7 +389,7 @@ const S6b: React.FC = () => (
           <div key={n} style={{display: 'flex', alignItems: 'center', gap: 14, padding: '12px 0', borderTop: i ? `1px solid ${LINE}` : 'none', marginTop: i ? 0 : 12, opacity: p, transform: `translateY(${(1 - p) * -20}px)`}}>
             <div style={{width: 48, height: 48, borderRadius: 99, background: '#F0ECFF', color: ACC, display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 22}}>{n[0]}</div>
             <div style={{flex: 1}}><div style={{fontSize: 26, fontWeight: 700}}>{n} {i === 0 && <span style={{fontSize: 16, fontWeight: 800, color: '#fff', background: '#16A34A', borderRadius: 99, padding: '3px 10px', marginLeft: 6, verticalAlign: 4}}>NOUVEAU</span>}</div><div style={{fontSize: 20, color: MUTED}}>{d} · {t}</div></div>
-            <div style={{display: 'flex', alignItems: 'center', gap: 8, background: '#F4F1EA', borderRadius: 12, padding: '6px 10px 6px 6px', opacity: link, transform: `scale(${0.8 + 0.2 * link})`}}><Img src={M(NOOR.img)} style={{width: 34, height: 34, borderRadius: 8, objectFit: 'cover'}} /><span style={{fontSize: 18, fontWeight: 700}}>Pub Noël</span></div>
+            <div style={{display: 'flex', alignItems: 'center', gap: 8, background: '#F4F1EA', borderRadius: 12, padding: '6px 10px 6px 6px', opacity: link, transform: `scale(${0.8 + 0.2 * link})`}}><Img src={M('actors-real/r110.jpg')} style={{width: 34, height: 34, borderRadius: 8, objectFit: 'cover'}} /><span style={{fontSize: 18, fontWeight: 700}}>Pub Noël</span></div>
           </div>); })}
       </Card>
     </>);
@@ -396,7 +400,7 @@ const S6b: React.FC = () => (
 const S7: React.FC = () => (
   <Stage k="s7">{(f) => {
     const bars = [0.35, 0.42, 0.4, 0.55, 0.62, 0.6, 0.74, 0.82, 0.9];
-    const ins: [string, string, string, string][] = [['🏆', 'Meilleure pub repérée', 'Noor · Bracelet Trèfle', 'analyse'], ['💡', 'À améliorer', 'l’accroche des 3 premières secondes', 'résultats'], ['✨', 'Nouvelle version prête', 'à valider en un clic', 'faire']];
+    const ins: [string, string, string, string][] = [['🏆', 'Meilleure pub repérée', 'Salomé · Bracelet Trèfle', 'analyse'], ['💡', 'À améliorer', 'l’accroche des 3 premières secondes', 'résultats'], ['✨', 'Nouvelle version prête', 'à valider en un clic', 'faire']];
     return (
       <Card style={{left: RX, top: 160, width: RW}}>
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}><div style={{fontWeight: 800, fontSize: 40, letterSpacing: '-0.02em'}}>Campagne Noël</div><span style={{display: 'flex', alignItems: 'center', gap: 8, background: '#EEF4FF', color: '#0866FF', fontWeight: 800, fontSize: 20, padding: '8px 16px', borderRadius: 999}}><Brand k="meta" s={22} />Synchronisé avec Meta Ads</span></div>
