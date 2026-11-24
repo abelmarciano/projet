@@ -3,7 +3,7 @@
 // alertes WhatsApp, fin) en motion design, avec un autre exemple : bijoux (marque fictive Maison Trèfle), pub de Noël.
 // Aucun chiffre de résultat. Voix off Hugo (lm-1 … lm-11).
 import React, {useEffect, useState} from 'react';
-import {AbsoluteFill, Audio, Img, OffthreadVideo, Sequence, continueRender, delayRender, interpolate, spring, staticFile, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Audio, Img, Loop, OffthreadVideo, Sequence, continueRender, delayRender, interpolate, spring, staticFile, useCurrentFrame} from 'remotion';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
@@ -120,8 +120,13 @@ const Stage: React.FC<{k: string; children: (f: number) => React.ReactNode}> = (
   if (g < s0 - 2 || g > s1 + 2) return null;
   const f = g - s0;
   const inP = sp(f, 15), o = prog(g, s1 - 10, 12, INOUT);
-  return <AbsoluteFill style={{opacity: Math.min(1, inP * 1.4) * (1 - o), transform: `translateX(${(1 - inP) * 160 + o * 90}px) scale(${1 + f * 0.0002})`}}>{children(f)}</AbsoluteFill>;
+  return <AbsoluteFill style={{opacity: Math.min(1, inP * 1.4) * (1 - o), transform: `translateX(${(1 - inP) * 160 + o * 90}px) scale(${1 + f * 0.0002})`}}><Sequence from={s0 - 2} layout="none">{children(f)}</Sequence></AbsoluteFill>;
 };
+// vidéo qui tourne en boucle depuis le début de la scène (jamais figée)
+const LEN: Record<string, number> = {'fal/social/out/lr_rania.mp4': 151, 'vid-oeufs-cuisine.mp4': 240, 'gw/gw-48.mp4': 240, 'vid-sneakers.mp4': 240, 'chat/trefle-noor-edit.mp4': 188};
+const LoopVid: React.FC<{src: string; from?: number; style?: React.CSSProperties}> = ({src, from = 0, style}) => (
+  <Loop durationInFrames={(LEN[src] ?? 240) - from - 2} layout="none"><OffthreadVideo muted src={M(src)} startFrom={from} style={style} /></Loop>
+);
 const Card: React.FC<{style?: React.CSSProperties; children: React.ReactNode}> = ({style, children}) => (
   <div style={{position: 'absolute', background: SURF, borderRadius: 34, padding: '34px 38px', boxShadow: CARD_SH, border: `1px solid ${LINE}`, fontFamily: FONT, color: INK, ...style}}>{children}</div>
 );
@@ -281,7 +286,7 @@ const S4: React.FC = () => (
           return (
             <div key={x.k} style={{position: 'relative', background: SURF, borderRadius: 26, padding: 10, border: on ? `4px solid ${ACC}` : `1px solid ${LINE}`, boxShadow: on ? '0 30px 60px -26px rgba(91,63,228,.7)' : '0 20px 40px -34px rgba(0,0,0,.4)', transform: `scale(${p * (on ? 1 + 0.05 * pop : 1)})`, opacity: act >= 0 && !on ? 0.6 : 1, zIndex: on ? 2 : 1}}>
               <div style={{position: 'relative', height: 300, borderRadius: 18, overflow: 'hidden', background: '#EFEBE3'}}>
-                {x.v && <OffthreadVideo muted src={M(x.v)} startFrom={x.k === 'cine' ? 50 : 30} style={{width: '100%', height: '100%', objectFit: 'cover'}} />}
+                {x.v && <LoopVid src={x.v} from={x.k === 'cine' ? 50 : x.k === 'ugc' ? 0 : 30} style={{width: '100%', height: '100%', objectFit: 'cover'}} />}
                 {x.k === 'motion' && <MotionPrev f={f} />}
                 {x.k === 'img' && <ImgPrev f={f} />}
                 {x.k === 'ugc' && g >= flipFrom && g < meAt && <Img src={M(faces[(fi * 7) % faces.length].img)} style={{position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 30%'}} />}
@@ -306,7 +311,7 @@ const S5: React.FC = () => (
     return (<>
       <div style={{position: 'absolute', left: RX, top: 150, width: 440, height: 782, borderRadius: 54, padding: 12, background: '#16141A', boxShadow: '0 60px 100px -40px rgba(0,0,0,.6)', transform: `translateY(${(1 - ph) * 200}px) rotate(${(1 - ph) * 6}deg)`}}>
         <div style={{width: '100%', height: '100%', borderRadius: 44, overflow: 'hidden', position: 'relative'}}>
-          <OffthreadVideo muted src={M('chat/trefle-noor-edit.mp4')} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+          <LoopVid src="chat/trefle-noor-edit.mp4" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
           <div style={{position: 'absolute', left: 18, top: 22, background: '#B91C1C', color: '#fff', fontWeight: 800, fontSize: 18, padding: '7px 12px', borderRadius: 999, fontFamily: FONT}}>NOËL</div>
         </div>
       </div>
