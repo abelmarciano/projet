@@ -2690,5 +2690,85 @@
   "style": 0.5,
   "speed": 1.08,
   "text": "[confident] Grossiti est en ligne. Vos pubs et vos clients, au même endroit."
+ },
+ "lf-1": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "[excited] Aucune de ces pubs n'a été tournée."
+ },
+ "lf-2": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "Grossiti est en ligne. Créez, lancez, pilotez… sans agence, sans tournage, sans monteur."
+ },
+ "lf-3": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "Une phrase, ou le lien de votre site, et Grossiti comprend votre marque."
+ },
+ "lf-4": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "En panne d'idées ? Choisissez une pub qui marche dans la galerie, on la recrée pour votre produit."
+ },
+ "lf-5": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "Des centaines d'acteurs IA, des vidéos montées toutes seules… et vingt-quatre créas d'un coup."
+ },
+ "lf-6": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "Un clic, et elles partent sur Meta Ads. Objectif ventes ou leads, dès un euro par jour, zéro commission."
+ },
+ "lf-7": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "Vos prospects remplissent le formulaire et arrivent direct dans Grossiti. L'IA vous dit quoi booster, et quoi couper."
+ },
+ "lf-8": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "Connectez tous vos réseaux. Chaque post part au bon format, avec sa légende. Programmez, ou laissez l'IA remplir votre planning."
+ },
+ "lf-9": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "Et votre IA vous écrit sur WhatsApp. Une pub ne marche pas ? Répondez « pause ». C'est fait."
+ },
+ "lf-10": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.07,
+  "text": "[confident] Votre prochaine campagne est à une phrase. Grossiti point A I."
  }
 }
