@@ -1,6 +1,6 @@
 // « Growthity est en ligne » — film de lancement 16:9 (1920×1080, ~58 s) pour YouTube et la landing.
 // Même promesse que la vidéo de la landing (créer, lancer, piloter), avec une nouvelle mise en scène :
-// mur 3D de pubs UGC → « Aucune de ces pubs n'a été tournée » → Growthity est en ligne / Créez. Lancez. Pilotez.
+// Growthity est en ligne / Créez. Lancez. Pilotez. (mode clair) → mur 3D de pubs UGC « Aucune de ces pubs n'a été tournée »
 // → site → marque comprise → galerie d'inspiration recréée → acteurs IA + 24 créas → Meta Ads (ventes ou leads,
 // dès 1 €/jour, 0 commission) → leads dans Growthity + l'IA dit quoi booster / couper → tous les réseaux + planning
 // → WhatsApp : « Pause » → c'est fait → « Votre prochaine campagne est à une phrase. »
@@ -15,7 +15,6 @@ import '@fontsource/inter/900.css';
 import {LogoMark, Wordmark} from '../components/UI';
 import {EXPO, INOUT, prog} from '../components/anim';
 import {BRAND_PATHS} from '../components/brands';
-import {StudioBg, Dust} from '../chatpub/MotionChatPub';
 import ACTORS from '../organic/actors_real.json';
 import WORDS from './words.json';
 import TLJ from './timeline.json';
@@ -38,7 +37,7 @@ const cue = (k: number, start: string, d = 0) => {
   const w = WD[`lf-${k}`].find((x) => x.w.toLowerCase().startsWith(start));
   return VO[k] + Math.round((w ? w.s : d) * 30);
 };
-const ORDER = ['hook', 'intro', 'brand', 'gallery', 'actors', 'meta', 'leads', 'social', 'wa', 'end'];
+const ORDER = ['intro', 'hook', 'brand', 'gallery', 'actors', 'meta', 'leads', 'social', 'wa', 'end'];
 const nextOf = (k: string) => FS[ORDER[ORDER.indexOf(k) + 1]] ?? FS.total;
 const M = (p: string) => staticFile(`media/${p}`);
 const CLIP = (n: string) => M(`fal/social/out/${n}.mp4`);
@@ -92,63 +91,65 @@ const Stage: React.FC<{k: string; children: (f: number) => React.ReactNode}> = (
   return <AbsoluteFill style={{opacity: Math.min(1, inP * 1.4) * (1 - o), transform: `translateX(${(1 - inP) * 140 + o * 80}px)`}}>{children(f)}</AbsoluteFill>;
 };
 
-// ---------- 0. hook : mur 3D de pubs UGC ----------
+// ---------- 0. intro (mode clair) : Growthity est en ligne / Créez. Lancez. Pilotez. ----------
+const Intro: React.FC = () => {
+  const g = useCurrentFrame();
+  if (g > FS.hook + 14) return null;
+  const f = g;
+  const out = prog(g, FS.hook - 8, 14, INOUT);
+  const logo = sp(f - 2, 12);
+  const words: [string, string][] = [['Créez.', 'créer'], ['Lancez.', 'lancer'], ['Pilotez.', 'piloter']];
+  const nots = ['agence', 'tournage', 'monteur'];
+  const t1 = sp(f - 8, 12), t2 = sp(g - cue(2, 'en', 0.6), 12);
+  return (
+    <AbsoluteFill style={{opacity: 1 - out, transform: `scale(${1 + out * 0.06})`}}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 150, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 22, transform: `scale(${logo})`}}>
+        <div style={{width: 110, height: 110, borderRadius: 32, background: SURF, border: `1px solid ${LINE}`, boxShadow: SH, display: 'grid', placeItems: 'center'}}><LogoMark size={70} draw={prog(f, 2, 20)} /></div>
+        <Wordmark size={76} />
+      </div>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 300, textAlign: 'center', fontFamily: FONT, fontWeight: 900, fontSize: 150, lineHeight: 1.0, letterSpacing: '-0.055em', color: FG}}>
+        <div style={{overflow: 'hidden', paddingBottom: 10}}><div style={{transform: `translateY(${(1 - t1) * 110}%)`}}>Growthity <G>est en ligne.</G></div></div>
+      </div>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 520, display: 'flex', justifyContent: 'center', gap: 44, opacity: t2 > 0 ? 1 : 0}}>
+        {words.map(([t, w]) => { const p = sp(g - cue(2, w, 2.4), 10); return <span key={t} style={{fontFamily: FONT, fontWeight: 900, fontSize: 92, letterSpacing: '-0.045em', color: FG, transform: `scale(${0.6 + 0.4 * p}) translateY(${(1 - p) * 40}px)`, opacity: p}}>{t}</span>; })}
+      </div>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 700, display: 'flex', justifyContent: 'center', gap: 22}}>
+        {nots.map((t) => { const at = cue(2, t, 4); const p = sp(g - at, 11); const cross = interpolate(g, [at + 6, at + 14], [0, 1], clamp); return (
+          <span key={t} style={{position: 'relative', padding: '16px 32px', borderRadius: 999, background: SURF, border: `1px solid ${LINE}`, boxShadow: SH, fontFamily: FONT, fontWeight: 800, fontSize: 38, color: MUTED, transform: `scale(${p})`, opacity: p}}>
+            sans {t}<span style={{position: 'absolute', left: 20, right: 20, top: '50%', height: 5, borderRadius: 3, background: '#EF4444', transform: `scaleX(${cross})`, transformOrigin: 'left'}} />
+          </span>); })}
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+// ---------- 0 bis. le mur de pubs (fond clair) : « Aucune de ces pubs n'a été tournée » ----------
 const WALL = ['lr_isabella', 'game-priya', 'lr_theo', 'cp7-sana', 'sms-anais', 'lr_rania', 'rewind-yanis', 'cp5_noor', 'lr_sofiane', 'multi_amelie', 'sms-malik', 'p3d_patis', 'lr_darius', 'cp6-romane-v2', 'lr_aurelie'];
 const Hook: React.FC = () => {
   const g = useCurrentFrame();
-  if (g > FS.brand + 4) return null;
-  const pull = interpolate(g, [FS.intro - 6, FS.intro + 30], [0, 1], {...clamp, easing: EXPO});
-  const out = prog(g, FS.brand - 14, 16, INOUT);
+  if (g < FS.hook - 4 || g > FS.brand + 4) return null;
+  const f = g - FS.hook;
+  const inP = sp(f, 16);
+  const out = prog(g, FS.brand - 12, 14, INOUT);
   const drift = g * 1.4;
   const t1 = sp(g - VO[1], 12);
   return (
-    <AbsoluteFill style={{opacity: 1 - out}}>
-      <StudioBg />
+    <AbsoluteFill style={{opacity: Math.min(1, inP * 1.4) * (1 - out)}}>
       <AbsoluteFill style={{perspective: 2000, alignItems: 'center', justifyContent: 'center'}}>
-        <div style={{position: 'relative', width: 2600, height: 1500, transform: `rotateX(${24 - pull * 8}deg) rotateZ(-8deg) translateY(${-80 + pull * 60}px) scale(${1.05 - pull * 0.25})`, transformStyle: 'preserve-3d', filter: `blur(${pull * 3}px) brightness(${1 - pull * 0.45})`}}>
+        <div style={{position: 'relative', width: 2600, height: 1500, transform: `rotateX(${22 + (1 - inP) * 10}deg) rotateZ(-8deg) translateY(-60px) scale(${0.95 + inP * 0.1})`, transformStyle: 'preserve-3d'}}>
           {WALL.map((n, i) => {
             const col = i % 5, row = Math.floor(i / 5);
             const x = col * 520 - ((drift + row * 160) % 520), y = row * 520;
-            const p = sp(g - 2 - i * 1.5, 12);
-            return <div key={n} style={{position: 'absolute', left: x, top: y, width: 290, height: 500, borderRadius: 30, overflow: 'hidden', border: '5px solid rgba(255,255,255,.9)', boxShadow: '0 40px 80px -30px rgba(0,0,0,.8)', transform: `scale(${p})`}}>
+            const p = sp(f - 2 - i * 1.2, 12);
+            return <div key={n} style={{position: 'absolute', left: x, top: y, width: 290, height: 500, borderRadius: 30, overflow: 'hidden', border: '6px solid #fff', boxShadow: '0 40px 80px -30px rgba(20,20,60,.45)', transform: `scale(${p})`}}>
               <OffthreadVideo muted src={CLIP(n)} startFrom={20 + (i * 7) % 40} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
             </div>;
           })}
         </div>
       </AbsoluteFill>
-      <AbsoluteFill style={{background: 'radial-gradient(ellipse at center, rgba(11,10,12,0.15) 20%, rgba(11,10,12,0.85) 85%)'}} />
-      <Dust o={0.6} />
-      {g < FS.intro + 4 && (
-        <div style={{position: 'absolute', left: 0, right: 0, top: 420, textAlign: 'center', fontFamily: FONT, fontWeight: 900, fontSize: 118, lineHeight: 1.0, letterSpacing: '-0.05em', color: '#fff', textShadow: '0 20px 60px rgba(0,0,0,.7)', opacity: t1 * (1 - prog(g, FS.intro - 4, 8)), transform: `scale(${0.9 + 0.1 * t1})`}}>
-          Aucune de ces pubs<br /><span style={{color: '#C4B5FD'}}>n’a été tournée.</span>
-        </div>
-      )}
-      <Intro />
-    </AbsoluteFill>
-  );
-};
-const Intro: React.FC = () => {
-  const g = useCurrentFrame();
-  if (g < FS.intro - 2) return null;
-  const f = g - FS.intro;
-  const logo = sp(f, 12);
-  const words: [string, string][] = [['Créez.', 'créer'], ['Lancez.', 'lancer'], ['Pilotez.', 'piloter']];
-  const nots = [['agence', 'agence'], ['tournage', 'tournage'], ['monteur', 'monteur']];
-  return (
-    <AbsoluteFill>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 220, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 22, transform: `scale(${logo})`}}>
-        <div style={{width: 110, height: 110, borderRadius: 32, background: '#fff', display: 'grid', placeItems: 'center'}}><LogoMark size={70} draw={prog(f, 2, 20)} /></div>
-        <Wordmark size={76} dark />
-      </div>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 380, textAlign: 'center', fontFamily: FONT, fontWeight: 900, fontSize: 96, letterSpacing: '-0.05em', color: '#fff', opacity: sp(f - 6, 12)}}>est <span style={{color: '#C4B5FD'}}>en ligne.</span></div>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 540, display: 'flex', justifyContent: 'center', gap: 40}}>
-        {words.map(([t, w]) => { const p = sp(g - cue(2, w, 2.4), 10); return <span key={t} style={{fontFamily: FONT, fontWeight: 900, fontSize: 84, letterSpacing: '-0.04em', color: '#fff', transform: `scale(${0.6 + 0.4 * p}) translateY(${(1 - p) * 40}px)`, opacity: p}}>{t}</span>; })}
-      </div>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 720, display: 'flex', justifyContent: 'center', gap: 22}}>
-        {nots.map(([t, w]) => { const at = cue(2, w, 4); const p = sp(g - at, 11); const cross = interpolate(g, [at + 6, at + 14], [0, 1], clamp); return (
-          <span key={t} style={{position: 'relative', padding: '16px 30px', borderRadius: 999, background: 'rgba(255,255,255,.1)', border: '1px solid rgba(255,255,255,.25)', fontFamily: FONT, fontWeight: 800, fontSize: 36, color: 'rgba(255,255,255,.85)', transform: `scale(${p})`, opacity: p}}>
-            {t}<span style={{position: 'absolute', left: 18, right: 18, top: '50%', height: 5, borderRadius: 3, background: '#F87171', transform: `scaleX(${cross})`, transformOrigin: 'left'}} />
-          </span>); })}
+      <AbsoluteFill style={{background: 'radial-gradient(ellipse at center, rgba(244,244,247,0.92) 0%, rgba(244,244,247,0.55) 35%, rgba(244,244,247,0) 70%)'}} />
+      <div style={{position: 'absolute', left: 0, right: 0, top: 400, textAlign: 'center', fontFamily: FONT, fontWeight: 900, fontSize: 118, lineHeight: 1.0, letterSpacing: '-0.055em', color: FG, opacity: t1, transform: `scale(${0.9 + 0.1 * t1})`}}>
+        Aucune de ces pubs<br /><G>n’a été tournée.</G>
       </div>
     </AbsoluteFill>
   );
@@ -392,26 +393,26 @@ const Wa: React.FC = () => (
   }}</Stage>
 );
 
-// ---------- 8. fin ----------
+// ---------- 8. fin (mode clair) ----------
 const End: React.FC = () => {
   const f = useCurrentFrame(); // local
   const a = sp(f - 6, 12), b = sp(f - (cue(10, 'à', 1.6) - FS.end), 12), url = sp(f - (cue(10, 'growthity', 2.6) - FS.end), 11);
   return (
     <AbsoluteFill>
-      <StudioBg />
-      <Dust o={0.7} />
-      <div style={{position: 'absolute', left: 0, right: 0, top: 200, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 20, transform: `scale(${sp(f, 12)})`}}>
-        <div style={{width: 100, height: 100, borderRadius: 30, background: '#fff', display: 'grid', placeItems: 'center'}}><LogoMark size={64} draw={prog(f, 2, 20)} /></div>
-        <Wordmark size={66} dark />
+      <AbsoluteFill style={{background: `radial-gradient(1000px 600px at 50% 60%, rgba(91,63,228,0.18), transparent 70%)`}} />
+      <div style={{position: 'absolute', left: 0, right: 0, top: 190, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 20, transform: `scale(${sp(f, 12)})`}}>
+        <div style={{width: 100, height: 100, borderRadius: 30, background: SURF, border: `1px solid ${LINE}`, boxShadow: SH, display: 'grid', placeItems: 'center'}}><LogoMark size={64} draw={prog(f, 2, 20)} /></div>
+        <Wordmark size={66} />
       </div>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 380, textAlign: 'center', fontFamily: FONT, fontWeight: 900, fontSize: 120, lineHeight: 1.0, letterSpacing: '-0.055em', color: '#fff'}}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 370, textAlign: 'center', fontFamily: FONT, fontWeight: 900, fontSize: 120, lineHeight: 1.0, letterSpacing: '-0.055em', color: FG}}>
         <div style={{opacity: a, transform: `translateY(${(1 - a) * 50}px)`}}>Votre prochaine campagne</div>
-        <div style={{opacity: b, transform: `translateY(${(1 - b) * 50}px)`, color: '#C4B5FD'}}>est à une phrase.</div>
+        <div style={{opacity: b, transform: `translateY(${(1 - b) * 50}px)`}}><G>est à une phrase.</G></div>
       </div>
-      <div style={{position: 'absolute', left: 960 - 280, top: 720, width: 560, height: 130, borderRadius: 65, background: GRAD, display: 'grid', placeItems: 'center', color: '#fff', fontFamily: FONT, fontWeight: 900, fontSize: 50, boxShadow: '0 30px 60px -20px rgba(91,63,228,.8)', transform: `scale(${url})`, opacity: Math.min(1, url * 1.5)}}>growthity.ai →</div>
+      <div style={{position: 'absolute', left: 960 - 280, top: 710, width: 560, height: 130, borderRadius: 65, background: GRAD, display: 'grid', placeItems: 'center', color: '#fff', fontFamily: FONT, fontWeight: 900, fontSize: 50, boxShadow: '0 30px 60px -20px rgba(91,63,228,.6)', transform: `scale(${url})`, opacity: Math.min(1, url * 1.5)}}>growthity.ai →</div>
     </AbsoluteFill>
   );
 };
+
 
 // sous-titres discrets (la landing lit sans le son)
 const Caps: React.FC = () => {
@@ -453,9 +454,10 @@ export const Film: React.FC = () => {
       <Side k="wa" n="05 — WHATSAPP" a="Votre IA vous écrit." b="Vous répondez." sub="Une alerte, une décision : « pause », et c’est fait." />
       <Wa />
       <Caps />
+      <Intro />
       <Hook />
       <Sequence from={FS.end}><End /></Sequence>
-      <AbsoluteFill style={{background: '#fff', opacity: Math.max(flash(FS.brand), flash(FS.end)), pointerEvents: 'none'}} />
+      <AbsoluteFill style={{background: '#fff', opacity: Math.max(flash(FS.hook), flash(FS.brand)), pointerEvents: 'none'}} />
       <Audio src={staticFile('film/bed.wav')} />
       {Array.from({length: 10}, (_, i) => i + 1).map((k) => <Sequence key={k} from={VO[k]}><Audio src={staticFile(`voice/lf-${k}-n.mp3`)} /></Sequence>)}
     </AbsoluteFill>

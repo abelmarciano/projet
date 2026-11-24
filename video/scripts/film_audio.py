@@ -46,17 +46,18 @@ while b * bar < s('total'):
 i = 0
 while i * bt < s('total') - 0.5:
     at = i * bt
-    if at >= s('intro') - 0.05 and not (s('end') - 0.3 < at < s('end') + 1.0):
+    if at >= s('hook') - 0.05 and not (s('end') - 0.3 < at < s('end') + 1.0):
         add(mus, kick(), at, 0.42)
         if i % 2 == 1: add(mus, hp(rng.standard_normal(int(0.1 * SR)), 2200) * np.exp(-np.arange(int(0.1 * SR)) / SR * 32), at, 0.14)
     hh = hp(rng.standard_normal(int(0.02 * SR)), 9500) * np.exp(-np.arange(int(0.02 * SR)) / SR * 180)
     add(mus, hh, at + bt / 2, 0.06)
     i += 1
 env = np.ones(n) * 0.85
-env[:int(s('intro') * SR)] *= 0.6
+env[:int(s('hook') * SR)] *= 0.75
 tl = int((s('total') - 1.5) * SR); te = int(s('total') * SR); env[tl:te] = np.linspace(0.85, 0, te - tl); env[te:] = 0
 mus *= env
-add(sfx, riser(2.2, 200, 2400), s('intro') - 2.2, 0.3); add(sfx, boom(), s('intro'), 0.5); add(sfx, sub(1.4, 40), s('intro'), 0.55)
+add(sfx, sub(1.2, 44), 0.2, 0.45); add(sfx, chime(84), 0.3, 0.22); add(sfx, chime(91), 0.5, 0.2)
+add(sfx, riser(1.5, 200, 2400), s('hook') - 1.5, 0.3); add(sfx, boom(), s('hook'), 0.5); add(sfx, sub(1.4, 40), s('hook'), 0.55)
 for w in ['créer', 'lancer', 'piloter']: add(sfx, pop_sfx(), cue(2, w), 0.35)
 for w in ['agence', 'tournage', 'monteur']: add(sfx, whoosh(0.25), cue(2, w) + 0.2, 0.2)
 for k in ['brand', 'gallery', 'actors', 'meta', 'leads', 'social', 'wa']: add(sfx, whoosh(0.45), s(k) - 0.15, 0.3); add(sfx, sub(0.7, 50), s(k) + 0.03, 0.26)
