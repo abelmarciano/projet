@@ -2817,7 +2817,7 @@
   "stability": 0.45,
   "style": 0.45,
   "speed": 1.13,
-  "text": "Un clic, et c'est en ligne sur Meta Ads. Dès un euro par jour, zéro commission."
+  "text": "Un clic, et c'est en ligne sur Meta Ads : pour vendre, ou pour générer des leads. Dès un euro par jour, zéro commission."
  },
  "lm-8": {
   "voice": "3Tp5mYhT9wrfnry9pzvV",
@@ -2825,7 +2825,7 @@
   "stability": 0.45,
   "style": 0.45,
   "speed": 1.13,
-  "text": "Votre media buyer IA analyse vos résultats, et vous dit quoi améliorer."
+  "text": "Et votre media buyer IA analyse vos résultats, et vous dit quoi améliorer."
  },
  "lm-9": {
   "voice": "3Tp5mYhT9wrfnry9pzvV",
@@ -2850,5 +2850,13 @@
   "style": 0.45,
   "speed": 1.13,
   "text": "[confident] Votre prochaine pub est à une phrase. Grossiti point A I."
+ },
+ "lm-12": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_v4",
+  "stability": 0.45,
+  "style": 0.45,
+  "speed": 1.13,
+  "text": "Vos prospects remplissent le formulaire, et chaque lead arrive dans Grossiti, relié à la pub qui l'a apporté."
  }
 }

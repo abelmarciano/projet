@@ -33,7 +33,7 @@ const cue = (k: number, start: string, d = 0) => {
   const w = WD[`lm-${k}`].find((x) => x.w.toLowerCase().startsWith(start));
   return VO[k] + Math.round((w ? w.s : d) * 30);
 };
-const ORDER = ['intro', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 'end'];
+const ORDER = ['intro', 's1', 's2', 's3', 's4', 's5', 's6', 's6b', 's7', 's8', 's9', 'end'];
 const nextOf = (k: string) => FM[ORDER[ORDER.indexOf(k) + 1]] ?? FM.total;
 const M = (p: string) => staticFile(`media/${p}`);
 const CLIP = (n: string) => M(`fal/social/out/${n}.mp4`);
@@ -73,7 +73,7 @@ const Bg: React.FC = () => {
 };
 
 // barre d'étapes en haut (comme le fil du carrousel)
-const STEPS = [['s1', 'Décrivez'], ['s2', 'Marque'], ['s3', 'Produit'], ['s4', 'Style'], ['s5', 'Vidéo'], ['s6', 'Meta Ads'], ['s7', 'Performances']];
+const STEPS = [['s1', 'Décrivez'], ['s2', 'Marque'], ['s3', 'Produit'], ['s4', 'Style'], ['s5', 'Vidéo'], ['s6', 'Meta Ads'], ['s6b', 'Leads'], ['s7', 'Performances']];
 const Rail: React.FC = () => {
   const g = useCurrentFrame();
   if (g < FM.s1 - 10 || g > FM.end) return null;
@@ -242,7 +242,7 @@ const S3: React.FC = () => (
 
 // ---------- 4. style (les 5 styles vidéo de Growthity + visuels/carrousels) ----------
 const STYLES: {k: string; t: string; h: string; w: string; v?: string}[] = [
-  {k: 'ugc', t: 'Acteur UGC', h: '500+ acteurs, ou vous', w: 'un', v: 'gw/gw-28.mp4'},
+  {k: 'ugc', t: 'Acteur UGC', h: '500+ acteurs, ou vous', w: 'un', v: 'fal/social/out/lr_rania.mp4'},
   {k: 'vo', t: 'Produit + voix off', h: 'Votre produit, une voix', w: 'une', v: 'vid-oeufs-cuisine.mp4'},
   {k: 'motion', t: 'Motion design', h: 'Offre, lancement, promo', w: 'motion'},
   {k: 'cine', t: 'Cinématique', h: 'Plans soignés, lumière', w: 'cinématique', v: 'gw/gw-48.mp4'},
@@ -327,19 +327,23 @@ const S5: React.FC = () => (
 // ---------- 6. Meta Ads ----------
 const S6: React.FC = () => (
   <Stage k="s6">{(f) => {
-    const click = cue(7, 'clic', 0.6) - FM.s6 + 4;
+    const click = cue(7, 'leads', 4) - FM.s6 + 12;
     const live = f >= click + 14, lp = sp(f - click - 14, 11);
     const chips = sp(f - (cue(7, 'dès', 2.4) - FM.s6), 12);
     return (<>
-      <Card style={{left: RX, top: 220, width: RW}}>
+      <Card style={{left: RX, top: 170, width: RW}}>
         <div style={{display: 'flex', alignItems: 'center', gap: 22}}>
           <Brand k="meta" s={84} />
           <div style={{flex: 1}}><div style={{fontWeight: 800, fontSize: 48, letterSpacing: '-0.02em'}}>Meta Ads</div><div style={{fontSize: 26, color: MUTED, fontWeight: 500}}>Compte publicitaire connecté</div></div>
           <span style={{background: OK_SOFT, color: OK, fontWeight: 800, fontSize: 24, padding: '10px 20px', borderRadius: 999}}>Connecté</span>
         </div>
-        <div style={{height: 1, background: LINE, margin: '26px 0 10px'}} />
+        <div style={{display: 'flex', alignItems: 'center', gap: 14, marginTop: 24}}>
+          <span style={{fontSize: 24, fontWeight: 700, color: MUTED, marginRight: 6}}>Objectif</span>
+          {[['Ventes', 'vendre'], ['Leads', 'leads']].map(([t, w]) => { const on = f >= cue(7, w, 3) - FM.s6 && (t === 'Leads' || f < cue(7, 'leads', 4) - FM.s6); const p = sp(f - (cue(7, w, 3) - FM.s6), 10); return <span key={t} style={{fontSize: 28, fontWeight: 800, padding: '12px 26px', borderRadius: 999, background: on ? INK : '#F4F1EA', color: on ? '#fff' : MUTED, transform: `scale(${on ? 1 + 0.06 * p : 1})`}}>{t === 'Ventes' ? '🛒 ' : '📩 '}{t}</span>; })}
+        </div>
+        <div style={{height: 1, background: LINE, margin: '22px 0 6px'}} />
         {[{k: 'facebook', n: 'Facebook', d: 'Fil · Reels · Stories'}, {k: 'instagram', n: 'Instagram', d: 'Fil · Reels · Stories'}].map((x) => (
-          <div key={x.k} style={{display: 'flex', alignItems: 'center', gap: 20, padding: '12px 0'}}><Brand k={x.k} s={54} /><div style={{flex: 1, fontSize: 34, fontWeight: 700}}>{x.n}<span style={{fontSize: 24, color: MUTED, fontWeight: 500, marginLeft: 14}}>{x.d}</span></div><Check s={38} /></div>
+          <div key={x.k} style={{display: 'flex', alignItems: 'center', gap: 20, padding: '8px 0'}}><Brand k={x.k} s={50} /><div style={{flex: 1, fontSize: 34, fontWeight: 700}}>{x.n}<span style={{fontSize: 24, color: MUTED, fontWeight: 500, marginLeft: 14}}>{x.d}</span></div><Check s={38} /></div>
         ))}
         <div style={{display: 'flex', gap: 14, margin: '18px 0 4px', opacity: chips, transform: `translateY(${(1 - chips) * 16}px)`}}>
           {['Dès 1 € / jour', '0 % de commission'].map((t) => <span key={t} style={{fontSize: 26, fontWeight: 800, padding: '10px 20px', borderRadius: 999, background: '#F0ECFF', color: ACC}}>{t}</span>)}
@@ -348,7 +352,35 @@ const S6: React.FC = () => (
           {live ? <span style={{transform: `scale(${lp})`, display: 'flex', alignItems: 'center', gap: 14}}><Check s={40} c="#fff" />En diffusion sur Meta</span> : <><svg width="44" height="44" viewBox="0 0 24 24"><path d={BRAND_PATHS.meta} fill="#fff" /></svg>Publier sur Meta</>}
         </div>
       </Card>
-      <Cursor f={f} from={[RX + 1000, 1000]} to={[RX + RW / 2, 800]} at={click - 2} click={click} />
+      <Cursor f={f} from={[RX + 1000, 1000]} to={[RX + RW / 2, 860]} at={click - 2} click={click} />
+    </>);
+  }}</Stage>
+);
+
+// ---------- 7. leads ----------
+const LEADS: [string, string, string][] = [['Julie R.', 'Gravure personnalisée', 'à l’instant'], ['Sarah M.', 'Coffret cadeau de Noël', 'il y a 4 min'], ['Inès B.', 'Bracelet sur mesure', 'il y a 12 min']];
+const S6b: React.FC = () => (
+  <Stage k="s6b">{(f) => {
+    const form = sp(f - 2, 13), sent = cue(12, 'formulaire', 1.4) - FM.s6b + 8;
+    const rowAt = (i: number) => cue(12, 'lead', 2.2) - FM.s6b + i * 9;
+    const link = sp(f - (cue(12, 'relié', 3.4) - FM.s6b), 11);
+    return (<>
+      <Card style={{left: RX, top: 160, width: 400, padding: '26px 28px', transform: `scale(${form})`, transformOrigin: 'left top'}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: 10, fontSize: 20, color: MUTED, fontWeight: 700}}><Brand k="meta" s={26} /> Formulaire Meta</div>
+        <div style={{fontSize: 30, fontWeight: 800, marginTop: 10}}>Maison Trèfle</div>
+        {[['Prénom', 'Julie'], ['Téléphone', '06 •• •• •• 12']].map(([k, v], i) => { const n = Math.max(0, Math.min(v.length, Math.floor((f - 10 - i * 12) * 0.9))); return (
+          <div key={k} style={{marginTop: 14, border: `1px solid ${LINE}`, borderRadius: 14, padding: '10px 14px'}}><div style={{fontSize: 16, color: MUTED, fontWeight: 700}}>{k}</div><div style={{fontSize: 24, fontWeight: 600, minHeight: 30}}>{v.slice(0, n)}</div></div>); })}
+        <div style={{marginTop: 16, background: f >= sent ? '#16A34A' : '#0866FF', color: '#fff', borderRadius: 14, padding: '14px 0', textAlign: 'center', fontWeight: 800, fontSize: 24, transform: `scale(${interpolate(f, [sent, sent + 4, sent + 10], [1, 0.94, 1], clamp)})`}}>{f >= sent ? '✓ Envoyé' : 'Envoyer'}</div>
+      </Card>
+      <Card style={{left: RX + 300, top: 470, width: RW - 300, padding: '24px 28px'}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: 12, fontWeight: 800, fontSize: 30}}><LogoMark size={30} /> Vos leads</div>
+        {LEADS.map(([n, d, t], i) => { const p = sp(f - rowAt(i), 12); return (
+          <div key={n} style={{display: 'flex', alignItems: 'center', gap: 14, padding: '12px 0', borderTop: i ? `1px solid ${LINE}` : 'none', marginTop: i ? 0 : 12, opacity: p, transform: `translateY(${(1 - p) * -20}px)`}}>
+            <div style={{width: 48, height: 48, borderRadius: 99, background: '#F0ECFF', color: ACC, display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: 22}}>{n[0]}</div>
+            <div style={{flex: 1}}><div style={{fontSize: 26, fontWeight: 700}}>{n} {i === 0 && <span style={{fontSize: 16, fontWeight: 800, color: '#fff', background: '#16A34A', borderRadius: 99, padding: '3px 10px', marginLeft: 6, verticalAlign: 4}}>NOUVEAU</span>}</div><div style={{fontSize: 20, color: MUTED}}>{d} · {t}</div></div>
+            <div style={{display: 'flex', alignItems: 'center', gap: 8, background: '#F4F1EA', borderRadius: 12, padding: '6px 10px 6px 6px', opacity: link, transform: `scale(${0.8 + 0.2 * link})`}}><Img src={M(NOOR.img)} style={{width: 34, height: 34, borderRadius: 8, objectFit: 'cover'}} /><span style={{fontSize: 18, fontWeight: 700}}>Pub Noël</span></div>
+          </div>); })}
+      </Card>
     </>);
   }}</Stage>
 );
@@ -446,7 +478,7 @@ const Caps: React.FC = () => {
   const g = useCurrentFrame();
   if (g < FM.s1 || g >= FM.end) return null;
   let k = 0;
-  for (let i = 2; i <= 10; i++) if (g >= VO[i] - 2) k = i;
+  for (const i of [2, 3, 4, 5, 6, 7, 12, 8, 9, 10]) if (g >= VO[i] - 2) k = i;
   if (!k) return null;
   const words = WD[`lm-${k}`]; const t = (g - VO[k]) / 30;
   const i = words.findIndex((w) => t < w.e + 0.12);
@@ -479,7 +511,9 @@ export const FilmMix: React.FC = () => {
       <S5 />
       <Head k="s6" kick="Étape 6 · Lancez" a="Directement" b="sur Meta Ads." />
       <S6 />
-      <Head k="s7" kick="Étape 7 · Suivez vos performances" a="Votre media buyer" b="vous dit quoi améliorer." />
+      <Head k="s6b" kick="Étape 7 · Récupérez vos leads" a="Chaque lead," b="relié à sa pub." />
+      <S6b />
+      <Head k="s7" kick="Étape 8 · Suivez vos performances" a="Votre media buyer" b="vous dit quoi améliorer." />
       <S7 />
       <Head k="s8" kick="Et en plus" a="Postez aussi" b="sur vos réseaux sociaux." />
       <S8 />
@@ -490,7 +524,7 @@ export const FilmMix: React.FC = () => {
       <Sequence from={FM.end}><End /></Sequence>
       <AbsoluteFill style={{background: '#fff', opacity: flash(FM.end), pointerEvents: 'none'}} />
       <Audio src={staticFile('film/bed-mix.wav')} />
-      {Array.from({length: 11}, (_, i) => i + 1).map((k) => <Sequence key={k} from={VO[k]}><Audio src={staticFile(`voice/lm-${k}-n.mp3`)} /></Sequence>)}
+      {Array.from({length: 12}, (_, i) => i + 1).map((k) => <Sequence key={k} from={VO[k]}><Audio src={staticFile(`voice/lm-${k}-n.mp3`)} /></Sequence>)}
     </AbsoluteFill>
   );
 };

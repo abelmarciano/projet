@@ -60,7 +60,7 @@ add(sfx, sub(1.2, 44), 0.2, 0.45); add(sfx, chime(84), 0.3, 0.22); add(sfx, chim
 add(sfx, chime(88), cue(1, 'en', 0.6), 0.25)
 for i in range(7): add(sfx, pop_sfx(), cue(1, 'générés', 2.4) + i * 3 / 30, 0.14)
 add(sfx, riser(1.2, 200, 2400), s('s1') - 1.2, 0.25); add(sfx, boom(), s('s1'), 0.45); add(sfx, sub(1.2, 40), s('s1'), 0.5)
-for k in ['s2', 's3', 's4', 's5', 's6', 's7', 's8', 's9']: add(sfx, whoosh(0.45), s(k) - 0.15, 0.3); add(sfx, sub(0.7, 50), s(k) + 0.03, 0.24)
+for k in ['s2', 's3', 's4', 's5', 's6', 's6b', 's7', 's8', 's9']: add(sfx, whoosh(0.45), s(k) - 0.15, 0.3); add(sfx, sub(0.7, 50), s(k) + 0.03, 0.24)
 t0 = cue(2, 'une', 0.9) + 4 / 30; L = 42
 for j in range(0, int(L / 1.7), 2): add(sfx, click(1.0 + 0.4 * rng.random()), t0 + j / 30, 0.08)
 ck = t0 + (L / 1.7 + 8) / 30; add(sfx, click(1.6), ck, 0.5); add(sfx, chime(84), ck + 1.0, 0.22)
@@ -70,7 +70,11 @@ for w in ['un', 'une', 'motion', 'cinématique', 'photo', 'visuels']: add(sfx, p
 for j in range(0, 22, 3): add(sfx, click(1.2), cue(5, 'cinq', 3) + j / 30, 0.1)
 for w in ['script', 'voix', 'sous', 'montage', 'formats']: add(sfx, pop_sfx(), cue(6, w, 1), 0.2)
 add(sfx, chime(84), cue(6, 'prêt', 2.6), 0.28); add(sfx, chime(91), cue(6, 'prêt', 2.6) + 0.1, 0.2)
-c6 = cue(7, 'clic', 0.6) + 4 / 30; add(sfx, click(1.6), c6, 0.5); add(sfx, chime(84), c6 + 14 / 30, 0.25)
+c6 = cue(7, 'leads', 4) + 12 / 30
+for w in ['vendre', 'leads']: add(sfx, pop_sfx(), cue(7, w, 3), 0.25)
+add(sfx, click(1.6), cue(12, 'formulaire', 1.4) + 8 / 30, 0.45)
+for i in range(3): add(sfx, tone(88, 0.22, r=11), cue(12, 'lead', 2.2) + i * 9 / 30, 0.2)
+add(sfx, chime(84), cue(12, 'relié', 3.4), 0.22); add(sfx, click(1.6), c6, 0.5); add(sfx, chime(84), c6 + 14 / 30, 0.25)
 for i in range(3): add(sfx, pop_sfx(), cue(8, ['analyse', 'quoi', 'améliorer'][i], 1.5 + i), 0.22)
 for i in range(5): add(sfx, pop_sfx(), s('s8') + (10 + i * 6) / 30, 0.18)
 for w in ['lead', 'pub', 'whatsapp']: add(sfx, chime(93), cue(10, w, 1), 0.22)
