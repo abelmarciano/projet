@@ -1,6 +1,6 @@
 // Short 9:16 « Défi : ta pub en 2 minutes » — format réponse à un commentaire.
-// Théo B. (Kling v4 + voix Hugo en speech-to-speech) relève le défi de Léa → il tape dans Growthity (UI recréée par-dessus) →
-// la pub générée de Salomé (bougie) en plein écran → retour Théo : « Le prochain, c'est toi : mets ton produit en commentaire. »
+// Marcus (Kling v4 + voix Hugo en speech-to-speech) relève le défi de Léa → il tape dans Growthity (UI recréée par-dessus) →
+// la pub générée de Salomé (bougie) en plein écran → retour Marcus : « Le prochain, c'est toi : mets ton produit en commentaire. »
 // Zones sûres : rien d'important au-dessus de 250 px ni sous 1536 px, marge droite pour les boutons TikTok/Reels. Aucun chiffre de résultat.
 import React, {useEffect, useState} from 'react';
 import {AbsoluteFill, Img, OffthreadVideo, Sequence, continueRender, delayRender, interpolate, spring, staticFile, useCurrentFrame, Audio} from 'remotion';
@@ -72,11 +72,11 @@ const Caps: React.FC = () => {
 // sticker « Réponse au commentaire » (format TikTok), visible dès la frame 0
 const Reply: React.FC = () => {
   const g = useCurrentFrame();
-  const out = interpolate(g, [SEGS[0].d - 8, SEGS[0].d], [1, 0], clamp);
+  const out = interpolate(g, [C.typeFrom - 10, C.typeFrom - 2], [1, 0], clamp);
   if (out <= 0) return null;
   const a = g < 2 ? 1 : 1 - 0.0 * g;
   return (
-    <div style={{position: 'absolute', left: 70, top: 800, opacity: out * a, transform: `rotate(-3deg) scale(${g < 3 ? 1.08 : 1})`, fontFamily: FONT}}>
+    <div style={{position: 'absolute', left: 70, top: 280, opacity: out * a, transform: `rotate(-3deg) scale(${g < 3 ? 1.08 : 1})`, fontFamily: FONT}}>
       <div style={{background: '#fff', borderRadius: 26, padding: '18px 26px 22px', boxShadow: '0 20px 50px -18px rgba(0,0,0,.6)', maxWidth: 760}}>
         <div style={{display: 'flex', alignItems: 'center', gap: 12, color: MUTED, fontWeight: 700, fontSize: 28}}>
           <div style={{width: 40, height: 40, borderRadius: 20, background: 'linear-gradient(135deg,#F9A8D4,#FDBA74)', display: 'grid', placeItems: 'center', color: '#fff', fontWeight: 900, fontSize: 22}}>L</div>
@@ -120,7 +120,7 @@ const ChatUI: React.FC = () => {
       <Img src={M(img)} style={{width: 64, height: 64, borderRadius: round ? 32 : 12, objectFit: 'cover', objectPosition: '50% 30%'}} />{label}
     </div>); };
   return (
-    <div style={{position: 'absolute', left: 50, right: 50, top: 560, opacity: out, transform: `translateY(${(1 - inA) * 80}px) scale(${0.92 + 0.08 * inA})`, fontFamily: FONT}}>
+    <div style={{position: 'absolute', left: 50, right: 50, top: 760, opacity: out, transform: `translateY(${(1 - inA) * 80}px) scale(${0.92 + 0.08 * inA})`, fontFamily: FONT}}>
       <div style={{background: '#fff', borderRadius: 40, padding: 34, boxShadow: '0 40px 90px -30px rgba(0,0,0,.7)'}}>
         <div style={{display: 'flex', alignItems: 'center', gap: 12, marginBottom: 22}}><LogoMark size={40} /><Wordmark size={36} /></div>
         <div style={{display: 'flex', gap: 14, marginBottom: 20}}>
