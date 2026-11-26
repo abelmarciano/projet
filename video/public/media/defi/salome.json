@@ -1,0 +1,16 @@
+{
+ "prompt": "The person speaks native French with a natural French accent, natural and conversational, and says exactly the quoted lines below.\n\n@Element1 est la personne de la vidéo : même visage, mêmes cheveux bruns bouclés, mêmes créoles dorées, même chemise blanche, du début à la fin. La bougie est exactement celle de @Image1 : pot en céramique blanc mat, cire crème, une seule mèche, sans étiquette.\nLe lieu est son salon le soir : canapé beige avec un plaid, table basse en bois, lampe allumée, la nuit bleutée par la fenêtre. Lumière chaude et tamisée, la flamme de la bougie éclaire son visage par en dessous quand elle s'approche.\nLa vidéo est filmée au téléphone, à hauteur humaine. Peau non retouchée : grain, pores visibles, légère brillance sur le front et le nez, cernes légers, dents naturelles. La main bouge légèrement, la mise au point et l'exposition s'ajustent toutes seules, léger bruit d'image. Elle parle comme à une amie, jamais comme une présentatrice : on voit ses respirations, ses clignements, de petites pauses, son regard quitte parfois l'objectif puis revient. Son visage reste net et éclairé quand il parle, ses mains loin de sa bouche. Le bas de l'image reste dégagé. Pas de musique, aucun texte ni écriture à l'image, aucun logo, aucune marque lisible, l'écran de l'ordinateur n'est jamais visible de face.\nDe 0 à 4 s : selfie plan poitrine, elle est assise sur le canapé, la bougie éteinte dans sa main libre. Dès la première image, elle la montre à l'objectif en souriant. Elle dit : « Mon petit rituel du soir ? Cette bougie. » Ton : chaleureux et complice, débit naturel.\nDe 4 à 7 s : plan de coupe, téléphone posé sur la table basse, cadre fixe : elle pose la bougie sur la table et l'allume avec une allumette, la flamme prend, elle souffle l'allumette. Elle dit, hors champ ou de profil : « Bois de santal, un peu de vanille… » Ton : doux, presque murmuré.\nDe 7 à 10 s : selfie plan poitrine, elle se penche vers la bougie allumée, ferme les yeux une seconde, puis regarde l'objectif. Elle dit : « Et franchement, toute la pièce sent bon. » Ton : sincère, petit rire léger à la fin.\nSon : voix proche et claire, prise par le micro du téléphone, craquement de l'allumette, ambiance calme d'un salon le soir, pas de musique.",
+ "duration": 10,
+ "elements": [
+  {
+   "frontal_image_url": "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/salome/frontal.jpg",
+   "reference_image_urls": [
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/salome/ref1.jpg",
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/salome/ref2.jpg"
+   ]
+  }
+ ],
+ "image_urls": [
+  "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/img-bougie.webp"
+ ]
+}
