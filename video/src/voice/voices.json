@@ -3018,5 +3018,13 @@
   "style": 0.75,
   "speed": 1.08,
   "text": "[deadpan] Je n'existe pas. [calm] Ce visage, cette voix… rien n'est réel. [confident] Une photo de ton produit, une phrase dans Grossiti… et je le présente pour toi. En deux minutes."
+ },
+ "defi-pub0": {
+  "voice": "3Tp5mYhT9wrfnry9pzvV",
+  "model": "eleven_multilingual_v2",
+  "stability": 0.5,
+  "style": 0.2,
+  "speed": 1.2,
+  "text": "Léa veut une pube pour ses bougies ?"
  }
 }
