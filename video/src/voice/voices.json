@@ -2922,5 +2922,61 @@
   "style": 0.55,
   "speed": 1.08,
   "text": "Grossiti. Ta pub vidéo, en une phrase."
+ },
+ "g5-0": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.08,
+  "text": "[serious] Nouvelle mission : faire ta première pub vidéo."
+ },
+ "g5-1": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.08,
+  "text": "Premier arrêt : le casting. Des acteurs qui se filment toute la journée… Mille cinq cents balles, juste pour un visage."
+ },
+ "g5-2": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.08,
+  "text": "Ensuite, le monteur. Huit cents de plus… et deux semaines d'attente."
+ },
+ "g5-3": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.08,
+  "text": "Et maintenant… Meta Ads. Ciblage, budget, pixel… [sighs] Cinq cents balles de pub parties en fumée."
+ },
+ "g5-4": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.08,
+  "text": "Alors l'agence ? Deux mille par mois. Budget à sec."
+ },
+ "g5-5": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.08,
+  "text": "[excited] Nouveau lieu débloqué : Grossiti. Des acteurs IA, le montage, Meta Ads… tout au même endroit. Une phrase, et ta pub est en ligne. Mission réussie."
+ },
+ "g5-6": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.08,
+  "text": "Grossiti. Ta pub vidéo, en une phrase."
  }
 }
