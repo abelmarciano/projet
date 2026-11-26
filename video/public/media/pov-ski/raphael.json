@@ -1,0 +1,13 @@
+{
+ "prompt": "No one speaks in this video and there is no voice at all: only the natural ambient sound of the place, no music.\n\n@Element1 est la personne de la vidéo : même visage, même barbe courte, mêmes cheveux bruns, du début à la fin. Il porte une doudoune de ski bleu marine ouverte, un bonnet gris, des lunettes de soleil remontées sur le bonnet, un pantalon de ski noir.\nLe lieu est la terrasse en bois d'un chalet d'altitude en plein soleil : neige immaculée, sapins enneigés, sommets blancs et ciel bleu profond derrière lui, quelques transats et une paire de skis plantée dans la neige. Lumière de montagne franche et éclatante, reflets sur la neige.\nLa vidéo est filmée au téléphone par un ami, à hauteur humaine, plan large en pied puis plan taille, la main bouge légèrement, mise au point automatique, léger bruit d'image. Peau non retouchée, joues un peu rougies par le froid, buée légère quand il souffle. Il danse librement et joyeusement, comme sur une musique entraînante qu'on n'entend pas : il bouge les épaules, fait des petits pas sur le côté, lève les bras vers le ciel, tourne sur lui-même, rit franchement, pointe la caméra du doigt, puis s'avance vers l'objectif en dansant. Mouvements naturels et un peu maladroits, vraie joie spontanée, jamais chorégraphiés.\nPas de musique, aucun texte ni écriture à l'image, aucun logo, aucune marque lisible. Le centre de l'image reste lisible et le bas dégagé.\nSon : ambiance de montagne, vent léger, bruits de pas dans la neige, rires lointains, pas de musique.",
+ "duration": 10,
+ "elements": [
+  {
+   "frontal_image_url": "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/raphael/frontal.jpg",
+   "reference_image_urls": [
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/raphael/ref1.jpg",
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/raphael/ref2.jpg"
+   ]
+  }
+ ]
+}
