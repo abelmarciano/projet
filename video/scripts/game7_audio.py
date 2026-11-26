@@ -77,4 +77,4 @@ add(sfx, boom(), s('end'), 0.4)
 mix = (mus + sfx * 0.5)[: int(total * SR)]
 mix = np.tanh(mix / (np.max(np.abs(mix)) + 1e-9) * 1.4) * 0.5
 d = int(0.012 * SR); st = np.stack([mix, np.concatenate([np.zeros(d), mix[:-d]]) * 0.9 + mix * 0.1], 1)
-os.makedirs('public/game4', exist_ok=True); wavfile.write('public/game4/bed6.wav', SR, (st * 32767).astype(np.int16)); print('ok', round(total, 2))
+os.makedirs('public/game4', exist_ok=True); wavfile.write('public/game4/bed7.wav', SR, (st * 32767).astype(np.int16)); print('ok', round(total, 2))
