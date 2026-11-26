@@ -2874,5 +2874,53 @@
   "style": 0.5,
   "speed": 1.1,
   "text": "[excited] Cette pub n'a jamais été tournée. Une photo de ton produit, un acteur IA, une phrase… et Grossiti crée la vidéo, avec la voix, les sous-titres, le montage. Un clic, et elle est en ligne sur Meta. Ton produit mérite sa pub."
+ },
+ "g4-0": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.08,
+  "text": "[serious] Mission : faire ta première pub vidéo."
+ },
+ "g4-1": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.08,
+  "text": "Premier arrêt : le casting. Mille cinq cents balles… juste pour un acteur."
+ },
+ "g4-2": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.08,
+  "text": "Ensuite, le monteur. Huit cents de plus… et deux semaines d'attente."
+ },
+ "g4-3": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.08,
+  "text": "Et l'agence pour la lancer ? Deux mille. [sighs] Budget à sec."
+ },
+ "g4-4": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.08,
+  "text": "[excited] Nouveau lieu débloqué : Grossiti. Une phrase… l'acteur, le montage, et ta pub part sur Meta. Mission réussie."
+ },
+ "g4-5": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.08,
+  "text": "Grossiti. Ta pub vidéo, en une phrase."
  }
 }
