@@ -3010,5 +3010,13 @@
   "style": 0.55,
   "speed": 1.1,
   "text": "Mais avant ça… retour en arrière."
+ },
+ "choc-manon": {
+  "voice": "i5Fydub7F0HPXhynAgDo",
+  "model": "eleven_v4",
+  "stability": 0.25,
+  "style": 0.75,
+  "speed": 1.08,
+  "text": "[deadpan] Je n'existe pas. [calm] Ce visage, cette voix… rien n'est réel. [confident] Une photo de ton produit, une phrase dans Grossiti… et je le présente pour toi. En deux minutes."
  }
 }
