@@ -2978,5 +2978,21 @@
   "style": 0.55,
   "speed": 1.08,
   "text": "Grossiti. Ta pub vidéo, en une phrase."
+ },
+ "g6-5": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.08,
+  "text": "[excited] Nouveau lieu débloqué : Grossiti. Tu choisis ton acteur… ton produit… Un message dans le chat, et ta pub part sur Meta Ads. Et tu suis tes performances en direct. Mission réussie."
+ },
+ "g6-6": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.08,
+  "text": "Bilan : quatre mille huit cents balles économisées. Grossiti, à partir de dix-neuf euros quatre-vingt-dix-neuf. Ta pub vidéo, en une phrase."
  }
 }
