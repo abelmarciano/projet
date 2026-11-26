@@ -136,6 +136,7 @@ import {GameAd, G3} from './game3/GameAd';
 import {GameAd2, G4} from './game4/GameAd2';
 import {GameAd3, G5} from './game4/GameAd3';
 import {GameAd4, G6} from './game4/GameAd4';
+import {GameAd5, G7} from './game4/GameAd5';
 import {LightChatPub, lightTimeline, LightCfg} from './chatpub/LightChatPub';
 import {SocialStory, StoryCfg, storyTotal} from './chatpub/SocialStory';
 import lr4Cfg from './chatpub/lr4.json';
@@ -265,6 +266,7 @@ export const Root: React.FC = () => (
     <Composition id="GameAd2" component={GameAd2} durationInFrames={G4.total} fps={30} width={1080} height={1920} />
     <Composition id="GameAd3" component={GameAd3} durationInFrames={G5.total} fps={30} width={1080} height={1920} />
     <Composition id="GameAd4" component={GameAd4} durationInFrames={G6.total} fps={30} width={1080} height={1920} />
+    <Composition id="GameAd5" component={GameAd5} durationInFrames={G7.total} fps={30} width={1080} height={1920} />
     <Composition id="Launch-calendrier" component={SocialStory} durationInFrames={storyTotal(lr4Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr4Cfg as unknown as StoryCfg}} />
     <Composition id="Launch-whatsapp" component={SocialStory} durationInFrames={storyTotal(lr5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: lr5Cfg as unknown as StoryCfg}} />
     <Composition id="AvantApres-julien" component={SocialStory} durationInFrames={storyTotal(av5Cfg as unknown as StoryCfg)} fps={30} width={1080} height={1920} defaultProps={{cfg: av5Cfg as unknown as StoryCfg}} />

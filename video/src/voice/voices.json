@@ -2994,5 +2994,21 @@
   "style": 0.55,
   "speed": 1.08,
   "text": "Bilan : quatre mille huit cents balles économisées. Grossiti, à partir de dix-neuf euros quatre-vingt-dix-neuf. Ta pub vidéo, en une phrase."
+ },
+ "g7-h": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.1,
+  "text": "[excited] Nouveau lieu débloqué : Grossiti !"
+ },
+ "g7-r": {
+  "voice": "Kg44Et7dmnb41tHrZjeN",
+  "model": "eleven_v4",
+  "stability": 0.4,
+  "style": 0.55,
+  "speed": 1.1,
+  "text": "Mais avant ça… retour en arrière."
  }
 }
