@@ -43,13 +43,13 @@ const Hud: React.FC = () => {
   const m = money(g); const inP = sp(g - G3.s1 + 10, 14);
   const down = SHOPS.some((s) => g >= s.at + 40 && g < s.at + 62), up = g >= G3.s4 + 20 && g < G3.s4 + 120;
   const col = down ? RED : up ? GREEN : '#fff';
-  const obj = g < G3.s4 + 4 ? 'Faire ta première pub vidéo' : 'Mission accomplie';
+  const obj = g < G3.s4 + 100 ? 'Faire ta première pub vidéo' : 'Mission accomplie';
   return (
     <>
-      <div style={{position: 'absolute', right: 56, top: 250, textAlign: 'right', fontFamily: FONT, transform: `translateX(${(1 - inP) * 300}px)`}}>
+      <div style={{position: 'absolute', right: 56, top: 290, textAlign: 'right', fontFamily: FONT, transform: `translateX(${(1 - inP) * 300}px)`}}>
         <div style={{fontWeight: 900, fontSize: 74, color: col, letterSpacing: '0.02em', ...stroke(6), transform: `scale(${down || up ? 1.08 : 1})`}}>$ {fmt(m)}</div>
       </div>
-      <div style={{position: 'absolute', left: 50, top: 260, fontFamily: FONT, background: 'rgba(0,0,0,.62)', borderLeft: `8px solid ${GOLD}`, padding: '14px 22px', borderRadius: 8, opacity: inP, transform: `translateX(${(1 - inP) * -300}px)`, maxWidth: 560}}>
+      <div style={{position: 'absolute', left: 50, top: 300, fontFamily: FONT, background: 'rgba(0,0,0,.62)', borderLeft: `8px solid ${GOLD}`, padding: '14px 22px', borderRadius: 8, opacity: inP, transform: `translateX(${(1 - inP) * -300}px)`, maxWidth: 560}}>
         <div style={{fontWeight: 800, fontSize: 20, letterSpacing: '0.18em', color: GOLD}}>OBJECTIF</div>
         <div style={{fontWeight: 800, fontSize: 32, color: '#fff', marginTop: 2}}>{obj}</div>
       </div>
@@ -85,13 +85,13 @@ const Shop: React.FC<{i: number}> = ({i}) => {
   const card = sp(f - 10, 12); const minus = sp(f - 40, 9); const mOut = interpolate(f, [40, 75], [0, -160], clamp);
   return (
     <AbsoluteFill>
-      <div style={{position: 'absolute', left: 50, right: 50, top: 420, fontFamily: FONT, transform: `translateX(${(1 - card) * -700}px)`}}>
+      <div style={{position: 'absolute', left: 50, right: 50, top: 450, fontFamily: FONT, transform: `translateX(${(1 - card) * -700}px)`}}>
         <div style={{display: 'inline-block', background: 'rgba(0,0,0,.72)', borderRadius: 10, padding: '16px 24px', borderBottom: `6px solid ${RED}`}}>
           <div style={{fontWeight: 900, fontSize: 52, color: '#fff', letterSpacing: '0.04em'}}>{s.name}</div>
           <div style={{fontWeight: 800, fontSize: 32, color: '#ddd', marginTop: 4}}>{s.what} : <span style={{color: RED}}>{fmt(s.cost)} $</span></div>
         </div>
       </div>
-      {f >= 38 && <div style={{position: 'absolute', right: 70, top: 340 + mOut * -0.3, fontFamily: FONT, fontWeight: 900, fontSize: 84, color: RED, ...stroke(6), opacity: interpolate(f, [40, 50, 70, 85], [0, 1, 1, 0], clamp), transform: `scale(${0.6 + 0.4 * minus}) translateY(${mOut * 0.4}px)`}}>− {fmt(s.cost)} $</div>}
+      {f >= 38 && <div style={{position: 'absolute', right: 70, top: 600, fontFamily: FONT, fontWeight: 900, fontSize: 84, color: RED, ...stroke(6), opacity: interpolate(f, [40, 50, 70, 85], [0, 1, 1, 0], clamp), transform: `scale(${0.6 + 0.4 * minus}) translateY(${mOut * 0.4}px)`}}>− {fmt(s.cost)} $</div>}
       <div style={{position: 'absolute', left: 60, right: 60, top: 1180, textAlign: 'center', fontFamily: FONT, opacity: interpolate(f, [12, 20, 95, 104], [0, 1, 1, 0], clamp)}}>
         <span style={{fontWeight: 800, fontSize: 46, color: '#fff', ...stroke(5)}}>{s.line}</span>
       </div>
@@ -125,7 +125,7 @@ const Win: React.FC = () => {
   const done = sp(f - 108, 10);
   return (
     <AbsoluteFill>
-      <div style={{position: 'absolute', left: 50, right: 50, top: 420, fontFamily: FONT, opacity: interpolate(f, [4, 12, 100, 108], [0, 1, 1, 0], clamp)}}>
+      <div style={{position: 'absolute', left: 50, right: 50, top: 450, fontFamily: FONT, opacity: interpolate(f, [4, 12, 100, 108], [0, 1, 1, 0], clamp)}}>
         <div style={{display: 'inline-block', background: 'rgba(15,12,30,.8)', borderRadius: 10, padding: '16px 24px', borderBottom: `6px solid ${GREEN}`}}>
           <div style={{fontWeight: 900, fontSize: 52, color: '#fff', letterSpacing: '0.04em'}}>GROWTHITY</div>
           <div style={{fontWeight: 800, fontSize: 32, color: '#ddd', marginTop: 4}}>Acteur + montage + Meta Ads : <span style={{color: GREEN}}>1 phrase</span></div>
