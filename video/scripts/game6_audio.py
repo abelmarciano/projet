@@ -48,8 +48,8 @@ t = np.arange(int((total - s('end')) * SR)) / SR
 add(mus, sum(np.sin(2 * np.pi * note(m) * t) for m in [50, 57, 62, 66, 69]) / 5 * np.exp(-t * 0.6), s('end'), 0.25)
 e = np.ones(n) * 0.55; tl = int((total - 0.8) * SR); te = int(total * SR); e[tl:te] = np.linspace(0.55, 0, te - tl); e[te:] = 0; mus *= e
 # bruitages
-for i in range(9): add(sfx, click(1.3), (14 + i * 3) / F, 0.35)  # lettres tapées
-add(sfx, boom(), 44 / F, 0.45); add(sfx, whoosh(0.5), s('aerial') - 0.2, 0.35)
+for i in range(9): add(sfx, click(1.3), (3 + i) / F, 0.3)  # lettres tapées
+add(sfx, boom(), 13 / F, 0.5); add(sfx, whoosh(0.5), s('aerial') - 0.2, 0.35)
 def cash(up=True):
     d = 0.5; t = np.arange(int(d * SR)) / SR
     bell = sum(np.sin(2 * np.pi * f * t) * np.exp(-t * 8) for f in ([2093, 2637, 3136] if up else [523, 415]))

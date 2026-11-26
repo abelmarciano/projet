@@ -49,7 +49,7 @@ const money = (g: number) => {
 // écran-titre : affiche de jeu originale (vignettes illustrées) + GROWTHITY au centre + chargement
 const TitleCard: React.FC = () => {
   const f = useCurrentFrame();
-  const word = 'GROWTHITY'; const n = Math.min(word.length, Math.floor((f - 10) / 3));
+  const word = 'GROWTHITY'; const n = Math.min(word.length, Math.floor(f - 3));
   const out = interpolate(f, [67, 75], [1, 0], clamp); const load = interpolate(f, [8, 66], [0, 1], clamp);
   const z = 1.08 - 0.08 * sp(f, 20, 1);
   return (
@@ -58,7 +58,7 @@ const TitleCard: React.FC = () => {
       <AbsoluteFill style={{background: 'radial-gradient(520px 420px at 50% 50%, rgba(18,7,32,.75), rgba(18,7,32,0) 80%)'}} />
       <div style={{position: 'absolute', left: 0, right: 0, top: 820, textAlign: 'center', fontFamily: FONT}}>
         <div style={{display: 'inline-flex'}}>
-          {word.split('').map((c, i) => { const p = sp(f - 10 - i * 3, 9, 0.5); return (
+          {word.split('').map((c, i) => { const p = sp(f - 3 - i, 9, 0.5); return (
             <span key={i} style={{fontWeight: 900, fontStyle: 'italic', fontSize: 134, letterSpacing: '-0.03em', backgroundImage: SUNSET, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', WebkitTextStroke: '7px #120720', paintOrder: 'stroke fill', filter: 'drop-shadow(0 9px 0 #120720)', opacity: i < n ? 1 : 0, transform: `translateY(${(1 - p) * -70}px) scale(${0.6 + 0.4 * p}) rotate(-5deg)`, display: 'inline-block'}}>{c}</span>); })}
         </div>
       </div>
