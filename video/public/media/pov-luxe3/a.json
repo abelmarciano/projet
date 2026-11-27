@@ -1,0 +1,13 @@
+{
+ "prompt": "No one speaks in this video and there is no voice at all: only the natural ambient sound of the place, no music.\n\n@Element1 est la femme de la vidéo, une adulte d'environ 30 ans : même visage, mêmes longues tresses noires, même peau, du début à la fin. Elle porte un maillot de bain deux pièces noir élégant, des créoles dorées et un paréo en voile blanc. Attitude glamour, joyeuse et sûre d'elle, comme une campagne de voyage de luxe.\nLe lieu est une villa de luxe à Santorin : piscine à débordement qui se confond avec la mer Égée bleu profond, maisons blanches et dômes bleus à flanc de falaise, transats blancs, bougainvilliers roses. Lumière dorée de fin d'après-midi puis coucher de soleil orangé.\nStyle : publicité haut de gamme tournée par une agence, image cinéma 35 mm, étalonnage chaud et lumineux, couleurs riches, légère profondeur de champ, caméra stabilisée sur gimbal, mouvements fluides. Chaque plan est court et différent, avec des cadrages variés (très gros plan, plan taille, plan large, plongée, vue drone). Image naturelle, grain fin.\nAucun texte ni écriture à l'image, aucun logo, aucune marque lisible. Le centre de l'image reste lisible.\nDe 0 à 2 s : vue drone qui glisse au-dessus des maisons blanches et des dômes bleus jusqu'à la piscine à débordement où elle est au bord de l'eau.\nDe 2 à 4 s : plan taille : allongée sur un transat blanc, lunettes de soleil, elle tourne la tête vers l'objectif et sourit.\nDe 4 à 6 s : très gros plan : ses doigts glissent à la surface de l'eau de la piscine, reflets dorés.\nDe 6 à 8 s : contre-plongée : elle se lève, le paréo blanc flotte dans le vent, la mer derrière elle, elle regarde l'objectif avec assurance.\nDe 8 à 10 s : plan large de dos : elle marche le long de la piscine à débordement vers la mer.\nDe 10 à 12 s : plan taille : elle s'accoude au bord de la piscine, dos à la caméra, et regarde l'horizon, puis se retourne en souriant.\nDe 12 à 15 s : ralenti : elle entre dans la piscine à débordement, l'eau scintille, la mer Égée à perte de vue.\nSon : vent léger, eau qui clapote, cigales, pas de musique.",
+ "duration": 15,
+ "elements": [
+  {
+   "frontal_image_url": "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/aissatou/frontal.jpg",
+   "reference_image_urls": [
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/aissatou/ref1.jpg",
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/aissatou/ref2.jpg"
+   ]
+  }
+ ]
+}

@@ -136,6 +136,7 @@ import {ChocAd, T as CHOC_T} from './choc/ChocAd';
 import {DefiAd, T as DEFI_T} from './defi/DefiAd';
 import {LuxeAd, T as LUXE_T} from './luxe/LuxeAd';
 import {LuxeAd2, T as LUXE2_T} from './luxe/LuxeAd2';
+import {LuxeAd3, T as LUXE3_T} from './luxe/LuxeAd3';
 import {GameAd, G3} from './game3/GameAd';
 import {GameAd2, G4} from './game4/GameAd2';
 import {GameAd3, G5} from './game4/GameAd3';
@@ -265,6 +266,7 @@ export const Root: React.FC = () => (
     <Composition id="LinkedInLaunch" component={LinkedInLaunch} durationInFrames={LS.total} fps={30} width={1080} height={1350} />
     <Composition id="LaunchFilm" component={Film} durationInFrames={FS.total} fps={30} width={1920} height={1080} />
     <Composition id="LaunchFilmMix" component={FilmMix} durationInFrames={FM.total} fps={30} width={1920} height={1080} />
+    <Composition id="LuxeAd3" component={LuxeAd3} durationInFrames={LUXE3_T.total} fps={30} width={1080} height={1920} />
     <Composition id="LuxeAd2" component={LuxeAd2} durationInFrames={LUXE2_T.total} fps={30} width={1080} height={1920} />
     <Composition id="LuxeAd" component={LuxeAd} durationInFrames={LUXE_T.total} fps={30} width={1080} height={1920} />
     <Composition id="DefiAd" component={DefiAd} durationInFrames={DEFI_T.total} fps={30} width={1080} height={1920} />

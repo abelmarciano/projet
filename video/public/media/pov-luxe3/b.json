@@ -1,0 +1,13 @@
+{
+ "prompt": "No one speaks in this video and there is no voice at all: only the natural ambient sound of the place, no music.\n\n@Element1 est la femme de la vidéo, une adulte d'environ 30 ans : même visage, mêmes longues tresses noires, même peau, du début à la fin. Elle porte un maillot de bain deux pièces noir élégant, des créoles dorées et un paréo en voile blanc. Attitude glamour, joyeuse et sûre d'elle, comme une campagne de voyage de luxe.\nLe lieu est une villa de luxe à Santorin : piscine à débordement qui se confond avec la mer Égée bleu profond, maisons blanches et dômes bleus à flanc de falaise, transats blancs, bougainvilliers roses. Lumière dorée de fin d'après-midi puis coucher de soleil orangé.\nStyle : publicité haut de gamme tournée par une agence, image cinéma 35 mm, étalonnage chaud et lumineux, couleurs riches, légère profondeur de champ, caméra stabilisée sur gimbal, mouvements fluides. Chaque plan est court et différent, avec des cadrages variés (très gros plan, plan taille, plan large, plongée, vue drone). Image naturelle, grain fin.\nAucun texte ni écriture à l'image, aucun logo, aucune marque lisible. Le centre de l'image reste lisible.\nDe 0 à 3 s : ralenti, plan taille : dans la piscine, elle sort la tête de l'eau en riant et rejette ses tresses en arrière.\nDe 3 à 5 s : vue du dessus : elle flotte paisiblement dans la piscine turquoise, bras écartés.\nDe 5 à 7 s : très gros plan : son visage au soleil couchant, elle rit, créoles dorées qui brillent.\nDe 7 à 9 s : plan large : coucher de soleil orangé sur la caldeira, elle est assise au bord de la piscine, silhouette dorée.\nDe 9 à 12 s : plan taille : sur un transat, enveloppée dans le paréo, elle prend son téléphone (l'écran n'est pas visible), le regarde et sourit, satisfaite.\nDe 12 à 15 s : plan taille au coucher du soleil : elle lève une coupe de jus de fruits vers l'objectif comme pour trinquer, sourire complice, dômes bleus derrière elle.\nSon : eau, rires, vent léger, pas de musique.",
+ "duration": 15,
+ "elements": [
+  {
+   "frontal_image_url": "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/aissatou/frontal.jpg",
+   "reference_image_urls": [
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/aissatou/ref1.jpg",
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/aissatou/ref2.jpg"
+   ]
+  }
+ ]
+}
