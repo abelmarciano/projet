@@ -1,0 +1,13 @@
+{
+ "prompt": "No one speaks in this video and there is no voice at all: only the natural ambient sound of the place, no music.\n\n@Element1 est la jeune femme de la vidéo, une adulte d'environ 27 ans : même visage, mêmes longs cheveux bruns, même sourire, du début à la fin. Elle porte un maillot de bain deux pièces noir simple, des lunettes de soleil sur la tête, une fine chaîne dorée.\nLe lieu est le pont arrière en teck d'un voilier en Méditerranée, ancré dans une crique : eau turquoise transparente, falaises blanches et pins au loin, ciel bleu, plein soleil d'été. Une serviette blanche et un verre de jus posés sur le banc. Lumière naturelle éclatante, reflets de l'eau.\nLa vidéo est filmée au téléphone par une amie, à hauteur humaine, plan en pied puis plan taille, la main bouge légèrement, mise au point automatique. Peau naturelle non retouchée, légèrement bronzée, cheveux qui bougent dans le vent.\nDès la première image, elle danse joyeusement et librement comme sur une musique entraînante qu'on n'entend pas : elle ondule des hanches, lève les bras, fait tourner ses cheveux, tourne sur elle-même, rit, puis s'avance vers l'objectif en dansant et sourit à la caméra. Mouvements naturels et spontanés, jamais chorégraphiés, attitude solaire et insouciante.\nPas de musique, aucun texte ni écriture à l'image, aucun logo, aucune marque lisible. Le centre de l'image reste lisible et le bas dégagé.\nSon : clapotis de l'eau contre la coque, vent léger, mouettes au loin, rires, pas de musique.",
+ "duration": 10,
+ "elements": [
+  {
+   "frontal_image_url": "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/valentina/frontal.jpg",
+   "reference_image_urls": [
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/valentina/ref1.jpg",
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/valentina/ref2.jpg"
+   ]
+  }
+ ]
+}
