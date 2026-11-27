@@ -1,0 +1,13 @@
+{
+ "prompt": "No one speaks in this video and there is no voice at all: only the natural ambient sound of the place, no music.\n\n@Element1 est la femme de la vidéo, une adulte d'environ 28 ans : même visage, mêmes longs cheveux noirs très bouclés, même peau, du début à la fin. Elle porte un bikini blanc échancré élégant, une fine chaîne dorée à la taille, des créoles dorées. Silhouette sportive et féminine, attitude sûre d'elle, sensuelle mais élégante, comme une campagne de mode de luxe.\nLe lieu est une crique privée méditerranéenne : sable blanc, eau turquoise cristalline, rochers clairs, un grand parasol en paille et une serviette en lin écru, une paire de lunettes de soleil. Lumière d'été dorée, soleil haut puis fin d'après-midi.\nStyle : publicité haut de gamme tournée par une agence, image cinéma 35 mm, étalonnage chaud et lumineux, couleurs riches, légère profondeur de champ, caméra stabilisée sur gimbal, mouvements fluides. Chaque plan est court et différent, avec des cadrages variés (très gros plan, plan taille, plan large, plongée, contre-plongée). Peau naturelle, grain fin, gouttes d'eau réalistes.\nAucun texte ni écriture à l'image, aucun logo, aucune marque lisible. Le centre de l'image reste lisible.\nDe 0 à 2 s : plan large en plongée, presque vue du ciel : elle est allongée sur la serviette au soleil sous le parasol, au bord de l'eau turquoise.\nDe 2 à 4 s : très gros plan sur son visage de profil, les yeux fermés au soleil, elle sourit, une mèche bouge au vent.\nDe 4 à 6 s : gros plan : sa main glisse lentement dans le sable chaud, la lumière dorée sur sa peau.\nDe 6 à 8 s : plan taille en contre-plongée : elle descend ses lunettes de soleil sur son nez et regarde l'objectif avec un sourire assuré.\nDe 8 à 10 s : elle se lève et attache ses cheveux bouclés, plan taille de trois-quarts, ciel bleu derrière elle.\nDe 10 à 12 s : travelling de dos qui la suit : elle marche vers l'eau sur le sable blanc, démarche assurée.\nDe 12 à 15 s : ralenti : elle court dans l'eau peu profonde, les éclaboussures brillent au soleil, puis elle plonge dans une petite vague.\nSon : vagues, vent léger, éclaboussures, pas de musique.",
+ "duration": 15,
+ "elements": [
+  {
+   "frontal_image_url": "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/amara/frontal.jpg",
+   "reference_image_urls": [
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/amara/ref1.jpg",
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/amara/ref2.jpg"
+   ]
+  }
+ ]
+}

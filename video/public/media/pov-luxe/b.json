@@ -1,0 +1,13 @@
+{
+ "prompt": "No one speaks in this video and there is no voice at all: only the natural ambient sound of the place, no music.\n\n@Element1 est la femme de la vidéo, une adulte d'environ 28 ans : même visage, mêmes longs cheveux noirs très bouclés, même peau, du début à la fin. Elle porte un bikini blanc échancré élégant, une fine chaîne dorée à la taille, des créoles dorées. Silhouette sportive et féminine, attitude sûre d'elle, sensuelle mais élégante, comme une campagne de mode de luxe.\nLe lieu est une crique privée méditerranéenne : sable blanc, eau turquoise cristalline, rochers clairs, un grand parasol en paille et une serviette en lin écru, une paire de lunettes de soleil. Lumière d'été dorée, soleil haut puis fin d'après-midi.\nStyle : publicité haut de gamme tournée par une agence, image cinéma 35 mm, étalonnage chaud et lumineux, couleurs riches, légère profondeur de champ, caméra stabilisée sur gimbal, mouvements fluides. Chaque plan est court et différent, avec des cadrages variés (très gros plan, plan taille, plan large, plongée, contre-plongée). Peau naturelle, grain fin, gouttes d'eau réalistes.\nAucun texte ni écriture à l'image, aucun logo, aucune marque lisible. Le centre de l'image reste lisible.\nDe 0 à 3 s : ralenti, plan taille face caméra : elle sort de l'eau turquoise, passe les deux mains dans ses cheveux mouillés vers l'arrière, des gouttes brillent sur sa peau.\nDe 3 à 5 s : très gros plan : son visage mouillé, elle rit, gouttes d'eau sur ses cils, soleil en contre-jour.\nDe 5 à 7 s : vue du dessus : elle flotte sur le dos dans l'eau cristalline, bras écartés, yeux fermés, cheveux en étoile autour d'elle.\nDe 7 à 9 s : plan large en contre-jour : elle marche hors de la mer vers la caméra, silhouette dorée, reflets sur l'eau.\nDe 9 à 12 s : plan taille : assise sur la serviette, elle prend son téléphone (l'écran n'est pas visible), le regarde et sourit, satisfaite, puis le repose.\nDe 12 à 15 s : fin d'après-midi, lumière dorée : elle lève un verre de limonade vers l'objectif comme pour trinquer, sourire complice, la mer derrière elle.\nSon : vagues, éclaboussures, rires, pas de musique.",
+ "duration": 15,
+ "elements": [
+  {
+   "frontal_image_url": "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/amara/frontal.jpg",
+   "reference_image_urls": [
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/amara/ref1.jpg",
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/amara/ref2.jpg"
+   ]
+  }
+ ]
+}
