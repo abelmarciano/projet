@@ -53,9 +53,10 @@ for c in C['cuts'][1:]:
 add(sfx, boom(), 0.0, 0.35); add(sfx, boom(), end, 0.45); add(sfx, whoosh(0.5), end - 0.35, 0.25)
 add(sfx, chime(88), end + 0.35, 0.18); add(sfx, chime(84), end + 0.55, 0.15)
 if 'notif' in C: add(sfx, chime(91), C['notif'], 0.25); add(sfx, chime(96), C['notif'] + 0.09, 0.2)
-mix = drums * 0.9 + syn + sfx * 0.6
+SFX_ONLY = os.environ.get('SFX_ONLY')
+mix = sfx if SFX_ONLY else drums * 0.9 + syn + sfx * 0.6
 mix = mix[: int(total * SR)]
 f = int(0.7 * SR); mix[-f:] *= np.linspace(1, 0, f)
-mix = np.tanh(mix / (np.max(np.abs(mix)) + 1e-9) * 1.8) * 0.62
+mix = (mix * 0.9) if SFX_ONLY else np.tanh(mix / (np.max(np.abs(mix)) + 1e-9) * 1.8) * 0.62
 d = int(0.012 * SR); st = np.stack([mix, np.concatenate([np.zeros(d), mix[:-d]]) * 0.82 + mix * 0.18], 1)
-wavfile.write('public/media/pov-luxe/bed.wav', SR, (st * 32767).astype(np.int16)); print('ok', round(total, 2))
+wavfile.write('public/media/pov-luxe/' + ('sfx.wav' if SFX_ONLY else 'bed.wav'), SR, (st * 32767).astype(np.int16)); print('ok', round(total, 2))
