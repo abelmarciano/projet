@@ -1,0 +1,13 @@
+{
+ "prompt": "No one speaks in this video and there is no voice at all: only the natural ambient sound of the place, no music.\n\n@Element1 est la femme de la vidéo, une adulte d'environ 30 ans : même visage, mêmes longs cheveux noirs lisses, même peau, du début à la fin. Elle porte un maillot de bain deux pièces rouge, de fines créoles dorées. Attitude solaire, joyeuse et sûre d'elle, comme une campagne de voyage haut de gamme.\nLe lieu est une plage paradisiaque des Caraïbes : sable blanc poudreux, cocotiers penchés au-dessus de l'eau, lagon turquoise cristallin, un ponton en bois clair qui avance dans la mer, un hamac entre deux palmiers. Lumière tropicale éclatante, ciel bleu, quelques nuages blancs.\nStyle : publicité haut de gamme tournée par une agence, image cinéma 35 mm, étalonnage chaud et lumineux, couleurs riches, légère profondeur de champ, caméra stabilisée sur gimbal, mouvements fluides. Chaque plan est court et différent, avec des cadrages variés (très gros plan, plan taille, plan large, plongée, contre-plongée, vue drone). Image naturelle, grain fin.\nAucun texte ni écriture à l'image, aucun logo, aucune marque lisible. Le centre de l'image reste lisible.\nDe 0 à 3 s : ralenti, plan taille face caméra : elle sort la tête de l'eau turquoise en riant et repousse ses cheveux en arrière.\nDe 3 à 5 s : plan large : elle nage tranquillement dans le lagon cristallin, rayons de soleil sur l'eau.\nDe 5 à 7 s : très gros plan : son visage, elle rit, soleil en contre-jour.\nDe 7 à 9 s : plan large : elle remonte l'échelle du ponton et s'enroule dans une serviette rayée.\nDe 9 à 12 s : plan taille : assise sur une serviette rayée sur le ponton, elle prend son téléphone (l'écran n'est pas visible), le regarde et sourit, satisfaite.\nDe 12 à 15 s : coucher de soleil doré : elle tient une noix de coco avec une paille et la lève vers l'objectif comme pour trinquer, sourire complice, cocotiers derrière elle.\nSon : eau, éclaboussures, rires, vent léger, pas de musique.",
+ "duration": 15,
+ "elements": [
+  {
+   "frontal_image_url": "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/yasmine/frontal.jpg",
+   "reference_image_urls": [
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/yasmine/ref1.jpg",
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/yasmine/ref2.jpg"
+   ]
+  }
+ ]
+}

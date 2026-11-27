@@ -6,7 +6,8 @@ from scipy.io import wavfile
 src = open(os.path.join(os.path.dirname(__file__), 'shorts_audio.py')).read().split('def timeline')[0]
 g = {'__file__': __file__}; exec(src, g)
 SR, note, lp, hp, kick, whoosh, boom, chime, rng = (g[k] for k in ['SR', 'note', 'lp', 'hp', 'kick', 'whoosh', 'boom', 'chime', 'rng'])
-C = json.load(open('src/luxe/cuts.json')); total = C['total']
+C = json.load(open(os.environ.get('CUTS', 'src/luxe/cuts.json')))
+OUT = os.environ.get('OUTDIR', 'public/media/pov-luxe'); total = C['total']
 n = int(total * SR) + SR; drums = np.zeros(n); syn = np.zeros(n); sfx = np.zeros(n)
 def add(buf, x, t, gain=1.0):
     i = int(t * SR)
@@ -59,4 +60,4 @@ mix = mix[: int(total * SR)]
 f = int(0.7 * SR); mix[-f:] *= np.linspace(1, 0, f)
 mix = (mix * 0.9) if SFX_ONLY else np.tanh(mix / (np.max(np.abs(mix)) + 1e-9) * 1.8) * 0.62
 d = int(0.012 * SR); st = np.stack([mix, np.concatenate([np.zeros(d), mix[:-d]]) * 0.82 + mix * 0.18], 1)
-wavfile.write('public/media/pov-luxe/' + ('sfx.wav' if SFX_ONLY else 'bed.wav'), SR, (st * 32767).astype(np.int16)); print('ok', round(total, 2))
+wavfile.write(OUT + '/' + ('sfx.wav' if SFX_ONLY else 'bed.wav'), SR, (st * 32767).astype(np.int16)); print('ok', round(total, 2))

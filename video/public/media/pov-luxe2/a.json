@@ -1,0 +1,13 @@
+{
+ "prompt": "No one speaks in this video and there is no voice at all: only the natural ambient sound of the place, no music.\n\n@Element1 est la femme de la vidéo, une adulte d'environ 30 ans : même visage, mêmes longs cheveux noirs lisses, même peau, du début à la fin. Elle porte un bikini rouge vif élégant et échancré, de fines créoles dorées. Silhouette féminine et sportive, attitude sûre d'elle, sensuelle mais élégante, comme une campagne de maillots de bain de luxe.\nLe lieu est une plage paradisiaque des Caraïbes : sable blanc poudreux, cocotiers penchés au-dessus de l'eau, lagon turquoise cristallin, un ponton en bois clair qui avance dans la mer, un hamac entre deux palmiers. Lumière tropicale éclatante, ciel bleu, quelques nuages blancs.\nStyle : publicité haut de gamme tournée par une agence, image cinéma 35 mm, étalonnage chaud et lumineux, couleurs riches, légère profondeur de champ, caméra stabilisée sur gimbal, mouvements fluides. Chaque plan est court et différent, avec des cadrages variés (très gros plan, plan taille, plan large, plongée, contre-plongée, vue drone). Peau naturelle, grain fin, gouttes d'eau réalistes.\nAucun texte ni écriture à l'image, aucun logo, aucune marque lisible. Le centre de l'image reste lisible.\nDe 0 à 2 s : vue drone qui avance au-dessus du lagon turquoise vers le ponton en bois où elle est allongée au soleil.\nDe 2 à 4 s : plan taille : elle se balance doucement dans le hamac entre deux cocotiers, un pied dans le vide, elle sourit les yeux fermés.\nDe 4 à 6 s : très gros plan : ses doigts effleurent la surface de l'eau depuis le bord du ponton, reflets dorés.\nDe 6 à 8 s : contre-plongée : debout sur le ponton, elle passe la main dans ses longs cheveux noirs et regarde l'objectif avec assurance.\nDe 8 à 10 s : travelling de côté : elle marche au bord de l'eau, ses pieds dans les petites vagues, ses cheveux bougent au vent.\nDe 10 à 12 s : plan de dos : elle avance au bout du ponton vers le lagon.\nDe 12 à 15 s : ralenti, plan large : elle plonge du ponton dans l'eau turquoise, éclaboussures brillantes au soleil.\nSon : vagues, vent dans les palmes, plongeon, pas de musique.",
+ "duration": 15,
+ "elements": [
+  {
+   "frontal_image_url": "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/yasmine/frontal.jpg",
+   "reference_image_urls": [
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/yasmine/ref1.jpg",
+    "https://raw.githubusercontent.com/abelmarciano/projet/claude/eager-cerf-4d88re/video/public/media/kling/yasmine/ref2.jpg"
+   ]
+  }
+ ]
+}
